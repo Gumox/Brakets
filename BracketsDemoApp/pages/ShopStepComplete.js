@@ -36,19 +36,20 @@ const VText = styled.Text`
 `;
 
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
-
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepOne( { navigation } ) {
     
     return (
         <Container>
-             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
+            
             <CenterText>
                 
+                <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
                 <CompleteV><VText>✓</VText></CompleteV>
                 <RegistText>접수 완료</RegistText>
                 <BlueText>수선 접수가 정상적으로 완료</BlueText>

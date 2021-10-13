@@ -31,6 +31,7 @@ function App() {
         <Stack.Screen name="StartPage" component={StartPage} />
         
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
+
         <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center'}} />
 
         <Stack.Screen name="ShopRepairStep" component={ShopRepairStep} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
@@ -39,6 +40,7 @@ function App() {
         <Stack.Screen name="ShopStepFour2" component={ShopStepFour2} options={{ title: '4단계' ,headerTitleAlign: 'center'}} />
 
         <Stack.Screen name="ShopStepFive" component={ShopStepFive} options={{ title: '5단계' ,headerTitleAlign: 'center'}} />
+
         <Stack.Screen name="ShopStepComplete" component={ShopStepComplete} options={{ title: '5단계' ,headerTitleAlign: 'center'}} />
 
 

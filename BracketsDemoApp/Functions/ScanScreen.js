@@ -39,6 +39,7 @@ export default class ScanScreen extends Component {
             }) 
             if(route.params.key !=null){
                this.props.navigation.replace(route.params.key );
+               
             }
         }
     

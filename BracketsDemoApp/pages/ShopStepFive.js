@@ -22,19 +22,20 @@ const GrayText = styled.Text`
     color:#858585;
 `;
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
-
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepFive( { navigation } ) {
     
     return (
         <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
+            
             <CenterText>
                 
+                <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
                 <RegistText>행낭 접수</RegistText>
             
                 
