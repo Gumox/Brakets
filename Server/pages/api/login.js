@@ -4,7 +4,8 @@ import excuteQuery from './db';
 export async function staffLogin(id, pwd) {
     try {
         const result = await excuteQuery({
-            query: "SELECT * FROM staff WHERE id='" + id + "' AND passwd='" + pwd + "'"
+            query: "SELECT * FROM staff WHERE id=? AND passwd=?",
+            values: [id, pwd]
         });
 
         //console.log( "rr" + result);
