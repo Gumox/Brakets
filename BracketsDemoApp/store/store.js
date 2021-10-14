@@ -2,7 +2,7 @@ import { createStore } from "redux";
 
 export default createStore(function(state,action){
     if(state === undefined){
-        return{number:0,cardValue:"",bagCodeValue:""}
+        return{number:0,cardValue:"",bagCodeValue:"",receptionDate:"",appointmentDate:""}
     }
     if(action.type ==='INCREM'){
         return{...state, number: state.number+action.size}
