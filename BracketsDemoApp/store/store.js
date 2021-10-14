@@ -10,8 +10,15 @@ export default createStore(function(state,action){
     if(action.type ==='SERVICECAED'){
         return{...state, cardValue: action.value };
     }
+    if(action.type ==='RECDATE'){
+        return{...state, receptionDate: action.recDate };
+    }
+    if(action.type ==='APPODATE'){
+        return{...state, appointmentDate: action.appoDate };
+    }
     if(action.type ==='BAGCODE'){
         return{...state, bagCodeValue: action.bag };
     }
+    
     return state;
 })

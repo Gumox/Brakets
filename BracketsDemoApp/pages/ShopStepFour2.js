@@ -68,8 +68,8 @@ function ShopStepFour2({navigation}) {
     const [mode, setMode] = React.useState('date');
     const [show, setShow] = React.useState(false);
     const [dateP14, setDateP14] = React.useState(date.addDays(14));
-
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
+
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -120,7 +120,9 @@ function ShopStepFour2({navigation}) {
             
             </Contents>
             <CenterView>
-                <ButtonBlack onPress={ ()=> navigation.navigate( 'ShopStepFive' ) }>
+                <ButtonBlack onPress={ ()=>
+                    //store.dispatch({type:'RECDATE',recDate: date })
+                    navigation.navigate( 'ShopStepFive' ) }>
                     다음: 5단계
                 </ButtonBlack>
             </CenterView>

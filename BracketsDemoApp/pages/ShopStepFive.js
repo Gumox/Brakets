@@ -6,7 +6,7 @@ import CenterText from '../components/CenterText';
 import _ from 'lodash';
 import Contents from '../components/Contents';
 import StateBarSolid from '../components/StateBarSolid';
-
+import store from '../store/store';
 
 const RegistText= styled.Text`
     font-weight: bold;
@@ -29,7 +29,7 @@ const TopStateView = styled.View`
 `;
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepFive( { navigation } ) {
-    
+    //console.log(store.getState().recDate);
     return (
         <Container>
             
