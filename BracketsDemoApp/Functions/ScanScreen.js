@@ -43,7 +43,8 @@ export default class ScanScreen extends Component {
                 console.log(store.getState().cardValue);
               }
               else if(route.params.key === 'ShopStepComplete'){
-
+                store.dispatch({type:'SERVICECAED',bag:check});
+                console.log(store.getState().bagCodeValue);
               }
                this.props.navigation.replace(route.params.key );
                
