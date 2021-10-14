@@ -11,13 +11,13 @@ import {
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import { RNCamera } from 'react-native-camera';
-
+import store from '../store/store';
 export default class ScanScreen extends Component {
   
   onSuccess = e => {
     const {route}=this.props;
     console.log(route.params.key);
-    const check = e.data.substring(0, 4);
+    const check = e.data.substring(0, 30);
         console.log('scanned data: ' + check);
         this.setState({
             result: e,
@@ -38,6 +38,13 @@ export default class ScanScreen extends Component {
                 ScanResult: true
             }) 
             if(route.params.key !=null){
+              if(route.params.key ==='ShopStepFour2'){
+                store.dispatch({type:'SERVICECAED',value:check});
+                console.log(store.getState().cardValue);
+              }
+              else if(route.params.key === 'ShopStepComplete'){
+
+              }
                this.props.navigation.replace(route.params.key );
                
             }

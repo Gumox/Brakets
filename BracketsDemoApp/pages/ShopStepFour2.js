@@ -7,7 +7,7 @@ import { Image, View,Text,useState} from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import store from '../store/store';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;
@@ -69,6 +69,8 @@ function ShopStepFour2({navigation}) {
     const [show, setShow] = React.useState(false);
     const [dateP14, setDateP14] = React.useState(date.addDays(14));
 
+    const [barcode, setBarcode] = React.useState(store.getState().cardValue);
+
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -91,7 +93,7 @@ function ShopStepFour2({navigation}) {
                 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
                 <Label> 서비스 카드 바코드</Label>
-                <Input />
+                <Input value ={barcode}/>
                 <Label> 매장 접수일</Label>
                 <TouchableView onPress={showDatepicker}>
                     <PrView>
