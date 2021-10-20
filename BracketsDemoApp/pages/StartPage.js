@@ -5,7 +5,27 @@ import SelectButton from '../components/SelectButton';
 <<<<<<< Updated upstream
 import _ from 'lodash';
 
+import { Image,Text,Button, View } from "react-native";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DateObject from "react-date-object";
+
+import styled from 'styled-components/native';
+
+const TouchableView = styled.TouchableOpacity`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px
+`;
+const ImgIcon =styled.Image`
+    width: 20px;
+    height: 20px;
+`;
+
+
 function StartPage( { navigation } ) {
+<<<<<<< HEAD
 =======
 import _, { size } from 'lodash';
 
@@ -36,12 +56,20 @@ function StartPage( { navigation } ) {
         setNumber(store.getState().number);
     })
 >>>>>>> Stashed changes
+=======
+    
+
+>>>>>>> 0chan
     return(
         <Container>
             <Contents>
-                <SelectButton onPress={ ()=> navigation.navigate( 'ShopStepOne' ) }>
+                <SelectButton onPress={ ()=> 
+                //navigation.navigate( 'CameraQR')}
+                navigation.navigate( 'ShopStepOne' ) }
+                >
                     시작
                 </SelectButton>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
                 <TouchableView onPress={function(){
@@ -54,6 +82,13 @@ function StartPage( { navigation } ) {
                 <Text>{number}</Text>
                 
 >>>>>>> Stashed changes
+=======
+                <TouchableView>
+                    <ImgIcon source={require('../Icons/calendar.png')}/>
+                </TouchableView>
+                
+                
+>>>>>>> 0chan
             </Contents>
         </Container>
     )

@@ -38,8 +38,9 @@ const GrayText = styled.Text`
     color:#858585;
 `;
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
 
@@ -48,8 +49,8 @@ function ShopStepTwo({navigation}) {
     
     return (
         <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <CenterText>
+            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
                 <TopIntro>제품 정보</TopIntro>
                 <BlueText>수선 요구 사항</BlueText>
                 <GrayText>을 선택하세요</GrayText>

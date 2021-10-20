@@ -10,23 +10,37 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@mdi/js": "^6.2.95",
+    "@mdi/react": "^1.5.0",
+    "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-picker/picker": "^2.1.0",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/native-stack": "^6.2.2",
     "@reduxjs/toolkit": "^1.6.2",
     "lodash": "^4.17.21",
     "react": "17.0.2",
+    "react-date-object": "^2.1.5",
+    "react-datepicker": "^4.2.1",
     "react-native": "0.66.0",
     "react-native-camera": "^4.2.1",
+    "react-native-fast-image": "^8.5.11",
+    "react-native-image-modal": "^2.0.4",
+    "react-native-image-viewing": "^0.2.1",
+    "react-native-modal-datetime-picker": "^12.0.0",
+    "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-picker-select": "^8.0.4",
     "react-native-qrcode-scanner": "^1.5.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.8.0",
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
     "react-native-vector-icons": "^8.1.0",
     "react-redux": "^7.2.5",
 >>>>>>> Stashed changes
+=======
+    "react-native-vector-icons": "^8.1.0",
+>>>>>>> 0chan
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
     "styled-components": "^5.3.1"

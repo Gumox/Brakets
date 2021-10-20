@@ -10,19 +10,18 @@ import StateBarVoid from '../components/StateBarVoid';
 
 
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
-
 // 구조 분해 할당, Destructuring Assignment
 function ShopRepairStep( { navigation } ) {
     
     return (
         <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <CenterText>
-                
+                <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             </CenterText>
             <Button onPress={ ()=> navigation.navigate( 'ShopStepFour' )}>
                 다음 단계
