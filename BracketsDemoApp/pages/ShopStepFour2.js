@@ -3,7 +3,7 @@ import Contents from '../components/Contents';
 import ButtonBlack from '../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
-import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions} from 'react-native';
+import { Image, View,Text,useState, StyleSheet,Pressable } from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 
@@ -59,7 +59,6 @@ const TopStateView = styled.View`
     justify-content: center;
 `;
 
-
 Date.prototype.addDays = function(days) {
     var date = new Date(this.valueOf());
     date.setDate(date.getDate() + days);
@@ -76,11 +75,9 @@ function ShopStepFour2({navigation}) {
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
     store.dispatch({type:'SERVICECAED',value:barcode});
     
-    const [modalVisible, setModalVisible] = React.useState(false);
-    
     const cardImgUri =store.getState().card;
     
-    //console.log(cardImgUri );
+    console.log(cardImgUri );
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -97,35 +94,13 @@ function ShopStepFour2({navigation}) {
         showMode('date');
     };
 
-    const styles = StyleSheet.create({
-        centeredView: {
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 22
+    const images = [
+        {
+          uri: cardImgUri,
         },
-        xView:{
-            backgroundColor: "#78909c",
-            borderRadius: 20,
-        },
-
-        modalView: {
-          margin: 10,
-          backgroundColor: "white",
-          borderRadius: 20,
-          paddingRight: 5,
-          paddingLeft: 5,
-          paddingTop: 15,
-          paddingBottom: 15,
-          alignItems: "center",
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 2
-          },
-        }
-      });
-    
+      ];
+      
+    const [visible, setIsVisible] = React.useState(false);
 
     return (
         <ContainView>
@@ -134,45 +109,20 @@ function ShopStepFour2({navigation}) {
                 
 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
-            
-            
+                
                 <CenterView>
-                    
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                        }}
-                    >
-                        <View style={styles.centeredView}>
-                        <View style ={styles.xView} >    
-                        <View style={styles.modalView} >
-                            
-                            <ImageZoom cropWidth={320}
-                                    cropHeight={400}
-                                    imageWidth={300}
-                                    imageHeight={400}>
-                                    <Image style={{width:300, height:400}}
-                                    source={{uri:cardImgUri}}/>
-                            </ImageZoom>
-                            
-                        </View>
-                        </View>
-                        </View>
-                    </Modal>
-                    
-                    
-                    <Pressable  onPress={() => setModalVisible(!modalVisible)}>
-                        <Image
-                        style ={{width:200,height:200}}
-                        source={{uri:cardImgUri}}
-                        />
-                    </Pressable>
-                           
+                    <Image
+                    style ={{width:200,height:200}}
+                    source={{uri:cardImgUri}}
+                    />
+                    <ImageView
+                    images={images}
+                    imageIndex={0}
+                    visible={visible}
+                    onRequestClose={() => setIsVisible(false)}
+                    />;
+                                    
                 </CenterView>
-
                 <Label> 서비스 카드 바코드</Label>
                 <Input value ={barcode}/>
 
@@ -197,13 +147,7 @@ function ShopStepFour2({navigation}) {
                 <Label> 고객 약속일</Label>
 
                 <Input  multiline={ true }/>
-                <Label> 매장 발송일</Label>
-                <Input  multiline={ true }/>
-
-                <DateView><Label>{dateP14.getFullYear()}년  {dateP14.getMonth()+1}월  {dateP14.getDate()}일</Label></DateView>
-                <Label> 매장 발송 예정일</Label>
-                <DateView><Label>{dateP1.getFullYear()}년  {dateP1.getMonth()+1}월  {dateP1.getDate()}일</Label></DateView>
-
+                
 
             
             </Contents>
@@ -216,7 +160,6 @@ function ShopStepFour2({navigation}) {
             </CenterView>
         </ContainView>
     )
-    
 }
 
 export default ShopStepFour2;
