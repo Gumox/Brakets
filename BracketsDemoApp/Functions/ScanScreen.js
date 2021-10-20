@@ -104,7 +104,4 @@ export default class ScanScreen extends Component {
     );
   }
 }
-
-
-
 AppRegistry.registerComponent('default', () => ScanScreen);
