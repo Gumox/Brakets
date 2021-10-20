@@ -3,10 +3,9 @@ import Contents from '../components/Contents';
 import ButtonBlack from '../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
-import { Image, View,Text,useState, StyleSheet,Pressable } from 'react-native';
+import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions} from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
-
 import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
@@ -16,7 +15,6 @@ const TouchableView = styled.TouchableOpacity`
     background-color:#d6d6d6;
     border-radius:10px;
 `;
-
 const Label = styled.Text`
     font-size: 15px;
     margin-Top: 12px;
@@ -59,6 +57,7 @@ const TopStateView = styled.View`
     justify-content: center;
 `;
 
+
 Date.prototype.addDays = function(days) {
     var date = new Date(this.valueOf());
     date.setDate(date.getDate() + days);
@@ -67,7 +66,6 @@ Date.prototype.addDays = function(days) {
 
 
 function ShopStepFour2({navigation}) {
-
     const [date, setDate] = React.useState(new Date());
     const [mode, setMode] = React.useState('date');
     const [show, setShow] = React.useState(false);
@@ -75,9 +73,11 @@ function ShopStepFour2({navigation}) {
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
     store.dispatch({type:'SERVICECAED',value:barcode});
     
+    const [modalVisible, setModalVisible] = React.useState(false);
+    
     const cardImgUri =store.getState().card;
     
-    console.log(cardImgUri );
+    //console.log(cardImgUri );
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -94,38 +94,82 @@ function ShopStepFour2({navigation}) {
         showMode('date');
     };
 
-    const images = [
-        {
-          uri: cardImgUri,
+    const styles = StyleSheet.create({
+        centeredView: {
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 22
         },
-      ];
-      
-    const [visible, setIsVisible] = React.useState(false);
-
+        xView:{
+            backgroundColor: "#78909c",
+            borderRadius: 20,
+        },
+        modalView: {
+          margin: 10,
+          backgroundColor: "white",
+          borderRadius: 20,
+          paddingRight: 5,
+          paddingLeft: 5,
+          paddingTop: 15,
+          paddingBottom: 15,
+          alignItems: "center",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },
+        }
+      });
+    
+    
+    
     return (
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
             <Contents>
                 
-
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
-                
+            
                 <CenterView>
-                    <Image
-                    style ={{width:200,height:200}}
-                    source={{uri:cardImgUri}}
-                    />
-                    <ImageView
-                    images={images}
-                    imageIndex={0}
-                    visible={visible}
-                    onRequestClose={() => setIsVisible(false)}
-                    />;
-                                    
+                    
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={styles.centeredView}>
+                        <View style ={styles.xView} >    
+                        <View style={styles.modalView} >
+                            
+                            <ImageZoom cropWidth={320}
+                                    cropHeight={400}
+                                    imageWidth={300}
+                                    imageHeight={400}>
+                                    <Image style={{width:300, height:400}}
+                                    source={{uri:cardImgUri}}/>
+                            </ImageZoom>
+                            
+                        </View>
+                        </View>
+                        </View>
+                    </Modal>
+                    
+                    
+                    <Pressable  onPress={() => setModalVisible(!modalVisible)}>
+                        <Image
+                        style ={{width:200,height:200}}
+                        source={{uri:cardImgUri}}
+                        />
+                    </Pressable>
+                           
                 </CenterView>
+
                 <Label> 서비스 카드 바코드</Label>
                 <Input value ={barcode}/>
-
                 <Label> 매장 접수일</Label>
                 <TouchableView onPress={showDatepicker}>
                     <PrView>
@@ -145,10 +189,9 @@ function ShopStepFour2({navigation}) {
                         />
                     )}
                 <Label> 고객 약속일</Label>
-
-                <Input  multiline={ true }/>
+                <DateView><Label>{dateP14.getFullYear()}년  {dateP14.getMonth()+1}월  {dateP14.getDate()}일</Label></DateView>
+                <View style ={{margin:30}}/>
                 
-
             
             </Contents>
             <CenterView>
@@ -160,6 +203,7 @@ function ShopStepFour2({navigation}) {
             </CenterView>
         </ContainView>
     )
+    
 }
 
 export default ShopStepFour2;
