@@ -6,15 +6,7 @@ import ContainView from '../components/ContainView';
 import { Image, View,Text,useState, StyleSheet } from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 
-=======
-import DateTimePicker from '@react-native-community/datetimepicker';
-import store from '../store/store';
->>>>>>> Stashed changes
-
-=======
 import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../store/store';
 import ImageView from "react-native-image-viewing";
@@ -24,7 +16,7 @@ const TouchableView = styled.TouchableOpacity`
     background-color:#d6d6d6;
     border-radius:10px;
 `;
->>>>>>> 0chan
+
 const Label = styled.Text`
     font-size: 15px;
     margin-Top: 12px;
@@ -140,23 +132,13 @@ function ShopStepFour2({navigation}) {
     const showDatepicker = () => {
         showMode('date');
     };
->>>>>>> Stashed changes
+
     return (
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
             <Contents>
                 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-                <CenterView><TopIntro>수선증 정보</TopIntro></CenterView>
-                <Label> 수선증 바코드</Label>
-                <Input />
-=======
-                <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
-                <Label> 서비스 카드 바코드</Label>
-                <Input value={codeData}/>
->>>>>>> Stashed changes
-=======
+
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
                 
                 <CenterView>
@@ -174,7 +156,6 @@ function ShopStepFour2({navigation}) {
                 </CenterView>
                 <Label> 서비스 카드 바코드</Label>
                 <Input value ={barcode}/>
->>>>>>> 0chan
                 <Label> 매장 접수일</Label>
                 <TouchableView onPress={showDatepicker}>
                     <PrView>
@@ -194,22 +175,16 @@ function ShopStepFour2({navigation}) {
                         />
                     )}
                 <Label> 고객 약속일</Label>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+
                 <Input  multiline={ true }/>
                 <Label> 매장 발송일</Label>
                 <Input  multiline={ true }/>
-=======
+
                 <DateView><Label>{dateP14.getFullYear()}년  {dateP14.getMonth()+1}월  {dateP14.getDate()}일</Label></DateView>
                 <Label> 매장 발송 예정일</Label>
                 <DateView><Label>{dateP1.getFullYear()}년  {dateP1.getMonth()+1}월  {dateP1.getDate()}일</Label></DateView>
 
->>>>>>> Stashed changes
-=======
-                <DateView><Label>{dateP14.getFullYear()}년  {dateP14.getMonth()+1}월  {dateP14.getDate()}일</Label></DateView>
-                <View style ={{margin:30}}/>
-                
->>>>>>> 0chan
+
             
             </Contents>
             <CenterView>

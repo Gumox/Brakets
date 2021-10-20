@@ -2,7 +2,7 @@ import React,{useState ,useEffect} from 'react';
 import Container from '../components/Container';
 import Contents from '../components/Contents';
 import SelectButton from '../components/SelectButton';
-<<<<<<< Updated upstream
+
 import _ from 'lodash';
 
 import { Image,Text,Button, View } from "react-native";
@@ -55,11 +55,6 @@ function StartPage( { navigation } ) {
     useEffect(()=> {
         setNumber(store.getState().number);
     })
->>>>>>> Stashed changes
-=======
-    
-
->>>>>>> 0chan
     return(
         <Container>
             <Contents>
@@ -69,26 +64,12 @@ function StartPage( { navigation } ) {
                 >
                     시작
                 </SelectButton>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-                <TouchableView onPress={function(){
-                    store.dispatch({type:'INCREM', size:state.size});
-                    console.log(store.getState().number);
-                    
-                }}>
-                    <ImgIcon source={require('../Icons/calendar.png')}/>
-                </TouchableView>
-                <Text>{number}</Text>
-                
->>>>>>> Stashed changes
-=======
+
                 <TouchableView>
                     <ImgIcon source={require('../Icons/calendar.png')}/>
                 </TouchableView>
                 
-                
->>>>>>> 0chan
+               
             </Contents>
         </Container>
     )

@@ -13,17 +13,6 @@ import Container from '../components/Container';
 
 import { RNCamera } from 'react-native-camera';
 import store from '../store/store';
-<<<<<<< HEAD
-=======
-
-
-<RNCamera
-  style={{width: 200, height: 200}}
-  type={RNCamera.Constants.Type.back}
-  captureAudio={false}
-/>
-
->>>>>>> 0chan
 
 export default class ScanScreen extends Component {
   
@@ -31,31 +20,13 @@ export default class ScanScreen extends Component {
     const {route}=this.props;
     console.log(route.params.key);
     const check = e.data.substring(0, 30);
-<<<<<<< HEAD
-        console.log('scanned data: ' + check);
-=======
-    console.log('scanned data: ' + check);
-    this.setState({
-        result: e,
-        scan: false,
-        ScanResult: true
-    })
-    
-    if (check === 'http') {
-        
-        Linking
-            .openURL(e.data)
-            .catch(err => console.error('An error occured', err));
 
-
-    } else {
->>>>>>> 0chan
         this.setState({
             result: e,
             scan: false,
             ScanResult: true
         })
-<<<<<<< HEAD
+
         if (check === 'http') {
             
             Linking
@@ -70,9 +41,7 @@ export default class ScanScreen extends Component {
                 ScanResult: true
             }) 
             if(route.params.key !=null){
-<<<<<<< Updated upstream
-               this.props.navigation.replace(route.params.key );
-=======
+
               if(route.params.key =='ShopStepFour2'){
                 
                 store.dispatch({type:'SERVICECAED', value: check});
@@ -83,8 +52,7 @@ export default class ScanScreen extends Component {
               }
               this.props.navigation.replace(route.params.key );
                
->>>>>>> Stashed changes
-=======
+
         
         if(route.params.key !=null){
           if(route.params.key ==='ShopStepFour2'){
@@ -97,7 +65,7 @@ export default class ScanScreen extends Component {
              
               store.dispatch({type:'TAKE',take:imgUri});
              
->>>>>>> 0chan
+
             }
 
           }
