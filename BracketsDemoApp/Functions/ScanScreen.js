@@ -70,17 +70,7 @@ export default class ScanScreen extends Component {
     
   };
   
-  async onResult(result) {
-    if (this.camera) {
-      
-      console.log("123456")
-        const options = { quality: 0.9, base64: true, skipProcessing: true }
-        const data = await this.camera.takePictureAsync(options) // this is photo data with file uri and base64
-        
-      console.log(data.uri)
-      console.log(result.data.substring(0, 30))
-    }
-}
+
   render() {
     
     
