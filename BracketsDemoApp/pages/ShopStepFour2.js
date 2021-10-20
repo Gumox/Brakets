@@ -127,31 +127,6 @@ function ShopStepFour2({navigation}) {
       });
     
 
-    const [date, setDate] = React.useState(new Date());
-    const [mode, setMode] = React.useState('date');
-    const [show, setShow] = React.useState(false);
-    const [dateP14, setDateP14] = React.useState(date.addDays(14));
-    const [dateP1, setDateP1] = React.useState(date.addDays(1));
-    const [codeData,setCodeData] =React.useState(store.getState().cardValue);
-
-    console.log(codeData);
-
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setDate(currentDate);
-        setDateP14(currentDate.addDays(14));
-        setDateP1(currentDate.addDays(1))
-    };
-
-    const showMode = (currentMode) => {
-        setShow(true);
-        setMode(currentMode);
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
     return (
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
