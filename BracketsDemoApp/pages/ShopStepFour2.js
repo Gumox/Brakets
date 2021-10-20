@@ -131,7 +131,6 @@ function ShopStepFour2({navigation}) {
                 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
             
-            
                 <CenterView>
                     
                     <Modal
