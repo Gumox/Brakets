@@ -70,7 +70,6 @@ export default class ScanScreen extends Component {
     
   };
   
-
   render() {
     
     
