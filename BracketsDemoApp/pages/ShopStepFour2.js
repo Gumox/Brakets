@@ -132,7 +132,7 @@ function ShopStepFour2({navigation}) {
     const showDatepicker = () => {
         showMode('date');
     };
-
+>>>>>>> Stashed changes
     return (
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
@@ -156,6 +156,7 @@ function ShopStepFour2({navigation}) {
                 </CenterView>
                 <Label> 서비스 카드 바코드</Label>
                 <Input value ={barcode}/>
+
                 <Label> 매장 접수일</Label>
                 <TouchableView onPress={showDatepicker}>
                     <PrView>
