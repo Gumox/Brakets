@@ -8,7 +8,7 @@ import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
-
+import ShopStepThree2 from './ShopStepThree2';
 
 
 const TopStateView = styled.View`
@@ -81,7 +81,7 @@ function ShopStepThree( { navigation } ) {
             ]}
           />
 
-            <Button onPress={ ()=> navigation.navigate( 'ShopStepFour' )}>
+            <Button onPress={ ()=> navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' } )}>
                 다음 단계
             </Button>
         </Container>

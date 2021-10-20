@@ -10,7 +10,6 @@ import {
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Container from '../components/Container';
-
 import { RNCamera } from 'react-native-camera';
 import store from '../store/store';
 
@@ -19,9 +18,13 @@ export default class ScanScreen extends Component {
   
   onSuccess = async (e) => {
     const {route}=this.props;
+
     console.log(route.params.key);
+
     const check = e.data.substring(0, 30);
+
     console.log('scanned data: ' + check);
+    
     this.setState({
         result: e,
         scan: false,
