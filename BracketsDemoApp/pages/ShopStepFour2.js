@@ -3,11 +3,12 @@ import Contents from '../components/Contents';
 import ButtonBlack from '../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
-import { Image, View,Text,useState} from 'react-native';
+import { Image, View,Text,useState, StyleSheet } from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../store/store';
+import ImageView from "react-native-image-viewing";
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;
@@ -69,8 +70,11 @@ function ShopStepFour2({navigation}) {
     const [show, setShow] = React.useState(false);
     const [dateP14, setDateP14] = React.useState(date.addDays(14));
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
-
-
+    store.dispatch({type:'SERVICECAED',value:barcode});
+    
+    const cardImgUri =store.getState().card;
+    
+    console.log(cardImgUri );
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -86,12 +90,35 @@ function ShopStepFour2({navigation}) {
     const showDatepicker = () => {
         showMode('date');
     };
+
+    const images = [
+        {
+          uri: cardImgUri,
+        },
+      ];
+      
+    const [visible, setIsVisible] = React.useState(false);
+    
     return (
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
             <Contents>
                 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
+                
+                <CenterView>
+                    <Image
+                    style ={{width:200,height:200}}
+                    source={{uri:cardImgUri}}
+                    />
+                    <ImageView
+                    images={images}
+                    imageIndex={0}
+                    visible={visible}
+                    onRequestClose={() => setIsVisible(false)}
+                    />;
+                                    
+                </CenterView>
                 <Label> 서비스 카드 바코드</Label>
                 <Input value ={barcode}/>
                 <Label> 매장 접수일</Label>
@@ -114,9 +141,8 @@ function ShopStepFour2({navigation}) {
                     )}
                 <Label> 고객 약속일</Label>
                 <DateView><Label>{dateP14.getFullYear()}년  {dateP14.getMonth()+1}월  {dateP14.getDate()}일</Label></DateView>
-                <Label> 매장 발송 예정일</Label>
-                <DateView><Label>{date.getFullYear()}년  {date.getMonth()+1}월  {date.getDate()+1}일</Label></DateView>
-
+                <View style ={{margin:30}}/>
+                
             
             </Contents>
             <CenterView>

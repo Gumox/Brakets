@@ -2,13 +2,14 @@ import { createStore } from "redux";
 
 export default createStore(function(state,action){
     if(state === undefined){
-        return{number:0,cardValue:"",bagCodeValue:"",receptionDate:"",appointmentDate:""}
+        return{cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:""}
     }
-    if(action.type ==='INCREM'){
-        return{...state, number: state.number+action.size}
-    }
+    
     if(action.type ==='SERVICECAED'){
         return{...state, cardValue: action.value };
+    }
+    if(action.type ==='TAKE'){
+        return{...state, card: action.take };
     }
     if(action.type ==='RECDATE'){
         return{...state, receptionDate: action.recDate };

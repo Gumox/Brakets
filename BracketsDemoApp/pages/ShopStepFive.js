@@ -30,6 +30,8 @@ const TopStateView = styled.View`
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepFive( { navigation } ) {
     //console.log(store.getState().recDate);
+    console.log(store.getState().cardValue + ":s5");
+    
     return (
         <Container>
             

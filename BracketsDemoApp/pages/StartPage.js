@@ -29,7 +29,10 @@ function StartPage( { navigation } ) {
     return(
         <Container>
             <Contents>
-                <SelectButton onPress={ ()=> navigation.navigate( 'ShopStepOne' ) }>
+                <SelectButton onPress={ ()=> 
+                //navigation.navigate( 'CameraQR')}
+                navigation.navigate( 'ShopStepOne' ) }
+                >
                     시작
                 </SelectButton>
                 <TouchableView>
