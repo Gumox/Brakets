@@ -15,13 +15,6 @@ import { RNCamera } from 'react-native-camera';
 import store from '../store/store';
 
 
-<RNCamera
-  style={{width: 200, height: 200}}
-  type={RNCamera.Constants.Type.back}
-  captureAudio={false}
-/>
-
-
 export default class ScanScreen extends Component {
   
   onSuccess = async (e) => {
