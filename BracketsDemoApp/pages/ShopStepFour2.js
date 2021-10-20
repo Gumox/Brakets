@@ -68,10 +68,7 @@ Date.prototype.addDays = function(days) {
 
 
 function ShopStepFour2({navigation}) {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-   
-=======
+
     const [date, setDate] = React.useState(new Date());
     const [mode, setMode] = React.useState('date');
     const [show, setShow] = React.useState(false);
@@ -111,12 +108,7 @@ function ShopStepFour2({navigation}) {
             backgroundColor: "#78909c",
             borderRadius: 20,
         },
-<<<<<<< HEAD
-      ];
-      
-    const [visible, setIsVisible] = React.useState(false);
->>>>>>> 0chan
-=======
+
         modalView: {
           margin: 10,
           backgroundColor: "white",
@@ -134,10 +126,7 @@ function ShopStepFour2({navigation}) {
         }
       });
     
-    
->>>>>>> 0chan
-    
-=======
+
     const [date, setDate] = React.useState(new Date());
     const [mode, setMode] = React.useState('date');
     const [show, setShow] = React.useState(false);
@@ -163,7 +152,6 @@ function ShopStepFour2({navigation}) {
     const showDatepicker = () => {
         showMode('date');
     };
->>>>>>> Stashed changes
     return (
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
