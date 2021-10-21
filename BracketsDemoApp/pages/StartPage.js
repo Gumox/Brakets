@@ -11,8 +11,10 @@ import DateObject from "react-date-object";
 import styled from 'styled-components/native';
 
 const TouchableView = styled.TouchableOpacity`
-    width: 100%;
-    padding: 8px;
+    
+    flex-direction:row;
+    justify-content:space-around;
+    
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
@@ -36,7 +38,7 @@ function StartPage( { navigation } ) {
                     시작
                 </SelectButton>
                 <TouchableView>
-                    <ImgIcon source={require('../Icons/calendar.png')}/>
+                    <Text>2222</Text><ImgIcon source={require('../Icons/calendar.png')}/>
                 </TouchableView>
                 
                 
