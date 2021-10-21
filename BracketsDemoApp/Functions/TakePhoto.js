@@ -54,23 +54,7 @@ const PressButton = styled.View`
   flex-direction : row;
   margin-top : 200px;
 `;
-=======
 
-
-
-const Take = styled.View`
-  height : 100px;
-  width :100px;
-  border-radius : 50px;
-  border : solid 10px black;
-  background-color : white;
-  margin-top : 10px;
-`;
-
-const Touch  = styled.TouchableOpacity``;
-
-
->>>>>>> 0chan
 export default class TakePhoto extends Component {
   
 

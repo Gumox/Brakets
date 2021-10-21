@@ -58,14 +58,11 @@ function App() {
         <Stack.Screen name="Form" component={Form} options={{ title: '일기 작성' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="InputAlternativeNumber" component={InputAlternativeNumber} options={{ title: '대체 품번 입력' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ProductInfo" component={ProductInfo} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
-<<<<<<< HEAD
-        <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{ title: 'QR 코드 / 바코드 스캔' ,headerTitleAlign: 'center'}} />
-        <Stack.Screen name="TakePhoto" component={TakePhoto}  options={{ title: '' ,headerStyle : {backgroundColor: 'black'}}} />
-=======
+
 
         <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{ title: 'QR 코드 스캔' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="TakePhoto" component={TakePhoto}  />
->>>>>>> 0chan
+
 
       </Stack.Navigator>
     </NavigationContainer>
