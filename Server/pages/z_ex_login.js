@@ -9,7 +9,7 @@ export default function Login() {
 
     Axios({
 	  method: "POST",
-	  url: "/api/login",
+	  url: "/api/z_ex_login",
 	  headers: {
 	    "Content-Type": "application/json"
 	  },
