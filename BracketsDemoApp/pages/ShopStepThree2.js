@@ -1,17 +1,34 @@
-import React from "react";
-import styled from "styled-components";
-import Container from "../components/Container";
-import ImageZoom from "react-native-image-pan-zoom";
-import { Image, View } from "react-native";
-
-function ShopStepThree2 ({ navigation }) {
-  return (
-    <Container>
-
-    </Container>
+import React from 'react';
+import Container from '../components/Container';
+import Button from '../components/Button';
+import styled from 'styled-components/native';
+import CenterText from '../components/CenterText';
+import _ from 'lodash';
+import StateBarSolid from '../components/StateBarSolid';
+import StateBarVoid from '../components/StateBarVoid';
+import ButtonBlack from '../components/ButtonBlack';
 
 
-  );
+const TopStateView = styled.View`
+    flex:1;
+    flex-direction: row;
+    padding-bottom:24px;
+    justify-content: center;
+`;
+// 구조 분해 할당, Destructuring Assignment
+function ShopStepThree2( { navigation } ) {
+    
+    return (
+        <Container>
+            <CenterText>
+                <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
+            </CenterText>
+            <ButtonBlack onPress={ ()=> navigation.navigate( 'ShopStepFour' )}>
+                다음 단계
+            </ButtonBlack>
+        </Container>
+    )
 }
+
 
 export default ShopStepThree2;

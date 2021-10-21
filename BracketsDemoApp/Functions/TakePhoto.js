@@ -6,7 +6,9 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Linking} from 'react-native';
+  Linking,
+  Dimensions
+  } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Container from '../components/Container';
@@ -66,9 +68,7 @@ export default class TakePhoto extends Component {
 
     const [read,setRead] = " ";
 
-    if (route.params.key === 'ShopStepThree2') {
-      setRead("제품을 평평한 곳에 놓고, 전면 또는 후면이 모두 보이도록");
-    }
+   
     
     return (
       <Container>
