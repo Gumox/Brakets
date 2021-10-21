@@ -10,7 +10,7 @@ import StartPage from './pages/StartPage';
 import ShopStepOne from './pages/ShopStepOne';
 import ShopStepTwo from './pages/ShopStepTwo';
 
-import ShopRepairStep from './pages/ShopRepairStep';
+
 import ShopStepThree from './pages/ShopStepThree';
 import ShopStepThree2 from './pages/ShopStepThree2';
 
@@ -40,7 +40,6 @@ function App() {
         <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center'}} />
 
 
-        <Stack.Screen name="ShopRepairStep" component={ShopRepairStep} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ShopStepThree" component={ShopStepThree} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ShopStepThree2" component={ShopStepThree2} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
 

@@ -6,6 +6,14 @@ import store from "../store/store";
 
 import { Image, View, StyleSheet, Modal, Text } from "react-native";
 
+
+import Button from '../components/Button';
+import CenterText from '../components/CenterText';
+import _ from 'lodash';
+import StateBarSolid from '../components/StateBarSolid';
+import StateBarVoid from '../components/StateBarVoid';
+import ButtonBlack from '../components/ButtonBlack';
+
 const CenterView =styled.View`
     align-items: center;
 `;
@@ -55,15 +63,7 @@ function ShopStepThree2 ({ navigation }) {
 
   );
 
-import React from 'react';
-import Container from '../components/Container';
-import Button from '../components/Button';
-import styled from 'styled-components/native';
-import CenterText from '../components/CenterText';
-import _ from 'lodash';
-import StateBarSolid from '../components/StateBarSolid';
-import StateBarVoid from '../components/StateBarVoid';
-import ButtonBlack from '../components/ButtonBlack';
+
 
 
 const TopStateView = styled.View`
@@ -84,8 +84,8 @@ function ShopStepThree2( { navigation } ) {
                 다음 단계
             </ButtonBlack>
         </Container>
-    )
+  )
 
 
-
+}
 export default ShopStepThree2;
