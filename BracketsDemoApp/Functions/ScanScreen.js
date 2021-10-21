@@ -64,7 +64,7 @@ export default class ScanScreen extends Component {
             console.log(store.getState().bagCodeValue);
           }
           
-            this.props.navigation.replace(route.params.key );
+            this.props.navigation.replace(route.params.key);
            
             
             
