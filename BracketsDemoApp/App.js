@@ -13,7 +13,7 @@ import ShopStepTwo from './pages/ShopStepTwo';
 import ShopRepairStep from './pages/ShopRepairStep';
 import ShopStepThree from './pages/ShopStepThree';
 import ShopStepThree2 from './pages/ShopStepThree2';
->>>>>>> 0chan
+
 import ShopStepFour from './pages/ShopStepFour';
 import ShopStepFour2 from './pages/ShopStepFour2';
 import ShopStepFive from './pages/ShopStepFive';
