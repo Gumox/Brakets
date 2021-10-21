@@ -43,11 +43,11 @@ const ContainImg =styled.View`
     align-items: center;
 `;
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
-
 
 
 function ProductInfo({navigation}) {
@@ -55,9 +55,8 @@ function ProductInfo({navigation}) {
     
     return (
         <ContainView>
-            <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <Contents>
-                
+                <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
                 <CenterView><TopIntro>제품 정보</TopIntro></CenterView>
                 <Label>제품 바코드 / QR코드 번호</Label>
                 <Input  multiline={ true }/>

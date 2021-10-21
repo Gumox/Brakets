@@ -1,0 +1,97 @@
+import React, { Component } from 'react';
+
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Linking,
+  Dimensions
+  } from 'react-native';
+
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import Container from '../components/Container';
+import { RNCamera } from 'react-native-camera';
+import store from '../store/store';
+import Button from '../components/Button';
+import styled from 'styled-components';
+import ShopStepThree2 from '../pages/ShopStepThree2';
+import { NavigationContainer } from '@react-navigation/native';
+
+
+
+const Take = styled.View`
+  height : 100px;
+  width :100px;
+  border-radius : 50px;
+  border : solid 10px black;
+  background-color : white;
+  margin-top : 10px;
+`;
+
+const Touch  = styled.TouchableOpacity``;
+
+
+export default class TakePhoto extends Component {
+  
+
+  onSuccess = async (e) => {
+  const {route}=this.props;
+
+    console.log(route.params.key);
+
+    console.log("go");
+    if (this.camera) {
+      const options = { quality: 0.9, base64: true, skipProcessing: true }
+      const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
+      const imgUri = data.uri;
+     
+      {/*store.dispatch({type:'TAKE',take:imgUri});*/}
+      console.log (imgUri);
+      store.dispatch({type:'PHOTO',photo: imgUri});
+      console.log(store.getState().picture);
+      
+      if (route.params.key === 'ShopStepThree2'){
+        this.props.navigation.replace(route.params.key);
+      }
+
+     
+    }
+
+    
+  };
+  
+  render() {
+    const {route}=this.props;
+    console.log(route.params.key);
+
+    const [read,setRead] = " ";
+
+   
+    
+    return (
+      <Container>
+        <RNCamera
+         ref={ref => {
+          this.camera = ref;
+        }}
+          style={{width: 200, height: 200}}
+          type={RNCamera.Constants.Type.back}
+          captureAudio={false}
+        />
+        <View>
+          <Text >{read}</Text>
+          </View>
+    
+      <Touch onPress = { this.onSuccess.bind(this)}>
+      
+        <Take/>
+      </Touch>
+
+      </Container>
+      
+    );
+  }
+}
+AppRegistry.registerComponent('default', () => TakePhoto);

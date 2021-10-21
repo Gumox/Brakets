@@ -6,29 +6,29 @@ import CenterText from '../components/CenterText';
 import _ from 'lodash';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
-
+import ButtonBlack from '../components/ButtonBlack';
 
 
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
-
 // 구조 분해 할당, Destructuring Assignment
-function ShopRepairStep( { navigation } ) {
+function ShopStepThree2( { navigation } ) {
     
     return (
         <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <CenterText>
-                
+                <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             </CenterText>
-            <Button onPress={ ()=> navigation.navigate( 'ShopStepFour' )}>
+            <ButtonBlack onPress={ ()=> navigation.navigate( 'ShopStepFour' )}>
                 다음 단계
-            </Button>
+            </ButtonBlack>
         </Container>
     )
 }
 
-export default ShopRepairStep;
+
+export default ShopStepThree2;

@@ -38,8 +38,9 @@ const GrayText = styled.Text`
     color:#858585;
 `;
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
 
@@ -48,15 +49,15 @@ function ShopStepTwo({navigation}) {
     
     return (
         <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <CenterText>
+            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
                 <TopIntro>제품 정보</TopIntro>
                 <BlueText>수선 요구 사항</BlueText>
                 <GrayText>을 선택하세요</GrayText>
                   
             </CenterText>  
             <PView>
-                <CenterView><SelectButton onPress={ ()=> navigation.navigate( 'ShopRepairStep' )}>수선</SelectButton><SelectButton>교환</SelectButton></CenterView>
+                <CenterView><SelectButton onPress={ ()=> navigation.navigate( 'ShopStepThree' )}>수선</SelectButton><SelectButton>교환</SelectButton></CenterView>
                 <CenterView><SelectButton>환불</SelectButton><SelectButton>심의</SelectButton></CenterView>
             </PView>  
             <Label>접수 유형 알아보기</Label>

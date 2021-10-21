@@ -2,18 +2,16 @@ import React,{useState ,useEffect} from 'react';
 import Container from '../components/Container';
 import Contents from '../components/Contents';
 import SelectButton from '../components/SelectButton';
-<<<<<<< Updated upstream
+
 import _ from 'lodash';
 
-function StartPage( { navigation } ) {
-=======
-import _, { size } from 'lodash';
-
+import { Image,Text,Button, View } from "react-native";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DateObject from "react-date-object";
+import { size } from 'lodash';
 import styled from 'styled-components/native';
-import { Text } from 'react-native';
 import store from '../store/store';
 import { Provider } from 'react-redux'
-
 const TouchableView = styled.TouchableOpacity`
     width: 100%;
     padding: 8px;
@@ -27,6 +25,7 @@ const ImgIcon =styled.Image`
 `;
 
 
+
 function StartPage( { navigation } ) {
     const state = {size:1};
     
@@ -35,25 +34,21 @@ function StartPage( { navigation } ) {
     useEffect(()=> {
         setNumber(store.getState().number);
     })
->>>>>>> Stashed changes
     return(
         <Container>
             <Contents>
-                <SelectButton onPress={ ()=> navigation.navigate( 'ShopStepOne' ) }>
+                <SelectButton onPress={ ()=> 
+                //navigation.navigate( 'CameraQR')}
+                navigation.navigate( 'ShopStepOne' ) }
+                >
                     시작
                 </SelectButton>
-<<<<<<< Updated upstream
-=======
-                <TouchableView onPress={function(){
-                    store.dispatch({type:'INCREM', size:state.size});
-                    console.log(store.getState().number);
-                    
-                }}>
+
+                <TouchableView>
                     <ImgIcon source={require('../Icons/calendar.png')}/>
                 </TouchableView>
-                <Text>{number}</Text>
                 
->>>>>>> Stashed changes
+               
             </Contents>
         </Container>
     )
