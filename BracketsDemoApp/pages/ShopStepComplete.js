@@ -6,6 +6,8 @@ import CenterText from '../components/CenterText';
 import _ from 'lodash';
 import StateBarSolid from '../components/StateBarSolid';
 import store from '../store/store';
+import { Modal ,StyleSheet,View,Pressable,Image} from 'react-native';
+import ImageZoom from 'react-native-image-pan-zoom';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -67,14 +69,65 @@ const BottomText = styled.Text`
     font-size: 15px;
     align-items: center;
 `;
+const TouchableView = styled.TouchableOpacity`
+    align-items: center;
+    flex-direction:row;
+    justify-content:space-between;
+    width: 100%;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px
+`;
+const ImgIcon =styled.Image`
+    width: 25px;
+    height: 20px;
+    margin_right:10px;
+`;
 
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepOne( { navigation } ) {
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
     const [bag, setBag] = React.useState(store.getState().bagCodeValue);
     console.log(barcode);
-    console.log(store.getState().cardValue);
-    
+
+    const cardImgUri = store.getState().card;
+    const bagImgUri =store.getState().bagPicture;
+
+    console.log(cardImgUri);
+    console.log(bagImgUri);
+
+    const [modalVisible, setModalVisible] = React.useState(false);
+    const [modalVisible2, setModalVisible2] = React.useState(false);
+
+    const styles = StyleSheet.create({
+        centeredView: {
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 22
+        },
+        xView:{
+            backgroundColor: "#78909c",
+            borderRadius: 20,
+        },
+        modalView: {
+          margin: 10,
+          backgroundColor: "white",
+          borderRadius: 20,
+          paddingRight: 5,
+          paddingLeft: 5,
+          paddingTop: 15,
+          paddingBottom: 15,
+          alignItems: "center",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },
+        }
+      });
+
+
     return (
         <Container>
             
@@ -90,11 +143,68 @@ function ShopStepOne( { navigation } ) {
             
             <InfoView>
                 <GrayText>서비스 카드 번호</GrayText>
-                <DataView><Label>{barcode}</Label></DataView>
+
+                
+                    
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={styles.centeredView}>
+                        <View style ={styles.xView} >    
+                        <View style={styles.modalView} >
+                            
+                            <ImageZoom cropWidth={320}
+                                    cropHeight={400}
+                                    imageWidth={300}
+                                    imageHeight={400}>
+                                    <Image style={{width:300, height:400}}
+                                    source={{uri:cardImgUri}}/>
+                            </ImageZoom>
+                            
+                        </View>
+                        </View>
+                        </View>
+                    </Modal>
+                    
+                    
+                    
+                    
+                    <TouchableView onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label><ImgIcon source={require('../Icons/image.png')}/></TouchableView>
+                   
                 <GrayText>보내는곳</GrayText>
                 <DataView><Label></Label></DataView>
                 <GrayText>행낭 바코드</GrayText>
-                <DataView><Label>{bag}</Label></DataView>
+                <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible2}
+                        onRequestClose={() => {
+                        setModalVisible2(!modalVisible2);
+                        }}
+                    >
+                        <View style={styles.centeredView}>
+                        <View style ={styles.xView} >    
+                        <View style={styles.modalView} >
+                            
+                            <ImageZoom cropWidth={320}
+                                    cropHeight={400}
+                                    imageWidth={300}
+                                    imageHeight={400}>
+                                    <Image style={{width:300, height:400}}
+                                    source={{uri:bagImgUri}}/>
+                            </ImageZoom>
+                            
+                        </View>
+                        </View>
+                        </View>
+                    </Modal>
+                <TouchableView onPress={() => setModalVisible2(!modalVisible)}><Label>{bag}</Label><ImgIcon source={require('../Icons/image.png')}/></TouchableView>
+                
             </InfoView>  
             <BottomText>자세한 내용은 마이페이지에서</BottomText>
             <BottomText>확인 가능합니다</BottomText>

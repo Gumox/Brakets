@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 import React from "react";
 import styled from "styled-components";
@@ -56,6 +57,8 @@ function ShopStepThree2 ({ navigation }) {
 
   );
 
+=======
+>>>>>>> 0chan
 import React from 'react';
 import Container from '../components/Container';
 import Button from '../components/Button';
@@ -86,7 +89,10 @@ function ShopStepThree2( { navigation } ) {
             </ButtonBlack>
         </Container>
     )
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0chan
 }
 
 

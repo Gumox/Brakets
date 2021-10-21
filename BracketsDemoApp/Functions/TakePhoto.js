@@ -18,6 +18,7 @@ import Button from '../components/Button';
 import styled from 'styled-components';
 import ShopStepThree2 from '../pages/ShopStepThree2';
 import { NavigationContainer } from '@react-navigation/native';
+<<<<<<< HEAD
 import { stubArray } from 'lodash';
 
 
@@ -53,6 +54,23 @@ const PressButton = styled.View`
   flex-direction : row;
   margin-top : 200px;
 `;
+=======
+
+
+
+const Take = styled.View`
+  height : 100px;
+  width :100px;
+  border-radius : 50px;
+  border : solid 10px black;
+  background-color : white;
+  margin-top : 10px;
+`;
+
+const Touch  = styled.TouchableOpacity``;
+
+
+>>>>>>> 0chan
 export default class TakePhoto extends Component {
   
 
@@ -71,11 +89,16 @@ export default class TakePhoto extends Component {
       console.log (imgUri);
       store.dispatch({type:'PHOTO',photo: imgUri});
       console.log(store.getState().picture);
+<<<<<<< HEAD
 
       
       
       if (route.params.key === 'ShopStepThree2'){
         console.log (route.params.key);
+=======
+      
+      if (route.params.key === 'ShopStepThree2'){
+>>>>>>> 0chan
         this.props.navigation.replace(route.params.key);
       }
 
@@ -89,6 +112,7 @@ export default class TakePhoto extends Component {
     const {route}=this.props;
     console.log(route.params.key);
 
+<<<<<<< HEAD
 
 
     const [read,setRead] = " ";
@@ -121,6 +145,32 @@ export default class TakePhoto extends Component {
 
       </CameraButton>
 
+=======
+    const [read,setRead] = " ";
+
+   
+    
+    return (
+      <Container>
+        <RNCamera
+         ref={ref => {
+          this.camera = ref;
+        }}
+          style={{width: 200, height: 200}}
+          type={RNCamera.Constants.Type.back}
+          captureAudio={false}
+        />
+        <View>
+          <Text >{read}</Text>
+          </View>
+    
+      <Touch onPress = { this.onSuccess.bind(this)}>
+      
+        <Take/>
+      </Touch>
+
+      </Container>
+>>>>>>> 0chan
       
     );
   }

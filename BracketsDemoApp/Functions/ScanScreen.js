@@ -62,6 +62,15 @@ export default class ScanScreen extends Component {
           else if(route.params.key === 'ShopStepComplete'){
             store.dispatch({type:'BAGCODE',bag:check});
             console.log(store.getState().bagCodeValue);
+
+            if (this.camera) {
+              const options = { quality: 0.9, base64: true, skipProcessing: true }
+              const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
+              const imgUri = data.uri;
+             
+              store.dispatch({type:'BAGTAG',bagTag:imgUri});
+             
+            }
           }
           
             this.props.navigation.replace(route.params.key);
