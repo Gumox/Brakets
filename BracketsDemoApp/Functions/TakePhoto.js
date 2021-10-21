@@ -6,7 +6,9 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Linking} from 'react-native';
+  Linking,
+  Dimensions
+  } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Container from '../components/Container';
@@ -86,6 +88,12 @@ export default class TakePhoto extends Component {
   render() {
     const {route}=this.props;
     console.log(route.params.key);
+
+
+
+    const [read,setRead] = " ";
+
+   
 
     
     return (

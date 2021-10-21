@@ -9,7 +9,8 @@ export async function getRepairInfo(repair, category, receipt, name) {
 	if (repair == 'type'){ 
 	    if(category == 1 && receipt == 1){
 		//고객용, 수선 -> 수선처
-	    	q = "SELECT repair_name, receiver, receiver_name FROM repair_type WHERE repair_id>0 AND priority=0";
+	    	//q = "SELECT repair_name, receiver, receiver_name FROM repair_type WHERE repair_id>0 AND priority=0";
+	    	q = "SELECT repair_name, receiver, receiver_name FROM repair_type WHERE priority=0";
 	    }
 	    else{
 		//나머지 -> 본사

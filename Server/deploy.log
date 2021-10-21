@@ -1,0 +1,373 @@
+
+> brackets-nextjs@0.1.0 start /root/brackets-git/Server
+> next start -p $PORT "80"
+
+ready - started server on 0.0.0.0:80, url: http://localhost:80
+req[object Object]
+Repair type Info
+req[object Object]
+login succ
+req[object Object]
+Repair type Info
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+Aborted (core dumped)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 134
+npm ERR! brackets-nextjs@0.1.0 start: `next start -p $PORT "80"`
+npm ERR! Exit status 134
+npm ERR! 
+npm ERR! Failed at the brackets-nextjs@0.1.0 start script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2021-10-15T04_40_39_795Z-debug.log
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+
+> brackets-nextjs@0.1.0 start /root/brackets-git/Server
+> next start -p $PORT "80"
+
+ready - started server on 0.0.0.0:80, url: http://localhost:80
+req[object Object]
+Repair type Info
+req
+No Product
+req
+No Product
+req
+No Product
+req
+No Product
+req
+No Product
+req
+No Product
+req
+No Product
+req
+No Product
+req
+No Product
+
+> brackets-nextjs@0.1.0 start /root/brackets-git/Server
+> next start -p $PORT "80"
+
+ready - started server on 0.0.0.0:80, url: http://localhost:80
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+Error: Cannot find module '/root/brackets-git/Server/.next/server/pages/api/getProductInfo.js'
+Require stack:
+- /root/brackets-git/Server/node_modules/next/dist/server/next-server.js
+- /root/brackets-git/Server/node_modules/next/dist/server/next.js
+- /root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js
+- /root/brackets-git/Server/node_modules/next/dist/cli/next-start.js
+- /root/brackets-git/Server/node_modules/next/dist/bin/next
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.mod._resolveFilename (/root/brackets-git/Server/node_modules/next/dist/build/webpack/require-hook.js:96:28)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Server.handleApiRequest (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:756:34)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Object.fn (/root/brackets-git/Server/node_modules/next/dist/server/next-server.js:661:37)
+    at async Router.execute (/root/brackets-git/Server/node_modules/next/dist/server/router.js:205:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/root/brackets-git/Server/node_modules/next/dist/server/next-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/next.js',
+    '/root/brackets-git/Server/node_modules/next/dist/server/lib/start-server.js',
+    '/root/brackets-git/Server/node_modules/next/dist/cli/next-start.js',
+    '/root/brackets-git/Server/node_modules/next/dist/bin/next'
+  ]
+}
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+Aborted (core dumped)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 134
+npm ERR! brackets-nextjs@0.1.0 start: `next start -p $PORT "80"`
+npm ERR! Exit status 134
+npm ERR! 
+npm ERR! Failed at the brackets-nextjs@0.1.0 start script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2021-10-21T15_49_33_092Z-debug.log
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+
+> brackets-nextjs@0.1.0 start /root/brackets-git/Server
+> next start -p $PORT "80"
+
+ready - started server on 0.0.0.0:80, url: http://localhost:80
+req[object Object]
+SELECT staff_id FROM staff WHERE id=?
+current id 17
+17
+INSERT INTO `staff_log`(`staff_id`, `status`, `phone`, `phone_uuid`) VALUES (?,?,?,?)
+OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 26,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0
+}
+StaffLogin/Logout/Signin SUCC
+
+> brackets-nextjs@0.1.0 start /root/brackets-git/Server
+> next start -p $PORT "80"
+
+ready - started server on 0.0.0.0:80, url: http://localhost:80
+req[object Object]
+new staff id  undefined
+
+> brackets-nextjs@0.1.0 start /root/brackets-git/Server
+> next start -p $PORT "80"
+
+ready - started server on 0.0.0.0:80, url: http://localhost:80
+req[object Object]
+new staff id  18
+StaffLogin/Logout/Signin SUCC
+req[object Object]
+staff id  17
+StaffLogin/Logout/Signin SUCC
+req[object Object]
+staff id  17
+StaffLogin/Logout/Signin SUCC
