@@ -3,7 +3,8 @@ import { createStore } from "redux";
 export default createStore(function(state,action){
     if(state === undefined){
 
-        return{cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", picture:""}
+
+        return{cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", picture:"",bagPicture:""}
     }
     
     if(action.type ==='SERVICECAED'){
@@ -23,6 +24,9 @@ export default createStore(function(state,action){
     }
     if (action.type ==='PHOTO') {
         return{...state, picture: action.photo};
+    }
+    if (action.type ==='BAGTAG') {
+        return{...state, bagPicture: action.bagTag};
     }
     return state;
 })

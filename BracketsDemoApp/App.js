@@ -9,6 +9,8 @@ import StartPage from './pages/StartPage';
 
 import ShopStepOne from './pages/ShopStepOne';
 import ShopStepTwo from './pages/ShopStepTwo';
+
+
 import ShopStepThree from './pages/ShopStepThree';
 import ShopStepThree2 from './pages/ShopStepThree2';
 
@@ -37,9 +39,10 @@ function App() {
 
         <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center'}} />
 
+
         <Stack.Screen name="ShopStepThree" component={ShopStepThree} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ShopStepThree2" component={ShopStepThree2} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
-    
+
         
 
         <Stack.Screen name="ShopStepFour" component={ShopStepFour} options={{ title: '4단계' ,headerTitleAlign: 'center'}} />
@@ -54,8 +57,11 @@ function App() {
         <Stack.Screen name="Form" component={Form} options={{ title: '일기 작성' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="InputAlternativeNumber" component={InputAlternativeNumber} options={{ title: '대체 품번 입력' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ProductInfo" component={ProductInfo} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
-        <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{ title: 'QR 코드 / 바코드 스캔' ,headerTitleAlign: 'center'}} />
-        <Stack.Screen name="TakePhoto" component={TakePhoto}  options={{ title: '수선 부위 촬영' ,headerTitleAlign: 'center'}} />
+
+
+        <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{ title: 'QR 코드 스캔' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="TakePhoto" component={TakePhoto}  />
+
 
       </Stack.Navigator>
     </NavigationContainer>
