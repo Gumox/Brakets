@@ -50,7 +50,7 @@ const Label = styled.Text`
 
 `;
 const PressButton = styled.View`
-  flex : 1;
+  
   flex-direction : row;
   margin-top : 200px;
 `;
@@ -90,13 +90,16 @@ export default class TakePhoto extends Component {
     const {route}=this.props;
     console.log(route.params.key);
 
+    var readText1 = " ";
+    var readText2 = " ";
+    var readText3 = " ";
 
-
-
-    const [read,setRead] = " ";
-
-   
-
+    
+    if(route.params.key === 'ShopStepThree2'){
+      readText1 ="제품을 평평한 곳에 놓고";
+      readText2 ="전면 또는 후면이 모두 보이도록";
+      readText3 = "제품의 전체 사진을 촬영하세요";
+    }
     
     return (
       <CameraButton>
@@ -105,21 +108,21 @@ export default class TakePhoto extends Component {
           ref={ref => {
             this.camera = ref;
           }}
-            style={{width: 500, height: 150}}
+            style={{width: Dimensions.get('window').width, height: 250}}
             type={RNCamera.Constants.Type.back}
             captureAudio={false}
           />
         
-          <Label >제품을 평평한 곳에 놓고</Label>
-          <Label >전면 또는 후면이 모두 보이도록</Label>
-          <Label >제품의 전체 사진을 촬영하세요</Label>
+          <Label >{readText1}</Label>
+          <Label >{readText2}</Label>
+          <Label >{readText3}</Label>
         </View>
     
         <PressButton>
           <Touch onPress = { this.onSuccess.bind(this)}>
             <Take/>
           </Touch>
-      </PressButton>
+        </PressButton>
 
       </CameraButton>
 
