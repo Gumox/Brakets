@@ -4,7 +4,7 @@ import Container from "../components/Container";
 import ImageZoom from "react-native-image-pan-zoom";
 import store from "../store/store";
 
-import { Image, View, StyleSheet, Modal, Text } from "react-native";
+import { Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text } from "react-native";
 
 
 import Button from '../components/Button';
@@ -18,17 +18,30 @@ const CenterView =styled.View`
     align-items: center;
 `;
 
-const AllImage = styled.Image`
-  width
-  height : 50%;
+const BottomItemBox = styled.View`
+  flex-direction: row;
+  width:100%
+  justify-content: space-between;
+  background-color : #000000;
+  margin-left : 20px;
+  margin-right : 20px;
 `;
-
+const TouchableView = styled.TouchableOpacity`
+    margin:10px
+`;
+const StepText = styled.Text`
+  color : #FFFFFF
+  font-size:15px
+`;
 function ShopStepThree2 ({ navigation }) {
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const imgUri =store.getState().picture;
+  console.log("in shop32"+imgUri);
 
   
+const imageP = { uri: imgUri };
+
   const styles = StyleSheet.create({
     
     modalView: {
@@ -45,22 +58,31 @@ function ShopStepThree2 ({ navigation }) {
         width: 0,
         height: 2
       },
-    }
+    },
+    image: {
+      flex:1,
+      width: "100%",
+      height:"100%",
+      justifyContent: "center"
+    },
+
   });
   return (
     <Container>
-      <CenterView>
+     
                                   
         
-            <Image
-            style = {{ width : window.width, height : 500}}
-            source={{uri:imgUri}}
-            />
+          <ImageBackground source={imageP} resizeMode="cover" style={styles.image}>
+          
+          </ImageBackground>
+          <BottomItemBox>
 
-            <ButtonBlack onPress={ ()=> navigation.navigate('ShopStepFour') }>
-                다음 단계
-            </ButtonBlack>
-      </CenterView>
+          <TouchableView onPress={ ()=> navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}><StepText>다시 찍기</StepText></TouchableView>
+          <TouchableView onPress={()=> navigation.replace('ShopStepThree3')}><StepText>그리기</StepText></TouchableView>
+          <TouchableView onPress={()=> navigation.replace('ShopStepFour')}><StepText>다음 단계</StepText></TouchableView>
+
+          </BottomItemBox>
+      
     </Container>
 
   );

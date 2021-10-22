@@ -13,6 +13,7 @@ import ShopStepTwo from './pages/ShopStepTwo';
 
 import ShopStepThree from './pages/ShopStepThree';
 import ShopStepThree2 from './pages/ShopStepThree2';
+import ShopStepThree3 from './pages/ShopStepThree3';
 
 import ShopStepFour from './pages/ShopStepFour';
 import ShopStepFour2 from './pages/ShopStepFour2';
@@ -32,7 +33,7 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="StartPage" component={StartPage} />
         
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
@@ -41,7 +42,8 @@ function App() {
 
 
         <Stack.Screen name="ShopStepThree" component={ShopStepThree} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
-        <Stack.Screen name="ShopStepThree2" component={ShopStepThree2} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="ShopStepThree2" component={ShopStepThree2} options={{ headerShown: false }} />
+        <Stack.Screen name="ShopStepThree3" component={ShopStepThree3} options={{ headerShown: false }} />
 
         
 
@@ -60,7 +62,7 @@ function App() {
 
 
         <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{ title: 'QR 코드 스캔' ,headerTitleAlign: 'center'}} />
-        <Stack.Screen name="TakePhoto" component={TakePhoto}  />
+        <Stack.Screen name="TakePhoto" component={TakePhoto} options={{ headerShown: false }}  />
 
 
       </Stack.Navigator>
