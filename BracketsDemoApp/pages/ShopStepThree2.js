@@ -37,8 +37,6 @@ function ShopStepThree2 ({ navigation }) {
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const imgUri =store.getState().picture;
-  console.log("in shop32"+imgUri);
-
   
 const imageP = { uri: imgUri };
 

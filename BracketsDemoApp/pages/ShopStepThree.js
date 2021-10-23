@@ -70,7 +70,6 @@ function ShopStepThree( { navigation } ) {
                     <BlueText>제품 사진</BlueText>
                     <GrayText>을 촬영하세요</GrayText>
                 </Oneline>
-                
             </CenterText>
 
             <BlackText>수선유형선택</BlackText>
