@@ -9,7 +9,7 @@ import StateBarVoid from '../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 import ShopStepThree2 from './ShopStepThree2';
-
+import { Alert } from 'react-native';
 
 const TopStateView = styled.View`
     flex-direction: row;
@@ -37,12 +37,19 @@ const BlackText = styled.Text`
   font-size : 15px;
   color : black;
 `;
-
-
+const DropBackground= styled.View`
+    width: 220px;
+    border-radius:10px;
+    font-color:#ffffff;
+    border:2px solid #78909c;
+    margin-top:10px;
+`;
 
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepThree( { navigation } ) {
-    
+  const [select,setSelect] = React.useState();
+
+ 
     return (
         <Container>
             <TopStateView></TopStateView>
@@ -67,10 +74,13 @@ function ShopStepThree( { navigation } ) {
             </CenterText>
 
             <BlackText>수선유형선택</BlackText>
+            <DropBackground>
             <RNPickerSelect
-            placeholder = {{label : '[필수] 옵션을 선택하세요'}}
+            placeholder = {{label : '[필수] 옵션을 선택하세요',value: null}}
             style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => 
+              setSelect(value)
+            }
             items={[
                 { label: '1.원단', value: 'Material' },
                 { label: '2.봉제', value: 'Plush' },
@@ -80,9 +90,28 @@ function ShopStepThree( { navigation } ) {
                 { label: '6.기타', value: 'etc' }
             ]}
           />
+          </DropBackground>
 
-            <Button onPress={ ()=> navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' } )}>
-                다음 단계
+            <Button onPress={()=> {
+              if(select=== null){
+                Alert.alert(
+                  "",
+                  "수선유형을 선택해 주세요",
+                  [
+                    {
+                      text: "Cancel",
+                      onPress: () => console.log("Cancel Pressed"),
+                      style: "cancel"
+                    },
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                  ]
+                );
+                
+              }else{
+
+                navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
+              }}}>
+              다음 단계
             </Button>
         </Container>
     )
