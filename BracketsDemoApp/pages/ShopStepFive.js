@@ -47,7 +47,6 @@ function ShopStepFive( { navigation } ) {
                 <BlueText>행낭 바코드</BlueText>
                 <GrayText>를 스캔하세요</GrayText>
             </Contents>
-
             <Button onPress={ ()=> navigation.navigate( 'ScanScreen',{key:'ShopStepComplete'} ) }>
                 코드 스캔
             </Button>
