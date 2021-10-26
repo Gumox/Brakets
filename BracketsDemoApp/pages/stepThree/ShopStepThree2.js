@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import Container from "../components/Container";
+import Container from "../../components/Container";
 import ImageZoom from "react-native-image-pan-zoom";
-import store from "../store/store";
+import store from "../../store/store";
 
 import { Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text } from "react-native";
 
 
-import Button from '../components/Button';
-import CenterText from '../components/CenterText';
+import Button from '../../components/Button';
+import CenterText from '../../components/CenterText';
 import _ from 'lodash';
-import StateBarSolid from '../components/StateBarSolid';
-import StateBarVoid from '../components/StateBarVoid';
-import ButtonBlack from '../components/ButtonBlack';
+import StateBarSolid from '../../components/StateBarSolid';
+import StateBarVoid from '../../components/StateBarVoid';
+import ButtonBlack from '../../components/ButtonBlack';
 
 const CenterView =styled.View`
     align-items: center;
@@ -42,21 +42,7 @@ const imageP = { uri: imgUri };
 
   const styles = StyleSheet.create({
     
-    modalView: {
-      margin: 10,
-      backgroundColor: "white",
-      borderRadius: 20,
-      paddingRight: 5,
-      paddingLeft: 5,
-      paddingTop: 15,
-      paddingBottom: 15,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-    },
+    
     image: {
       flex:1,
       width: "100%",
@@ -71,13 +57,13 @@ const imageP = { uri: imgUri };
                                   
         
           <ImageBackground source={imageP} resizeMode="cover" style={styles.image}>
-          
+            
           </ImageBackground>
           <BottomItemBox>
 
           <TouchableView onPress={ ()=> navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}><StepText>다시 찍기</StepText></TouchableView>
           <TouchableView onPress={()=> navigation.replace('ShopStepThree3')}><StepText>그리기</StepText></TouchableView>
-          <TouchableView onPress={()=> navigation.replace('ShopStepFour')}><StepText>다음 단계</StepText></TouchableView>
+          <TouchableView onPress={()=> navigation.replace('TakePhoto', {key : 'ShopStepThree4' })}><StepText>사진 사용</StepText></TouchableView>
 
           </BottomItemBox>
       

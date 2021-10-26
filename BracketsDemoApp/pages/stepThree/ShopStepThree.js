@@ -1,14 +1,13 @@
 import React from 'react';
-import Container from '../components/Container';
-import Button from '../components/Button';
+import Container from '../../components/Container';
+import Button from '../../components/Button';
 import styled from 'styled-components/native';
-import CenterText from '../components/CenterText';
+import CenterText from '../../components/CenterText';
 import _ from 'lodash';
-import StateBarSolid from '../components/StateBarSolid';
-import StateBarVoid from '../components/StateBarVoid';
+import StateBarSolid from '../../components/StateBarSolid';
+import StateBarVoid from '../../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
-import ShopStepThree2 from './ShopStepThree2';
 import { Alert } from 'react-native';
 
 const TopStateView = styled.View`

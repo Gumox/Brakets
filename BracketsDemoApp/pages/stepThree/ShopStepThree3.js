@@ -25,16 +25,9 @@ export default class MyPaint extends React.Component {
   
     });
     return (
-      <View style={{ flex: 1 }}>
-        <Sketch
-          ref={sketch => {
-            this.sketch = sketch;
-          }}
-          strokeColor="#ff69b4"
-          strokeThickness={3}
-        />
-        <Button onPress={this.save} title="Save" />
-      </View>
-    );
+      <ImageBackground source={imageP} resizeMode="cover" style={styles.image}>
+            
+      </ImageBackground>
+    )
   }
 }

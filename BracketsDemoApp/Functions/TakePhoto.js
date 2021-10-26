@@ -104,6 +104,11 @@ export default class TakePhoto extends Component {
         console.log (route.params.key);
 
         this.props.navigation.replace(route.params.key);
+      }
+      if (route.params.key === 'ShopStepThree4'){
+        console.log (route.params.key);
+
+        this.props.navigation.replace(route.params.key);
       } 
     }  
   };
@@ -122,7 +127,11 @@ export default class TakePhoto extends Component {
       readText2 ="전면 또는 후면이 모두 보이도록";
       readText3 = "제품의 전체 사진을 촬영하세요";
     }
-    
+    if(route.params.key === 'ShopStepThree4'){
+      readText1 ="표시한 수선 부위를";
+      readText2 ="자세히 볼 수 있도록";
+      readText3 = "근접해서 사진을 촬영하세요";
+    }
     state = {}
     return (
       <CameraButton>

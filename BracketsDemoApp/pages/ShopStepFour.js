@@ -90,7 +90,6 @@ function ShopStepFour( { navigation } ) {
                 <Label>수선처</Label>
                 
                 <DropBackground><Picker
-                    placeholder={{ label: '기본위치: '+List0[0].label , value: List0[0].value,color:'black'}}
                     onValueChange={(value) => console.log(value)}
                     items={List2}
                 /></DropBackground>
