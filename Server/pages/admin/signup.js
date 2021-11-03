@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import cookies from "next-cookies";
 import styled from "styled-components";
+import Router from "next/router";
 import "semantic-ui-css/semantic.min.css";
 
 const SignUp = () => {

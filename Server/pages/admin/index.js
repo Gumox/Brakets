@@ -1,13 +1,19 @@
 import React from "react";
-import Link from "next/link";
 import cookies from "next-cookies";
 import styled from "styled-components";
+import Router, { useRouter } from "next/router";
+import axios from "axios";
 
 const AdminHome = ({ token }) => {
+  const router = useRouter()
+  const handleLogout = async () => {
+    await axios.get('/api/auth/logout');
+    router.push('/admin/login');
+  }
   return (
     <Wrapper>
       <Title>수선 OK Admin Home</Title>
-      <Link href="/api/auth/logout">Logout</Link>
+        <button onClick={handleLogout}>Logout</button>
     </Wrapper>
   );
 };

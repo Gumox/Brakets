@@ -1,14 +1,11 @@
-import Axios from "axios";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { Button } from "semantic-ui-react";
+import React from "react";
+import Link from "next/link";
 
 export default function Admin() {
   return (
     <>
-      <body>
-	  brackets server
-      </body>
+	    <div>brackets server</div>
+      <Link href='/admin'>Link to Admin</Link>
     </>
   );
 }
