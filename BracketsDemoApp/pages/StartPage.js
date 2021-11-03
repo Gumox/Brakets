@@ -12,6 +12,7 @@ import { size } from 'lodash';
 import styled from 'styled-components/native';
 import store from '../store/store';
 import { Provider } from 'react-redux'
+
 const TouchableView = styled.TouchableOpacity`
     
     flex-direction:row;
@@ -33,9 +34,20 @@ function StartPage( { navigation } ) {
     
     const [number,setNumber] =useState(store.getState().number);
 
-    useEffect(()=> {
-        setNumber(store.getState().number);
-    })
+    const x ={"key":2};
+    console.log(x["key"]);
+    console.log(store.getState().photoArr[0]);
+    
+
+   
+   
+
+    for(var i =0; i<10 ;i++){
+        if(store.getState().photoArr[i]!==undefined){
+        console.log(store.getState().photoArr[i]["key"]);
+        }
+    
+    }
     return(
         <Container>
             <Contents>
@@ -46,7 +58,9 @@ function StartPage( { navigation } ) {
                     시작
                 </SelectButton>
 
-                <TouchableView>
+                <TouchableView onPress ={()=>  {store.dispatch({type:'ADD',add: {"key":"fdjkgkdsck"}})
+                    console.log(store.getState().photoArr)
+                    }}>
                     <Text>2222</Text><ImgIcon source={require('../Icons/calendar.png')}/>
                 </TouchableView>
                 

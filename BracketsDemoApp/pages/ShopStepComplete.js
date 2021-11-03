@@ -116,8 +116,8 @@ function ShopStepOne( { navigation } ) {
           borderRadius: 20,
           paddingRight: 5,
           paddingLeft: 5,
-          paddingTop: 15,
-          paddingBottom: 15,
+          paddingTop: 8,
+          paddingBottom: 8,
           alignItems: "center",
           shadowColor: "#000",
           shadowOffset: {
@@ -157,7 +157,7 @@ function ShopStepOne( { navigation } ) {
                         <View style={styles.centeredView}>
                         <View style ={styles.xView} >    
                         <View style={styles.modalView} >
-                            
+                            <Label>{barcode}</Label>
                             <ImageZoom cropWidth={320}
                                     cropHeight={400}
                                     imageWidth={300}
@@ -176,7 +176,7 @@ function ShopStepOne( { navigation } ) {
                     
                     <TouchableView onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label><ImgIcon source={require('../Icons/image.png')}/></TouchableView>
                    
-                <GrayText>보내는곳</GrayText>
+                <GrayText>받는 곳</GrayText>
                 <DataView><Label></Label></DataView>
                 <GrayText>행낭 바코드</GrayText>
                 <Modal
@@ -190,7 +190,7 @@ function ShopStepOne( { navigation } ) {
                         <View style={styles.centeredView}>
                         <View style ={styles.xView} >    
                         <View style={styles.modalView} >
-                            
+                            <Label>{bag}</Label>
                             <ImageZoom cropWidth={320}
                                     cropHeight={400}
                                     imageWidth={300}

@@ -87,7 +87,7 @@ export default class TakePhoto extends Component {
   onSuccess = async (e) => {
   const {route}=this.props;
 
-    console.log(route.params.key);
+    console.log("to go: "+route.params.key);
 
     console.log("go");
     if (this.camera) {
@@ -95,40 +95,61 @@ export default class TakePhoto extends Component {
       const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
       const imgUri = data.uri;
      
-      {/*store.dispatch({type:'TAKE',take:imgUri});*/}
-      console.log (imgUri);
-      store.dispatch({type:'PHOTO',photo: imgUri});
-      console.log(store.getState().picture);
       
+      console.log (imgUri);
+      console.log(store.getState().photoArr);
       if (route.params.key === 'ShopStepThree2'){
-        console.log (route.params.key);
-
+        console.log ("ShopStepThree2: "+route.params.key);
+        store.dispatch({type:'ADD',add: {key:0,value:imgUri}});
+        
         this.props.navigation.replace(route.params.key);
       }
-      if (route.params.key === 'ShopStepThree4'){
-        console.log (route.params.key);
+      else if (route.params.key === 'ShopStepThree4'){
+        console.log ("ShopStepThreeX: "+route.params.key);
+          
+        store.dispatch({type:'ADD',add: {key:0,value:imgUri}});
+        
 
         this.props.navigation.replace(route.params.key);
       } 
+      else if(route.params.key === "FullShot") {
+        console.log(route.params.value);
+        const addPhoto = {key: route.params.value,value:imgUri};
+       
+        console.log(addPhoto);
+        store.dispatch({type:'ADD',add: addPhoto});
+        
+        this.props.navigation.replace("ShopStepThree2",{key:"CloseShot",value:route.params.value});
+
+      }else if(route.params.key==="CloseShot"){
+        
+        const addPhoto = {key: route.params.value,value:imgUri};
+        
+        console.log(addPhoto);
+        store.dispatch({type:'ADD',add: addPhoto});
+        
+        this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
+      }
     }  
   };
   
   render() {
     const {route}=this.props;
     console.log(route.params.key);
-
+    console.log(route.params.value);
+    console.log(store.getState().photoArr);
     var readText1 = " ";
     var readText2 = " ";
     var readText3 = " ";
 
     
-    if(route.params.key === 'ShopStepThree2'){
+    if(route.params.key === 'ShopStepThree2'||route.params.key === "FullShot"){
       readText1 ="제품을 평평한 곳에 놓고";
       readText2 ="전면 또는 후면이 모두 보이도록";
       readText3 = "제품의 전체 사진을 촬영하세요";
     }
-    if(route.params.key === 'ShopStepThree4'){
-      readText1 ="표시한 수선 부위를";
+    if(route.params.key === 'ShopStepThree4'||route.params.key ==="CloseShot"){
+      readText1 ="표시한 수선 필요 부위를";
       readText2 ="자세히 볼 수 있도록";
       readText3 = "근접해서 사진을 촬영하세요";
     }

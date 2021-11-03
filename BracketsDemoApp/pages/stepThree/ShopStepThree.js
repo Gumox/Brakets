@@ -9,6 +9,7 @@ import StateBarVoid from '../../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 import { Alert } from 'react-native';
+import store from '../../store/store';
 
 const TopStateView = styled.View`
     flex-direction: row;
@@ -46,73 +47,113 @@ const DropBackground= styled.View`
 
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepThree( { navigation } ) {
-  const [select,setSelect] = React.useState();
 
- 
-    return (
-        <Container>
-            <TopStateView></TopStateView>
-            <CenterText>
-                <Title>수선정보</Title>
-            </CenterText>
+  const [select,setSelect] =  React.useState(null);
 
-            <CenterText>
-                <Oneline>
-                    <BlueText>수선 유형 </BlueText>
-                    <GrayText>선택 후</GrayText>
-                </Oneline>
-                <Oneline>
-                    <BlueText>수선 위치</BlueText>
-                    <GrayText>를 체크하고 </GrayText>
-                </Oneline>
-                <Oneline>
-                    <BlueText>제품 사진</BlueText>
-                    <GrayText>을 촬영하세요</GrayText>
-                </Oneline>
-            </CenterText>
+  const [data, setData] = React.useState([]);
+  const ix = 1;
+  
+  const [isLoading, setLoading] = React.useState(true);
+  const bodyData = {"repair":"type",
+  "category": ix,
+  "receipt": ix}
+  const getAplType = async () => {
+      try {
+      const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      body: JSON.stringify(bodyData)
+      });
+      
+      const json = await response.json();
+      setData(json.body);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+  React.useEffect(()=>{
+    getAplType();
+    console.log("uri data: "+data);
+  },[]);
+  const SelectValue =()=>{
+    for(var i =0 ; i<data.length;i++){
+      if(data[i].repair_name===select){
+          
+      }
+    }
+  }
+  
+  return (
+      <Container>
+          <TopStateView></TopStateView>
+          <CenterText>
+              <Title>수선정보</Title>
+          </CenterText>
 
-            <BlackText>수선유형선택</BlackText>
-            <DropBackground>
-            <RNPickerSelect
-            placeholder = {{label : '[필수] 옵션을 선택하세요',value: null}}
-            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
-            onValueChange={(value) => 
-              setSelect(value)
-            }
-            items={[
-                { label: '1.원단', value: 'Material' },
-                { label: '2.봉제', value: 'Plush' },
-                { label: '3.부자재', value: 'Subsidiary' },
-                { label: '4.아트워크', value: 'Artwork' },
-                { label: '5.액세서리', value: 'Accessories' },
-                { label: '6.기타', value: 'etc' }
-            ]}
-          />
-          </DropBackground>
+          <CenterText>
+              <Oneline>
+                  <BlueText>수선 유형 </BlueText>
+                  <GrayText>선택 후</GrayText>
+              </Oneline>
+              <Oneline>
+                  <BlueText>수선 위치</BlueText>
+                  <GrayText>를 체크하고 </GrayText>
+              </Oneline>
+              <Oneline>
+                  <BlueText>제품 사진</BlueText>
+                  <GrayText>을 촬영하세요</GrayText>
+              </Oneline>
+          </CenterText>
 
-            <Button onPress={()=> {
-              if(select=== null){
-                Alert.alert(
-                  "",
-                  "수선유형을 선택해 주세요",
-                  [
-                    {
-                      text: "Cancel",
-                      onPress: () => console.log("Cancel Pressed"),
-                      style: "cancel"
-                    },
-                    { text: "OK", onPress: () => console.log("OK Pressed") }
-                  ]
-                );
-                
-              }else{
+          <BlackText>수선유형선택</BlackText>
+          <DropBackground>
+          <RNPickerSelect
+          placeholder = {{label : '[필수] 옵션을 선택하세요',value: null}}
+          style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
+          onValueChange={(value) => 
+            {setSelect(value)
+            store.dispatch({type:'SELECTTYPE',typeSelect: value})
+            console.log(store.getState().selectType)}
+          }
+          items={[
+              { label: '1.원단', value: '원단' },
+              { label: '2.봉제', value: '봉제' },
+              { label: '3.부자재', value: '부자재' },
+              { label: '4.아트워크', value: '아트워크' },
+              { label: '5.액세서리', value: '액세서리' },
+              { label: '6.기타', value: '기타' }
+          ]}
+        />
+        </DropBackground>
 
-                navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
-              }}}>
-              다음 단계
-            </Button>
-        </Container>
-    )
+          <Button onPress={()=> {
+            if(select=== null){
+              Alert.alert(
+                "",
+                "수선유형을 선택해 주세요",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+              
+            }else{
+
+              navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
+            }}}>
+            다음 단계
+          </Button>
+      </Container>
+  )
 }
 
 export default ShopStepThree;

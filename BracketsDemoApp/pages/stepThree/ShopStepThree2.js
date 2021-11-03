@@ -33,12 +33,37 @@ const StepText = styled.Text`
   color : #FFFFFF
   font-size:15px
 `;
-function ShopStepThree2 ({ navigation }) {
+function ShopStepThree2 ({ navigation ,route}) {
 
   const [modalVisible, setModalVisible] = React.useState(false);
-  const imgUri =store.getState().picture;
+
+  const imageArray =store.getState().photoArr;
+
+  console.log(imageArray[0]);
   
-const imageP = { uri: imgUri };
+  const [imgUri,setImageUri] =React.useState();
+
+  React.useEffect(()=>{
+    if(route.params === undefined){
+      console.log("at 3-1")
+      setImageUri(store.getState().photoArr[0]["value"]);
+
+    }else if( route.params.key === "CloseShot"){
+      console.log("CloseShot");
+      var indexUriList = [];
+      console.log(indexUriList);
+      imageArray.forEach(element => {
+                if(element.key == store.getState().indexNumber){
+                    indexUriList.push(element);
+                    console.log(indexUriList);
+                }
+            });
+      
+      setImageUri(indexUriList[0]["value"]);
+    }  
+  },[]);
+  
+  const imageP = { uri: imgUri };
 
   const styles = StyleSheet.create({
     
@@ -63,7 +88,18 @@ const imageP = { uri: imgUri };
 
           <TouchableView onPress={ ()=> navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}><StepText>다시 찍기</StepText></TouchableView>
           <TouchableView onPress={()=> navigation.replace('ShopStepThree3')}><StepText>그리기</StepText></TouchableView>
-          <TouchableView onPress={()=> navigation.replace('TakePhoto', {key : 'ShopStepThree4' })}><StepText>사진 사용</StepText></TouchableView>
+          <TouchableView onPress={()=> 
+          { 
+            if(route.params === undefined){
+              navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
+            }
+            else if( route.params.key === "CloseShot"){
+              console.log("CloseShot");
+               navigation.replace('TakePhoto', {key :route.params.key,value:route.params.value }); 
+            
+            }
+          }
+          }><StepText>사진 사용</StepText></TouchableView>
 
           </BottomItemBox>
       

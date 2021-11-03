@@ -52,7 +52,7 @@ function ShopStepTwo({navigation}) {
             <CenterText>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
                 <TopIntro>제품 정보</TopIntro>
-                <BlueText>수선 요구 사항</BlueText>
+                <BlueText>요구 사항</BlueText>
                 <GrayText>을 선택하세요</GrayText>
                   
             </CenterText>  

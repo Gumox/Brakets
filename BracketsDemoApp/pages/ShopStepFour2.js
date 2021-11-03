@@ -56,7 +56,13 @@ const TopStateView = styled.View`
     padding:24px;
     justify-content: center;
 `;
-
+const InfoView =styled.View`
+    width: 100%;
+    border:2px solid  #78909c;
+    border-radius:12px;
+    
+    padding:15px;
+`;
 
 Date.prototype.addDays = function(days) {
     var date = new Date(this.valueOf());
@@ -130,7 +136,7 @@ function ShopStepFour2({navigation}) {
             <Contents>
                 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
-            
+                <InfoView>
                 <CenterView>
                     
                     <Modal
@@ -165,7 +171,7 @@ function ShopStepFour2({navigation}) {
                         source={{uri:cardImgUri}}
                         />
                     </Pressable>
-                           
+                   
                 </CenterView>
 
                 <Label> 서비스 카드 바코드</Label>
@@ -190,13 +196,12 @@ function ShopStepFour2({navigation}) {
                     )}
                 <Label> 고객 약속일</Label>
                 <DateView><Label>{dateP14.getFullYear()}년  {dateP14.getMonth()+1}월  {dateP14.getDate()}일</Label></DateView>
+
+                </InfoView>
                 <View style ={{margin:30}}/>
-                
-            
             </Contents>
             <CenterView>
                 <ButtonBlack onPress={ ()=>
-                    //store.dispatch({type:'RECDATE',recDate: date })
                     navigation.navigate( 'ShopStepFive' ) }>
                     다음: 5단계
                 </ButtonBlack>
