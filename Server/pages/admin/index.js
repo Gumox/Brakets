@@ -1,31 +1,46 @@
 import React from "react";
+import Router, { useRouter } from "next/router";
 import cookies from "next-cookies";
 import styled from "styled-components";
-import Router, { useRouter } from "next/router";
 import axios from "axios";
 
 const AdminHome = () => {
-  const router = useRouter()
+  const router = useRouter();
   const handleLogout = async () => {
-    await axios.get('/api/auth/logout');
-    router.push('/admin/login');
-  }
+    await axios.get("/api/auth/logout");
+    router.push("/admin/login");
+  };
   return (
     <Wrapper>
-      <Title>수선 OK Admin Home</Title>
-        <button onClick={handleLogout}>Logout</button>
+      <Title>수선 OK</Title>
+      <Logout onClick={handleLogout}>Logout</Logout>
+      <CuetomLink onClick={() => router.push("/admin/reception")}>
+        수선접수/처리
+      </CuetomLink>
+      <CuetomLink onClick={() => router.push("/admin/return")}>
+        하자반품
+      </CuetomLink>
+      <CuetomLink onClick={() => router.push("/admin/claim")}>
+        업체클레임
+      </CuetomLink>
     </Wrapper>
   );
 };
 
 AdminHome.getInitialProps = async (ctx) => {
-  const { data: { isAuthorized } } = await axios.get(`${process.env.API_URL}/auth`, 
-    ctx.req ? {
-      withCredentials: true,
-      headers: {
-        cookie: ctx.req.headers.cookie
-      }
-    } : {});
+  const {
+    data: { isAuthorized },
+  } = await axios.get(
+    `${process.env.API_URL}/auth`,
+    ctx.req
+      ? {
+          withCredentials: true,
+          headers: {
+            cookie: ctx.req.headers.cookie,
+          },
+        }
+      : {}
+  );
   if (!isAuthorized) {
     if (ctx.req && ctx.res) {
       ctx.res.writeHead(302, { Location: "/admin/login" });
@@ -34,7 +49,7 @@ AdminHome.getInitialProps = async (ctx) => {
       Router.push("/admin/login");
     }
   }
-  return { props: { } };
+  return { props: {} };
 };
 
 const Wrapper = styled.div`
@@ -45,9 +60,28 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const Title = styled.div`
-  margin-bottom: 20px;
-  font-size: 40px;
-  font-wieght: bold;
+  margin-bottom: 30px;
+  padding: 10px 30px;
+  font-size: 45px;
+  font-weight: bold;
+  border: 2px solid;
+  border-radius: 10px;
+`;
+
+const Logout = styled.button`
+  border: 1px solid;
+  background-color: transparent;
+  height: 26px;
+  padding: 2px 5px;
+  text-align: center;
+  border-radius: 10px;
+`;
+
+const CuetomLink = styled.div`
+  margin-top: 20px;
+  font-size: 20px;
+  border-bottom: 1px solid;
+  cursor: pointer;
 `;
 
 export default AdminHome;

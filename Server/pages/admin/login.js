@@ -31,9 +31,12 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const Title = styled.div`
-  margin-bottom: 20px;
-  font-size: 40px;
-  font-wieght: bold;
+  margin-bottom: 50px;
+  padding: 10px 30px;
+  font-size: 45px;
+  font-weight: bold;
+  border: 2px solid;
+  border-radius: 10px;
 `;
 
 export default Login;
