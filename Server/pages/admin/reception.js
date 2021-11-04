@@ -13,7 +13,7 @@ const Reception = () => {
   );
 };
 
-Reception.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   return { props: { } };
 };
 
