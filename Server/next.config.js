@@ -15,7 +15,8 @@ module.exports = {
     MYSQL_PASSWORD: "qmfozlcm21",
 	  KAKAO_CLIENT_ID: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
 	  KAKAO_REDIRECT_URI: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
-    JWT_SECRET_KEY: "bracketssecretkey"
+    JWT_SECRET_KEY: "bracketssecretkey",
+    API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
 
   /*

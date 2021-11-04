@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
-const AdminHome = ({ token }) => {
+const AdminHome = () => {
   const router = useRouter()
   const handleLogout = async () => {
     await axios.get('/api/auth/logout');
@@ -19,8 +19,14 @@ const AdminHome = ({ token }) => {
 };
 
 AdminHome.getInitialProps = async (ctx) => {
-  const { token } = cookies(ctx);
-  if (!token || token === "") {
+  const { data: { isAuthorized } } = await axios.get(`${process.env.API_URL}/auth`, 
+    ctx.req ? {
+      withCredentials: true,
+      headers: {
+        cookie: ctx.req.headers.cookie
+      }
+    } : {});
+  if (!isAuthorized) {
     if (ctx.req && ctx.res) {
       ctx.res.writeHead(302, { Location: "/admin/login" });
       ctx.res.end();
@@ -28,7 +34,7 @@ AdminHome.getInitialProps = async (ctx) => {
       Router.push("/admin/login");
     }
   }
-  return { props: { token } };
+  return { props: { } };
 };
 
 const Wrapper = styled.div`
