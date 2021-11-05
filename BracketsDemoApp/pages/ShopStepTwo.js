@@ -80,7 +80,7 @@ function ShopStepTwo({navigation, route}) {
                   
             </CenterText>  
             <PView>
-                <CenterView><SelectButton onPress={ ()=> navigation.navigate( 'ShopRepairStep' )}>수선</SelectButton><SelectButton>교환</SelectButton></CenterView>
+                <CenterView><SelectButton onPress={ ()=> navigation.navigate( 'ShopStepThree' )}>수선</SelectButton><SelectButton>교환</SelectButton></CenterView>
                 <CenterView><SelectButton>환불</SelectButton><SelectButton>심의</SelectButton></CenterView>
             </PView>  
             <Label>접수 유형 알아보기</Label>

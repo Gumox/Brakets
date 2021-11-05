@@ -9,9 +9,15 @@ import StartPage from './pages/StartPage';
 
 import ShopStepOne from './pages/ShopStepOne';
 import ShopStepTwo from './pages/ShopStepTwo';
-import ShopRepairStep from './pages/ShopRepairStep';
+
+import ShopStepThree from './pages/stepThree/ShopStepThree';
+import ShopStepThree2 from './pages/stepThree/ShopStepThree2';
+import ShopStepThree3 from './pages/stepThree/ShopStepThree3';
+import ShopStepThree4 from './pages/stepThree/ShopStepThree4';
+
 import ShopStepFour from './pages/ShopStepFour';
 import ShopStepFour2 from './pages/ShopStepFour2';
+
 import ShopStepFive from './pages/ShopStepFive';
 import ShopStepComplete from './pages/ShopStepComplete';
 
@@ -35,7 +41,10 @@ function App() {
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center'}} />
 
-        <Stack.Screen name="ShopRepairStep" component={ShopRepairStep} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="ShopRepairThree" component={ShopStepThree} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="ShopRepairThree2" component={ShopStepThree2} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="ShopRepairThree3" component={ShopStepThree3} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="ShopRepairThree4" component={ShopStepThree4} options={{ title: '3단계' ,headerTitleAlign: 'center'}} />
 
         <Stack.Screen name="ShopStepFour" component={ShopStepFour} options={{ title: '4단계' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ShopStepFour2" component={ShopStepFour2} options={{ title: '4단계' ,headerTitleAlign: 'center'}} />
