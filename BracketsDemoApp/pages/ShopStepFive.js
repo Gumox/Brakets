@@ -6,7 +6,7 @@ import CenterText from '../components/CenterText';
 import _ from 'lodash';
 import Contents from '../components/Contents';
 import StateBarSolid from '../components/StateBarSolid';
-
+import store from '../store/store';
 
 const RegistText= styled.Text`
     font-weight: bold;
@@ -22,19 +22,22 @@ const GrayText = styled.Text`
     color:#858585;
 `;
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
-
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepFive( { navigation } ) {
+    //console.log(store.getState().recDate);
+    console.log(store.getState().cardValue + ":s5");
     
     return (
         <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
+            
             <CenterText>
                 
+                <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
                 <RegistText>행낭 접수</RegistText>
             
                 
@@ -44,7 +47,6 @@ function ShopStepFive( { navigation } ) {
                 <BlueText>행낭 바코드</BlueText>
                 <GrayText>를 스캔하세요</GrayText>
             </Contents>
-
             <Button onPress={ ()=> navigation.navigate( 'ScanScreen',{key:'ShopStepComplete'} ) }>
                 코드 스캔
             </Button>

@@ -1,75 +1,108 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
   AppRegistry,
+  StyleSheet,
   Text,
+  TouchableOpacity,
+  Linking
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import Button from '../components/Button';
-import styled from 'styled-components';
+import Container from '../components/Container';
+import { RNCamera } from 'react-native-camera';
+import store from '../store/store';
 
-const ButtonView = styled.View`
-  align-items: center;
-`;
 
-const Container = styled.View`
-  flex: 1
-`;
-
-const View = styled.View`
-  padding-bottom: 550px
-`;
+export default class ScanScreen extends Component {
   
-function ScanScreen ({navigation}) {
+  onSuccess = async (e) => {
+    const {route}=this.props;
 
-  onSuccess = e => {
+    console.log(route.params.key);
 
-    const check = e.data.substring(0, 4);
-    console.log('scanned data: ' + check)
-    console.log(e.data.type)
+    const check = e.data.substring(0, 30);
 
+    console.log('scanned data: ' + check);
+    
+    this.setState({
+        result: e,
+        scan: false,
+        ScanResult: true
+    })
+    
     if (check === 'http') {
-            
-      // Linking
-      //     .openURL(e.data)
-      //     .catch(err => console.error('An error occured', err));
-      alert('해당 QR코드는 링크가 포함된 QR코드 입니다.')
+        
+        Linking
+            .openURL(e.data)
+            .catch(err => console.error('An error occured', err));
+
 
     } else {
-      navigation.replace( 
-        'ProductInfo',
-        {codeType: 'QRcode' ,code: e.data, serial: ''}
-      )
-      console.log('type of code is ' + e.type)
-      }
-    }
-
-  return(
-    <>
-      <Container>
-        <View>
-          <QRCodeScanner 
-            containerStyle={{height:550}}
-            cameraStyle={[{height:550}]}
-            onRead={this.onSuccess}
-          />
-        </View>
-        <ButtonView>
-          <Button onPress={ ()=> 
-            navigation.navigate('InputAlternativeNumber')
-          }>
-          <Text>
-            코드 직접 입력하기
-          </Text>
-        </Button>
-        </ButtonView>
+        this.setState({
+            result: e,
+            scan: false,
+            ScanResult: true
+        })
         
+        if(route.params.key !=null){
+          if(route.params.key ==='ShopStepFour2'){
+            store.dispatch({type:'SERVICECAED',value:check});
+
+            if (this.camera) {
+              const options = { quality: 0.9, base64: true, skipProcessing: true }
+              const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
+              const imgUri = data.uri;
+             
+              store.dispatch({type:'TAKE',take:imgUri});
+             
+            }
+
+          }
+          else if(route.params.key === 'ShopStepComplete'){
+            store.dispatch({type:'BAGCODE',bag:check});
+            console.log(store.getState().bagCodeValue);
+
+            if (this.camera) {
+              const options = { quality: 0.9, base64: true, skipProcessing: true }
+              const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
+              const imgUri = data.uri;
+             
+              store.dispatch({type:'BAGTAG',bagTag:imgUri});
+             
+            }
+          }
+          
+            this.props.navigation.replace(route.params.key);
+           
+            
+            
+        }
+    }
+    
+  };
+  
+  render() {
+    
+    
+    return (
+      <Container>
+      <QRCodeScanner
+        showMarker={true}
+        onRead={this.onSuccess.bind(this)}
+        cameraProps={{
+          ref: ref => {
+            this.camera = ref;
+          },
+        }}
+       
+      />
+      
+    
       </Container>
-    </>
-  );
+      
+      
+    );
   }
-
-export default ScanScreen;
-
+}
 AppRegistry.registerComponent('default', () => ScanScreen);

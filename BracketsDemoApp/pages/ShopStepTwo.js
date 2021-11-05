@@ -38,44 +38,21 @@ const GrayText = styled.Text`
     color:#858585;
 `;
 const TopStateView = styled.View`
+    flex:1;
     flex-direction: row;
-    padding:24px;
+    padding-bottom:24px;
     justify-content: center;
 `;
 
-function ShopStepTwo({navigation, route}) {
+function ShopStepTwo({navigation}) {
    
-    const codeType = route.params.codeType
-    const codeInput = route.params.codeType
-    const serialInput = route.params.serialInput
-
-    const productName = route.params.productName
-    const season = route.params.season
-    const colorValue = route.params.colorValue
-    const size = route.params.size
-    const measure = route.params.measure
-    const imageFile = route.params.imageFile
-
-
+    
     return (
-        console.log(
-            {
-                codeType,
-                codeInput,
-                serialInput,
-                productName,
-                season,
-                colorValue,
-                size,
-                measure,
-                imageFile
-            }
-        ),
         <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <CenterText>
+            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
                 <TopIntro>제품 정보</TopIntro>
-                <BlueText>수선 요구 사항</BlueText>
+                <BlueText>요구 사항</BlueText>
                 <GrayText>을 선택하세요</GrayText>
                   
             </CenterText>  

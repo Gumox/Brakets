@@ -1,3 +1,6 @@
+// npm i -S react-native-sketch 모듈 설치
+// react-native link react-native-sketch
+
 import React, { useRef,Component } from 'react';
 import { AppRegistry,Alert,Text,  View, ImageBackground,StyleSheet,TouchableOpacity} from 'react-native';
 import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';

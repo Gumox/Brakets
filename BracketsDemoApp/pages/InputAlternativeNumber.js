@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Container from '../components/Container';
+import Contents from '../components/Contents';
 import Button from '../components/Button';
-import styled, { ThemeProvider } from 'styled-components/native';
+import styled from 'styled-components/native';
 import JustView from '../components/JustView';
-import { Alert } from 'react-native';
+//import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 
 const Label = styled.Text`
     font-size: 20px;
@@ -21,36 +23,18 @@ const Input = styled.TextInput`
     border-radius:10px
 `;
 
-function InputAlternativeNumber({navigation, props}) {
+function InputAlternativeNumber({navigation}) {
    
-    const [input, setInput] = useState('');
     
     return (
         <Container>
             <JustView>
                 <Label>대체 품번을 입력하세요</Label>
-                <Input
-                    value = {input}
-                    onChange={(event) => {
-                        const {eventCount, target, text} = event.nativeEvent;
-                        setInput(text);
-                        }
-                    }
+                <Input  multiline={ true }
                     style={{ width: 250 }}/>
+
             </JustView>
-            <Button
-                onPress={ () => (input != '') ? (
-                    navigation.navigate( 'ProductInfo', {codeType: 'qrcode', code: input} )
-                ) : (
-                    Alert.alert(            
-                        "입력 코드 오류",             
-                        "코드를 입력하세요",                   
-                        [                              
-                            { text: "확인"},
-                        ]
-                    )
-                )                   
-                }>
+            <Button onPress={ ()=> navigation.navigate( 'ProductInfo' )}>
                 다음
             </Button>
         </Container>
