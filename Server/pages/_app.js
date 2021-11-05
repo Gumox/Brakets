@@ -1,15 +1,7 @@
-import "../styles/globals.css";
-import Head from "next/head";
+import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <Head>
-        <title>수선 OK</title>
-      </Head>
-      <Component {...pageProps} />
-    </>
-  );
+  return <Component {...pageProps} />
 }
 
-export default MyApp;
+export default MyApp
