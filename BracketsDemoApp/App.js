@@ -30,7 +30,6 @@ import TakePhoto from './Functions/TakePhoto';
 
 const Stack = createNativeStackNavigator();
 
-
 function App() {
   return (
     <NavigationContainer>
