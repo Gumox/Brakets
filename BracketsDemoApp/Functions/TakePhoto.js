@@ -152,6 +152,7 @@ export default class TakePhoto extends Component {
       readText1 ="표시한 수선 필요 부위를";
       readText2 ="자세히 볼 수 있도록";
       readText3 = "근접해서 사진을 촬영하세요";
+
     }
     state = {}
     return (
