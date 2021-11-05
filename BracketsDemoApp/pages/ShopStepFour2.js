@@ -98,6 +98,7 @@ function ShopStepFour2({navigation}) {
 
     const showDatepicker = () => {
         showMode('date');
+        
     };
 
     const styles = StyleSheet.create({
