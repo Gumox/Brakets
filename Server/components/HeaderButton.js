@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/dist/client/router";
 import styled from "styled-components";
+import COLOR from "../utils/color";
 
 const HeaderButton = ({ title, link, path }) => {
   const router = useRouter();
@@ -16,9 +17,9 @@ const Wrapper = styled.div`
   height: 26px;
   padding: 2px 0;
   text-align: center;
-  background-color: ${({ selected }) => (selected ? "blue" : "white")};
-  color: ${({ selected }) => (selected ? "white" : "blue")};
-  border: 1px solid blue;
+  background-color: ${({ selected }) => (selected ? COLOR.cyanBlue : COLOR.white)};
+  color: ${({ selected }) => (selected ? COLOR.white : COLOR.cyanBlue)};
+  border: 1px solid ${COLOR.cyanBlue};
   cursor: pointer;
 `;
 
