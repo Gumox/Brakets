@@ -51,7 +51,64 @@ const TopStateView = styled.View`
 
 
 function ShopStepFour2({navigation}) {
-   
+
+    const [date, setDate] = React.useState(new Date());
+    const [mode, setMode] = React.useState('date');
+    const [show, setShow] = React.useState(false);
+    const [dateP14, setDateP14] = React.useState(date.addDays(14));
+    const [barcode, setBarcode] = React.useState(store.getState().cardValue);
+    store.dispatch({type:'SERVICECAED',value:barcode});
+    
+    const [modalVisible, setModalVisible] = React.useState(false);
+    
+    const cardImgUri =store.getState().card;
+    
+    //console.log(cardImgUri );
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+        setDateP14(currentDate.addDays(14))
+    };
+
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
+
+    const showDatepicker = () => {
+        showMode('date');
+        
+    };
+
+    const styles = StyleSheet.create({
+        centeredView: {
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 22
+        },
+        xView:{
+            backgroundColor: "#78909c",
+            borderRadius: 20,
+        },
+        modalView: {
+          margin: 10,
+          backgroundColor: "white",
+          borderRadius: 20,
+          paddingRight: 5,
+          paddingLeft: 5,
+          paddingTop: 15,
+          paddingBottom: 15,
+          alignItems: "center",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },
+        }
+      });
+    
     
     return (
         <ContainView>
