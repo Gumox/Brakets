@@ -79,21 +79,7 @@ function ShopStepFour( { navigation } ) {
                 <RegistText>서비스 카드 스캔</RegistText>
                 
             </CenterText>
-            <PView><GrayText>아래의 수선처로</GrayText></PView>
-                <PView>
-                    <BlueText>제품</BlueText>
-                    <GrayText>과 </GrayText>
-                    <BlueText>서비스 카드</BlueText>
-                    <GrayText>를 함께 보내주세요</GrayText>
-                </PView>
-            <Contents>
-                <Label>수선처</Label>
-                
-                <DropBackground><Picker
-                    onValueChange={(value) => console.log(value)}
-                    items={List2}
-                /></DropBackground>
-            </Contents>
+            
 
             <BlueText>서비스 카드의 바코드</BlueText>
             <GrayText>를 스캔하세요</GrayText>
