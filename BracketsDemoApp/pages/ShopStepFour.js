@@ -58,23 +58,7 @@ function ShopStepFour( { navigation } ) {
                 <RegistText>수선증 스캔</RegistText>
                 
             </CenterText>
-<<<<<<< HEAD
-            <PView><GrayText>아래의 수선처로</GrayText></PView>
-                <PView>
-                    <BlueText>제품</BlueText>
-                    <GrayText>과 </GrayText>
-                    <BlueText>수선증</BlueText>
-                    <GrayText>을 함께 보내주세요</GrayText>
-                </PView>
-            <Contents>
-                <Label>수선처</Label>
-                <Input
-                    placeholder={ '맥가이버' }  
-                    multiline={ true }/>
-            </Contents>
-=======
-            
->>>>>>> main
+
 
             <BlueText>수선증 바코드</BlueText>
             <GrayText>를 스캔하세요</GrayText>
