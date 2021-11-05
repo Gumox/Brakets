@@ -39,23 +39,23 @@ function ShopStepThree2 ({ navigation ,route}) {
 
   const imageArray =store.getState().photoArr;
 
-  console.log(imageArray[0]);
+  //console.log(imageArray[0]);
   
   const [imgUri,setImageUri] =React.useState();
 
   React.useEffect(()=>{
     if(route.params === undefined){
-      console.log("at 3-1")
+      //console.log("at 3-1")
       setImageUri(store.getState().photoArr[0]["value"]);
 
     }else if( route.params.key === "CloseShot"){
       console.log("CloseShot");
       var indexUriList = [];
-      console.log(indexUriList);
+      //console.log(indexUriList);
       imageArray.forEach(element => {
                 if(element.key == store.getState().indexNumber){
                     indexUriList.push(element);
-                    console.log(indexUriList);
+                    //console.log(indexUriList);
                 }
             });
       
