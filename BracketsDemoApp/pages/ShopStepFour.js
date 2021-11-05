@@ -58,8 +58,12 @@ function ShopStepFour( { navigation } ) {
                 <RegistText>수선증 스캔</RegistText>
                 
             </CenterText>
+<<<<<<< HEAD
 
 
+=======
+            
+>>>>>>> main
             <BlueText>수선증 바코드</BlueText>
             <GrayText>를 스캔하세요</GrayText>
 
