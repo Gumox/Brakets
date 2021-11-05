@@ -1,0 +1,170 @@
+import React from 'react';
+import Container from '../../components/Container';
+import Button from '../../components/Button';
+import styled from 'styled-components/native';
+import CenterText from '../../components/CenterText';
+import _, { values } from 'lodash';
+import StateBarSolid from '../../components/StateBarSolid';
+import StateBarVoid from '../../components/StateBarVoid';
+import RNPickerSelect from 'react-native-picker-select';
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
+import { Alert } from 'react-native';
+import store from '../../store/store';
+
+const TopStateView = styled.View`
+    flex-direction: row;
+    padding:24px;
+    justify-content: center;
+`;
+
+const Oneline = styled.View`
+  flex-direction : row;
+`;
+const Title = styled.Text`
+  font-size : 24px;
+  font-weight : bold;
+`;
+const BlueText = styled.Text`
+  font-size : 20px;
+  color : #78909c;
+`;
+const GrayText = styled.Text`
+  font-size : 20px;
+  color : #858585;
+`;
+
+const BlackText = styled.Text`
+  font-size : 15px;
+  color : black;
+`;
+const DropBackground= styled.View`
+    width: 220px;
+    border-radius:10px;
+    font-color:#ffffff;
+    border:2px solid #78909c;
+    margin-top:10px;
+`;
+
+// 구조 분해 할당, Destructuring Assignment
+function ShopStepThree( { navigation } ) {
+
+  const [select,setSelect] =  React.useState(null);
+
+  const [data, setData] = React.useState([]);
+  const ix = 1;
+  
+  const [isLoading, setLoading] = React.useState(true);
+  const bodyData = {"repair":"type",
+  "category": 1,
+  "receipt": 1}
+  const getAplType = async () => {
+    
+      try {
+      const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      body: JSON.stringify(bodyData)
+      });
+      
+      const json = await response.json();
+      setData(json.body);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+    React.useEffect(()=>{
+        getAplType();
+        console.log("uri data: "+data);
+        //console.log(dataList[0].receiver_name);
+        
+      },[]);
+  
+  return (
+      <Container>
+          <TopStateView></TopStateView>
+          <CenterText>
+              <Title>수선정보</Title>
+          </CenterText>
+
+          <CenterText>
+              <Oneline>
+                  <BlueText>수선 유형 </BlueText>
+                  <GrayText>선택 후</GrayText>
+              </Oneline>
+              <Oneline>
+                  <BlueText>수선 위치</BlueText>
+                  <GrayText>를 체크하고 </GrayText>
+              </Oneline>
+              <Oneline>
+                  <BlueText>제품 사진</BlueText>
+                  <GrayText>을 촬영하세요</GrayText>
+              </Oneline>
+          </CenterText>
+
+          <BlackText>수선유형선택</BlackText>
+          <DropBackground>
+          <RNPickerSelect
+          placeholder = {{label : '[필수] 옵션을 선택하세요',value: null}}
+          style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
+          onValueChange={(value) => 
+            {setSelect(value)
+              store.dispatch({type:"SELECTTYPERESET"});
+              store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:[]});
+              
+              data.forEach(obj => {
+                if(value === obj.repair_name){
+                  console.log(obj.receiver_name);
+                  
+                  store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: obj.receiver_name});
+                  
+                  console.log("+++"+store.getState().basicRepairStore);
+                  
+                }
+              });
+              
+            
+            }
+          }
+          items={[
+              { label: '1.원단', value: '원단' },
+              { label: '2.봉제', value: '봉제' },
+              { label: '3.부자재', value: '부자재' },
+              { label: '4.아트워크', value: '아트워크' },
+              { label: '5.액세서리', value: '악세사리' },
+              { label: '6.기타', value: '기타' }
+          ]}
+        />
+        </DropBackground>
+
+          <Button onPress={()=> {
+            if(select=== null){
+              Alert.alert(
+                "",
+                "수선유형을 선택해 주세요",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+              
+            }else{
+              store.dispatch({type:'SELECTTYPE',typeSelect: select})
+              console.log(store.getState().selectType)
+              navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
+            }}}>
+            다음 단계
+          </Button>
+      </Container>
+  )
+}
+
+export default ShopStepThree;

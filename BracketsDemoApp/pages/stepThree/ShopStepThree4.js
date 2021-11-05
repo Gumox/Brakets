@@ -87,12 +87,14 @@ function ShopStepThree4({route,navigation}) {
     var index = 0;
 
     const [arrayValueIndex,setArrayValueIndex] =React.useState(0);
+    
     const [select,setSelect] = React.useState();
-
-    //get Type 함수: 선택한 유형의 기본 수선 장소
+    
     const [data, setData] = React.useState([]);
+    
+    
     const [isLoading, setLoading] = React.useState(true);
-      
+    //get Type 함수: 선택한 유형의 기본 수선 장소  
     const getAplType = async (value,key) => {
         const bodyData = {"repair":"type",
         "category": 1,
@@ -204,6 +206,7 @@ function ShopStepThree4({route,navigation}) {
         );
         photoOutput[i] = (tempPhoto);
     }
+    console.log("+++++----++-+-+-++++"+photoOutput);
     
     React.useEffect(()=>{
         getAplStore(selectedType,0);  
@@ -316,6 +319,11 @@ function ShopStepThree4({route,navigation}) {
             {
               setSelect(value)
 
+
+             
+
+              
+              
               store.dispatch({type:'SELECTTYPE',typeSelect: value})
               console.log(store.getState().selectType)
               store.dispatch({type:'PLUSINDEXNUMBER',plus:1});
