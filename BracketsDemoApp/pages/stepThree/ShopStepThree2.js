@@ -18,6 +18,7 @@ const CenterView =styled.View`
     align-items: center;
 `;
 
+
 const BottomItemBox = styled.View`
   flex-direction: row;
   width:100%
