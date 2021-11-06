@@ -50709,3 +50709,105 @@ nohup: ignoring input
 
 ready - started server on 0.0.0.0:80, url: http://localhost:80
 info  - Loaded env from /root/brackets-git/Server/.env.production
+nohup: ignoring input
+
+> brackets-nextjs@0.1.0 start /root/brackets-git/Server
+> next start -p $PORT "80"
+
+ready - started server on 0.0.0.0:80, url: http://localhost:80
+info  - Loaded env from /root/brackets-git/Server/.env.production
+TypeError [ERR_HTTP_INVALID_HEADER_VALUE]: Invalid value "undefined" for header "cookie"
+    at ClientRequest.setHeader (_http_outgoing.js:533:3)
+    at new ClientRequest (_http_client.js:242:14)
+    at Object.request (http.js:46:10)
+    at RedirectableRequest._performRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:272:24)
+    at new RedirectableRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:61:8)
+    at Object.request (/root/brackets-git/Server/node_modules/follow-redirects/index.js:463:14)
+    at dispatchHttpRequest (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:226:25)
+    at new Promise (<anonymous>)
+    at httpAdapter (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:48:10)
+    at dispatchRequest (/root/brackets-git/Server/node_modules/axios/lib/core/dispatchRequest.js:58:10) {
+  code: 'ERR_HTTP_INVALID_HEADER_VALUE'
+}
+TypeError [ERR_HTTP_INVALID_HEADER_VALUE]: Invalid value "undefined" for header "cookie"
+    at ClientRequest.setHeader (_http_outgoing.js:533:3)
+    at new ClientRequest (_http_client.js:242:14)
+    at Object.request (http.js:46:10)
+    at RedirectableRequest._performRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:272:24)
+    at new RedirectableRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:61:8)
+    at Object.request (/root/brackets-git/Server/node_modules/follow-redirects/index.js:463:14)
+    at dispatchHttpRequest (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:226:25)
+    at new Promise (<anonymous>)
+    at httpAdapter (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:48:10)
+    at dispatchRequest (/root/brackets-git/Server/node_modules/axios/lib/core/dispatchRequest.js:58:10) {
+  code: 'ERR_HTTP_INVALID_HEADER_VALUE'
+}
+TypeError [ERR_HTTP_INVALID_HEADER_VALUE]: Invalid value "undefined" for header "cookie"
+    at ClientRequest.setHeader (_http_outgoing.js:533:3)
+    at new ClientRequest (_http_client.js:242:14)
+    at Object.request (http.js:46:10)
+    at RedirectableRequest._performRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:272:24)
+    at new RedirectableRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:61:8)
+    at Object.request (/root/brackets-git/Server/node_modules/follow-redirects/index.js:463:14)
+    at dispatchHttpRequest (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:226:25)
+    at new Promise (<anonymous>)
+    at httpAdapter (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:48:10)
+    at dispatchRequest (/root/brackets-git/Server/node_modules/axios/lib/core/dispatchRequest.js:58:10) {
+  code: 'ERR_HTTP_INVALID_HEADER_VALUE'
+}
+TypeError [ERR_HTTP_INVALID_HEADER_VALUE]: Invalid value "undefined" for header "cookie"
+    at ClientRequest.setHeader (_http_outgoing.js:533:3)
+    at new ClientRequest (_http_client.js:242:14)
+    at Object.request (http.js:46:10)
+    at RedirectableRequest._performRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:272:24)
+    at new RedirectableRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:61:8)
+    at Object.request (/root/brackets-git/Server/node_modules/follow-redirects/index.js:463:14)
+    at dispatchHttpRequest (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:226:25)
+    at new Promise (<anonymous>)
+    at httpAdapter (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:48:10)
+    at dispatchRequest (/root/brackets-git/Server/node_modules/axios/lib/core/dispatchRequest.js:58:10) {
+  code: 'ERR_HTTP_INVALID_HEADER_VALUE'
+}
+TypeError [ERR_HTTP_INVALID_HEADER_VALUE]: Invalid value "undefined" for header "cookie"
+    at ClientRequest.setHeader (_http_outgoing.js:533:3)
+    at new ClientRequest (_http_client.js:242:14)
+    at Object.request (http.js:46:10)
+    at RedirectableRequest._performRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:272:24)
+    at new RedirectableRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:61:8)
+    at Object.request (/root/brackets-git/Server/node_modules/follow-redirects/index.js:463:14)
+    at dispatchHttpRequest (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:226:25)
+    at new Promise (<anonymous>)
+    at httpAdapter (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:48:10)
+    at dispatchRequest (/root/brackets-git/Server/node_modules/axios/lib/core/dispatchRequest.js:58:10) {
+  code: 'ERR_HTTP_INVALID_HEADER_VALUE'
+}
+TypeError [ERR_HTTP_INVALID_HEADER_VALUE]: Invalid value "undefined" for header "cookie"
+    at ClientRequest.setHeader (_http_outgoing.js:533:3)
+    at new ClientRequest (_http_client.js:242:14)
+    at Object.request (http.js:46:10)
+    at RedirectableRequest._performRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:272:24)
+    at new RedirectableRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:61:8)
+    at Object.request (/root/brackets-git/Server/node_modules/follow-redirects/index.js:463:14)
+    at dispatchHttpRequest (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:226:25)
+    at new Promise (<anonymous>)
+    at httpAdapter (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:48:10)
+    at dispatchRequest (/root/brackets-git/Server/node_modules/axios/lib/core/dispatchRequest.js:58:10) {
+  code: 'ERR_HTTP_INVALID_HEADER_VALUE'
+}
+TypeError [ERR_HTTP_INVALID_HEADER_VALUE]: Invalid value "undefined" for header "cookie"
+    at ClientRequest.setHeader (_http_outgoing.js:533:3)
+    at new ClientRequest (_http_client.js:242:14)
+    at Object.request (http.js:46:10)
+    at RedirectableRequest._performRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:272:24)
+    at new RedirectableRequest (/root/brackets-git/Server/node_modules/follow-redirects/index.js:61:8)
+    at Object.request (/root/brackets-git/Server/node_modules/follow-redirects/index.js:463:14)
+    at dispatchHttpRequest (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:226:25)
+    at new Promise (<anonymous>)
+    at httpAdapter (/root/brackets-git/Server/node_modules/axios/lib/adapters/http.js:48:10)
+    at dispatchRequest (/root/brackets-git/Server/node_modules/axios/lib/core/dispatchRequest.js:58:10) {
+  code: 'ERR_HTTP_INVALID_HEADER_VALUE'
+}
+req[object Object]
+add Receipt (step 2)
+Warning: For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'yarn add sharp', and Next.js will use it automatically for Image Optimization.
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
