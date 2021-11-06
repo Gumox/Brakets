@@ -13,7 +13,7 @@ const Sms = () => {
   );
 };
 
-Sms.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   return { props: { } };
 };
 

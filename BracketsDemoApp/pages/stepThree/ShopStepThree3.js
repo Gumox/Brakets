@@ -11,10 +11,8 @@ import { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
 import Button from '../../components/Button';
 export default function ShopStepThree3({navigation})  {
   
- 
   
   const imgUri =store.getState().photoArr[0]["value"];
-  
   const imageP = { uri: imgUri };
   
   const sketchCanvas = useRef()

@@ -47,7 +47,7 @@ const SignUp = () => {
   );
 };
 
-SignUp.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   const { id } = cookies(ctx);
   if (!id || id === "") {
     if (ctx.req && ctx.res) {

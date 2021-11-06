@@ -89,7 +89,7 @@ export default class TakePhoto extends Component {
 
     console.log("to go: "+route.params.key);
 
-    console.log("go");
+    //console.log("go");
     if (this.camera) {
       const options = { quality: 0.9, base64: true, skipProcessing: true }
       const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
@@ -99,13 +99,13 @@ export default class TakePhoto extends Component {
       console.log (imgUri);
       console.log(store.getState().photoArr);
       if (route.params.key === 'ShopStepThree2'){
-        console.log ("ShopStepThree2: "+route.params.key);
+        //console.log ("ShopStepThree2: "+route.params.key);
         store.dispatch({type:'ADD',add: {key:0,value:imgUri}});
         
         this.props.navigation.replace(route.params.key);
       }
       else if (route.params.key === 'ShopStepThree4'){
-        console.log ("ShopStepThreeX: "+route.params.key);
+        //console.log ("ShopStepThreeX: "+route.params.key);
           
         store.dispatch({type:'ADD',add: {key:0,value:imgUri}});
         
@@ -113,10 +113,10 @@ export default class TakePhoto extends Component {
         this.props.navigation.replace(route.params.key);
       } 
       else if(route.params.key === "FullShot") {
-        console.log(route.params.value);
+        //console.log(route.params.value);
         const addPhoto = {key: route.params.value,value:imgUri};
        
-        console.log(addPhoto);
+       // console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
         
         this.props.navigation.replace("ShopStepThree2",{key:"CloseShot",value:route.params.value});
@@ -125,7 +125,7 @@ export default class TakePhoto extends Component {
         
         const addPhoto = {key: route.params.value,value:imgUri};
         
-        console.log(addPhoto);
+        //console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
         
         this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
@@ -135,9 +135,9 @@ export default class TakePhoto extends Component {
   
   render() {
     const {route}=this.props;
-    console.log(route.params.key);
-    console.log(route.params.value);
-    console.log(store.getState().photoArr);
+    //console.log(route.params.key);
+    //console.log(route.params.value);
+    //console.log(store.getState().photoArr);
     var readText1 = " ";
     var readText2 = " ";
     var readText3 = " ";
@@ -152,7 +152,6 @@ export default class TakePhoto extends Component {
       readText1 ="표시한 수선 필요 부위를";
       readText2 ="자세히 볼 수 있도록";
       readText3 = "근접해서 사진을 촬영하세요";
-
     }
     state = {}
     return (

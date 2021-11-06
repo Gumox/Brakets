@@ -3,7 +3,7 @@ import Container from '../../components/Container';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
-import _ from 'lodash';
+import _, { values } from 'lodash';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
@@ -55,9 +55,10 @@ function ShopStepThree( { navigation } ) {
   
   const [isLoading, setLoading] = React.useState(true);
   const bodyData = {"repair":"type",
-  "category": ix,
-  "receipt": ix}
+  "category": 1,
+  "receipt": 1}
   const getAplType = async () => {
+    
       try {
       const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
       headers: {
@@ -76,17 +77,12 @@ function ShopStepThree( { navigation } ) {
     }
   }
   
-  React.useEffect(()=>{
-    getAplType();
-    console.log("uri data: "+data);
-  },[]);
-  const SelectValue =()=>{
-    for(var i =0 ; i<data.length;i++){
-      if(data[i].repair_name===select){
-          
-      }
-    }
-  }
+    React.useEffect(()=>{
+        getAplType();
+        console.log("uri data: "+data);
+        //console.log(dataList[0].receiver_name);
+        
+      },[]);
   
   return (
       <Container>
@@ -117,15 +113,29 @@ function ShopStepThree( { navigation } ) {
           style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
           onValueChange={(value) => 
             {setSelect(value)
-            store.dispatch({type:'SELECTTYPE',typeSelect: value})
-            console.log(store.getState().selectType)}
+              store.dispatch({type:"SELECTTYPERESET"});
+              store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:[]});
+              
+              data.forEach(obj => {
+                if(value === obj.repair_name){
+                  console.log(obj.receiver_name);
+                  
+                  store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: obj.receiver_name});
+                  
+                  console.log("+++"+store.getState().basicRepairStore);
+                  
+                }
+              });
+              
+            
+            }
           }
           items={[
               { label: '1.원단', value: '원단' },
               { label: '2.봉제', value: '봉제' },
               { label: '3.부자재', value: '부자재' },
               { label: '4.아트워크', value: '아트워크' },
-              { label: '5.액세서리', value: '액세서리' },
+              { label: '5.액세서리', value: '악세사리' },
               { label: '6.기타', value: '기타' }
           ]}
         />
@@ -147,7 +157,8 @@ function ShopStepThree( { navigation } ) {
               );
               
             }else{
-
+              store.dispatch({type:'SELECTTYPE',typeSelect: select})
+              console.log(store.getState().selectType)
               navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
             }}}>
             다음 단계

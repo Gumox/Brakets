@@ -27,7 +27,7 @@ const AdminHome = () => {
   );
 };
 
-AdminHome.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   const {
     data: { isAuthorized },
   } = await axios.get(
@@ -42,11 +42,11 @@ AdminHome.getInitialProps = async (ctx) => {
       : {}
   );
   if (!isAuthorized) {
-    if (ctx.req && ctx.res) {
-      ctx.res.writeHead(302, { Location: "/admin/login" });
-      ctx.res.end();
-    } else {
-      Router.push("/admin/login");
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/admin/login'
+      }
     }
   }
   return { props: {} };

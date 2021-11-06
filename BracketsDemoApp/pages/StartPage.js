@@ -13,6 +13,7 @@ import styled from 'styled-components/native';
 import store from '../store/store';
 import { Provider } from 'react-redux'
 
+
 const TouchableView = styled.TouchableOpacity`
     
     flex-direction:row;
@@ -35,19 +36,58 @@ function StartPage( { navigation } ) {
     const [number,setNumber] =useState(store.getState().number);
 
     const x ={"key":2};
-    console.log(x["key"]);
-    console.log(store.getState().photoArr[0]);
     
 
    
-   
-
-    for(var i =0; i<10 ;i++){
-        if(store.getState().photoArr[i]!==undefined){
-        console.log(store.getState().photoArr[i]["key"]);
+    console.log("여기는 start 입니다");
+    const [data, setData] = React.useState([]);
+    
+    
+    const [isLoading, setLoading] = React.useState(true);
+    
+    const getAplType = async (value,key) => {
+        const bodyData = {"repair":"type",
+        "category": 1,
+        "receipt": 1}
+        try {
+        const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+        body: JSON.stringify(bodyData)
+        });
+        if(key>0){
+        console.log("is in here: getAplType ");
+        const json = await response.json();
+        const xData = json.body;
+        console.log(xData);
+        xData.forEach(obj => {
+            if(value === obj.repair_name){
+              console.log(obj.receiver_name);
+              
+              //store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: obj.receiver_name});
+              
+              //console.log("+++"+store.getState().basicRepairStore);
+              
+            }
+          });
+        }else {
+        
+            const json = await response.json();
+            setData(json.body);
         }
-    
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
     }
+    
+
+    
+    
+    
     return(
         <Container>
             <Contents>
@@ -58,8 +98,8 @@ function StartPage( { navigation } ) {
                     시작
                 </SelectButton>
 
-                <TouchableView onPress ={()=>  {store.dispatch({type:'ADD',add: {"key":"fdjkgkdsck"}})
-                    console.log(store.getState().photoArr)
+                <TouchableView onPress ={()=>  {
+                    getAplType("부자재",1);
                     }}>
                     <Text>2222</Text><ImgIcon source={require('../Icons/calendar.png')}/>
                 </TouchableView>

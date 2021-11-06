@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.6.2",
     "@terrylinla/react-native-sketch-canvas": "^0.8.0",
     "lodash": "^4.17.21",
+    "mysql": "^2.18.1",
     "react": "17.0.2",
     "react-date-object": "^2.1.5",
     "react-datepicker": "^4.2.1",
