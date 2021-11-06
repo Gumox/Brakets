@@ -36,7 +36,7 @@ export const getServerSideProps = async (ctx) => {
       ? {
           withCredentials: true,
           headers: {
-            cookie: ctx.req.headers.cookie,
+            cookie: ctx.req.headers.cookie || {},
           },
         }
       : {}
