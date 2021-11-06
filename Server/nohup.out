@@ -583,3 +583,1170 @@ Page                                Size     First Load JS
 ●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
    (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
 
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/6)
+info  - Generating static pages (1/6)
+info  - Generating static pages (2/6)
+info  - Generating static pages (4/6)
+info  - Generating static pages (6/6)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ / (390 ms)                      307 B          73.8 kB
+├   /_app                           0 B              67 kB
+├ ○ /404                            194 B          67.2 kB
+├ λ /api/db                         0 B              67 kB
+├ λ /api/getProductInfo             0 B              67 kB
+├ λ /api/getRepairInfo              0 B              67 kB
+├ λ /api/staffLogin                 0 B              67 kB
+├ λ /api/z_ex_hello                 0 B              67 kB
+├ λ /api/z_ex_isLogin               0 B              67 kB
+├ λ /api/z_ex_login                 0 B              67 kB
+├ λ /api/z_ex_logout                0 B              67 kB
+├ ○ /example                        4.62 kB        71.6 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index                     18.4 kB        91.9 kB
+└ ○ /z_ex_login                     713 B          74.2 kB
++ First Load JS shared by all       67 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.a40023.js     555 B
+  ├ chunks/webpack.fb7614.js        770 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/6)
+info  - Generating static pages (1/6)
+info  - Generating static pages (2/6)
+info  - Generating static pages (4/6)
+info  - Generating static pages (6/6)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ / (392 ms)                      307 B          73.8 kB
+├   /_app                           0 B              67 kB
+├ ○ /404                            194 B          67.2 kB
+├ λ /api/db                         0 B              67 kB
+├ λ /api/getProductInfo             0 B              67 kB
+├ λ /api/getRepairInfo              0 B              67 kB
+├ λ /api/staffLogin                 0 B              67 kB
+├ λ /api/z_ex_hello                 0 B              67 kB
+├ λ /api/z_ex_isLogin               0 B              67 kB
+├ λ /api/z_ex_login                 0 B              67 kB
+├ λ /api/z_ex_logout                0 B              67 kB
+├ ○ /example                        4.62 kB        71.6 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index                     18.4 kB        91.9 kB
+└ ○ /z_ex_login                     713 B          74.2 kB
++ First Load JS shared by all       67 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.a40023.js     555 B
+  ├ chunks/webpack.fb7614.js        770 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/6)
+info  - Generating static pages (1/6)
+info  - Generating static pages (2/6)
+info  - Generating static pages (4/6)
+info  - Generating static pages (6/6)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ / (398 ms)                      307 B          73.8 kB
+├   /_app                           0 B              67 kB
+├ ○ /404                            194 B          67.2 kB
+├ λ /api/db                         0 B              67 kB
+├ λ /api/getProductInfo             0 B              67 kB
+├ λ /api/getRepairInfo              0 B              67 kB
+├ λ /api/staffLogin                 0 B              67 kB
+├ λ /api/z_ex_hello                 0 B              67 kB
+├ λ /api/z_ex_isLogin               0 B              67 kB
+├ λ /api/z_ex_login                 0 B              67 kB
+├ λ /api/z_ex_logout                0 B              67 kB
+├ ○ /example                        4.62 kB        71.6 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index                     18.4 kB        91.9 kB
+└ ○ /z_ex_login                     713 B          74.2 kB
++ First Load JS shared by all       67 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.a40023.js     555 B
+  ├ chunks/webpack.fb7614.js        770 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/6)
+info  - Generating static pages (1/6)
+info  - Generating static pages (2/6)
+info  - Generating static pages (4/6)
+info  - Generating static pages (6/6)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ / (407 ms)                      307 B          73.8 kB
+├   /_app                           0 B              67 kB
+├ ○ /404                            194 B          67.2 kB
+├ λ /api/db                         0 B              67 kB
+├ λ /api/getProductInfo             0 B              67 kB
+├ λ /api/getRepairInfo              0 B              67 kB
+├ λ /api/staffLogin                 0 B              67 kB
+├ λ /api/z_ex_hello                 0 B              67 kB
+├ λ /api/z_ex_isLogin               0 B              67 kB
+├ λ /api/z_ex_login                 0 B              67 kB
+├ λ /api/z_ex_logout                0 B              67 kB
+├ ○ /example                        4.62 kB        71.6 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index                     18.4 kB        91.9 kB
+└ ○ /z_ex_login                     713 B          74.2 kB
++ First Load JS shared by all       67 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.a40023.js     555 B
+  ├ chunks/webpack.fb7614.js        770 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/6)
+info  - Generating static pages (1/6)
+info  - Generating static pages (2/6)
+info  - Generating static pages (4/6)
+info  - Generating static pages (6/6)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ / (405 ms)                      307 B          73.8 kB
+├   /_app                           0 B              67 kB
+├ ○ /404                            194 B          67.2 kB
+├ λ /api/db                         0 B              67 kB
+├ λ /api/getProductInfo             0 B              67 kB
+├ λ /api/getRepairInfo              0 B              67 kB
+├ λ /api/staffLogin                 0 B              67 kB
+├ λ /api/z_ex_hello                 0 B              67 kB
+├ λ /api/z_ex_isLogin               0 B              67 kB
+├ λ /api/z_ex_login                 0 B              67 kB
+├ λ /api/z_ex_logout                0 B              67 kB
+├ ○ /example                        4.62 kB        71.6 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index                     18.4 kB        91.9 kB
+└ ○ /z_ex_login                     713 B          74.2 kB
++ First Load JS shared by all       67 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.a40023.js     555 B
+  ├ chunks/webpack.fb7614.js        770 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+info  - Using external babel configuration from /root/brackets-git/Server/.babelrc
+(node:28479) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (398 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+(node:28762) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (421 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+(node:28849) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (432 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+(node:28987) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (400 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+(node:29076) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (446 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+(node:29250) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (445 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+(node:29487) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (456 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+(node:29678) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (410 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/z_ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/z_ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+(node:29874) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/7)
+info  - Generating static pages (1/7)
+info  - Generating static pages (3/7)
+info  - Generating static pages (5/7)
+info  - Generating static pages (7/7)
+info  - Finalizing page optimization...
+
+Page                                Size     First Load JS
+┌ ○ /                               1.79 kB        82.8 kB
+├   /_app                           0 B            67.1 kB
+├ ○ /404                            194 B          67.3 kB
+├ λ /admin                          2.64 kB        89.6 kB
+├ λ /admin/cash-receipt             2.94 kB        89.9 kB
+├ λ /admin/claim                    2.94 kB        89.9 kB
+├ ○ /admin/login                    1.65 kB        86.4 kB
+├ λ /admin/paid-repair              2.94 kB        89.9 kB
+├ λ /admin/reception                2.94 kB        89.9 kB
+├ λ /admin/return                   2.94 kB        89.9 kB
+├ λ /admin/signup                   2.6 kB         83.6 kB
+├   ├ css/2afeab882c669d42b6cf.css  102 kB
+├   └ css/620d38b77a89b808bc8e.css  108 B
+├ λ /admin/sms                      2.94 kB        89.9 kB
+├ λ /admin/sms-result               2.94 kB        89.9 kB
+├ λ /api/auth                       0 B            67.1 kB
+├ λ /api/auth/callback/kakao        0 B            67.1 kB
+├ λ /api/auth/kakao                 0 B            67.1 kB
+├ λ /api/auth/logout                0 B            67.1 kB
+├ λ /api/auth/signup                0 B            67.1 kB
+├ λ /api/db                         0 B            67.1 kB
+├ λ /api/getProductInfo             0 B            67.1 kB
+├ λ /api/getRepairInfo              0 B            67.1 kB
+├ λ /api/staffLogin                 0 B            67.1 kB
+├ λ /api/z_ex_hello                 0 B            67.1 kB
+├ λ /api/z_ex_isLogin               0 B            67.1 kB
+├ λ /api/z_ex_login                 0 B            67.1 kB
+├ λ /api/z_ex_logout                0 B            67.1 kB
+├ ○ /example                        1.07 kB        71.9 kB
+├   └ css/99492b8413865e20907e.css  757 B
+├ ○ /z_ex_index (444 ms)            18.9 kB          92 kB
+└ ○ /z_ex_login                     1.36 kB        74.5 kB
++ First Load JS shared by all       67.1 kB
+  ├ chunks/framework.2191d1.js      42.4 kB
+  ├ chunks/main.62b8ca.js           23.3 kB
+  ├ chunks/pages/_app.b231f5.js     661 B
+  ├ chunks/webpack.301358.js        776 B
+  └ css/120f2e2270820d49a21f.css    209 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
+
+> brackets-nextjs@0.1.0 build /root/brackets-git/Server
+> next build
+
+info  - Loaded env from /root/brackets-git/Server/.env.production
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
+info  - Checking validity of types...
+
+./pages/DEL/ex_index.js
+32:6  Warning: React Hook useEffect has a missing dependency: 'checkLogin'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/api/DEL/ex_isLogin.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/DEL/ex_login.js
+19:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/DEL/ex_logout.js
+1:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getProductInfo.js
+18:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/getRepairInfo.js
+38:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/api/staffLogin.js
+81:1  Warning: Assign arrow function to a variable before exporting as module default  import/no-anonymous-default-export
+
+./pages/fileupload.js
+33:9  Warning: Do not use <img>. Use Image from 'next/image' instead. See https://nextjs.org/docs/messages/no-img-element.  @next/next/no-img-element
+33:9  Warning: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+info  - Creating an optimized production build...
+info  - Using external babel configuration from /root/brackets-git/Server/.babelrc
+(node:13719) [DEP_WEBPACK_MODULE_UPDATE_HASH] DeprecationWarning: Module.updateHash: Use new ChunkGraph API
+Failed to compile.
+
+ModuleNotFoundError: Module not found: Error: Can't resolve './db' in '/root/brackets-git/Server/pages/api/DEL'
+
+
+> Build error occurred
+Error: > Build failed because of webpack errors
+    at /root/brackets-git/Server/node_modules/next/dist/build/index.js:397:19
+    at async Span.traceAsyncFn (/root/brackets-git/Server/node_modules/next/dist/telemetry/trace/trace.js:60:20)
+    at async Object.build [as default] (/root/brackets-git/Server/node_modules/next/dist/build/index.js:77:25)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! brackets-nextjs@0.1.0 build: `next build`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the brackets-nextjs@0.1.0 build script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2021-11-06T07_20_39_736Z-debug.log
