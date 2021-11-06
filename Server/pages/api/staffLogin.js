@@ -65,7 +65,7 @@ export async function staffLogin(type,store,kid, uid, phone, name) {
         	});
 
 	    //console.log(result);
-            return result;
+            return staffid;
 
 	}
 	else{
@@ -92,22 +92,19 @@ export default (req, res) => {
     //200 - 성공, 204 - 아이디 없음, 205 - 아이디 이미 존재
     staffLogin(type,store,kid,uid,phone,name).then((body) => {
 	//console.log("bbb",body['affectedRows']);
-        if (body.length){
-                console.log("Fail ", body);
-		if (body == "no-staff"){
-                	res.status(204).send();
-		}
-		else if (body == "id-exist"){
-                	res.status(205).send();
-		}
-        }
-        else{
-		if(body['affectedRows']){
-                	console.log("StaffLogin/Logout/Signin SUCC");
-			res.statusCode = 200;
-                	res.json({body:"succ"});
-		}
-        }
+	if (body == "no-staff"){
+		console.log("Fail ", body);
+		res.status(204).send();
+	}
+	else if (body == "id-exist"){
+		console.log("Fail ", body);
+		res.status(205).send();
+	}
+	else if(body){
+		console.log("StaffLogin/Logout/Signin SUCC");
+		res.statusCode = 200;
+		res.json({body:"succ", user_id:body});
+	}
 
     });
   }
