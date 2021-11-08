@@ -2,7 +2,7 @@ import { act } from "react-test-renderer";
 import { createStore } from "redux";
 
 export default createStore(function(state,action){
-    var array =[];
+    
     if(state === undefined){
 
 
@@ -46,10 +46,11 @@ export default createStore(function(state,action){
         return{...state, selectType:  []};
     }
     if(action.type === 'PHOTORESET'){
-        return{...state,  photoArr:  []};
+        return{...state,  photoArr: action.setPhoto};
     }
     if(action.type === 'PLUSINDEXNUMBER'){
-        return{...state,  indexNumber:state.indexNumber+1};
+        state.indexNumber= state.indexNumber + action.plus;
+        return{...state,  indexNumber:state.indexNumber};
     }
     if (action.type ==='TYPESTORE') {
         return{...state,  typeStore: [...state.typeStore,action.typeStoreAdd]};
@@ -59,6 +60,19 @@ export default createStore(function(state,action){
     }
     if(action.type === 'RESET_BASIC_REPAIR_STORE'){
         return{...state,  basicRepairStore: action.reset};
+    }
+    if(action.type === 'DELETE_KEY_SELECT_TYPE'){
+        console.log(state.selectType.length);
+        for(let i  = 0 ; i < state.selectType.length;i++){
+            console.log(state.selectType[i]);
+            console.log(action.deleteTypeKey);
+            if(state.selectType[i].key==action.deleteTypeKey){
+                state.selectType.splice(i,1);
+               i--;
+            }
+        }
+        return{...state,selectType:[...state.selectType]}
+        
     }
     return state;
 }) 

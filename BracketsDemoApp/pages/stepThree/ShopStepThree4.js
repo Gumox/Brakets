@@ -3,7 +3,7 @@ import Contents from '../../components/Contents';
 import ButtonBlack from '../../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../../components/ContainView';
-import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions} from 'react-native';
+import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler} from 'react-native';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import store from '../../store/store';
@@ -70,20 +70,35 @@ const ContainImg =styled.View`
     width:90px;
     height:100px;
 `;
+const AddTypeDleleteView =styled.View`
+    flex-direction: row;
+    justify-content: space-around;
+`;
+const DeleteButton = styled.TouchableOpacity`
+    background-color : #FF4500;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+`;
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 
 function ShopStepThree4({route,navigation}) {
     const uriList=store.getState().photoArr;
     
-    console.log(uriList);
     const photoUri =[];
     uriList.forEach(obj=> {
         if(obj.key === 0){
             photoUri.push(obj);
         }
     });
-    const selectedType = store.getState().selectType[0]; 
-    console.log(selectedType);
+    const selectedType = store.getState().selectType[0].value; 
     
+    console.log(uriList);
+    console.log("");
     var index = 0;
 
     const [arrayValueIndex,setArrayValueIndex] =React.useState(0);
@@ -108,10 +123,8 @@ function ShopStepThree4({route,navigation}) {
         body: JSON.stringify(bodyData)
         });
         if(key>0){
-        console.log("is in here: getAplType ");
         const json = await response.json();
         const xData = json.body;
-        console.log(xData);
         xData.forEach(obj => {
             if(value === obj.repair_name){
               console.log(obj.receiver_name);
@@ -156,17 +169,14 @@ function ShopStepThree4({route,navigation}) {
             
             const json = await response.json();
             if(key>0){
-                console.log("is in here ")
                 chlidDataList[key] =(json.body);
                 
-                console.log(chlidDataList[key]);
                 chlidList.push( DataParseForDropdownList(chlidDataList[key]));
                 const cData=DataParseForDropdownList(chlidDataList[key]);
                 store.dispatch({type:"TYPESTORE",typeStoreAdd: cData});
-                //return(json.body);
+                
             }else{
                 setDataList(json.body);
-                console.log(dataList);
             }
         } catch (error) {
             console.error(error);
@@ -179,13 +189,12 @@ function ShopStepThree4({route,navigation}) {
     const [dataList,setDataList] = React.useState([]);
     
     const DataParseForDropdownList = (dataList)=>{
-        console.log(dataList);
+ 
         const itemList=[];
         for(var i =0 ; i<dataList.length;i++){
             itemList.push( dataList[i].receiver_name)
         }
         
-        //console.log(itemList);
         const Lists =[];
     
         if (itemList !==null){
@@ -194,22 +203,62 @@ function ShopStepThree4({route,navigation}) {
         }
         return(Lists);
     }
+    const DeleteAddType = (deleteKey,deleteType) => {
+        var delList =uriList;
+
+        store.dispatch({type:'DELETE_KEY_SELECT_TYPE',deleteTypeKey:deleteKey});
+        
+        for(let i = 0  ; i<delList.length;i++){
+            if(delList[i].key == deleteKey){
+                delList.splice(i,1);
+                i--;
+            }
+        }
+        for(let i = 0 ; i<delList.length;i++){
+            if(delList[i].key > deleteKey){
+                var obj = delList[i];
+                obj.key=Number(obj.key) -1;
+            }
+        }
+        store.dispatch({type:'PLUSINDEXNUMBER',plus:-1});
+        console.log("deleted:  ");
+        console.log(delList);
+        console.log("store saved:  ");
+        console.log( store.getState().photoArr);
+        store.dispatch({type:'PHOTORESET',setPhoto:delList});
+        console.log("store changed:  ");
+        console.log( store.getState().photoArr);
+        
+        //OnRefresh();
+        navigation.replace("ShopStepThree4");
+    }
 
     const List = DataParseForDropdownList(dataList);
     const List0 = store.getState().basicRepairStore;
-    //전단계 찍은 사진들 쌓은 부분
+    //전단계 찍은 사진들 쌓은 부분 ---
     var photoOutput= [];
-    
     for(var i =0; i<photoUri.length;i++){
         var tempPhoto = (
             <Image key = {i} style={{width:90, height:100}} source={{uri:photoUri[i].value}}/>
         );
         photoOutput[i] = (tempPhoto);
     }
-    console.log("+++++----++-+-+-++++"+photoOutput);
-    
+    // ---
     React.useEffect(()=>{
         getAplStore(selectedType,0);  
+        const backAction = () => {
+            store.dispatch({type:'PHOTORESET',setPhoto:[]});
+            navigation.goBack();
+            return true;
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => backHandler.remove();
+
     },[]);
     // 수선유형 추가하면 쌓이는 부분 //
     var output=[];
@@ -217,28 +266,24 @@ function ShopStepThree4({route,navigation}) {
     if(store.getState().indexNumber>0){
         for (var i = 1; i < store.getState().indexNumber+1; i++) {
             
-            const keySelectedType = store.getState().selectType[i];
-            var xxx=[];
-            console.log("???????"+keySelectedType);
+            const keySelectedType = store.getState().selectType[i].value;
+            console.log(i+":get: "+keySelectedType);
+        
             React.useEffect(()=>{
-                console.log("+++++++++++++++++++++++++++++++++");
-                console.log(i+"번")
+              
                 //getAplStore(keySelectedType,i);
                 console.log(store.getState().typeStore)
             },[]);
             
             const cList =store.getState().typeStore[i-1][0];
             const cBasicLavel = store.getState().basicRepairStore[i];
-            console.log("======:"+ cList);
-            console.log(Object.assign({}, cList))
-
-            console.log("get data: "+xxx);
+           
             var indexUriList =[];
             var photoImages =[];
             uriList.forEach(element => {
                 if(element.key == i){
                     indexUriList.push(element);
-                    //console.log(indexUriList);
+                   
                 }
             });
             for(var j=0; j < indexUriList.length ; j++){
@@ -247,26 +292,32 @@ function ShopStepThree4({route,navigation}) {
                 );
                 photoImages[j] =(photoImage);
             }
-            
+            const myKey = i;
+            console.log("025852025852:   "+myKey);
             var tempItem=  (
-                <View key ={i} >
+                <View key ={myKey} >
                     <Label/>
                     <InfoView>
-
+                        <AddTypeDleleteView><DeleteButton onPress ={() =>{
+                            DeleteAddType(myKey)
+                            console.log(myKey)}
+                        }><Text>✖</Text></DeleteButton></AddTypeDleleteView>
                         <Text>{keySelectedType}</Text>
-
-                        <TopStateView>
-                            {photoImages}
-                            
-                            <ContainImg><Image style={{width:40, height:40}} source ={require("../../Icons/plus.png")}/></ContainImg>
-                            
-                        </TopStateView>
+                        
+                        <ScrollView horizontal ={true}>
+                            <TopStateView>
+                                {photoImages}
+                                
+                                <ContainImg><Image style={{width:40, height:40}} source ={require("../../Icons/plus.png")}/></ContainImg>
+                                
+                            </TopStateView>
+                        </ScrollView>
 
                         <Label>추가 요청 사항</Label>
                         <Input  multiline={ true }/>
                         <Label>수선처</Label>
                         <Picker
-                            key ={i}
+                            key ={myKey}
                             placeholder={{ label: '기본위치: ' + cBasicLavel }}
                             style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
                             onValueChange={(value) => console.log(value)}
@@ -291,12 +342,14 @@ function ShopStepThree4({route,navigation}) {
             <InfoView>
 
             <Text>{selectedType}</Text>
-            
-            <TopStateView>
-                {photoOutput}
-                <ContainImg><Image style={{width:40, height:40}} source ={require("../../Icons/plus.png")}/></ContainImg>
-                
-            </TopStateView>
+
+            <ScrollView horizontal ={true}>
+                <TopStateView>
+                    {photoOutput}
+                    <ContainImg><Image style={{width:40, height:40}} source ={require("../../Icons/plus.png")}/></ContainImg>
+                    
+                </TopStateView>
+            </ScrollView>
 
             <Label>추가 요청 사항</Label>
             <Input  multiline={ true }/>
@@ -318,18 +371,16 @@ function ShopStepThree4({route,navigation}) {
             onValueChange={(value) =>
             {
               setSelect(value)
-
-
              
-
-              
-              
-              store.dispatch({type:'SELECTTYPE',typeSelect: value})
-              console.log(store.getState().selectType)
               store.dispatch({type:'PLUSINDEXNUMBER',plus:1});
               index = store.getState().indexNumber;
+
+              store.dispatch({type:'SELECTTYPE',typeSelect: {key :index , value : value}});
+              console.log(store.getState().selectType);
+              
               getAplType(value,index);
               console.log("arrayValueIndex: "+index);
+              
               getAplStore(value,index);
               
               navigation.replace("TakePhoto",{key:"FullShot",value:index});

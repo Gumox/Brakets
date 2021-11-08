@@ -83,6 +83,18 @@ const ImgIcon =styled.Image`
     height: 20px;
     margin_right:10px;
 `;
+const CodeViewText = styled.Text`
+    font-size: 20px;
+    color:#ffffff;
+`;
+const CodeView = styled.View`
+    align-items: center;
+    margin: 12px;
+    width: 300px;
+    background-color:#78909c;
+    border-radius:8px
+`;
+
 
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepOne( { navigation } ) {
@@ -98,6 +110,8 @@ function ShopStepOne( { navigation } ) {
 
     const [modalVisible, setModalVisible] = React.useState(false);
     const [modalVisible2, setModalVisible2] = React.useState(false);
+
+    const sendForRepir =store.getState().basicRepairStore[0];
 
     const styles = StyleSheet.create({
         centeredView: {
@@ -124,6 +138,10 @@ function ShopStepOne( { navigation } ) {
             width: 0,
             height: 2
           },
+        },
+        ViewCenter:{
+            justifyContent: "center",
+            alignItems: "center",
         }
       });
 
@@ -157,7 +175,7 @@ function ShopStepOne( { navigation } ) {
                         <View style={styles.centeredView}>
                         <View style ={styles.xView} >    
                         <View style={styles.modalView} >
-                            <Label>{barcode}</Label>
+                            <CodeView><CodeViewText>{barcode}</CodeViewText></CodeView>
                             <ImageZoom cropWidth={320}
                                     cropHeight={400}
                                     imageWidth={300}
@@ -177,7 +195,7 @@ function ShopStepOne( { navigation } ) {
                     <TouchableView onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label><ImgIcon source={require('../Icons/image.png')}/></TouchableView>
                    
                 <GrayText>받는 곳</GrayText>
-                <DataView><Label></Label></DataView>
+                <DataView><Label>{sendForRepir}</Label></DataView>
                 <GrayText>행낭 바코드</GrayText>
                 <Modal
                         animationType="slide"
@@ -190,7 +208,7 @@ function ShopStepOne( { navigation } ) {
                         <View style={styles.centeredView}>
                         <View style ={styles.xView} >    
                         <View style={styles.modalView} >
-                            <Label>{bag}</Label>
+                        <CodeView><CodeViewText>{bag}</CodeViewText></CodeView>
                             <ImageZoom cropWidth={320}
                                     cropHeight={400}
                                     imageWidth={300}

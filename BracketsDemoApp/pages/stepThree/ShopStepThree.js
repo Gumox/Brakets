@@ -8,7 +8,7 @@ import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
-import { Alert } from 'react-native';
+import { Alert ,BackHandler} from 'react-native';
 import store from '../../store/store';
 
 const TopStateView = styled.View`
@@ -81,7 +81,20 @@ function ShopStepThree( { navigation } ) {
         getAplType();
         console.log("uri data: "+data);
         //console.log(dataList[0].receiver_name);
-        
+        getAplStore(selectedType,0);  
+
+        const backAction = () => {
+            store.dispatch({type:'SELECTTYPERESET'});
+            navigation.goBack();
+            return true;
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => backHandler.remove();
       },[]);
   
   return (
@@ -157,7 +170,7 @@ function ShopStepThree( { navigation } ) {
               );
               
             }else{
-              store.dispatch({type:'SELECTTYPE',typeSelect: select})
+              store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
               console.log(store.getState().selectType)
               navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
             }}}>
