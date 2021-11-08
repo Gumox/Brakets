@@ -1,0 +1,17 @@
+const COLOR = {
+  MENU_MAIN: "#4B89DC",
+  FILTER_MAIN: "#3EB489",
+
+  WHITE: "#FFFFFF",
+  BLACK: "#000000",
+  RED: "#FF0000",
+  YELLOW: "#FFFF00",
+  GREEN: "#00FF00",
+  PURPLE: "#800080",
+  BLUE: "	#0000FF",
+  GRAY: "#808080",
+  CYAN_BLUE: "#0066FF",
+  MINT: "#3EB489",
+};
+
+export default COLOR;
