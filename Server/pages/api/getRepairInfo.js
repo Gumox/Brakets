@@ -20,7 +20,7 @@ export async function getRepairInfo(repair, category, receipt, name) {
 	
 	//repair == 'store'
 	else{
-	    q = "SELECT priority, repair_name, receiver, receiver_name FROM repair_type WHERE repair_name = ? ORDER BY priority";
+	    q = "SELECT priority, repair_id, repair_name, receiver, receiver_name FROM repair_type WHERE repair_name = ? ORDER BY priority";
 	}
 
         const result = await excuteQuery({
