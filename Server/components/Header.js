@@ -1,39 +1,10 @@
 import React from "react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import axios from "axios";
 import styled from "styled-components";
-import HeaderButton from "./HeaderButton";
 
-const MENUS = [
-  {
-    title: "수선접수/처리",
-    link: "/admin/reception",
-  },
-  {
-    title: "하자반품",
-    link: "/admin/return",
-  },
-  {
-    title: "업체클레임",
-    link: "/admin/claim",
-  },
-  {
-    title: "유상수선",
-    link: "/admin/paid-repair",
-  },
-  {
-    title: "현금영수증",
-    link: "/admin/cash-receipt",
-  },
-  {
-    title: "SMS 전송",
-    link: "/admin/sms",
-  },
-  {
-    title: "SMS 결과",
-    link: "/admin/sms-result",
-  },
-];
+import MENUS from "../constants/menu";
+import HeaderButton from "./HeaderButton";
 
 const Header = ({ path }) => {
   const router = useRouter();
@@ -54,7 +25,7 @@ const Header = ({ path }) => {
 };
 
 const Wrapper = styled.div`
-  margin: 5px 2% 0 2%;
+  margin: 5px 2% 5px 1%;
   width: 96%;
   height: 30px;
   display: flex;
@@ -75,6 +46,7 @@ const Logout = styled.button`
   padding: 2px 5px;
   text-align: center;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 export default Header;
