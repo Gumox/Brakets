@@ -27,6 +27,7 @@ import InputAlternativeNumber from './pages/InputAlternativeNumber';
 import ProductInfo from './pages/ProductInfo';
 import ScanScreen from './Functions/ScanScreen';
 import TakePhoto from './Functions/TakePhoto';
+import BarcodeScreen from './Functions/BarcodeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -64,7 +65,7 @@ function App() {
 
         <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{ title: 'QR 코드 스캔' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="TakePhoto" component={TakePhoto} options={{ headerShown: false }}  />
-
+        <Stack.Screen name="BarcodeScreen" component={BarcodeScreen}  options={{ title: '스캔' ,headerTitleAlign: 'center'}} />
 
       </Stack.Navigator>
     </NavigationContainer>
