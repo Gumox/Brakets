@@ -7,7 +7,7 @@ const StateBarSolid = styled.View`
     height: 10px;
     background: #78909c;
     border:2px solid #78909c;
-    border-radius:12px
+    border-radius:12px;
     margin-right:5px;
     margin-left:5px;
 `;

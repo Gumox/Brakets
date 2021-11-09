@@ -82,4 +82,4 @@ const styles = {
     }
 };
 
-export default  BarcodeScreen;
+export default BarcodeScreen;
