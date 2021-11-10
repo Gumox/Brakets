@@ -136,6 +136,13 @@ export default class TakePhoto extends Component {
         store.dispatch({type:'ADD',add: addPhoto});
         
         this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
+      }else if(route.params.key === "RetakePhoto"){
+        const addPhoto = {key: route.params.value,value:imgUri,index: route.params.index};
+        
+        //console.log(addPhoto);
+        store.dispatch({type:'ADD',add: addPhoto});
+        
+        this.props.navigation.replace("PhotoControl",addPhoto);
       }
     }  
   };

@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
       },
     }
   });
+  
+
 export default function PhotoControl({ navigation ,route}){
     const [selected,setSelected] = React.useState( route.params);
 
@@ -61,10 +63,31 @@ export default function PhotoControl({ navigation ,route}){
         console.log(store.getState().photoArr);
         store.dispatch({type:"PHOTORESET",setPhoto: saved});
         console.log(store.getState().photoArr);
-        navigation.replace("ShopStepThree4");
+        
     }
     const RetakePhoto = () =>{
+        DeletePhoto();
+        navigation.navigate("TakePhoto",{key:"RetakePhoto",value:selected.key,index:selected.index});
 
+    }
+    var output;
+    if(selected.index === 0 || selected.index ===1){
+        output=(
+            <PView>
+            <Pressable onPress ={ () =>{RetakePhoto()}}><Text>다시찍기</Text></Pressable>
+            <Pressable onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text>확인</Text></Pressable>
+            </PView>
+        );
+    }else{
+        output=(
+            <PView>
+            <Pressable onPress ={ () =>{RetakePhoto()}}><Text>다시찍기</Text></Pressable>
+            <Pressable onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text>확인</Text></Pressable>
+            <Pressable onPress ={ () =>{ {
+                DeletePhoto();
+                navigation.replace("ShopStepThree4");}}}><Text>삭제</Text></Pressable>
+            </PView>
+        );
     }
     return(
         <Container>
@@ -84,11 +107,7 @@ export default function PhotoControl({ navigation ,route}){
                         </View>
                         </View>
                         </View>
-                <PView>
-                <Pressable><Text>다시찍기</Text></Pressable>
-                <Pressable ><Text>확인</Text></Pressable>
-                <Pressable onPress ={ () =>{ DeletePhoto()}}><Text>삭제</Text></Pressable>
-                </PView>
+                {output}
             
             </ImgView>
         </Container>

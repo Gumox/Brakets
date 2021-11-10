@@ -134,7 +134,7 @@ function ShopStepThree4({route,navigation}) {
     var chlidDataList = [];
     var inputTexts = [];
     if(store.getState().indexNumber>0){
-        for (var i = 0 ;i < store.getState().indexNumber+1; i++) {
+        for (var i = 0 ;i < store.getState().indexNumber; i++) {
             
             const keySelectedType = store.getState().selectType[i].value;
             console.log(i+":get: "+keySelectedType);
@@ -196,7 +196,7 @@ function ShopStepThree4({route,navigation}) {
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <Contents>
             <CenterView><TopIntro>수선 정보 확인</TopIntro></CenterView>
-            <Label>총 {store.getState().indexNumber+1}개</Label>
+            <Label>총 {store.getState().indexNumber}개</Label>
 
             
             {output}

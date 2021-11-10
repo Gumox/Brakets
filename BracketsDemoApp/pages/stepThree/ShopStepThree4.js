@@ -282,7 +282,7 @@ function ShopStepThree4({route,navigation}) {
     var chlidDataList = [];
     var inputTexts = [];
     if(store.getState().indexNumber>0){
-        for (var i = 1; i < store.getState().indexNumber+1; i++) {
+        for (var i = 1; i < store.getState().indexNumber; i++) {
             
             const keySelectedType = store.getState().selectType[i].value;
             console.log(i+":get: "+keySelectedType);
@@ -307,7 +307,10 @@ function ShopStepThree4({route,navigation}) {
             });
             for(var j=0; j < indexUriList.length ; j++){
                 var photoImage =(
+                    
+                    <Pressable onPress={() => {navigation.replace("PhotoControl",{key: 0 ,value: img.value,index:img.index})}}>
                     <Image  key = {j} style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j].value}}/>
+                    </Pressable>
                 );
                 photoImages[j] =(photoImage);
             }
