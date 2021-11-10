@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Linking,
   Dimensions,
-  Image
+  Image,
+  Vibration
   } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -88,6 +89,7 @@ export default class TakePhoto extends Component {
   const {route}=this.props;
 
     console.log("to go: "+route.params.key);
+    Vibration.vibrate();
 
     //console.log("go");
     if (this.camera) {
