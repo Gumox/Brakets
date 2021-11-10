@@ -89,8 +89,6 @@ const ModalInsideOptionsView =styled.View`
 
 function ShopStepThree4({route,navigation}) {
 
-    const [text,setText] = React.useState('');
-
     const uriList=store.getState().photoArr;
     const indexSort =uriList.sort(function (a,b) {
         return a.index -b.index;
@@ -103,8 +101,6 @@ function ShopStepThree4({route,navigation}) {
     });
     
     
-    console.log("++++++++++++++++++++++");
-    console.log("?"+indexSort);
     //console.log(uriList.sort);
     const selectedType = store.getState().selectType[0].value; 
     
@@ -282,7 +278,7 @@ function ShopStepThree4({route,navigation}) {
     var chlidDataList = [];
     var inputTexts = [];
     if(store.getState().indexNumber>0){
-        for (var i = 1; i < store.getState().indexNumber; i++) {
+        for (var i = 1; i < store.getState().indexNumber+1; i++) {
             
             const keySelectedType = store.getState().selectType[i].value;
             console.log(i+":get: "+keySelectedType);
@@ -308,8 +304,8 @@ function ShopStepThree4({route,navigation}) {
             for(var j=0; j < indexUriList.length ; j++){
                 var photoImage =(
                     
-                    <Pressable onPress={() => {navigation.replace("PhotoControl",{key: 0 ,value: img.value,index:img.index})}}>
-                    <Image  key = {j} style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j].value}}/>
+                    <Pressable  key = {j} onPress={() => {navigation.replace("PhotoControl",{key: 0 ,value: img.value,index:img.index})}}>
+                    <Image  style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j].value}}/>
                     </Pressable>
                 );
                 photoImages[j] =(photoImage);
@@ -390,7 +386,7 @@ function ShopStepThree4({route,navigation}) {
             <Input 
                  multiline={ true }
                  
-                 onChangeText={ value => setText( value ) }/>
+                 onChangeText={ value => inputTexts[0]=( value ) }/>
             <Label>수선처</Label>
             <Picker
                 placeholder={{ label: '기본위치: '+List0[0]}}
@@ -437,9 +433,10 @@ function ShopStepThree4({route,navigation}) {
             </Contents>
             <CenterView>
                 <ButtonBlack onPress={ ()=>
-                    {console.log(" : "+text);
-                     console.log(" :? ");
+                    {
                      console.log(inputTexts);
+                     store.dispatch({type:'ADD_REQUESR',addRequest:inputTexts});
+                     console.log(store.getState().addRequest)
                      navigation.navigate( 'ShopStepThree5' );
                     }
                 }>

@@ -92,7 +92,7 @@ function StartPage( { navigation } ) {
                     </SelectButton>
             </Contents>
             <BottomView>
-                    <BottomButton onPress = {() => navigation.navigate( 'ShopStepOne')}>
+                    <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
                         <BottomButtonText>
                             접수
                         </BottomButtonText>

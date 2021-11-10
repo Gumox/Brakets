@@ -51,7 +51,8 @@ function ShopStepThree( { navigation } ) {
   const [select,setSelect] =  React.useState(null);
 
   const [data, setData] = React.useState([]);
-  const ix = 1;
+  const ix = store.getState().indexNumber;
+  console.log(ix);
   
   const [isLoading, setLoading] = React.useState(true);
   const bodyData = {"repair":"type",
@@ -171,6 +172,7 @@ function ShopStepThree( { navigation } ) {
               
             }else{
               store.dispatch({type:'PHOTORESET',setPhoto:[]});
+              store.dispatch({type:'PLUSINDEXNUMBER',plus:-ix});
               store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
               console.log(store.getState().selectType)
               navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });

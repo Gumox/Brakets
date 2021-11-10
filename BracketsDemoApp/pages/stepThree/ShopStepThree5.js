@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react';
 import Contents from '../../components/Contents';
-import ButtonBlack from '../../components/ButtonBlack';
+import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import ContainView from '../../components/ContainView';
 import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler, Touchable} from 'react-native';
@@ -10,17 +10,7 @@ import store from '../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
 import _ from 'lodash';
-
-const RetakeView = styled.TouchableOpacity`
-    padding:3px;
-    background-color:#0000ff;
-    border-radius:10px;
-`;
-const DeleteView = styled.TouchableOpacity`
-    padding:3px;
-    background-color:#ff0000;
-    border-radius:10px;
-`;
+import ShopStepFour2 from '../ShopStepFour2';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -32,13 +22,7 @@ const PrView = styled.View`
     flex-direction: row;
     justify-content:space-between;
 `;
-const Input = styled.TextInput`
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px
-`;
+
 const CenterView =styled.View`
     align-items: center;
 `;
@@ -59,33 +43,21 @@ const InfoView =styled.View`
     
     padding:15px;
 `;
-const DropBackground= styled.View`
-    width: 220px;
-    border-radius:10px;
-    font-color:#ffffff
-`;
-const ContainImg =styled.TouchableOpacity`
-    border:2px
-    justify-content: center;
-    align-items: center;
-    width:75px;
-    height:100px;
-    margin-Left:3px;
-`;
-const AddTypeDleleteView =styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-`;
-const DeleteButton = styled.TouchableOpacity`
 
+const Input = styled.Text`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    border : 1.5px;
+    border-radius:10px
 `;
-const ModalInsideOptionsView =styled.View`
-    margin-Top:10px;
-    width: 300px;
-    flex-direction: row;
-    justify-content: space-around;
+const SendText = styled.Text`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px
 `;
-
 
 function ShopStepThree4({route,navigation}) {
 
@@ -102,15 +74,9 @@ function ShopStepThree4({route,navigation}) {
         }
     });
     
-    
-    console.log("++++++++++++++++++++++");
-    console.log("?"+indexSort);
-    //console.log(uriList.sort);
     const selectedType = store.getState().selectType[0].value; 
+
     
-    console.log(uriList);
-    console.log("");
-   
     React.useEffect(()=>{
         const backAction = () => {
             
@@ -131,18 +97,24 @@ function ShopStepThree4({route,navigation}) {
     },[]);
     // 수선유형 추가하면 쌓이는 부분 //
     var output=[];
-    var chlidDataList = [];
-    var inputTexts = [];
-    if(store.getState().indexNumber>0){
-        for (var i = 0 ;i < store.getState().indexNumber; i++) {
+    var inputTexts = store.getState().addRequest;
+    console.log(inputTexts);
+        for (var i = 0 ;i < store.getState().indexNumber+1; i++) {
             
+            const [request,setRequet] =React.useState();
             const keySelectedType = store.getState().selectType[i].value;
             console.log(i+":get: "+keySelectedType);
         
             React.useEffect(()=>{
               
                 //getAplStore(keySelectedType,i);
-                console.log(store.getState().typeStore)
+                //console.log(store.getState().typeStore);
+                console.log(myKey+':'+inputTexts[myKey])
+                if(inputTexts[myKey] == undefined){
+                    setRequet("없음")
+                }else{
+                    setRequet(inputTexts[myKey]);
+                }
             },[]);
             
             const cBasicLavel = store.getState().basicRepairStore[i];
@@ -161,14 +133,15 @@ function ShopStepThree4({route,navigation}) {
                 );
                 photoImages[j] =(photoImage);
             }
+            
+            
             const myKey = i;
-            console.log("025852025852:   "+myKey);
             var tempItem=  (
                 <View key ={myKey} >
-                    <Label/>
+                   
                     <InfoView>
-                       
-                        <Text>{keySelectedType}</Text>
+                        <Text>({i+1})</Text>
+                        <Label>{keySelectedType}</Label>
                         
                         <ScrollView horizontal ={true} style={{marginLeft:8,marginRight:8,marginTop:5,marginBottom:5}}>
                                 {photoImages}
@@ -177,18 +150,17 @@ function ShopStepThree4({route,navigation}) {
                         <Label>추가 요청 사항</Label>
                         <Input  
                             multiline={ true }
-                            
-                            onChangeText={ value => inputTexts[myKey] =( value)  }/>
+                            >{request}</Input>
                         <Label>수선처</Label>
-                        
-                        </InfoView>
-                
+                        <SendText>{store.getState().basicRepairStore[myKey]}</SendText>
+                    </InfoView>
+                    <Label/>
                 </View>
             );
             output[i] = (tempItem);
 
         }
-    }
+    
     
     return (
         
@@ -196,21 +168,18 @@ function ShopStepThree4({route,navigation}) {
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <Contents>
             <CenterView><TopIntro>수선 정보 확인</TopIntro></CenterView>
-            <Label>총 {store.getState().indexNumber}개</Label>
+            <Label>총 {store.getState().indexNumber+1}개</Label>
 
             
             {output}
             <Label/>
             </Contents>
             <CenterView>
-                <ButtonBlack onPress={ ()=>
-                    {console.log(" : "+text);
-                     console.log(" :? ");
-                     console.log(inputTexts);
-                    }
-                /*navigation.navigate( 'ShopStepThree5' )*/ }>
-                    다음
-                </ButtonBlack>
+                <Button onPress={ ()=>
+                    
+                    navigation.navigate( 'ScanScreen',{key:'ShopStepFour2'} ) }>
+                    4단계: 서비스 바코드 스캔 
+                </Button>
             </CenterView>
         </ContainView>
     )

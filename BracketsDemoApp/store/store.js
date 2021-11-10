@@ -9,7 +9,7 @@ export default createStore(function(state,action){
         return{
             cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", 
             picture:"",picture2:"",selectType:[],bagPicture:"", photoArr:[],indexNumber:0,
-            typeStore:[],basicRepairStore : []}
+            typeStore:[],basicRepairStore : [],addRequest: []}
     }
     
     if(action.type ==='SERVICECAED'){
@@ -73,6 +73,9 @@ export default createStore(function(state,action){
         }
         return{...state,selectType:[...state.selectType]}
         
+    }
+    if(action.type === 'ADD_REQUESR'){
+        return{...state,  addRequest: action.addRequest};
     }
     return state;
 }) 
