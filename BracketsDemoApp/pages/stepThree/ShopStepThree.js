@@ -81,7 +81,7 @@ function ShopStepThree( { navigation } ) {
         getAplType();
         console.log("uri data: "+data);
         //console.log(dataList[0].receiver_name);
-        getAplStore(selectedType,0);  
+        //getAplStore(selectedType,0);  
 
         const backAction = () => {
             store.dispatch({type:'SELECTTYPERESET'});
@@ -170,6 +170,7 @@ function ShopStepThree( { navigation } ) {
               );
               
             }else{
+              store.dispatch({type:'PHOTORESET',setPhoto:[]});
               store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
               console.log(store.getState().selectType)
               navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });

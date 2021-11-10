@@ -44,7 +44,19 @@ function InputAlternativeNumber({navigation}) {
                 style={{ width: 250 }}/>
             </JustView>
             <Button 
-                onPress={ () => (input != '') ? (
+                onPress={ () => 
+                    {  navigation.navigate( 'ProductInfo', {codeType: 'qrcode', code: input} ) }                 
+                    }>
+                    다음
+            </Button>
+        </Container>
+    )
+}
+
+export default InputAlternativeNumber;
+
+/*console.log(input);
+                    (input != '') ? (
                         navigation.navigate( 'ProductInfo', {codeType: 'qrcode', code: input} )
                     ) : (
                         Alert.alert(            
@@ -54,12 +66,4 @@ function InputAlternativeNumber({navigation}) {
                                 { text: "확인"},
                             ]
                         )
-                    )                   
-                    }>
-                    다음
-            </Button>
-        </Container>
-    )
-}
-
-export default InputAlternativeNumber;
+                    ) */

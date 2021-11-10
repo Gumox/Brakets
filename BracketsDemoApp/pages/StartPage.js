@@ -38,7 +38,7 @@ const BottomButtonText = styled.Text`
 const BottomEmptySpace = styled.View`
     background: #78909c;
     width: 100%;
-    height: 4%;
+    height: 3%;
 `;
 
 
@@ -84,6 +84,12 @@ function StartPage( { navigation } ) {
     return(
         <Container>
             <Contents>
+                <SelectButton onPress={ ()=> 
+                    //navigation.navigate( 'CameraQR')}
+                    navigation.navigate( 'ShopStepOne' ) }
+                    >
+                        시작
+                    </SelectButton>
             </Contents>
             <BottomView>
                     <BottomButton onPress = {() => navigation.navigate( 'ShopStepOne')}>

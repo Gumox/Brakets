@@ -94,7 +94,7 @@ function ProductInfo({navigation, route}) {
 
             // console.log(response.data.body[0].qrcode)
         ) : (
-            navigation.goBack(),
+            //navigation.goBack(),
             Alert.alert(            
                 "QR코드/Barcode 오류",             
                 "알맞은 QR코드/Barcode를 입력하세요",                   
@@ -119,11 +119,8 @@ function ProductInfo({navigation, route}) {
 
 
     return (
-        <KeyboardAwareScrollView
-            enableOnAndroid={true}
-            keyboardShouldPersistTaps={"handled"}
-            enableResetScrollToCoords={false}
-        >
+       
+        
             <ContainView>
                 <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
                 <Contents>
@@ -269,7 +266,6 @@ function ProductInfo({navigation, route}) {
 
             </ContainView>
 
-        </KeyboardAwareScrollView>
     )
 }
 

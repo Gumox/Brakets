@@ -3,18 +3,25 @@ import Contents from '../../components/Contents';
 import ButtonBlack from '../../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../../components/ContainView';
-import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler} from 'react-native';
+import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler, Touchable} from 'react-native';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import store from '../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
+import _ from 'lodash';
 
-const TouchableView = styled.TouchableOpacity`
-    width: 100%;
-    background-color:#d6d6d6;
+const RetakeView = styled.TouchableOpacity`
+    padding:3px;
+    background-color:#0000ff;
     border-radius:10px;
 `;
+const DeleteView = styled.TouchableOpacity`
+    padding:3px;
+    background-color:#ff0000;
+    border-radius:10px;
+`;
+
 const Label = styled.Text`
     font-size: 15px;
     margin-Top: 12px;
@@ -40,12 +47,6 @@ const TopIntro =styled.Text`
     font-weight: bold;
     margin: 15px;
 `;
-
-const ImgIcon =styled.Image`
-    width: 20px;
-    height: 20px;
-    margin:10px;
-`;
 const TopStateView = styled.View`
     flex-direction: row;
     padding:24px;
@@ -63,38 +64,48 @@ const DropBackground= styled.View`
     border-radius:10px;
     font-color:#ffffff
 `;
-const ContainImg =styled.View`
-    background-color:#d6d6d6;
+const ContainImg =styled.TouchableOpacity`
+    border:2px
     justify-content: center;
     align-items: center;
-    width:90px;
+    width:75px;
     height:100px;
+    margin-Left:3px;
 `;
 const AddTypeDleleteView =styled.View`
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
 `;
 const DeleteButton = styled.TouchableOpacity`
-    background-color : #FF4500;
-    width: 20px;
-    height: 20px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
+
 `;
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
+const ModalInsideOptionsView =styled.View`
+    margin-Top:10px;
+    width: 300px;
+    flex-direction: row;
+    justify-content: space-around;
+`;
+
 
 function ShopStepThree4({route,navigation}) {
+
+    const [text,setText] = React.useState('');
+
     const uriList=store.getState().photoArr;
-    
-    const photoUri =[];
-    uriList.forEach(obj=> {
+    const indexSort =uriList.sort(function (a,b) {
+        return a.index -b.index;
+    })
+    const photoUri=[];
+    indexSort.forEach(obj=> {
         if(obj.key === 0){
             photoUri.push(obj);
         }
     });
+    
+    
+    console.log("++++++++++++++++++++++");
+    console.log("?"+indexSort);
+    //console.log(uriList.sort);
     const selectedType = store.getState().selectType[0].value; 
     
     console.log(uriList);
@@ -127,11 +138,8 @@ function ShopStepThree4({route,navigation}) {
         const xData = json.body;
         xData.forEach(obj => {
             if(value === obj.repair_name){
-              console.log(obj.receiver_name);
               
               store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: obj.receiver_name});
-              
-              console.log("====: "+store.getState().basicRepairStore);
               
             }
           });
@@ -221,13 +229,7 @@ function ShopStepThree4({route,navigation}) {
             }
         }
         store.dispatch({type:'PLUSINDEXNUMBER',plus:-1});
-        console.log("deleted:  ");
-        console.log(delList);
-        console.log("store saved:  ");
-        console.log( store.getState().photoArr);
         store.dispatch({type:'PHOTORESET',setPhoto:delList});
-        console.log("store changed:  ");
-        console.log( store.getState().photoArr);
         
         //OnRefresh();
         navigation.replace("ShopStepThree4");
@@ -237,9 +239,20 @@ function ShopStepThree4({route,navigation}) {
     const List0 = store.getState().basicRepairStore;
     //전단계 찍은 사진들 쌓은 부분 ---
     var photoOutput= [];
+    var photoVisiable = [];
+    var imageModalsVisiable = []; 
     for(var i =0; i<photoUri.length;i++){
+        //photoVisible[i]=(false)
+        
+        const img = photoUri[i]
+        //console.log(imgValue);
         var tempPhoto = (
-            <Image key = {i} style={{width:90, height:100}} source={{uri:photoUri[i].value}}/>
+        <View key={i}>
+            
+            <Pressable onPress={() => {navigation.replace("PhotoControl",{key: 0 ,value: img.value,index:img.index})}}>
+                <Image key = {i} style={{width:90, height:100 ,marginLeft:2}} source={{uri:photoUri[i].value}}/>
+            </Pressable>
+        </View>
         );
         photoOutput[i] = (tempPhoto);
     }
@@ -247,7 +260,7 @@ function ShopStepThree4({route,navigation}) {
     React.useEffect(()=>{
         getAplStore(selectedType,0);  
         const backAction = () => {
-            store.dispatch({type:'PHOTORESET',setPhoto:[]});
+            //store.dispatch({type:'PHOTORESET',setPhoto:[]});
             navigation.goBack();
             return true;
           };
@@ -257,12 +270,17 @@ function ShopStepThree4({route,navigation}) {
             backAction
           );
       
-          return () => backHandler.remove();
+          return () => {
+              backHandler.remove();
+              setLoading(false);
+              setLoadingStore(false);
+            }
 
     },[]);
     // 수선유형 추가하면 쌓이는 부분 //
     var output=[];
     var chlidDataList = [];
+    var inputTexts = [];
     if(store.getState().indexNumber>0){
         for (var i = 1; i < store.getState().indexNumber+1; i++) {
             
@@ -275,7 +293,8 @@ function ShopStepThree4({route,navigation}) {
                 console.log(store.getState().typeStore)
             },[]);
             
-            const cList =store.getState().typeStore[i-1][0];
+            const cList=[] ;
+            cList.push(store.getState().typeStore[i-1][0]);
             const cBasicLavel = store.getState().basicRepairStore[i];
            
             var indexUriList =[];
@@ -288,40 +307,51 @@ function ShopStepThree4({route,navigation}) {
             });
             for(var j=0; j < indexUriList.length ; j++){
                 var photoImage =(
-                    <Image  key = {j} style={{width:90, height:100}}source={{uri:indexUriList[j].value}}/>
+                    <Image  key = {j} style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j].value}}/>
                 );
                 photoImages[j] =(photoImage);
             }
             const myKey = i;
             console.log("025852025852:   "+myKey);
+            console.log(cList);
             var tempItem=  (
                 <View key ={myKey} >
                     <Label/>
                     <InfoView>
-                        <AddTypeDleleteView><DeleteButton onPress ={() =>{
-                            DeleteAddType(myKey)
-                            console.log(myKey)}
-                        }><Text>✖</Text></DeleteButton></AddTypeDleleteView>
+                        <AddTypeDleleteView>
+                            <View/>
+                            <DeleteButton onPress ={() =>{
+                                DeleteAddType(myKey)
+                                console.log(myKey)}
+                            }>
+                            <Text>X</Text>
+                            {/*<Image style={{width:20, height:20}} source ={require("../../Icons/cancel.png")}/>*/}
+                            </DeleteButton></AddTypeDleleteView>
                         <Text>{keySelectedType}</Text>
                         
-                        <ScrollView horizontal ={true}>
-                            <TopStateView>
+                        <ScrollView horizontal ={true} style={{marginLeft:8,marginRight:8,marginTop:5,marginBottom:5}}>
+                            
                                 {photoImages}
                                 
-                                <ContainImg><Image style={{width:40, height:40}} source ={require("../../Icons/plus.png")}/></ContainImg>
+                                <ContainImg onPress={()=>{
+                                    navigation.replace("TakePhoto",{key:"AddPhoto",value:myKey,index:indexUriList[j].length})
+                                }}>
+                                <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
                                 
-                            </TopStateView>
                         </ScrollView>
 
                         <Label>추가 요청 사항</Label>
-                        <Input  multiline={ true }/>
+                        <Input  
+                            multiline={ true }
+                            
+                            onChangeText={ value => inputTexts[myKey] =( value)  }/>
                         <Label>수선처</Label>
                         <Picker
                             key ={myKey}
                             placeholder={{ label: '기본위치: ' + cBasicLavel }}
                             style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
                             onValueChange={(value) => console.log(value)}
-                            items={Object.assign({}, cList)}
+                            items={cList}
                         />
                         </InfoView>
                 
@@ -343,16 +373,21 @@ function ShopStepThree4({route,navigation}) {
 
             <Text>{selectedType}</Text>
 
-            <ScrollView horizontal ={true}>
-                <TopStateView>
+            <ScrollView horizontal ={true}  style={{marginLeft:8,marginRight:8,marginTop:5,marginBottom:5}}>
+                
                     {photoOutput}
-                    <ContainImg><Image style={{width:40, height:40}} source ={require("../../Icons/plus.png")}/></ContainImg>
-                    
-                </TopStateView>
+                    <ContainImg onPress={()=>{
+                        navigation.replace("TakePhoto",{key:"AddPhoto",value:0,index: photoUri.length})
+                        }}>
+                        <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
+                  
             </ScrollView>
 
             <Label>추가 요청 사항</Label>
-            <Input  multiline={ true }/>
+            <Input 
+                 multiline={ true }
+                 
+                 onChangeText={ value => setText( value ) }/>
             <Label>수선처</Label>
             <Picker
                 placeholder={{ label: '기본위치: '+List0[0]}}
@@ -391,8 +426,7 @@ function ShopStepThree4({route,navigation}) {
                 { label: '2.봉제', value: '봉제' },
                 { label: '3.부자재', value: '부자재' },
                 { label: '4.아트워크', value: '아트워크' },
-                { label: '5.액세서리', value: '악세사리' },
-                { label: '6.기타', value: '기타' }
+                { label: '5.액세서리', value: '악세사리' }
             ]}
             />
             </InfoView>
@@ -400,8 +434,12 @@ function ShopStepThree4({route,navigation}) {
             </Contents>
             <CenterView>
                 <ButtonBlack onPress={ ()=>
-                    
-                    navigation.navigate( 'ShopStepFour' ) }>
+                    {console.log(" : "+text);
+                     console.log(" :? ");
+                     console.log(inputTexts);
+                     navigation.navigate( 'ShopStepThree5' );
+                    }
+                }>
                     다음
                 </ButtonBlack>
             </CenterView>

@@ -100,21 +100,21 @@ export default class TakePhoto extends Component {
       console.log(store.getState().photoArr);
       if (route.params.key === 'ShopStepThree2'){
         //console.log ("ShopStepThree2: "+route.params.key);
-        store.dispatch({type:'ADD',add: {key:0,value:imgUri}});
+        store.dispatch({type:'ADD',add: {key:0,value:imgUri,index:0}});
         
         this.props.navigation.replace(route.params.key);
       }
       else if (route.params.key === 'ShopStepThree4'){
         //console.log ("ShopStepThreeX: "+route.params.key);
           
-        store.dispatch({type:'ADD',add: {key:0,value:imgUri}});
+        store.dispatch({type:'ADD',add: {key:0,value:imgUri,index:1}});
         
 
         this.props.navigation.replace(route.params.key);
       } 
       else if(route.params.key === "FullShot") {
         //console.log(route.params.value);
-        const addPhoto = {key: route.params.value,value:imgUri};
+        const addPhoto = {key: route.params.value,value:imgUri,index:0};
        
        // console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
@@ -123,7 +123,14 @@ export default class TakePhoto extends Component {
 
       }else if(route.params.key==="CloseShot"){
         
-        const addPhoto = {key: route.params.value,value:imgUri};
+        const addPhoto = {key: route.params.value,value:imgUri,index:1};
+        
+        //console.log(addPhoto);
+        store.dispatch({type:'ADD',add: addPhoto});
+        
+        this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
+      }else if(route.params.key === "AddPhoto"){
+        const addPhoto = {key: route.params.value,value:imgUri,index: route.params.index};
         
         //console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
