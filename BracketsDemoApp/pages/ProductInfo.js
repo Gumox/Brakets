@@ -68,6 +68,8 @@ function ProductInfo({navigation, route}) {
     const option = {
         url: 'http://13.125.232.214/api/getProductInfo',
         method: 'POST',
+
+        // 
         header: {
             'Content-Type': 'application/json'
         },
