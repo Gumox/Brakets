@@ -6,6 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import StartPage from './pages/StartPage';
+import TakeOverPage from './pages/takeOver/TakeOverPage';
+import LookupPage from './pages/lookup/lookupPage';
+import Mypage from './pages/mypage/mypage';
 
 import ShopStepOne from './pages/ShopStepOne';
 import ShopStepTwo from './pages/ShopStepTwo';
@@ -38,6 +41,9 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator >
         <Stack.Screen name="StartPage" component={StartPage} />
+        <Stack.Screen name="TakeOverPage" component={TakeOverPage} />
+        <Stack.Screen name="LookupPage" component={LookupPage} />
+        <Stack.Screen name="MyPage" component={Mypage} />
         
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
 

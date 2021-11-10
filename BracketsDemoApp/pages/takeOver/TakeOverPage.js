@@ -1,7 +1,7 @@
 import React,{useState ,useEffect} from 'react';
-import Container from '../components/Container';
-import Contents from '../components/Contents';
-import SelectButton from '../components/SelectButton';
+import Container from '../../components/Container';
+import Contents from '../../components/Contents';
+import SelectButton from '../../components/SelectButton';
 
 import _ from 'lodash';
 
@@ -10,7 +10,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
 import styled from 'styled-components/native';
-import store from '../store/store';
+import store from '../../store/store';
 import { Provider } from 'react-redux'
 
 const BottomView = styled.View`
@@ -60,7 +60,7 @@ const wait = (timeout) => {
   }
 
 
-function StartPage( { navigation } ) {
+function TakeOverPage( { navigation } ) {
     const state = {size:1};
     
     const [number,setNumber] =useState(store.getState().number);
@@ -75,21 +75,14 @@ function StartPage( { navigation } ) {
         
         console.log("is refreshing")});
       }, [])
-
-   
-    //console.log("여기는 start 입니다");
     
 
     
     return(
         <Container>
             <Contents>
-                <SelectButton onPress={ ()=> 
-                    //navigation.navigate( 'CameraQR')}
-                    navigation.navigate( 'ShopStepOne' ) }
-                    >
-                        시작
-                    </SelectButton>
+                
+            <Text>인수 page</Text>
             </Contents>
             <BottomView>
                     <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
@@ -119,24 +112,4 @@ function StartPage( { navigation } ) {
         </Container>
     )
 }
-export default StartPage;
-
-
-/* <Container>
-            <Contents>
-                <SelectButton onPress={ ()=> 
-                //navigation.navigate( 'CameraQR')}
-                navigation.navigate( 'ShopStepOne' ) }
-                >
-                    시작
-                </SelectButton>
-
-                <TouchableView onPress ={()=>  {
-                    OnRefresh();
-                }}>
-                    <Text>2222</Text><ImgIcon source={require('../Icons/calendar.png')}/>
-                </TouchableView>
-                
-               
-            </Contents>
-</Container> */
+export default TakeOverPage;
