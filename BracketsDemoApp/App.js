@@ -9,6 +9,7 @@ import StartPage from './pages/StartPage';
 import TakeOverPage from './pages/takeOver/TakeOverPage';
 import LookupPage from './pages/lookup/lookupPage';
 import Mypage from './pages/mypage/mypage';
+import ReceiptDivision from './pages/receipt/ReceiptDivision';
 
 import ShopStepOne from './pages/ShopStepOne';
 import ShopStepTwo from './pages/ShopStepTwo';
@@ -45,6 +46,8 @@ function App() {
         <Stack.Screen name="LookupPage" component={LookupPage} />
         <Stack.Screen name="MyPage" component={Mypage} />
         
+        
+        <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} />
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
 
         <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center'}} />

@@ -86,7 +86,7 @@ function StartPage( { navigation } ) {
             <Contents>
                 <SelectButton onPress={ ()=> 
                     //navigation.navigate( 'CameraQR')}
-                    navigation.navigate( 'ShopStepOne' ) }
+                    navigation.navigate( 'ReceiptDivision' ) }
                     >
                         시작
                     </SelectButton>
