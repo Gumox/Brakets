@@ -112,7 +112,6 @@ function ShopStepThree4({route,navigation}) {
     console.log("");
    
     React.useEffect(()=>{
-        getAplStore(selectedType,0);  
         const backAction = () => {
             
             navigation.goBack();
@@ -146,8 +145,6 @@ function ShopStepThree4({route,navigation}) {
                 console.log(store.getState().typeStore)
             },[]);
             
-            const cList=[] ;
-            cList.push(store.getState().typeStore[i-1][0]);
             const cBasicLavel = store.getState().basicRepairStore[i];
            
             var indexUriList =[];
@@ -166,7 +163,6 @@ function ShopStepThree4({route,navigation}) {
             }
             const myKey = i;
             console.log("025852025852:   "+myKey);
-            console.log(cList);
             var tempItem=  (
                 <View key ={myKey} >
                     <Label/>
@@ -184,13 +180,7 @@ function ShopStepThree4({route,navigation}) {
                             
                             onChangeText={ value => inputTexts[myKey] =( value)  }/>
                         <Label>수선처</Label>
-                        <Picker
-                            key ={myKey}
-                            placeholder={{ label: '기본위치: ' + cBasicLavel }}
-                            style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
-                            onValueChange={(value) => console.log(value)}
-                            items={cList}
-                        />
+                        
                         </InfoView>
                 
                 </View>
