@@ -122,21 +122,3 @@ function StartPage( { navigation } ) {
 export default StartPage;
 
 
-/* <Container>
-            <Contents>
-                <SelectButton onPress={ ()=> 
-                //navigation.navigate( 'CameraQR')}
-                navigation.navigate( 'ShopStepOne' ) }
-                >
-                    시작
-                </SelectButton>
-
-                <TouchableView onPress ={()=>  {
-                    OnRefresh();
-                }}>
-                    <Text>2222</Text><ImgIcon source={require('../Icons/calendar.png')}/>
-                </TouchableView>
-                
-               
-            </Contents>
-</Container> */

@@ -26,6 +26,7 @@ const TopIntro =styled.Text`
     font-size: 25px;
     font-weight: bold;
     margin: 15px;
+    color:#000000;
 `;
 const BlueText = styled.Text`
     font-weight: bold;
@@ -49,11 +50,10 @@ function ReceiptDivision({navigation}) {
     
     return (
         <Container>
-            <CenterText>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
-            </CenterText>
+            <Label/>
+            <Label/>
             <TopIntro>접수 구분</TopIntro>
-            <ContainView style = {{width :300}}>
+            <Label/>
             <ReceiptButton onPress={ ()=> 
                     navigation.navigate( 'ShopStepOne' ) }>고객용 제품</ReceiptButton>
             
@@ -63,7 +63,6 @@ function ReceiptDivision({navigation}) {
             <ReceiptButton onPress={ ()=> 
                     navigation.navigate( 'ShopStepOne' ) }>매장용 제품</ReceiptButton>
             
-            </ContainView>
             
             
 
