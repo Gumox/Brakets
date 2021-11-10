@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import styled from 'styled-components/native';
 import JustView from '../components/JustView';
 //import AsyncStorage from '@react-native-community/async-storage';
-import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from 'react-native';
 import { Alert } from 'react-native';
 
 const Label = styled.Text`
