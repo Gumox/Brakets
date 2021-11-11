@@ -51,10 +51,6 @@ const TouchableView = styled.TouchableOpacity`
     background-color:#d6d6d6;
     border-radius:10px
 `;
-const ImgIcon =styled.Image`
-    width: 20px;
-    height: 20px;
-`;
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -114,8 +110,7 @@ function StartPage( { navigation } ) {
                         </BottomButtonText>
                     </BottomButton>
             </BottomView>
-            <BottomEmptySpace>
-            </BottomEmptySpace>
+            <BottomEmptySpace/>
         </Container>
     )
 }

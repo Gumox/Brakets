@@ -42,12 +42,12 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator >
         <Stack.Screen name="StartPage" component={StartPage} />
-        <Stack.Screen name="TakeOverPage" component={TakeOverPage} options={{ headerShown: false }}/>
-        <Stack.Screen name="LookupPage" component={LookupPage} options={{ headerShown: false }} />
-        <Stack.Screen name="MyPage" component={Mypage} options={{ headerShown: false }}/>
+        <Stack.Screen name="TakeOverPage" component={TakeOverPage} options={{  title: '인수' ,headerTitleAlign: 'center'}}/>
+        <Stack.Screen name="LookupPage" component={LookupPage} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="MyPage" component={Mypage} options={{  title: '마이페이지' ,headerTitleAlign: 'center'}}/>
         
         
-        <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{ headerShown: false }} />
+        <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{  title: '',headerTitleAlign: 'center' }} />
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
 
         <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center'}} />

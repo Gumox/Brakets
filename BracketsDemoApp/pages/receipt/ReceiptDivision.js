@@ -7,20 +7,10 @@ import StateBarVoid from '../../components/StateBarVoid';
 import CenterText from '../../components/CenterText';
 import ReceiptButton from '../../components/ReceiptButton';
 import ContainView from '../../components/ContainView';
+
 const Label = styled.Text`
     font-size: 15px;
     margin: 20px;
-`;
-const PView = styled.View`
-    flex:1;
-    flex-direction: row;
-    padding-bottom:24px;
-    justify-content: center;
-`;
-
-const CenterView =styled.View`
-    align-items: center;
-    
 `;
 const TopIntro =styled.Text`
     font-size: 25px;
@@ -45,11 +35,53 @@ const TopStateView = styled.View`
     justify-content: center;
 `;
 
+const BottomView = styled.View`
+    flex: 0.4;
+    flex-direction: row;
+    align-items: flex-end;
+    /* background: red; */
+`;
+
+const BottomButton = styled.TouchableOpacity`
+    width: 25%;
+    height: 30%;
+    background: #78909c;
+    border-color: red;
+    align-items: center;
+    justify-content: center;
+`;
+
+const BottomButtonText = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+`;
+
+const BottomEmptySpace = styled.View`
+    background: #78909c;
+    width: 100%;
+    height: 3%;
+    border :0.6px solid #78909c;
+`;
+
+
+const TouchableView = styled.TouchableOpacity`
+    
+    flex-direction:row;
+    justify-content:space-around;
+    
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px
+`;
+
 function ReceiptDivision({navigation}) {
    
     
     return (
+
         <Container>
+            <Container>
             <Label/>
             <Label/>
             <TopIntro>접수 구분</TopIntro>
@@ -62,11 +94,33 @@ function ReceiptDivision({navigation}) {
 
             <ReceiptButton onPress={ ()=> 
                     navigation.navigate( 'ShopStepOne' ) }>매장용 제품</ReceiptButton>
-            
-            
-            
+            </Container>
+            <BottomView>
+                    <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
+                        <BottomButtonText>
+                            접수
+                        </BottomButtonText>
+                    </BottomButton>
+                    <BottomButton onPress = {() => navigation.navigate( 'TakeOverPage')}>
+                        <BottomButtonText>
+                            인수
+                        </BottomButtonText>
+                    </BottomButton>
 
+                    <BottomButton onPress = {() => navigation.navigate( 'LookupPage')}>
+                        <BottomButtonText>
+                            조회
+                        </BottomButtonText>
+                    </BottomButton>
+                    <BottomButton onPress = {() => navigation.navigate( 'MyPage')}>
+                        <BottomButtonText>
+                            MY
+                        </BottomButtonText>
+                    </BottomButton>
+            </BottomView>
+            <BottomEmptySpace/>
         </Container>
+        
     )
 }
 
