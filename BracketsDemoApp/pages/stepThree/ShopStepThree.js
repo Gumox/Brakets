@@ -51,7 +51,8 @@ function ShopStepThree( { navigation } ) {
   const [select,setSelect] =  React.useState(null);
 
   const [data, setData] = React.useState([]);
-  const ix = 1;
+  const ix = store.getState().indexNumber;
+  console.log(ix);
   
   const [isLoading, setLoading] = React.useState(true);
   const bodyData = {"repair":"type",
@@ -81,10 +82,10 @@ function ShopStepThree( { navigation } ) {
         getAplType();
         console.log("uri data: "+data);
         //console.log(dataList[0].receiver_name);
-        getAplStore(selectedType,0);  
+        //getAplStore(selectedType,0);  
 
         const backAction = () => {
-            store.dispatch({type:'SELECTTYPERESET'});
+            store.dispatch({type:'SELECTTYPESET',set:[]});
             navigation.goBack();
             return true;
           };
@@ -126,7 +127,7 @@ function ShopStepThree( { navigation } ) {
           style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
           onValueChange={(value) => 
             {setSelect(value)
-              store.dispatch({type:"SELECTTYPERESET"});
+              store.dispatch({type:"SELECTTYPESET" ,set : []});
               store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:[]});
               
               data.forEach(obj => {
@@ -170,6 +171,10 @@ function ShopStepThree( { navigation } ) {
               );
               
             }else{
+              store.dispatch({type:'PHOTORESET',setPhoto:[]});
+              store.dispatch({type:'PLUSINDEXNUMBER',plus:-ix});
+              console.log("? "+ix);
+              console.log(store.getState().indexNumber);
               store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
               console.log(store.getState().selectType)
               navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });

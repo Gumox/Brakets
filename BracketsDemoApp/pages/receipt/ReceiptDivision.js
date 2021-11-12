@@ -1,17 +1,39 @@
-import React,{useState ,useEffect} from 'react';
-import Container from '../components/Container';
-import Contents from '../components/Contents';
-import SelectButton from '../components/SelectButton';
-
-import _ from 'lodash';
-
-import { Image,Text,Button, View } from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DateObject from "react-date-object";
-import { size } from 'lodash';
+import React from 'react';
+import Contents from '../../components/Contents';
 import styled from 'styled-components/native';
-import store from '../store/store';
-import { Provider } from 'react-redux'
+import Container from '../../components/Container';
+import StateBarSolid from '../../components/StateBarSolid';
+import StateBarVoid from '../../components/StateBarVoid';
+import CenterText from '../../components/CenterText';
+import ReceiptButton from '../../components/ReceiptButton';
+import ContainView from '../../components/ContainView';
+
+const Label = styled.Text`
+    font-size: 15px;
+    margin: 20px;
+`;
+const TopIntro =styled.Text`
+    font-size: 25px;
+    font-weight: bold;
+    margin: 15px;
+    color:#000000;
+`;
+const BlueText = styled.Text`
+    font-weight: bold;
+    font-size: 20px;
+    color:#78909c;
+    margin-Top:50px
+`;
+const GrayText = styled.Text`
+    font-size: 20px;
+    color:#858585;
+`;
+const TopStateView = styled.View`
+    flex:1;
+    flex-direction: row;
+    padding-bottom:24px;
+    justify-content: center;
+`;
 
 const BottomView = styled.View`
     flex: 0.4;
@@ -39,6 +61,7 @@ const BottomEmptySpace = styled.View`
     background: #78909c;
     width: 100%;
     height: 3%;
+    border :0.6px solid #78909c;
 `;
 
 
@@ -51,42 +74,27 @@ const TouchableView = styled.TouchableOpacity`
     background-color:#d6d6d6;
     border-radius:10px
 `;
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
 
-
-function StartPage( { navigation } ) {
-    const state = {size:1};
-    
-    const [number,setNumber] =useState(store.getState().number);
-
-    const x ={"key":2};
-    
-    //새로고침 함수
-    const [refreshing, setRefreshing] = React.useState(false);
-    const OnRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(1000).then(() => {setRefreshing(false)
-        
-        console.log("is refreshing")});
-      }, [])
-
+function ReceiptDivision({navigation}) {
    
-    //console.log("여기는 start 입니다");
     
+    return (
 
-    
-    return(
         <Container>
-            <Contents>
-                <SelectButton onPress={ ()=> 
-                    //navigation.navigate( 'CameraQR')}
-                    navigation.navigate( 'ReceiptDivision' ) }
-                    >
-                        시작
-                    </SelectButton>
-            </Contents>
+            <Container>
+            <Label/>
+            <Label/>
+            <TopIntro>접수 구분</TopIntro>
+            <Label/>
+            <ReceiptButton onPress={ ()=> 
+                    navigation.navigate( 'ShopStepOne' ) }>고객용 제품</ReceiptButton>
+            
+            <ReceiptButton onPress={ ()=> 
+                    navigation.navigate( 'ShopStepOne' ) }>매장용-선처리 제품</ReceiptButton>
+
+            <ReceiptButton onPress={ ()=> 
+                    navigation.navigate( 'ShopStepOne' ) }>매장용 제품</ReceiptButton>
+            </Container>
             <BottomView>
                     <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
                         <BottomButtonText>
@@ -112,8 +120,8 @@ function StartPage( { navigation } ) {
             </BottomView>
             <BottomEmptySpace/>
         </Container>
+        
     )
 }
-export default StartPage;
 
-
+export default ReceiptDivision;

@@ -104,7 +104,7 @@ export default (req, res) => {
 	else if(body){
 		console.log("StaffLogin/Logout/Signin SUCC");
 		res.statusCode = 200;
-		res.json({body:"succ", user_id:body});
+		res.json({body:"succ", staff_id:body});
 	}
 
     });

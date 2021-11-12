@@ -14,13 +14,13 @@ export async function getRepairInfo(repair, category, receipt, name) {
 	    }
 	    else{
 		//나머지 -> 본사
-	    	q = "SELECT type.repair_name, place.receiver, place.receiver_name FROM repair_type as type LEFT JOIN repair_type as place ON type.priority = place.repair_id WHERE type.repair_id>0 AND type.priority=0";
+	    	q = "SELECT type.repair_id, type.repair_name, place.receiver, place.receiver_name FROM repair_type as type LEFT JOIN repair_type as place ON type.priority = place.repair_id WHERE type.repair_id>0 AND type.priority=0";
 	    }
 	}
 	
 	//repair == 'store'
 	else{
-	    q = "SELECT priority, repair_name, receiver, receiver_name FROM repair_type WHERE repair_name = ? ORDER BY priority";
+	    q = "SELECT priority, repair_id, repair_name, receiver, receiver_name FROM repair_type WHERE repair_name = ? ORDER BY priority";
 	}
 
         const result = await excuteQuery({
