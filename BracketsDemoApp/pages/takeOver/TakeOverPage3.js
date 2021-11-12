@@ -3,9 +3,9 @@ import Container from '../../components/Container';
 import Contents from '../../components/Contents';
 import SelectButton from '../../components/SelectButton';
 
-import _, { sortedLastIndex } from 'lodash';
+import _ from 'lodash';
 
-import { Image,Text,Button, View, ScrollView, Dimensions } from "react-native";
+import { Image,Text,Button, View } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
@@ -56,7 +56,7 @@ const ImgIcon =styled.Image`
     height: 20px;
 `;
 const InfoView =styled.View`
-    width: 90%;
+    width: 100%;
     border:2px solid  #78909c;
     border-radius:12px;
     margin : 10px;
@@ -69,7 +69,6 @@ const Input = styled.TextInput`
     background-color:#d6d6d6;
     border-radius:10px
 `;
-
 
 
 const wait = (timeout) => {
@@ -97,81 +96,27 @@ function TakeOverPage( { navigation } ) {
     
     return(
         <Container>
-            <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
-            <Text>인수1</Text>
+            <Contents>
+            <Text>인수3</Text>
           
-            
+            </Contents>
             <InfoView>
-              <Text>서비스 카드 번호</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>접수 구분</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>고객명</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>고객 연락처</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
+              <Text>시즌-스타일</Text>
+              <Text>컬러-사이즈</Text>
+              <Text>제품 바코드/qr코드 번호</Text>
+              <Text>차수</Text>
+              <Text>상품 교환</Text>
+              <Text>판매가</Text>
+
             </InfoView>
 
             <InfoView>
               <Text>매장 접수일</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
               <Text>고객 약속일</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
             </InfoView>
-            </Contents>
 
-            <View style = {{alignItems : 'center', justifyContent : 'center'}}>
-            <Button onPress = {() => {navigation.navigate('TakeOverPage2')}}
-                    title = "다음:(2)제품정보"></Button>
-          </View>
+            <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}
+                    title = "다음:(4)고객 요구"></Button>
             
             <BottomView>
                     <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
