@@ -7,9 +7,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import StartPage from './pages/StartPage';
 import TakeOverPage from './pages/takeOver/TakeOverPage';
-import LookupPage from './pages/lookup/lookupPage';
-import Mypage from './pages/mypage/mypage';
+
+import Mypage from './pages/mypage/Mypage';
 import ReceiptDivision from './pages/receipt/ReceiptDivision';
+import LookupPage from './pages/lookup/LookupPage';
 
 import ShopStepOne from './pages/ShopStepOne';
 import ShopStepTwo from './pages/ShopStepTwo';

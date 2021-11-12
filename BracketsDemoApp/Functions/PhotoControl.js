@@ -2,7 +2,7 @@ import React from "react";
 import store from "../store/store";
 import Container from "../components/Container";
 import ImageZoom from "react-native-image-pan-zoom";
-import { Image ,Pressable,View,Text,Dimensions,StyleSheet} from "react-native";
+import { Image ,Pressable,View,Text,Dimensions,StyleSheet,BackHandler} from "react-native";
 import { createIconSetFromFontello } from "react-native-vector-icons";
 import styled from "styled-components";
 
@@ -10,8 +10,8 @@ import styled from "styled-components";
 const PView = styled.View`
     
     flex-direction: row;
-    padding-bottom:24px;
-    justify-content: space-between;
+    padding-bottom:10px;
+    justify-content: space-around;
 `;
 const ImgView = styled.View`
     margin:12px;
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: 22
     },
     xView:{
         backgroundColor: "#78909c",
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
 
 export default function PhotoControl({ navigation ,route}){
     const [selected,setSelected] = React.useState( route.params);
-
+    console.log(selected);
     const saved = store.getState().photoArr;
     console.log(saved);
     const changeData =[];
@@ -56,6 +55,7 @@ export default function PhotoControl({ navigation ,route}){
             const element = saved[i];
             if(element.value == selected.value){
                 saved.splice(i,1);
+                console.log(saved)
                 i--;
             }
 
@@ -66,6 +66,7 @@ export default function PhotoControl({ navigation ,route}){
         
     }
     const RetakePhoto = () =>{
+        console.log("key : "+selected.key+"   value: " +selected.value+"    index: "+selected.index);
         DeletePhoto();
         navigation.navigate("TakePhoto",{key:"RetakePhoto",value:selected.key,index:selected.index});
 
@@ -73,34 +74,60 @@ export default function PhotoControl({ navigation ,route}){
     var output;
     if(selected.index === 0 || selected.index ===1){
         output=(
+            <View>
+                <Text> </Text>
             <PView>
-            <Pressable onPress ={ () =>{RetakePhoto()}}><Text>다시찍기</Text></Pressable>
-            <Pressable onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text>확인</Text></Pressable>
+            <Pressable onPress ={ () =>{RetakePhoto()}}><Text style = {{color : "#ffffff"}}> 다시찍기</Text></Pressable>
+            <Pressable onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text style = {{color : "#ffffff"}}>확인 </Text></Pressable>
             </PView>
+            </View>
         );
     }else{
         output=(
             <PView>
-            <Pressable onPress ={ () =>{RetakePhoto()}}><Text>다시찍기</Text></Pressable>
-            <Pressable onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text>확인</Text></Pressable>
+            <Pressable onPress ={ () =>{RetakePhoto()}}><Text style = {{color : "#ffffff"}}> 다시찍기</Text></Pressable>
+            <Pressable onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text style = {{color : "#ffffff"}}>확인</Text></Pressable>
             <Pressable onPress ={ () =>{ {
                 DeletePhoto();
-                navigation.replace("ShopStepThree4");}}}><Text>삭제</Text></Pressable>
+                navigation.replace("ShopStepThree4");}}}><Text style = {{color : "#ffffff"}}>삭제 </Text></Pressable>
             </PView>
         );
     }
+
+
+    React.useEffect(()=>{
+       
+        const backAction = () => {
+            //store.dispatch({type:'PHOTORESET',setPhoto:[]});
+            navigation.pop();
+            return true;
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => {
+              backHandler.remove();
+             
+            }
+
+    },[]);
+
+
     return(
-        <Container>
+        <Container style = {{backgroundColor : '#000000'}}>
             <ImgView  >
             <View style={styles.centeredView}>
                         <View style ={styles.xView} >    
                         <View style={styles.modalView} >
                             
-                            <ImageZoom cropWidth={320}
-                                    cropHeight={400}
-                                    imageWidth={300}
-                                    imageHeight={400}>
-                                    <Image style={{width:300, height:400}}
+                            <ImageZoom cropWidth={Dimensions.get('window').width-30}
+                                    cropHeight={ Dimensions.get('window').height-125}
+                                    imageWidth={Dimensions.get('window').width-40}
+                                    imageHeight={ Dimensions.get('window').height-140}>
+                                    <Image style={{width:Dimensions.get('window').width-40, height: Dimensions.get('window').height-140}}
                                     source={{uri:selected.value}}/>
                             </ImageZoom>
                             

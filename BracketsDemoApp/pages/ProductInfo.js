@@ -46,7 +46,7 @@ const ContainImg =styled.View`
     align-items: center;
 `;
 const TopStateView = styled.View`
-    flex:1;
+ 
     flex-direction: row;
     padding-bottom:24px;
     justify-content: center;
