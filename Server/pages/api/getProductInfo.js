@@ -17,7 +17,8 @@ export async function getProductInfo(type, code) {
 
 export default (req, res) => {
   if (req.method === "POST") {
-    console.log("req"+ req.body);
+    console.log("req");
+    console.log(req.body);
     var type = req.body.type; //qrcode, barcode
     var code = req.body.code;
 

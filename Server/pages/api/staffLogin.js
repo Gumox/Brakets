@@ -80,7 +80,8 @@ export async function staffLogin(type,store,kid, uid, phone, name) {
 
 export default (req, res) => {
   if (req.method === "POST") {
-    console.log("req"+ req.body);
+	console.log("req");
+    console.log(req.body);
     var type = req.body.type; //signin, login, 
     var store = req.body.store; //store id
     var kid = req.body.kid; //kakao token
