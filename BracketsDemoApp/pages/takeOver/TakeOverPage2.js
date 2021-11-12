@@ -11,7 +11,7 @@ import DateObject from "react-date-object";
 import { size } from 'lodash';
 import styled from 'styled-components/native';
 import store from '../../store/store';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
 const BottomView = styled.View`
     flex: 0.4;
@@ -55,14 +55,6 @@ const ImgIcon =styled.Image`
     width: 20px;
     height: 20px;
 `;
-const InfoView =styled.View`
-    width: 100%;
-    border:2px solid  #78909c;
-    border-radius:12px;
-    margin : 10px;
-    padding:15px;
-`;
-
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -88,25 +80,12 @@ function TakeOverPage( { navigation } ) {
     
     return(
         <Container>
-            <Contents>
-            <Text>인수</Text>
           
+            <Contents>
+            <Text>인</Text>
+
+      
             </Contents>
-            <InfoView>
-              <Text>서비스 카드 번호</Text>
-              <Text>접수 구분</Text>
-              <Text>고객명</Text>
-              <Text>고객 연락처</Text>
-            </InfoView>
-
-            <InfoView>
-              <Text>매장 접수일</Text>
-              <Text>고객 약속일</Text>
-            </InfoView>
-
-            <Button onPress = {() => {navigation.navigate('TakeOverPage2')}}
-                    title = "다음:(2)제품정보"></Button>
-            
             <BottomView>
                     <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
                         <BottomButtonText>
