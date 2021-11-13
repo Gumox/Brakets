@@ -111,12 +111,40 @@ function TakeOverPage( { navigation } ) {
             </InfoView>
 
             <InfoView>
-              <Text>매장 접수일</Text>
-              <Text>고객 약속일</Text>
+              <Text>과실 구분</Text>
+              <Input  
+                onChangeText = {onChangeText}
+                value = {text}
+                        // onChange={(event) => {
+                        //     const {eventCount, target, text} = event.nativeEvent;
+                        //     setProuctName(text);
+                        //   }
+                        // }
+                    />
+              <Text>내용 분석</Text>
+              <Input  
+                onChangeText = {onChangeText}
+                value = {text}
+                        // onChange={(event) => {
+                        //     const {eventCount, target, text} = event.nativeEvent;
+                        //     setProuctName(text);
+                        //   }
+                        // }
+                    />
+              <Text>판정 결과</Text>
+              <Input  
+                onChangeText = {onChangeText}
+                value = {text}
+                        // onChange={(event) => {
+                        //     const {eventCount, target, text} = event.nativeEvent;
+                        //     setProuctName(text);
+                        //   }
+                        // }
+                    />
             </InfoView>
 
             <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}
-                    title = "다음:(4)고객 요구"></Button>
+                    title = "다음:(4)접수 정보"></Button>
             
             <BottomView>
                     <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
