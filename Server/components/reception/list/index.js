@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
-import { RECEIPT_LIST } from "../../../constants/dummy";
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
 
-const ReceptionList = () => {
+const ReceptionList = ({ data, handleDataClick = () => {} }) => {
   return (
     <Wrapper>
       <Table>
@@ -32,15 +32,22 @@ const ReceptionList = () => {
           </tr>
         </TableHeader>
         <tbody>
-          {RECEIPT_LIST.map((receipt) => (
-            <TableRow key={receipt[RECEIPT.ID]}>
+          {data.map((receipt) => (
+            <TableRow
+              key={receipt[RECEIPT.ID]}
+              onClick={() => handleDataClick(receipt[RECEIPT.CODE])}
+            >
               <TableData>{receipt[RECEIPT.CODE]}</TableData>
               <TableData>{receipt[STORE.ID]}</TableData>
-              <TableData width="150px">{receipt[STORE.NAME]}</TableData>
+              <TableData title={receipt[STORE.NAME]} width="200px">
+                {receipt[STORE.NAME]}
+              </TableData>
               <TableData width="70px">{receipt[STORE.TYPE]}</TableData>
               <TableData width="150px">{receipt[STORE.CONTACT]}</TableData>
               <TableData width="120px">
-                {receipt[RECEIPT.RECEIPT_DATE]}
+                {receipt[RECEIPT.RECEIPT_DATE]
+                  ? moment(receipt[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD")
+                  : ""}
               </TableData>
               <TableData>{receipt[CUSTOMER.ID]}</TableData>
               <TableData>{receipt[RECEIPT.CATEGORY]}</TableData>
@@ -96,10 +103,14 @@ const TableRow = styled.tr`
 `;
 
 const TableData = styled.td`
+  max-width: ${({ width = "100px" }) => width};
   width: ${({ width = "100px" }) => width};
   min-width: ${({ width = "100px" }) => width};
   text-align: ${({ textAlign = "center" }) => textAlign};
   border: 1px solid ${COLOR.GRAY};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 export default ReceptionList;

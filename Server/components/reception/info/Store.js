@@ -1,9 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { CUSTOMER, STORE, RECEIPT } from "../../../constants/field";
-import { STORE_OPTIONS } from "../../../constants/select-option";
+import {
+  STORE_OPTIONS,
+  RECEIPT_CATEGORY_OPTIONS,
+} from "../../../constants/select-option";
 import { Row, Field } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
@@ -43,11 +47,11 @@ const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
       </Row>
       <Row>
         <Field>
-          <Input
+          <SelectOption
             title="접수구분"
-            name={RECEIPT.TYPE}
-            styleOptions={{ width: "100px" }}
-            value={data[RECEIPT.TYPE]}
+            name={RECEIPT.CATEGORY}
+            options={RECEIPT_CATEGORY_OPTIONS}
+            value={data[RECEIPT.CATEGORY]}
             onChange={handleValueChange}
           />
         </Field>
@@ -57,7 +61,11 @@ const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
             title="매장접수일"
             name={RECEIPT.RECEIPT_DATE}
             styleOptions={{ padding: "1px 0px" }}
-            value={data[RECEIPT.RECEIPT_DATE]}
+            value={
+              data[RECEIPT.RECEIPT_DATE]
+                ? moment(data[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD")
+                : undefined
+            }
             onChange={handleValueChange}
           />
         </Field>
@@ -67,7 +75,11 @@ const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
             title="고객약속일"
             name={RECEIPT.DUE_DATE}
             styleOptions={{ padding: "1px 0px" }}
-            value={data[RECEIPT.DUE_DATE]}
+            value={
+              data[RECEIPT.DUE_DATE]
+                ? moment(data[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
+                : undefined
+            }
             onChange={handleValueChange}
           />
         </Field>

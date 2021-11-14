@@ -12,6 +12,7 @@ const FilterInfo = ({
   data = {},
   handleCheckboxChange = () => {},
   handleValueChange = () => {},
+  handleSearchButtonClick = () => {},
 }) => {
   return (
     <Wrapper>
@@ -170,7 +171,7 @@ const FilterInfo = ({
         </Field>
         <SmsButton>조회 대상 SMS 전송</SmsButton>
       </Row>
-      <SearchButton>조회</SearchButton>
+      <SearchButton onClick={handleSearchButtonClick}>조회</SearchButton>
     </Wrapper>
   );
 };

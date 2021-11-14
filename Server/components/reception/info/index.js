@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
-import { RECEIPT } from "../../../constants/dummy";
 import BasicInfo from "./Basic";
 import DetailInfo from "./Detail";
 import FilterInfo from "./Filter";
@@ -9,66 +8,47 @@ import ProducInfo from "./Product";
 import ReceiptInfo from "./Receipt";
 import StoreInfo from "./Store";
 
-const ReceptionInfo = ({ data }) => {
-  const [inputData, setInputData] = useState({});
-  const [searchData, setSearchData] = useState(data);
-  const handleInputCheckboxChange = useCallback(
-    (e) => {
-      setInputData({ ...inputData, [e.target.name]: e.target.checked });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [inputData]
-  );
-  const handleInputValueChange = useCallback(
-    (e) => {
-      setInputData({ ...inputData, [e.target.name]: e.target.value });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [inputData]
-  );
-  const handleSearchCheckboxChange = useCallback(
-    (e) => {
-      setSearchData({ ...searchData, [e.target.name]: e.target.checked });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [searchData]
-  );
-  const handleSearchValueChange = useCallback(
-    (e) => {
-      setSearchData({ ...searchData, [e.target.name]: e.target.value });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchData]
-  );
-
-  useEffect(() => {
-    console.log(inputData);
-  }, [inputData]);
+const ReceptionInfo = ({
+  initialData = {},
+  inputData = {},
+  data = {},
+  handleInputCheckboxChange = () => {},
+  handleInputValueChange = () => {},
+  handleTargetValueChange = () => {},
+  handleSearchButtonClick = () => {},
+}) => {
   return (
     <Wrapper>
       <SubWrapper>
         <BasicInfo
           data={inputData}
-          handleValueChange={handleSearchValueChange}
+          handleValueChange={handleInputValueChange}
         />
         <FilterInfo
           data={inputData}
           handleCheckboxChange={handleInputCheckboxChange}
           handleValueChange={handleInputValueChange}
+          handleSearchButtonClick={handleSearchButtonClick}
         />
         <Section>
           <ProducInfo
-            data={searchData}
-            handleValueChange={handleSearchValueChange}
+            data={data}
+            handleValueChange={handleTargetValueChange}
           />
           <StoreInfo
-            data={searchData}
-            handleValueChange={handleSearchValueChange}
+            data={data}
+            handleValueChange={handleTargetValueChange}
           />
         </Section>
         <Section>
-          <DetailInfo />
-          <ReceiptInfo />
+          <DetailInfo
+            data={data}
+            handleValueChange={handleTargetValueChange}
+          />
+          <ReceiptInfo
+            data={data}
+            handleValueChange={handleTargetValueChange}
+          />
         </Section>
       </SubWrapper>
     </Wrapper>

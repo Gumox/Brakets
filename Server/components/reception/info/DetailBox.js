@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
+import { DETAIL } from "../../../constants/field";
 import {
   OPTIONS,
   REPAIR_OPTIONS,
@@ -14,7 +16,7 @@ import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
 
-const DetailBox = () => {
+const DetailBox = ({ data = {} }) => {
   return (
     <Wrapper>
       <SectionRow>
@@ -23,14 +25,19 @@ const DetailBox = () => {
             <Field>
               <SelectOption
                 title="수선유형:"
-                // name={PRODUCT.SEASON}
+                name={DETAIL.REPAIR_ID}
                 options={REPAIR_OPTIONS}
-                // value={data[PRODUCT.SEASON]}
+                value={data[DETAIL.REPAIR_ID]}
                 // onChange={handleValueChange}
               />
             </Field>
             <Field>
-              <Input title="추가요청사항" styleOptions={{ width: "300px" }} />
+              <Input
+                title="추가요청사항"
+                name={DETAIL.MESSAGE}
+                value={data[DETAIL.MESSAGE]}
+                styleOptions={{ width: "300px" }}
+              />
             </Field>
           </Row>
         </Section>
@@ -112,7 +119,12 @@ const DetailBox = () => {
               <Input title="수량" styleOptions={{ width: "15px" }} />
             </Field>
             <Field>
-              <Input title="수선비" styleOptions={{ width: "70px" }} />
+              <Input
+                title="수선비"
+                styleOptions={{ width: "70px" }}
+                name={DETAIL.CHARGE}
+                value={data[DETAIL.CHARGE]}
+              />
             </Field>
           </Row>
         </Section>
@@ -125,7 +137,16 @@ const DetailBox = () => {
           <Checkbox title="재수선" />
         </Field>
         <Field>
-          <Input type="date" title="수선처발송일" />
+          <Input
+            type="date"
+            title="수선처발송일"
+            name={DETAIL.SEND_DATE}
+            value={
+              data[DETAIL.SEND_DATE]
+                ? moment(data[DETAIL.SEND_DATE]).format("YYYY-MM-DD")
+                : undefined
+            }
+          />
         </Field>
         <Field>
           <SelectOption

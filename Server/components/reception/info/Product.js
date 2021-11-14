@@ -92,7 +92,7 @@ const ProducInfo = ({ data = {}, handleValueChange = () => {} }) => {
           </Row>
         </Section>
         <Section>
-          <ImageButton>제품사진 (누르면 확대) </ImageButton>
+          <ProductImage imageUrl={data[PRODUCT.IMAGE]} />
         </Section>
       </SectionRow>
     </Wrapper>
@@ -102,15 +102,12 @@ const Wrapper = styled.div`
   margin: 0px 5px 5px 15px;
 `;
 
-const ImageButton = styled.button`
-  min-height: max-content;
+const ProductImage = styled.div`
   width: 80px;
+  height: 80px;
   background-color: ${COLOR.GRAY};
+  background: center / contain no-repeat url(${({imageUrl}) => imageUrl});
   color: ${COLOR.WHITE};
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: none;
-  word-break: keep-all;
   margin-right: 5px;
 `;
 

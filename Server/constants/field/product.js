@@ -1,10 +1,12 @@
 const FIELD = {
-  SEASON: "product_season",
-  STYLE: "product_style",
-  DEGREE: "product_degree",
-  COLOR: "product_color",
-  SIZE: "product_size",
-  RFID: "product_qrcode",
+  SEASON: "product_season", // 시즌
+  COLOR: "product_color", // 컬러
+  STYLE: "product_style", // 스타일
+  SIZE: "product_size", // 사이즈
+  DEGREE: "product_degree", // 차수
+  IMAGE: "product_image", // 이미지
+  RFID: "product_qrcode", // RFID 코드
+  
   RELEASE_DATE: "product_release_date",
   SUBSTITUE_CODE: "product_substitue_code",
   PRICE: "product_price",

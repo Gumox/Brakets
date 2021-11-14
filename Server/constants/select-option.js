@@ -47,6 +47,45 @@ export const STORE_OPTIONS = [
     text: "아디다스 오리지널스 홍대 직영점",
   },
 ];
+export const RECEIPT_CATEGORY_OPTIONS = [
+  {
+    key: "1",
+    value: "1",
+    text: "고객용",
+  },
+  {
+    key: "2",
+    value: "2",
+    text: "매장용",
+  },
+  {
+    key: "3",
+    value: "3",
+    text: "선처리",
+  },
+];
+export const RECEIPT_TYPE_OPTIONS = [
+  {
+    key: "1",
+    value: "1",
+    text: "수선",
+  },
+  {
+    key: "2",
+    value: "2",
+    text: "교환",
+  },
+  {
+    key: "3",
+    value: "3",
+    text: "환불",
+  },
+  {
+    key: "4",
+    value: "4",
+    text: "심의",
+  },
+];
 export const REPAIR_OPTIONS = [
   {
     key: "1",
