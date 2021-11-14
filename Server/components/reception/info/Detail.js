@@ -8,7 +8,7 @@ import { Field } from "../../styled";
 import SelectOption from "../../SelectOption";
 import DetailBox from "./DetailBox";
 
-const DetailInfo = ({ data = {}, handleValueChange = () => {} }) => {
+const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
       <Row>
@@ -25,7 +25,7 @@ const DetailInfo = ({ data = {}, handleValueChange = () => {} }) => {
       {data?.details?.map((detail) => (
         <Row key={detail[DETAIL.ID]}>
           <Index>{`(${detail[DETAIL.ORDER]})`}</Index>
-          <DetailBox data={detail}/>
+          <DetailBox options={options} data={detail}/>
         </Row>
       ))}
     </Wrapper>

@@ -9,6 +9,7 @@ import SelectOption from "../../SelectOption";
 import Checkbox from "../../Checkbox";
 
 const FilterInfo = ({
+  options,
   data = {},
   handleCheckboxChange = () => {},
   handleValueChange = () => {},
@@ -29,7 +30,7 @@ const FilterInfo = ({
           <SelectOption
             title="매장명"
             name="storeName"
-            options={OPTIONS}
+            options={options.storeList}
             value={data["storeName"]}
             onChange={handleValueChange}
           />

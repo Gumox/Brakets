@@ -9,7 +9,7 @@ import ReceiptInfo from "./Receipt";
 import StoreInfo from "./Store";
 
 const ReceptionInfo = ({
-  initialData = {},
+  options,
   inputData = {},
   data = {},
   handleInputCheckboxChange = () => {},
@@ -25,27 +25,28 @@ const ReceptionInfo = ({
           handleValueChange={handleInputValueChange}
         />
         <FilterInfo
+          options={options}
           data={inputData}
           handleCheckboxChange={handleInputCheckboxChange}
           handleValueChange={handleInputValueChange}
           handleSearchButtonClick={handleSearchButtonClick}
         />
         <Section>
-          <ProducInfo
-            data={data}
-            handleValueChange={handleTargetValueChange}
-          />
+          <ProducInfo data={data} handleValueChange={handleTargetValueChange} />
           <StoreInfo
+            options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
           />
         </Section>
         <Section>
           <DetailInfo
+            options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
           />
           <ReceiptInfo
+            options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
           />

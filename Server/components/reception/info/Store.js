@@ -5,14 +5,13 @@ import moment from "moment";
 import COLOR from "../../../constants/color";
 import { CUSTOMER, STORE, RECEIPT } from "../../../constants/field";
 import {
-  STORE_OPTIONS,
   RECEIPT_CATEGORY_OPTIONS,
 } from "../../../constants/select-option";
 import { Row, Field } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
-const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
+const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
       <Row>
@@ -20,7 +19,7 @@ const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
           <SelectOption
             title="매장명"
             name={STORE.ID}
-            options={STORE_OPTIONS}
+            options={options.storeList}
             value={data[STORE.ID]}
             onChange={handleValueChange}
             styleOptions={{ maxWidth: "150px" }}

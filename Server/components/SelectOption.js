@@ -22,8 +22,8 @@ const SelectOption = ({
           value={value}
         >
           <option disabled={true} value=""></option>
-          {options.map(({ key, value, text }) => (
-            <option key={key} value={value}>
+          {options.map(({ value, text }) => (
+            <option key={value} value={value}>
               {text}
             </option>
           ))}

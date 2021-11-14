@@ -14,7 +14,7 @@ import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
 
-const ReceiptInfo = () => {
+const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
       <SectionRow>
@@ -80,7 +80,7 @@ const ReceiptInfo = () => {
               <SelectOption
                 title="수선처지정:"
                 // name={PRODUCT.SEASON}
-                options={OPTIONS}
+                options={options.repairList}
                 // value={data[PRODUCT.SEASON]}
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "80px" }}
@@ -105,7 +105,7 @@ const ReceiptInfo = () => {
           <Row>
             <Field>
               <Checkbox />
-              <Input title="유상수선비" styleOptions={{ width: "70px" }}/>
+              <Input title="유상수선비" styleOptions={{ width: "70px" }} />
             </Field>
             <Field>
               <Input title="현금영수증번호" />
@@ -142,7 +142,7 @@ const ReceiptInfo = () => {
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "70px" }}
               />
-              <Input styleOptions={{ width: "70px" }}/>
+              <Input styleOptions={{ width: "70px" }} />
             </Field>
             <Field>
               <Input type="date" title="발송일 to S" />

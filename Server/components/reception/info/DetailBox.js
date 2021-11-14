@@ -16,7 +16,7 @@ import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
 
-const DetailBox = ({ data = {} }) => {
+const DetailBox = ({ options, data = {} }) => {
   return (
     <Wrapper>
       <SectionRow>
@@ -51,9 +51,9 @@ const DetailBox = ({ data = {} }) => {
             <Field>
               <SelectOption
                 title="수선처:"
-                // name={PRODUCT.SEASON}
-                options={REPAIR_PLACE_OPTIONS}
-                // value={data[PRODUCT.SEASON]}
+                name={DETAIL.REPAIR_PLACE}
+                options={options.repairList}
+                value={data[DETAIL.REPAIR_PLACE]}
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "200px" }}
               />

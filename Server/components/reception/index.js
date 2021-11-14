@@ -6,7 +6,7 @@ import Content from "../Content";
 import Info from "./info";
 import List from "./list";
 
-const Reception = ({ data }) => {
+const Reception = ({ options }) => {
   const [inputData, setInputData] = useState({});
   const [targetData, setTargetData] = useState({});
   const [searchList, setSearchList] = useState([]);
@@ -51,7 +51,7 @@ const Reception = ({ data }) => {
   return (
     <Content>
       <Info
-        initialData={data}
+        options={options}
         inputData={inputData}
         data={targetData}
         {...{
@@ -61,7 +61,7 @@ const Reception = ({ data }) => {
           handleSearchButtonClick,
         }}
       />
-      <List data={searchList} handleDataClick={searchTargetData}/>
+      <List data={searchList} handleDataClick={searchTargetData} />
     </Content>
   );
 };

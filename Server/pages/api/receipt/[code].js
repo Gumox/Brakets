@@ -36,8 +36,9 @@ async function getReceiptDetail(id) {
                      num,
                      send_date,
                      message,
-                     charge        
-            FROM receipt_detail WHERE receipt_id = ?
+                     charge,
+                     receiver      
+            FROM receipt_detail WHERE receipt_id = ? 
             ORDER BY num ASC`,
     values: [id],
   });
