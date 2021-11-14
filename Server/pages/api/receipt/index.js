@@ -27,8 +27,8 @@ async function getReceipt() {
 
 const receipt = async (req, res) => {
   if (req.method === "GET") {
-    console.log("req.headers");
-    console.log(req.headers);
+    console.log("req.headers.referer");
+    console.log(req.headers.referer);
     console.log("req.query");
     console.log(req.query);
     try {
@@ -36,7 +36,7 @@ const receipt = async (req, res) => {
       if (receipt.error) throw new Error(receipt.error);
       res.status(200).json({ data: receipt });
     } catch (err) {
-        console.log(err.message)
+      console.log(err.message);
       res.status(500).json(err);
     }
   }

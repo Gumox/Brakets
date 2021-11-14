@@ -5,7 +5,7 @@ const FIELD = {
   SIZE: "product_size", // 사이즈
   DEGREE: "product_degree", // 차수
   IMAGE: "product_image", // 이미지
-  RFID: "product_qrcode", // RFID 코드
+  RFID: "product_code", // RFID 코드
   
   RELEASE_DATE: "product_release_date",
   SUBSTITUE_CODE: "product_substitue_code",
