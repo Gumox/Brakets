@@ -5,10 +5,10 @@ import Content from "../Content";
 import Info from "./info";
 import List from "./list";
 
-const Reception = ({data}) => {
+const Reception = ({ data }) => {
   return (
     <Content>
-      <Info data={data}/>
+      <Info data={data} />
       <List />
     </Content>
   );

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
-import { OPTIONS } from "../../../constants/dummy";
+import { OPTIONS } from "../../../constants/select-option";
 import { Row, Field } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
@@ -79,6 +79,7 @@ const FilterInfo = ({
             </Field>
           </div>
         </Field>
+        <Row>
         <Field>
           <SelectOption
             title="접수여부"
@@ -115,6 +116,7 @@ const FilterInfo = ({
             onChange={handleValueChange}
           />
         </Field>
+        </Row>
       </Row>
       <Row>
         <Field>
@@ -173,6 +175,7 @@ const FilterInfo = ({
   );
 };
 const Wrapper = styled.div`
+min-width: 1510px;
   position: relative;
   margin: 15px 10px 25px 10px;
   padding: 10px;

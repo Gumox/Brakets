@@ -1,20 +1,11 @@
 const FIELD = {
-    TYPE: {
-        id: 'receipt_type', 
-        title: '접수구분',
-    },
-    RECEIPT_DATE: {
-        id: 'receipt_date', 
-        title: '매장접수일',
-    },
-    DUE_DATE: {
-        id: 'due_date', 
-        title: '고객약속일',
-    },
-    CODE: {
-        id: 'receipt_code',
-        title: '서비스카드 번호 or RFID',
-    }
+    ID: 'receipt_id',
+    TYPE: 'receipt_type', 
+    RECEIPT_DATE: 'receipt_date', 
+    DUE_DATE: 'due_date', 
+    CODE: 'receipt_code',
+    CATEGORY: 'receipt_category',
+    MESSAGE: 'receipt_message',
 }
 
 export default FIELD;

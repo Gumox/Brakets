@@ -10,7 +10,7 @@ import ReceiptInfo from "./Receipt";
 import StoreInfo from "./Store";
 
 const ReceptionInfo = ({ data }) => {
-  const [inputData, setInputData] = useState({ ...RECEIPT });
+  const [inputData, setInputData] = useState({});
   const [searchData, setSearchData] = useState(data);
   const handleInputCheckboxChange = useCallback(
     (e) => {
@@ -71,7 +71,7 @@ const ReceptionInfo = ({ data }) => {
 };
 const Wrapper = styled.div`
   height: 65%;
-  border: 3px solid yellow; // TODO: 마무리 후 삭제
+  overflow: scroll;
 `;
 
 const Section = styled.div`

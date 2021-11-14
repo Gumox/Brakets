@@ -10,6 +10,7 @@ const Input = ({
   value = "",
   onChange = () => {},
   styleOptions = {},
+  disabled = false,
 }) => {
   return (
     <Wrapper>
@@ -21,6 +22,7 @@ const Input = ({
           name={name}
           value={value}
           onChange={onChange}
+          disabled={disabled}
         />
       </InputBox>
     </Wrapper>

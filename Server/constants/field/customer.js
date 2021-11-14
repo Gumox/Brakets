@@ -1,12 +1,7 @@
 const FIELD = {
-    NAME: {
-        id: 'customer_name', 
-        title: '고객명',
-    },
-    CONTACT: {
-        id: 'customer_contact', 
-        title: '고객연락처',
-    },
+    ID: 'customer_id',
+    NAME: 'customer_name', 
+    CONTACT: 'customer_phone', 
 }
 
 export default FIELD;
