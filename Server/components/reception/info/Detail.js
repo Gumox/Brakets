@@ -25,7 +25,6 @@ const DetailInfo = () => {
   );
 };
 const Wrapper = styled.div`
-  min-width: 750px;
   margin: 0px 5px 5px 15px;
   padding: 0px 7px;
   border: 2px solid ${COLOR.GRAY};

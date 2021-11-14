@@ -46,32 +46,41 @@ const ReceptionInfo = ({ data }) => {
   }, [inputData]);
   return (
     <Wrapper>
-      <BasicInfo data={inputData} handleValueChange={handleSearchValueChange} />
-      <FilterInfo
-        data={inputData}
-        handleCheckboxChange={handleInputCheckboxChange}
-        handleValueChange={handleInputValueChange}
-      />
-      <Section>
-        <ProducInfo
-          data={searchData}
+      <SubWrapper>
+        <BasicInfo
+          data={inputData}
           handleValueChange={handleSearchValueChange}
         />
-        <StoreInfo
-          data={searchData}
-          handleValueChange={handleSearchValueChange}
+        <FilterInfo
+          data={inputData}
+          handleCheckboxChange={handleInputCheckboxChange}
+          handleValueChange={handleInputValueChange}
         />
-      </Section>
-      <Section>
-        <DetailInfo />
-        <ReceiptInfo />
-      </Section>
+        <Section>
+          <ProducInfo
+            data={searchData}
+            handleValueChange={handleSearchValueChange}
+          />
+          <StoreInfo
+            data={searchData}
+            handleValueChange={handleSearchValueChange}
+          />
+        </Section>
+        <Section>
+          <DetailInfo />
+          <ReceiptInfo />
+        </Section>
+      </SubWrapper>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
   height: 65%;
   overflow: scroll;
+`;
+
+const SubWrapper = styled.div`
+  min-width: 1520px;
 `;
 
 const Section = styled.div`

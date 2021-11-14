@@ -175,7 +175,6 @@ const FilterInfo = ({
   );
 };
 const Wrapper = styled.div`
-min-width: 1510px;
   position: relative;
   margin: 15px 10px 25px 10px;
   padding: 10px;

@@ -18,7 +18,7 @@ const ReceiptInfo = () => {
   return (
     <Wrapper>
       <SectionRow>
-        <Section>
+        <Section marginRight="10px">
           <Row>
             <Field>
               <Input type="date" title="본사접수일" />
@@ -70,11 +70,11 @@ const ReceiptInfo = () => {
           </Row>
         </Section>
         <Section>
-          <TextArea title="본사설명:" styleOptions={{ width: "500px" }} />
+          <TextArea title="본사설명:" styleOptions={{ width: "400px" }} />
         </Section>
       </SectionRow>
       <SectionRow>
-        <Section>
+        <Section marginRight="10px">
           <Row>
             <Field>
               <SelectOption
@@ -105,7 +105,7 @@ const ReceiptInfo = () => {
           <Row>
             <Field>
               <Checkbox />
-              <Input title="유상수선비" />
+              <Input title="유상수선비" styleOptions={{ width: "70px" }}/>
             </Field>
             <Field>
               <Input title="현금영수증번호" />
@@ -142,7 +142,7 @@ const ReceiptInfo = () => {
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "70px" }}
               />
-              <Input />
+              <Input styleOptions={{ width: "70px" }}/>
             </Field>
             <Field>
               <Input type="date" title="발송일 to S" />
@@ -160,7 +160,6 @@ const ReceiptInfo = () => {
   );
 };
 const Wrapper = styled.div`
-  min-width: 750px;
   margin: 0px 15px 5px 5px;
 `;
 

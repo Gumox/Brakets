@@ -14,7 +14,7 @@ const ProducInfo = ({ data = {}, handleValueChange = () => {} }) => {
       <SectionRow>
         <Section>
           <Row>
-            <Field>
+            <Field marginRight="10px">
               <SelectOption
                 title="시즌:"
                 name={PRODUCT.SEASON}
@@ -23,45 +23,45 @@ const ProducInfo = ({ data = {}, handleValueChange = () => {} }) => {
                 onChange={handleValueChange}
               />
             </Field>
-            <Field>
+            <Field marginRight="10px">
               <Input
                 title="스타일:"
                 name={PRODUCT.STYLE}
-                styleOptions={{ width: "100px" }}
+                styleOptions={{ width: "80px" }}
                 value={data[PRODUCT.STYLE]}
                 onChange={handleValueChange}
               />
             </Field>
-            <Field>
+            <Field marginRight="10px">
               <Input
                 title="차수:"
                 name={PRODUCT.DEGREE}
-                styleOptions={{ width: "40px" }}
+                styleOptions={{ width: "30px" }}
                 value={data[PRODUCT.DEGREE]}
                 onChange={handleValueChange}
               />
             </Field>
-            <Field>
+            <Field marginRight="10px">
               <Input
                 title="컬러:"
                 name={PRODUCT.COLOR}
-                styleOptions={{ width: "40px" }}
+                styleOptions={{ width: "30px" }}
                 value={data[PRODUCT.COLOR]}
                 onChange={handleValueChange}
               />
             </Field>
-            <Field>
+            <Field marginRight="10px">
               <Input
                 title="사이즈:"
                 name={PRODUCT.SIZE}
-                styleOptions={{ width: "40px" }}
+                styleOptions={{ width: "30px" }}
                 value={data[PRODUCT.SIZE]}
                 onChange={handleValueChange}
               />
             </Field>
           </Row>
           <Row>
-            <Field>
+            <Field marginRight="10px">
               <Input
                 title="RFID코드"
                 name={PRODUCT.RFID}
@@ -70,7 +70,7 @@ const ProducInfo = ({ data = {}, handleValueChange = () => {} }) => {
                 onChange={handleValueChange}
               />
             </Field>
-            <Field>
+            <Field marginRight="10px">
               <Input
                 type="date"
                 title="최초출고일"
@@ -80,7 +80,7 @@ const ProducInfo = ({ data = {}, handleValueChange = () => {} }) => {
                 onChange={handleValueChange}
               />
             </Field>
-            <Field>
+            <Field marginRight="10px">
               <Input
                 title="대체품번"
                 name={PRODUCT.SUBSTITUE_CODE}
@@ -99,13 +99,12 @@ const ProducInfo = ({ data = {}, handleValueChange = () => {} }) => {
   );
 };
 const Wrapper = styled.div`
-  min-width: 750px;
   margin: 0px 5px 5px 15px;
 `;
 
 const ImageButton = styled.button`
   min-height: max-content;
-  width: 90px;
+  width: 80px;
   background-color: ${COLOR.GRAY};
   color: ${COLOR.WHITE};
   padding: 5px 10px;

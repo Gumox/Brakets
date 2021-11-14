@@ -76,7 +76,6 @@ const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
   );
 };
 const Wrapper = styled.div`
-  min-width: 750px;
   margin: 0px 15px 5px 5px;
 `;
 
