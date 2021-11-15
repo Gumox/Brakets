@@ -4,28 +4,33 @@ import styled from "styled-components";
 import COLOR from "../../../constants/color";
 import { RECEIPT, DETAIL } from "../../../constants/field";
 import { RECEIPT_TYPE_OPTIONS } from "../../../constants/select-option";
-import { Field } from "../../styled";
+import { Field, Section, SectionRow } from "../../styled";
 import SelectOption from "../../SelectOption";
 import DetailBox from "./DetailBox";
 
 const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
-      <Row>
-        <Field>
-          <SelectOption
-            title="고객요구"
-            name={RECEIPT.TYPE}
-            options={RECEIPT_TYPE_OPTIONS}
-            value={data[RECEIPT.TYPE]}
-            onChange={handleValueChange}
-          />
-        </Field>
-      </Row>
+      <SectionRow>
+        <Section>
+          <Field>
+            <SelectOption
+              title="고객요구"
+              name={RECEIPT.TYPE}
+              options={RECEIPT_TYPE_OPTIONS}
+              value={data[RECEIPT.TYPE]}
+              onChange={handleValueChange}
+            />
+          </Field>
+        </Section>
+        <Section>
+          <ImageButton>사진보기</ImageButton>
+        </Section>
+      </SectionRow>
       {data?.details?.map((detail) => (
         <Row key={detail[DETAIL.ID]}>
           <Index>{`(${detail[DETAIL.ORDER]})`}</Index>
-          <DetailBox options={options} data={detail}/>
+          <DetailBox options={options} data={detail} />
         </Row>
       ))}
     </Wrapper>
@@ -43,8 +48,19 @@ const Row = styled.div`
 `;
 
 const Index = styled.span`
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 15px;
+`;
+
+const ImageButton = styled.button`
+  margin-top: 10px;
+  min-height: max-content;
+  height: 30px;
+  background-color: ${COLOR.MENU_MAIN};
+  color: ${COLOR.WHITE};
+  padding: 0 20px;
+  border-radius: 5px;
+  border: 2px solid ${COLOR.BLUE};
 `;
 
 export default DetailInfo;

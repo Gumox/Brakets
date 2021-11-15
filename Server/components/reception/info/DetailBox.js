@@ -19,32 +19,25 @@ import Checkbox from "../../Checkbox";
 const DetailBox = ({ options, data = {} }) => {
   return (
     <Wrapper>
-      <SectionRow>
-        <Section marginRight="10px">
-          <Row>
-            <Field>
-              <SelectOption
-                title="수선유형:"
-                name={DETAIL.REPAIR_ID}
-                options={REPAIR_OPTIONS}
-                value={data[DETAIL.REPAIR_ID]}
-                // onChange={handleValueChange}
-              />
-            </Field>
-            <Field>
-              <Input
-                title="추가요청사항"
-                name={DETAIL.MESSAGE}
-                value={data[DETAIL.MESSAGE]}
-                styleOptions={{ width: "300px" }}
-              />
-            </Field>
-          </Row>
-        </Section>
-        <Section>
-          <ImageButton>사진보기</ImageButton>
-        </Section>
-      </SectionRow>
+      <Row>
+        <Field>
+          <SelectOption
+            title="수선유형:"
+            name={DETAIL.REPAIR_ID}
+            options={REPAIR_OPTIONS}
+            value={data[DETAIL.REPAIR_ID]}
+            // onChange={handleValueChange}
+          />
+        </Field>
+        <Field>
+          <Input
+            title="추가요청사항"
+            name={DETAIL.MESSAGE}
+            value={data[DETAIL.MESSAGE]}
+            styleOptions={{ width: "300px" }}
+          />
+        </Field>
+      </Row>
       <SectionRow>
         <Section>
           <Row>
@@ -165,17 +158,8 @@ const DetailBox = ({ options, data = {} }) => {
   );
 };
 const Wrapper = styled.div`
-  margin: 0px 5px 15px 5px;
+  margin: 5px 5px 20px 5px;
   width: 100%;
 `;
 
-const ImageButton = styled.button`
-  min-height: max-content;
-  height: 30px;
-  background-color: ${COLOR.MENU_MAIN};
-  color: ${COLOR.WHITE};
-  padding: 0 20px;
-  border-radius: 5px;
-  border: 2px solid ${COLOR.BLUE};
-`;
 export default DetailBox;
