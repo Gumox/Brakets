@@ -3,38 +3,36 @@ import Container from '../../components/Container';
 import Contents from '../../components/Contents';
 import SelectButton from '../../components/SelectButton';
 import Button from '../../components/Button';
-import Bottom from '../../components/Bottom';
-import _, { sortedLastIndex } from 'lodash';
+import _ from 'lodash';
 
-import { Image,Text, View, ScrollView, Dimensions } from "react-native";
+import { Image,Text, View, Dimensions } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
 import styled from 'styled-components/native';
 import store from '../../store/store';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import Bottom from '../../components/Bottom';
 
 const TouchableView = styled.TouchableOpacity`
     flex-direction:row;
     justify-content:space-around;
+    
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
 `;
-
 const ImgIcon =styled.Image`
     width: 20px;
     height: 20px;
 `;
-
 const InfoView =styled.View`
     width: 100%;
     border:2px solid  #78909c;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom : 30px;
+    border-radius:12px;
+    margin : 10px;
+    padding:15px;
 `;
-
 const Input = styled.TextInput`
     width: 100%;
     padding: 8px;
@@ -42,7 +40,6 @@ const Input = styled.TextInput`
     background-color:#d6d6d6;
     border-radius:10px
 `;
-
 
 
 const wait = (timeout) => {
@@ -71,9 +68,10 @@ function TakeOverPage( { navigation } ) {
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
+              <Text>고객 요구 : 수선 </Text>
             <InfoView>
-              <Text>서비스 카드 번호</Text>
-              <Input  
+                <Text>과실 구분</Text>
+                <Input
                 onChangeText = {onChangeText}
                 value = {text}
                         // onChange={(event) => {
@@ -82,41 +80,9 @@ function TakeOverPage( { navigation } ) {
                         //   }
                         // }
                     />
-              <Text>접수 구분</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>고객명</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>고객 연락처</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-            </InfoView>
 
-            <InfoView>
-              <Text>매장 접수일</Text>
-              <Input  
+                <Text>내용 분석</Text>
+                <Input
                 onChangeText = {onChangeText}
                 value = {text}
                         // onChange={(event) => {
@@ -125,8 +91,8 @@ function TakeOverPage( { navigation } ) {
                         //   }
                         // }
                     />
-              <Text>고객 약속일</Text>
-              <Input  
+              <Text>판정 결과</Text>
+              <Input
                 onChangeText = {onChangeText}
                 value = {text}
                         // onChange={(event) => {
@@ -135,11 +101,12 @@ function TakeOverPage( { navigation } ) {
                         //   }
                         // }
                     />
+
             </InfoView>
             </Contents>
-            <Button onPress = {() => {navigation.navigate('TakeOverPage2')}}>다음 : (2) 제품 정보</Button>
+            <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}>다음 : (4) 수선 정보</Button>
+
             <Bottom></Bottom>
-         
         </Container>
     )
 }
