@@ -2,48 +2,19 @@ import React,{useState ,useEffect} from 'react';
 import Container from '../../components/Container';
 import Contents from '../../components/Contents';
 import SelectButton from '../../components/SelectButton';
-
+import Button from '../../components/Button';
 import _ from 'lodash';
 
-import { Image,Text,Button, View } from "react-native";
+import { Image,Text, View, Dimensions } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
 import styled from 'styled-components/native';
 import store from '../../store/store';
-import { Provider } from 'react-redux'
-
-const BottomView = styled.View`
-    flex: 0.4;
-    flex-direction: row;
-    align-items: flex-end;
-    /* background: red; */
-`;
-
-const BottomButton = styled.TouchableOpacity`
-    width: 25%;
-    height: 30%;
-    background: #78909c;
-    border-color: red;
-    align-items: center;
-    justify-content: center;
-`;
-
-const BottomButtonText = styled.Text`
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-`;
-
-const BottomEmptySpace = styled.View`
-    background: #78909c;
-    width: 100%;
-    height: 3%;
-`;
-
+import { Provider } from 'react-redux';
+import Bottom from '../../components/Bottom';
 
 const TouchableView = styled.TouchableOpacity`
-    
     flex-direction:row;
     justify-content:space-around;
     
@@ -96,23 +67,11 @@ function TakeOverPage( { navigation } ) {
     
     return(
         <Container>
-            <Contents>
-            <Text>인수3</Text>
-          
-            </Contents>
+            <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
+              <Text>고객 요구 : 수선 </Text>
             <InfoView>
-              <Text>시즌-스타일</Text>
-              <Text>컬러-사이즈</Text>
-              <Text>제품 바코드/qr코드 번호</Text>
-              <Text>차수</Text>
-              <Text>상품 교환</Text>
-              <Text>판매가</Text>
-
-            </InfoView>
-
-            <InfoView>
-              <Text>과실 구분</Text>
-              <Input  
+                <Text>과실 구분</Text>
+                <Input
                 onChangeText = {onChangeText}
                 value = {text}
                         // onChange={(event) => {
@@ -121,8 +80,9 @@ function TakeOverPage( { navigation } ) {
                         //   }
                         // }
                     />
-              <Text>내용 분석</Text>
-              <Input  
+
+                <Text>내용 분석</Text>
+                <Input
                 onChangeText = {onChangeText}
                 value = {text}
                         // onChange={(event) => {
@@ -132,7 +92,7 @@ function TakeOverPage( { navigation } ) {
                         // }
                     />
               <Text>판정 결과</Text>
-              <Input  
+              <Input
                 onChangeText = {onChangeText}
                 value = {text}
                         // onChange={(event) => {
@@ -141,36 +101,12 @@ function TakeOverPage( { navigation } ) {
                         //   }
                         // }
                     />
+
             </InfoView>
+            </Contents>
+            <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}>다음 : (4) 수선 정보</Button>
 
-            <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}
-                    title = "다음:(4)접수 정보"></Button>
-            
-            <BottomView>
-                    <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
-                        <BottomButtonText>
-                            접수
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'TakeOverPage')}>
-                        <BottomButtonText>
-                            인수
-                        </BottomButtonText>
-                    </BottomButton>
-
-                    <BottomButton onPress = {() => navigation.navigate( 'LookupPage')}>
-                        <BottomButtonText>
-                            조회
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'MyPage')}>
-                        <BottomButtonText>
-                            MY
-                        </BottomButtonText>
-                    </BottomButton>
-            </BottomView>
-            <BottomEmptySpace>
-            </BottomEmptySpace>
+            <Bottom></Bottom>
         </Container>
     )
 }

@@ -5,42 +5,21 @@ import SelectButton from '../../components/SelectButton';
 
 import _ from 'lodash';
 
-import { Image,Text,Button, View } from "react-native";
+import { Image,Text, View, Dimensions } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
 import styled from 'styled-components/native';
 import store from '../../store/store';
 import { Provider } from 'react-redux'
-
-const BottomView = styled.View`
-    flex: 0.4;
-    flex-direction: row;
-    align-items: flex-end;
-    /* background: red; */
-`;
-
-const BottomButton = styled.TouchableOpacity`
-    width: 25%;
-    height: 30%;
-    background: #78909c;
-    border-color: red;
-    align-items: center;
-    justify-content: center;
-`;
-
-const BottomButtonText = styled.Text`
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-`;
+import Button from '../../components/Button';
+import Bottom from '../../components/Bottom';
 
 const BottomEmptySpace = styled.View`
     background: #78909c;
     width: 100%;
     height: 3%;
 `;
-
 
 const TouchableView = styled.TouchableOpacity`
     
@@ -59,8 +38,8 @@ const InfoView =styled.View`
     width: 100%;
     border:2px solid  #78909c;
     border-radius:12px;
-    margin:20px;
-    padding:15px;
+    padding: 15px;
+    margin-bottom : 10px;
 `;
 const Input = styled.TextInput`
     width: 100%;
@@ -68,6 +47,19 @@ const Input = styled.TextInput`
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
+`;
+
+const Half = styled.View`
+    width : 100%;
+    height : 20%;
+    flex-direction : row;
+    justify-content : space-between;
+    align-items : center;
+`;
+
+const HalfLine = styled.View`
+    width : 45%;
+    height : 100%;
 `;
 
 const wait = (timeout) => {
@@ -95,85 +87,113 @@ function TakeOverPage( { navigation } ) {
     
     return(
         <Container>
-            <Contents>
-            <Text>인수2</Text>
-          
-            </Contents>
+            <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>        
             <InfoView>
-              <Text>시즌-스타일</Text>
+                  <Half>
+                    <HalfLine>
+                    <Text>시즌</Text>
+                    <Input  
+                      onChangeText = {onChangeText}
+                      value = {text}
+                              // onChange={(event) => {
+                              //     const {eventCount, target, text} = event.nativeEvent;
+                              //     setProuctName(text);
+                              //   }
+                              // }
+                          />
+                      </HalfLine>
 
-              <Text>컬러-사이즈</Text>
-              <Text>제품 바코드/qr코드 번호</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>차수</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>상품 교환</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>판매가</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
+                      <HalfLine>
+                    <Text>스타일</Text>
+                  <Input  
+                    onChangeText = {onChangeText}
+                    value = {text}
+                            // onChange={(event) => {
+                            //     const {eventCount, target, text} = event.nativeEvent;
+                            //     setProuctName(text);
+                            //   }
+                            // }
+                        />
+                        </HalfLine>
+                  </Half>
 
-            </InfoView>
+                  <Half>
+                    <HalfLine>
+                    <Text>컬러</Text>
+                    <Input  
+                    onChangeText = {onChangeText}
+                    value = {text}
+                            // onChange={(event) => {
+                            //     const {eventCount, target, text} = event.nativeEvent;
+                            //     setProuctName(text);
+                            //   }
+                            // }
+                        />
+                    </HalfLine>
+                    <HalfLine>
 
-            <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}
-                    title = "다음:(3)고객 요구"></Button>
+                    <Text>사이즈</Text>
+                    <Input  
+                    onChangeText = {onChangeText}
+                    value = {text}
+                            // onChange={(event) => {
+                            //     const {eventCount, target, text} = event.nativeEvent;
+                            //     setProuctName(text);
+                            //   }
+                            // }
+                        />
+                        </HalfLine>
+                  </Half>
+                
+                  <Text>제품 바코드/qr코드 번호</Text>
+                  
+                  <Input  
+                    onChangeText = {onChangeText}
+                    value = {text}
+                            // onChange={(event) => {
+                            //     const {eventCount, target, text} = event.nativeEvent;
+                            //     setProuctName(text);
+                            //   }
+                            // }
+                        />
+                  <Text>차수</Text>
+                  <Input  
+                    onChangeText = {onChangeText}
+                    value = {text}
+                            // onChange={(event) => {
+                            //     const {eventCount, target, text} = event.nativeEvent;
+                            //     setProuctName(text);
+                            //   }
+                            // }
+                        />
+                  <Text>상품 교환</Text>
+                  <Input  
+                    onChangeText = {onChangeText}
+                    value = {text}
+                            // onChange={(event) => {
+                            //     const {eventCount, target, text} = event.nativeEvent;
+                            //     setProuctName(text);
+                            //   }
+                            // }
+                        />
+                  <Text>판매가</Text>
+                  <Input  
+                    onChangeText = {onChangeText}
+                    value = {text}
+                            // onChange={(event) => {
+                            //     const {eventCount, target, text} = event.nativeEvent;
+                            //     setProuctName(text);
+                            //   }
+                            // }
+                        />
+
+                </InfoView>
+            </Contents>s
+
+            <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}>다음 : (3)고객 요구</Button>
+                    
             
-            <BottomView>
-                    <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
-                        <BottomButtonText>
-                            접수
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'TakeOverPage')}>
-                        <BottomButtonText>
-                            인수
-                        </BottomButtonText>
-                    </BottomButton>
-
-                    <BottomButton onPress = {() => navigation.navigate( 'LookupPage')}>
-                        <BottomButtonText>
-                            조회
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'MyPage')}>
-                        <BottomButtonText>
-                            MY
-                        </BottomButtonText>
-                    </BottomButton>
-            </BottomView>
-            <BottomEmptySpace>
-            </BottomEmptySpace>
+            <Bottom></Bottom>
         </Container>
     )
 }

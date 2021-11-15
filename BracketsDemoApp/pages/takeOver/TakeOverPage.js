@@ -2,10 +2,11 @@ import React,{useState ,useEffect} from 'react';
 import Container from '../../components/Container';
 import Contents from '../../components/Contents';
 import SelectButton from '../../components/SelectButton';
-
+import Button from '../../components/Button';
+import Bottom from '../../components/Bottom';
 import _, { sortedLastIndex } from 'lodash';
 
-import { Image,Text,Button, View, ScrollView, Dimensions } from "react-native";
+import { Image,Text, View, ScrollView, Dimensions } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
@@ -13,55 +14,27 @@ import styled from 'styled-components/native';
 import store from '../../store/store';
 import { Provider } from 'react-redux'
 
-const BottomView = styled.View`
-    flex: 0.4;
-    flex-direction: row;
-    align-items: flex-end;
-    /* background: red; */
-`;
-
-const BottomButton = styled.TouchableOpacity`
-    width: 25%;
-    height: 30%;
-    background: #78909c;
-    border-color: red;
-    align-items: center;
-    justify-content: center;
-`;
-
-const BottomButtonText = styled.Text`
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-`;
-
-const BottomEmptySpace = styled.View`
-    background: #78909c;
-    width: 100%;
-    height: 3%;
-`;
-
-
 const TouchableView = styled.TouchableOpacity`
-    
     flex-direction:row;
     justify-content:space-around;
-    
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
 `;
+
 const ImgIcon =styled.Image`
     width: 20px;
     height: 20px;
 `;
+
 const InfoView =styled.View`
-    width: 90%;
+    width: 100%;
     border:2px solid  #78909c;
-    border-radius:12px;
-    margin : 10px;
-    padding:15px;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom : 30px;
 `;
+
 const Input = styled.TextInput`
     width: 100%;
     padding: 8px;
@@ -98,9 +71,6 @@ function TakeOverPage( { navigation } ) {
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
-            <Text>인수1</Text>
-          
-            
             <InfoView>
               <Text>서비스 카드 번호</Text>
               <Input  
@@ -167,37 +137,9 @@ function TakeOverPage( { navigation } ) {
                     />
             </InfoView>
             </Contents>
-
-            <View style = {{alignItems : 'center', justifyContent : 'center'}}>
-            <Button onPress = {() => {navigation.navigate('TakeOverPage2')}}
-                    title = "다음:(2)제품정보"></Button>
-          </View>
-            
-            <BottomView>
-                    <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
-                        <BottomButtonText>
-                            접수
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'TakeOverPage')}>
-                        <BottomButtonText>
-                            인수
-                        </BottomButtonText>
-                    </BottomButton>
-
-                    <BottomButton onPress = {() => navigation.navigate( 'LookupPage')}>
-                        <BottomButtonText>
-                            조회
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'MyPage')}>
-                        <BottomButtonText>
-                            MY
-                        </BottomButtonText>
-                    </BottomButton>
-            </BottomView>
-            <BottomEmptySpace>
-            </BottomEmptySpace>
+            <Button onPress = {() => {navigation.navigate('TakeOverPage2')}}>다음 : (2) 제품 정보</Button>
+            <Bottom></Bottom>
+         
         </Container>
     )
 }
