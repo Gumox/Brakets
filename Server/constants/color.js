@@ -12,6 +12,7 @@ const COLOR = {
   GRAY: "#808080",
   CYAN_BLUE: "#0066FF",
   MINT: "#3EB489",
+  ORANGE: "#FF8000",
 };
 
 export default COLOR;

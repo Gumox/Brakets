@@ -111,7 +111,18 @@ function ShopStepOne( { navigation } ) {
     const [modalVisible, setModalVisible] = React.useState(false);
     const [modalVisible2, setModalVisible2] = React.useState(false);
 
-    const sendForRepir =store.getState().basicRepairStore[0];
+    const sendForRepir =store.getState().basicRepairStore;
+    const [repairShop,setRepairShop] =React.useState();
+    const set =new Set(sendForRepir);
+
+    React.useEffect(()=>{
+        if(set.size === 1){
+            setRepairShop(...set);
+        }else{
+            setRepairShop("본사")
+        }
+    },[]);
+
 
     const styles = StyleSheet.create({
         centeredView: {
@@ -195,7 +206,7 @@ function ShopStepOne( { navigation } ) {
                     <TouchableView onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label><ImgIcon source={require('../Icons/image.png')}/></TouchableView>
                    
                 <GrayText>받는 곳</GrayText>
-                <DataView><Label>{sendForRepir}</Label></DataView>
+                <DataView><Label>{repairShop}</Label></DataView>
                 <GrayText>행낭 바코드</GrayText>
                 <Modal
                         animationType="slide"

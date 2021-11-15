@@ -42,8 +42,8 @@ export default createStore(function(state,action){
     if (action.type ==='ADD') {
         return{...state,  photoArr: [...state.photoArr,action.add]};
     }
-    if(action.type === 'SELECTTYPERESET'){
-        return{...state, selectType:  []};
+    if(action.type === 'SELECTTYPESET'){
+        return{...state, selectType: action.set};
     }
     if(action.type === 'PHOTORESET'){
         return{...state,  photoArr: action.setPhoto};

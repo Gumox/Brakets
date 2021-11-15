@@ -1,11 +1,11 @@
 import excuteQuery from './db';
 
 
-export async function getProductInfo(type, code) {
+export async function getProductInfo(code) {
     try {
         const result = await excuteQuery({
-            query: "SELECT * FROM product WHERE "+type+"=?",
-            values: [code]
+            query: "SELECT * FROM product WHERE qrcode=? OR barcode=?",
+            values: [code,code]
         });
 
         return result;
@@ -17,11 +17,11 @@ export async function getProductInfo(type, code) {
 
 export default (req, res) => {
   if (req.method === "POST") {
-    console.log("req"+ req.body);
-    var type = req.body.type; //qrcode, barcode
+    console.log("req");
+    console.log(req.body);
     var code = req.body.code;
 
-    getProductInfo(type,code).then((body) => {
+    getProductInfo(code).then((body) => {
 
         if (body.length){
                 console.log("Product Info");

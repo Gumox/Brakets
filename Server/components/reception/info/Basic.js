@@ -2,31 +2,35 @@ import React from "react";
 import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
-import { RECEIPT } from "../../../constants/field";
+import { COMPANY, STORE, RECEIPT } from "../../../constants/field";
+import { BRAND_OPTIONS } from "../../../constants/select-option";
 import Input from "../../Input";
+import SelectOption from "../../SelectOption";
 
 const BasicInfo = ({ data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
       <Input
         title="회사코드:"
-        name="headquarterId"
+        name={COMPANY.ID}
         type="text"
-        value={data["headquarterId"]}
+        value={process.env.HEADQUARTER_ID}
         onChange={handleValueChange}
+        disabled={true}
       />
-      <Input
+      <SelectOption
         title="브랜드:"
-        name="brand"
-        type="text"
-        value={data["brand"]}
+        name={STORE.ID}
+        options={BRAND_OPTIONS}
+        value={data[STORE.ID]}
         onChange={handleValueChange}
+        styleOptions={{ maxWidth: "150px" }}
       />
       <Input
-        title={RECEIPT.CODE.title}
-        name={RECEIPT.CODE.id}
+        title="서비스카드 번호 or RFID:"
+        name={RECEIPT.CODE}
         type="text"
-        value={data[RECEIPT.CODE.id]}
+        value={data[RECEIPT.CODE]}
         onChange={handleValueChange}
       />
       <ScanButton>바코드/QR 스캔</ScanButton>
@@ -36,16 +40,18 @@ const BasicInfo = ({ data = {}, handleValueChange = () => {} }) => {
 const Wrapper = styled.div`
   margin: 5px 15px 0 15px;
   display: flex;
+  flex-wrap: wrap;
   > * {
     margin-right: 30px;
   }
 `;
 
 const ScanButton = styled.button`
+  min-height: max-content;
   background-color: ${COLOR.BLACK};
   color: ${COLOR.WHITE};
-  margin: 0 15px;
-  padding: 0 20px;
+  margin: 2px 15px;
+  padding: 2px 20px;
   border-radius: 10px;
   border: none;
 `;

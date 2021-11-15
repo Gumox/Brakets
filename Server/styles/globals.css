@@ -8,6 +8,10 @@ body {
   overflow: hidden;
 }
 
+button {
+  cursor: pointer;
+}
+
 #__next {
   height: 100%;
 }

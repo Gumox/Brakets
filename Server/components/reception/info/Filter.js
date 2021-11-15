@@ -2,16 +2,18 @@ import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
-import { OPTIONS } from "../../../constants/dummy";
+import { OPTIONS } from "../../../constants/select-option";
 import { Row, Field } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 import Checkbox from "../../Checkbox";
 
 const FilterInfo = ({
+  options,
   data = {},
   handleCheckboxChange = () => {},
   handleValueChange = () => {},
+  handleSearchButtonClick = () => {},
 }) => {
   return (
     <Wrapper>
@@ -28,7 +30,7 @@ const FilterInfo = ({
           <SelectOption
             title="매장명"
             name="storeName"
-            options={OPTIONS}
+            options={options.storeList}
             value={data["storeName"]}
             onChange={handleValueChange}
           />
@@ -79,6 +81,7 @@ const FilterInfo = ({
             </Field>
           </div>
         </Field>
+        <Row>
         <Field>
           <SelectOption
             title="접수여부"
@@ -115,6 +118,7 @@ const FilterInfo = ({
             onChange={handleValueChange}
           />
         </Field>
+        </Row>
       </Row>
       <Row>
         <Field>
@@ -168,7 +172,7 @@ const FilterInfo = ({
         </Field>
         <SmsButton>조회 대상 SMS 전송</SmsButton>
       </Row>
-      <SearchButton>조회</SearchButton>
+      <SearchButton onClick={handleSearchButtonClick}>조회</SearchButton>
     </Wrapper>
   );
 };
