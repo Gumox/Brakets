@@ -87,7 +87,7 @@ export default class TakePhoto extends Component {
   onSuccess = async (e) => {
   const {route}=this.props;
 
-    console.log("to go: "+route.params.key);
+  console.log("to go: "+route.params.key);
 
     //console.log("go");
     if (this.camera) {
@@ -98,6 +98,7 @@ export default class TakePhoto extends Component {
       
       console.log (imgUri);
       console.log(store.getState().photoArr);
+
       if (route.params.key === 'ShopStepThree2'){
         //console.log ("ShopStepThree2: "+route.params.key);
         store.dispatch({type:'ADD',add: {key:0,value:imgUri,index:0}});
@@ -116,27 +117,31 @@ export default class TakePhoto extends Component {
         //console.log(route.params.value);
         const addPhoto = {key: route.params.value,value:imgUri,index:0};
        
-       // console.log(addPhoto);
+        console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
         
+        console.log("98745632145698745632145698745632145698")
+        console.log(store.getState().photoArr);
         this.props.navigation.replace("ShopStepThree2",{key:"CloseShot",value:route.params.value});
 
-      }else if(route.params.key==="CloseShot"){
+      }
+      else if(route.params.key==="CloseShot"){
         
         const addPhoto = {key: route.params.value,value:imgUri,index:1};
         
         //console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
-        
         this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
-      }else if(route.params.key === "AddPhoto"){
+      }
+      else if(route.params.key === "AddPhoto"){
         const addPhoto = {key: route.params.value,value:imgUri,index: route.params.index};
         
         //console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
         
         this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
-      }else if(route.params.key === "RetakePhoto"){
+      }
+      else if(route.params.key === "RetakePhoto"){
         const addPhoto = {key: route.params.value,value:imgUri,index: route.params.index};
         
         //console.log(addPhoto);
@@ -149,8 +154,9 @@ export default class TakePhoto extends Component {
   
   render() {
     const {route}=this.props;
+    console.log("to go: "+route.params.key);
     //console.log(route.params.key);
-    //console.log(route.params.value);
+    console.log(route.params.value);
     //console.log(store.getState().photoArr);
     var readText1 = " ";
     var readText2 = " ";

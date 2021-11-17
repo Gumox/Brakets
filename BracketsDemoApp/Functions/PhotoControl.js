@@ -68,7 +68,7 @@ export default function PhotoControl({ navigation ,route}){
     const RetakePhoto = () =>{
         console.log("key : "+selected.key+"   value: " +selected.value+"    index: "+selected.index);
         DeletePhoto();
-        navigation.navigate("TakePhoto",{key:"RetakePhoto",value:selected.key,index:selected.index});
+        navigation.replace("TakePhoto",{key:"RetakePhoto",value:selected.key,index:selected.index});
 
     }
     var output;

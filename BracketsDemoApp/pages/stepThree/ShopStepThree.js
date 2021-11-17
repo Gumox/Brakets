@@ -10,6 +10,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 import { Alert ,BackHandler} from 'react-native';
 import store from '../../store/store';
+import GetAplStore from '../../Functions/GetAplStore';
+import { getList } from '../../Functions/GetSendList';
 
 const TopStateView = styled.View`
     flex-direction: row;
@@ -50,54 +52,36 @@ function ShopStepThree( { navigation } ) {
 
   const [select,setSelect] =  React.useState(null);
 
-  const [data, setData] = React.useState([]);
+  const data =store.getState().getAplType;
   const ix = store.getState().indexNumber;
-  console.log(ix);
+  //console.log(ix);
+  //console.log("                       :"+store.getState().getAplType);
   
-  const [isLoading, setLoading] = React.useState(true);
-  const bodyData = {"repair":"type",
-  "category": 1,
-  "receipt": 1}
-  const getAplType = async () => {
+  const basicSend = store.getState().getAplType;
+  React.useEffect(()=>{
     
-      try {
-      const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      body: JSON.stringify(bodyData)
-      });
-      
-      const json = await response.json();
-      setData(json.body);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }
+    //setData(store.getState().getAplType);
+    //console.log("uri data: "+data);
+    //console.log(data);
+    const backAction = () => {
+        store.dispatch({type:'SELECTTYPESET',set:[]});
+        navigation.goBack();
+        return true;
+      };
   
-    React.useEffect(()=>{
-        getAplType();
-        console.log("uri data: "+data);
-        //console.log(dataList[0].receiver_name);
-        //getAplStore(selectedType,0);  
-
-        const backAction = () => {
-            store.dispatch({type:'SELECTTYPESET',set:[]});
-            navigation.goBack();
-            return true;
-          };
-      
-          const backHandler = BackHandler.addEventListener(
-            "hardwareBackPress",
-            backAction
-          );
-      
-          return () => backHandler.remove();
-      },[]);
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
   
+      return () => backHandler.remove();
+  },[]);
+  console.log("");
+  console.log("");
+  console.log("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
+  console.log(basicSend);
+  console.log("");
+  console.log("");
   return (
       <Container>
           <TopStateView></TopStateView>
@@ -129,19 +113,24 @@ function ShopStepThree( { navigation } ) {
             {setSelect(value)
               store.dispatch({type:"SELECTTYPESET" ,set : []});
               store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:[]});
+              console.log("        :"+value);
               
+              store.dispatch({type:'RESET_TYPE_STORE',reset:[]});
+              getList(value,0);
+              console.log(store.getState().typeStore);
+
               data.forEach(obj => {
                 if(value === obj.repair_name){
                   console.log(obj.receiver_name);
                   
-                  store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: obj.receiver_name});
+                  store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: {key: 0 ,basicSend :obj.receiver_name}});
                   
                   console.log("+++"+store.getState().basicRepairStore);
                   
                 }
+
               });
-              
-            
+             
             }
           }
           items={[
@@ -173,10 +162,26 @@ function ShopStepThree( { navigation } ) {
             }else{
               store.dispatch({type:'PHOTORESET',setPhoto:[]});
               store.dispatch({type:'PLUSINDEXNUMBER',plus:-ix});
+              
               console.log("? "+ix);
               console.log(store.getState().indexNumber);
               store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
-              console.log(store.getState().selectType)
+              console.log(store.getState().selectType);
+              
+              console.log("");
+              console.log("");
+              console.log("");
+              console.log("");
+              console.log("");
+              console.log("");
+              console.log(store.getState().typeStore);
+              
+              console.log("");
+              console.log("");
+              console.log("");
+              console.log("");
+              console.log("");
+              console.log("");
               navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
             }}}>
             다음 단계

@@ -6,7 +6,7 @@ import Container from '../components/Container';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import CenterText from '../components/CenterText';
-
+import store from '../store/store';
 const Label = styled.Text`
     font-size: 15px;
     margin: 20px;
@@ -45,7 +45,37 @@ const TopStateView = styled.View`
 `;
 
 function ShopStepTwo({navigation}) {
-   
+    const [data, setData] = React.useState([]);
+    const [isLoading, setLoading] = React.useState(true);
+    const bodyData = {"repair":"type",
+    "category": 1,
+    "receipt": 1}
+    const getAplType = async () => {
+        
+        try {
+            const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(bodyData)
+            });
+            const json = await response.json();
+            setData(json.body);
+            console.log(json.body);
+            console.log(data);
+            store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
+            console.log(store.getState().getAplType)
+            setLoading(false);
+           
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+            navigation.navigate("ShopStepThree");
+        }
+    }
+    
     
     return (
         <Container>
@@ -57,7 +87,11 @@ function ShopStepTwo({navigation}) {
                   
             </CenterText>  
             <PView>
-                <CenterView><SelectButton onPress={ ()=> navigation.navigate( 'ShopStepThree' )}>수선</SelectButton><SelectButton>교환</SelectButton></CenterView>
+                <CenterView><SelectButton onPress={ ()=> {
+                    getAplType();}
+
+                }>수선</SelectButton>
+                <SelectButton>교환</SelectButton></CenterView>
                 <CenterView><SelectButton>환불</SelectButton><SelectButton>심의</SelectButton></CenterView>
             </PView>  
             <Label>접수 유형 알아보기</Label>

@@ -11,6 +11,10 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
 import _ from 'lodash';
 
+import GetAplStore from '../../Functions/GetAplStore';
+import { getList } from '../../Functions/GetSendList';
+import { changeSelectSend ,changeBasicSend} from '../../Functions/SendDataFuctions';
+
 const RetakeView = styled.TouchableOpacity`
     padding:3px;
     background-color:#0000ff;
@@ -86,11 +90,13 @@ const ModalInsideOptionsView =styled.View`
     justify-content: space-around;
 `;
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 
 function ShopStepThree4({route,navigation}) {
 
     const uriList=store.getState().photoArr;
-    console.log(uriList)
     const indexSort =uriList.sort(function (a,b) {
         return a.index -b.index;
     })
@@ -104,163 +110,101 @@ function ShopStepThree4({route,navigation}) {
         }
     });
     
-    
-    //console.log(uriList.sort);
     const selectedType = store.getState().selectType[0].value; 
     
-    console.log(uriList);
-    console.log("");
-    var index = 0;
+    const index = store.getState().indexNumber
+    console.log("number:   "+store.getState().indexNumber)
 
     const [arrayValueIndex,setArrayValueIndex] =React.useState(0);
     
     const [select,setSelect] = React.useState();
     
-    const [data, setData] = React.useState([]);
-    
-    
-    const [isLoading, setLoading] = React.useState(true);
-    //get Type 함수: 선택한 유형의 기본 수선 장소  
-    const getAplType = async (value,key) => {
-        const bodyData = {"repair":"type",
-        "category": 1,
-        "receipt": 1}
-        try {
-        const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-        body: JSON.stringify(bodyData)
-        });
-        if(key>0){
-        const json = await response.json();
-        const xData = json.body;
-        xData.forEach(obj => {
-            if(value === obj.repair_name){
-              
-              store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: obj.receiver_name});
-              
-            }
-          });
-        }else {
-        
-            const json = await response.json();
-            setData(json.body);
-        }
-        } catch (error) {
-        console.error(error);
-        } finally {
-        setLoading(false);
-        }
-    }
-    
-    const [isLoadingStore, setLoadingStore] = React.useState(true);
-    var chlidList=[];
-    //get store : 선택한 유형의 다른 수선장소들
-    const getAplStore = async (value,key) => {
-      const dataSet = {
-        "repair":"store",
-        "category": 1,
-        "receipt": 1,
-        "name": value
-        }
-        console.log(dataSet);
-        try {
-            const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataSet)
-            });
-            
-            const json = await response.json();
-            if(key>0){
-                chlidDataList[key] =(json.body);
-                console.log("rkrkrkrk");
-                console.log(chlidDataList[key]);
-                //chlidList.push( DataParseForDropdownList(chlidDataList[key]));
-                const cData=DataParseForDropdownList(chlidDataList[key]);
-                console.log(cData);
-                store.dispatch({type:"TYPESTORE",typeStoreAdd: cData});
-                
-            }else{
-                setDataList(json.body);
-            }
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoadingStore(false);
-        }
-        
-    }
-    
     const [dataList,setDataList] = React.useState([]);
     
-    const DataParseForDropdownList = (dataList)=>{
- 
-        const itemList=[];
-        for(var i =0 ; i<dataList.length;i++){
-            itemList.push( dataList[i].receiver_name)
-        }
-        
-        const Lists =[];
     
-        if (itemList !==null){
-            itemList.map(x => Lists.push({label:x,value:x}));
-            
-        }
-        return(Lists);
-    }
-    const DeleteAddType = (deleteKey,deleteType) => {
-        var delList =uriList;
+    const data =store.getState().getAplType;
+
+    const useList = store.getState().typeStore ;
+    
+    var useListSort = useList.sort(function(a,b){
+        return a.key -b.key;
+    });
+    const DeleteAddType = (deleteKey) => {
+        var delPhotoList =uriList;
         var delSend = List0;
-        store.dispatch({type:'DELETE_KEY_SELECT_TYPE',deleteTypeKey:deleteKey});
+        var delSendList = useList;
+        var delSelectList =  store.getState().selectType;
         
+        console.log("");
+        console.log(delPhotoList);
+        console.log("");
         console.log(delSend);
-        for(let i = 0  ; i<delList.length;i++){
-            if(delList[i].key == deleteKey){
-                delList.splice(i,1);
+        console.log("");
+        console.log(delSendList);
+        for(let i = 0  ; i<delPhotoList.length;i++){
+            if(delPhotoList[i].key == deleteKey){
+                delPhotoList.splice(i,1);
                 i--;
             }
         }
-        for(let i = 0 ; i<delList.length;i++){
-            if(delList[i].key > deleteKey){
-                var obj = delList[i];
+        for(let i = 0 ; i<delPhotoList.length;i++){
+            if(delPhotoList[i].key > deleteKey){
+                var obj = delPhotoList[i];
                 obj.key=Number(obj.key) -1;
             }
         } 
+        
+        console.log(delPhotoList);
+
         for(let i = 0  ; i<delSend.length;i++){
-            if(delSend[i] == deleteKey){
+            if(i == deleteKey){
                 delSend.splice(i,1);
-                i--;
+               break;
+            }
+        } 
+        console.log(delSend);
+        for(let i = 0  ; i<delSendList.length;i++){
+            if(i == deleteKey){
+                delSendList.splice(i,1);
+                break;
             }
         }
-        console.log(delSend);
+        for(let i  = 0 ; i < delSelectList.length;i++){
+            console.log(delSelectList[i]);
+            if(delSelectList[i].key==deleteKey){
+                delSelectList.splice(i,1);
+               i--;
+            }
+        }
+        for(let i = 0 ; i<delSelectList.length;i++){
+            if(delSelectList[i].key > deleteKey){
+                var obj = delSelectList[i];
+                obj.key=Number(obj.key) -1;
+            }
+        } 
+        console.log(delSendList);
+
+        store.dispatch({type:"SELECTTYPESET" ,set: delSelectList})
         store.dispatch({type:'PLUSINDEXNUMBER',plus:-1});
-        store.dispatch({type:'PHOTORESET',setPhoto:delList});
+        store.dispatch({type:'PHOTORESET',setPhoto:delPhotoList});
         store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset: delSend});
+        store.dispatch({type:'RESET_TYPE_STORE',reset: delSendList});
         
-        //OnRefresh();
+        console.log("before nvi===================================================")
         navigation.replace("ShopStepThree4");
     }
-
-    const List = DataParseForDropdownList(dataList);
-    const List0 = store.getState().basicRepairStore;
+    const [List0,setList0] = React.useState( store.getState().basicRepairStore);
     //전단계 찍은 사진들 쌓은 부분 ---
     var photoOutput= [];
     var photoVisiable = [];
     var imageModalsVisiable = []; 
     for(var i =0; i<photoUri.length;i++){
-        //photoVisible[i]=(false)
         
         const img = photoUri[i];
         var tempPhoto = (
         <View key={i}>
             
             <Pressable onPress={() => {
-                console.log(img);
                 navigation.navigate("PhotoControl",{key: 0 ,value: img.value,index:img.index})
                 }}>
                 <Image key = {i} style={{width:90, height:100 ,marginLeft:2}} source={{uri:photoUri[i].value}}/>
@@ -270,10 +214,23 @@ function ShopStepThree4({route,navigation}) {
         photoOutput[i] = (tempPhoto);
     }
     // ---
+    const [refreshing, setRefreshing] = React.useState(false);
+    
+    const OnRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(500).then(() => {setRefreshing(false)
+        
+
+        });
+    }, []);
+    var addDataList = [];
+    
     React.useEffect(()=>{
-        getAplStore(selectedType,0);  
+        
+        console.log(store.getState().typeStore[0]);
+        console.log("xxxxxxxxxxxx"+store.getState().typeStore);
+        
         const backAction = () => {
-            //store.dispatch({type:'PHOTORESET',setPhoto:[]});
             navigation.goBack();
             return true;
           };
@@ -285,37 +242,65 @@ function ShopStepThree4({route,navigation}) {
       
           return () => {
               backHandler.remove();
-              setLoading(false);
-              setLoadingStore(false);
             }
 
     },[]);
+
+
+
+    console.log("")
+       
+    console.log("")
+    console.log("")
+    console.log("")
+   
+
     // 수선유형 추가하면 쌓이는 부분 //
     var output=[];
     var chlidDataList = [];
     var inputTexts = [];
     var selectedTypeLists = [];
+    var basicLavel = store.getState().basicRepairStore;
+    console.log(basicLavel)
+
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
+    console.log("")
     if(store.getState().indexNumber>0){
         for (var i = 1; i < store.getState().indexNumber+1; i++) {
             
-            const keySelectedType = store.getState().selectType[i].value;
-            selectedTypeLists[i] = ( store.getState().selectType[i]);
-            //console.log(i+":get: "+keySelectedType);
-        
+            const myKey = i;
+
+            const [cSendList,setCSendList] = React.useState(useListSort[myKey].sendList);
+
+            const keySelectedType = store.getState().selectType[myKey].value;
+            selectedTypeLists[myKey] = ( store.getState().selectType[myKey]);
+            const cBasicLavel = basicLavel[myKey].basicSend;
+            
+            store.dispatch({type:'RESET_TYPE_STORE',reset:useList});
+           
+            console.log(store.getState().typeStore);
             React.useEffect(()=>{
-              
-                //getAplStore(keySelectedType,i);
-                console.log("???????");
-                console.log(store.getState().typeStore[0])
+                //OnRefresh();
             },[]);
             
-            const cList=store.getState().typeStore[i-1];
-            const cBasicLavel = store.getState().basicRepairStore[i];
            
             var indexUriList =[];
             var photoImages =[];
 
-            const myKey = i;
+           
             console.log('myKey    :'+myKey);
             uriList.forEach(element => {
                 if(element.key == i){
@@ -332,7 +317,7 @@ function ShopStepThree4({route,navigation}) {
                         console.log(myKey);
                         console.log(img.index);
                         console.log(img.value);
-                    navigation.navigate("PhotoControl",{key: myKey ,value: img.value,index:img.index});
+                        navigation.navigate("PhotoControl",{key: myKey ,value: img.value,index:img.index});
                         }}>
                     <Image  style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j].value}}/>
                     </Pressable>
@@ -340,11 +325,6 @@ function ShopStepThree4({route,navigation}) {
                 photoImages[j] =(photoImage);
             }
             
-            /*console.log("025852025852:   "+myKey);*/
-            console.log("CLIST Y")
-            console.log(cList);
-            /*console.log("??????");
-            console.log(chlidList[myKey]);*/
             var tempItem=  (
                 <View key ={myKey} >
                     <Label/>
@@ -353,7 +333,7 @@ function ShopStepThree4({route,navigation}) {
                             <View/>
                             <DeleteButton onPress ={() =>{
                                 DeleteAddType(myKey)
-                            /*console.log(myKey)*/}
+                            }
                             }>
                             <Image style={{width:20, height:20}} source ={require("../../Icons/cancel.png")}/>
                             </DeleteButton></AddTypeDleleteView>
@@ -364,7 +344,20 @@ function ShopStepThree4({route,navigation}) {
                                 onValueChange={(value) =>
                                 {
                                     selectedTypeLists[myKey] = ( {key : myKey ,value : value});
-                                    console.log(selectedTypeLists);
+                                    //console.log(selectedTypeLists);
+                                    changeSelectSend(value,myKey);
+                                    changeBasicSend(value,myKey);
+                                    wait(500).then(() => {
+                                        console.log("??");
+                                        console.log(store.getState().typeStore[myKey].sendList);
+                                        useListSort = store.getState().typeStore.sort(function(a,b){
+                                            return a.key -b.key;
+                                        })
+                                        console.log(useListSort[myKey].sendList);
+                                        setCSendList(useListSort[myKey].sendList);
+                                        console.log(cSendList);
+                                        console.log("AAAAAAAAAAAAAAAAA");
+                                    });
                                 }
                                 }
                                 items={[
@@ -396,10 +389,10 @@ function ShopStepThree4({route,navigation}) {
                         <Label>수선처</Label>
                         <Picker
                            
-                            placeholder={{ label: '기본위치: ' + cBasicLavel }}
+                            placeholder={{ label: '기본위치: ' + cBasicLavel,value:cBasicLavel }}
                             style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
                             onValueChange={(value) => console.log(value)}
-                            items={cList}
+                            items={store.getState().typeStore[myKey].sendList}
                         />
                         </InfoView>
                 
@@ -409,7 +402,11 @@ function ShopStepThree4({route,navigation}) {
 
         }
     }
+
+
     selectedTypeLists[0] = ( store.getState().selectType[0]);
+
+    const [sendList,setSendList] = React.useState(useListSort[0].sendList);
     return (
         
         <ContainView>
@@ -426,7 +423,17 @@ function ShopStepThree4({route,navigation}) {
                 onValueChange={(value) =>
                 {
                     selectedTypeLists[0] = ( {key : 0 ,value : value});
-                    console.log(selectedTypeLists);
+                    changeSelectSend(value,0);
+                    changeBasicSend(value,0);
+                    wait(500).then(() => {
+                        console.log("??");
+                        console.log(store.getState().typeStore[0].sendList);
+                        useListSort = store.getState().typeStore.sort(function(a,b){
+                            return a.key -b.key;
+                        })
+                        setSendList(useListSort[0].sendList);
+                    });
+                    //getList(value,0);
                 }
                 }
                 items={[
@@ -455,10 +462,10 @@ function ShopStepThree4({route,navigation}) {
                  onChangeText={ value => inputTexts[0]=( value ) }/>
             <Label>수선처</Label>
             <Picker
-                placeholder={{ label: '기본위치: '+List0[0]}}
+                placeholder={{ label: '기본위치: '+store.getState().basicRepairStore[0].basicSend, value:store.getState().basicRepairStore[0].basicSend}}
                 style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
                 onValueChange={(value) => console.log(value)}
-                items={List}
+                items={store.getState().typeStore[0].sendList}
             />
                 
             </InfoView>
@@ -466,25 +473,40 @@ function ShopStepThree4({route,navigation}) {
             <Label>수선 유형 추가</Label>
             <InfoView>
             <Picker
-            placeholder = {{label : '[선택] 옵션을 선택하세요',value: null}}
-            style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
-            onValueChange={(value) =>
-            {
-              setSelect(value)
-             
-              store.dispatch({type:'PLUSINDEXNUMBER',plus:1});
-              index = store.getState().indexNumber;
+                placeholder = {{label : '[선택] 옵션을 선택하세요',value: null}}
+                style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
+                onValueChange={(value) =>
+                {
+                    setSelect(value)
+                    store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:basicLavel});
+                    
+                    store.dispatch({type:'PLUSINDEXNUMBER',plus:1});
+                    //index = store.getState().indexNumber;
 
-              store.dispatch({type:'SELECTTYPE',typeSelect: {key :index , value : value}});
-              console.log(store.getState().selectType);
-              
-              getAplType(value,index);
-              console.log("arrayValueIndex: "+index);
-              console.log(value + "    "+ index);
-              getAplStore(value,index);
-              
-              navigation.replace("TakePhoto",{key:"FullShot",value:index});
-            }
+                    store.dispatch({type:'SELECTTYPE',typeSelect: {key :(index+1) , value : value}});
+
+                    console.log(store.getState().selectType);
+                    console.log("arrayValueIndex: "+(index+1));
+                    console.log(value + "    "+ (index+1));
+
+
+                    
+                    data.forEach(obj => {
+                        if(value === obj.repair_name){
+                        console.log(obj.receiver_name);
+                        
+                        store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: {key: (index+1) ,basicSend :obj.receiver_name}});
+                        
+                        
+                        }
+                    });
+
+
+                    getList(value,(index+1));
+
+                
+                navigation.replace("TakePhoto",{key:"FullShot",value:(index+1)});
+                }
             }
             items={[
                 { label: '1.원단', value: '원단' },

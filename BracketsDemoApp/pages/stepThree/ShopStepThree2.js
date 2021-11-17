@@ -52,13 +52,14 @@ function ShopStepThree2 ({ navigation ,route}) {
     }else if( route.params.key === "CloseShot"){
       console.log("CloseShot");
       var indexUriList = [];
-      //console.log(indexUriList);
+      console.log(indexUriList);
       imageArray.forEach(element => {
-                if(element.key == store.getState().indexNumber){
-                    indexUriList.push(element);
-                    //console.log(indexUriList);
-                }
-            });
+        console.log(element);
+        if(element.key == store.getState().indexNumber){
+            indexUriList.push(element);
+            //console.log(indexUriList);
+        }
+      });
       
       setImageUri(indexUriList[0]["value"]);
     }  

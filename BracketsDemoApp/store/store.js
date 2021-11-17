@@ -9,7 +9,7 @@ export default createStore(function(state,action){
         return{
             cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", 
             picture:"",picture2:"",selectType:[],bagPicture:"", photoArr:[],indexNumber:0,
-            typeStore:[],basicRepairStore : [],addRequest: []}
+            typeStore:[],basicRepairStore : [],addRequest: [],getAplType:[]}
     }
     
     if(action.type ==='SERVICECAED'){
@@ -55,6 +55,10 @@ export default createStore(function(state,action){
     if (action.type ==='TYPESTORE') {
         return{...state,  typeStore: [...state.typeStore,action.typeStoreAdd]};
     }
+    if (action.type ==='RESET_TYPE_STORE') {
+        return{...state,  typeStore: action.reset};
+    }
+
     if (action.type ==='SAVE_BASIC_REPAIR_STORE') {
         return{...state,  basicRepairStore: [...state.basicRepairStore,action.basicRepairStoreAdd]};
     }
@@ -76,6 +80,10 @@ export default createStore(function(state,action){
     }
     if(action.type === 'ADD_REQUESR'){
         return{...state,  addRequest: action.addRequest};
+    }
+    if(action.type === 'GET_APL_TYPE'){
+        
+        return{...state,  getAplType: action.setAplType};
     }
     return state;
 }) 
