@@ -357,6 +357,8 @@ function ShopStepThree4({route,navigation}) {
                                         setCSendList(useListSort[myKey].sendList);
                                         console.log(cSendList);
                                         console.log("AAAAAAAAAAAAAAAAA");
+                                        ///change///
+                                        
                                     });
                                 }
                                 }
