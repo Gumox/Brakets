@@ -153,7 +153,7 @@ function ShopStepThree4({route,navigation}) {
                             multiline={ true }
                             >{request}</Input>
                         <Label>수선처</Label>
-                        <SendText>{store.getState().basicRepairStore[myKey]}</SendText>
+                        <SendText>{store.getState().basicRepairStore[myKey].basicSend}</SendText>
                     </InfoView>
                     <Label/>
                 </View>

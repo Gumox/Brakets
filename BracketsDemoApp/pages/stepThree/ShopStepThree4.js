@@ -11,9 +11,8 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
 import _ from 'lodash';
 
-import GetAplStore from '../../Functions/GetAplStore';
 import { getList } from '../../Functions/GetSendList';
-import { changeSelectSend ,changeBasicSend} from '../../Functions/SendDataFuctions';
+import { changeSelectSend ,changeBasicSend,changeSelectType} from '../../Functions/SendDataFuctions';
 
 const RetakeView = styled.TouchableOpacity`
     padding:3px;
@@ -347,6 +346,7 @@ function ShopStepThree4({route,navigation}) {
                                     //console.log(selectedTypeLists);
                                     changeSelectSend(value,myKey);
                                     changeBasicSend(value,myKey);
+                                    changeSelectType(value,myKey);
                                     wait(500).then(() => {
                                         console.log("??");
                                         console.log(store.getState().typeStore[myKey].sendList);
@@ -425,6 +425,7 @@ function ShopStepThree4({route,navigation}) {
                     selectedTypeLists[0] = ( {key : 0 ,value : value});
                     changeSelectSend(value,0);
                     changeBasicSend(value,0);
+                    changeSelectType(value,0);
                     wait(500).then(() => {
                         console.log("??");
                         console.log(store.getState().typeStore[0].sendList);

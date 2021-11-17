@@ -54,3 +54,16 @@ export function changeSelectSend(value,key){
     console.log(selectSendList);
     console.log(store.getState().typeStore);
 } 
+export function changeSelectType(value,key){
+    const selectType =store.getState().selectType;
+    for (let i = 0; i < selectType.length; i++) {
+        if(selectType[i].key == key){
+            selectType.splice(i,1);
+        }
+    }
+    selectType.push({key : key,value : value});
+    selectType.sort(function(a,b){
+        return a.key -b.key;
+    })
+
+}

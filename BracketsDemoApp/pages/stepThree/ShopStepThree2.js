@@ -19,7 +19,14 @@ const CenterView =styled.View`
 `;
 
 
-
+const BottomItemBox = styled.View`
+  flex-direction: row;
+  width:100%
+  justify-content: space-between;
+  background-color : #000000;
+  margin-left : 20px;
+  margin-right : 20px;
+`;
 const TouchableView = styled.TouchableOpacity`
     margin:10px
 `;

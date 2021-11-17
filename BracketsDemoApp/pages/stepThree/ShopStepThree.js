@@ -10,7 +10,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 import { Alert ,BackHandler} from 'react-native';
 import store from '../../store/store';
-import GetAplStore from '../../Functions/GetAplStore';
 import { getList } from '../../Functions/GetSendList';
 
 const TopStateView = styled.View`
