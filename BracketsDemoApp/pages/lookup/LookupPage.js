@@ -12,6 +12,7 @@ import { size } from 'lodash';
 import styled from 'styled-components/native';
 import store from '../../store/store';
 import { Provider } from 'react-redux'
+import Bottom from '../../components/Bottom';
 
 const BottomView = styled.View`
     flex: 0.4;
@@ -88,32 +89,7 @@ function LookupPage( { navigation } ) {
                 <Text>연락처 (뒷4자리) or 이름 입력</Text>
             </Contents>
 
-
-            <BottomView>
-                    <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
-                        <BottomButtonText>
-                            접수
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'TakeOverPage')}>
-                        <BottomButtonText>
-                            인수
-                        </BottomButtonText>
-                    </BottomButton>
-
-                    <BottomButton onPress = {() => navigation.navigate( 'LookupPage')}>
-                        <BottomButtonText>
-                            조회
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'MyPage')}>
-                        <BottomButtonText>
-                            MY
-                        </BottomButtonText>
-                    </BottomButton>
-            </BottomView>
-            <BottomEmptySpace>
-            </BottomEmptySpace>
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }

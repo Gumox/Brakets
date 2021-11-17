@@ -7,6 +7,7 @@ import JustView from '../components/JustView';
 //import AsyncStorage from '@react-native-community/async-storage';
 // import { AsyncStorage } from 'react-native';
 import { Alert } from 'react-native';
+import Bottom from '../components/Bottom';
 
 const Label = styled.Text`
     font-size: 20px;
@@ -58,6 +59,7 @@ function InputAlternativeNumber({navigation}) {
                     }>
                     다음
             </Button>
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }

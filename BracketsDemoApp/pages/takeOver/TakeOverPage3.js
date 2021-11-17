@@ -106,7 +106,7 @@ function TakeOverPage( { navigation } ) {
             </Contents>
             <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}>다음 : (4) 수선 정보</Button>
 
-            <Bottom></Bottom>
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }

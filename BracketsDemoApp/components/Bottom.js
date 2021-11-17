@@ -8,7 +8,7 @@ const BottomView = styled.View`
 const BottomButton = styled.TouchableOpacity`
     width: 25%;
     height: 100%;
-    background: #78909c;
+    background: #858585;
     align-items: center;
     justify-content: center;
 `;
@@ -21,31 +21,31 @@ const BottomItemBox = styled.View`
   flex-direction: row;
   width:100%
   justify-content: space-between;
-  background-color : #000000;
+  background-color :#858585;
   margin-left : 20px;
   margin-right : 20px;
 `;
 
-function Bottom ({navigation}){
+function Bottom  (props){
   return(
   <BottomView>
-      <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
+      <BottomButton onPress = {() => props.navigation.navigate( 'StartPage')}>
           <BottomButtonText>
               접수
           </BottomButtonText>
       </BottomButton>
-      <BottomButton onPress = {() => navigation.navigate( 'TakeOverPage')}>
+      <BottomButton onPress = {() => props.navigation.navigate( 'TakeOverPage')}>
           <BottomButtonText>
               인수
           </BottomButtonText>
       </BottomButton>
 
-      <BottomButton onPress = {() => navigation.navigate( 'LookupPage')}>
+      <BottomButton onPress = {() => props.navigation.navigate( 'LookupPage')}>
           <BottomButtonText>
               조회
           </BottomButtonText>
       </BottomButton>
-      <BottomButton onPress = {() => navigation.navigate( 'MyPage')}>
+      <BottomButton onPress = {() => props.navigation.navigate( 'MyPage')}>
           <BottomButtonText>
               MY
           </BottomButtonText>

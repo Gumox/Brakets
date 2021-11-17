@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import CenterText from '../components/CenterText';
 import _ from 'lodash';
 import Contents from '../components/Contents';
+import Bottom from '../components/Bottom';
 import StateBarSolid from '../components/StateBarSolid';
 import store from '../store/store';
 
@@ -50,6 +51,8 @@ function ShopStepFive( { navigation } ) {
             <Button onPress={ ()=> navigation.navigate( 'ScanScreen',{key:'ShopStepComplete'} ) }>
                 코드 스캔
             </Button>
+            
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }

@@ -6,6 +6,7 @@ import ContainView from '../../components/ContainView';
 import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler, Touchable} from 'react-native';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
+import Bottom from '../../components/Bottom';
 import store from '../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
@@ -534,6 +535,7 @@ function ShopStepThree4({route,navigation}) {
                     다음
                 </ButtonBlack>
             </CenterView>
+            <Bottom navigation={navigation}/>
         </ContainView>
     )
     

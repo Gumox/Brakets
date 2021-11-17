@@ -7,6 +7,7 @@ import _ from 'lodash';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import { PERMISSIONS, RESULTS, request } from 'react-native-permissions'
+import Bottom from '../components/Bottom';
 
 
 const Alternative = styled.Text`
@@ -66,7 +67,7 @@ function ShopStepOne( { navigation } ) {
                 대체 코드 작성</Alternative>
             <Button onPress={ ()=> navigation.navigate( 'BarcodeScreen') }>
                 코드 스캔
-            </Button>
+            </Button><Bottom navigation={navigation}/>
         </Container>
     )
 }

@@ -4,6 +4,7 @@ import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
+import Bottom from '../../components/Bottom';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
@@ -83,7 +84,7 @@ function ShopStepThree( { navigation } ) {
   console.log("");
   return (
       <Container>
-          <TopStateView></TopStateView>
+          <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
           <CenterText>
               <Title>수선정보</Title>
           </CenterText>
@@ -185,6 +186,7 @@ function ShopStepThree( { navigation } ) {
             }}}>
             다음 단계
           </Button>
+          <Bottom navigation={navigation}/>
       </Container>
   )
 }

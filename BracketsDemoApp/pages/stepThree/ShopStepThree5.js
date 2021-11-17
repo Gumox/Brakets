@@ -11,6 +11,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
 import _ from 'lodash';
 import ShopStepFour2 from '../ShopStepFour2';
+import Bottom from '../../components/Bottom';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -151,7 +152,7 @@ function ShopStepThree4({route,navigation}) {
                         <Label>추가 요청 사항</Label>
                         <Input  
                             multiline={ true }
-                            >{request}</Input>
+                            >{request}</Input> 
                         <Label>수선처</Label>
                         <SendText>{store.getState().basicRepairStore[myKey].basicSend}</SendText>
                     </InfoView>
@@ -182,6 +183,7 @@ function ShopStepThree4({route,navigation}) {
                     4단계: 서비스 바코드 스캔 
                 </Button>
             </CenterView>
+            <Bottom navigation={navigation}/>
         </ContainView>
     )
     

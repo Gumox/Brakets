@@ -6,6 +6,7 @@ import Container from '../components/Container';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import CenterText from '../components/CenterText';
+import Bottom from '../components/Bottom';
 import store from '../store/store';
 const Label = styled.Text`
     font-size: 15px;
@@ -95,6 +96,7 @@ function ShopStepTwo({navigation}) {
                 <CenterView><SelectButton>환불</SelectButton><SelectButton>심의</SelectButton></CenterView>
             </PView>  
             <Label>접수 유형 알아보기</Label>
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }

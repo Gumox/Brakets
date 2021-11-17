@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import CenterText from '../components/CenterText';
 import _ from 'lodash';
 import StateBarSolid from '../components/StateBarSolid';
+import Bottom from '../components/Bottom'
 import store from '../store/store';
 import { Modal ,StyleSheet,View,Pressable,Image} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
@@ -27,7 +28,7 @@ const BlueText = styled.Text`
     color:#78909c;
 `;
 const GrayText = styled.Text`
-    font-size: 20px;
+    font-size: 17px;
     color:#858585;
 `;
 const CompleteV = styled.View`
@@ -100,24 +101,22 @@ const CodeView = styled.View`
 function ShopStepOne( { navigation } ) {
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
     const [bag, setBag] = React.useState(store.getState().bagCodeValue);
-    console.log(barcode);
+    
 
     const cardImgUri = store.getState().card;
     const bagImgUri =store.getState().bagPicture;
 
-    console.log(cardImgUri);
-    console.log(bagImgUri);
 
     const [modalVisible, setModalVisible] = React.useState(false);
     const [modalVisible2, setModalVisible2] = React.useState(false);
 
     const sendForRepir =store.getState().basicRepairStore;
-    const [repairShop,setRepairShop] =React.useState();
+    const [repairShop,setRepairShop] =React.useState(null);
+    
     const set =new Set(sendForRepir);
-
     React.useEffect(()=>{
         if(set.size === 1){
-            setRepairShop(...set);
+            setRepairShop(sendForRepir[0].basicSend);
         }else{
             setRepairShop("본사")
         }
@@ -240,6 +239,7 @@ function ShopStepOne( { navigation } ) {
             <Button onPress={ ()=> navigation.popToTop()}>
                 완료
             </Button>
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }

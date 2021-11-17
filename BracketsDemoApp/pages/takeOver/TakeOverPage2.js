@@ -193,7 +193,7 @@ function TakeOverPage( { navigation } ) {
             <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}>다음 : (3)고객 요구</Button>
                     
             
-            <Bottom></Bottom>
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }

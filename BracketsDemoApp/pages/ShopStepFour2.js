@@ -3,6 +3,7 @@ import Contents from '../components/Contents';
 import ButtonBlack from '../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
+import Bottom from '../components/Bottom';
 import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions} from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
@@ -206,6 +207,7 @@ function ShopStepFour2({navigation}) {
                     다음: 5단계
                 </ButtonBlack>
             </CenterView>
+            <Bottom navigation={navigation}/>
         </ContainView>
     )
     

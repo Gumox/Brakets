@@ -9,6 +9,7 @@ import StateBarVoid from '../components/StateBarVoid';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 import { Alert } from 'react-native';
+import Bottom from '../components/Bottom';
 
 
 const Label = styled.Text`
@@ -48,7 +49,7 @@ const ContainImg =styled.View`
 const TopStateView = styled.View`
  
     flex-direction: row;
-    padding-bottom:24px;
+    padding:24px;
     justify-content: center;
 `;
 
@@ -265,7 +266,7 @@ function ProductInfo({navigation, route}) {
                     </Button>
 
                 </CenterView>
-
+                <Bottom navigation={navigation}/>
             </ContainView>
 
     )

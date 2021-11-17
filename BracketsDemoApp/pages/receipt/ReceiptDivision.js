@@ -7,6 +7,7 @@ import StateBarVoid from '../../components/StateBarVoid';
 import CenterText from '../../components/CenterText';
 import ReceiptButton from '../../components/ReceiptButton';
 import ContainView from '../../components/ContainView';
+import Bottom from '../../components/Bottom';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -95,30 +96,7 @@ function ReceiptDivision({navigation}) {
             <ReceiptButton onPress={ ()=> 
                     navigation.navigate( 'ShopStepOne' ) }>매장용 제품</ReceiptButton>
             </Container>
-            <BottomView>
-                    <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
-                        <BottomButtonText>
-                            접수
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'TakeOverPage')}>
-                        <BottomButtonText>
-                            인수
-                        </BottomButtonText>
-                    </BottomButton>
-
-                    <BottomButton onPress = {() => navigation.navigate( 'LookupPage')}>
-                        <BottomButtonText>
-                            조회
-                        </BottomButtonText>
-                    </BottomButton>
-                    <BottomButton onPress = {() => navigation.navigate( 'MyPage')}>
-                        <BottomButtonText>
-                            MY
-                        </BottomButtonText>
-                    </BottomButton>
-            </BottomView>
-            <BottomEmptySpace/>
+            <Bottom navigation={navigation}/>
         </Container>
         
     )

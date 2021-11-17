@@ -150,8 +150,7 @@ function TakeOverPage( { navigation } ) {
 
             </Contents>
             
-
-            <Bottom></Bottom>
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }
