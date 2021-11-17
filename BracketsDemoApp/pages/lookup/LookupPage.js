@@ -84,8 +84,11 @@ function LookupPage( { navigation } ) {
     return(
         <Container>
             <Contents>
-                <Text>조회 page</Text>
+                <Text>고객 조회</Text>
+                <Text>연락처 (뒷4자리) or 이름 입력</Text>
             </Contents>
+
+
             <BottomView>
                     <BottomButton onPress = {() => navigation.navigate( 'StartPage')}>
                         <BottomButtonText>

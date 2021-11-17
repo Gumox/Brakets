@@ -1,73 +1,84 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { CUSTOMER, STORE, RECEIPT } from "../../../constants/field";
-import { STORE_OPTIONS } from "../../../constants/dummy";
+import {
+  RECEIPT_CATEGORY_OPTIONS,
+} from "../../../constants/select-option";
 import { Row, Field } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
-const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
+const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
       <Row>
         <Field>
           <SelectOption
-            title={STORE.NAME.title}
-            name={STORE.NAME.id}
-            options={STORE_OPTIONS}
-            value={data[STORE.NAME.id]}
+            title="매장명"
+            name={STORE.ID}
+            options={options.storeList}
+            value={data[STORE.ID]}
             onChange={handleValueChange}
             styleOptions={{ maxWidth: "150px" }}
           />
         </Field>
         <Field>
           <Input
-            title={CUSTOMER.NAME.title}
-            name={CUSTOMER.NAME.id}
+            title="고객명"
+            name={CUSTOMER.NAME}
             styleOptions={{ width: "100px" }}
-            value={data[CUSTOMER.NAME.id]}
+            value={data[CUSTOMER.NAME]}
             onChange={handleValueChange}
           />
         </Field>
         <Field>
           <Input
-            title={CUSTOMER.CONTACT.title}
-            name={CUSTOMER.CONTACT.id}
+            title="고객연락처"
+            name={CUSTOMER.CONTACT}
             styleOptions={{ width: "100px" }}
-            value={data[CUSTOMER.CONTACT.id]}
+            value={data[CUSTOMER.CONTACT]}
             onChange={handleValueChange}
           />
         </Field>
       </Row>
       <Row>
         <Field>
-          <Input
-            title={RECEIPT.TYPE.title}
-            name={RECEIPT.TYPE.id}
-            styleOptions={{ width: "100px" }}
-            value={data[RECEIPT.TYPE.id]}
+          <SelectOption
+            title="접수구분"
+            name={RECEIPT.CATEGORY}
+            options={RECEIPT_CATEGORY_OPTIONS}
+            value={data[RECEIPT.CATEGORY]}
             onChange={handleValueChange}
           />
         </Field>
         <Field>
           <Input
             type="date"
-            title={RECEIPT.RECEIPT_DATE.title}
-            name={RECEIPT.RECEIPT_DATE.id}
+            title="매장접수일"
+            name={RECEIPT.RECEIPT_DATE}
             styleOptions={{ padding: "1px 0px" }}
-            value={data[RECEIPT.RECEIPT_DATE.id]}
+            value={
+              data[RECEIPT.RECEIPT_DATE]
+                ? moment(data[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD")
+                : undefined
+            }
             onChange={handleValueChange}
           />
         </Field>
         <Field>
           <Input
             type="date"
-            title={RECEIPT.DUE_DATE.title}
-            name={RECEIPT.DUE_DATE.id}
+            title="고객약속일"
+            name={RECEIPT.DUE_DATE}
             styleOptions={{ padding: "1px 0px" }}
-            value={data[RECEIPT.DUE_DATE.id]}
+            value={
+              data[RECEIPT.DUE_DATE]
+                ? moment(data[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
+                : undefined
+            }
             onChange={handleValueChange}
           />
         </Field>
@@ -76,7 +87,6 @@ const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
   );
 };
 const Wrapper = styled.div`
-  border: 2px dotted ${COLOR.PURPLE};
   margin: 0px 15px 5px 5px;
 `;
 

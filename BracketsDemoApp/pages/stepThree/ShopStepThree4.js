@@ -100,9 +100,6 @@ function ShopStepThree4({route,navigation}) {
     const indexSort =uriList.sort(function (a,b) {
         return a.index -b.index;
     })
-    const keySort = indexSort.sort(function(a,b){
-        return a.key -b.key;
-    })
     const photoUri=[];
     indexSort.forEach(obj=> {
         if(obj.key === 0){
@@ -119,9 +116,10 @@ function ShopStepThree4({route,navigation}) {
     
     const [select,setSelect] = React.useState();
     
+
     const [dataList,setDataList] = React.useState([]);
     
-    
+
     const data =store.getState().getAplType;
 
     const useList = store.getState().typeStore ;
@@ -144,6 +142,7 @@ function ShopStepThree4({route,navigation}) {
         for(let i = 0  ; i<delPhotoList.length;i++){
             if(delPhotoList[i].key == deleteKey){
                 delPhotoList.splice(i,1);
+
                 i--;
             }
         }
@@ -152,6 +151,7 @@ function ShopStepThree4({route,navigation}) {
                 var obj = delPhotoList[i];
                 obj.key=Number(obj.key) -1;
             }
+
         } 
         
         console.log(delPhotoList);
@@ -189,6 +189,7 @@ function ShopStepThree4({route,navigation}) {
         store.dispatch({type:'PHOTORESET',setPhoto:delPhotoList});
         store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset: delSend});
         store.dispatch({type:'RESET_TYPE_STORE',reset: delSendList});
+
         
         console.log("before nvi===================================================")
         navigation.replace("ShopStepThree4");
@@ -200,13 +201,15 @@ function ShopStepThree4({route,navigation}) {
     var imageModalsVisiable = []; 
     for(var i =0; i<photoUri.length;i++){
         
-        const img = photoUri[i];
+        const img = photoUri[i]
+        //console.log(imgValue);
         var tempPhoto = (
         <View key={i}>
-            
+
             <Pressable onPress={() => {
                 navigation.navigate("PhotoControl",{key: 0 ,value: img.value,index:img.index})
                 }}>
+
                 <Image key = {i} style={{width:90, height:100 ,marginLeft:2}} source={{uri:photoUri[i].value}}/>
             </Pressable>
         </View>
@@ -259,6 +262,7 @@ function ShopStepThree4({route,navigation}) {
     var output=[];
     var chlidDataList = [];
     var inputTexts = [];
+
     var selectedTypeLists = [];
     var basicLavel = store.getState().basicRepairStore;
     console.log(basicLavel)
@@ -302,6 +306,7 @@ function ShopStepThree4({route,navigation}) {
 
            
             console.log('myKey    :'+myKey);
+
             uriList.forEach(element => {
                 if(element.key == i){
                     indexUriList.push(element);
@@ -309,22 +314,21 @@ function ShopStepThree4({route,navigation}) {
                 }
             });
             for(var j=0; j < indexUriList.length ; j++){
-                const img = indexUriList[j];
-                console.log(img);
                 var photoImage =(
-                
+
                     <Pressable  key = {j} onPress={() => {
                         console.log(myKey);
                         console.log(img.index);
                         console.log(img.value);
                         navigation.navigate("PhotoControl",{key: myKey ,value: img.value,index:img.index});
                         }}>
+
                     <Image  style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j].value}}/>
                     </Pressable>
                 );
                 photoImages[j] =(photoImage);
             }
-            
+
             var tempItem=  (
                 <View key ={myKey} >
                     <Label/>
@@ -333,10 +337,12 @@ function ShopStepThree4({route,navigation}) {
                             <View/>
                             <DeleteButton onPress ={() =>{
                                 DeleteAddType(myKey)
-                            }
+
                             }>
-                            <Image style={{width:20, height:20}} source ={require("../../Icons/cancel.png")}/>
+                            <Text>X</Text>
+                            {/*<Image style={{width:20, height:20}} source ={require("../../Icons/cancel.png")}/>*/}
                             </DeleteButton></AddTypeDleleteView>
+
                             <View style = {{width :180}}>
                             <Picker
                                 placeholder = {{label : keySelectedType,value: keySelectedType}}
@@ -371,13 +377,14 @@ function ShopStepThree4({route,navigation}) {
                                 ]}
                             />
                             </View>
+
                         
                         <ScrollView horizontal ={true} style={{marginLeft:8,marginRight:8,marginTop:5,marginBottom:5}}>
                             
                                 {photoImages}
                                 
                                 <ContainImg onPress={()=>{
-                                    navigation.navigate("TakePhoto",{key:"AddPhoto",value:myKey,index:indexUriList[myKey].length})
+                                    navigation.replace("TakePhoto",{key:"AddPhoto",value:myKey,index:indexUriList[j].length})
                                 }}>
                                 <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
                                 
@@ -390,8 +397,10 @@ function ShopStepThree4({route,navigation}) {
                             onChangeText={ value => inputTexts[myKey] =( value)  }/>
                         <Label>수선처</Label>
                         <Picker
+
                            
                             placeholder={{ label: '기본위치: ' + cBasicLavel,value:cBasicLavel }}
+
                             style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
                             onValueChange={(value) => console.log(value)}
                             items={store.getState().typeStore[myKey].sendList}
@@ -405,10 +414,10 @@ function ShopStepThree4({route,navigation}) {
         }
     }
 
-
     selectedTypeLists[0] = ( store.getState().selectType[0]);
 
     const [sendList,setSendList] = React.useState(useListSort[0].sendList);
+
     return (
         
         <ContainView>
@@ -451,7 +460,7 @@ function ShopStepThree4({route,navigation}) {
                 
                     {photoOutput}
                     <ContainImg onPress={()=>{
-                        navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: photoUri.length})
+                        navigation.replace("TakePhoto",{key:"AddPhoto",value:0,index: photoUri.length})
                         }}>
                         <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
                   
@@ -475,6 +484,7 @@ function ShopStepThree4({route,navigation}) {
             <Label>수선 유형 추가</Label>
             <InfoView>
             <Picker
+
                 placeholder = {{label : '[선택] 옵션을 선택하세요',value: null}}
                 style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
                 onValueChange={(value) =>
@@ -509,6 +519,7 @@ function ShopStepThree4({route,navigation}) {
                 
                 navigation.replace("TakePhoto",{key:"FullShot",value:(index+1)});
                 }
+
             }
             items={[
                 { label: '1.원단', value: '원단' },
@@ -525,8 +536,6 @@ function ShopStepThree4({route,navigation}) {
                 <ButtonBlack onPress={ ()=>
                     {
                      console.log(inputTexts);
-                     //store.dispatch({type:'SELECTTYPESET',set:[]});
-                     store.dispatch({type:'SELECTTYPESET',set:selectedTypeLists})
                      store.dispatch({type:'ADD_REQUESR',addRequest:inputTexts});
                      console.log(store.getState().addRequest)
                      navigation.navigate( 'ShopStepThree5' );

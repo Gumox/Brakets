@@ -13,7 +13,6 @@ import Container from '../components/Container';
 import { RNCamera } from 'react-native-camera';
 import store from '../store/store';
 
-
 export default class ScanScreen extends Component {
   
   onSuccess = async (e) => {

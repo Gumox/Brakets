@@ -37,7 +37,8 @@ export async function getRepairInfo(repair, category, receipt, name) {
 
 export default (req, res) => {
   if (req.method === "POST") {
-    console.log("req"+ req.body);
+    console.log("req");
+    console.log(req.body);
     var repair = req.body.repair; 	//type:수선유형, store:수선유형에 따른 수선처
     var category = req.body.category; 	//1:고객용 2:매장용 3:선처리
     var receipt = req.body.receipt; 	//1: 수선 2: 교환 3: 환불 4: 심의

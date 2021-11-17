@@ -19,7 +19,8 @@ export async function addReceipt(store, staff, customer, category, pid, pcode, s
 
 export default (req, res) => {
   if (req.method === "POST") {
-    console.log("req"+ req.body);
+    console.log("req");
+    console.log(req.body);
     var store = req.body.store; 
     var staff = req.body.staff; 
     var customer = req.body.customer; 

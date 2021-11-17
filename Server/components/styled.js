@@ -16,3 +16,17 @@ export const Field = styled.div`
     margin-right: 5px;
   }
 `;
+
+export const Section = styled.div`
+  margin-right: ${({ marginRight = "40px" }) => marginRight};
+
+  &: last-child {
+    margin-right: 0px;
+  }
+`;
+
+export const SectionRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`

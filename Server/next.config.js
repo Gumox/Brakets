@@ -17,6 +17,7 @@ module.exports = {
 		KAKAO_REDIRECT_URI: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
 	  JWT_SECRET_KEY: "bracketssecretkey",
 	  API_URL: process.env.NEXT_PUBLIC_API_URL,
+	  HEADQUARTER_ID: process.env.NEXT_PUBLIC_HEADQUARTER_ID,
 	},
   
 	/*
