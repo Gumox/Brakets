@@ -1,3 +1,8 @@
+export const DEFAULT_OPTION = {
+  value: "",
+  text: "",
+};
+
 export const OPTIONS = [
   {
     key: 1,
@@ -16,18 +21,6 @@ export const OPTIONS = [
   },
 ];
 
-export const SEASON_OPTIONS = [
-  {
-    key: "2021fw",
-    value: "2021fw",
-    text: "21 F/W",
-  },
-  {
-    key: "2021ss",
-    value: "2021ss",
-    text: "21 S/S",
-  },
-];
 export const BRAND_OPTIONS = [
   {
     key: "1",
@@ -40,13 +33,7 @@ export const BRAND_OPTIONS = [
     text: "나이키",
   },
 ];
-export const STORE_OPTIONS = [
-  {
-    key: "2",
-    value: "2",
-    text: "아디다스 오리지널스 홍대 직영점",
-  },
-];
+
 export const RECEIPT_CATEGORY_OPTIONS = [
   {
     key: "1",
@@ -115,5 +102,72 @@ export const SHIPPING_OPTIONS = [
     key: "1",
     value: "1",
     text: "택배",
+  },
+];
+
+export const DATE_SEARCH_TYPE_OPTIONS = [
+  {
+    value: "receipt_date",
+    text: "매장등록일",
+  },
+  {
+    value: "send_date",
+    text: "매장발송일",
+  },
+  {
+    value: "register_date",
+    text: "본사접수일",
+  },
+  {
+    value: "return_date",
+    text: "하자반품일",
+  },
+  {
+    value: "due_date",
+    text: "고객약속일",
+  },
+];
+
+export const REGISTER_STEP_OPTIONS = [
+  {
+    value: "",
+    text: "접수여부 ALL",
+  },
+  {
+    value: "0",
+    text: "미접수",
+  },
+  {
+    value: "1",
+    text: "접수",
+  },
+];
+
+export const SEND_OPTIONS = [
+  {
+    value: "",
+    text: "발송여부 ALL",
+  },
+  {
+    value: "0",
+    text: "발송",
+  },
+  {
+    value: "1",
+    text: "미발송",
+  },
+];
+
+export const ANALYSIS_TYPE_OPTIONS = [
+  {
+    value: "",
+    text: "내용분석 ALL",
+  },
+];
+
+export const RESULT_TYPE_OPTIONS = [
+  {
+    value: "",
+    text: "판정결과 ALL",
   },
 ];

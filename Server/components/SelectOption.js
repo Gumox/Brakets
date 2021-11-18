@@ -10,18 +10,21 @@ const SelectOption = ({
   value = "",
   onChange = () => {},
   styleOptions = {},
+  disabled = false,
 }) => {
   return (
     <Wrapper>
-      <CustomLabel {...styleOptions}>{title}</CustomLabel>
-      <SelectBox>
+      <CustomLabel {...styleOptions} disabled={disabled}>
+        {title}
+      </CustomLabel>
+      <SelectBox disabled={disabled}>
         <CustomSelect
           {...styleOptions}
           name={name}
           onChange={onChange}
           value={value}
+          disabled={disabled}
         >
-          <option disabled={true} value=""></option>
           {options.map(({ value, text }) => (
             <option key={value} value={value}>
               {text}
@@ -43,6 +46,7 @@ const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: 5px;
   font-size: ${({ labelFontSize = "15px" }) => labelFontSize};
+  color: ${({ disabled }) => (disabled ? COLOR.GRAY : COLOR.BLACK)};
 `;
 
 const CustomSelect = styled.select`
@@ -61,7 +65,8 @@ const SelectBox = styled.div`
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid
+    ${({ disabled }) => (disabled ? COLOR.GRAY : COLOR.BLACK)};
 `;
 
 export default SelectOption;

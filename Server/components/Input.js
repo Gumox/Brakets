@@ -14,8 +14,8 @@ const Input = ({
 }) => {
   return (
     <Wrapper>
-      <CustomLabel>{title}</CustomLabel>
-      <InputBox {...styleOptions}>
+      <CustomLabel disabled={disabled}>{title}</CustomLabel>
+      <InputBox {...styleOptions} disabled={disabled}>
         <CustomInput
           {...styleOptions}
           type={type}
@@ -39,6 +39,7 @@ const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: 5px;
   font-size: ${({ labelFontSize = "15px" }) => labelFontSize};
+  color: ${({ disabled }) => (disabled ? COLOR.GRAY : COLOR.BLACK)};
 `;
 
 const CustomInput = styled.input`
@@ -60,7 +61,8 @@ const InputBox = styled.div`
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid
+    ${({ disabled }) => (disabled ? COLOR.GRAY : COLOR.BLACK)};
 `;
 
 export default Input;

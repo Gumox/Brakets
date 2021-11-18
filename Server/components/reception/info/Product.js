@@ -3,12 +3,11 @@ import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
 import { PRODUCT } from "../../../constants/field";
-import { SEASON_OPTIONS } from "../../../constants/select-option";
 import { Row, Field, Section, SectionRow } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
-const ProducInfo = ({ data = {}, handleValueChange = () => {} }) => {
+const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
       <SectionRow>
@@ -18,7 +17,7 @@ const ProducInfo = ({ data = {}, handleValueChange = () => {} }) => {
               <SelectOption
                 title="시즌:"
                 name={PRODUCT.SEASON}
-                options={SEASON_OPTIONS}
+                options={options.seasonList}
                 value={data[PRODUCT.SEASON]}
                 onChange={handleValueChange}
               />

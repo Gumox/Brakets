@@ -32,7 +32,7 @@ const ReceptionInfo = ({
           handleSearchButtonClick={handleSearchButtonClick}
         />
         <Section>
-          <ProducInfo data={data} handleValueChange={handleTargetValueChange} />
+          <ProducInfo options={options} data={data} handleValueChange={handleTargetValueChange} />
           <StoreInfo
             options={options}
             data={data}
