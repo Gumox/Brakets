@@ -25,7 +25,6 @@ const TouchableView = styled.TouchableOpacity`
     
     flex-direction:row;
     justify-content:space-around;
-    
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
@@ -39,22 +38,26 @@ const InfoView =styled.View`
     border:2px solid  #78909c;
     border-radius:12px;
     padding: 15px;
-    margin-bottom : 10px;
+    margin-bottom : 50px;
 `;
+
 const Input = styled.TextInput`
     width: 100%;
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
+    margin-bottom : 15px;
 `;
 
 const Half = styled.View`
+  
     width : 100%;
-    height : 20%;
+    height : 17%;
     flex-direction : row;
     justify-content : space-between;
     align-items : center;
+    
 `;
 
 const HalfLine = styled.View`
@@ -88,111 +91,108 @@ function TakeOverPage( { navigation } ) {
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>        
-            <InfoView>
-                  <Half>
-                    <HalfLine>
-                    <Text>시즌</Text>
-                    <Input  
-                      onChangeText = {onChangeText}
-                      value = {text}
-                              // onChange={(event) => {
-                              //     const {eventCount, target, text} = event.nativeEvent;
-                              //     setProuctName(text);
-                              //   }
-                              // }
-                          />
+              <InfoView>
+                    <Half>
+                      <HalfLine>
+                          <Text>시즌</Text>
+                              <Input  
+                                onChangeText = {onChangeText}
+                                value = {text}
+                                        // onChange={(event) => {
+                                        //     const {eventCount, target, text} = event.nativeEvent;
+                                        //     setProuctName(text);
+                                        //   }
+                                        // }
+                                    />
                       </HalfLine>
 
                       <HalfLine>
-                    <Text>스타일</Text>
-                  <Input  
-                    onChangeText = {onChangeText}
-                    value = {text}
-                            // onChange={(event) => {
-                            //     const {eventCount, target, text} = event.nativeEvent;
-                            //     setProuctName(text);
-                            //   }
-                            // }
-                        />
-                        </HalfLine>
-                  </Half>
+                          <Text>스타일</Text>
+                              <Input  
+                                onChangeText = {onChangeText}
+                                value = {text}
+                                        // onChange={(event) => {
+                                        //     const {eventCount, target, text} = event.nativeEvent;
+                                        //     setProuctName(text);
+                                        //   }
+                                        // }
+                                    />
+                      </HalfLine>
+                    </Half>
 
-                  <Half>
-                    <HalfLine>
-                    <Text>컬러</Text>
-                    <Input  
-                    onChangeText = {onChangeText}
-                    value = {text}
-                            // onChange={(event) => {
-                            //     const {eventCount, target, text} = event.nativeEvent;
-                            //     setProuctName(text);
-                            //   }
-                            // }
-                        />
-                    </HalfLine>
-                    <HalfLine>
+                    <Half>
+                          <HalfLine>
+                              <Text>컬러</Text>
+                                  <Input  
+                                  onChangeText = {onChangeText}
+                                  value = {text}
+                                          // onChange={(event) => {
+                                          //     const {eventCount, target, text} = event.nativeEvent;
+                                          //     setProuctName(text);
+                                          //   }
+                                          // }
+                                      />
+                          </HalfLine>
 
-                    <Text>사이즈</Text>
-                    <Input  
-                    onChangeText = {onChangeText}
-                    value = {text}
-                            // onChange={(event) => {
-                            //     const {eventCount, target, text} = event.nativeEvent;
-                            //     setProuctName(text);
-                            //   }
-                            // }
-                        />
-                        </HalfLine>
-                  </Half>
-                
-                  <Text>제품 바코드/qr코드 번호</Text>
-                  
-                  <Input  
-                    onChangeText = {onChangeText}
-                    value = {text}
-                            // onChange={(event) => {
-                            //     const {eventCount, target, text} = event.nativeEvent;
-                            //     setProuctName(text);
-                            //   }
-                            // }
-                        />
-                  <Text>차수</Text>
-                  <Input  
-                    onChangeText = {onChangeText}
-                    value = {text}
-                            // onChange={(event) => {
-                            //     const {eventCount, target, text} = event.nativeEvent;
-                            //     setProuctName(text);
-                            //   }
-                            // }
-                        />
-                  <Text>상품 교환</Text>
-                  <Input  
-                    onChangeText = {onChangeText}
-                    value = {text}
-                            // onChange={(event) => {
-                            //     const {eventCount, target, text} = event.nativeEvent;
-                            //     setProuctName(text);
-                            //   }
-                            // }
-                        />
-                  <Text>판매가</Text>
-                  <Input  
-                    onChangeText = {onChangeText}
-                    value = {text}
-                            // onChange={(event) => {
-                            //     const {eventCount, target, text} = event.nativeEvent;
-                            //     setProuctName(text);
-                            //   }
-                            // }
-                        />
-
-                </InfoView>
-            </Contents>s
-
+                          <HalfLine>
+                              <Text>사이즈</Text>
+                                  <Input  
+                                  onChangeText = {onChangeText}
+                                  value = {text}
+                                          // onChange={(event) => {
+                                          //     const {eventCount, target, text} = event.nativeEvent;
+                                          //     setProuctName(text);
+                                          //   }
+                                          // }
+                                      />
+                            </HalfLine>
+                        </Half>
+                      
+                        <Text>제품 바코드/qr코드 번호</Text>
+                        <Input  
+                          onChangeText = {onChangeText}
+                          value = {text}
+                                  // onChange={(event) => {
+                                  //     const {eventCount, target, text} = event.nativeEvent;
+                                  //     setProuctName(text);
+                                  //   }
+                                  // }
+                              />
+                    <Text>차수</Text>
+                        <Input  
+                          onChangeText = {onChangeText}
+                          value = {text}
+                                  // onChange={(event) => {
+                                  //     const {eventCount, target, text} = event.nativeEvent;
+                                  //     setProuctName(text);
+                                  //   }
+                                  // }
+                              />
+                    <Text>상품 교환</Text>
+                        <Input  
+                          onChangeText = {onChangeText}
+                          value = {text}
+                                  // onChange={(event) => {
+                                  //     const {eventCount, target, text} = event.nativeEvent;
+                                  //     setProuctName(text);
+                                  //   }
+                                  // }
+                              />
+                    <Text>판매가</Text>
+                        <Input  
+                          onChangeText = {onChangeText}
+                          value = {text}
+                          style = {{marginBottom: 15}}
+                                  // onChange={(event) => {
+                                  //     const {eventCount, target, text} = event.nativeEvent;
+                                  //     setProuctName(text);
+                                  //   }
+                                  // }
+                              />
+              </InfoView>
+            </Contents>
             <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}>다음 : (3)고객 요구</Button>
                     
-            
             <Bottom navigation={navigation}/>
         </Container>
     )

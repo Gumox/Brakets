@@ -30,8 +30,8 @@ const InfoView =styled.View`
     width: 100%;
     border:2px solid  #78909c;
     border-radius:12px;
-    margin : 10px;
-    padding:15px;
+    padding: 15px;
+    margin-bottom : 50px;
 `;
 const Input = styled.TextInput`
     width: 100%;
@@ -68,7 +68,7 @@ function TakeOverPage( { navigation } ) {
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
-              <Text>고객 요구 : 수선 </Text>
+              <Text style = {{marginBottom : 15}}>고객 요구 : 수선 </Text>
             <InfoView>
                 <Text>과실 구분</Text>
                 <Input

@@ -83,18 +83,19 @@ function ReceiptDivision({navigation}) {
 
         <Container>
             <Container>
-            <Label/>
-            <Label/>
-            <TopIntro>접수 구분</TopIntro>
-            <Label/>
-            <ReceiptButton onPress={ ()=> 
-                    navigation.navigate( 'ShopStepOne' ) }>고객용 제품</ReceiptButton>
-            
-            <ReceiptButton onPress={ ()=> 
-                    navigation.navigate( 'ShopStepOne' ) }>매장용-선처리 제품</ReceiptButton>
+                <Label/>
+                  <TopIntro>접수 구분</TopIntro>
+                <Label/>
 
-            <ReceiptButton onPress={ ()=> 
-                    navigation.navigate( 'ShopStepOne' ) }>매장용 제품</ReceiptButton>
+                    <ReceiptButton onPress={ ()=> 
+                            navigation.navigate( 'ShopStepOne' ) }>고객용 제품</ReceiptButton>
+                    
+                    <ReceiptButton onPress={ ()=> 
+                            navigation.navigate( 'ShopStepOne' ) }>매장용-선처리 제품</ReceiptButton>
+
+                    <ReceiptButton onPress={ ()=> 
+                            navigation.navigate( 'ShopStepOne' ) }>매장용 제품</ReceiptButton>
+                <Label/>
             </Container>
             <Bottom navigation={navigation}/>
         </Container>
