@@ -1,96 +1,57 @@
-import React,{useState ,useEffect} from 'react';
+import React from 'react';
 import Container from '../../components/Container';
-import Contents from '../../components/Contents';
-import SelectButton from '../../components/SelectButton';
-
-import _ from 'lodash';
-
-import { Image,Text,Button, View } from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DateObject from "react-date-object";
-import { size } from 'lodash';
+import Button from '../../components/Button';
 import styled from 'styled-components/native';
-import store from '../../store/store';
-import { Provider } from 'react-redux'
+import CenterText from '../../components/CenterText';
+import _, { values } from 'lodash';
 import Bottom from '../../components/Bottom';
+import RNPickerSelect from 'react-native-picker-select';
 
-const BottomView = styled.View`
-    flex: 0.4;
-    flex-direction: row;
-    align-items: flex-end;
-    /* background: red; */
+const Title = styled.Text`
+  font-size : 24px;
+  font-weight : bold;
 `;
 
-const BottomButton = styled.TouchableOpacity`
-    width: 25%;
-    height: 30%;
-    background: #78909c;
-    border-color: red;
-    align-items: center;
-    justify-content: center;
+const BlackText = styled.Text`
+  font-size : 15px;
+  color : black;
+`;
+const DropBackground= styled.View`
+    width: 220px;
+    border-radius:10px;
+    font-color:#ffffff;
+    border:2px solid #78909c;
+    margin-top:10px;
 `;
 
-const BottomButtonText = styled.Text`
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-`;
-
-const BottomEmptySpace = styled.View`
-    background: #78909c;
-    width: 100%;
-    height: 3%;
-`;
-
-
-const TouchableView = styled.TouchableOpacity`
-    
-    flex-direction:row;
-    justify-content:space-around;
-    
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px
-`;
-const ImgIcon =styled.Image`
-    width: 20px;
-    height: 20px;
-`;
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
-
-
+// 구조 분해 할당, Destructuring Assignment
 function LookupPage( { navigation } ) {
-    const state = {size:1};
-    
-    const [number,setNumber] =useState(store.getState().number);
 
-    const x ={"key":2};
-    
-    //새로고침 함수
-    const [refreshing, setRefreshing] = React.useState(false);
-    const OnRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(1000).then(() => {setRefreshing(false)
-        
-        console.log("is refreshing")});
-      }, [])
+  return (
+      <Container>
+          <CenterText>
+              <Title>고객 조회</Title>
+          </CenterText>
 
-   
-    //console.log("여기는 start 입니다");
-    
+          <CenterText>
+            <BlackText>연락처 (뒤 4자리)</BlackText>
+            <DropBackground>
+            <RNPickerSelect
+            placeholder = {{label : '검색',value: null}}
+            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
+            onValueChange={(value) => console.log(value)}
+                items={[
+                    { label: '가가가 010-1111-1111', value: '가가가 010-1111-1111'}
+                ]}
+            />
+            </DropBackground>
+          </CenterText>
 
-    
-    return(
-        <Container>
-            <Contents>
-                <Text>고객 조회</Text>
-                <Text>연락처 (뒷4자리) or 이름 입력</Text>
-            </Contents>
-
-            <Bottom navigation={navigation}/>
-        </Container>
-    )
+          <Button onPress = {() => navigation.navigate('LookupPage2')}>
+            조회
+          </Button>
+          <Bottom navigation={navigation}/>
+      </Container>
+  )
 }
 export default LookupPage;
