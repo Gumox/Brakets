@@ -4,7 +4,7 @@ import excuteQuery from './db';
 export async function submitReceipt(receipt_id, receipt_type, receipt_code, mailbag, receipt_date, due_date, receiver, detail ) {
     try {
 
-	var result="fail";
+	var result="{";
         const update_receipt = await excuteQuery({
 
 	    query: "UPDATE receipt SET step=1, receipt_type=?, receipt_code=?, mailbag=?, receipt_date=?, due_date=?, receiver_id=?  WHERE receipt_id=?", 
@@ -12,29 +12,54 @@ export async function submitReceipt(receipt_id, receipt_type, receipt_code, mail
 
         });
 
-	console.log(update_receipt);
-//	console.log(update_receipt['affectedRows']);
+	const r_info = await excuteQuery({
+
+	    query: "SELECT * FROM receipt WHERE receipt_id=?", 
+            values: [receipt_id]
+
+        });
+
+	//console.log(update_receipt);
 
 	if (update_receipt['affectedRows']){
-		
-		console.log(detail);	
+		//console.log(r_info);	
+		var product_id = r_info[0]['product_id'];
+		var product_code = r_info[0]['product_code'];
+		var substitute = r_info[0]['substitute'];
+		var sender = r_info[0]['store_id'];
+ 		var send_date = r_info[0]['send_date'];	
+
 		for(const det of detail){
 			var num = det['num'];
 			var repair_id = det['repair_id'];
 			var message = det['message'];
-			var image = det['image'];
-			console.log("nnn" + num);
-		
-		
+
+
+			var query = "INSERT INTO `receipt_detail`";
+			query += "(`receipt_id`, `receipt_code`, `mailbag`, `product_id`, `product_code`, `substitute`,";
+			query += "`num`, `repair_id`, `step`, `sender`, `send_date`, `message`, `receiver`)";
+			query += "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)"
+
+			const insert_detail = await excuteQuery({
+
+		            query: query,
+		            values: [receipt_id, receipt_code, mailbag, product_id, product_code, substitute, num, repair_id, 1, sender, send_date, message, receiver]
+
+		        });
+
+			if (result != "{")
+				result += ",";
+
+			result += '"num' + num + '": ' + insert_detail['insertId']+'';
 		}	
 	
 	
 	
 	
 	
-		result="succ";
 	}
 
+	result += "}";
         return result;
 
     } catch (error) {
@@ -57,13 +82,11 @@ export default (req, res) => {
     var detail = req.body.detail; 
 
     submitReceipt(receipt_id, receipt_type, receipt_code, mailbag, receipt_date, due_date, receiver, detail ).then((body) => {
-
-	//if(body['affectedRows']){
-	    //
-	if(body == "succ"){
+	//console.log(body);
+	if(body != "{}"){
                 console.log("submit Receipt (step 5)");
                 res.statusCode = 200;
-                res.json({receipt_id: body['insertId']});
+                res.json(body);
         }
         else{
                 console.log("submit Receipt (step5) failed");
