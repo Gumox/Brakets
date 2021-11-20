@@ -14,7 +14,7 @@ const post = async (req, res) => {
   form.parse(req, async function (err, fields, files) {
 
 	saveFile(files, fields['receipt_id'], fields['num']).then((body) => {
-		console.log(body);
+		//console.log(body);
 		if (body != "fail"){
 			console.log("submit Receipt Image SUCC");
 			res.statusCode = 200;
@@ -47,7 +47,7 @@ const saveFile = async (files, rid, num) => {
 	var name = "./public/storage/receipt/"+rid+"-"+num+"-";
 	var url = "http://13.125.232.214/storage/receipt/"+rid+"-"+num+"-";
 
-	console.log(image);
+	//console.log(image);
 	const data = fs.readFileSync(image.path);
 	fs.writeFileSync(`${name}image.jpg`, data);
 	await fs.unlinkSync(image.path);
