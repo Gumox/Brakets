@@ -1,11 +1,11 @@
 import excuteQuery from './db';
 
 
-export async function addReceipt(store, staff, customer, category, pid, pcode, subsititude) {
+export async function addReceipt(store, staff, customer, category, pid, pcode, substitute) {
     try {
         const result = await excuteQuery({
-            query: "INSERT INTO `receipt`(`store_id`, `staff_id`, `customer_id`,`category`, `product_id`, `product_code`, `subsititude`) VALUES (?,?,?,?,?,?,?)",
-            values: [store, staff, customer, category, pid, pcode, subsititude]
+            query: "INSERT INTO `receipt`(`store_id`, `staff_id`, `customer_id`,`category`, `product_id`, `product_code`, `substitute`) VALUES (?,?,?,?,?,?,?)",
+            values: [store, staff, customer, category, pid, pcode, substitute]
         });
 
 	//console.log("id"+ result['insertId']);
@@ -27,9 +27,9 @@ export default (req, res) => {
     var category = req.body.category; 
     var pid = req.body.pid; 
     var pcode = req.body.pcode; 
-    var subsititude = req.body.subsititude;
+    var substitute = req.body.substitute;
 
-    addReceipt(store, staff, customer, category, pid, pcode, subsititude).then((body) => {
+    addReceipt(store, staff, customer, category, pid, pcode, substitute).then((body) => {
 
 	if(body['affectedRows']){
                 console.log("add Receipt (step 2)");

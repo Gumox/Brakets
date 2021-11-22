@@ -8,6 +8,7 @@ const Checkbox = ({
   title,
   name,
   value = "",
+  checked = false,
   onChange = () => {},
   styleOptions = {},
 }) => {
@@ -17,6 +18,7 @@ const Checkbox = ({
         type={type}
         name={name}
         value={value}
+        checked={checked}
         onChange={onChange}
       />
       <CustomLabel {...styleOptions}>{title}</CustomLabel>

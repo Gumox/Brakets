@@ -1,13 +1,19 @@
-import React, { useState, useCallback } from "react";
-import styled from "styled-components";
+import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
+
+import { DATE_SEARCH_TYPE_OPTIONS } from "../../constants/select-option";
 
 import Content from "../Content";
 import Info from "./info";
 import List from "./list";
 
 const Reception = ({ options }) => {
-  const [inputData, setInputData] = useState({});
+  const [inputData, setInputData] = useState({
+    storeName: options.storeList[0].value,
+    season: options.seasonList[0].value,
+    dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
+    dateType: "all",
+  });
   const [targetData, setTargetData] = useState({});
   const [searchList, setSearchList] = useState([]);
   const handleInputCheckboxChange = useCallback(
@@ -40,7 +46,7 @@ const Reception = ({ options }) => {
   );
   const handleSearchButtonClick = useCallback(() => {
     axios
-      .get("/api/receipt")
+      .get("/api/receipt", { params: inputData })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
   const searchTargetData = useCallback(() => {
@@ -48,6 +54,8 @@ const Reception = ({ options }) => {
       .get("/api/receipt/7099433")
       .then((response) => setTargetData(response.data.data));
   }, []);
+
+  useEffect(() => console.log(inputData), [inputData]);
   return (
     <Content>
       <Info
