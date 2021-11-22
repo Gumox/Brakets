@@ -196,7 +196,7 @@ function ShopStepThree4({route,navigation}) {
     const [List0,setList0] = React.useState( store.getState().basicRepairStore);
     //전단계 찍은 사진들 쌓은 부분 ---
     var photoOutput= [];
-    var photoVisiable = [];
+    var photoAdd;
     var imageModalsVisiable = []; 
     for(var i =0; i<photoUri.length;i++){
         
@@ -212,6 +212,16 @@ function ShopStepThree4({route,navigation}) {
         </View>
         );
         photoOutput[i] = (tempPhoto);
+    }
+    if(photoUri.length<5){
+        photoAdd =(
+            <ContainImg onPress={()=>{
+                    
+                    navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: photoUri.length});
+                
+                }}>
+                <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
+        );
     }
     // ---
     const [refreshing, setRefreshing] = React.useState(false);
@@ -324,6 +334,17 @@ function ShopStepThree4({route,navigation}) {
                 );
                 photoImages[j] =(photoImage);
             }
+            var cPhotoAdd;
+            if(indexUriList[myKey].length<5){
+                cPhotoAdd =(
+                    <ContainImg onPress={()=>{
+                        
+                        navigation.navigate("TakePhoto",{key:"AddPhoto",value:myKey,index:indexUriList[myKey].length})
+                        
+                    }}>
+                    <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
+                );
+            }
             
             var tempItem=  (
                 <View key ={myKey} >
@@ -375,10 +396,7 @@ function ShopStepThree4({route,navigation}) {
                             
                                 {photoImages}
                                 
-                                <ContainImg onPress={()=>{
-                                    navigation.navigate("TakePhoto",{key:"AddPhoto",value:myKey,index:indexUriList[myKey].length})
-                                }}>
-                                <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
+                                {cPhotoAdd}
                                 
                         </ScrollView>
 
@@ -450,11 +468,7 @@ function ShopStepThree4({route,navigation}) {
             <ScrollView horizontal ={true}  style={{marginLeft:8,marginRight:8,marginTop:5,marginBottom:5}}>
                 
                     {photoOutput}
-                    <ContainImg onPress={()=>{
-                        navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: photoUri.length})
-                        }}>
-                        <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
-                  
+                    {photoAdd}
             </ScrollView>
 
             <Label>추가 요청 사항</Label>

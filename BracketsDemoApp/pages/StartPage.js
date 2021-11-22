@@ -92,7 +92,6 @@ function StartPage( { navigation } ) {
                         시작
                     </SelectButton>
             </Contents>
-            <Bottom navigation={navigation}/>
         </Container>
     )
 }

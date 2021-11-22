@@ -133,6 +133,7 @@ export default class TakePhoto extends Component {
         
         //console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
+        this.props.navigation.pop();
         this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
       }
       else if(route.params.key === "AddPhoto"){
@@ -140,7 +141,7 @@ export default class TakePhoto extends Component {
         
         //console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
-        
+        this.props.navigation.pop();
         this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
       }
       else if(route.params.key === "RetakePhoto"){
@@ -148,7 +149,7 @@ export default class TakePhoto extends Component {
         
         //console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
-        
+        this.props.navigation.pop();
         this.props.navigation.replace("PhotoControl",addPhoto);
       }
     }  
