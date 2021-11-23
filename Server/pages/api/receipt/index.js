@@ -46,6 +46,8 @@ const receipt = async (req, res) => {
         dateType,
         startDate,
         endDate,
+        analysisId, 
+        resultId,
         customerName,
         customerContact,
         companyName,
@@ -83,6 +85,16 @@ const receipt = async (req, res) => {
           query += ` AND DATE(receipt.${dateOption}) = ?`;
           values = [...values, startDate];
         }
+      }
+
+      if(analysisId) {
+        query += " AND receipt.analysis_id = ? ";
+        values = [...values, analysisId];
+      }
+
+      if(resultId) {
+        query += " AND receipt.result_id = ? ";
+        values = [...values, resultId];
       }
 
       if (customerName) {
