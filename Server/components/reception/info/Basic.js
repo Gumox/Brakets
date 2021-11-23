@@ -20,17 +20,17 @@ const BasicInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
       />
       <SelectOption
         title="브랜드:"
-        name={STORE.ID}
+        name={"storeId"}
         options={options.brandList}
-        value={data[STORE.ID]}
+        value={data["storeId"]}
         onChange={handleValueChange}
         styleOptions={{ maxWidth: "150px" }}
       />
       <Input
         title="서비스카드 번호 or RFID:"
-        name={RECEIPT.CODE}
+        name={"receiptCode"}
         type="text"
-        value={data[RECEIPT.CODE]}
+        value={data["receiptCode"]}
         onChange={handleValueChange}
       />
       <ScanButton>바코드/QR 스캔</ScanButton>

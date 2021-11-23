@@ -50,9 +50,9 @@ const Reception = ({ options , user}) => {
       .get("/api/receipt", { params: inputData })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
-  const searchTargetData = useCallback(() => {
+  const searchTargetData = useCallback((receiptCode) => {
     axios
-      .get("/api/receipt/7099433")
+      .get(`/api/receipt/${receiptCode}`)
       .then((response) => setTargetData(response.data.data));
   }, []);
 
