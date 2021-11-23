@@ -115,18 +115,18 @@ const FilterInfo = ({
           <Field>
             <SelectOption
               title="내용분석"
-              name="contentType"
-              options={ANALYSIS_TYPE_OPTIONS}
-              value={data["contentType"]}
+              name="analysisId"
+              options={[...ANALYSIS_TYPE_OPTIONS, ...options.analysisType]}
+              value={data["analysisId"]}
               onChange={handleValueChange}
             />
           </Field>
           <Field>
             <SelectOption
               title="판정결과"
-              name="step"
-              options={RESULT_TYPE_OPTIONS}
-              value={data["step"]}
+              name="resultId"
+              options={[...RESULT_TYPE_OPTIONS, ...options.resultType]}
+              value={data["resultId"]}
               onChange={handleValueChange}
             />
           </Field>

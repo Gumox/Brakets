@@ -4,6 +4,7 @@ import styled from "styled-components";
 import COLOR from "../../../constants/color";
 import {
   OPTIONS,
+  DEFAULT_OPTION,
   REPAIR_OPTIONS,
   REPAIR_PLACE_OPTIONS,
   SHIPPING_OPTIONS,
@@ -29,7 +30,7 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <SelectOption
                 title="1.과실구분:"
                 // name={PRODUCT.SEASON}
-                options={OPTIONS}
+                options={[DEFAULT_OPTION, ...options.faultType]}
                 // value={data[PRODUCT.SEASON]}
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "80px" }}
@@ -41,7 +42,7 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <SelectOption
                 title="2.내용분석:"
                 // name={PRODUCT.SEASON}
-                options={OPTIONS}
+                options={[DEFAULT_OPTION, ...options.analysisType]}
                 // value={data[PRODUCT.SEASON]}
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "80px" }}
@@ -53,7 +54,7 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <SelectOption
                 title="3.판정결과:"
                 // name={PRODUCT.SEASON}
-                options={OPTIONS}
+                options={[DEFAULT_OPTION, ...options.resultType]}
                 // value={data[PRODUCT.SEASON]}
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "80px" }}

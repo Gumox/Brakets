@@ -12,7 +12,7 @@ const ReceptionPage = ({ options, user }) => {
   return (
     <>
       <Header path={router.pathname} />
-      <Reception options={options} user={user}/>
+      <Reception options={options} user={user} />
     </>
   );
 };
@@ -35,26 +35,35 @@ export const getServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: '/admin/login'
-      }
-    }
+        destination: "/admin/login",
+      },
+    };
   }
 
-  const [brands, stores, repairs, producers] = await Promise.all([
-    axios.get(`${process.env.API_URL}/store/0`), // 브랜드 본사
-    axios.get(`${process.env.API_URL}/store/1`), // 매장
-    axios.get(`${process.env.API_URL}/store/2`), // 수선처
-    axios.get(`${process.env.API_URL}/store/3`), // 생산업체
-  ]);
+  const [brands, stores, repairs, producers, faults, analysis, results] =
+    await Promise.all([
+      axios.get(`${process.env.API_URL}/store/0`).then(({ data }) => data), // 브랜드 본사
+      axios.get(`${process.env.API_URL}/store/1`).then(({ data }) => data), // 매장
+      axios.get(`${process.env.API_URL}/store/2`).then(({ data }) => data), // 수선처
+      axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
+      axios.get(`${process.env.API_URL}/type/fault`).then(({ data }) => data), // 과실구분
+      axios
+        .get(`${process.env.API_URL}/type/analysis`)
+        .then(({ data }) => data), // 내용분석
+      axios.get(`${process.env.API_URL}/type/result`).then(({ data }) => data), // 판정결과
+    ]);
   const seasons = SEASON_LIST; // TODO: 본사에서 API 제공 필요
   return {
     props: {
-      user, 
+      user,
       options: {
-        brandList: brands.data.data,
-        storeList: stores.data.data,
-        repairList: repairs.data.data,
-        producerList: producers.data.data,
+        brandList: brands? brands.data : [],
+        storeList: stores? stores.data : [],
+        repairList: repairs? repairs.data : [],
+        producerList: producers? producers.data : [],
+        faultType: faults? faults.data : [],
+        analysisType: analysis? analysis.data : [],
+        resultType: results? results.data : [],
         seasonList: seasons,
       },
     },
