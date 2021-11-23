@@ -7,7 +7,7 @@ import { BRAND_OPTIONS } from "../../../constants/select-option";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
-const BasicInfo = ({ data = {}, handleValueChange = () => {} }) => {
+const BasicInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
       <Input
@@ -21,7 +21,7 @@ const BasicInfo = ({ data = {}, handleValueChange = () => {} }) => {
       <SelectOption
         title="브랜드:"
         name={STORE.ID}
-        options={BRAND_OPTIONS}
+        options={options.brandList}
         value={data[STORE.ID]}
         onChange={handleValueChange}
         styleOptions={{ maxWidth: "150px" }}

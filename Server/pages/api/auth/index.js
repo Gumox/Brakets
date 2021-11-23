@@ -6,8 +6,8 @@ const auth = async (req, res) => {
       if(!token || token === "") return res.status(200).json({ isAuthorized: false });
       
       try {
-        jwt.verify(token, process.env.JWT_SECRET_KEY);
-        res.status(200).json({ isAuthorized: true });
+        const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        res.status(200).json({ isAuthorized: true, user });
       } catch (err) {
         res.status(200).json({ isAuthorized: false });
       }

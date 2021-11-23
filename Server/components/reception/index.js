@@ -7,8 +7,9 @@ import Content from "../Content";
 import Info from "./info";
 import List from "./list";
 
-const Reception = ({ options }) => {
+const Reception = ({ options , user}) => {
   const [inputData, setInputData] = useState({
+    storeId: user.store_id, 
     storeName: options.storeList[0].value,
     season: options.seasonList[0].value,
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
@@ -55,7 +56,7 @@ const Reception = ({ options }) => {
       .then((response) => setTargetData(response.data.data));
   }, []);
 
-  useEffect(() => console.log(inputData), [inputData]);
+  // useEffect(() => console.log(inputData), [inputData]);
   return (
     <Content>
       <Info
