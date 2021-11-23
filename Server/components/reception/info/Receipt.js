@@ -9,6 +9,7 @@ import {
   REPAIR_PLACE_OPTIONS,
   SHIPPING_OPTIONS,
 } from "../../../constants/select-option";
+import { RECEIPT } from "../../../constants/field";
 import { Row, Field, Section, SectionRow } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
@@ -29,9 +30,9 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Field>
               <SelectOption
                 title="1.과실구분:"
-                // name={PRODUCT.SEASON}
+                name={RECEIPT.FAULT_ID}
                 options={[DEFAULT_OPTION, ...options.faultType]}
-                // value={data[PRODUCT.SEASON]}
+                value={data[RECEIPT.FAULT_ID]}
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "80px" }}
               />
@@ -41,9 +42,9 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Field>
               <SelectOption
                 title="2.내용분석:"
-                // name={PRODUCT.SEASON}
+                name={RECEIPT.ANALYSIS_ID}
                 options={[DEFAULT_OPTION, ...options.analysisType]}
-                // value={data[PRODUCT.SEASON]}
+                value={data[RECEIPT.ANALYSIS_ID]}
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "80px" }}
               />
@@ -53,9 +54,9 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Field>
               <SelectOption
                 title="3.판정결과:"
-                // name={PRODUCT.SEASON}
+                name={RECEIPT.RESULT_ID}
                 options={[DEFAULT_OPTION, ...options.resultType]}
-                // value={data[PRODUCT.SEASON]}
+                value={data[RECEIPT.RESULT_ID]}
                 // onChange={handleValueChange}
                 styleOptions={{ maxWidth: "80px" }}
               />

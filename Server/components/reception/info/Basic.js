@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
 import { COMPANY, STORE, RECEIPT } from "../../../constants/field";
-import { BRAND_OPTIONS } from "../../../constants/select-option";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
