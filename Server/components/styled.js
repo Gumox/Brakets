@@ -20,6 +20,10 @@ export const Field = styled.div`
 export const Section = styled.div`
   margin-right: ${({ marginRight = "40px" }) => marginRight};
 
+  & {
+    align-self: stretch;
+  }
+
   &: last-child {
     margin-right: 0px;
   }

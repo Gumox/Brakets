@@ -122,12 +122,12 @@ export const REGISTER_STEP_OPTIONS = [
     text: "접수여부 ALL",
   },
   {
-    value: "0",
-    text: "미접수",
-  },
-  {
     value: "1",
     text: "접수",
+  },
+  {
+    value: "0",
+    text: "미접수",
   },
 ];
 
