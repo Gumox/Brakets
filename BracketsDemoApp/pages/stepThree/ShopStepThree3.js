@@ -25,17 +25,35 @@ export default class ShopStepThree3 extends Component {
       console.log(imagePath);
         return (
             <View style={styles.container}>
-            <DrawBoard localSourceImagePath = {imagePath}  navigation={this.props.navigation}></DrawBoard>
+                <ImageBackground source={{ uri: imageUri}} resizeMode="cover" style ={styles.image} > 
+                <DrawBoard localSourceImagePath = {imagePath}  navigation={this.props.navigation}></DrawBoard>
+                </ImageBackground>
+            
             </View>
         )
     }
 }
 
+
+
 const styles = StyleSheet.create({
+image: {
+    flex:1,
+    width: "100%",
+    height:"100%",
+    justifyContent: "center",
+    alignItems: 'center',
+    
+   
+    },
 container: {
     flex: 1,
     justifyContent: 'center',
-
+    alignItems: 'center',
+    paddingTop:10,
+    paddingLeft:10,
+    paddingRight:10,
+    backgroundColor:"#000000"
 },
 headerText: {
     fontSize: 5,

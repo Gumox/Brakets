@@ -1,3 +1,9 @@
 rootProject.name = 'DempApp'
+include ':react-native-sketch-draw'
+project(':react-native-sketch-draw').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sketch-draw/android')
+include ':react-native-image-tools-wm'
+project(':react-native-image-tools-wm').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-tools-wm/android')
+include ':react-native-sketch-draw'
+project(':react-native-sketch-draw').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sketch-draw/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

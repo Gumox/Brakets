@@ -122,7 +122,6 @@ export default class TakePhoto extends Component {
         console.log(addPhoto);
         store.dispatch({type:'ADD',add: addPhoto});
         
-        console.log("98745632145698745632145698745632145698")
         console.log(store.getState().photoArr);
         this.props.navigation.replace("ShopStepThree2",{key:"CloseShot",value:route.params.value});
 

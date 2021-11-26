@@ -4,7 +4,7 @@ import Container from "../../components/Container";
 import ImageZoom from "react-native-image-pan-zoom";
 import store from "../../store/store";
 
-import { Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text } from "react-native";
+import { Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text  } from "react-native";
 
 
 import Button from '../../components/Button';
@@ -14,8 +14,10 @@ import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import ButtonBlack from '../../components/ButtonBlack';
 
+
 const CenterView =styled.View`
-    align-items: center;
+  flex:1;
+  align-items: center;
 `;
 
 
@@ -34,6 +36,12 @@ const StepText = styled.Text`
   color : #FFFFFF
   font-size:15px
 `;
+const ContainerBlack = styled.View`
+  background-color : #000000;
+  flex :1
+  align-items: center;
+`;
+
 function ShopStepThree2 ({ navigation ,route}) {
 
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -64,6 +72,7 @@ function ShopStepThree2 ({ navigation ,route}) {
       setImageUri(indexUriList[0]["value"]);
     }  
   },[]);
+
   
   const imageP = { uri: imgUri };
 
@@ -72,40 +81,42 @@ function ShopStepThree2 ({ navigation ,route}) {
     
     image: {
       flex:1,
-      width: "100%",
-      height:"100%",
-      justifyContent: "center"
+      width: "95%",
+      height:"95%",
+      justifyContent: "center",
+      margin:10,
     },
 
   });
   return (
-    <Container>
+    <ContainerBlack>
      
                                   
-        
-          <ImageBackground source={imageP} resizeMode="cover" style={styles.image}>
-            
-          </ImageBackground>
-          <BottomItemBox>
-
-          <TouchableView onPress={ ()=> navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}><StepText>다시 찍기</StepText></TouchableView>
-          <TouchableView onPress={()=> navigation.replace('ShopStepThree3')}><StepText>그리기</StepText></TouchableView>
-          <TouchableView onPress={()=> 
-          { 
-            if(route.params === undefined){
-              navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
-            }
-            else if( route.params.key === "CloseShot"){
-              console.log("CloseShot");
-               navigation.replace('TakePhoto', {key :route.params.key,value:route.params.value }); 
-            
-            }
-          }
-          }><StepText>사진 사용</StepText></TouchableView>
-
-          </BottomItemBox>
       
-    </Container>
+      <Image source={imageP} resizeMode="cover" style={styles.image}/>
+           
+      <BottomItemBox>
+
+      <TouchableView onPress={ ()=> {
+        store.dispatch({type:'PHOTORESET',setPhoto:[]});
+        navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}}><StepText>다시 찍기</StepText></TouchableView>
+      <TouchableView onPress={()=> navigation.replace('ShopStepThree3')}><StepText>그리기</StepText></TouchableView>
+      <TouchableView onPress={()=> 
+      { 
+        if(route.params === undefined){
+          navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
+        }
+        else if( route.params.key === "CloseShot"){
+          console.log("CloseShot");
+          navigation.replace('TakePhoto', {key :route.params.key,value:route.params.value }); 
+        
+        }
+      }
+      }><StepText>사진 사용</StepText></TouchableView>
+    
+      </BottomItemBox>
+  
+    </ContainerBlack>
 
   );
 }
