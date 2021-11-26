@@ -75,23 +75,23 @@ export default class DrawBoard extends Component {
         }).catch(console.error);
         
     }
- 
+    
     render() {
-        console.log(this.props.localSourceImagePath)
+        console.log(this.props);
         return (
             <View style={{flex: 1, flexDirection: 'column' ,width : Dimensions.get('window').width, height : Dimensions.get('window').height}}>
                 
                 <SketchDraw style={{flex: 1 }} ref="sketchRef"
                 selectedTool={this.state.toolSelected} 
-                toolColor={'#FFFA38'} //Yelow Example! you can changIT!
+                toolColor={this.props.children} //Yelow Example! you can changIT!
                 onSaveSketch={this.onSketchSave.bind(this)}
                 />
  
                 <View style={{ flexDirection: 'row', backgroundColor: '#000',marginTop:10}}>
-                    <TouchableHighlight underlayColor={"#CCC"} style={{ flex: 1, alignItems: 'center', paddingVertical:20 }} onPress={() => { this.refs.sketchRef.clearSketch() }}>
+                    <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center', paddingVertical:20 }} onPress={() => { this.refs.sketchRef.clearSketch() }}>
                         <Text style={{color:'#fff',fontWeight:'600'}}>CLEAR</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight underlayColor={"#CCC"} style={{ flex: 1, alignItems: 'center', paddingVertical:20, borderLeftWidth:1, borderRightWidth:1, borderColor:'#000' }} onPress={() => { {
+                    <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center', paddingVertical:20, borderLeftWidth:1, borderRightWidth:1, borderColor:'#000' }} onPress={() => { {
                         this.refs.sketchRef.saveSketch()
                        
                     } }}>

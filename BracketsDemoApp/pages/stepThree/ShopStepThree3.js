@@ -2,7 +2,7 @@
 // react-native link react-native-sketch
 
 import React, { useRef,Component } from 'react';
-import { AppRegistry,Alert,Text,  View, ImageBackground,StyleSheet,TouchableOpacity} from 'react-native';
+import { AppRegistry,Alert,Text,  View, ImageBackground,StyleSheet,TouchableOpacity ,TouchableHighlight ,Modal ,Pressable, ScrollView} from 'react-native';
 import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
 import store from '../../store/store';
 
@@ -14,24 +14,76 @@ import Button from '../../components/Button';
 import DrawBoard from './DrawBoard';
 
 
-export default class ShopStepThree3 extends Component {
-  render() {
+export default function ShopStepThree3 ({navigation}) {
+ 
       console.log(store.getState().photoArr[0]["value"]);
       console.log("");
       console.log("");
       console.log("");
       var imageUri = store.getState().photoArr[0]["value"];
-      var imagePath  =imageUri.replace("file://", "")
+      var imagePath  =imageUri.replace("file://", "");
+      const [color,setColor] = React.useState("#333333");
+      const [modalVisible, setModalVisible] = React.useState(false);
       console.log(imagePath);
         return (
             <View style={styles.container}>
                 <ImageBackground source={{ uri: imageUri}} resizeMode="cover" style ={styles.image} > 
-                <DrawBoard localSourceImagePath = {imagePath}  navigation={this.props.navigation}></DrawBoard>
+                
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}>
+                    
+                    <View style ={{width : "100%" }}>
+                    <ScrollView horizontal ={true} style={{ flexDirection: 'row' ,backgroundColor : "#eFeFeF",height: 50 , borderRadius:5 ,margin: 10 ,borderStyle : 'solid', borderColor: '#78909c'}}>
+                        
+                        <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#FFFFFF' ,margin:10}} onPress={() => {
+                            setColor( "#FFFFFF");
+                        }}><Text/></TouchableHighlight>
+                        <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#CCCFFF' ,margin:10}} onPress={() => {
+                            setColor( "#CCCFFF");
+                        }}><Text/></TouchableHighlight>
+                        <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#0000FF',margin:10}} onPress={() => {
+                            setColor( "#0000ff");
+                        }}><Text/></TouchableHighlight>
+                        <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#FF0000',margin:10}} onPress={() => {
+                            setColor( "#FF0000");
+                        }}><Text/></TouchableHighlight>
+                        <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#00FF00',margin:10}} onPress={() => {
+                            setColor( "#00ff00");
+                        }}><Text/></TouchableHighlight>
+                        
+                        <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#FFFA38',margin:10}} onPress={() => {
+                            setColor( '#FFFA38');
+                        }}><Text/></TouchableHighlight>
+                        <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#999999',margin:10}} onPress={() => {
+                            setColor( "#999999");
+                        }}><Text/></TouchableHighlight>
+                        <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#000000',margin:10}} onPress={() => {
+                            setColor( "#000000");
+                        }}><Text/></TouchableHighlight>
+
+                    </ScrollView>
+                    </View>
+                    <Pressable style ={{width : "100%" ,height: "100%"}}  onPress={() => {
+                    setModalVisible(!modalVisible)}}>
+                    </Pressable>
+                </Modal>
+                
+                <View style={{ flexDirection: 'row'}}>
+                <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: color}} onPress={() => {
+                    setModalVisible(!modalVisible)
+                    }}><Text></Text></TouchableHighlight>
+                </View>
+                <DrawBoard localSourceImagePath = {imagePath}  navigation={navigation}>{color}</DrawBoard>
                 </ImageBackground>
             
             </View>
         )
-    }
+    
 }
 
 
