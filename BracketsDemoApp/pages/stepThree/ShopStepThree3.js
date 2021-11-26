@@ -38,7 +38,7 @@ export default function ShopStepThree3 ({navigation}) {
                 }}>
                     
                     <View style ={{width : "100%" }}>
-                    <ScrollView horizontal ={true} style={{ flexDirection: 'row' ,backgroundColor : "#eFeFeF",height: 50 , borderRadius:5 ,margin: 10 ,borderStyle : 'solid', borderColor: '#78909c'}}>
+                    <ScrollView horizontal ={true} style={{ flexDirection: 'row' ,backgroundColor : "#eFeFeF",height: 50 , borderRadius:5 ,margin: 10 }}>
                         
                         <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: '#FFFFFF' ,margin:10}} onPress={() => {
                             setColor( "#FFFFFF");
