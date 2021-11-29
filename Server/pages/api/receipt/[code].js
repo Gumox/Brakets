@@ -15,6 +15,7 @@ async function getReceipt(code) {
                     receipt.analysis_id AS analysis_id,
                     receipt.result_id AS result_id,
                     product.season AS product_season,
+                    product.style AS product_style,
                     product.color AS product_color,
                     product.size AS product_size, 
                     product.degree AS product_degree,

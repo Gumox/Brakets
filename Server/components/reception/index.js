@@ -56,7 +56,7 @@ const Reception = ({ options , user}) => {
       .then((response) => setTargetData(response.data.data));
   }, []);
 
-  // useEffect(() => console.log(inputData), [inputData]);
+  useEffect(() => console.log(targetData), [targetData]);
   return (
     <Content>
       <Info
