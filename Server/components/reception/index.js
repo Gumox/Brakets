@@ -7,8 +7,9 @@ import Content from "../Content";
 import Info from "./info";
 import List from "./list";
 
-const Reception = ({ options }) => {
+const Reception = ({ options , user}) => {
   const [inputData, setInputData] = useState({
+    storeId: user.store_id, 
     storeName: options.storeList[0].value,
     season: options.seasonList[0].value,
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
@@ -49,13 +50,13 @@ const Reception = ({ options }) => {
       .get("/api/receipt", { params: inputData })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
-  const searchTargetData = useCallback(() => {
+  const searchTargetData = useCallback((receiptCode) => {
     axios
-      .get("/api/receipt/7099433")
+      .get(`/api/receipt/${receiptCode}`)
       .then((response) => setTargetData(response.data.data));
   }, []);
 
-  useEffect(() => console.log(inputData), [inputData]);
+  // useEffect(() => console.log(inputData), [inputData]);
   return (
     <Content>
       <Info

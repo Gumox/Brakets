@@ -104,7 +104,7 @@ function TakeOverPage( { navigation } ) {
 
             </InfoView>
             </Contents>
-            <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}>다음 : (4) 수선 정보</Button>
+            <Button onPress = {() => {navigation.navigate('TakeOverPage4')}}>다음 : (4) 수선 정보</Button>
 
             <Bottom navigation={navigation}/>
         </Container>

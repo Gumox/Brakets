@@ -142,7 +142,6 @@ function ShopStepThree4({route,navigation}) {
                 <View key ={myKey} >
                    
                     <InfoView>
-                        <Text>({i+1})</Text>
                         <Label>{keySelectedType}</Label>
                         
                         <ScrollView horizontal ={true} style={{marginLeft:8,marginRight:8,marginTop:5,marginBottom:5}}>
@@ -156,7 +155,7 @@ function ShopStepThree4({route,navigation}) {
                         <Label>수선처</Label>
                         <SendText>{store.getState().basicRepairStore[myKey].basicSend}</SendText>
                     </InfoView>
-                    <Label/>
+                    
                 </View>
             );
             output[i] = (tempItem);
@@ -170,7 +169,7 @@ function ShopStepThree4({route,navigation}) {
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <Contents>
             <CenterView><TopIntro>수선 정보 확인</TopIntro></CenterView>
-            <Label>총 {store.getState().indexNumber+1}개</Label>
+            
 
             
             {output}

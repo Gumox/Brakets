@@ -3,11 +3,10 @@ import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
 import { COMPANY, STORE, RECEIPT } from "../../../constants/field";
-import { BRAND_OPTIONS } from "../../../constants/select-option";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
-const BasicInfo = ({ data = {}, handleValueChange = () => {} }) => {
+const BasicInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
     <Wrapper>
       <Input
@@ -20,17 +19,17 @@ const BasicInfo = ({ data = {}, handleValueChange = () => {} }) => {
       />
       <SelectOption
         title="브랜드:"
-        name={STORE.ID}
-        options={BRAND_OPTIONS}
-        value={data[STORE.ID]}
+        name={"storeId"}
+        options={options.brandList}
+        value={data["storeId"]}
         onChange={handleValueChange}
         styleOptions={{ maxWidth: "150px" }}
       />
       <Input
         title="서비스카드 번호 or RFID:"
-        name={RECEIPT.CODE}
+        name={"receiptCode"}
         type="text"
-        value={data[RECEIPT.CODE]}
+        value={data["receiptCode"]}
         onChange={handleValueChange}
       />
       <ScanButton>바코드/QR 스캔</ScanButton>

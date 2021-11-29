@@ -13,8 +13,7 @@ async function getStore(type) {
 
 const store = async (req, res) => {
   if (req.method === "GET") {
-    console.log("req.headers.referer");
-    console.log(req.headers.referer);
+    console.log("/api/store/{type}");
     console.log("req.query");
     console.log(req.query);
     const { type } = req.query;

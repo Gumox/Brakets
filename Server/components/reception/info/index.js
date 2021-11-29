@@ -21,6 +21,7 @@ const ReceptionInfo = ({
     <Wrapper>
       <SubWrapper>
         <BasicInfo
+          options={options}
           data={inputData}
           handleValueChange={handleInputValueChange}
         />
@@ -32,7 +33,11 @@ const ReceptionInfo = ({
           handleSearchButtonClick={handleSearchButtonClick}
         />
         <Section>
-          <ProducInfo options={options} data={data} handleValueChange={handleTargetValueChange} />
+          <ProducInfo
+            options={options}
+            data={data}
+            handleValueChange={handleTargetValueChange}
+          />
           <StoreInfo
             options={options}
             data={data}

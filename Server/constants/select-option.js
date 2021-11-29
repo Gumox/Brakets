@@ -21,19 +21,6 @@ export const OPTIONS = [
   },
 ];
 
-export const BRAND_OPTIONS = [
-  {
-    key: "1",
-    value: "1",
-    text: "아디다스",
-  },
-  {
-    key: "2",
-    value: "2",
-    text: "나이키",
-  },
-];
-
 export const RECEIPT_CATEGORY_OPTIONS = [
   {
     key: "1",
@@ -114,14 +101,15 @@ export const DATE_SEARCH_TYPE_OPTIONS = [
     value: "send_date",
     text: "매장발송일",
   },
-  {
-    value: "register_date",
-    text: "본사접수일",
-  },
-  {
-    value: "return_date",
-    text: "하자반품일",
-  },
+  // TODO: DB 에 column 추가 먼저
+  // {
+  //   value: "register_date",
+  //   text: "본사접수일",
+  // },
+  // {
+  //   value: "return_date",
+  //   text: "하자반품일",
+  // },
   {
     value: "due_date",
     text: "고객약속일",
@@ -134,12 +122,12 @@ export const REGISTER_STEP_OPTIONS = [
     text: "접수여부 ALL",
   },
   {
-    value: "0",
-    text: "미접수",
-  },
-  {
     value: "1",
     text: "접수",
+  },
+  {
+    value: "0",
+    text: "미접수",
   },
 ];
 

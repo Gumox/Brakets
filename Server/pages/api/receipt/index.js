@@ -5,6 +5,7 @@ async function getReceipt(query, values) {
   const result = await excuteQuery({
     query: `SELECT receipt.receipt_id AS receipt_id,
                     receipt.receipt_code AS receipt_code,
+                    receipt.category AS receipt_category,
                     receipt.store_id AS store_id,
                     store.name AS store_name,
                     store.store_type AS store_type,
@@ -12,6 +13,7 @@ async function getReceipt(query, values) {
                     receipt.receipt_date AS receipt_date,
                     receipt.customer_id AS customer_id,
                     customer.phone AS customer_phone,
+                    customer.name AS customer_name, 
                     product.season AS product_season,
                     product.degree AS product_degree,
                     product.color AS product_color,
@@ -44,6 +46,8 @@ const receipt = async (req, res) => {
         dateType,
         startDate,
         endDate,
+        analysisId, 
+        resultId,
         customerName,
         customerContact,
         companyName,
@@ -66,22 +70,32 @@ const receipt = async (req, res) => {
         //   values = [...values, style]
         // }
       }
-      // TODO: date 종류 추가
-      // if (dateType === "all") {
-      //   if (startDate) {
-      //     query += ` AND DATE(receipt.${dateOption}) >= ?`;
-      //     values = [...values, startDate];
-      //   }
-      //   if (endDate) {
-      //     query += ` AND DATE(receipt.${dateOption}) <= ?`;
-      //     values = [...values, endDate];
-      //   }
-      // } else {
-      //   if (startDate) {
-      //     query += ` AND DATE(receipt.${dateOption}) = ?`;
-      //     values = [...values, startDate];
-      //   }
-      // }
+      // TODO: 날짜기준 추가
+      if (dateType === "all") {
+        if (startDate) {
+          query += ` AND DATE(receipt.${dateOption}) >= ?`;
+          values = [...values, startDate];
+        }
+        if (endDate) {
+          query += ` AND DATE(receipt.${dateOption}) <= ?`;
+          values = [...values, endDate];
+        }
+      } else {
+        if (startDate) {
+          query += ` AND DATE(receipt.${dateOption}) = ?`;
+          values = [...values, startDate];
+        }
+      }
+
+      if(analysisId) {
+        query += " AND receipt.analysis_id = ? ";
+        values = [...values, analysisId];
+      }
+
+      if(resultId) {
+        query += " AND receipt.result_id = ? ";
+        values = [...values, resultId];
+      }
 
       if (customerName) {
         query += " AND customer.name LIKE ? ";

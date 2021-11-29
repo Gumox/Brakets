@@ -129,74 +129,11 @@ function ShopStepThree4({route,navigation}) {
     var useListSort = useList.sort(function(a,b){
         return a.key -b.key;
     });
-    const DeleteAddType = (deleteKey) => {
-        var delPhotoList =uriList;
-        var delSend = List0;
-        var delSendList = useList;
-        var delSelectList =  store.getState().selectType;
-        
-        console.log("");
-        console.log(delPhotoList);
-        console.log("");
-        console.log(delSend);
-        console.log("");
-        console.log(delSendList);
-        for(let i = 0  ; i<delPhotoList.length;i++){
-            if(delPhotoList[i].key == deleteKey){
-                delPhotoList.splice(i,1);
-                i--;
-            }
-        }
-        for(let i = 0 ; i<delPhotoList.length;i++){
-            if(delPhotoList[i].key > deleteKey){
-                var obj = delPhotoList[i];
-                obj.key=Number(obj.key) -1;
-            }
-        } 
-        
-        console.log(delPhotoList);
-
-        for(let i = 0  ; i<delSend.length;i++){
-            if(i == deleteKey){
-                delSend.splice(i,1);
-               break;
-            }
-        } 
-        console.log(delSend);
-        for(let i = 0  ; i<delSendList.length;i++){
-            if(i == deleteKey){
-                delSendList.splice(i,1);
-                break;
-            }
-        }
-        for(let i  = 0 ; i < delSelectList.length;i++){
-            console.log(delSelectList[i]);
-            if(delSelectList[i].key==deleteKey){
-                delSelectList.splice(i,1);
-               i--;
-            }
-        }
-        for(let i = 0 ; i<delSelectList.length;i++){
-            if(delSelectList[i].key > deleteKey){
-                var obj = delSelectList[i];
-                obj.key=Number(obj.key) -1;
-            }
-        } 
-        console.log(delSendList);
-
-        store.dispatch({type:"SELECTTYPESET" ,set: delSelectList})
-        store.dispatch({type:'PLUSINDEXNUMBER',plus:-1});
-        store.dispatch({type:'PHOTORESET',setPhoto:delPhotoList});
-        store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset: delSend});
-        store.dispatch({type:'RESET_TYPE_STORE',reset: delSendList});
-        
-        console.log("before nvi===================================================")
-        navigation.replace("ShopStepThree4");
-    }
+    
     const [List0,setList0] = React.useState( store.getState().basicRepairStore);
     //전단계 찍은 사진들 쌓은 부분 ---
     var photoOutput= [];
-    var photoVisiable = [];
+    var photoAdd;
     var imageModalsVisiable = []; 
     for(var i =0; i<photoUri.length;i++){
         
@@ -212,6 +149,16 @@ function ShopStepThree4({route,navigation}) {
         </View>
         );
         photoOutput[i] = (tempPhoto);
+    }
+    if(photoUri.length<5){
+        photoAdd =(
+            <ContainImg onPress={()=>{
+                    
+                    navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: photoUri.length});
+                
+                }}>
+                <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
+        );
     }
     // ---
     const [refreshing, setRefreshing] = React.useState(false);
@@ -261,148 +208,7 @@ function ShopStepThree4({route,navigation}) {
     var inputTexts = [];
     var selectedTypeLists = [];
     var basicLavel = store.getState().basicRepairStore;
-    console.log(basicLavel)
-
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    console.log("")
-    if(store.getState().indexNumber>0){
-        for (var i = 1; i < store.getState().indexNumber+1; i++) {
-            
-            const myKey = i;
-
-            const [cSendList,setCSendList] = React.useState(useListSort[myKey].sendList);
-
-            const keySelectedType = store.getState().selectType[myKey].value;
-            selectedTypeLists[myKey] = ( store.getState().selectType[myKey]);
-            const cBasicLavel = basicLavel[myKey].basicSend;
-            
-            store.dispatch({type:'RESET_TYPE_STORE',reset:useList});
-           
-            console.log(store.getState().typeStore);
-            React.useEffect(()=>{
-                //OnRefresh();
-            },[]);
-            
-           
-            var indexUriList =[];
-            var photoImages =[];
-
-           
-            console.log('myKey    :'+myKey);
-            uriList.forEach(element => {
-                if(element.key == i){
-                    indexUriList.push(element);
-                   
-                }
-            });
-            for(var j=0; j < indexUriList.length ; j++){
-                const img = indexUriList[j];
-                console.log(img);
-                var photoImage =(
-                
-                    <Pressable  key = {j} onPress={() => {
-                        console.log(myKey);
-                        console.log(img.index);
-                        console.log(img.value);
-                        navigation.navigate("PhotoControl",{key: myKey ,value: img.value,index:img.index});
-                        }}>
-                    <Image  style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j].value}}/>
-                    </Pressable>
-                );
-                photoImages[j] =(photoImage);
-            }
-            
-            var tempItem=  (
-                <View key ={myKey} >
-                    <Label/>
-                    <InfoView>
-                        <AddTypeDleleteView>
-                            <View/>
-                            <DeleteButton onPress ={() =>{
-                                DeleteAddType(myKey)
-                            }
-                            }>
-                            <Image style={{width:20, height:20}} source ={require("../../Icons/cancel.png")}/>
-                            </DeleteButton></AddTypeDleleteView>
-                            <View style = {{width :180}}>
-                            <Picker
-                                placeholder = {{label : keySelectedType,value: keySelectedType}}
-                                style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
-                                onValueChange={(value) =>
-                                {
-                                    selectedTypeLists[myKey] = ( {key : myKey ,value : value});
-                                    //console.log(selectedTypeLists);
-                                    changeSelectSend(value,myKey);
-                                    changeBasicSend(value,myKey);
-                                    changeSelectType(value,myKey);
-                                    wait(500).then(() => {
-                                        console.log("??");
-                                        console.log(store.getState().typeStore[myKey].sendList);
-                                        useListSort = store.getState().typeStore.sort(function(a,b){
-                                            return a.key -b.key;
-                                        })
-                                        console.log(useListSort[myKey].sendList);
-                                        setCSendList(useListSort[myKey].sendList);
-                                        console.log(cSendList);
-                                        console.log("AAAAAAAAAAAAAAAAA");
-                                    });
-                                }
-                                }
-                                items={[
-                                    { label: '1.원단', value: '원단' },
-                                    { label: '2.봉제', value: '봉제' },
-                                    { label: '3.부자재', value: '부자재' },
-                                    { label: '4.아트워크', value: '아트워크' },
-                                    { label: '5.액세서리', value: '악세사리' }
-                                ]}
-                            />
-                            </View>
-                        
-                        <ScrollView horizontal ={true} style={{marginLeft:8,marginRight:8,marginTop:5,marginBottom:5}}>
-                            
-                                {photoImages}
-                                
-                                <ContainImg onPress={()=>{
-                                    navigation.navigate("TakePhoto",{key:"AddPhoto",value:myKey,index:indexUriList[myKey].length})
-                                }}>
-                                <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
-                                
-                        </ScrollView>
-
-                        <Label>추가 요청 사항</Label>
-                        <Input  
-                            multiline={ true }
-                            
-                            onChangeText={ value => inputTexts[myKey] =( value)  }/>
-                        <Label>수선처</Label>
-                        <Picker
-                           
-                            placeholder={{ label: '기본위치: ' + cBasicLavel,value:cBasicLavel }}
-                            style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
-                            onValueChange={(value) => console.log(value)}
-                            items={store.getState().typeStore[myKey].sendList}
-                        />
-                        </InfoView>
-                
-                </View>
-            );
-            output[i] = (tempItem);
-
-        }
-    }
+    
 
 
     selectedTypeLists[0] = ( store.getState().selectType[0]);
@@ -414,7 +220,7 @@ function ShopStepThree4({route,navigation}) {
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <Contents>
             <CenterView><TopIntro>수선 정보 확인</TopIntro></CenterView>
-            <Label>수선 유형</Label>
+            <Label>제품 구분</Label>
             <InfoView>
 
             <View style = {{width :180}}>
@@ -450,14 +256,10 @@ function ShopStepThree4({route,navigation}) {
             <ScrollView horizontal ={true}  style={{marginLeft:8,marginRight:8,marginTop:5,marginBottom:5}}>
                 
                     {photoOutput}
-                    <ContainImg onPress={()=>{
-                        navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: photoUri.length})
-                        }}>
-                        <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
-                  
+                    {photoAdd}
             </ScrollView>
 
-            <Label>추가 요청 사항</Label>
+            <Label>매장 접수 내용</Label>
             <Input 
                  multiline={ true }
                  
@@ -471,54 +273,7 @@ function ShopStepThree4({route,navigation}) {
             />
                 
             </InfoView>
-            {output}
-            <Label>수선 유형 추가</Label>
-            <InfoView>
-            <Picker
-                placeholder = {{label : '[선택] 옵션을 선택하세요',value: null}}
-                style = { {border :'solid', borderWidth : '3', borderColor : 'black'} }
-                onValueChange={(value) =>
-                {
-                    setSelect(value)
-                    store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:basicLavel});
-                    
-                    store.dispatch({type:'PLUSINDEXNUMBER',plus:1});
-                    //index = store.getState().indexNumber;
-
-                    store.dispatch({type:'SELECTTYPE',typeSelect: {key :(index+1) , value : value}});
-
-                    console.log(store.getState().selectType);
-                    console.log("arrayValueIndex: "+(index+1));
-                    console.log(value + "    "+ (index+1));
-
-
-                    
-                    data.forEach(obj => {
-                        if(value === obj.repair_name){
-                        console.log(obj.receiver_name);
-                        
-                        store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: {key: (index+1) ,basicSend :obj.receiver_name}});
-                        
-                        
-                        }
-                    });
-
-
-                    getList(value,(index+1));
-
-                
-                navigation.replace("TakePhoto",{key:"FullShot",value:(index+1)});
-                }
-            }
-            items={[
-                { label: '1.원단', value: '원단' },
-                { label: '2.봉제', value: '봉제' },
-                { label: '3.부자재', value: '부자재' },
-                { label: '4.아트워크', value: '아트워크' },
-                { label: '5.액세서리', value: '악세사리' }
-            ]}
-            />
-            </InfoView>
+            
             <Label/>
             </Contents>
             <CenterView>
