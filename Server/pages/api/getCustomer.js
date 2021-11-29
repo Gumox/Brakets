@@ -34,7 +34,7 @@ export default (req, res) => {
     console.log("req");
     console.log(req.body);
     var name = req.body.name;
-    var phone = req.body.phone;
+    var phone = req.body.lastphone;
 
     getCustomer(name, phone).then((body) => {
 
