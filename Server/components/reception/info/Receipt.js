@@ -108,7 +108,7 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 <SelectOption
                   title="수선처지정:"
                   // name={PRODUCT.SEASON}
-                  options={options.repairList}
+                  options={[DEFAULT_OPTION, ...options.repairList]}
                   // value={data[PRODUCT.SEASON]}
                   // onChange={handleValueChange}
                   styleOptions={{ maxWidth: "80px" }}

@@ -15,6 +15,7 @@ async function getReceipt(query, values) {
                     customer.phone AS customer_phone,
                     customer.name AS customer_name, 
                     product.season AS product_season,
+                    product.style AS product_style,
                     product.degree AS product_degree,
                     product.color AS product_color,
                     product.size AS product_size, 
@@ -42,6 +43,7 @@ const receipt = async (req, res) => {
         storeName,
         isStyleType,
         season,
+        style,
         dateOption,
         dateType,
         startDate,
@@ -64,11 +66,10 @@ const receipt = async (req, res) => {
           query += " AND product.season = ? ";
           values = [...values, season];
         }
-        // TODO: DB 에 column 추가
-        // if (style && style.length > 0) {
-        //   query += " AND product.style = ? ";
-        //   values = [...values, style]
-        // }
+        if (style && style.length > 0) {
+          query += " AND product.style = ? ";
+          values = [...values, style]
+        }
       }
       // TODO: 날짜기준 추가
       if (dateType === "all") {
