@@ -67,6 +67,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 styleOptions={{ width: "100px" }}
                 value={data[PRODUCT.RFID]}
                 onChange={handleValueChange}
+                disabled={true}
               />
             </Field>
             <Field marginRight="10px">
@@ -77,6 +78,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 styleOptions={{ padding: "1px 0px" }}
                 value={data[PRODUCT.RELEASE_DATE]}
                 onChange={handleValueChange}
+                disabled={true}
               />
             </Field>
             <Field marginRight="10px">
