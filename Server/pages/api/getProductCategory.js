@@ -4,17 +4,16 @@ import excuteQuery from './db';
 export async function getProductCategory(category, receipt, brand, season) {
     try {
 
-	var q = "";
+	var q = "SELECT * FROM product_category WHERE brand_id=? AND season_type=? ORDER BY category_name";
 
         if(category == 1 && receipt == 1){
     	    //고객용, 수선 -> 수선처
-	    q = "SELECT * FROM product_category WHERE brand_id=? AND season_type=? ORDER BY category_name";
         }
         else{
+	
 	    //나머지 -> 본사
-	    //q = "SELECT type.repair_id, type.repair_name, place.receiver, place.receiver_name FROM repair_type as type LEFT JOIN repair_type as place ON type.priority = place.repair_id WHERE type.repair_id>0 AND type.priority=0";
-
-	    //q = "SELECT " 	
+	    brand=0;
+	    season=0;
         }
 	
 
@@ -23,7 +22,7 @@ export async function getProductCategory(category, receipt, brand, season) {
             values: [brand, season]
         });
 
-	console.log(result);
+	//console.log(result);
         return result;
 
     } catch (error) {
