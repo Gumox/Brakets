@@ -9,7 +9,7 @@ export async function updateCustomer(cid, name, phone) {
 		    query: "UPDATE customer SET name=?, phone=? WHERE customer_id=?",
 		    values: [name, phone, cid]
 		});
-		console.log(result);
+		//console.log(result);
 		return result;
 
 	    } catch (error) {
