@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: ${({ alignItems = "center" }) => alignItems};
 `;
 
 export const Field = styled.div`
@@ -33,4 +33,4 @@ export const SectionRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
+`;
