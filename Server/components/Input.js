@@ -50,7 +50,7 @@ const CustomInput = styled.input`
   font-size: 12px;
 
   &[type="date"] {
-    max-width: 130px;
+    max-width: 140px;
   }
 `;
 

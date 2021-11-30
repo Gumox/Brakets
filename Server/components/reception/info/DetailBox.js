@@ -23,9 +23,9 @@ const DetailBox = ({ options, data = {} }) => {
         <Field>
           <SelectOption
             title="수선유형:"
-            name={DETAIL.REPAIR_ID}
+            name={DETAIL.PRODUCT_CATEGORY_ID}
             options={REPAIR_OPTIONS}
-            value={data[DETAIL.REPAIR_ID]}
+            value={data[DETAIL.PRODUCT_CATEGORY_ID]}
             // onChange={handleValueChange}
           />
         </Field>

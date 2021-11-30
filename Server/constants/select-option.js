@@ -101,11 +101,11 @@ export const DATE_SEARCH_TYPE_OPTIONS = [
     value: "send_date",
     text: "매장발송일",
   },
+  {
+    value: "register_date",
+    text: "본사접수일",
+  },
   // TODO: DB 에 column 추가 먼저
-  // {
-  //   value: "register_date",
-  //   text: "본사접수일",
-  // },
   // {
   //   value: "return_date",
   //   text: "하자반품일",

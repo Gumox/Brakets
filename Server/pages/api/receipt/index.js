@@ -11,6 +11,7 @@ async function getReceipt(query, values) {
                     store.store_type AS store_type,
                     store.contact AS store_contact,
                     receipt.receipt_date AS receipt_date,
+                    receipt.register_date AS register_date,
                     receipt.customer_id AS customer_id,
                     customer.phone AS customer_phone,
                     customer.name AS customer_name, 

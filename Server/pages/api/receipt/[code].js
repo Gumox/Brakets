@@ -6,6 +6,7 @@ async function getReceipt(code) {
                     receipt.receipt_code AS receipt_code,
                     receipt.category AS receipt_category,
                     receipt.receipt_date AS receipt_date,
+                    receipt.register_date AS register_date,
                     receipt.due_date AS due_date,
                     receipt.store_id AS store_id,
                     receipt.customer_id AS customer_id,
@@ -19,8 +20,10 @@ async function getReceipt(code) {
                     product.color AS product_color,
                     product.size AS product_size, 
                     product.degree AS product_degree,
+                    IF(receipt.substitute=0, "N", "Y") AS substitute,
                     receipt.product_code AS product_code,
                     product.image AS product_image,
+                    product.release_date AS product_release_date,
                     customer.name AS customer_name,
                     customer.phone AS customer_phone
               FROM receipt 
@@ -36,7 +39,7 @@ async function getReceipt(code) {
 async function getReceiptDetail(id) {
   const result = await excuteQuery({
     query: `SELECT detail_id,
-                     repair_id,
+                     pcategory_id,
                      num,
                      send_date,
                      message,

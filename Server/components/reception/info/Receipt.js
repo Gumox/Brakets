@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import {
@@ -43,7 +44,16 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
         <Section marginRight="10px">
           <Row>
             <Field>
-              <Input type="date" title="본사접수일" />
+              <Input
+                type="date"
+                title="본사접수일"
+                name={RECEIPT.REGISTER_DATE}
+                value={
+                  data[RECEIPT.RECEIPT_DATE]
+                    ? moment(data[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
+                    : undefined
+                }
+              />
             </Field>
           </Row>
           <Row>

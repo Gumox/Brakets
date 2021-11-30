@@ -37,9 +37,9 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <Field>
                 <SelectOption
                   title="제품구분:"
-                  name={DETAIL.REPAIR_ID}
-                  options={REPAIR_OPTIONS}
-                  value={data[DETAIL.REPAIR_ID]}
+                  name={DETAIL.PRODUCT_CATEGORY_ID}
+                  options={options.productCategoryList}
+                  value={data[DETAIL.PRODUCT_CATEGORY_ID]}
                   // onChange={handleValueChange}
                   styleOptions={{ width: "100px" }}
                 />

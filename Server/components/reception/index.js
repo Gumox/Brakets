@@ -9,7 +9,6 @@ import List from "./list";
 
 const Reception = ({ options , user}) => {
   const [inputData, setInputData] = useState({
-    storeId: user.store_id, 
     storeName: options.storeList[0].value,
     season: options.seasonList[0].value,
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
