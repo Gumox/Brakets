@@ -122,11 +122,11 @@ export const REGISTER_STEP_OPTIONS = [
     text: "접수여부 ALL",
   },
   {
-    value: "1",
+    value: "true",
     text: "접수",
   },
   {
-    value: "0",
+    value: "false",
     text: "미접수",
   },
 ];
@@ -137,11 +137,11 @@ export const SEND_OPTIONS = [
     text: "발송여부 ALL",
   },
   {
-    value: "0",
+    value: "true",
     text: "발송",
   },
   {
-    value: "1",
+    value: "false",
     text: "미발송",
   },
 ];

@@ -4,6 +4,7 @@ import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
+import { STORE_TYPE, RECEIPT_CATEGORY_TYPE, RECEIPT_TYPE } from "../../../constants/type";
 
 const ReceptionList = ({ data, handleDataClick = () => {} }) => {
   return (
@@ -42,7 +43,7 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
               <TableData title={receipt[STORE.NAME]} width="200px">
                 {receipt[STORE.NAME]}
               </TableData>
-              <TableData width="70px">{receipt[STORE.TYPE]}</TableData>
+              <TableData width="70px">{STORE_TYPE[receipt[STORE.TYPE]]}</TableData>
               <TableData width="150px">{receipt[STORE.CONTACT]}</TableData>
               <TableData width="120px">
                 {receipt[RECEIPT.RECEIPT_DATE]
@@ -50,7 +51,7 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
                   : ""}
               </TableData>
               <TableData>{receipt[CUSTOMER.ID]}</TableData>
-              <TableData>{receipt[RECEIPT.CATEGORY]}</TableData>
+              <TableData>{RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]]}</TableData>
               <TableData>{receipt[CUSTOMER.NAME]}</TableData>
               <TableData width="150px">{receipt[CUSTOMER.CONTACT]}</TableData>
               <TableData width="70px">{receipt[PRODUCT.SEASON]}</TableData>
@@ -59,8 +60,8 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
               <TableData width="70px">{receipt[PRODUCT.COLOR]}</TableData>
               <TableData width="70px">{receipt[PRODUCT.SIZE]}</TableData>
               <TableData>{receipt[PRODUCT.PRICE]}</TableData>
-              <TableData>{receipt[RECEIPT.TYPE]}</TableData>
-              <TableData width="150px">{receipt[RECEIPT.MESSAGE]}</TableData>
+              <TableData>{RECEIPT_TYPE[receipt[RECEIPT.TYPE]]}</TableData>
+              <TableData width="150px"></TableData>
             </TableRow>
           ))}
         </tbody>
