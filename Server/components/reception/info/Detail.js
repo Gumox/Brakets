@@ -5,7 +5,6 @@ import COLOR from "../../../constants/color";
 import { RECEIPT, DETAIL } from "../../../constants/field";
 import {
   OPTIONS,
-  REPAIR_OPTIONS,
   RECEIPT_TYPE_OPTIONS,
   SHIPPING_OPTIONS,
 } from "../../../constants/select-option";

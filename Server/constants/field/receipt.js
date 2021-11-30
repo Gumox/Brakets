@@ -10,6 +10,7 @@ const FIELD = {
     ANALYSIS_ID: 'analysis_id', // 내용분석
     RESULT_ID: 'result_id', // 판정결과
     SUBSTITUE: 'substitute', // 상품대체
+    MESSAGE: 'receipt_message', // 본사설명
 }
 
 export default FIELD;

@@ -12,6 +12,7 @@ async function getReceipt(code) {
                     receipt.customer_id AS customer_id,
                     receipt.product_id AS product_id,
                     receipt.receipt_type AS receipt_type,
+                    receipt.message AS receipt_message,
                     receipt.fault_id AS fault_id,
                     receipt.analysis_id AS analysis_id,
                     receipt.result_id AS result_id,

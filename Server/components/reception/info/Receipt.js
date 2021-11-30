@@ -3,13 +3,7 @@ import styled from "styled-components";
 import moment from "moment";
 
 import COLOR from "../../../constants/color";
-import {
-  OPTIONS,
-  DEFAULT_OPTION,
-  REPAIR_OPTIONS,
-  REPAIR_PLACE_OPTIONS,
-  SHIPPING_OPTIONS,
-} from "../../../constants/select-option";
+import { OPTIONS, DEFAULT_OPTION } from "../../../constants/select-option";
 import { RECEIPT } from "../../../constants/field";
 import { Row, Field, Section, SectionRow } from "../../styled";
 import Input from "../../Input";
@@ -107,7 +101,13 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
           )}
         </Section>
         <Section>
-          <TextArea title="본사설명:" styleOptions={{ width: "400px" }} />
+          <TextArea
+            title="본사설명:"
+            name={RECEIPT.MESSAGE}
+            value={data[RECEIPT.MESSAGE]}
+            onChange={handleValueChange}
+            styleOptions={{ width: "400px" }}
+          />
         </Section>
       </SectionRow>
       <SectionRow>

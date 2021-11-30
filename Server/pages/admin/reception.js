@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-import { SEASON_LIST } from "../../constants/dummy";
+import { SEASON_OPTIONS } from "../../constants/select-option";
 
 import Header from "../../components/Header";
 import Reception from "../../components/reception";
@@ -53,7 +53,7 @@ export const getServerSideProps = async (ctx) => {
         .then(({ data }) => data), // 내용분석
       axios.get(`${process.env.API_URL}/type/result`).then(({ data }) => data), // 판정결과
     ]);
-  const seasons = SEASON_LIST; // TODO: 본사에서 API 제공 필요
+  const seasons = SEASON_OPTIONS; // TODO: 본사에서 API 제공 필요
   return {
     props: {
       user,
