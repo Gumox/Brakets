@@ -8,7 +8,12 @@ import { Row, Field, Section, SectionRow } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
-const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
+const ProducInfo = ({
+  options,
+  data = {},
+  handleValueChange = () => {},
+  handleProductImageClick = () => {},
+}) => {
   return (
     <Wrapper>
       <SectionRow>
@@ -98,7 +103,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
           </Row>
         </Section>
         <Section>
-          <ProductImage imageUrl={data[PRODUCT.IMAGE]} />
+          <ProductImage imageUrl={data[PRODUCT.IMAGE]} onClick={handleProductImageClick}/>
         </Section>
       </SectionRow>
     </Wrapper>
@@ -115,6 +120,7 @@ const ProductImage = styled.div`
   background: center / contain no-repeat url(${({ imageUrl }) => imageUrl});
   color: ${COLOR.WHITE};
   margin-right: 5px;
+  cursor: pointer;
 `;
 
 export default ProducInfo;

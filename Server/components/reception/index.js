@@ -1,13 +1,25 @@
 import React, { useState, useCallback, useEffect } from "react";
+import Image from "next/image";
 import axios from "axios";
 
 import { DATE_SEARCH_TYPE_OPTIONS } from "../../constants/select-option";
 
 import Content from "../Content";
+import Modal from "../Modal";
 import Info from "./info";
 import List from "./list";
+import { PRODUCT } from "../../constants/field";
 
-const Reception = ({ options , user}) => {
+const Reception = ({ options, user }) => {
+  const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
+  const openProductImage = useCallback(
+    () => setIsProductImageModalOpen(true),
+    []
+  );
+  const closeProductImage = useCallback(
+    () => setIsProductImageModalOpen(false),
+    []
+  );
   const [inputData, setInputData] = useState({
     storeName: options.storeList[0].value,
     season: options.seasonList[0].value,
@@ -68,8 +80,21 @@ const Reception = ({ options , user}) => {
           handleTargetValueChange,
           handleSearchButtonClick,
         }}
+        handleProductImageClick={openProductImage}
       />
       <List data={searchList} handleDataClick={searchTargetData} />
+      {isProductImageModalOpen && (
+        <Modal handleCloseButtonClick={closeProductImage}>
+          {
+            <Image
+              src={targetData[PRODUCT.IMAGE]}
+              alt={targetData[PRODUCT.STYLE]}
+              layout="fill"
+              objectFit="contain"
+            />
+          }
+        </Modal>
+      )}
     </Content>
   );
 };
