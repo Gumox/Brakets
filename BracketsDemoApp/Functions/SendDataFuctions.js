@@ -13,33 +13,22 @@ export function changeBasicSend(value,key){
     console.log("");
     console.log("");
     console.log("");
-    for (let i = 0; i < basicSendList.length; i++) {
-        if(basicSendList[i].key == key){
-            basicSendList.splice(i,1);
+    const Categories = [];
+    const productCategories = store.getState().getProductCategory;
+    productCategories.forEach(obj => {
+        if(obj.receiver_name !== '아디다스코리아(본사)' ){
+    
+            Categories.push({'category_name' :obj.category_name, 'receiver_name': obj.receiver_name});
         }
-    }
-    console.log(basicSendList);
-            console.log("");
-            console.log("");
-            console.log("");
-    data.forEach(obj => {
-        if(value === obj.repair_name){
-            basicSendList.push({key: key ,basicSend :obj.receiver_name});
-          
-            console.log(basicSendList);
-            console.log("");
-            console.log("");
-            console.log("");
+        console.log(obj.category_name+ " : " + obj.receiver_name);
+        
+    });
+    Categories.forEach(obj =>{
+        if(value === obj.category_name){
+            store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:[]});
+            store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: {key: 0 ,basicSend :obj.receiver_name}});
         }
     });
-    basicSendList.sort(function(a,b){
-        return a.key -b.key;
-    })
-    console.log(basicSendList);
-    console.log("");
-    console.log("");
-    console.log("");
-
 }
 export function changeSelectSend(value,key){
     const selectSendList = store.getState().typeStore;

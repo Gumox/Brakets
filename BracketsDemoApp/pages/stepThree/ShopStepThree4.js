@@ -103,23 +103,34 @@ function ShopStepThree4({route,navigation}) {
 
     const [sendList,setSendList] = React.useState([]);
 
-    const itemList = [];
-    var i = 1;
-    var j = 1;
+    const [itemList , setItemList] = React.useState([]);
+    
     const productCategories = store.getState().getProductCategory;
-    productCategories.forEach(obj => {
-        if(obj.receiver_name !== '아디다스코리아(본사)' ){
-        
-        itemList.push({ label: i+'.'+obj.category_name, value: obj.category_name })
-        var key = obj.category_name;
-        i = i+1;
-        }
-        console.log(obj.category_name+ " : " + obj.receiver_name);
-        if(selectedType === obj.category_name){
-            sendList.push({ label: j+'.'+obj.receiver_name, value: obj.receiver_name });
-            j = j+1;
-        }
-    });
+    
+    const ProductCategoriesClassify =()=>{
+        var items  = [];
+        var category = [];
+        var i = 1;
+        var j = 1;
+        productCategories.forEach(obj => {
+            if(obj.receiver_name !== '아디다스코리아(본사)' ){
+            
+                category.push({ label: i+'.'+obj.category_name, value: obj.category_name })
+                var key = obj.category_name;
+                i = i+1;
+            }
+           
+            if(selectedType === obj.category_name){
+                items.push({ label: j+'.'+obj.receiver_name, value: obj.receiver_name });
+                j = j+1;
+                
+            }
+        });
+        setItemList(category);
+        setSendList(items);
+    } 
+    
+   
     
     const [List0,setList0] = React.useState( store.getState().basicRepairStore);
     //전단계 찍은 사진들 쌓은 부분 ---
@@ -164,9 +175,7 @@ function ShopStepThree4({route,navigation}) {
     var addDataList = [];
     
     React.useEffect(()=>{
-        
-        console.log(store.getState().typeStore[0]);
-        console.log("xxxxxxxxxxxx"+store.getState().typeStore);
+        ProductCategoriesClassify();
         
         const backAction = () => {
             navigation.goBack();
@@ -188,6 +197,8 @@ function ShopStepThree4({route,navigation}) {
     var selectedTypeLists = [];
 
     selectedTypeLists[0] = ( store.getState().selectType[0]);
+    
+    const [basicSend,setBasicSend] = React.useState(store.getState().basicRepairStore[0].basicSend)
 
     //const [sendList,setSendList] = React.useState(useListSort[0].sendList);
     return (
@@ -210,14 +221,13 @@ function ShopStepThree4({route,navigation}) {
                     changeBasicSend(value,0);
                     changeSelectType(value,0);
                     wait(500).then(() => {
-                        console.log("??");
-                        //console.log(store.getState().typeStore[0].sendList);data.
-                        /*useListSort = store.getState().typeStore.sort(function(a,b){
-                            return a.key -b.key;
-                        })
-                        setSendList(useListSort[0].sendList);*/
+                        setSendList([]);
+                        
+                        setBasicSend(store.getState().basicRepairStore[0].basicSend);
+
+                        ProductCategoriesClassify();
+                        
                     });
-                    //getList(value,0);
                 }
                 }
                 items={itemList}
@@ -236,10 +246,14 @@ function ShopStepThree4({route,navigation}) {
                  onChangeText={ value => inputTexts[0]=( value ) }/>
             <Label>수선처</Label>
             <Picker
-                placeholder={{ label: '기본위치: '+store.getState().basicRepairStore[0].basicSend, value:store.getState().basicRepairStore[0].basicSend}}
+                placeholder={{ label: '기본위치: '+ basicSend,value: basicSend}}
                 
                 style = { {border :'solid', borderWidth : '3', borderColor : 'black' ,placeholder:{color: '#78909c'}} }
-                onValueChange={(value) => console.log(value)}
+                onValueChange={(value) =>{
+                    store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:[]});
+                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: {key: 0 ,basicSend :value}});
+                    console.log(store.getState().basicRepairStore[0].basicSend);
+                }}
                 items={sendList}
             />
                 
@@ -250,11 +264,8 @@ function ShopStepThree4({route,navigation}) {
             <CenterView>
                 <ButtonBlack onPress={ ()=>
                     {
-                     console.log(inputTexts);
-                     //store.dispatch({type:'SELECTTYPESET',set:[]});
                      store.dispatch({type:'SELECTTYPESET',set:selectedTypeLists})
                      store.dispatch({type:'ADD_REQUESR',addRequest:inputTexts});
-                     console.log(store.getState().addRequest)
                      navigation.navigate( 'ShopStepThree5' );
                     }
                 }>
