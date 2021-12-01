@@ -97,7 +97,6 @@ function ShopStepThree4({route,navigation}) {
             }
 
     },[]);
-    // 수선유형 추가하면 쌓이는 부분 //
     var output=[];
     var inputTexts = store.getState().addRequest;
     console.log(inputTexts);

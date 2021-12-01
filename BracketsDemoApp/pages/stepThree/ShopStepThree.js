@@ -52,17 +52,32 @@ function ShopStepThree( { navigation } ) {
 
   const [select,setSelect] =  React.useState(null);
 
-  const data =store.getState().getAplType;
   const ix = store.getState().indexNumber;
   //console.log(ix);
-  //console.log("                       :"+store.getState().getAplType);
+  //console.log("                       :"+store.getState().getProductCategory);
   
-  const basicSend = store.getState().getAplType;
-  React.useEffect(()=>{
+  const Categories = [];
+  const itemList = [];
+  var i = 1;
+  const productCategories = store.getState().getProductCategory;
+  productCategories.forEach(obj => {
+    if(obj.receiver_name !== '아디다스코리아(본사)' ){
+      //key: i+'.'+obj.category_name , value:obj.category_name
+      
+      itemList.push({ label: i+'.'+obj.category_name, value: obj.category_name })
+      var key = obj.category_name;
+      Categories.push({'category_name' :obj.category_name, 'receiver_name': obj.receiver_name});
+      var title = obj.receiver_name;
+      i = i+1;
+       //Categories.push(title : obj.receiver_name);
+    }
+    console.log(obj.category_name+ " : " + obj.receiver_name);
     
-    //setData(store.getState().getAplType);
-    //console.log("uri data: "+data);
-    //console.log(data);
+  });
+  
+  React.useEffect(()=>{
+    console.log(Categories)
+    console.log(itemList)
     const backAction = () => {
         store.dispatch({type:'SELECTTYPESET',set:[]});
         navigation.goBack();
@@ -76,12 +91,6 @@ function ShopStepThree( { navigation } ) {
   
       return () => backHandler.remove();
   },[]);
-  console.log("");
-  console.log("");
-  console.log("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
-  console.log(basicSend);
-  console.log("");
-  console.log("");
   return (
       <Container>
           <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
@@ -116,16 +125,18 @@ function ShopStepThree( { navigation } ) {
               console.log("        :"+value);
               
               store.dispatch({type:'RESET_TYPE_STORE',reset:[]});
-              getList(value,0);
+              //getList(value,0);
               console.log(store.getState().typeStore);
 
-              data.forEach(obj => {
-                if(value === obj.repair_name){
-                  console.log(obj.receiver_name);
+              
+              Categories.forEach(obj => {
+                if(value === obj.category_name){
+                  console.log("???????????"+obj.receiver_name);
                   
                   store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: {key: 0 ,basicSend :obj.receiver_name}});
                   
-                  console.log("+++"+store.getState().basicRepairStore);
+                  console.log("+++");
+                  console.log(store.getState().basicRepairStore);
                   
                 }
 
@@ -133,14 +144,7 @@ function ShopStepThree( { navigation } ) {
              
             }
           }
-          items={[
-              { label: '1.원단', value: '원단' },
-              { label: '2.봉제', value: '봉제' },
-              { label: '3.부자재', value: '부자재' },
-              { label: '4.아트워크', value: '아트워크' },
-              { label: '5.액세서리', value: '악세사리' },
-              { label: '6.기타', value: '기타' }
-          ]}
+          items={itemList}
         />
         </DropBackground>
 

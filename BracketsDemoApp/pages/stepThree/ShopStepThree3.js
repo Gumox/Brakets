@@ -73,7 +73,7 @@ export default function ShopStepThree3 ({navigation}) {
                     </Pressable>
                 </Modal>
                 
-                <View style={{ flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row', width:35,height:35, borderRadius :17.5 ,backgroundColor :"#ffffff" , justifyContent: "center",alignItems: 'center',}}>
                 <TouchableHighlight underlayColor={"#CCC"} style={{ width:30,height:30, borderRadius :15 , backgroundColor: color}} onPress={() => {
                     setModalVisible(!modalVisible)
                     }}><Text></Text></TouchableHighlight>

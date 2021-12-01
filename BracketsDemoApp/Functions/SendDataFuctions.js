@@ -5,7 +5,7 @@ import { getList } from "./GetSendList";
 
 export function changeBasicSend(value,key){
     const basicSendList = store.getState().basicRepairStore;
-    const data =store.getState().getAplType;
+    const data =store.getState().getProductCategory;
     console.log("");
     console.log("on hear");
     console.log("");
