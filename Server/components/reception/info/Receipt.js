@@ -1,14 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
-import {
-  OPTIONS,
-  DEFAULT_OPTION,
-  REPAIR_OPTIONS,
-  REPAIR_PLACE_OPTIONS,
-  SHIPPING_OPTIONS,
-} from "../../../constants/select-option";
+import { OPTIONS, DEFAULT_OPTION } from "../../../constants/select-option";
 import { RECEIPT } from "../../../constants/field";
 import { Row, Field, Section, SectionRow } from "../../styled";
 import Input from "../../Input";
@@ -43,7 +38,16 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
         <Section marginRight="10px">
           <Row>
             <Field>
-              <Input type="date" title="본사접수일" />
+              <Input
+                type="date"
+                title="본사접수일"
+                name={RECEIPT.REGISTER_DATE}
+                value={
+                  data[RECEIPT.RECEIPT_DATE]
+                    ? moment(data[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
+                    : undefined
+                }
+              />
             </Field>
           </Row>
           <Row>
@@ -97,7 +101,13 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
           )}
         </Section>
         <Section>
-          <TextArea title="본사설명:" styleOptions={{ width: "400px" }} />
+          <TextArea
+            title="본사설명:"
+            name={RECEIPT.MESSAGE}
+            value={data[RECEIPT.MESSAGE]}
+            onChange={handleValueChange}
+            styleOptions={{ width: "400px" }}
+          />
         </Section>
       </SectionRow>
       <SectionRow>
@@ -108,7 +118,7 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 <SelectOption
                   title="수선처지정:"
                   // name={PRODUCT.SEASON}
-                  options={options.repairList}
+                  options={[DEFAULT_OPTION, ...options.repairList]}
                   // value={data[PRODUCT.SEASON]}
                   // onChange={handleValueChange}
                   styleOptions={{ maxWidth: "80px" }}

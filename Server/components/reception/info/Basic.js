@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
 import { COMPANY, STORE, RECEIPT } from "../../../constants/field";
+import { DEFAULT_OPTION } from "../../../constants/select-option";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
@@ -16,14 +17,15 @@ const BasicInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
         value={process.env.HEADQUARTER_ID}
         onChange={handleValueChange}
         disabled={true}
+        styleOptions={{width: "20px"}}
       />
       <SelectOption
         title="브랜드:"
-        name={"storeId"}
-        options={options.brandList}
-        value={data["storeId"]}
+        name={"brandId"}
+        options={[DEFAULT_OPTION, ...options.brandList]}
+        value={data["brandId"]}
         onChange={handleValueChange}
-        styleOptions={{ maxWidth: "150px" }}
+        styleOptions={{ width: "200px" }}
       />
       <Input
         title="서비스카드 번호 or RFID:"

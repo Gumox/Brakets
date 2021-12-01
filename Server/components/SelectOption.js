@@ -50,7 +50,7 @@ const CustomLabel = styled.div`
 `;
 
 const CustomSelect = styled.select`
-  width: 100%;
+  width: ${({ width = "100%" }) => width};
   max-width: ${({ maxWidth = "100px" }) => maxWidth};
   height: ${({ height = "20px" }) => height};
   outline: none;

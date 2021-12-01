@@ -16,6 +16,7 @@ const ReceptionInfo = ({
   handleInputValueChange = () => {},
   handleTargetValueChange = () => {},
   handleSearchButtonClick = () => {},
+  handleProductImageClick = () => {},
 }) => {
   return (
     <Wrapper>
@@ -37,6 +38,7 @@ const ReceptionInfo = ({
             options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
+            handleProductImageClick={handleProductImageClick}
           />
           <StoreInfo
             options={options}

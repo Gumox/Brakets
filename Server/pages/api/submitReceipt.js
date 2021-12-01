@@ -31,24 +31,25 @@ export async function submitReceipt(receipt_id, receipt_type, receipt_code, mail
 
 		for(const det of detail){
 			var num = det['num'];
-			var repair_id = det['repair_id'];
+			var pcategory_id = det['pcategory_id'];
 			var message = det['message'];
 
 
 			var query = "INSERT INTO `receipt_detail`";
 			query += "(`receipt_id`, `receipt_code`, `mailbag`, `product_id`, `product_code`, `substitute`,";
-			query += "`num`, `repair_id`, `step`, `sender`, `send_date`, `message`, `receiver`)";
+			query += "`num`, `pcategory_id`, `step`, `sender`, `send_date`, `message`, `receiver`)";
 			query += "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
 			const insert_detail = await excuteQuery({
 
 		            query: query,
-		            values: [receipt_id, receipt_code, mailbag, product_id, product_code, substitute, num, repair_id, 1, sender, send_date, message, receiver]
+		            values: [receipt_id, receipt_code, mailbag, product_id, product_code, substitute, num, pcategory_id, 1, sender, send_date, message, receiver]
 
 		        });
 
 			if (result != "{")
 				result += ",";
+
 
 			result += '"num' + num + '": ' + insert_detail['insertId']+'';
 		}	

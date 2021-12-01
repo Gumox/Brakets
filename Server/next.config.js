@@ -19,7 +19,10 @@ module.exports = {
 	  API_URL: process.env.NEXT_PUBLIC_API_URL,
 	  HEADQUARTER_ID: process.env.NEXT_PUBLIC_HEADQUARTER_ID,
 	},
-  
+	
+	images: {
+		domains: ["image.adidas.co.kr"], // TODO: Image 저장하거나, 특정 도메인 미리 설정 필요
+	},
 	/*
 	  init: function () {
 		  return mysql.createConnection(db_info);

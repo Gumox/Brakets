@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
 import {
-  DEFAULT_OPTION,
   DATE_SEARCH_TYPE_OPTIONS,
   REGISTER_STEP_OPTIONS,
   SEND_OPTIONS,
@@ -97,18 +96,18 @@ const FilterInfo = ({
           <Field>
             <SelectOption
               title="접수여부"
-              name="receiptType"
+              name="hasRegistered"
               options={REGISTER_STEP_OPTIONS}
-              value={data["receiptType"]}
+              value={data["hasRegistered"]}
               onChange={handleValueChange}
             />
           </Field>
           <Field>
             <SelectOption
               title="발송여부"
-              name="sendType"
+              name="hasSent"
               options={SEND_OPTIONS}
-              value={data["sendType"]}
+              value={data["hasSent"]}
               onChange={handleValueChange}
             />
           </Field>
