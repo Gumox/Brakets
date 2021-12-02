@@ -47,7 +47,7 @@ const wait = (timeout) => {
   }
 
 
-function TakeOverPage( { navigation } ) {
+function TakeOverPage4( { navigation } ) {
     const state = {size:1};
     
     const [number,setNumber] =useState(store.getState().number);
@@ -66,92 +66,14 @@ function TakeOverPage( { navigation } ) {
 
     
     return(
-        <Container>
+        <Container >
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
-              <Text>수선처 : 맥가이버 </Text>
-            <InfoView>
-                <Text>수선처 접수일</Text>
-                <Input
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-                    
-                <Text>수선처 발송일</Text>
-                <Input
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>수선처 설명</Text>
-              <Input
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
+              
 
-            </InfoView>
-
-            <InfoView>
-              <Text>본사 접수일</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>본사 발송일</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>본사 설명</Text>
-              <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-            </InfoView>
-
-            <Text>매장 인수일</Text>
-            <Input  
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-
-            </Contents>
-            
-            <Bottom navigation={navigation}/>
-        </Container>
+              </Contents>
+              
+              <Bottom navigation={navigation}/>
+          </Container>
     )
 }
-export default TakeOverPage;
+export default TakeOverPage4;

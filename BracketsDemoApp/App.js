@@ -10,6 +10,7 @@ import StartPage from './pages/StartPage';
 import TakeOverPage from './pages/takeOver/TakeOverPage';
 import TakeOverPage2 from './pages/takeOver/TakeOverPage2';
 import TakeOverPage3 from './pages/takeOver/TakeOverPage3';
+import TakeOverPage4 from './pages/takeOver/TakeOverPage4';
 
 import LookupPage from './pages/lookup/LookupPage'
 import Mypage from './pages/mypage/Mypage';
@@ -49,6 +50,7 @@ function App() {
         <Stack.Screen name="TakeOverPage" component={TakeOverPage} options={{  title: '인수 정보\n(1)고객정보' ,headerTitleAlign: 'center' }}/>
         <Stack.Screen name="TakeOverPage2" component={TakeOverPage2} options={{  title: '인수 정보\n(2)제품정보' ,headerTitleAlign: 'center'}}/>
         <Stack.Screen name="TakeOverPage3" component={TakeOverPage3} options={{  title: '인수 정보\n(3)고객요구' ,headerTitleAlign: 'center'}}/>
+        <Stack.Screen name="TakeOverPage4" component={TakeOverPage4} options={{  title: '인수 정보\n(4)수선정보' ,headerTitleAlign: 'center'}}/>
         <Stack.Screen name="LookupPage" component={LookupPage} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="MyPage" component={Mypage} options={{  title: '마이페이지' ,headerTitleAlign: 'center'}}/>
         

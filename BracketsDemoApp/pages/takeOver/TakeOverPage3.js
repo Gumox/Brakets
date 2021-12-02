@@ -69,42 +69,9 @@ function TakeOverPage( { navigation } ) {
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
               <Text style = {{marginBottom : 15}}>고객 요구 : 수선 </Text>
-            <InfoView>
-                <Text>과실 구분</Text>
-                <Input
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-
-                <Text>내용 분석</Text>
-                <Input
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-              <Text>판정 결과</Text>
-              <Input
-                onChangeText = {onChangeText}
-                value = {text}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
-                    />
-
-            </InfoView>
+            
             </Contents>
-            <Button onPress = {() => {navigation.navigate('TakeOverPage3')}}>다음 : (4) 수선 정보</Button>
+            <Button onPress = {() => {navigation.navigate('TakeOverPage4')}}>다음 : (4) 수선 정보</Button>
 
             <Bottom navigation={navigation}/>
         </Container>
