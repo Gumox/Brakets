@@ -210,7 +210,7 @@ function TakeOverPage( { navigation } ) {
                           value = {text}
                               />
               </InfoView>
-
+              
               <InfoView>
                 <Text>과실 구분</Text>
                 <Input
