@@ -76,7 +76,7 @@ function ShopStepFour2({navigation}) {
     const [date, setDate] = React.useState(new Date());
     const [mode, setMode] = React.useState('date');
     const [show, setShow] = React.useState(false);
-    const [dateP14, setDateP14] = React.useState(date.addDays(14));
+    const [dateP, setDateP] = React.useState(new Date());
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
     store.dispatch({type:'SERVICECAED',value:barcode});
     
@@ -196,7 +196,23 @@ function ShopStepFour2({navigation}) {
                         />
                     )}
                 <Label> 고객 약속일</Label>
-                <DateView><Label>{dateP14.getFullYear()}년  {dateP14.getMonth()+1}월  {dateP14.getDate()}일</Label></DateView>
+                <TouchableView onPress={showDatepicker}>
+                    <PrView>
+                    <Label>{dateP.getFullYear()}년  {dateP.getMonth()+1}월  {dateP.getDate()}일</Label>
+                    <ImgIcon source={require('../Icons/calendar.png')}/>
+                    </PrView>
+                </TouchableView>
+                
+                    {show && (
+                        <DateTimePicker
+                        testID="dateTimePicker"
+                        value={dateP}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={onChange}
+                        />
+                    )}
 
                 </InfoView>
                 <View style ={{margin:30}}/>

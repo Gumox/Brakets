@@ -68,19 +68,11 @@ const wait = (timeout) => {
 
 function ShopStepThree4({route,navigation}) {
 
-    const uriList=store.getState().photoArr;
-    const indexSort =uriList.sort(function (a,b) {
-        return a.index -b.index;
-    })
-    const keySort = indexSort.sort(function(a,b){
-        return a.key -b.key;
-    })
-    const photoUri=[];
-    indexSort.forEach(obj=> {
-        if(obj.key === 0){
-            photoUri.push(obj);
-        }
-    });
+    const uriList=[];
+    uriList.push(store.getState().photo);
+    uriList.push(store.getState().detailPhoto);
+    
+    
     
     const selectedType = store.getState().selectType[0].value; 
     
@@ -136,27 +128,37 @@ function ShopStepThree4({route,navigation}) {
     //전단계 찍은 사진들 쌓은 부분 ---
     var photoOutput= [];
     var photoAdd;
-    var imageModalsVisiable = []; 
-    for(var i =0; i<photoUri.length;i++){
+    if(store.getState().photoArr.length>0){
+        const addPhotos = store.getState().photoArr;
+        console.log(addPhotos);
+        for (let i = 0; i < addPhotos.length; i++) {
         
-        const img = photoUri[i];
+            uriList.push(addPhotos[i]);
+        }
+        
+    }
+         
+    for(var i =0; i<uriList.length;i++){
+        
+        const img = uriList[i];
+        const index = i;
         var tempPhoto = (
-        <View key={i}>
+        <View key={index}>
             
             <Pressable onPress={() => {
-                navigation.navigate("PhotoControl",{key: 0 ,value: img.value,index:img.index})
+                navigation.navigate("PhotoControl",{value: img,index: index})
                 }}>
-                <Image key = {i} style={{width:90, height:100 ,marginLeft:2}} source={{uri:photoUri[i].value}}/>
+                <Image key = {index} style={{width:90, height:100 ,marginLeft:2}} source={{uri: img}}/>
             </Pressable>
         </View>
         );
         photoOutput[i] = (tempPhoto);
     }
-    if(photoUri.length<5){
+    if(uriList.length<5){
         photoAdd =(
             <ContainImg onPress={()=>{
                     
-                    navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: photoUri.length});
+                    navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: index});
                 
                 }}>
                 <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
@@ -165,17 +167,12 @@ function ShopStepThree4({route,navigation}) {
     // ---
     const [refreshing, setRefreshing] = React.useState(false);
     
-    const OnRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(500).then(() => {setRefreshing(false)
-        
 
-        });
-    }, []);
     var addDataList = [];
     
     React.useEffect(()=>{
         ProductCategoriesClassify();
+
         
         const backAction = () => {
             navigation.goBack();
@@ -198,9 +195,9 @@ function ShopStepThree4({route,navigation}) {
 
     selectedTypeLists[0] = ( store.getState().selectType[0]);
     
-    const [basicSend,setBasicSend] = React.useState(store.getState().basicRepairStore[0].basicSend)
+   
+    const [basicSend,setBasicSend] = React.useState(store.getState().basicRepairStore)
 
-    //const [sendList,setSendList] = React.useState(useListSort[0].sendList);
     return (
         
         <ContainView>
@@ -220,14 +217,11 @@ function ShopStepThree4({route,navigation}) {
                    
                     changeBasicSend(value,0);
                     changeSelectType(value,0);
-                    wait(500).then(() => {
-                        setSendList([]);
-                        
-                        setBasicSend(store.getState().basicRepairStore[0].basicSend);
-
-                        ProductCategoriesClassify();
-                        
-                    });
+                   
+                    setBasicSend(store.getState().basicRepairStore);
+                    setSendList([]);
+                    ProductCategoriesClassify();
+                
                 }
                 }
                 items={itemList}
@@ -250,9 +244,9 @@ function ShopStepThree4({route,navigation}) {
                 
                 style = { {border :'solid', borderWidth : '3', borderColor : 'black' ,placeholder:{color: '#78909c'}} }
                 onValueChange={(value) =>{
-                    store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:[]});
-                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: {key: 0 ,basicSend :value}});
-                    console.log(store.getState().basicRepairStore[0].basicSend);
+                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: value});
+                    console.log(store.getState().basicRepairStore);
+                    setBasicSend(store.getState().basicRepairStore);
                 }}
                 items={sendList}
             />

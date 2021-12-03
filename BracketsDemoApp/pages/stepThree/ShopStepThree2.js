@@ -48,29 +48,12 @@ function ShopStepThree2 ({ navigation ,route}) {
 
   const imageArray =store.getState().photoArr;
 
-  //console.log(imageArray[0]);
   
-  const [imgUri,setImageUri] =React.useState();
-
+  const [imgUri,setImageUri] =React.useState(store.getState().photo);
+  console.log('in shop step 3 -2')
+  
   React.useEffect(()=>{
-    if(route.params === undefined){
-      //console.log("at 3-1")
-      setImageUri(store.getState().photoArr[0]["value"]);
-
-    }else if( route.params.key === "CloseShot"){
-      console.log("CloseShot");
-      var indexUriList = [];
-      console.log(indexUriList);
-      imageArray.forEach(element => {
-        console.log(element);
-        if(element.key == store.getState().indexNumber){
-            indexUriList.push(element);
-            //console.log(indexUriList);
-        }
-      });
-      
-      setImageUri(indexUriList[0]["value"]);
-    }  
+    //setImageUri(store.getState.photo);
   },[]);
 
   
@@ -100,16 +83,34 @@ function ShopStepThree2 ({ navigation ,route}) {
       <TouchableView onPress={ ()=> {
         store.dispatch({type:'PHOTORESET',setPhoto:[]});
         navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}}><StepText>다시 찍기</StepText></TouchableView>
-      <TouchableView onPress={()=> navigation.replace('ShopStepThree3')}><StepText>그리기</StepText></TouchableView>
+      <TouchableView onPress={()=>{ 
+       
+        
+        if(route.params === undefined){
+          navigation.replace('ShopStepThree3')
+        }
+        else if(route.params.toGo=== "PhotoControl"){
+          const params = route.params; 
+          console.log(params);
+          navigation.replace('ShopStepThree3',{index: 0, key: 0, toGo: 'PhotoControl', value: route.params.value});
+        }
+        
+        }}><StepText>그리기</StepText></TouchableView>
       <TouchableView onPress={()=> 
       { 
+        console.log(route.params);
         if(route.params === undefined){
+          
           navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
         }
         else if( route.params.key === "CloseShot"){
           console.log("CloseShot");
-          navigation.replace('TakePhoto', {key :route.params.key,value:route.params.value }); 
+          navigation.replace('TakePhoto', {key :route.params.key,value:route.params.value ,index :route.params.index,toGo:route.params.toGo}); 
         
+        }
+        else if(route.params.toGo=== "PhotoControl"){
+          console.log(route.params);
+          //navigation.replace('PhotoControl', {key :route.params.key,value:route.params.value }); 
         }
       }
       }><StepText>사진 사용</StepText></TouchableView>

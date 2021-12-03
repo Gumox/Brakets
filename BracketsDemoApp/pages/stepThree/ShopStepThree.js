@@ -100,7 +100,7 @@ function ShopStepThree( { navigation } ) {
 
           <CenterText>
               <Oneline>
-                  <BlueText>수선 유형 </BlueText>
+                  <BlueText>제품 구분 </BlueText>
                   <GrayText>선택 후</GrayText>
               </Oneline>
               <Oneline>
@@ -113,7 +113,7 @@ function ShopStepThree( { navigation } ) {
               </Oneline>
           </CenterText>
 
-          <BlackText>수선유형선택</BlackText>
+          <BlackText>제품 구분 선택</BlackText>
           <DropBackground>
           <RNPickerSelect
           placeholder = {{label : '[필수] 옵션을 선택하세요',value: null}}
@@ -121,7 +121,6 @@ function ShopStepThree( { navigation } ) {
           onValueChange={(value) => 
             {setSelect(value)
               store.dispatch({type:"SELECTTYPESET" ,set : []});
-              store.dispatch({type:'RESET_BASIC_REPAIR_STORE',reset:[]});
               console.log("        :"+value);
               
               store.dispatch({type:'RESET_TYPE_STORE',reset:[]});
@@ -133,7 +132,7 @@ function ShopStepThree( { navigation } ) {
                 if(value === obj.category_name){
                   console.log("???????????"+obj.receiver_name);
                   
-                  store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStoreAdd: {key: 0 ,basicSend :obj.receiver_name}});
+                  store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: obj.receiver_name});
                   
                   console.log("+++");
                   console.log(store.getState().basicRepairStore);
