@@ -74,7 +74,6 @@ const receipt = async (req, res) => {
           values = [...values, style]
         }
       }
-      // TODO: 날짜기준 추가
       if (dateType === "all") {
         if (startDate) {
           query += ` AND DATE(receipt.${dateOption}) >= ? `;

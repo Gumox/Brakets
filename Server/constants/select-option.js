@@ -59,11 +59,10 @@ export const DATE_SEARCH_TYPE_OPTIONS = [
     value: "register_date",
     text: "본사접수일",
   },
-  // TODO: DB 에 column 추가 먼저
-  // {
-  //   value: "return_date",
-  //   text: "하자반품일",
-  // },
+  {
+    value: "return_date",
+    text: "하자반품일",
+  },
   {
     value: "due_date",
     text: "고객약속일",
@@ -113,6 +112,61 @@ export const RESULT_TYPE_OPTIONS = [
     text: "판정결과 ALL",
   },
 ];
+
+export const MONTHLY_OPTIONS = [
+  {
+    value: "",
+    text: "ALL",
+  },
+  {
+    value: "1",
+    text: "1",
+  },
+  {
+    value: "2",
+    text: "2",
+  },
+  {
+    value: "3",
+    text: "3",
+  },
+  {
+    value: "4",
+    text: "4",
+  },
+  {
+    value: "5",
+    text: "5",
+  },
+  {
+    value: "6",
+    text: "6",
+  },
+  {
+    value: "7",
+    text: "7",
+  },
+  {
+    value: "8",
+    text: "8",
+  },
+  {
+    value: "9",
+    text: "9",
+  },
+  {
+    value: "10",
+    text: "10",
+  },
+  {
+    value: "11",
+    text: "11",
+  },
+  {
+    value: "12",
+    text: "12",
+  },
+]
 
 /**
  * Temp 
