@@ -9,6 +9,7 @@ const Input = ({
   type = "text",
   value = "",
   onChange = () => {},
+  onKeyPress = () => {},
   styleOptions = {},
   disabled = false,
 }) => {
@@ -22,6 +23,7 @@ const Input = ({
           name={name}
           value={value}
           onChange={onChange}
+          onKeyPress={onKeyPress}
           disabled={disabled}
         />
       </InputBox>

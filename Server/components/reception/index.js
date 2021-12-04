@@ -81,6 +81,7 @@ const Reception = ({ options, user }) => {
           handleSearchButtonClick,
         }}
         handleProductImageClick={openProductImage}
+        handleCodeEnter={searchTargetData}
       />
       <List data={searchList} handleDataClick={searchTargetData} />
       {isProductImageModalOpen && (

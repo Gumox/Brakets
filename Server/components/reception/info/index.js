@@ -17,6 +17,7 @@ const ReceptionInfo = ({
   handleTargetValueChange = () => {},
   handleSearchButtonClick = () => {},
   handleProductImageClick = () => {},
+  handleCodeEnter = () => {},
 }) => {
   return (
     <Wrapper>
@@ -25,6 +26,7 @@ const ReceptionInfo = ({
           options={options}
           data={inputData}
           handleValueChange={handleInputValueChange}
+          handleCodeEnter={handleCodeEnter}
         />
         <FilterInfo
           options={options}

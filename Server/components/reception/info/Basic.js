@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
@@ -7,7 +7,12 @@ import { DEFAULT_OPTION } from "../../../constants/select-option";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
-const BasicInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
+const BasicInfo = ({ options, data = {}, handleValueChange = () => {}, handleCodeEnter = () => {} }) => {
+  const handleKeyPress = useCallback((e) => {
+    if (e.key !== "Enter") return;
+    handleCodeEnter(data["receiptCode"]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
   return (
     <Wrapper>
       <Input
@@ -17,7 +22,7 @@ const BasicInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
         value={process.env.HEADQUARTER_ID}
         onChange={handleValueChange}
         disabled={true}
-        styleOptions={{width: "20px"}}
+        styleOptions={{ width: "20px" }}
       />
       <SelectOption
         title="브랜드:"
@@ -33,8 +38,9 @@ const BasicInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
         type="text"
         value={data["receiptCode"]}
         onChange={handleValueChange}
+        onKeyPress={handleKeyPress}
       />
-      <ScanButton>바코드/QR 스캔</ScanButton>
+      {/* <ScanButton>바코드/QR 스캔</ScanButton> */}
     </Wrapper>
   );
 };
