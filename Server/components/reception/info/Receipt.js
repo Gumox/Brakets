@@ -90,12 +90,15 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Row>
               {!isRepair && (
                 <Field>
-                  <Checkbox title="폐기" />
+                  <Checkbox title="폐기" styleOptions={{ color: COLOR.RED }} />
                 </Field>
               )}
 
               <Field>
-                <Checkbox title="수선미입고" />
+                <Checkbox
+                  title="수선미입고"
+                  styleOptions={{ color: COLOR.RED }}
+                />
               </Field>
             </Row>
           )}
@@ -117,36 +120,80 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <Field>
                 <SelectOption
                   title="수선처지정:"
-                  // name={PRODUCT.SEASON}
+                  name={RECEIPT.REPAIR_PLACE_ID}
                   options={[DEFAULT_OPTION, ...options.repairList]}
-                  // value={data[PRODUCT.SEASON]}
-                  // onChange={handleValueChange}
+                  value={data[RECEIPT.REPAIR_PLACE_ID]}
+                  onChange={handleValueChange}
                   styleOptions={{ maxWidth: "80px" }}
                 />
               </Field>
               <Field>
-                <Input type="date" title="발송일 to R" />
+                <Input
+                  type="date"
+                  title="발송일 to R"
+                  name={RECEIPT.REPAIR_SEND_DATE}
+                  value={
+                    data[RECEIPT.REPAIR_SEND_DATE]
+                      ? moment(data[RECEIPT.REPAIR_SEND_DATE]).format(
+                          "YYYY-MM-DD"
+                        )
+                      : undefined
+                  }
+                  onChange={handleValueChange}
+                />
               </Field>
             </Row>
             <Row>
               <Field>
-                <Input title="생산업체" styleOptions={{ width: "50px" }} />
-                <Input styleOptions={{ width: "70px" }} />
+                <Input
+                  title="생산업체"
+                  name={RECEIPT.MANUFACTURER_CODE}
+                  value={data[RECEIPT.MANUFACTURER_CODE]}
+                  onChange={handleValueChange}
+                  styleOptions={{ width: "50px" }}
+                />
+                <Input
+                  name={RECEIPT.MANUFACTURER_NAME}
+                  value={data[RECEIPT.MANUFACTURER_NAME]}
+                  onChange={handleValueChange}
+                  styleOptions={{ width: "70px" }}
+                />
               </Field>
               <Field>
-                <Input type="date" title="발송일 to M" />
+                <Input
+                  type="date"
+                  title="발송일 to M"
+                  name={RECEIPT.MANUFACTURER_SEND_DATE}
+                  value={
+                    data[RECEIPT.MANUFACTURER_SEND_DATE]
+                      ? moment(data[RECEIPT.MANUFACTURER_SEND_DATE]).format(
+                          "YYYY-MM-DD"
+                        )
+                      : undefined
+                  }
+                  onChange={handleValueChange}
+                />
               </Field>
               <Field>
-                <Input title="대체품" styleOptions={{ width: "70px" }} />
+                <Input
+                  title="대체품"
+                  styleOptions={{ width: "70px", color: COLOR.RED }}
+                />
               </Field>
             </Row>
             <Row>
               <Field>
                 <Checkbox />
-                <Input title="유상수선비" styleOptions={{ width: "70px" }} />
+                <Input
+                  title="유상수선비"
+                  styleOptions={{ width: "70px", color: COLOR.RED }}
+                />
               </Field>
               <Field>
-                <Input title="현금영수증번호" />
+                <Input
+                  title="현금영수증번호"
+                  styleOptions={{ color: COLOR.RED }}
+                />
               </Field>
             </Row>
             {!isRepair && (
@@ -155,40 +202,52 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   <Field>
                     <Input
                       title="고객구매금액"
-                      styleOptions={{ width: "70px" }}
+                      styleOptions={{ width: "70px", color: COLOR.RED }}
                     />
                   </Field>
                   <Field>
-                    <Input title="Tag가:" styleOptions={{ width: "70px" }} />
+                    <Input
+                      title="Tag가:"
+                      styleOptions={{ width: "70px", color: COLOR.RED }}
+                    />
                   </Field>
                   <Field>
                     <SelectOption
                       title="할인율:"
-                      // name={PRODUCT.SEASON}
                       options={OPTIONS}
-                      // value={data[PRODUCT.SEASON]}
-                      // onChange={handleValueChange}
-                      styleOptions={{ maxWidth: "80px" }}
+                      styleOptions={{ maxWidth: "80px", color: COLOR.RED }}
                     />
                   </Field>
                   <Field>
-                    <Input title="실판매가:" styleOptions={{ width: "70px" }} />
+                    <Input
+                      title="실판매가:"
+                      styleOptions={{ width: "70px", color: COLOR.RED }}
+                    />
                   </Field>
                 </Row>
                 <Row>
                   <Field>
                     <SelectOption
                       title="클레임가:"
-                      // name={PRODUCT.SEASON}
                       options={OPTIONS}
-                      // value={data[PRODUCT.SEASON]}
-                      // onChange={handleValueChange}
-                      styleOptions={{ maxWidth: "70px" }}
+                      styleOptions={{ maxWidth: "70px", color: COLOR.RED }}
                     />
-                    <Input styleOptions={{ width: "70px" }} />
+                    <Input styleOptions={{ width: "70px", color: COLOR.RED }} />
                   </Field>
                   <Field>
-                    <Input type="date" title="발송일 to S" />
+                    <Input
+                      type="date"
+                      title="발송일 to S"
+                      name={RECEIPT.STORE_SEND_DATE}
+                      value={
+                        data[RECEIPT.STORE_SEND_DATE]
+                          ? moment(data[RECEIPT.STORE_SEND_DATE]).format(
+                              "YYYY-MM-DD"
+                            )
+                          : undefined
+                      }
+                      onChange={handleValueChange}
+                    />
                   </Field>
                 </Row>
               </>
@@ -212,7 +271,19 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 <ReportButton>파일저장</ReportButton>
               </Field>
               <Field>
-                <Input type="date" title="발송일 to S" />
+                <Input
+                  type="date"
+                  title="발송일 to S"
+                  name={RECEIPT.STORE_SEND_DATE}
+                  value={
+                    data[RECEIPT.STORE_SEND_DATE]
+                      ? moment(data[RECEIPT.STORE_SEND_DATE]).format(
+                          "YYYY-MM-DD"
+                        )
+                      : undefined
+                  }
+                  onChange={handleValueChange}
+                />
               </Field>
             </Row>
           </Section>

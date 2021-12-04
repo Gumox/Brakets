@@ -27,7 +27,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   name={RECEIPT.TYPE}
                   options={RECEIPT_TYPE_OPTIONS}
                   value={data[RECEIPT.TYPE]}
-                  onChange={handleValueChange}
+                  // onChange={handleValueChange}
                   styleOptions={{ width: "100px" }}
                 />
               </Field>
@@ -178,7 +178,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
 const Wrapper = styled.div`
   margin: 0px 5px 5px 15px;
   padding: 7px 7px 20px 7px;
-  border: 2px solid ${COLOR.GRAY};
+  border: 2px solid ${COLOR.RED};
   border-radius: 10px;
 `;
 

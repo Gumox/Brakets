@@ -35,6 +35,7 @@ const Wrapper = styled.div`
 const CustomLabel = styled.div`
   white-space: nowrap;
   font-size: ${({ labelFontSize = "14px" }) => labelFontSize};
+  color: ${({ color = COLOR.BLACK }) => color};
 `;
 
 const CustomInput = styled.input`
