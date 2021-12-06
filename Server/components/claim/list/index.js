@@ -102,6 +102,7 @@ const Wrapper = styled.div`
   height: 50%;
   width: 100%;
   overflow: scroll;
+  border-bottom: 2px solid;
 `;
 
 const Table = styled.table`

@@ -90,9 +90,10 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
 };
 
 const Wrapper = styled.div`
-  height: 50%;
+  height: calc(100% - 110px);
   width: 100%;
   overflow: scroll;
+  border-bottom: 2px solid;
 `;
 
 const Table = styled.table`
