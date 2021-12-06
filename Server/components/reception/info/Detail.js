@@ -115,7 +115,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 />
               </Field>
             </Row>
-            {data.details.map((detail, index) => <Row key={detail[DETAIL.ID]}>
+            {data.details?.map((detail, index) => <Row key={detail[DETAIL.ID]}>
               <Field marginRight="10px">
                 <SelectOption
                   title={`수선내용${index+1}:`}
