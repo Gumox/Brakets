@@ -24,7 +24,6 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
             <TableHeaderCell width="70px">구분</TableHeaderCell>
             <TableHeaderCell width="150px">매장 연락처</TableHeaderCell>
             <TableHeaderCell width="120px">등록일</TableHeaderCell>
-            <TableHeaderCell>고객ID</TableHeaderCell>
             {/* <TableHeaderCell>접수구분</TableHeaderCell> */}
             <TableHeaderCell>고객</TableHeaderCell>
             <TableHeaderCell width="150px">연락처</TableHeaderCell>
@@ -34,11 +33,16 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
             <TableHeaderCell width="70px">컬러</TableHeaderCell>
             <TableHeaderCell width="70px">사이즈</TableHeaderCell>
             <TableHeaderCell>판매가</TableHeaderCell>
+            <TableHeaderCell>매장 처리여부</TableHeaderCell>
+            <TableHeaderCell>클레임가 구분</TableHeaderCell>
+            <TableHeaderCell>클레임가</TableHeaderCell>
+            <TableHeaderCell>업체처리여부</TableHeaderCell>
+            <TableHeaderCell>클레임 업체</TableHeaderCell>
+            <TableHeaderCell>업체코드</TableHeaderCell>
+            <TableHeaderCell width="120px">업체코드(유통)</TableHeaderCell>
+            <TableHeaderCell>고객ID</TableHeaderCell>
             <TableHeaderCell>고객요구</TableHeaderCell>
             <TableHeaderCell width="150px">접수내용</TableHeaderCell>
-            <TableHeaderCell>과실구분</TableHeaderCell>
-            <TableHeaderCell width="120px">약속일</TableHeaderCell>
-            <TableHeaderCell width="120px">본사접수일</TableHeaderCell>
             <TableHeaderCell>내용분석</TableHeaderCell>
             <TableHeaderCell>판정결과</TableHeaderCell>
           </tr>
@@ -63,7 +67,6 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
                   ? moment(receipt[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD")
                   : ""}
               </TableData>
-              <TableData>{receipt[CUSTOMER.ID]}</TableData>
               {/* <TableData>
                 {RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]]}
               </TableData> */}
@@ -75,19 +78,16 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
               <TableData width="70px">{receipt[PRODUCT.COLOR]}</TableData>
               <TableData width="70px">{receipt[PRODUCT.SIZE]}</TableData>
               <TableData>{receipt[PRODUCT.PRICE]}</TableData>
+              <TableData></TableData>
+              <TableData></TableData>
+              <TableData></TableData>
+              <TableData></TableData>
+              <TableData></TableData>
+              <TableData></TableData>
+              <TableData width="120px"></TableData>
+              <TableData>{receipt[CUSTOMER.ID]}</TableData>
               <TableData>{RECEIPT_TYPE[receipt[RECEIPT.TYPE]]}</TableData>
               <TableData width="150px"></TableData>
-              <TableData>{receipt[RECEIPT.FAULT_NAME]}</TableData>
-              <TableData width="120px">
-                {receipt[RECEIPT.DUE_DATE]
-                  ? moment(receipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
-                  : ""}
-              </TableData>
-              <TableData width="120px">
-                {receipt[RECEIPT.REGISTER_DATE]
-                  ? moment(receipt[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
-                  : ""}
-              </TableData>
               <TableData>{receipt[RECEIPT.ANALYSIS_NAME]}</TableData>
               <TableData>{receipt[RECEIPT.RESULT_NAME]}</TableData>
             </TableRow>

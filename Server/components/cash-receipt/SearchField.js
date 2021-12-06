@@ -34,11 +34,12 @@ const SearchField = ({
             options={options.storeList}
             value={data["storeName"]}
             onChange={handleValueChange}
+            styleOptions={{ width: "200px", maxWidth: "200px" }}
           />
         </Field>
         <Field>
           <Input
-            title="하자반품일"
+            title="발송일 to S"
             type="date"
             name="startDate"
             styleOptions={{ padding: "1px 0px" }}

@@ -2,19 +2,18 @@ import React from "react";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
-import Header from '../../components/Header'
-import Return from '../../components/return'
+import Header from "../../components/Header";
+import Return from "../../components/return";
 
 const ReturnPage = (props) => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <>
-      <Header path={router.pathname}/>
-      <Return {...props}/>
-      </>
+      <Header path={router.pathname} />
+      <Return {...props} />
+    </>
   );
 };
-
 
 export const getServerSideProps = async (ctx) => {
   const {
@@ -38,13 +37,15 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  const stores = await axios.get(`${process.env.API_URL}/store/1`).then(({ data }) => data)
+  const stores = await axios
+    .get(`${process.env.API_URL}/store/1`)
+    .then(({ data }) => data);
 
   return {
     props: {
       user,
       options: {
-        storeList: stores? stores.data : [],
+        storeList: stores ? stores.data : [],
       },
     },
   };

@@ -38,7 +38,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   title="제품구분:"
                   name={DETAIL.PRODUCT_CATEGORY_ID}
                   options={options.productCategoryList}
-                  value={data[DETAIL.PRODUCT_CATEGORY_ID]}
+                  value={data[DETAIL.PRODUCT_CATEGORY_ID] } // details last index pcategory_id
                   // onChange={handleValueChange}
                   styleOptions={{ width: "100px" }}
                 />
@@ -50,7 +50,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   title="수선처:"
                   name={DETAIL.REPAIR_PLACE}
                   options={options.repairList}
-                  value={data[DETAIL.REPAIR_PLACE]}
+                  value={data[DETAIL.REPAIR_PLACE]} // details last index receiver
                   // onChange={handleValueChange}
                   styleOptions={{ width: "100px" }}
                 />
@@ -61,7 +61,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Row alignItems="flex-start">
               <TextArea
                 title="매장접수내용:"
-                styleOptions={{ width: "390px", height: "50px" }}
+                styleOptions={{ width: "390px", height: "50px" }} // details first index message
               />
               <ImageButton>사진보기</ImageButton>
             </Row>

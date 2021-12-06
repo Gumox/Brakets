@@ -5,7 +5,7 @@ import axios from "axios";
 import Content from "../Content";
 import Modal from "../Modal";
 import SearchField from "./SearchField";
-import List from "./list"
+import List from "./list";
 
 const Return = ({ options, user }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
@@ -50,7 +50,15 @@ const Return = ({ options, user }) => {
   );
   const handleSearchButtonClick = useCallback(() => {
     axios
-      .get("/api/receipt", { params: {...inputData, dateType: inputData["isMonthly"]? "month": "all", dateOption: 'return_date', resultId: 4} })
+      .get("/api/receipt", {
+        params: {
+          ...inputData,
+          dateType: inputData["isMonthly"] ? "month" : "all",
+          dateOption: "complete_date",
+          hasCharged: true,
+          hasCashReceipt: true,
+        },
+      })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
   const searchTargetData = useCallback((receiptCode) => {
@@ -69,7 +77,7 @@ const Return = ({ options, user }) => {
         handleValueChange={handleInputValueChange}
         handleSearchButtonClick={handleSearchButtonClick}
       />
-      <List data={searchList}/>
+      <List data={searchList} />
     </Content>
   );
 };

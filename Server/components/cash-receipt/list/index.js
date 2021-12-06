@@ -4,12 +4,7 @@ import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
-import {
-  STORE_TYPE,
-  RECEIPT_CATEGORY_TYPE,
-  RECEIPT_TYPE,
-} from "../../../constants/type";
-import Checkbox from "../../Checkbox";
+import { STORE_TYPE, RECEIPT_CATEGORY_TYPE, RECEIPT_TYPE } from "../../../constants/type";
 
 const ReturnList = ({ data, handleDataClick = () => {} }) => {
   return (
@@ -17,8 +12,8 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
       <Table>
         <TableHeader>
           <tr>
-            <TableHeaderCell width="40px">선택</TableHeaderCell>
             <TableHeaderCell>No.</TableHeaderCell>
+            <TableHeaderCell width="120px">현금영수증 번호</TableHeaderCell>
             <TableHeaderCell>Shop</TableHeaderCell>
             <TableHeaderCell width="150px">매장명</TableHeaderCell>
             <TableHeaderCell width="70px">구분</TableHeaderCell>
@@ -45,18 +40,16 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
         </TableHeader>
         <tbody>
           {data.map((receipt) => (
-            <TableRow key={receipt[RECEIPT.ID]}>
-              <TableData width="40px">
-                <Checkbox value={receipt[RECEIPT.ID]} />
-              </TableData>
+            <TableRow
+              key={receipt[RECEIPT.ID]}
+            >
               <TableData>{receipt[RECEIPT.CODE]}</TableData>
+              <TableData width="120px">{receipt[RECEIPT.CASHRECEIPT_NUM]}</TableData>
               <TableData>{receipt[STORE.ID]}</TableData>
               <TableData title={receipt[STORE.NAME]} width="200px">
                 {receipt[STORE.NAME]}
               </TableData>
-              <TableData width="70px">
-                {STORE_TYPE[receipt[STORE.TYPE]]}
-              </TableData>
+              <TableData width="70px">{STORE_TYPE[receipt[STORE.TYPE]]}</TableData>
               <TableData width="150px">{receipt[STORE.CONTACT]}</TableData>
               <TableData width="120px">
                 {receipt[RECEIPT.RECEIPT_DATE]
@@ -64,9 +57,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
                   : ""}
               </TableData>
               <TableData>{receipt[CUSTOMER.ID]}</TableData>
-              {/* <TableData>
-                {RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]]}
-              </TableData> */}
+              {/* <TableData>{RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]]}</TableData> */}
               <TableData>{receipt[CUSTOMER.NAME]}</TableData>
               <TableData width="150px">{receipt[CUSTOMER.CONTACT]}</TableData>
               <TableData width="70px">{receipt[PRODUCT.SEASON]}</TableData>

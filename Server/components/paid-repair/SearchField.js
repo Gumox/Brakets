@@ -38,7 +38,7 @@ const SearchField = ({
         </Field>
         <Field>
           <Input
-            title="하자반품일"
+            title="발송일 to S"
             type="date"
             name="startDate"
             styleOptions={{ padding: "1px 0px" }}

@@ -21,25 +21,26 @@ const Checkbox = ({
         checked={checked}
         onChange={onChange}
       />
-      <CustomLabel {...styleOptions}>{title}</CustomLabel>
+      {title && <CustomLabel {...styleOptions}>{title}</CustomLabel>}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 
 const CustomLabel = styled.div`
+  margin-left: 5px;
   white-space: nowrap;
   font-size: ${({ labelFontSize = "14px" }) => labelFontSize};
   color: ${({ color = COLOR.BLACK }) => color};
 `;
 
 const CustomInput = styled.input`
-  margin-right: 5px;
+  // margin-right: 5px;
 `;
 
 export default Checkbox;

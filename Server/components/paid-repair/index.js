@@ -50,7 +50,7 @@ const Return = ({ options, user }) => {
   );
   const handleSearchButtonClick = useCallback(() => {
     axios
-      .get("/api/receipt", { params: {...inputData, dateType: inputData["isMonthly"]? "month": "all", dateOption: 'return_date', resultId: 4} })
+      .get("/api/receipt", { params: {...inputData, dateType: inputData["isMonthly"]? "month": "all", dateOption: 'complete_date', hasCharged: true} })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
   const searchTargetData = useCallback((receiptCode) => {
