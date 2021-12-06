@@ -115,7 +115,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 />
               </Field>
             </Row>
-            {new Array(3).fill(0).map((_, index) => <Row key={index}>
+            {data.details.map((detail, index) => <Row key={detail[DETAIL.ID]}>
               <Field marginRight="10px">
                 <SelectOption
                   title={`수선내용${index+1}:`}
@@ -131,9 +131,9 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <Field marginRight="10px">
                 <Input
                   title={`수선비${index+1}`}
-                  styleOptions={{ width: "70px" }}
                   name={DETAIL.CHARGE}
-                  value={data[DETAIL.CHARGE]}
+                  value={detail[DETAIL.CHARGE]}
+                  styleOptions={{ width: "70px" }}
                 />
               </Field>
               <Field marginRight="0px">

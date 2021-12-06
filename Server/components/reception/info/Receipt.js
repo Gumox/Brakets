@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -11,7 +11,12 @@ import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
 
-const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
+const ReceiptInfo = ({
+  options,
+  data = {},
+  handleValueChange = () => {},
+  handleCheckboxChange = () => {},
+}) => {
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
 
@@ -107,7 +112,7 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
           <TextArea
             title="본사설명:"
             name={RECEIPT.MESSAGE}
-            value={data[RECEIPT.MESSAGE]}
+            value={data[RECEIPT.MESSAGE] || ""}
             onChange={handleValueChange}
             styleOptions={{ width: "400px" }}
           />
@@ -148,13 +153,13 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 <Input
                   title="생산업체"
                   name={RECEIPT.MANUFACTURER_CODE}
-                  value={data[RECEIPT.MANUFACTURER_CODE]}
+                  value={data[RECEIPT.MANUFACTURER_CODE] || ""}
                   onChange={handleValueChange}
                   styleOptions={{ width: "50px" }}
                 />
                 <Input
                   name={RECEIPT.MANUFACTURER_NAME}
-                  value={data[RECEIPT.MANUFACTURER_NAME]}
+                  value={data[RECEIPT.MANUFACTURER_NAME] || ""}
                   onChange={handleValueChange}
                   styleOptions={{ width: "70px" }}
                 />
@@ -183,75 +188,89 @@ const ReceiptInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             </Row>
             <Row>
               <Field>
-                <Checkbox />
+                <Checkbox
+                  name={RECEIPT.FREECHARGE}
+                  value={parseInt(data[RECEIPT.FREECHARGE]) === 0 ? 1 : 0}
+                  checked={parseInt(data[RECEIPT.FREECHARGE]) === 0}
+                  onChange={handleValueChange}
+                />
                 <Input
                   title="유상수선비"
-                  styleOptions={{ width: "70px", color: COLOR.RED }}
+                  name={RECEIPT.CHARGE}
+                  value={data[RECEIPT.CHARGE]}
+                  onChange={handleValueChange}
+                  styleOptions={{ width: "70px" }}
+                  disabled={parseInt(data[RECEIPT.FREECHARGE]) !== 0}
                 />
               </Field>
               <Field>
                 <Input
                   title="현금영수증번호"
-                  styleOptions={{ color: COLOR.RED }}
+                  name={RECEIPT.CASHRECEIPT_NUM}
+                  value={data[RECEIPT.CASHRECEIPT_NUM] || ""}
+                  onChange={handleValueChange}
+                  disabled={parseInt(data[RECEIPT.FREECHARGE]) !== 0}
                 />
               </Field>
             </Row>
             {!isRepair && (
-              <>
-                <Row>
-                  <Field>
-                    <Input
-                      title="고객구매금액"
-                      styleOptions={{ width: "70px", color: COLOR.RED }}
-                    />
-                  </Field>
-                  <Field>
-                    <Input
-                      title="Tag가:"
-                      styleOptions={{ width: "70px", color: COLOR.RED }}
-                    />
-                  </Field>
-                  <Field>
-                    <SelectOption
-                      title="할인율:"
-                      options={OPTIONS}
-                      styleOptions={{ maxWidth: "80px", color: COLOR.RED }}
-                    />
-                  </Field>
-                  <Field>
-                    <Input
-                      title="실판매가:"
-                      styleOptions={{ width: "70px", color: COLOR.RED }}
-                    />
-                  </Field>
-                </Row>
-                <Row>
-                  <Field>
-                    <SelectOption
-                      title="클레임가:"
-                      options={OPTIONS}
-                      styleOptions={{ maxWidth: "70px", color: COLOR.RED }}
-                    />
-                    <Input styleOptions={{ width: "70px", color: COLOR.RED }} />
-                  </Field>
-                  <Field>
-                    <Input
-                      type="date"
-                      title="발송일 to S"
-                      name={RECEIPT.STORE_SEND_DATE}
-                      value={
-                        data[RECEIPT.STORE_SEND_DATE]
-                          ? moment(data[RECEIPT.STORE_SEND_DATE]).format(
-                              "YYYY-MM-DD"
-                            )
-                          : undefined
-                      }
-                      onChange={handleValueChange}
-                    />
-                  </Field>
-                </Row>
-              </>
+              <Row>
+                <Field>
+                  <Input
+                    title="고객구매금액"
+                    styleOptions={{ width: "70px", color: COLOR.RED }}
+                  />
+                </Field>
+                <Field>
+                  <Input
+                    title="Tag가:"
+                    styleOptions={{ width: "70px", color: COLOR.RED }}
+                  />
+                </Field>
+                <Field>
+                  <SelectOption
+                    title="할인율:"
+                    options={OPTIONS}
+                    styleOptions={{ maxWidth: "80px", color: COLOR.RED }}
+                  />
+                </Field>
+                <Field>
+                  <Input
+                    title="실판매가:"
+                    styleOptions={{ width: "70px", color: COLOR.RED }}
+                  />
+                </Field>
+              </Row>
             )}
+
+            <Row>
+              {!isRepair && (
+                <Field>
+                  <SelectOption
+                    title="클레임가:"
+                    options={OPTIONS}
+                    styleOptions={{ maxWidth: "70px", color: COLOR.RED }}
+                  />
+                  <Input styleOptions={{ width: "70px", color: COLOR.RED }} />
+                </Field>
+              )}
+              {isRepair && <Field marginRight="400px" />}
+              <Field marginRight="0px">
+                <Input
+                  type="date"
+                  title="발송일 to S"
+                  name={RECEIPT.STORE_SEND_DATE}
+                  value={
+                    data[RECEIPT.STORE_SEND_DATE]
+                      ? moment(data[RECEIPT.STORE_SEND_DATE]).format(
+                          "YYYY-MM-DD"
+                        )
+                      : undefined
+                  }
+                  onChange={handleValueChange}
+                />
+              </Field>
+            </Row>
           </Section>
         )}
         {isReview && (

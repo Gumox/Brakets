@@ -8,7 +8,7 @@ import Content from "../Content";
 import Modal from "../Modal";
 import Info from "./info";
 import List from "./list";
-import { PRODUCT } from "../../constants/field";
+import { PRODUCT, RECEIPT } from "../../constants/field";
 
 const Reception = ({ options, user }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
@@ -44,6 +44,7 @@ const Reception = ({ options, user }) => {
   );
   const handleTargetCheckboxChange = useCallback(
     (e) => {
+      console.log(e.target)
       setTargetData({ ...targetData, [e.target.name]: e.target.checked });
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
@@ -64,7 +65,7 @@ const Reception = ({ options, user }) => {
   const searchTargetData = useCallback((receiptCode) => {
     axios
       .get(`/api/receipt/${receiptCode}`)
-      .then((response) => setTargetData(response.data.data));
+      .then((response) => setTargetData({...response.data.data}));
   }, []);
 
   useEffect(() => console.log(targetData), [targetData]);
@@ -78,6 +79,7 @@ const Reception = ({ options, user }) => {
           handleInputCheckboxChange,
           handleInputValueChange,
           handleTargetValueChange,
+          handleTargetCheckboxChange,
           handleSearchButtonClick,
         }}
         handleProductImageClick={openProductImage}

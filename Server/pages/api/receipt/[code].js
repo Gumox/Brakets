@@ -27,7 +27,10 @@ async function getReceipt(code) {
                     product.image AS product_image,
                     product.release_date AS product_release_date,
                     customer.name AS customer_name,
-                    customer.phone AS customer_phone
+                    customer.phone AS customer_phone,
+                    receipt.freecharge AS freecharge,
+                    receipt.charge AS charge,
+                    receipt.cashreceipt_num AS cashreceipt_num
               FROM receipt 
               JOIN product ON receipt.product_id = product.product_id 
               JOIN customer ON receipt.customer_id = customer.customer_id 

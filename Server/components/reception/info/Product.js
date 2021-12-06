@@ -24,7 +24,7 @@ const ProducInfo = ({
                 title="시즌:"
                 name={PRODUCT.SEASON}
                 options={options.seasonList}
-                value={data[PRODUCT.SEASON]}
+                value={data[PRODUCT.SEASON] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -33,7 +33,7 @@ const ProducInfo = ({
                 title="스타일:"
                 name={PRODUCT.STYLE}
                 styleOptions={{ width: "80px" }}
-                value={data[PRODUCT.STYLE]}
+                value={data[PRODUCT.STYLE] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -42,7 +42,7 @@ const ProducInfo = ({
                 title="차수:"
                 name={PRODUCT.DEGREE}
                 styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.DEGREE]}
+                value={data[PRODUCT.DEGREE] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -51,7 +51,7 @@ const ProducInfo = ({
                 title="컬러:"
                 name={PRODUCT.COLOR}
                 styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.COLOR]}
+                value={data[PRODUCT.COLOR] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -60,7 +60,7 @@ const ProducInfo = ({
                 title="사이즈:"
                 name={PRODUCT.SIZE}
                 styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.SIZE]}
+                value={data[PRODUCT.SIZE] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -71,7 +71,7 @@ const ProducInfo = ({
                 title="RFID코드"
                 name={PRODUCT.RFID}
                 styleOptions={{ width: "100px" }}
-                value={data[PRODUCT.RFID]}
+                value={data[PRODUCT.RFID] || "" }
                 onChange={handleValueChange}
                 disabled={true}
               />

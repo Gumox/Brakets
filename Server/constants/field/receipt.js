@@ -14,6 +14,8 @@ const FIELD = {
     RESULT_NAME: 'result_name', // 판정결과
     SUBSTITUE: 'substitute', // 상품대체
     MESSAGE: 'receipt_message', // 본사설명
+    FREECHARGE: 'freecharge', // 유상 | 무상
+    CHARGE: 'charge', // 비용
     CASHRECEIPT_NUM: 'cashreceipt_num', // 현금영수증 번호
     STORE_SEND_DATE: 'complete_date', // 발송일 to S(store)
 
