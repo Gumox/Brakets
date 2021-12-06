@@ -168,6 +168,21 @@ export const MONTHLY_OPTIONS = [
   },
 ]
 
+const createYearList = (back) => {
+  const year = new Date().getFullYear();
+  return Array.from({ length: back }, (v, i) => ({
+    value: year - i,
+    text: year - i,
+  }));
+};
+export const YEARLY_OPTIONS = [
+  {
+    value: "",
+    text: "ALL",
+  },
+  ...createYearList(5),
+]
+
 /**
  * Temp 
  */

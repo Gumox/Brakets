@@ -7,6 +7,7 @@ async function getReceipt(code) {
                     receipt.category AS receipt_category,
                     receipt.receipt_date AS receipt_date,
                     receipt.register_date AS register_date,
+                    receipt.complete_date AS complete_date,
                     receipt.due_date AS due_date,
                     receipt.store_id AS store_id,
                     receipt.customer_id AS customer_id,
