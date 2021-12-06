@@ -29,7 +29,12 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
             <TableHeaderCell width="70px">사이즈</TableHeaderCell>
             <TableHeaderCell>판매가</TableHeaderCell>
             <TableHeaderCell>고객요구</TableHeaderCell>
-            <TableHeaderCell width="150px"></TableHeaderCell>
+            <TableHeaderCell width="150px">접수내용</TableHeaderCell>
+            <TableHeaderCell>과실구분</TableHeaderCell>
+            <TableHeaderCell width="120px">약속일</TableHeaderCell>
+            <TableHeaderCell width="120px">본사접수일</TableHeaderCell>
+            <TableHeaderCell>내용분석</TableHeaderCell>
+            <TableHeaderCell>판정결과</TableHeaderCell>
           </tr>
         </TableHeader>
         <tbody>
@@ -62,6 +67,19 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
               <TableData>{receipt[PRODUCT.PRICE]}</TableData>
               <TableData>{RECEIPT_TYPE[receipt[RECEIPT.TYPE]]}</TableData>
               <TableData width="150px"></TableData>
+              <TableData>{receipt[RECEIPT.FAULT_NAME]}</TableData>
+              <TableData width="120px">
+                {receipt[RECEIPT.DUE_DATE]
+                  ? moment(receipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
+                  : ""}
+              </TableData>
+              <TableData width="120px">
+                {receipt[RECEIPT.REGISTER_DATE]
+                  ? moment(receipt[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
+                  : ""}
+              </TableData>
+              <TableData>{receipt[RECEIPT.ANALYSIS_NAME]}</TableData>
+              <TableData>{receipt[RECEIPT.RESULT_NAME]}</TableData>
             </TableRow>
           ))}
         </tbody>
