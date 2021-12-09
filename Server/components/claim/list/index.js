@@ -33,8 +33,8 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
             <TableHeaderCell width="70px">컬러</TableHeaderCell>
             <TableHeaderCell width="70px">사이즈</TableHeaderCell>
             <TableHeaderCell>판매가</TableHeaderCell>
-            <TableHeaderCell>매장 처리여부</TableHeaderCell>
-            <TableHeaderCell>클레임가 구분</TableHeaderCell>
+            <TableHeaderCell width="120px">매장 처리여부</TableHeaderCell>
+            <TableHeaderCell width="120px">클레임가 구분</TableHeaderCell>
             <TableHeaderCell>클레임가</TableHeaderCell>
             <TableHeaderCell>업체처리여부</TableHeaderCell>
             <TableHeaderCell>클레임 업체</TableHeaderCell>
@@ -78,8 +78,8 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
               <TableData width="70px">{receipt[PRODUCT.COLOR]}</TableData>
               <TableData width="70px">{receipt[PRODUCT.SIZE]}</TableData>
               <TableData>{receipt[PRODUCT.PRICE]}</TableData>
-              <TableData></TableData>
-              <TableData></TableData>
+              <TableData width="120px"></TableData>
+              <TableData width="120px"></TableData>
               <TableData></TableData>
               <TableData></TableData>
               <TableData></TableData>
