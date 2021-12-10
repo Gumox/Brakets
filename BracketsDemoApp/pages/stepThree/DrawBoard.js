@@ -104,7 +104,7 @@ export default class DrawBoard extends Component {
                 onSaveSketch={this.onSketchSave.bind(this)}
                 />
  
-                <View style={{ flexDirection: 'row', backgroundColor: '#000',marginTop:10}}>
+                <View style={{ flexDirection: 'row', backgroundColor: '#000',marginTop:10 , height : '10%'}}>
                     <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center', paddingVertical:20 }} onPress={() => { this.refs.sketchRef.clearSketch() }}>
                         <Text style={{color:'#fff',fontWeight:'600'}}>CLEAR</Text>
                     </TouchableHighlight>

@@ -25,7 +25,7 @@ export default function ShopStepThree3 ({navigation ,route}) {
     console.log("");
     console.log("");
     console.log("");
-    
+
     var imageUri = store.getState().photo;
 
     /*const imageArray =store.getState().photoArr;
@@ -95,6 +95,7 @@ export default function ShopStepThree3 ({navigation ,route}) {
             </View>
             <DrawBoard localSourceImagePath = {imagePath}  navigation={navigation}>{color}{params}</DrawBoard>
             </ImageBackground>
+            
         
         </View>
     )
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
 image: {
     flex:1,
     width: "100%",
-    height:"100%",
+    height:"90%",
     justifyContent: "center",
     alignItems: 'center',
     
