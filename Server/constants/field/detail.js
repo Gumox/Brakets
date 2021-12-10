@@ -5,7 +5,7 @@ const FIELD = {
     SEND_DATE: 'send_date', // 수선처발송일
     MESSAGE: 'message', // 추가요청사항
     CHARGE: 'charge', // 수선비
-    REPAIR_PLACE: 'receiver',
+    REPAIR_PLACE: 'receiver', // 수선처
 }
 
 export default FIELD;

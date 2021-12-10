@@ -9,12 +9,13 @@ const Input = ({
   type = "text",
   value = "",
   onChange = () => {},
+  onKeyPress = () => {},
   styleOptions = {},
   disabled = false,
 }) => {
   return (
     <Wrapper>
-      <CustomLabel disabled={disabled}>{title}</CustomLabel>
+      <CustomLabel {...styleOptions} disabled={disabled}>{title}</CustomLabel>
       <InputBox {...styleOptions} disabled={disabled}>
         <CustomInput
           {...styleOptions}
@@ -22,6 +23,7 @@ const Input = ({
           name={name}
           value={value}
           onChange={onChange}
+          onKeyPress={onKeyPress}
           disabled={disabled}
         />
       </InputBox>
@@ -39,7 +41,8 @@ const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: 5px;
   font-size: ${({ labelFontSize = "15px" }) => labelFontSize};
-  color: ${({ disabled }) => (disabled ? COLOR.GRAY : COLOR.BLACK)};
+  color: ${({ disabled, color }) =>
+    color ? color : disabled ? COLOR.GRAY : COLOR.BLACK};
 `;
 
 const CustomInput = styled.input`

@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
+import { getThisSeason, getCurrentSeasons } from "../../utils/season";
 import { SEASON_OPTIONS } from "../../constants/select-option";
 
 import Header from "../../components/Header";
@@ -39,7 +40,6 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-
   const [brands, stores, productCategories, repairs, producers, faults, analysis, results] =
     await Promise.all([
       axios.get(`${process.env.API_URL}/brand`).then(({ data }) => data), // 브랜드

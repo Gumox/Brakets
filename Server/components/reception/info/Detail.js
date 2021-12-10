@@ -27,7 +27,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   name={RECEIPT.TYPE}
                   options={RECEIPT_TYPE_OPTIONS}
                   value={data[RECEIPT.TYPE]}
-                  onChange={handleValueChange}
+                  // onChange={handleValueChange}
                   styleOptions={{ width: "100px" }}
                 />
               </Field>
@@ -38,7 +38,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   title="제품구분:"
                   name={DETAIL.PRODUCT_CATEGORY_ID}
                   options={options.productCategoryList}
-                  value={data[DETAIL.PRODUCT_CATEGORY_ID]}
+                  value={data[DETAIL.PRODUCT_CATEGORY_ID] } // details last index pcategory_id
                   // onChange={handleValueChange}
                   styleOptions={{ width: "100px" }}
                 />
@@ -50,7 +50,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   title="수선처:"
                   name={DETAIL.REPAIR_PLACE}
                   options={options.repairList}
-                  value={data[DETAIL.REPAIR_PLACE]}
+                  value={data[DETAIL.REPAIR_PLACE]} // details last index receiver
                   // onChange={handleValueChange}
                   styleOptions={{ width: "100px" }}
                 />
@@ -61,7 +61,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Row alignItems="flex-start">
               <TextArea
                 title="매장접수내용:"
-                styleOptions={{ width: "390px", height: "50px" }}
+                styleOptions={{ width: "390px", height: "50px" }} // details first index message
               />
               <ImageButton>사진보기</ImageButton>
             </Row>
@@ -115,7 +115,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 />
               </Field>
             </Row>
-            {new Array(3).fill(0).map((_, index) => <Row key={index}>
+            {data.details?.map((detail, index) => <Row key={detail[DETAIL.ID]}>
               <Field marginRight="10px">
                 <SelectOption
                   title={`수선내용${index+1}:`}
@@ -131,9 +131,9 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <Field marginRight="10px">
                 <Input
                   title={`수선비${index+1}`}
-                  styleOptions={{ width: "70px" }}
                   name={DETAIL.CHARGE}
-                  value={data[DETAIL.CHARGE]}
+                  value={detail[DETAIL.CHARGE]}
+                  styleOptions={{ width: "70px" }}
                 />
               </Field>
               <Field marginRight="0px">
@@ -178,7 +178,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
 const Wrapper = styled.div`
   margin: 0px 5px 5px 15px;
   padding: 7px 7px 20px 7px;
-  border: 2px solid ${COLOR.GRAY};
+  border: 2px solid ${COLOR.RED};
   border-radius: 10px;
 `;
 

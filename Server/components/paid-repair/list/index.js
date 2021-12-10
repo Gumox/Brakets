@@ -4,14 +4,20 @@ import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
-import { STORE_TYPE, RECEIPT_CATEGORY_TYPE, RECEIPT_TYPE } from "../../../constants/type";
+import {
+  STORE_TYPE,
+  RECEIPT_CATEGORY_TYPE,
+  RECEIPT_TYPE,
+} from "../../../constants/type";
+import Checkbox from "../../Checkbox";
 
-const ReceptionList = ({ data, handleDataClick = () => {} }) => {
+const ReturnList = ({ data, handleDataClick = () => {} }) => {
   return (
     <Wrapper>
       <Table>
         <TableHeader>
           <tr>
+            <TableHeaderCell width="40px">선택</TableHeaderCell>
             <TableHeaderCell>No.</TableHeaderCell>
             <TableHeaderCell>Shop</TableHeaderCell>
             <TableHeaderCell width="150px">매장명</TableHeaderCell>
@@ -19,12 +25,12 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
             <TableHeaderCell width="150px">매장 연락처</TableHeaderCell>
             <TableHeaderCell width="120px">등록일</TableHeaderCell>
             <TableHeaderCell>고객ID</TableHeaderCell>
-            <TableHeaderCell>접수구분</TableHeaderCell>
+            {/* <TableHeaderCell>접수구분</TableHeaderCell> */}
             <TableHeaderCell>고객</TableHeaderCell>
             <TableHeaderCell width="150px">연락처</TableHeaderCell>
             <TableHeaderCell width="70px">시즌</TableHeaderCell>
             <TableHeaderCell>스타일</TableHeaderCell>
-            <TableHeaderCell width="70px">차수</TableHeaderCell>
+            {/* <TableHeaderCell width="70px">차수</TableHeaderCell> */}
             <TableHeaderCell width="70px">컬러</TableHeaderCell>
             <TableHeaderCell width="70px">사이즈</TableHeaderCell>
             <TableHeaderCell>판매가</TableHeaderCell>
@@ -39,16 +45,18 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
         </TableHeader>
         <tbody>
           {data.map((receipt) => (
-            <TableRow
-              key={receipt[RECEIPT.ID]}
-              onClick={() => handleDataClick(receipt[RECEIPT.CODE])}
-            >
+            <TableRow key={receipt[RECEIPT.ID]}>
+              <TableData width="40px">
+                <Checkbox value={receipt[RECEIPT.ID]} />
+              </TableData>
               <TableData>{receipt[RECEIPT.CODE]}</TableData>
               <TableData>{receipt[STORE.ID]}</TableData>
               <TableData title={receipt[STORE.NAME]} width="200px">
                 {receipt[STORE.NAME]}
               </TableData>
-              <TableData width="70px">{STORE_TYPE[receipt[STORE.TYPE]]}</TableData>
+              <TableData width="70px">
+                {STORE_TYPE[receipt[STORE.TYPE]]}
+              </TableData>
               <TableData width="150px">{receipt[STORE.CONTACT]}</TableData>
               <TableData width="120px">
                 {receipt[RECEIPT.RECEIPT_DATE]
@@ -56,12 +64,14 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
                   : ""}
               </TableData>
               <TableData>{receipt[CUSTOMER.ID]}</TableData>
-              <TableData>{RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]]}</TableData>
+              {/* <TableData>
+                {RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]]}
+              </TableData> */}
               <TableData>{receipt[CUSTOMER.NAME]}</TableData>
               <TableData width="150px">{receipt[CUSTOMER.CONTACT]}</TableData>
               <TableData width="70px">{receipt[PRODUCT.SEASON]}</TableData>
               <TableData>{receipt[PRODUCT.STYLE]}</TableData>
-              <TableData width="70px">{receipt[PRODUCT.DEGREE]}</TableData>
+              {/* <TableData width="70px">{receipt[PRODUCT.DEGREE]}</TableData> */}
               <TableData width="70px">{receipt[PRODUCT.COLOR]}</TableData>
               <TableData width="70px">{receipt[PRODUCT.SIZE]}</TableData>
               <TableData>{receipt[PRODUCT.PRICE]}</TableData>
@@ -89,13 +99,10 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
 };
 
 const Wrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 35%;
+  height: 50%;
   width: 100%;
   overflow: scroll;
+  border-bottom: 2px solid;
 `;
 
 const Table = styled.table`
@@ -115,10 +122,6 @@ const TableHeaderCell = styled.th`
 
 const TableRow = styled.tr`
   cursor: pointer;
-
-  &:hover {
-    background-color: ${COLOR.CYAN_BLUE};
-  }
 `;
 
 const TableData = styled.td`
@@ -132,4 +135,4 @@ const TableData = styled.td`
   white-space: nowrap;
 `;
 
-export default ReceptionList;
+export default ReturnList;

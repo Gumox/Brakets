@@ -3,7 +3,6 @@ import excuteQuery from "../db";
 
 async function getReceipt(query, values) {
   const result = await excuteQuery({
-    // No. Shop 매장명 구분 매장연락처 등록일 고객ID 접수구분 고객 연락처 시즌 스타일 차수 컬러 사이즈 판매가 고객요구 
     query: `SELECT receipt.receipt_id AS receipt_id,
                     receipt.receipt_code AS receipt_code,
                     receipt.store_id AS store_id,
@@ -11,6 +10,8 @@ async function getReceipt(query, values) {
                     store.store_type AS store_type,
                     store.contact AS store_contact,
                     receipt.receipt_date AS receipt_date,
+                    receipt.due_date AS due_date,
+                    receipt.register_date AS register_date,
                     receipt.customer_id AS customer_id,
                     receipt.category AS receipt_category,
                     customer.name AS customer_name, 
@@ -20,12 +21,19 @@ async function getReceipt(query, values) {
                     product.degree AS product_degree,
                     product.color AS product_color,
                     product.size AS product_size, 
-                    receipt.receipt_type AS receipt_type
+                    receipt.receipt_type AS receipt_type,
+                    receipt.cashreceipt_num AS cashreceipt_num,
+                    analysis_type.analysis_name AS analysis_name,
+                    result_type.result_name AS result_name,
+                    fault_type.fault_name AS fault_name
             FROM receipt 
-            JOIN store ON receipt.store_id = store.store_id 
-            JOIN product ON receipt.product_id = product.product_id 
-            JOIN customer ON receipt.customer_id = customer.customer_id 
-            WHERE true ${query}`,
+            LEFT JOIN store ON receipt.store_id = store.store_id 
+            LEFT JOIN product ON receipt.product_id = product.product_id 
+            LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
+            LEFT JOIN analysis_type ON receipt.analysis_id = analysis_type.analysis_id
+            LEFT JOIN result_type ON receipt.result_id = result_type.result_id
+            LEFT JOIN fault_type ON receipt.fault_id = fault_type.fault_id
+            WHERE receipt.step = 1 ${query}`,
     values,
   });
 
@@ -49,6 +57,8 @@ const receipt = async (req, res) => {
         dateType, // 기간전체, 하루만
         startDate, 
         endDate,
+        year, // 월별 연도
+        month, // 월별 월
         analysisId, // 내용분석 
         resultId, // 판정결과
         customerName, // 고객이름
@@ -56,6 +66,8 @@ const receipt = async (req, res) => {
         companyName,  // 업체명
         hasRegistered,  // 접수여부
         hasSent,  // 발송여부
+        hasCharged, // 유상수선
+        hasCashReceipt, // 현금영수증번호
       } = req.query;
       let query = "";
       let values = [];
@@ -74,7 +86,7 @@ const receipt = async (req, res) => {
           values = [...values, style]
         }
       }
-      // TODO: 날짜기준 추가
+
       if (dateType === "all") {
         if (startDate) {
           query += ` AND DATE(receipt.${dateOption}) >= ? `;
@@ -83,6 +95,15 @@ const receipt = async (req, res) => {
         if (endDate) {
           query += ` AND DATE(receipt.${dateOption}) <= ? `;
           values = [...values, endDate];
+        }
+      } else if(dateType === "month") {
+        if(year) {
+          query += ` AND YEAR(receipt.${dateOption}) = ? `;
+          values = [...values, year];
+        }
+        if(month) {
+          query += ` AND MONTH(receipt.${dateOption}) = ? `;
+          values = [...values, month];
         }
       } else {
         if (startDate) {
@@ -104,6 +125,16 @@ const receipt = async (req, res) => {
           query += ` AND receipt.send_date IS NOT NULL `;
         } else {
           query += ` AND receipt.send_date IS NULL `;
+        }
+      }
+
+      if (hasCharged) {
+        if(hasCharged === "true") {
+          query += " AND receipt.freecharge = 0 ";
+
+          if(hasCashReceipt && hasCashReceipt === "true") {
+            query += " AND receipt.cashreceipt_num IS NOT NULL "
+          }
         }
       }
 

@@ -15,8 +15,10 @@ const ReceptionInfo = ({
   handleInputCheckboxChange = () => {},
   handleInputValueChange = () => {},
   handleTargetValueChange = () => {},
+  handleTargetCheckboxChange = () => {},
   handleSearchButtonClick = () => {},
   handleProductImageClick = () => {},
+  handleCodeEnter = () => {},
 }) => {
   return (
     <Wrapper>
@@ -25,6 +27,7 @@ const ReceptionInfo = ({
           options={options}
           data={inputData}
           handleValueChange={handleInputValueChange}
+          handleCodeEnter={handleCodeEnter}
         />
         <FilterInfo
           options={options}
@@ -56,6 +59,7 @@ const ReceptionInfo = ({
             options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
+            handleCheckboxChange={handleTargetCheckboxChange}
           />
         </Section>
       </SubWrapper>

@@ -2,15 +2,13 @@ import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
 
-import { DATE_SEARCH_TYPE_OPTIONS } from "../../constants/select-option";
-
 import Content from "../Content";
 import Modal from "../Modal";
-import Info from "./info";
+import SearchField from "./SearchField";
 import List from "./list";
-import { PRODUCT, RECEIPT } from "../../constants/field";
+import Total from "./Total";
 
-const Reception = ({ options, user }) => {
+const Return = ({ options, user }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -20,12 +18,7 @@ const Reception = ({ options, user }) => {
     () => setIsProductImageModalOpen(false),
     []
   );
-  const [inputData, setInputData] = useState({
-    storeName: options.storeList[0].value,
-    season: options.seasonList[0].value,
-    dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
-    dateType: "all",
-  });
+  const [inputData, setInputData] = useState({});
   const [targetData, setTargetData] = useState({});
   const [searchList, setSearchList] = useState([]);
   const handleInputCheckboxChange = useCallback(
@@ -44,7 +37,6 @@ const Reception = ({ options, user }) => {
   );
   const handleTargetCheckboxChange = useCallback(
     (e) => {
-      console.log(e.target)
       setTargetData({ ...targetData, [e.target.name]: e.target.checked });
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
@@ -59,47 +51,37 @@ const Reception = ({ options, user }) => {
   );
   const handleSearchButtonClick = useCallback(() => {
     axios
-      .get("/api/receipt", { params: inputData })
+      .get("/api/receipt", {
+        params: {
+          ...inputData,
+          dateType: inputData["isMonthly"] ? "month" : "all",
+          dateOption: "complete_date",
+          hasCharged: true,
+          hasCashReceipt: true,
+        },
+      })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
   const searchTargetData = useCallback((receiptCode) => {
     axios
       .get(`/api/receipt/${receiptCode}`)
-      .then((response) => setTargetData({...response.data.data}));
+      .then((response) => setTargetData(response.data.data));
   }, []);
 
   useEffect(() => console.log(targetData), [targetData]);
   return (
     <Content>
-      <Info
+      <SearchField
         options={options}
-        inputData={inputData}
-        data={targetData}
-        {...{
-          handleInputCheckboxChange,
-          handleInputValueChange,
-          handleTargetValueChange,
-          handleTargetCheckboxChange,
-          handleSearchButtonClick,
-        }}
-        handleProductImageClick={openProductImage}
-        handleCodeEnter={searchTargetData}
+        data={inputData}
+        handleCheckboxChange={handleInputCheckboxChange}
+        handleValueChange={handleInputValueChange}
+        handleSearchButtonClick={handleSearchButtonClick}
       />
-      <List data={searchList} handleDataClick={searchTargetData} />
-      {isProductImageModalOpen && (
-        <Modal handleCloseButtonClick={closeProductImage}>
-          {
-            <Image
-              src={targetData[PRODUCT.IMAGE]}
-              alt={targetData[PRODUCT.STYLE]}
-              layout="fill"
-              objectFit="contain"
-            />
-          }
-        </Modal>
-      )}
+      <List data={searchList} />
+      <Total total={searchList.length}/>
     </Content>
   );
 };
 
-export default Reception;
+export default Return;
