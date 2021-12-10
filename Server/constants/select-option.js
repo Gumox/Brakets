@@ -3,108 +3,49 @@ export const DEFAULT_OPTION = {
   text: "",
 };
 
-export const OPTIONS = [
-  {
-    key: 1,
-    value: 1,
-    text: "First Option",
-  },
-  {
-    key: 2,
-    value: 2,
-    text: "Second Option",
-  },
-  {
-    key: 3,
-    value: 3,
-    text: "Third Option",
-  },
-];
-
-export const BRAND_OPTIONS = [
-  {
-    key: "1",
-    value: "1",
-    text: "아디다스",
-  },
-  {
-    key: "2",
-    value: "2",
-    text: "나이키",
-  },
-];
-
 export const RECEIPT_CATEGORY_OPTIONS = [
   {
-    key: "1",
     value: "1",
     text: "고객용",
   },
   {
-    key: "2",
     value: "2",
     text: "매장용",
   },
   {
-    key: "3",
     value: "3",
     text: "선처리",
   },
 ];
 export const RECEIPT_TYPE_OPTIONS = [
   {
-    key: "1",
     value: "1",
     text: "수선",
   },
   {
-    key: "2",
     value: "2",
     text: "교환",
   },
   {
-    key: "3",
     value: "3",
     text: "환불",
   },
   {
-    key: "4",
     value: "4",
     text: "심의",
   },
 ];
-export const REPAIR_OPTIONS = [
-  {
-    key: "1",
-    value: "1",
-    text: "원단",
-  },
-  {
-    key: "2",
-    value: "2",
-    text: "봉제",
-  },
-];
-export const REPAIR_PLACE_OPTIONS = [
-  {
-    key: "3",
-    value: "3",
-    text: "맥가이버",
-  },
-  {
-    key: "4",
-    value: "4",
-    text: "동대문종합시장",
-  },
-];
+
 export const SHIPPING_OPTIONS = [
   {
-    key: "1",
     value: "1",
     text: "택배",
   },
 ];
 
+/**
+ * Filter 관련 Options
+ */
 export const DATE_SEARCH_TYPE_OPTIONS = [
   {
     value: "receipt_date",
@@ -134,12 +75,12 @@ export const REGISTER_STEP_OPTIONS = [
     text: "접수여부 ALL",
   },
   {
-    value: "0",
-    text: "미접수",
+    value: "true",
+    text: "접수",
   },
   {
-    value: "1",
-    text: "접수",
+    value: "false",
+    text: "미접수",
   },
 ];
 
@@ -149,11 +90,11 @@ export const SEND_OPTIONS = [
     text: "발송여부 ALL",
   },
   {
-    value: "0",
+    value: "true",
     text: "발송",
   },
   {
-    value: "1",
+    value: "false",
     text: "미발송",
   },
 ];
@@ -169,5 +110,120 @@ export const RESULT_TYPE_OPTIONS = [
   {
     value: "",
     text: "판정결과 ALL",
+  },
+];
+
+export const MONTHLY_OPTIONS = [
+  {
+    value: "",
+    text: "ALL",
+  },
+  {
+    value: "1",
+    text: "1",
+  },
+  {
+    value: "2",
+    text: "2",
+  },
+  {
+    value: "3",
+    text: "3",
+  },
+  {
+    value: "4",
+    text: "4",
+  },
+  {
+    value: "5",
+    text: "5",
+  },
+  {
+    value: "6",
+    text: "6",
+  },
+  {
+    value: "7",
+    text: "7",
+  },
+  {
+    value: "8",
+    text: "8",
+  },
+  {
+    value: "9",
+    text: "9",
+  },
+  {
+    value: "10",
+    text: "10",
+  },
+  {
+    value: "11",
+    text: "11",
+  },
+  {
+    value: "12",
+    text: "12",
+  },
+]
+
+const createYearList = (back) => {
+  const year = new Date().getFullYear();
+  return Array.from({ length: back }, (v, i) => ({
+    value: year - i,
+    text: year - i,
+  }));
+};
+export const YEARLY_OPTIONS = [
+  {
+    value: "",
+    text: "ALL",
+  },
+  ...createYearList(5),
+]
+
+/**
+ * Temp 
+ */
+export const OPTIONS = [
+  {
+    value: 1,
+    text: "First Option",
+  },
+  {
+    value: 2,
+    text: "Second Option",
+  },
+  {
+    value: 3,
+    text: "Third Option",
+  },
+];
+
+export const SEASON_OPTIONS = [
+  {
+    value: "22N",
+    text: "2022NS",
+  },
+  {
+    value: "22F",
+    text: "2022FW",
+  },
+  {
+    value: "22S",
+    text: "2022SS",
+  },
+  {
+    value: "21N",
+    text: "2021NS",
+  },
+  {
+    value: "21F",
+    text: "2021FW",
+  },
+  {
+    value: "21S",
+    text: "2021SS",
   },
 ];

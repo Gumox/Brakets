@@ -99,57 +99,51 @@ export default class TakePhoto extends Component {
      
       
       console.log (imgUri);
-      console.log(store.getState().photoArr);
 
       if (route.params.key === 'ShopStepThree2'){
-        //console.log ("ShopStepThree2: "+route.params.key);
-        store.dispatch({type:'ADD',add: {key:0,value:imgUri,index:0}});
+        store.dispatch({type:'PHOTO',photo:imgUri});
         
         this.props.navigation.replace(route.params.key);
       }
       else if (route.params.key === 'ShopStepThree4'){
-        //console.log ("ShopStepThreeX: "+route.params.key);
           
-        store.dispatch({type:'ADD',add: {key:0,value:imgUri,index:1}});
-        
-
+        store.dispatch({type:'DETAIL_PHOTO',detailPhoto:imgUri});
+        console.log("???????");
+        console.log(store.getState().detailPhoto)
         this.props.navigation.replace(route.params.key);
       } 
-      else if(route.params.key === "FullShot") {
-        //console.log(route.params.value);
-        const addPhoto = {key: route.params.value,value:imgUri,index:0};
-       
-        console.log(addPhoto);
-        store.dispatch({type:'ADD',add: addPhoto});
-        
-        console.log("98745632145698745632145698745632145698")
-        console.log(store.getState().photoArr);
-        this.props.navigation.replace("ShopStepThree2",{key:"CloseShot",value:route.params.value});
-
-      }
-      else if(route.params.key==="CloseShot"){
-        
-        const addPhoto = {key: route.params.value,value:imgUri,index:1};
-        
-        //console.log(addPhoto);
-        store.dispatch({type:'ADD',add: addPhoto});
-        this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
-      }
       else if(route.params.key === "AddPhoto"){
-        const addPhoto = {key: route.params.value,value:imgUri,index: route.params.index};
         
-        //console.log(addPhoto);
-        store.dispatch({type:'ADD',add: addPhoto});
-        
+        store.dispatch({type:'ADD',add: imgUri});
+        console.log("   ");
+        console.log(store.getState().photoArr);
+        this.props.navigation.pop();
         this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
       }
+
       else if(route.params.key === "RetakePhoto"){
-        const addPhoto = {key: route.params.value,value:imgUri,index: route.params.index};
         
-        //console.log(addPhoto);
-        store.dispatch({type:'ADD',add: addPhoto});
-        
-        this.props.navigation.replace("PhotoControl",addPhoto);
+        if(route.params.index === 0){
+          console.log("");
+          console.log("");
+          console.log(imgUri);
+          console.log("");
+          console.log("");
+          console.log(store.getState().photoArr);
+          store.dispatch({type:'PHOTO',photo:imgUri})
+          this.props.navigation.replace('ShopStepThree2',{value:imgUri,index: route.params.index,toGo : "PhotoControl"});
+        } 
+        else if(route.params.index === 1){
+          store.dispatch({type:'DETAIL_PHOTO',detailPhoto:imgUri});
+          this.props.navigation.pop();
+          this.props.navigation.replace("PhotoControl",{value:imgUri ,index :route.params.index });
+        }
+        else {
+          //console.log(addPhoto);
+          store.dispatch({type:'ADD',add: imgUri});
+          this.props.navigation.pop();
+          this.props.navigation.replace("PhotoControl",{value:imgUri,index :route.params.index});
+        }
       }
     }  
   };

@@ -5,7 +5,7 @@ import { getList } from "./GetSendList";
 
 export function changeBasicSend(value,key){
     const basicSendList = store.getState().basicRepairStore;
-    const data =store.getState().getAplType;
+    const data =store.getState().getProductCategory;
     console.log("");
     console.log("on hear");
     console.log("");
@@ -13,33 +13,33 @@ export function changeBasicSend(value,key){
     console.log("");
     console.log("");
     console.log("");
-    for (let i = 0; i < basicSendList.length; i++) {
-        if(basicSendList[i].key == key){
-            basicSendList.splice(i,1);
+    const Categories = [];
+
+    const productCategories = store.getState().getProductCategory;
+
+    productCategories.forEach(obj => {
+
+        if(obj.receiver_name !== '아디다스코리아(본사)' ){
+    
+            Categories.push({'category_name' :obj.category_name, 'receiver_name': obj.receiver_name});
         }
-    }
-    console.log(basicSendList);
-            console.log("");
-            console.log("");
-            console.log("");
-    data.forEach(obj => {
-        if(value === obj.repair_name){
-            basicSendList.push({key: key ,basicSend :obj.receiver_name});
-          
-            console.log(basicSendList);
-            console.log("");
-            console.log("");
-            console.log("");
+        console.log(obj.category_name+ " : " + obj.receiver_name);
+        
+    });
+
+    Categories.forEach(obj =>{
+        if(value === obj.category_name){
+            console.log("??");
+            console.log("??");
+            console.log(value);
+            console.log("??");
+            console.log("??");
+            console.log(obj.receiver_name);
+            store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:obj.receiver_name});
+            console.log(store.getState().basicRepairStore);
         }
     });
-    basicSendList.sort(function(a,b){
-        return a.key -b.key;
-    })
-    console.log(basicSendList);
-    console.log("");
-    console.log("");
-    console.log("");
-
+    //console.log(store.getState().basicRepairStore)
 }
 export function changeSelectSend(value,key){
     const selectSendList = store.getState().typeStore;
@@ -51,8 +51,8 @@ export function changeSelectSend(value,key){
     }
     store.dispatch({type:'RESET_TYPE_STORE',reset:selectSendList});
     getList(value,key);
-    console.log(selectSendList);
-    console.log(store.getState().typeStore);
+    //console.log(selectSendList);
+    //console.log(store.getState().typeStore);
 } 
 export function changeSelectType(value,key){
     const selectType =store.getState().selectType;

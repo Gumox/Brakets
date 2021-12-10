@@ -30,7 +30,7 @@ const BottomItemBox = styled.View`
 function Bottom  (props){
   return(
   <BottomView>
-      <BottomButton onPress = {() => props.navigation.navigate( 'StartPage')}>
+      <BottomButton onPress = {() => props.navigation.navigate( 'ReceiptDivision')}>
           <BottomButtonText>
               접수
           </BottomButtonText>

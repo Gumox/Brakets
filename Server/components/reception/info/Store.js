@@ -30,7 +30,7 @@ const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             title="고객명"
             name={CUSTOMER.NAME}
             styleOptions={{ width: "100px" }}
-            value={data[CUSTOMER.NAME]}
+            value={data[CUSTOMER.NAME] || ""}
             onChange={handleValueChange}
           />
         </Field>
@@ -39,7 +39,7 @@ const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             title="고객연락처"
             name={CUSTOMER.CONTACT}
             styleOptions={{ width: "100px" }}
-            value={data[CUSTOMER.CONTACT]}
+            value={data[CUSTOMER.CONTACT] || ""}
             onChange={handleValueChange}
           />
         </Field>

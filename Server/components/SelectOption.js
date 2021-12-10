@@ -46,11 +46,11 @@ const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: 5px;
   font-size: ${({ labelFontSize = "15px" }) => labelFontSize};
-  color: ${({ disabled }) => (disabled ? COLOR.GRAY : COLOR.BLACK)};
+  color: ${({ disabled, color }) => (color ? color : disabled ? COLOR.GRAY : COLOR.BLACK)};
 `;
 
 const CustomSelect = styled.select`
-  width: 100%;
+  width: ${({ width = "100%" }) => width};
   max-width: ${({ maxWidth = "100px" }) => maxWidth};
   height: ${({ height = "20px" }) => height};
   outline: none;
