@@ -99,7 +99,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
 };
 
 const Wrapper = styled.div`
-  height: 50%;
+  height: 60%;
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;
