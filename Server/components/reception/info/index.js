@@ -72,7 +72,7 @@ const Wrapper = styled.div`
 `;
 
 const SubWrapper = styled.div`
-  min-width: 1520px;
+  min-width: 1600px;
 `;
 
 const Section = styled.div`

@@ -44,9 +44,10 @@ const Wrapper = styled.div`
 
 const CustomLabel = styled.div`
   white-space: nowrap;
-  margin-right: 5px;
+  margin-right: ${({ labelMarginRight = "5px" }) => labelMarginRight};
   font-size: ${({ labelFontSize = "15px" }) => labelFontSize};
-  color: ${({ disabled, color }) => (color ? color : disabled ? COLOR.GRAY : COLOR.BLACK)};
+  color: ${({ disabled, color }) =>
+    color ? color : disabled ? COLOR.GRAY : COLOR.BLACK};
 `;
 
 const CustomSelect = styled.select`

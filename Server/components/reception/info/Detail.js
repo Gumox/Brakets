@@ -17,43 +17,43 @@ import Checkbox from "../../Checkbox";
 
 const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
-    <div>
       <Wrapper>
+        <Container>
         <SectionRow>
           <Section marginRight="10px">
             <Row>
-              <Field>
+              <Field marginRight="0px">
                 <SelectOption
                   title="고객요구"
                   name={RECEIPT.TYPE}
                   options={RECEIPT_TYPE_OPTIONS}
                   value={data[RECEIPT.TYPE]}
                   // onChange={handleValueChange}
-                  styleOptions={{ width: "100px" }}
+                  styleOptions={{ width: "120px", maxWidth: "120px" }}
                 />
               </Field>
             </Row>
             <Row>
-              <Field>
+              <Field marginRight="0px">
                 <SelectOption
-                  title="제품구분:"
+                  title="제품구분"
                   name={DETAIL.PRODUCT_CATEGORY_ID}
                   options={options.productCategoryList}
                   value={data[DETAIL.PRODUCT_CATEGORY_ID] } // details last index pcategory_id
                   // onChange={handleValueChange}
-                  styleOptions={{ width: "100px" }}
+                  styleOptions={{ width: "120px", maxWidth: "120px" }}
                 />
               </Field>
             </Row>
             <Row>
-              <Field>
+              <Field marginRight="0px">
                 <SelectOption
-                  title="수선처:"
+                  title="수선처"
                   name={DETAIL.REPAIR_PLACE}
                   options={options.repairList}
                   value={data[DETAIL.REPAIR_PLACE]} // details last index receiver
                   // onChange={handleValueChange}
-                  styleOptions={{ width: "100px" }}
+                  styleOptions={{ width: "120px", maxWidth: "120px", labelMarginRight: "20px" }}
                 />
               </Field>
             </Row>
@@ -62,7 +62,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Row alignItems="flex-start">
               <TextArea
                 title="매장접수내용:"
-                styleOptions={{ width: "390px", height: "50px" }} // details first index message
+                styleOptions={{ width: "400px", height: "70px" }} // details first index message
               />
               <ImageButton>사진보기</ImageButton>
             </Row>
@@ -71,12 +71,12 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
         <SectionRow>
           <Section marginRight="10px">
             <Row>
-              <Field>
+              <Field marginRight="10px">
                 <Input type="date" title="수선처접수일" />
               </Field>
               <Field>
                 <SelectOption
-                  title="운송형태:"
+                  title="운송형태"
                   // name={PRODUCT.SEASON}
                   options={SHIPPING_OPTIONS}
                   // value={data[PRODUCT.SEASON]}
@@ -85,7 +85,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               </Field>
             </Row>
             <Row>
-              <Field marginRight="10px">
+              <Field marginRight="5px">
                 <SelectOption
                   title="과실구분:"
                   // name={PRODUCT.SEASON}
@@ -95,7 +95,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   styleOptions={{ width: "70px" }}
                 />
               </Field>
-              <Field marginRight="10px">
+              <Field marginRight="5px">
                 <SelectOption
                   title="내용분석:"
                   // name={PRODUCT.SEASON}
@@ -143,11 +143,11 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             </Row>)}
           </Section>
           <Section>
-            <TextArea title="수선처설명:" />
+            <TextArea title="수선처설명:" styleOptions={{ width: "290px", height: "100px" }}/>
           </Section>
         </SectionRow>
         <Row>
-          <Field>
+          <Field marginRight="10px">
             <Input
               type="date"
               title="수선처발송일"
@@ -159,7 +159,7 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               }
             />
           </Field>
-          <Field>
+          <Field marginRight="10px">
             <SelectOption
               title="발송방법:"
               // name={PRODUCT.SEASON}
@@ -168,16 +168,21 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               // onChange={handleValueChange}
             />
           </Field>
-          <Field>
+          <Field marginRight="0px">
             <Input title="발송비용" styleOptions={{ width: "70px" }} />
           </Field>
         </Row>
+        </Container>
       </Wrapper>
-    </div>
   );
 };
 const Wrapper = styled.div`
+  width: 50%;
   margin: 0px 5px 5px 15px;
+`;
+
+const Container = styled.div`
+  width: 100%;
   padding: 7px 7px 20px 7px;
   border: 2px solid ${COLOR.RED};
   border-radius: 10px;
