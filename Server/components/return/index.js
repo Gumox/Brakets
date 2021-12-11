@@ -5,7 +5,8 @@ import axios from "axios";
 import Content from "../Content";
 import Modal from "../Modal";
 import SearchField from "./SearchField";
-import List from "./list"
+import List from "./list";
+import Invoice from "./invoice";
 
 const Return = ({ options, user }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
@@ -70,6 +71,7 @@ const Return = ({ options, user }) => {
         handleSearchButtonClick={handleSearchButtonClick}
       />
       <List data={searchList}/>
+      <Invoice />
     </Content>
   );
 };
