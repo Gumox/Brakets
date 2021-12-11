@@ -17,7 +17,7 @@ const FIELD = {
     FREECHARGE: 'freecharge', // 유상 | 무상
     CHARGE: 'charge', // 비용
     CASHRECEIPT_NUM: 'cashreceipt_num', // 현금영수증 번호
-    STORE_SEND_DATE: 'complete_date', // 발송일 to S(store)
+    STORE_SEND_DATE: 'send_date', // 발송일 to S(store)
 
     // TODO: 아직 DB 에 없는 부분
     REPAIR_PLACE_ID: 'repair_send_date', // 수선처

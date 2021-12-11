@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { RECEIPT, DETAIL } from "../../../constants/field";
