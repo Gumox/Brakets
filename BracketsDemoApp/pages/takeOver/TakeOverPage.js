@@ -62,9 +62,9 @@ const Check =styled.View`
     align-items : center;
     `;
 const TotalMoney = styled.View`
-
     flex-direction : row;
     width : 50%;
+
     `;
 
 const Btn = styled.TouchableOpacity`
@@ -284,7 +284,7 @@ function TakeOverPage( { navigation } ) {
                   onChangeText = {onChangeText}
                   value = {text}
                       />
-            <Half styled = {{marginBottom : 150}}>
+            <Half style = {{marginBottom : 50}}>
                 <Check>
                       <Text>유상수선 </Text>
                       <CheckBox
@@ -296,11 +296,13 @@ function TakeOverPage( { navigation } ) {
                     <Text>수선비</Text>
                 </TotalMoney>
             </Half>
-<Half style={{marginBottom : 50}}>
+     
+            </Contents>
+            <Half>
               <Btn onPress = {() => {}}><Text>재접수</Text></Btn> 
               <Btn onPress = {() => {}}><Text>인수완료</Text></Btn>
-            </Half>      
-            </Contents>
+            </Half> 
+
             <Bottom navigation={navigation} />
          
         </Container>
