@@ -6,11 +6,14 @@ async function getReceipt(code) {
                     receipt.receipt_code AS receipt_code,
                     receipt.category AS receipt_category,
                     receipt.receipt_date AS receipt_date,
+                    receipt.register_date AS register_date,
+                    receipt.send_date AS send_date,
                     receipt.due_date AS due_date,
                     receipt.store_id AS store_id,
                     receipt.customer_id AS customer_id,
                     receipt.product_id AS product_id,
                     receipt.receipt_type AS receipt_type,
+                    receipt.message AS receipt_message,
                     receipt.fault_id AS fault_id,
                     receipt.analysis_id AS analysis_id,
                     receipt.result_id AS result_id,
@@ -19,10 +22,15 @@ async function getReceipt(code) {
                     product.color AS product_color,
                     product.size AS product_size, 
                     product.degree AS product_degree,
+                    IF(receipt.substitute=0, "N", "Y") AS substitute,
                     receipt.product_code AS product_code,
                     product.image AS product_image,
+                    product.release_date AS product_release_date,
                     customer.name AS customer_name,
-                    customer.phone AS customer_phone
+                    customer.phone AS customer_phone,
+                    receipt.freecharge AS freecharge,
+                    receipt.charge AS charge,
+                    receipt.cashreceipt_num AS cashreceipt_num
               FROM receipt 
               JOIN product ON receipt.product_id = product.product_id 
               JOIN customer ON receipt.customer_id = customer.customer_id 
@@ -36,7 +44,7 @@ async function getReceipt(code) {
 async function getReceiptDetail(id) {
   const result = await excuteQuery({
     query: `SELECT detail_id,
-                     repair_id,
+                     pcategory_id,
                      num,
                      send_date,
                      message,

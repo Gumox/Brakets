@@ -61,10 +61,9 @@ const SendText = styled.Text`
 `;
 
 function ShopStepThree4({route,navigation}) {
-
+    const uriList=[];
     const [text,setText] = React.useState('');
 
-    const uriList=store.getState().photoArr;
     const indexSort =uriList.sort(function (a,b) {
         return a.index -b.index;
     })
@@ -97,7 +96,6 @@ function ShopStepThree4({route,navigation}) {
             }
 
     },[]);
-    // 수선유형 추가하면 쌓이는 부분 //
     var output=[];
     var inputTexts = store.getState().addRequest;
     console.log(inputTexts);
@@ -123,15 +121,31 @@ function ShopStepThree4({route,navigation}) {
            
             var indexUriList =[];
             var photoImages =[];
-            uriList.forEach(element => {
-                if(element.key == i){
-                    indexUriList.push(element);
-                   
+            
+            uriList.push(store.getState().photo);
+            uriList.push(store.getState().detailPhoto);
+            var photoOutput= [];
+            var photoAdd;
+            if(store.getState().photoArr.length>0){
+                const addPhotos = store.getState().photoArr;
+                console.log(addPhotos);
+                for (let i = 0; i < addPhotos.length; i++) {
+                
+                    uriList.push(addPhotos[i]);
                 }
+                
+            }
+                 
+           
+            uriList.forEach(element => {
+                
+                indexUriList.push(element);
+                console.log(element)
+                
             });
             for(var j=0; j < indexUriList.length ; j++){
                 var photoImage =(
-                    <Image  key = {j} style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j].value}}/>
+                    <Image  key = {j} style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j]}}/>
                 );
                 photoImages[j] =(photoImage);
             }
@@ -153,7 +167,7 @@ function ShopStepThree4({route,navigation}) {
                             multiline={ true }
                             >{request}</Input> 
                         <Label>수선처</Label>
-                        <SendText>{store.getState().basicRepairStore[myKey].basicSend}</SendText>
+                        <SendText>{store.getState().basicRepairStore}</SendText>
                     </InfoView>
                     
                 </View>

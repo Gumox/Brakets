@@ -46,32 +46,31 @@ const styles = StyleSheet.create({
 
 export default function PhotoControl({ navigation ,route}){
     const [selected,setSelected] = React.useState( route.params);
-    console.log(selected);
     const saved = store.getState().photoArr;
-    console.log(saved);
     const changeData =[];
     const DeletePhoto = () =>{
         for (let i = 0; i < saved.length; i++) {
             const element = saved[i];
-            if(element.value == selected.value){
+            if(element == selected.value){
                 saved.splice(i,1);
                 console.log(saved)
                 i--;
             }
 
         }
-        console.log(store.getState().photoArr);
         store.dispatch({type:"PHOTORESET",setPhoto: saved});
-        console.log(store.getState().photoArr);
         
     }
     const RetakePhoto = () =>{
-        console.log("key : "+selected.key+"   value: " +selected.value+"    index: "+selected.index);
-        DeletePhoto();
-        navigation.replace("TakePhoto",{key:"RetakePhoto",value:selected.key,index:selected.index});
+        console.log(  "value: " +selected.value+"    index: "+selected.index);
+        if(selected.index>1){
+            DeletePhoto();
+        }
+        navigation.replace("TakePhoto",{key:"RetakePhoto",index:selected.index});
 
     }
     var output;
+    
     if(selected.index === 0 || selected.index ===1){
         output=(
             <View>

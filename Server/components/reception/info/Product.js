@@ -1,13 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
-import { PRODUCT } from "../../../constants/field";
+import { PRODUCT, RECEIPT } from "../../../constants/field";
 import { Row, Field, Section, SectionRow } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
-const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
+const ProducInfo = ({
+  options,
+  data = {},
+  handleValueChange = () => {},
+  handleProductImageClick = () => {},
+}) => {
   return (
     <Wrapper>
       <SectionRow>
@@ -18,7 +24,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 title="시즌:"
                 name={PRODUCT.SEASON}
                 options={options.seasonList}
-                value={data[PRODUCT.SEASON]}
+                value={data[PRODUCT.SEASON] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -27,7 +33,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 title="스타일:"
                 name={PRODUCT.STYLE}
                 styleOptions={{ width: "80px" }}
-                value={data[PRODUCT.STYLE]}
+                value={data[PRODUCT.STYLE] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -36,7 +42,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 title="차수:"
                 name={PRODUCT.DEGREE}
                 styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.DEGREE]}
+                value={data[PRODUCT.DEGREE] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -45,7 +51,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 title="컬러:"
                 name={PRODUCT.COLOR}
                 styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.COLOR]}
+                value={data[PRODUCT.COLOR] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -54,7 +60,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 title="사이즈:"
                 name={PRODUCT.SIZE}
                 styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.SIZE]}
+                value={data[PRODUCT.SIZE] || ""}
                 onChange={handleValueChange}
               />
             </Field>
@@ -65,7 +71,7 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 title="RFID코드"
                 name={PRODUCT.RFID}
                 styleOptions={{ width: "100px" }}
-                value={data[PRODUCT.RFID]}
+                value={data[PRODUCT.RFID] || "" }
                 onChange={handleValueChange}
                 disabled={true}
               />
@@ -76,7 +82,11 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 title="최초출고일"
                 name={PRODUCT.RELEASE_DATE}
                 styleOptions={{ padding: "1px 0px" }}
-                value={data[PRODUCT.RELEASE_DATE]}
+                value={
+                  data[PRODUCT.RELEASE_DATE]
+                    ? moment(data[PRODUCT.RELEASE_DATE]).format("YYYY-MM-DD")
+                    : undefined
+                }
                 onChange={handleValueChange}
                 disabled={true}
               />
@@ -84,16 +94,16 @@ const ProducInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Field marginRight="10px">
               <Input
                 title="대체품번"
-                name={PRODUCT.SUBSTITUE_CODE}
-                styleOptions={{ width: "70px" }}
-                value={data[PRODUCT.SUBSTITUE_CODE]}
+                name={RECEIPT.SUBSTITUE}
+                styleOptions={{ width: "20px" }}
+                value={data[RECEIPT.SUBSTITUE]}
                 onChange={handleValueChange}
               />
             </Field>
           </Row>
         </Section>
         <Section>
-          <ProductImage imageUrl={data[PRODUCT.IMAGE]} />
+          <ProductImage imageUrl={data[PRODUCT.IMAGE]} onClick={handleProductImageClick}/>
         </Section>
       </SectionRow>
     </Wrapper>
@@ -107,9 +117,10 @@ const ProductImage = styled.div`
   width: 80px;
   height: 80px;
   background-color: ${COLOR.GRAY};
-  background: center / contain no-repeat url(${({imageUrl}) => imageUrl});
+  background: center / contain no-repeat url(${({ imageUrl }) => imageUrl});
   color: ${COLOR.WHITE};
   margin-right: 5px;
+  cursor: pointer;
 `;
 
 export default ProducInfo;

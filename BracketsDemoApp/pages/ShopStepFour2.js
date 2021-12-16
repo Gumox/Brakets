@@ -76,7 +76,7 @@ function ShopStepFour2({navigation}) {
     const [date, setDate] = React.useState(new Date());
     const [mode, setMode] = React.useState('date');
     const [show, setShow] = React.useState(false);
-    const [dateP14, setDateP14] = React.useState(date.addDays(14));
+    const [dateP, setDateP] = React.useState(date.addDays(14));
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
     store.dispatch({type:'SERVICECAED',value:barcode});
     
@@ -84,12 +84,11 @@ function ShopStepFour2({navigation}) {
     
     const cardImgUri =store.getState().card;
     
-    //console.log(cardImgUri );
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        setDateP14(currentDate.addDays(14))
+        
     };
 
     const showMode = (currentMode) => {
@@ -196,7 +195,8 @@ function ShopStepFour2({navigation}) {
                         />
                     )}
                 <Label> 고객 약속일</Label>
-                <DateView><Label>{dateP14.getFullYear()}년  {dateP14.getMonth()+1}월  {dateP14.getDate()}일</Label></DateView>
+                <DateView><Label>{dateP.getFullYear()}년  {dateP.getMonth()+1}월  {dateP.getDate()}일</Label></DateView>
+                
 
                 </InfoView>
                 <View style ={{margin:30}}/>

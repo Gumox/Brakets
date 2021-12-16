@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import COLOR from "../../../constants/color";
 import {
-  DEFAULT_OPTION,
   DATE_SEARCH_TYPE_OPTIONS,
   REGISTER_STEP_OPTIONS,
   SEND_OPTIONS,
@@ -26,7 +25,7 @@ const FilterInfo = ({
     <Wrapper>
       <Title>조회</Title>
       <Row>
-        <Field>
+        <Field marginRight="10px" >
           <Checkbox
             title="매장별"
             name="isStoreType"
@@ -34,7 +33,7 @@ const FilterInfo = ({
             onChange={handleCheckboxChange}
           />
         </Field>
-        <Field>
+        <Field marginRight="10px">
           <SelectOption
             title="매장명"
             name="storeName"
@@ -44,7 +43,7 @@ const FilterInfo = ({
             onChange={handleValueChange}
           />
         </Field>
-        <Field marginRight="20px">
+        <Field marginRight="5px">
           <SelectOption
             title="날짜기준"
             name="dateOption"
@@ -71,7 +70,7 @@ const FilterInfo = ({
             onChange={handleValueChange}
           />
           <div>
-            <Field height="15px">
+            <Field height="15px" marginRight="10px">
               <Checkbox
                 type="radio"
                 title="기간전체"
@@ -81,7 +80,7 @@ const FilterInfo = ({
                 onChange={handleValueChange}
               />
             </Field>
-            <Field height="15px">
+            <Field height="15px" marginRight="10px">
               <Checkbox
                 type="radio"
                 title="하루만"
@@ -94,25 +93,25 @@ const FilterInfo = ({
           </div>
         </Field>
         <Row>
-          <Field>
+          <Field marginRight="10px">
             <SelectOption
               title="접수여부"
-              name="receiptType"
+              name="hasRegistered"
               options={REGISTER_STEP_OPTIONS}
-              value={data["receiptType"]}
+              value={data["hasRegistered"]}
               onChange={handleValueChange}
             />
           </Field>
-          <Field>
+          <Field marginRight="10px">
             <SelectOption
               title="발송여부"
-              name="sendType"
+              name="hasSent"
               options={SEND_OPTIONS}
-              value={data["sendType"]}
+              value={data["hasSent"]}
               onChange={handleValueChange}
             />
           </Field>
-          <Field>
+          <Field marginRight="10px">
             <SelectOption
               title="내용분석"
               name="analysisId"
@@ -121,7 +120,7 @@ const FilterInfo = ({
               onChange={handleValueChange}
             />
           </Field>
-          <Field>
+          <Field marginRight="0px">
             <SelectOption
               title="판정결과"
               name="resultId"
@@ -133,7 +132,7 @@ const FilterInfo = ({
         </Row>
       </Row>
       <Row>
-        <Field>
+        <Field marginRight="10px">
           <Checkbox
             title="스타일별"
             name="isStyleType"
@@ -141,7 +140,7 @@ const FilterInfo = ({
             onChange={handleCheckboxChange}
           />
         </Field>
-        <Field marginRight="20px">
+        <Field marginRight="10px">
           <SelectOption
             title="시즌"
             name="season"

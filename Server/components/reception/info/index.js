@@ -15,7 +15,10 @@ const ReceptionInfo = ({
   handleInputCheckboxChange = () => {},
   handleInputValueChange = () => {},
   handleTargetValueChange = () => {},
+  handleTargetCheckboxChange = () => {},
   handleSearchButtonClick = () => {},
+  handleProductImageClick = () => {},
+  handleCodeEnter = () => {},
 }) => {
   return (
     <Wrapper>
@@ -24,6 +27,7 @@ const ReceptionInfo = ({
           options={options}
           data={inputData}
           handleValueChange={handleInputValueChange}
+          handleCodeEnter={handleCodeEnter}
         />
         <FilterInfo
           options={options}
@@ -37,6 +41,7 @@ const ReceptionInfo = ({
             options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
+            handleProductImageClick={handleProductImageClick}
           />
           <StoreInfo
             options={options}
@@ -54,6 +59,7 @@ const ReceptionInfo = ({
             options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
+            handleCheckboxChange={handleTargetCheckboxChange}
           />
         </Section>
       </SubWrapper>
@@ -66,7 +72,7 @@ const Wrapper = styled.div`
 `;
 
 const SubWrapper = styled.div`
-  min-width: 1520px;
+  min-width: 1600px;
 `;
 
 const Section = styled.div`

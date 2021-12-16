@@ -48,13 +48,17 @@ const TopStateView = styled.View`
 function ShopStepTwo({navigation}) {
     const [data, setData] = React.useState([]);
     const [isLoading, setLoading] = React.useState(true);
-    const bodyData = {"repair":"type",
-    "category": 1,
-    "receipt": 1}
-    const getAplType = async () => {
+    const bodyData = {
+        "category": 1,
+        "receipt": 1,
+        "brand": 1,
+        "season": 1
+    }
+    
+    const getProductCategory = async () => {
         
         try {
-            const response = await fetch('http://13.125.232.214/api/getRepairInfo',{method: 'POST',
+            const response = await fetch('http://13.125.232.214/api/getProductCategory',{method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -66,7 +70,7 @@ function ShopStepTwo({navigation}) {
             console.log(json.body);
             console.log(data);
             store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
-            console.log(store.getState().getAplType)
+            console.log(store.getState().getProductCategory);
             setLoading(false);
            
         } catch (error) {
@@ -89,7 +93,7 @@ function ShopStepTwo({navigation}) {
             </CenterText>  
             <PView>
                 <CenterView><SelectButton onPress={ ()=> {
-                    getAplType();}
+                    getProductCategory();}
 
                 }>수선</SelectButton>
                 <SelectButton>교환</SelectButton></CenterView>

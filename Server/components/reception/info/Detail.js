@@ -1,59 +1,196 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { RECEIPT, DETAIL } from "../../../constants/field";
-import { RECEIPT_TYPE_OPTIONS } from "../../../constants/select-option";
-import { Field, Section, SectionRow } from "../../styled";
+import {
+  OPTIONS,
+  RECEIPT_TYPE_OPTIONS,
+  SHIPPING_OPTIONS,
+} from "../../../constants/select-option";
+import { Row, Field, Section, SectionRow } from "../../styled";
+import Input from "../../Input";
 import SelectOption from "../../SelectOption";
-import DetailBox from "./DetailBox";
+import TextArea from "../../TextArea";
+import Checkbox from "../../Checkbox";
 
 const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
-    <Wrapper>
-      <SectionRow>
-        <Section>
-          <Field>
-            <SelectOption
-              title="고객요구"
-              name={RECEIPT.TYPE}
-              options={RECEIPT_TYPE_OPTIONS}
-              value={data[RECEIPT.TYPE]}
-              onChange={handleValueChange}
+      <Wrapper>
+        <Container>
+        <SectionRow>
+          <Section marginRight="10px">
+            <Row>
+              <Field marginRight="0px">
+                <SelectOption
+                  title="고객요구"
+                  name={RECEIPT.TYPE}
+                  options={RECEIPT_TYPE_OPTIONS}
+                  value={data[RECEIPT.TYPE]}
+                  // onChange={handleValueChange}
+                  styleOptions={{ width: "120px", maxWidth: "120px" }}
+                />
+              </Field>
+            </Row>
+            <Row>
+              <Field marginRight="0px">
+                <SelectOption
+                  title="제품구분"
+                  name={DETAIL.PRODUCT_CATEGORY_ID}
+                  options={options.productCategoryList}
+                  value={data[DETAIL.PRODUCT_CATEGORY_ID] } // details last index pcategory_id
+                  // onChange={handleValueChange}
+                  styleOptions={{ width: "120px", maxWidth: "120px" }}
+                />
+              </Field>
+            </Row>
+            <Row>
+              <Field marginRight="0px">
+                <SelectOption
+                  title="수선처"
+                  name={DETAIL.REPAIR_PLACE}
+                  options={options.repairList}
+                  value={data[DETAIL.REPAIR_PLACE]} // details last index receiver
+                  // onChange={handleValueChange}
+                  styleOptions={{ width: "120px", maxWidth: "120px", labelMarginRight: "20px" }}
+                />
+              </Field>
+            </Row>
+          </Section>
+          <Section>
+            <Row alignItems="flex-start">
+              <TextArea
+                title="매장접수내용:"
+                styleOptions={{ width: "400px", height: "70px" }} // details first index message
+              />
+              <ImageButton>사진보기</ImageButton>
+            </Row>
+          </Section>
+        </SectionRow>
+        <SectionRow>
+          <Section marginRight="10px">
+            <Row>
+              <Field marginRight="10px">
+                <Input type="date" title="수선처접수일" />
+              </Field>
+              <Field>
+                <SelectOption
+                  title="운송형태"
+                  // name={PRODUCT.SEASON}
+                  options={SHIPPING_OPTIONS}
+                  // value={data[PRODUCT.SEASON]}
+                  // onChange={handleValueChange}
+                />
+              </Field>
+            </Row>
+            <Row>
+              <Field marginRight="5px">
+                <SelectOption
+                  title="과실구분:"
+                  // name={PRODUCT.SEASON}
+                  options={OPTIONS}
+                  // value={data[PRODUCT.SEASON]}
+                  // onChange={handleValueChange}
+                  styleOptions={{ width: "70px" }}
+                />
+              </Field>
+              <Field marginRight="5px">
+                <SelectOption
+                  title="내용분석:"
+                  // name={PRODUCT.SEASON}
+                  options={OPTIONS}
+                  // value={data[PRODUCT.SEASON]}
+                  // onChange={handleValueChange}
+                  styleOptions={{ width: "70px" }}
+                />
+              </Field>
+              <Field marginRight="0px">
+                <SelectOption
+                  title="판정결과:"
+                  // name={PRODUCT.SEASON}
+                  options={OPTIONS}
+                  // value={data[PRODUCT.SEASON]}
+                  // onChange={handleValueChange}
+                  styleOptions={{ width: "70px" }}
+                />
+              </Field>
+            </Row>
+            {data.details?.map((detail, index) => <Row key={detail[DETAIL.ID]}>
+              <Field marginRight="10px">
+                <SelectOption
+                  title={`수선내용${index+1}:`}
+                  // name={PRODUCT.SEASON}
+                  options={OPTIONS}
+                  // value={data[PRODUCT.SEASON]}
+                  // onChange={handleValueChange}
+                />
+              </Field>
+              {/* <Field>
+                <Input title="수량" styleOptions={{ width: "15px" }} />
+              </Field> */}
+              <Field marginRight="10px">
+                <Input
+                  title={`수선비${index+1}`}
+                  name={DETAIL.CHARGE}
+                  value={detail[DETAIL.CHARGE]}
+                  styleOptions={{ width: "70px" }}
+                />
+              </Field>
+              <Field marginRight="0px">
+                <Checkbox title={`재수선${index+1}`} />
+              </Field>
+            </Row>)}
+          </Section>
+          <Section>
+            <TextArea title="수선처설명:" styleOptions={{ width: "290px", height: "100px" }}/>
+          </Section>
+        </SectionRow>
+        <Row>
+          <Field marginRight="10px">
+            <Input
+              type="date"
+              title="수선처발송일"
+              name={DETAIL.SEND_DATE}
+              value={
+                data[DETAIL.SEND_DATE]
+                  ? moment(data[DETAIL.SEND_DATE]).format("YYYY-MM-DD")
+                  : undefined
+              }
             />
           </Field>
-        </Section>
-        <Section>
-          <ImageButton>사진보기</ImageButton>
-        </Section>
-      </SectionRow>
-      {data?.details?.map((detail) => (
-        <Row key={detail[DETAIL.ID]}>
-          <Index>{`(${detail[DETAIL.ORDER]})`}</Index>
-          <DetailBox options={options} data={detail} />
+          <Field marginRight="10px">
+            <SelectOption
+              title="발송방법:"
+              // name={PRODUCT.SEASON}
+              options={OPTIONS}
+              // value={data[PRODUCT.SEASON]}
+              // onChange={handleValueChange}
+            />
+          </Field>
+          <Field marginRight="0px">
+            <Input title="발송비용" styleOptions={{ width: "70px" }} />
+          </Field>
         </Row>
-      ))}
-    </Wrapper>
+        </Container>
+      </Wrapper>
   );
 };
 const Wrapper = styled.div`
+  width: 50%;
   margin: 0px 5px 5px 15px;
-  padding: 0px 7px;
-  border: 2px solid ${COLOR.GRAY};
+`;
+
+const Container = styled.div`
+  width: 100%;
+  padding: 7px 7px 20px 7px;
+  border: 2px solid ${COLOR.RED};
   border-radius: 10px;
-`;
-
-const Row = styled.div`
-  display: flex;
-`;
-
-const Index = styled.span`
-  margin-top: 10px;
-  font-size: 15px;
 `;
 
 const ImageButton = styled.button`
   margin-top: 10px;
+  margin-left: 15px;
   min-height: max-content;
   height: 30px;
   background-color: ${COLOR.MENU_MAIN};
