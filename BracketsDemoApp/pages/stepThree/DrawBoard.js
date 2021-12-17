@@ -11,7 +11,7 @@ import SketchDraw from 'react-native-sketch-draw';
 import store from '../../store/store';
 
 import RNImageTools from 'react-native-image-tools-wm';
-
+import { BackgroundMerge } from '../../Functions/BackgroundMerge';
 const SketchDrawConstants = SketchDraw.constants;
  
 const tools = {};
@@ -64,29 +64,26 @@ export default class DrawBoard extends Component {
         
         const image1 = "file://"+this.props.localSourceImagePath;
         const image2 = "file://"+saveEvent.localFilePath;
-
-        RNImageTools.merge(
+            if(params === undefined){
+                
+                this.props.navigation.replace("ShopStepThree2");
+                BackgroundMerge(image1,image2);
+            }else if(params['toGo'] == 'PhotoControl'){
+                
+                this.props.navigation.replace('PhotoControl',{index: params.index,value: mergedImage.uri});
+                BackgroundMerge(image1,image2);
+            }
+        /*RNImageTools.merge(
             [
                 image1,
                 image2
             ]
         ).then(mergedImage => {
             
-            if(params === undefined){
-                
-                store.dispatch({type:'PHOTO',photo: mergedImage.uri});
-                console.log("::: " + store.getState().photo)
-                this.props.navigation.replace("ShopStepThree2");
 
-            }else if(params['toGo'] == 'PhotoControl'){
-                console.log("????????")
-                store.dispatch({type:'PHOTO',photo: mergedImage.uri});
-                
-                this.props.navigation.replace('PhotoControl',{index: params.index,value: mergedImage.uri});
-            }
             //console.log(mergedImage.uri)
             
-        }).catch(console.error);
+        }).catch(console.error);*/
         
     }
     

@@ -5944,6 +5944,11 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
+"react-native-bg-thread@^1.2.0":
+  "integrity" "sha512-gKRDs8VmJsMjbTdwY25UFJrOflOjmNIXhkZSgx6+BMVGSuquNQ4DmkrkaX/oi1914Crp04jpo0cbG6YI2t5HZg=="
+  "resolved" "https://registry.npmjs.org/react-native-bg-thread/-/react-native-bg-thread-1.2.0.tgz"
+  "version" "1.2.0"
+
 "react-native-camera@^4.2.1", "react-native-camera@>=1.0.2":
   "integrity" "sha512-+Vkql24PFYQfsPRznJCvPwJQfyzCnjlcww/iZ4Ej80bgivKjL9eU0IMQIXp4yi6XCrKi4voWXxIDPMupQZKeIQ=="
   "resolved" "https://registry.npmjs.org/react-native-camera/-/react-native-camera-4.2.1.tgz"

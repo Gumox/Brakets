@@ -25,6 +25,7 @@
     "react-date-object": "^2.1.5",
     "react-datepicker": "^4.2.1",
     "react-native": "0.66.0",
+    "react-native-bg-thread": "^1.2.0",
     "react-native-camera": "^4.2.1",
     "react-native-fast-image": "^8.5.11",
     "react-native-image-modal": "^2.0.4",
