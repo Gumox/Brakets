@@ -6,7 +6,6 @@ import Button from '../../components/Button';
 import Bottom from '../../components/Bottom';
 import _, { reduce, sortedLastIndex } from 'lodash';
 
-import CheckBox from '@react-native-community/checkbox';
 import { Image,Text, View, ScrollView, Dimensions } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
@@ -287,10 +286,7 @@ function TakeOverPage( { navigation } ) {
             <Half style = {{marginBottom : 50}}>
                 <Check>
                       <Text>유상수선 </Text>
-                      <CheckBox
-                          value = {isSelected}
-                          onValueChange = {(newValue) => setSelection(newValue)}
-                        />
+                      
                   </Check>
                 <TotalMoney>
                     <Text>수선비</Text>
