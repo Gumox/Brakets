@@ -10,8 +10,8 @@ export const Row = styled.div`
 export const Field = styled.div`
   height: ${({ height = "30px" }) => height};
   display: flex;
-  align-items: center;
-  margin-right: ${({ marginRight = "20px" }) => marginRight};
+  align-items: ${({alignItems = "center"}) => alignItems};
+  margin-right: ${({ marginRight = "5px" }) => marginRight};
 
   > * {
     margin-right: 5px;
@@ -32,6 +32,6 @@ export const Section = styled.div`
 
 export const SectionRow = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 `;

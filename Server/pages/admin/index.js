@@ -8,19 +8,19 @@ const AdminHome = () => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
-    router.push("/admin/login");
+    router.push("/login");
   };
   return (
     <Wrapper>
       <Title>수선 OK</Title>
       <Logout onClick={handleLogout}>Logout</Logout>
-      <CuetomLink onClick={() => router.push("/admin/reception")}>
+      <CuetomLink onClick={() => router.push("/reception")}>
         수선접수/처리
       </CuetomLink>
-      <CuetomLink onClick={() => router.push("/admin/return")}>
+      <CuetomLink onClick={() => router.push("/return")}>
         하자반품
       </CuetomLink>
-      <CuetomLink onClick={() => router.push("/admin/claim")}>
+      <CuetomLink onClick={() => router.push("/claim")}>
         업체클레임
       </CuetomLink>
     </Wrapper>

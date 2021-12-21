@@ -35,7 +35,7 @@ const signup = async (req, res) => {
     });
 
     // admin 메인 페이지로 이동
-    res.redirect("/admin");
+    res.redirect("/");
   }
 };
 

@@ -51,10 +51,10 @@ export const getServerSideProps = async (ctx) => {
   const { id } = cookies(ctx);
   if (!id || id === "") {
     if (ctx.req && ctx.res) {
-      ctx.res.writeHead(302, { Location: "/admin/login" });
+      ctx.res.writeHead(302, { Location: "/login" });
       ctx.res.end();
     } else {
-      Router.push("/admin/login");
+      Router.push("/login");
     }
   }
   return { props: { id } };

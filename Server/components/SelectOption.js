@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: ${({ labelMarginRight = "5px" }) => labelMarginRight};
-  font-size: ${({ labelFontSize = "15px" }) => labelFontSize};
+  font-size: ${({ labelFontSize = "13px" }) => labelFontSize};
   color: ${({ disabled, color }) =>
     color ? color : disabled ? COLOR.GRAY : COLOR.BLACK};
 `;
@@ -55,6 +55,10 @@ const CustomSelect = styled.select`
   max-width: ${({ maxWidth = "100px" }) => maxWidth};
   height: ${({ height = "20px" }) => height};
   outline: none;
+  appearance: none;
+  padding: 3px 27px 3px 3px;
+  background: url('/arrow-down.png') 95% 50% no-repeat;
+  background-size: 14px 7px;
   border: none;
   font-size: 12px;
 `;
@@ -63,11 +67,8 @@ const SelectBox = styled.div`
   width: 100%;
   height: 100%;
   padding: 1px 0px 1px 5px;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid
-    ${({ disabled }) => (disabled ? COLOR.GRAY : COLOR.BLACK)};
+  border-radius: 5px;
+  border: 1px solid ${COLOR.GRAY};
 `;
 
 export default SelectOption;

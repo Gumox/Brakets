@@ -21,7 +21,7 @@ const ProducInfo = ({
           <Row>
             <Field marginRight="10px">
               <SelectOption
-                title="시즌:"
+                title="시즌"
                 name={PRODUCT.SEASON}
                 options={options.seasonList}
                 value={data[PRODUCT.SEASON] || ""}
@@ -30,7 +30,7 @@ const ProducInfo = ({
             </Field>
             <Field marginRight="10px">
               <Input
-                title="스타일:"
+                title="스타일"
                 name={PRODUCT.STYLE}
                 styleOptions={{ width: "80px" }}
                 value={data[PRODUCT.STYLE] || ""}
@@ -39,7 +39,7 @@ const ProducInfo = ({
             </Field>
             <Field marginRight="10px">
               <Input
-                title="차수:"
+                title="차수"
                 name={PRODUCT.DEGREE}
                 styleOptions={{ width: "30px" }}
                 value={data[PRODUCT.DEGREE] || ""}
@@ -48,7 +48,7 @@ const ProducInfo = ({
             </Field>
             <Field marginRight="10px">
               <Input
-                title="컬러:"
+                title="컬러"
                 name={PRODUCT.COLOR}
                 styleOptions={{ width: "30px" }}
                 value={data[PRODUCT.COLOR] || ""}
@@ -57,7 +57,7 @@ const ProducInfo = ({
             </Field>
             <Field marginRight="10px">
               <Input
-                title="사이즈:"
+                title="사이즈"
                 name={PRODUCT.SIZE}
                 styleOptions={{ width: "30px" }}
                 value={data[PRODUCT.SIZE] || ""}
@@ -93,7 +93,7 @@ const ProducInfo = ({
             </Field>
             <Field marginRight="10px">
               <Input
-                title="대체품번"
+                title="수선대체상품"
                 name={RECEIPT.SUBSTITUE}
                 styleOptions={{ width: "20px" }}
                 value={data[RECEIPT.SUBSTITUE]}
@@ -103,14 +103,18 @@ const ProducInfo = ({
           </Row>
         </Section>
         <Section>
-          <ProductImage imageUrl={data[PRODUCT.IMAGE]} onClick={handleProductImageClick}/>
+          {data[PRODUCT.IMAGE] && <ProductImage imageUrl={data[PRODUCT.IMAGE]} onClick={handleProductImageClick}/>}
         </Section>
       </SectionRow>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
-  margin: 0px 5px 5px 15px;
+width: 40%;
+  margin: 0px 15px 5px 5px;
+  padding: 10px;
+  border: 2px solid ${COLOR.BORDER_MAIN};
+  border-radius: 5px;
 `;
 
 const ProductImage = styled.div`

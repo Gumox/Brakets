@@ -4,9 +4,9 @@ import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
-import Header from '../../components/Header'
+import Header from '../components/Header'
 
-const Sms = () => {
+const SmsResult = () => {
   const router = useRouter()
   return (
       <Header path={router.pathname}/>
@@ -18,4 +18,4 @@ export const getServerSideProps = async (ctx) => {
 };
 
 
-export default Sms;
+export default SmsResult;

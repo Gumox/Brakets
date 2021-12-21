@@ -15,13 +15,19 @@ const HeaderButton = ({ title, link, path }) => {
 
 const Wrapper = styled.div`
   width: 11%;
-  height: 26px;
-  padding: 2px 0;
-  text-align: center;
-  background-color: ${({ selected }) => (selected ? COLOR.MENU_MAIN : COLOR.WHITE)};
-  color: ${({ selected }) => (selected ? COLOR.WHITE : COLOR.MENU_MAIN)};
-  border: 1px solid ${COLOR.MENU_MAIN};
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ selected }) => (selected ? COLOR.MENU_SELECTED : COLOR.MENU_MAIN)};
+  color: ${COLOR.TEXT_MAIN};
+  font-weight: bold;
+  font-size: 15px;
   cursor: pointer;
+
+  &: hover {
+    background-color: ${COLOR.MENU_SELECTED};
+  }
 `;
 
 export default HeaderButton;

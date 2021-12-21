@@ -25,12 +25,13 @@ const TextArea = ({
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+`;
 
 const CustomLabel = styled.div`
   white-space: nowrap;
   margin: 5px 0 0 0;
-  font-size: ${({ labelFontSize = "15px" }) => labelFontSize};
+  font-size: ${({ labelFontSize = "13px" }) => labelFontSize};
 `;
 
 const CustomTextArea = styled.textarea`
@@ -38,6 +39,7 @@ const CustomTextArea = styled.textarea`
   width: ${({ width = "250px" }) => width};
   height: ${({ height = "100px" }) => height};
   outline: transparent;
+  border-radius: 5px;
 `;
 
 export default TextArea;

@@ -1,19 +1,22 @@
 import React from "react";
+import cookies from "next-cookies";
+import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
-import Header from "../../components/Header";
-import Return from "../../components/return";
+import Header from "../components/Header";
+import Claim from "../components/claim";
 
-const ReturnPage = (props) => {
+const ClaimPage = (props) => {
   const router = useRouter();
   return (
     <>
       <Header path={router.pathname} />
-      <Return {...props} />
+      <Claim {...props}/>
     </>
   );
 };
+
 
 export const getServerSideProps = async (ctx) => {
   const {
@@ -33,7 +36,7 @@ export const getServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/admin/login",
+        destination: "/login",
       },
     };
   }
@@ -51,4 +54,4 @@ export const getServerSideProps = async (ctx) => {
   };
 };
 
-export default ReturnPage;
+export default ClaimPage;

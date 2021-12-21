@@ -180,7 +180,7 @@ const ReceiptInfo = ({
             </Field>
             <Field marginRight="0px">
               <Input
-                title="대체품"
+                title="수선대체상품"
                 styleOptions={{ width: "70px", color: COLOR.RED }}
               />
             </Field>
@@ -326,8 +326,12 @@ const ReceiptInfo = ({
   );
 };
 const Wrapper = styled.div`
+width: 50%;
   position: relative;
   margin: 0px 15px 5px 5px;
+  padding: 10px;
+  border: 2px solid ${COLOR.BORDER_MAIN};
+  border-radius: 5px;
 `;
 
 const CustomRow = styled.div`
@@ -351,13 +355,15 @@ const ReportButton = styled.button`
 `;
 const SaveButton = styled.button`
   min-height: max-content;
-  width: 100px;
-  background-color: ${COLOR.ORANGE};
+  width: 150px;
+  height: 35px;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: ${COLOR.BORDER_MAIN};
   color: ${COLOR.WHITE};
   padding: 5px;
-  border-radius: 5px;
-  border: 2px solid ${COLOR.ORANGE};
-  word-break: keep-all;
+  border-radius: 15px;
+  border: 2px solid ${COLOR.BORDER_MAIN};
 `;
 
 export default ReceiptInfo;

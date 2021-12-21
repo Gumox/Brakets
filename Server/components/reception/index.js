@@ -21,6 +21,7 @@ const Reception = ({ options, user }) => {
     []
   );
   const [inputData, setInputData] = useState({
+    brandId: options.brandList[0].value,
     storeName: options.storeList[0].value,
     season: options.seasonList[0].value,
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,

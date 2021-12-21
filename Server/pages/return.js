@@ -1,22 +1,19 @@
 import React from "react";
-import cookies from "next-cookies";
-import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
-import Header from "../../components/Header";
-import PaidRepair from "../../components/paid-repair";
+import Header from "../components/Header";
+import Return from "../components/return";
 
-const PaidRepairPage = (props) => {
+const ReturnPage = (props) => {
   const router = useRouter();
   return (
     <>
       <Header path={router.pathname} />
-      <PaidRepair {...props}/>
+      <Return {...props} />
     </>
   );
 };
-
 
 export const getServerSideProps = async (ctx) => {
   const {
@@ -36,7 +33,7 @@ export const getServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/admin/login",
+        destination: "/login",
       },
     };
   }
@@ -54,4 +51,4 @@ export const getServerSideProps = async (ctx) => {
   };
 };
 
-export default PaidRepairPage;
+export default ReturnPage;

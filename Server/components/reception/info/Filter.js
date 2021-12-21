@@ -152,7 +152,7 @@ const FilterInfo = ({
         </Field>
         <Field>
           <Input
-            title="스타일:"
+            title="스타일"
             name="style"
             disabled={!data["isStyleType"]}
             value={data["style"]}
@@ -200,7 +200,7 @@ const Wrapper = styled.div`
 const Title = styled.div`
   position: absolute;
   top: -10px;
-  width: 50px;
+  width: 100px;
   height: 20px;
   font-size: 13px;
   text-align: center;
@@ -211,25 +211,26 @@ const Title = styled.div`
 
 const SearchButton = styled.button`
   position: absolute;
-  bottom: -20px;
+  bottom: 5px;
   right: 10px;
-  width: 80px;
-  height: 30px;
+  width: 150px;
+  height: 35px;
   font-size: 17px;
+  font-weight: bold;
   text-align: center;
   color: ${COLOR.WHITE};
   border: 2px solid ${COLOR.FILTER_MAIN};
   background-color: ${COLOR.FILTER_MAIN};
-  border-radius: 5px;
+  border-radius: 15px;
 `;
 
 const SmsButton = styled.button`
   height: 25px;
-  background-color: ${COLOR.BLACK};
+  background-color: ${COLOR.FILTER_MAIN};
   color: ${COLOR.WHITE};
   margin: 0 15px;
   padding: 0 20px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
 `;
 

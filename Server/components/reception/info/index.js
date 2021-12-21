@@ -37,16 +37,16 @@ const ReceptionInfo = ({
           handleSearchButtonClick={handleSearchButtonClick}
         />
         <Section>
+          <StoreInfo
+            options={options}
+            data={data}
+            handleValueChange={handleTargetValueChange}
+          />
           <ProducInfo
             options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
             handleProductImageClick={handleProductImageClick}
-          />
-          <StoreInfo
-            options={options}
-            data={data}
-            handleValueChange={handleTargetValueChange}
           />
         </Section>
         <Section>
@@ -77,10 +77,6 @@ const SubWrapper = styled.div`
 
 const Section = styled.div`
   display: flex;
-
-  > div {
-    width: 50%;
-  }
 `;
 
 export default ReceptionInfo;

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
-import Header from "../../components/Header";
-import CashReceipt from "../../components/cash-receipt";
+import Header from "../components/Header";
+import CashReceipt from "../components/cash-receipt";
 
 const CashReceiptPage = (props) => {
   const router = useRouter();
@@ -36,7 +36,7 @@ export const getServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/admin/login",
+        destination: "/login",
       },
     };
   }

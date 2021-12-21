@@ -6,7 +6,7 @@ const logout = async (req, res) => {
       httpOnly: true,
       path: "/",
     });
-    res.redirect("/admin/login");
+    res.redirect("/login");
   }
 };
 

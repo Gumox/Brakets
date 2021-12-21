@@ -17,34 +17,10 @@ import Checkbox from "../../Checkbox";
 
 const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
   return (
-      <Wrapper>
-        <Container>
+    <Wrapper>
+      <Container>
         <SectionRow>
           <Section marginRight="10px">
-            <Row>
-              <Field marginRight="0px">
-                <SelectOption
-                  title="고객요구"
-                  name={RECEIPT.TYPE}
-                  options={RECEIPT_TYPE_OPTIONS}
-                  value={data[RECEIPT.TYPE]}
-                  // onChange={handleValueChange}
-                  styleOptions={{ width: "120px", maxWidth: "120px" }}
-                />
-              </Field>
-            </Row>
-            <Row>
-              <Field marginRight="0px">
-                <SelectOption
-                  title="제품구분"
-                  name={DETAIL.PRODUCT_CATEGORY_ID}
-                  options={options.productCategoryList}
-                  value={data[DETAIL.PRODUCT_CATEGORY_ID] } // details last index pcategory_id
-                  // onChange={handleValueChange}
-                  styleOptions={{ width: "120px", maxWidth: "120px" }}
-                />
-              </Field>
-            </Row>
             <Row>
               <Field marginRight="0px">
                 <SelectOption
@@ -53,18 +29,13 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                   options={options.repairList}
                   value={data[DETAIL.REPAIR_PLACE]} // details last index receiver
                   // onChange={handleValueChange}
-                  styleOptions={{ width: "120px", maxWidth: "120px", labelMarginRight: "20px" }}
+                  styleOptions={{
+                    width: "120px",
+                    maxWidth: "120px",
+                    labelMarginRight: "20px",
+                  }}
                 />
               </Field>
-            </Row>
-          </Section>
-          <Section>
-            <Row alignItems="flex-start">
-              <TextArea
-                title="매장접수내용:"
-                styleOptions={{ width: "400px", height: "70px" }} // details first index message
-              />
-              <ImageButton>사진보기</ImageButton>
             </Row>
           </Section>
         </SectionRow>
@@ -116,34 +87,39 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 />
               </Field>
             </Row>
-            {data.details?.map((detail, index) => <Row key={detail[DETAIL.ID]}>
-              <Field marginRight="10px">
-                <SelectOption
-                  title={`수선내용${index+1}:`}
-                  // name={PRODUCT.SEASON}
-                  options={OPTIONS}
-                  // value={data[PRODUCT.SEASON]}
-                  // onChange={handleValueChange}
-                />
-              </Field>
-              {/* <Field>
+            {data.details?.map((detail, index) => (
+              <Row key={detail[DETAIL.ID]}>
+                <Field marginRight="10px">
+                  <SelectOption
+                    title={`수선내용${index + 1}:`}
+                    // name={PRODUCT.SEASON}
+                    options={OPTIONS}
+                    // value={data[PRODUCT.SEASON]}
+                    // onChange={handleValueChange}
+                  />
+                </Field>
+                {/* <Field>
                 <Input title="수량" styleOptions={{ width: "15px" }} />
               </Field> */}
-              <Field marginRight="10px">
-                <Input
-                  title={`수선비${index+1}`}
-                  name={DETAIL.CHARGE}
-                  value={detail[DETAIL.CHARGE]}
-                  styleOptions={{ width: "70px" }}
-                />
-              </Field>
-              <Field marginRight="0px">
-                <Checkbox title={`재수선${index+1}`} />
-              </Field>
-            </Row>)}
+                <Field marginRight="10px">
+                  <Input
+                    title={`수선비${index + 1}`}
+                    name={DETAIL.CHARGE}
+                    value={detail[DETAIL.CHARGE]}
+                    styleOptions={{ width: "70px" }}
+                  />
+                </Field>
+                <Field marginRight="0px">
+                  <Checkbox title={`재수선${index + 1}`} />
+                </Field>
+              </Row>
+            ))}
           </Section>
           <Section>
-            <TextArea title="수선처설명:" styleOptions={{ width: "290px", height: "100px" }}/>
+            <TextArea
+              title="수선처설명:"
+              styleOptions={{ width: "290px", height: "100px" }}
+            />
           </Section>
         </SectionRow>
         <Row>
@@ -172,13 +148,16 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <Input title="발송비용" styleOptions={{ width: "70px" }} />
           </Field>
         </Row>
-        </Container>
-      </Wrapper>
+      </Container>
+    </Wrapper>
   );
 };
 const Wrapper = styled.div`
   width: 50%;
   margin: 0px 5px 5px 15px;
+  padding: 10px;
+  border: 2px solid ${COLOR.BORDER_MAIN};
+  border-radius: 5px;
 `;
 
 const Container = styled.div`

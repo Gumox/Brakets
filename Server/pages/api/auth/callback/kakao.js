@@ -46,7 +46,7 @@ const kakao = async (req, res) => {
         path: "/",
         maxAge: THIRTY_MINUTES,
       });
-      res.redirect("/admin/signup");
+      res.redirect("/signup");
     } else {
       // 없으면
       // 해당 데이터로 token 만들어서 cookie 에 넣고
@@ -56,7 +56,7 @@ const kakao = async (req, res) => {
         httpOnly: true,
         path: "/",
       });
-      res.redirect("/admin");
+      res.redirect("/");
     }
   }
 };

@@ -40,7 +40,7 @@ const Wrapper = styled.div`
 const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: 5px;
-  font-size: ${({ labelFontSize = "15px" }) => labelFontSize};
+  font-size: ${({ labelFontSize = "13px" }) => labelFontSize};
   color: ${({ disabled, color }) =>
     color ? color : disabled ? COLOR.GRAY : COLOR.BLACK};
 `;
@@ -61,11 +61,10 @@ const InputBox = styled.div`
   width: 100%;
   height: 100%;
   padding: ${({ padding = "1px 10px" }) => padding};
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid
-    ${({ disabled }) => (disabled ? COLOR.GRAY : COLOR.BLACK)};
+  border-radius: 5px;
+  border: 1px solid 
+    ${({ disabled }) => (disabled ? 'none' : COLOR.GRAY)};
+  background-color: ${({ disabled }) => (disabled ? COLOR.LIGHT_GRAY : COLOR.WHITE)};
 `;
 
 export default Input;

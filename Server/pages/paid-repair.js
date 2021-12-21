@@ -4,15 +4,15 @@ import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
-import Header from "../../components/Header";
-import Claim from "../../components/claim";
+import Header from "../components/Header";
+import PaidRepair from "../components/paid-repair";
 
-const ClaimPage = (props) => {
+const PaidRepairPage = (props) => {
   const router = useRouter();
   return (
     <>
       <Header path={router.pathname} />
-      <Claim {...props}/>
+      <PaidRepair {...props}/>
     </>
   );
 };
@@ -36,7 +36,7 @@ export const getServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/admin/login",
+        destination: "/login",
       },
     };
   }
@@ -54,4 +54,4 @@ export const getServerSideProps = async (ctx) => {
   };
 };
 
-export default ClaimPage;
+export default PaidRepairPage;
