@@ -74,10 +74,13 @@ function ShopStepThree( { navigation } ) {
     console.log(obj.category_name+ " : " + obj.receiver_name);
     
   });
-  
+  if(itemList[0]==undefined){
+    itemList.push({ label: '...', value: '...' })
+  }
   React.useEffect(()=>{
     console.log(Categories)
     console.log(itemList)
+    
     const backAction = () => {
         store.dispatch({type:'SELECTTYPESET',set:[]});
         navigation.goBack();
@@ -170,6 +173,7 @@ function ShopStepThree( { navigation } ) {
               console.log(store.getState().indexNumber);
               store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
               console.log(store.getState().selectType);
+              store.dispatch({type:'DRAW',drawingImage: ""});
               
               console.log("");
               console.log("");

@@ -9,7 +9,7 @@ export default createStore(function(state,action){
         return{
             cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", 
             selectType:[],bagPicture:"", photoArr:[],indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
-            typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[]}
+            typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:""}
     }
     if(action.type ==='PHOTO'){
         return{...state, photo: action.photo };
@@ -18,7 +18,9 @@ export default createStore(function(state,action){
     if(action.type ==='DETAIL_PHOTO'){
         return{...state, detailPhoto: action.detailPhoto };
     }
-    
+    if(action.type ==='DRAW'){
+        return{...state, drawingImage: action.drawingImage };
+    }
 
     if(action.type ==='SERVICECAED'){
         return{...state, cardValue: action.value };
