@@ -13,7 +13,7 @@ import _ from 'lodash';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import ButtonBlack from '../../components/ButtonBlack';
-
+import ViewShot from "react-native-view-shot";
 
 const CenterView =styled.View`
   flex:1;
@@ -41,53 +41,87 @@ const ContainerBlack = styled.View`
   flex :1
   align-items: center;
 `;
+const ImageView = styled.View`
 
+  align-items: center;
+`;
+
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 function ShopStepThree2 ({ navigation ,route}) {
 
-  const [modalVisible, setModalVisible] = React.useState(false);
 
   const imageArray =store.getState().photoArr;
 
+  const viewShot = React.useRef();
   
-  const [imgUri,setImageUri] =React.useState(store.getState().photo);
-  console.log('in shop step 3 -2')
-  
-  React.useEffect(()=>{
-    //setImageUri(store.getState.photo);
-  },[]);
+  const imgUri=store.getState().photo;
 
-  
+  const imageUri = store.getState().photo;
+  const imageUri2 = store.getState().drawingImage;
+
+
+
+  const imgUri2 =store.getState().drawingImage;
+
+  console.log(" imgUri2 : "+ imgUri2 )
   const imageP = { uri: imgUri };
+  var drawingImage
+  const imageD = { uri: imgUri2 };
+  if (imgUri2 != ""){
+    console.log("has")
+    drawingImage = (
+      <View style={styles.image}>
+        
+        <Image source={imageP} resizeMode="cover" style={styles.image1}/>
+        <Image source={imageD} resizeMode="cover" style={styles.image2}/>
+       
+      </View>
+    )
+  }else{
+    console.log("no")
+    drawingImage = (
+      <Image source={imageP} resizeMode="cover" style={styles.image}/>
+    );
+  }
 
-  const styles = StyleSheet.create({
-    
-    
-    image: {
-      flex:1,
-      width: "95%",
-      height:"95%",
-      justifyContent: "center",
-      margin:10,
-    },
+  const capture = () =>{
+    viewShot.current.capture().then(uri => {
+      console.log('do something with ', uri);
+      store.dispatch({type:'PHOTO',photo: uri});
+    });
+  }
+  React.useEffect(() => {
+    wait(250).then(() => {
+      if(imgUri2 != ""){
+        capture();
+      }
+    });
+    console.log("??")
+    //capture();
+  }, [])
 
-  });
+  
+
   return (
     <ContainerBlack>
-     
-                                  
+      <ViewShot ref={viewShot} style ={styles.img} options={{format: 'jpg', quality: 0.9}}>
+
+      {drawingImage}
       
-      <Image source={imageP} resizeMode="cover" style={styles.image}/>
-           
+      </ViewShot>
+                    
       <BottomItemBox>
 
       <TouchableView onPress={ ()=> {
         store.dispatch({type:'PHOTORESET',setPhoto:[]});
+        store.dispatch({type:'DRAW',drawingImage: ""});
         navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}}><StepText>다시 찍기</StepText></TouchableView>
       <TouchableView onPress={()=>{ 
-       
         
         if(route.params === undefined){
-          navigation.replace('ShopStepThree3')
+          navigation.navigate('ShopStepThree3')
         }
         else if(route.params.toGo=== "PhotoControl"){
           const params = route.params; 
@@ -98,7 +132,6 @@ function ShopStepThree2 ({ navigation ,route}) {
         }}><StepText>그리기</StepText></TouchableView>
       <TouchableView onPress={()=> 
       { 
-        console.log(route.params);
         if(route.params === undefined){
           
           navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
@@ -122,5 +155,46 @@ function ShopStepThree2 ({ navigation ,route}) {
   );
 }
 
-
+const styles = StyleSheet.create({
+    
+    
+  image: {
+    flex:1,
+    width: "99%",
+    height:"99%",
+    margin :10,
+    justifyContent: "center",
+    margin:10,
+  },
+  img: {
+    flex:1,
+    width: "100%",
+    height:"100%",
+    justifyContent: "center",
+    alignItems: 'center',
+    
+  },
+  image1: {
+    width: "100%",
+    height:"100%",
+    justifyContent: "center",
+    alignItems: 'center',
+    position : 'absolute',
+    left:0,
+    top:0,
+   
+  },
+  image2: {
+    
+    width: "100%",
+    height:"100%",
+    justifyContent: "center",
+    alignItems: 'center',
+    position : 'absolute',
+    left:0,
+    top:0,
+   
+  }
+  
+  });
 export default ShopStepThree2;

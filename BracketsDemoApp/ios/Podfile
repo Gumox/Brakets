@@ -19,6 +19,8 @@ target 'DempApp' do
 
   pod 'RNImageTools', :path => '../node_modules/react-native-image-tools-wm'
 
+  pod 'react-native-view-shot', :path => '../node_modules/react-native-view-shot'
+
   target 'DempAppTests' do
     inherit! :complete
     # Pods for testing

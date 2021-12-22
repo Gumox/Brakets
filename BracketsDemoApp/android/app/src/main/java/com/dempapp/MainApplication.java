@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import fr.greweb.reactnativeviewshot.RNViewShotPackage;
+import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.reactlibrary.RNSketchViewPackage;
 import net.wowmaking.RNImageToolsPackage;
 import com.reactlibrary.RNSketchViewPackage;

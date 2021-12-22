@@ -117,7 +117,7 @@ function ProductInfo({navigation, route}) {
                 { text: "확인"},
             ]
         )
-        navigation.goBack()
+        //navigation.goBack()
     })
 
 
