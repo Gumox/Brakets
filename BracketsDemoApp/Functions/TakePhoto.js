@@ -93,10 +93,10 @@ export default class TakePhoto extends Component {
 
     //console.log("go");
     if (this.camera) {
-      const options = { quality: 0.9, base64: true, skipProcessing: true }
+      const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
       const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
       const imgUri = data.uri;
-     
+      RNCamera.Constants.AutoFocus.on
       
       console.log (imgUri);
 

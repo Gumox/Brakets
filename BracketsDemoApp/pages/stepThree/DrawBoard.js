@@ -11,8 +11,6 @@ import SketchDraw from 'react-native-sketch-draw';
 import store from '../../store/store';
 
 import RNImageTools from 'react-native-image-tools-wm';
-
-import ViewShot from "react-native-view-shot";
 const SketchDrawConstants = SketchDraw.constants;
  
 const tools = {};
@@ -49,9 +47,7 @@ export default class DrawBoard extends Component {
     getToolName() {
         return tools[this.state.toolSelected].name;
     }
-    wait = (timeout) => {
-        return new Promise(resolve => setTimeout(resolve, timeout));
-      }
+ 
     onSketchSave(saveEvent) {
         this.props.onSave && this.props.onSave(saveEvent);
         //console.log(saveEvent.localFilePath)
@@ -67,17 +63,17 @@ export default class DrawBoard extends Component {
         
         const image1 = "file://"+this.props.localSourceImagePath;
         const image2 = "file://"+saveEvent.localFilePath;
+
         store.dispatch({type:'DRAW',drawingImage: image2});
             if(params === undefined){
+                
                 this.props.navigation.replace("ShopStepThree2");
-      
-               
+                
             }else if(params['toGo'] == 'PhotoControl'){
                 
-                this.props.navigation.replace('PhotoControl',{index: params.index,value: mergedImage.uri});
+                this.props.navigation.replace('Capture');
                
             }
-
         
     }
     

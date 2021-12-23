@@ -41,6 +41,7 @@ import ScanScreen from './Functions/ScanScreen';
 import TakePhoto from './Functions/TakePhoto';
 import BarcodeScreen from './Functions/BarcodeScreen';
 import PhotoControl from './Functions/PhotoControl';
+import Capture from './Functions/Capture';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -93,6 +94,7 @@ function App() {
         <Stack.Screen name="TakePhoto" component={TakePhoto} options={{ headerShown: false }}  />
         <Stack.Screen name="BarcodeScreen" component={BarcodeScreen}  options={{ title: '스캔' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="PhotoControl" component={PhotoControl} options={{ headerShown: false }}  />
+        <Stack.Screen name="Capture" component={Capture} options={{ headerShown: false }}  />
       </Stack.Navigator>
     </NavigationContainer>
   );

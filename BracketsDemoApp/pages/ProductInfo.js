@@ -141,7 +141,7 @@ function ProductInfo({navigation, route}) {
                         // }
                     />
 
-                    <Label>품번</Label>
+                    <Label>스타일 No.</Label>
 
                     <Input 
                         editable={false} 

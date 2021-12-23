@@ -35,9 +35,9 @@ export default class Capture extends Component{
             { this.refs.viewShot.capture().then(uri => {
                 console.log("do something with ", uri);
                 store.dispatch({type:'PHOTO',photo: uri});
-                wait(1000).then(() => {
+                wait(250).then(() => {
     
-                    this.props.navigation.replace("ShopStepThree2")
+                    this.props.navigation.replace('PhotoControl',{index: 0,value: uri});
                 });
               });}
             }>
