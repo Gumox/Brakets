@@ -15,7 +15,7 @@ import TakeOverPage4 from './pages/takeOver/TakeOverPage4';
 import LookupPage from './pages/lookup/LookupPage'
 import LookupPage2 from './pages/lookup/LookupPage2';
 import LookupPage3 from './pages/lookup/LookupPage3';
-import Mypage from './pages/mypage/Mypage';
+import Setting from './pages/setting/Setting';
 import ReceiptDivision from './pages/receipt/ReceiptDivision';
 
 import ShopStepOne from './pages/ShopStepOne';
@@ -59,7 +59,7 @@ function App() {
         <Stack.Screen name="LookupPage2" component={LookupPage2} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="LookupPage3" component={LookupPage3} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
 
-        <Stack.Screen name="MyPage" component={Mypage} options={{  title: '마이페이지' ,headerTitleAlign: 'center'}}/>
+        <Stack.Screen name="Setting" component={Setting} options={{  title: '설정' ,headerTitleAlign: 'center'}}/>
         
         
         <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{  title: '',headerTitleAlign: 'center' }} />

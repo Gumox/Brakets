@@ -65,6 +65,8 @@ export default function PhotoControl({ navigation ,route}){
         console.log(  "value: " +selected.value+"    index: "+selected.index);
         if(selected.index>1){
             DeletePhoto();
+        }else{
+            store.dispatch({type:'DRAW',drawingImage: ""});
         }
         navigation.replace("TakePhoto",{key:"RetakePhoto",index:selected.index});
 

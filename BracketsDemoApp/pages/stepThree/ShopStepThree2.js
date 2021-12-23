@@ -4,7 +4,7 @@ import Container from "../../components/Container";
 import ImageZoom from "react-native-image-pan-zoom";
 import store from "../../store/store";
 
-import { Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text  } from "react-native";
+import {  Alert ,Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text  } from "react-native";
 
 
 import Button from '../../components/Button';
@@ -23,21 +23,22 @@ const CenterView =styled.View`
 
 const BottomItemBox = styled.View`
   flex-direction: row;
-  width:100%
-  justify-content: space-between;
-  background-color : #000000;
-  margin-left : 20px;
-  margin-right : 20px;
+  
+  justify-content: space-around;
+ 
 `;
-const TouchableView = styled.TouchableOpacity`
-    margin:10px
+const TouchableView = styled.TouchableHighlight`
+    flex:1
+    align-items: center;
+    padding:10px
+    background-color : #000000;
 `;
 const StepText = styled.Text`
   color : #FFFFFF
   font-size:15px
 `;
 const ContainerBlack = styled.View`
-  background-color : #000000;
+  
   flex :1
   align-items: center;
 `;
@@ -51,17 +52,9 @@ const wait = (timeout) => {
 }
 function ShopStepThree2 ({ navigation ,route}) {
 
-
-  const imageArray =store.getState().photoArr;
-
   const viewShot = React.useRef();
   
   const imgUri=store.getState().photo;
-
-  const imageUri = store.getState().photo;
-  const imageUri2 = store.getState().drawingImage;
-
-
 
   const imgUri2 =store.getState().drawingImage;
 
@@ -107,21 +100,21 @@ function ShopStepThree2 ({ navigation ,route}) {
   return (
     <ContainerBlack>
       <ViewShot ref={viewShot} style ={styles.img} options={{format: 'jpg', quality: 0.9}}>
-
+      
       {drawingImage}
       
       </ViewShot>
                     
       <BottomItemBox>
 
-      <TouchableView onPress={ ()=> {
+      <TouchableView underlayColor={"#CCC"} onPress={ ()=> {
         store.dispatch({type:'PHOTORESET',setPhoto:[]});
         store.dispatch({type:'DRAW',drawingImage: ""});
         navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}}><StepText>다시 찍기</StepText></TouchableView>
-      <TouchableView onPress={()=>{ 
+      <TouchableView underlayColor={"#CCC"} onPress={()=>{ 
         
         if(route.params === undefined){
-          navigation.navigate('ShopStepThree3')
+          navigation.replace('ShopStepThree3')
         }
         else if(route.params.toGo=== "PhotoControl"){
           const params = route.params; 
@@ -130,20 +123,30 @@ function ShopStepThree2 ({ navigation ,route}) {
         }
         
         }}><StepText>그리기</StepText></TouchableView>
-      <TouchableView onPress={()=> 
+      <TouchableView  underlayColor={"#CCC"} onPress={()=> 
       { 
-        if(route.params === undefined){
-          
-          navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
-        }
-        else if( route.params.key === "CloseShot"){
-          console.log("CloseShot");
-          navigation.replace('TakePhoto', {key :route.params.key,value:route.params.value ,index :route.params.index,toGo:route.params.toGo}); 
-        
-        }
-        else if(route.params.toGo=== "PhotoControl"){
-          console.log(route.params);
-          //navigation.replace('PhotoControl', {key :route.params.key,value:route.params.value }); 
+        if(imgUri2 != ""){
+          if(route.params === undefined){
+            
+            navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
+          }
+          else if(route.params.toGo=== "PhotoControl"){
+            console.log(route.params);
+            //navigation.replace('PhotoControl', {key :route.params.key,value:route.params.value }); 
+          }
+        }else{
+          Alert.alert(
+            "",
+            "수선 부위를 표시해 주세요",
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
         }
       }
       }><StepText>사진 사용</StepText></TouchableView>
@@ -160,11 +163,10 @@ const styles = StyleSheet.create({
     
   image: {
     flex:1,
-    width: "99%",
-    height:"99%",
-    margin :10,
+    width: "100%",
+    height:"100%",
     justifyContent: "center",
-    margin:10,
+    
   },
   img: {
     flex:1,

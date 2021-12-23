@@ -12,7 +12,25 @@ import {
     TouchableOpacity
 } from 'react-native';
 import store from '../store/store';
+import styled from "styled-components";
 import Container from "../components/Container";
+
+
+const BottomItemBox = styled.View`
+  flex-direction: row;
+  width:100%
+  justify-content: space-around;
+  background-color : #000000;
+`;
+
+const TouchableView = styled.TouchableOpacity`
+    margin-bottom:10px
+`;
+const StepText = styled.Text`
+  color : #FFFFFF
+  font-size:15px
+`;
+
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -31,17 +49,28 @@ export default class Capture extends Component{
             <Image  source={{ uri: imageUri2}} resizeMode="cover" style ={styles.image2}/>
             
         </ViewShot>
-            <TouchableOpacity onPress={()=> 
-            { this.refs.viewShot.capture().then(uri => {
-                console.log("do something with ", uri);
-                store.dispatch({type:'PHOTO',photo: uri});
-                wait(250).then(() => {
-    
-                    this.props.navigation.replace('PhotoControl',{index: 0,value: uri});
-                });
-              });}
-            }>
-        <Text>사진 사용</Text></TouchableOpacity>
+        <BottomItemBox>
+            <TouchableView onPress={ ()=> {
+            store.dispatch({type:'PHOTORESET',setPhoto:[]});
+            store.dispatch({type:'DRAW',drawingImage: ""});
+            navigation.replace("TakePhoto",{key:"RetakePhoto",index:selected.index});
+            }}>
+            <StepText>다시 찍기</StepText>
+            </TouchableView>
+            
+            <TouchableView onPress={()=> 
+                { this.refs.viewShot.capture().then(uri => {
+                    console.log("do something with ", uri);
+                    store.dispatch({type:'PHOTO',photo: uri});
+                    wait(250).then(() => {
+        
+                        this.props.navigation.replace('PhotoControl',{index: 0,value: uri});
+                    });
+                });}
+                }>
+            <StepText>사진 사용</StepText>
+            </TouchableView>
+        </BottomItemBox>
       </Container>
 
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image ,View, Text} from 'react-native';
 import Contents from '../components/Contents';
 import styled from 'styled-components/native';
 import SelectButton from '../components/SelectButton';
@@ -13,7 +14,7 @@ const Label = styled.Text`
     margin: 20px;
 `;
 const PView = styled.View`
-    flex:1;
+    
     flex-direction: row;
     padding-bottom:24px;
     justify-content: center;
@@ -32,19 +33,24 @@ const BlueText = styled.Text`
     font-weight: bold;
     font-size: 20px;
     color:#78909c;
-    margin-Top:50px
+    margin-Top:40px
 `;
 const GrayText = styled.Text`
     font-size: 20px;
     color:#858585;
 `;
 const TopStateView = styled.View`
-    flex:1;
+    
     flex-direction: row;
-    padding-bottom:24px;
+    padding:24px;
     justify-content: center;
 `;
 
+const ImgIcon =styled.Image`
+    width: 45px;
+    height: 48px;
+    padding : 5px;
+`;
 function ShopStepTwo({navigation}) {
     const [data, setData] = React.useState([]);
     const [isLoading, setLoading] = React.useState(true);
@@ -71,6 +77,8 @@ function ShopStepTwo({navigation}) {
             console.log(data);
             store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
             console.log(store.getState().getProductCategory);
+            store.dispatch({type:'REQUIREMENT',requirement: "수선"});
+            
             setLoading(false);
            
         } catch (error) {
@@ -84,20 +92,40 @@ function ShopStepTwo({navigation}) {
     
     return (
         <Container>
-            <CenterText>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
+            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
+                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text>
+                </View>
+                <Text>  </Text>
+                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
+            </View>
+            <CenterText>
+            
                 <TopIntro>제품 정보</TopIntro>
                 <BlueText>요구 사항</BlueText>
                 <GrayText>을 선택하세요</GrayText>
                   
             </CenterText>  
             <PView>
-                <CenterView><SelectButton onPress={ ()=> {
-                    getProductCategory();}
+                <CenterView><SelectButton iconImg = {<ImgIcon source={require('../Icons/repair_blue.png')}/>} onPress={ ()=> {
+                    getProductCategory();
 
-                }>수선</SelectButton>
-                <SelectButton>교환</SelectButton></CenterView>
-                <CenterView><SelectButton>환불</SelectButton><SelectButton>심의</SelectButton></CenterView>
+                }}>수선</SelectButton>
+                <SelectButton  iconImg = {<ImgIcon source={require('../Icons/exchange_blue.png')}/>} onPress={ ()=> {
+                     store.dispatch({type:'REQUIREMENT',requirement: "교환"});
+                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
+                    navigation.navigate( 'ScanScreen',{key:'ShopStepFour2'} )
+                }}>교환</SelectButton></CenterView>
+                <CenterView><SelectButton iconImg = {<ImgIcon source={require('../Icons/refund_blue.png')}/>} onPress={ ()=> {
+                    store.dispatch({type:'REQUIREMENT',requirement:  "환불"});
+                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
+                    navigation.navigate( 'ScanScreen',{key:'ShopStepFour2'} )
+                }}>환불</SelectButton>
+                <SelectButton iconImg = {<ImgIcon source={require('../Icons/deliberating_blue.png')}/>} onPress={ ()=> {
+                     store.dispatch({type:'REQUIREMENT',requirement:  "심의"});
+                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
+                    navigation.navigate( 'ScanScreen',{key:'ShopStepFour2'} )
+                }}>심의</SelectButton></CenterView>
             </PView>  
             <Label>접수 유형 알아보기</Label>
             <Bottom navigation={navigation}/>

@@ -108,7 +108,7 @@ export default class TakePhoto extends Component {
       else if (route.params.key === 'ShopStepThree4'){
           
         store.dispatch({type:'DETAIL_PHOTO',detailPhoto:imgUri});
-        console.log("???????");
+
         console.log(store.getState().detailPhoto)
         this.props.navigation.replace(route.params.key);
       } 

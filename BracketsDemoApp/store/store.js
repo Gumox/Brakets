@@ -7,7 +7,7 @@ export default createStore(function(state,action){
 
 
         return{
-            cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", 
+            cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",
             selectType:[],bagPicture:"", photoArr:[],indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
             typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:""}
     }
@@ -20,6 +20,12 @@ export default createStore(function(state,action){
     }
     if(action.type ==='DRAW'){
         return{...state, drawingImage: action.drawingImage };
+    }
+    if(action.type ==='REQUIREMENT'){
+        return{...state, requirement: action.requirement };
+    }
+    if(action.type ==='RECEPITION_DIVISION'){
+        return{...state, receptionDivision: action.receptionDivision };
     }
 
     if(action.type ==='SERVICECAED'){

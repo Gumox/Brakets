@@ -8,6 +8,7 @@ import CenterText from '../../components/CenterText';
 import ReceiptButton from '../../components/ReceiptButton';
 import ContainView from '../../components/ContainView';
 import Bottom from '../../components/Bottom';
+import store from '../../store/store';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -87,14 +88,20 @@ function ReceiptDivision({navigation}) {
             <Label/>
             <TopIntro>접수 구분</TopIntro>
             <Label/>
-            <ReceiptButton onPress={ ()=> 
-                    navigation.navigate( 'ShopStepOne' ) }>고객용 제품</ReceiptButton>
+            <ReceiptButton onPress={ ()=> {
+                store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: "고객용"});
+                console.log(store.getState().receptionDivision);
+                navigation.navigate( 'ShopStepOne' ) }}>고객용 제품</ReceiptButton>
             
-            <ReceiptButton onPress={ ()=> 
-                    navigation.navigate( 'ShopStepOne' ) }>매장용-선처리 제품</ReceiptButton>
+            <ReceiptButton onPress={ ()=> {
+                store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: "선처리"});
+                console.log(store.getState().receptionDivision);
+                navigation.navigate( 'ShopStepOne' ) }}>매장용-선처리 제품</ReceiptButton>
 
-            <ReceiptButton onPress={ ()=> 
-                    navigation.navigate( 'ShopStepOne' ) }>매장용 제품</ReceiptButton>
+            <ReceiptButton onPress={ ()=> {
+                store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: "매장용"});
+                console.log(store.getState().receptionDivision);
+                navigation.navigate( 'ShopStepOne' ) }}>매장용 제품</ReceiptButton>
             </Container>
             <Bottom navigation={navigation}/>
         </Container>
