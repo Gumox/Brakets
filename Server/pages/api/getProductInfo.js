@@ -1,39 +1,33 @@
-import excuteQuery from './db';
+import excuteQuery from "./db";
 
-
-export async function getProductInfo(code) {
-    try {
-        const result = await excuteQuery({
-            query: "SELECT * FROM product WHERE qrcode=? OR barcode=?",
-            values: [code,code]
-        });
-
-        return result;
-
-    } catch (error) {
-        console.log(error);
-    }
+async function getProductInfo(code) {
+  return excuteQuery({
+    query: "SELECT * FROM product WHERE qrcode=? OR barcode=?",
+    values: [code, code],
+  });
 }
 
-export default (req, res) => {
+const controller = async (req, res) => {
   if (req.method === "POST") {
     console.log("req");
     console.log(req.body);
-    var code = req.body.code;
+    const code = req.body.code;
 
-    getProductInfo(code).then((body) => {
-
-        if (body.length){
-                console.log("Product Info");
-                res.statusCode = 200;
-                res.json({body});
-        }
-        else{
-                console.log("No Product");
-                res.status(204).send();
-        }
-
-    });
+    try {
+      const results = await getProductInfo(code);
+      if (results.error) throw new Error(results.error);
+      if (results.length) {
+        console.log("Product Info");
+        res.status(200).json({ body: results });
+      } else {
+        console.log("No Product");
+        res.status(204).send();
+      }
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).json(err);
+    }
   }
 };
 
+export default controller;
