@@ -10,7 +10,7 @@ module.exports = {
 	env: {
 	  MYSQL_HOST: process.env.NEXT_PUBLIC_MYSQL_HOST,
 	  MYSQL_PORT: "3306",
-	  MYSQL_DATABASE: "Adidas_01",
+	  MYSQL_DATABASE: "F&F_02",
 	  MYSQL_USER: "admin",
 	  MYSQL_PASSWORD: "qmfozlcm21",
 		KAKAO_CLIENT_ID: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
