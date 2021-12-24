@@ -8,6 +8,7 @@ import {
   OPTIONS,
   DEFAULT_OPTION,
   RECEIPT_TYPE_OPTIONS,
+TRANSPORT_OPTIONS,
   SHIPPING_OPTIONS,
 } from "../../../constants/select-option";
 import { Row, Field, Section, SectionRow } from "../../styled";
@@ -26,7 +27,7 @@ const RepairInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 <SelectOption
                   title="수선처"
                   name={REPAIR.PLACE_ID}
-                  options={options.repairList}
+                  options={[DEFAULT_OPTION, ...options.repairList]}
                   value={data[REPAIR.PLACE_ID]} // details last index receiver
                   // onChange={handleValueChange}
                   styleOptions={{
@@ -55,10 +56,9 @@ const RepairInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 <SelectOption
                   title="운송형태"
                   name={REPAIR.DELIVERY_TYPE}
-                  options={SHIPPING_OPTIONS}
+                  options={[DEFAULT_OPTION, ...TRANSPORT_OPTIONS]}
                   value={data[REPAIR.DELIVERY_TYPE]}
                   // onChange={handleValueChange}
-                  styleOptions={{ color: COLOR.RED }}
                 />
               </Field>
             </Row>
@@ -127,6 +127,8 @@ const RepairInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 <Field marginRight="0px">
                   <Checkbox 
                     title={`재수선${index + 1}`}  
+                    name={DETAIL.REDO}
+                    checked={data[DETAIL.REDO]}
                     disabled={data[DETAIL.TYPE_ID] === null}
                   />
                 </Field>
@@ -159,10 +161,9 @@ const RepairInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
             <SelectOption
               title="발송방법:"
               name={REPAIR.SHIPMENT_TYPE}
-              options={OPTIONS}
+              options={[DEFAULT_OPTION, ...SHIPPING_OPTIONS]}
               value={data[REPAIR.SHIPMENT_TYPE]}
               // onChange={handleValueChange}
-              styleOptions={{ color: COLOR.RED }}
             />
           </Field>
           <Field marginRight="0px">

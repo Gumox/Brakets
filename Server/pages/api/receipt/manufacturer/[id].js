@@ -19,6 +19,7 @@ async function getManufacturerDetail(id) {
                     DATE_FORMAT(register_date, '%Y-%m-%d %H:%i:%s') AS register_date,    
                     IF(substitute=0, "N", "Y") AS substitute,
                     message,
+                    redo,
                     DATE_FORMAT(complete_date, '%Y-%m-%d %H:%i:%s') AS complete_date
             FROM mfr_detail 
             WHERE mfr_detail_id = ?`,

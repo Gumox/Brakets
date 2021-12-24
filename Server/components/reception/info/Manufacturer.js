@@ -37,6 +37,13 @@ const ManufacturerInfo = ({
           />
         </Field>
         <Field marginRight="10px">
+            <Checkbox 
+              title="재수선"  
+              name={MANUFACTURER.REDO}
+              checked={data[MANUFACTURER.REDO]}
+            />
+        </Field>
+        <Field marginRight="10px">
           <Input
             type="date"
             title="생산업체발송일"

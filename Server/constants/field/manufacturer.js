@@ -5,6 +5,7 @@ const FIELD = {
     COMPLETE_DATE: 'complete_date', // 생산업체 발송일
     SUBSTITUTE: 'substitute', // 상품대체품목
     MESSAGE: 'message', // 생산업체 설명
+    REDO: 'redo', // 재수선
 }
 
 export default FIELD;

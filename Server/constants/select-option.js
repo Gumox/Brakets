@@ -36,7 +36,7 @@ export const RECEIPT_TYPE_OPTIONS = [
   },
 ];
 
-export const SHIPPING_OPTIONS = [
+export const TRANSPORT_OPTIONS = [
   {
     value: "1",
     text: "매장행낭",
@@ -55,6 +55,25 @@ export const SHIPPING_OPTIONS = [
   },
   {
     value: "5",
+    text: "기타",
+  },
+];
+
+export const SHIPPING_OPTIONS = [
+  {
+    value: "1",
+    text: "퀵",
+  },
+  {
+    value: "2",
+    text: "택배",
+  },
+  {
+    value: "3",
+    text: "행낭",
+  },
+  {
+    value: "4",
     text: "기타",
   },
 ];

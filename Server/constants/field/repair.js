@@ -3,7 +3,7 @@ const FIELD = {
     PLACE_ID: 'store_id', // 수선처 id
     SEND_DATE: 'send_date', // 본사발송일
     REGISTER_DATE: 'register_date', // 생산업체 접수일
-    DELIVERY_TYPE: 'delivery_tye', // 운송형태
+    DELIVERY_TYPE: 'delivery_type', // 운송형태
     FAULT_ID: 'fault_id', // 과실구분
     ANALYSIS_ID: 'analysis_id', // 내용분석
     RESULT_ID: 'result_id', // 판정결과
@@ -24,16 +24,19 @@ const FIELD = {
             TYPE_ID: 'repair1_type_id', // 수선 내용
             COUNT: 'repair1_count', // 수량
             PRICE: 'repair1_price', // 비용
+            REDO: 'repair1_redo', // 재수선
         },
         {
             TYPE_ID: 'repair2_type_id', // 수선 내용
             COUNT: 'repair2_count', // 수량
             PRICE: 'repair2_price', // 비용
+            REDO: 'repair2_redo', // 재수선
         },
         {
             TYPE_ID: 'repair3_type_id', // 수선 내용
             COUNT: 'repair3_count', // 수량
             PRICE: 'repair3_price', // 비용
+            REDO: 'repair3_redo', // 재수선
         },
     ],
 
