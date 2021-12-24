@@ -118,8 +118,8 @@ const RepairInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 <Field marginRight="5px">
                   <Input
                     title={`수선비${index + 1}`}
-                    name={DETAIL.CHARGE}
-                    value={DETAIL[DETAIL.CHARGE]}
+                    name={DETAIL.PRICE}
+                    value={DETAIL[DETAIL.PRICE]}
                     styleOptions={{ width: "70px" }}
                     disabled={data[DETAIL.TYPE_ID] === null}
                   />
