@@ -1,44 +1,38 @@
-import excuteQuery from './db';
+import excuteQuery from "./db";
 
-
-export async function addCustomer(name, phone, sms, clause) {
-
-    try {
-        const result = await excuteQuery({
-            query: "INSERT INTO `customer`(`name`, `phone`, `sms`, `clause`) VALUES (?,?,?,?)",
-            values: [name, phone, sms, clause]
-        });
-
-        return result;
-
-    } catch (error) {
-        console.log(error);
-    }
+async function addCustomer(name, phone, sms, clause) {
+  return excuteQuery({
+    query:
+      "INSERT INTO `customer`(`name`, `phone`, `sms`, `clause`) VALUES (?,?,?,?)",
+    values: [name, phone, sms, clause],
+  });
 }
 
-export default (req, res) => {
+const controller = async (req, res) => {
   if (req.method === "POST") {
     console.log("req");
     console.log(req.body);
-    var name = req.body.name;
-    var phone = req.body.phone;
-    var sms = req.body.sms;
-    var clause = req.body.clause;
+    const name = req.body.name;
+    const phone = req.body.phone;
+    const sms = req.body.sms;
+    const clause = req.body.clause;
 
-    addCustomer(name, phone, sms, clause).then((body) => {
-
-	if(body['affectedRows']){
-                console.log("add Custmer");
-                res.statusCode = 200;
-                //res.json({body});
-                res.json({customer_id: body['insertId']});
-        }
-        else{
-                console.log("add Customer Fail");
-                res.status(400).send();
-        }
-
-    });
+    try {
+      const result = await addCustomer(name, phone, sms, clause);
+      if (result.error) throw new Error(result.error);
+      if (result["affectedRows"]) {
+        console.log("add Custmer");
+        //res.json({body});
+        res.status(200).json({ customer_id: result["insertId"] });
+      } else {
+        console.log("add Customer Fail");
+        res.status(400).send();
+      }
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).json(err);
+    }
   }
 };
 
+export default controller;
