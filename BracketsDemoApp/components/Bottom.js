@@ -45,7 +45,7 @@ function Bottom  (props){
               조회
           </BottomButtonText>
       </BottomButton>
-      <BottomButton onPress = {() => props.navigation.navigate( 'MyPage')}>
+      <BottomButton onPress = {() => props.navigation.navigate( 'Setting')}>
           <BottomButtonText>
               MY
           </BottomButtonText>

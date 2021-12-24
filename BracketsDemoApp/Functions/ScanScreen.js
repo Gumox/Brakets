@@ -49,7 +49,7 @@ export default class ScanScreen extends Component {
             store.dispatch({type:'SERVICECAED',value:check});
 
             if (this.camera) {
-              const options = { quality: 0.9, base64: true, skipProcessing: true }
+              const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
               const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
               const imgUri = data.uri;
              
@@ -63,7 +63,7 @@ export default class ScanScreen extends Component {
             console.log(store.getState().bagCodeValue);
 
             if (this.camera) {
-              const options = { quality: 0.9, base64: true, skipProcessing: true }
+              const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
               const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
               const imgUri = data.uri;
              

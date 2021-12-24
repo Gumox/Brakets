@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import Container from '../components/Container';
 import Button from '../components/Button';
 import styled from 'styled-components/native';
@@ -8,6 +9,7 @@ import Contents from '../components/Contents';
 import Bottom from '../components/Bottom';
 import StateBarSolid from '../components/StateBarSolid';
 import store from '../store/store';
+
 
 const RegistText= styled.Text`
     font-weight: bold;
@@ -23,9 +25,9 @@ const GrayText = styled.Text`
     color:#858585;
 `;
 const TopStateView = styled.View`
-    flex:1;
+    
     flex-direction: row;
-    padding-bottom:24px;
+    padding:24px;
     justify-content: center;
 `;
 // 구조 분해 할당, Destructuring Assignment
@@ -35,10 +37,17 @@ function ShopStepFive( { navigation } ) {
     
     return (
         <Container>
-            
+            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
+                <View style={{flex:1,height:20,width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
+                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text><Text  style={{fontWeight: "bold",fontSize:15}}> : </Text>
+                    <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement}</Text>
+                </View>
+                <Text>  </Text>
+                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
+                </View>
             <CenterText>
                 
-                <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
+                
                 <RegistText>행낭 접수</RegistText>
             
                 

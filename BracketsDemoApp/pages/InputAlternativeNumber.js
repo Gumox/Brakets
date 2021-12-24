@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { View,Text } from 'react-native';
 import Container from '../components/Container';
 import Contents from '../components/Contents';
 import Button from '../components/Button';
 import styled from 'styled-components/native';
 import JustView from '../components/JustView';
+import StateBarSolid from '../components/StateBarSolid';
+import StateBarVoid from '../components/StateBarVoid';
 //import AsyncStorage from '@react-native-community/async-storage';
 // import { AsyncStorage } from 'react-native';
 import { Alert } from 'react-native';
 import Bottom from '../components/Bottom';
-
+import store from '../store/store';
 const Label = styled.Text`
     font-size: 20px;
     font-weight: bold;
@@ -24,7 +27,12 @@ const Input = styled.TextInput`
     background-color:#d6d6d6;
     border-radius:10px
 `;
-
+const TopStateView = styled.View`
+    
+    flex-direction: row;
+    padding:24px;
+    justify-content: center;
+`;
 function InputAlternativeNumber({navigation}) {
    
     
@@ -33,6 +41,13 @@ function InputAlternativeNumber({navigation}) {
 
     return (
         <Container>
+            <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
+            
+            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
+                <View><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text></View>
+                <Text>  </Text>
+                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
+            </View>
             <JustView>
                 <Label>대체 품번을 입력하세요</Label>
                     <Input

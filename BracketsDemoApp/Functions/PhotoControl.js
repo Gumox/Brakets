@@ -7,14 +7,27 @@ import { createIconSetFromFontello } from "react-native-vector-icons";
 import styled from "styled-components";
 
 
-const PView = styled.View`
-    
-    flex-direction: row;
-    padding-bottom:10px;
-    justify-content: space-around;
-`;
+
 const ImgView = styled.View`
     margin:12px;
+`;
+
+const BottomItemBox = styled.View`
+  flex-direction: row;
+  
+  justify-content: space-around;
+ 
+`;
+
+const TouchableView = styled.TouchableHighlight`
+    flex:1
+    align-items: center;
+    padding:10px
+    background-color : #000000;
+`;
+const StepText = styled.Text`
+  color : #FFFFFF
+  font-size:15px
 `;
 const styles = StyleSheet.create({
     centeredView: {
@@ -65,6 +78,8 @@ export default function PhotoControl({ navigation ,route}){
         console.log(  "value: " +selected.value+"    index: "+selected.index);
         if(selected.index>1){
             DeletePhoto();
+        }else{
+            store.dispatch({type:'DRAW',drawingImage: ""});
         }
         navigation.replace("TakePhoto",{key:"RetakePhoto",index:selected.index});
 
@@ -73,23 +88,21 @@ export default function PhotoControl({ navigation ,route}){
     
     if(selected.index === 0 || selected.index ===1){
         output=(
-            <View>
-                <Text> </Text>
-            <PView>
-            <Pressable onPress ={ () =>{RetakePhoto()}}><Text style = {{color : "#ffffff"}}> 다시찍기</Text></Pressable>
-            <Pressable onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text style = {{color : "#ffffff"}}>확인 </Text></Pressable>
-            </PView>
-            </View>
+            <BottomItemBox>
+            <TouchableView underlayColor={"#CCC"} onPress ={ () =>{RetakePhoto()}}><Text style = {{color : "#ffffff"}}> 다시찍기</Text></TouchableView>
+            <TouchableView underlayColor={"#CCC"}onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text style = {{color : "#ffffff"}}>확인 </Text></TouchableView>
+            </BottomItemBox>
+
         );
     }else{
         output=(
-            <PView>
-            <Pressable onPress ={ () =>{RetakePhoto()}}><Text style = {{color : "#ffffff"}}> 다시찍기</Text></Pressable>
-            <Pressable onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text style = {{color : "#ffffff"}}>확인</Text></Pressable>
-            <Pressable onPress ={ () =>{ {
+            <BottomItemBox>
+            <TouchableView underlayColor={"#CCC"} onPress ={ () =>{RetakePhoto()}}><Text style = {{color : "#ffffff"}}> 다시찍기</Text></TouchableView>
+            <TouchableView underlayColor={"#CCC"} onPress ={ () =>{navigation.replace("ShopStepThree4");}}><Text style = {{color : "#ffffff"}}>확인</Text></TouchableView>
+            <TouchableView underlayColor={"#CCC"}onPress ={ () =>{ {
                 DeletePhoto();
-                navigation.replace("ShopStepThree4");}}}><Text style = {{color : "#ffffff"}}>삭제 </Text></Pressable>
-            </PView>
+                navigation.replace("ShopStepThree4");}}}><Text style = {{color : "#ffffff"}}>삭제 </Text></TouchableView>
+            </BottomItemBox>
         );
     }
 

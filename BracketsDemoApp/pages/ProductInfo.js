@@ -3,14 +3,14 @@ import Contents from '../components/Contents';
 import Button from '../components/Button';
 import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
-import { Image, View} from 'react-native';
+import { Image, View, Text} from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 import { Alert } from 'react-native';
 import Bottom from '../components/Bottom';
-
+import store from '../store/store';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -126,6 +126,12 @@ function ProductInfo({navigation, route}) {
         
             <ContainView>
                 <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
+                
+                <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
+                <View><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text></View>
+                <Text>  </Text>
+                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View></View>
+                
                 <Contents>
                     
                     <CenterView><TopIntro>제품 정보</TopIntro></CenterView>
@@ -141,7 +147,7 @@ function ProductInfo({navigation, route}) {
                         // }
                     />
 
-                    <Label>품번</Label>
+                    <Label>스타일 No.</Label>
 
                     <Input 
                         editable={false} 

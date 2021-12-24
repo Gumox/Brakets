@@ -53,6 +53,10 @@ const TouchableView = styled.TouchableOpacity`
     background-color:#d6d6d6;
     border-radius:10px
 `;
+const ImgIcon =styled.Image`
+    width: 45px;
+    height: 45px;
+`;
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -82,7 +86,7 @@ function StartPage( { navigation } ) {
     return(
         <Container>
             <Contents>
-                <SelectButton onPress={ ()=> 
+                <SelectButton iconImg = {<ImgIcon source={require('../Icons/repair_blue.png')}/>} onPress={ ()=> 
                     //navigation.navigate( 'CameraQR')}
                     {
                         navigation.navigate( 'ReceiptDivision' ) 

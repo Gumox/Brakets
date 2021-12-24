@@ -295,8 +295,8 @@ function TakeOverPage( { navigation } ) {
      
             </Contents>
             <Half>
-              <Btn onPress = {() => {}}><Text>재접수</Text></Btn> 
-              <Btn onPress = {() => {}}><Text>인수완료</Text></Btn>
+              <Btn onPress = {() => {}}><Text style ={{color : "#ffffff"}}>재접수</Text></Btn> 
+              <Btn onPress = {() => {}}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
             </Half> 
 
             <Bottom navigation={navigation} />

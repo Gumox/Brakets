@@ -9,7 +9,7 @@ import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
-import { Alert ,BackHandler} from 'react-native';
+import { Alert ,BackHandler,View,Text} from 'react-native';
 import store from '../../store/store';
 import { getList } from '../../Functions/GetSendList';
 
@@ -97,6 +97,13 @@ function ShopStepThree( { navigation } ) {
   return (
       <Container>
           <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
+          <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
+                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text><Text  style={{fontWeight: "bold",fontSize:15}}> : </Text>
+                  <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement}</Text>
+                </View>
+                <Text>  </Text>
+                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
+            </View>
           <CenterText>
               <Title>수선정보</Title>
           </CenterText>
@@ -169,26 +176,13 @@ function ShopStepThree( { navigation } ) {
               store.dispatch({type:'PHOTORESET',setPhoto:[]});
               store.dispatch({type:'PLUSINDEXNUMBER',plus:-ix});
               
-              console.log("? "+ix);
-              console.log(store.getState().indexNumber);
+              
+              
               store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
-              console.log(store.getState().selectType);
+              
               store.dispatch({type:'DRAW',drawingImage: ""});
               
-              console.log("");
-              console.log("");
-              console.log("");
-              console.log("");
-              console.log("");
-              console.log("");
-              console.log(store.getState().typeStore);
               
-              console.log("");
-              console.log("");
-              console.log("");
-              console.log("");
-              console.log("");
-              console.log("");
               navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
             }}}>
             다음 단계

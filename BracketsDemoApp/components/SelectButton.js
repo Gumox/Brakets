@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
-
+import { View } from 'react-native';
 const Container = styled.TouchableOpacity`
-    width:120px;
-    height:100px;
+    width:140px;
+    height:120px;
     background: #78909c;    
-    align-items: center;
-    justify-content: center;
     border-radius:12px;
     margin:10px
 `;
@@ -15,12 +13,18 @@ const Label = styled.Text`
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;
-`;
+    paddingTop : 20px;
+    paddingLeft : 20px;
 
+        
+`;
 function SelectButton(props) {
     return (
         <Container onPress={ props.onPress }>
-            <Label>{props.children}</Label>
+            <View>
+            <View style={{flexDirection:"row"}}><Label>{props.children}</Label></View>
+            <View style={{ paddingTop:10,paddingLeft:15,flexDirection:"row-reverse" }}>{props.iconImg}</View> 
+            </View>
         </Container>
     )
 }

@@ -7,7 +7,7 @@ import _ from 'lodash';
 import StateBarSolid from '../components/StateBarSolid';
 import Bottom from '../components/Bottom'
 import store from '../store/store';
-import { Modal ,StyleSheet,View,Pressable,Image} from 'react-native';
+import { Modal ,StyleSheet,View,Pressable,Image,Text} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 
 const Label = styled.Text`
@@ -47,9 +47,9 @@ const VText = styled.Text`
 `;
 
 const TopStateView = styled.View`
-    flex:1;
+    
     flex-direction: row;
-    padding-bottom:24px;
+    padding:24px;
     justify-content: center;
 `;
 const InfoView =styled.View`
@@ -65,10 +65,6 @@ const DataView = styled.View`
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
-`;
-const BottomText = styled.Text`
-    font-size: 15px;
-    align-items: center;
 `;
 const TouchableView = styled.TouchableOpacity`
     align-items: center;
@@ -158,10 +154,17 @@ function ShopStepOne( { navigation } ) {
 
     return (
         <Container>
-            
+            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
+            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10, paddingBottom:10}}>
+                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text><Text  style={{fontWeight: "bold",fontSize:15}}> : </Text>
+                    <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement}</Text>
+                </View>
+                <Text>  </Text>
+                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
+            </View>
             <CenterText>
                 
-                <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
+                
                 <CompleteV><VText>✓</VText></CompleteV>
                 <RegistText>접수 완료</RegistText>
                 <BlueText>수선 접수가 정상적으로 완료</BlueText>
@@ -234,8 +237,6 @@ function ShopStepOne( { navigation } ) {
                 <TouchableView onPress={() => setModalVisible2(!modalVisible)}><Label>{bag}</Label><ImgIcon source={require('../Icons/image.png')}/></TouchableView>
                 
             </InfoView>  
-            <BottomText>자세한 내용은 마이페이지에서</BottomText>
-            <BottomText>확인 가능합니다</BottomText>
             <Button onPress={ ()=> navigation.popToTop()}>
                 완료
             </Button>

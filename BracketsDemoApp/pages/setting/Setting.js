@@ -61,7 +61,7 @@ const wait = (timeout) => {
   }
 
 
-function Mypage( { navigation } ) {
+function Setting( { navigation } ) {
     const state = {size:1};
     
     const [number,setNumber] =useState(store.getState().number);
@@ -86,11 +86,11 @@ function Mypage( { navigation } ) {
         <Container>
             <Contents>
                 
-            <Text>My page</Text>
+            <Text>설정</Text>
             </Contents>
             
             <Bottom navigation={navigation}/>
         </Container>
     )
 }
-export default Mypage;
+export default Setting;
