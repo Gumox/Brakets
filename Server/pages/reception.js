@@ -40,7 +40,7 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  const [brands, stores, productCategories, repairs, producers, faults, analysis, results] =
+  const [brands, stores, productCategories, repairShops, producers, faults, analysis, results, repairs] =
     await Promise.all([
       axios.get(`${process.env.API_URL}/brand`).then(({ data }) => data), // 브랜드
       axios.get(`${process.env.API_URL}/store/1`).then(({ data }) => data), // 매장
@@ -52,6 +52,7 @@ export const getServerSideProps = async (ctx) => {
         .get(`${process.env.API_URL}/type/analysis`)
         .then(({ data }) => data), // 내용분석
       axios.get(`${process.env.API_URL}/type/result`).then(({ data }) => data), // 판정결과
+      axios.get(`${process.env.API_URL}/type/repair`).then(({ data }) => data), // 수선내용
     ]);
   const seasons = SEASON_OPTIONS; // TODO: 본사에서 API 제공 필요
   return {
@@ -61,11 +62,12 @@ export const getServerSideProps = async (ctx) => {
         brandList: brands? brands.data : [],
         storeList: stores? stores.data : [],
         productCategoryList: productCategories? productCategories.data : [],
-        repairList: repairs? repairs.data : [],
+        repairList: repairShops? repairShops.data : [],
         producerList: producers? producers.data : [],
         faultType: faults? faults.data : [],
         analysisType: analysis? analysis.data : [],
         resultType: results? results.data : [],
+        repairType: repairs? repairs.data : [],
         seasonList: seasons,
       },
     },

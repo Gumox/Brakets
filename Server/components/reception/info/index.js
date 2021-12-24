@@ -12,6 +12,8 @@ const ReceptionInfo = ({
   options,
   inputData = {},
   data = {},
+  repairData = [],
+  mfrData = {},
   handleInputCheckboxChange = () => {},
   handleInputValueChange = () => {},
   handleTargetValueChange = () => {},
@@ -53,11 +55,15 @@ const ReceptionInfo = ({
           <DetailInfo
             options={options}
             data={data}
+            mfrData={mfrData}
+            repairData={repairData}
             handleValueChange={handleTargetValueChange}
           />
           <ReceiptInfo
             options={options}
             data={data}
+            mfrData={mfrData}
+            repairData={repairData}
             handleValueChange={handleTargetValueChange}
             handleCheckboxChange={handleTargetCheckboxChange}
           />

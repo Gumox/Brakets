@@ -26,6 +26,7 @@ const TextArea = ({
 };
 
 const Wrapper = styled.div`
+  width: 100%;
 `;
 
 const CustomLabel = styled.div`

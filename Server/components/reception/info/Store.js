@@ -106,7 +106,7 @@ const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 options={options.productCategoryList}
                 value={data[DETAIL.PRODUCT_CATEGORY_ID]} // details last index pcategory_id
                 // onChange={handleValueChange}
-                styleOptions={{ width: "120px", maxWidth: "120px" }}
+                styleOptions={{ width: "120px", maxWidth: "120px",  color: COLOR.RED}}
               />
             </Field>
           </Row>
@@ -114,7 +114,9 @@ const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
         <Section>
             <TextArea
               title="매장접수내용"
+              value={data[RECEIPT.STORE_MESSAGE]}
               styleOptions={{ width: "350px", height: "60px" }} // details first index message
+              disabled={true}
             />
         </Section>
       </SectionRow>
@@ -127,6 +129,18 @@ const Wrapper = styled.div`
   padding: 10px;
   border: 2px solid ${COLOR.BORDER_MAIN};
   border-radius: 5px;
+`;
+
+const ImageButton = styled.button`
+  margin-top: 10px;
+  margin-left: 15px;
+  min-height: max-content;
+  height: 30px;
+  background-color: ${COLOR.MENU_MAIN};
+  color: ${COLOR.WHITE};
+  padding: 0 20px;
+  border-radius: 5px;
+  border: 2px solid ${COLOR.BLUE};
 `;
 
 export default StoreInfo;

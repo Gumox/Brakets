@@ -5,6 +5,12 @@ export const STORE_TYPE = {
     3: "생산업체",
 }
 
+export const STORE_CATEGORY = {
+    0: "해당없음",
+    1: "정상",
+    2: "상설",
+}
+
 export const RECEIPT_CATEGORY_TYPE = {
     1: "고객용",
     2: "매장용",

@@ -93,11 +93,12 @@ const ProducInfo = ({
             </Field>
             <Field marginRight="10px">
               <Input
-                title="수선대체상품"
+                title="대체품번"
                 name={RECEIPT.SUBSTITUE}
                 styleOptions={{ width: "20px" }}
                 value={data[RECEIPT.SUBSTITUE]}
                 onChange={handleValueChange}
+                disabled={true}
               />
             </Field>
           </Row>

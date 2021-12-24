@@ -11,6 +11,7 @@ const Checkbox = ({
   checked = false,
   onChange = () => {},
   styleOptions = {},
+  disabled = false,
 }) => {
   return (
     <Wrapper>
@@ -20,6 +21,7 @@ const Checkbox = ({
         value={value}
         checked={checked}
         onChange={onChange}
+        disabled={disabled}
       />
       {title && <CustomLabel {...styleOptions}>{title}</CustomLabel>}
     </Wrapper>
@@ -33,7 +35,7 @@ const Wrapper = styled.div`
 `;
 
 const CustomLabel = styled.div`
-  margin-left: 5px;
+  margin-left: 0px;
   white-space: nowrap;
   font-size: ${({ labelFontSize = "14px" }) => labelFontSize};
   color: ${({ color = COLOR.BLACK }) => color};

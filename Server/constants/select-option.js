@@ -39,7 +39,23 @@ export const RECEIPT_TYPE_OPTIONS = [
 export const SHIPPING_OPTIONS = [
   {
     value: "1",
+    text: "매장행낭",
+  },
+  {
+    value: "2",
+    text: "본사행낭",
+  },
+  {
+    value: "3",
     text: "택배",
+  },
+  {
+    value: "4",
+    text: "퀵배송",
+  },
+  {
+    value: "5",
+    text: "기타",
   },
 ];
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import moment from "moment";
 
 import COLOR from "../../../constants/color";
-import { RECEIPT, DETAIL } from "../../../constants/field";
+import { RECEIPT, DETAIL, REPAIR, MANUFACTURER } from "../../../constants/field";
 import {
   OPTIONS,
   RECEIPT_TYPE_OPTIONS,
@@ -15,139 +15,22 @@ import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
 
-const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
+import RepairInfo from "./Repair";
+import ManufacturerInfo from "./Manufacturer";
+
+const DetailInfo = ({
+  options,
+  data = {},
+  mfrData = {},
+  repairData = [],
+  handleValueChange = () => {},
+}) => {
   return (
     <Wrapper>
       <Container>
-        <SectionRow>
-          <Section marginRight="10px">
-            <Row>
-              <Field marginRight="0px">
-                <SelectOption
-                  title="수선처"
-                  name={DETAIL.REPAIR_PLACE}
-                  options={options.repairList}
-                  value={data[DETAIL.REPAIR_PLACE]} // details last index receiver
-                  // onChange={handleValueChange}
-                  styleOptions={{
-                    width: "120px",
-                    maxWidth: "120px",
-                    labelMarginRight: "20px",
-                  }}
-                />
-              </Field>
-            </Row>
-          </Section>
-        </SectionRow>
-        <SectionRow>
-          <Section marginRight="10px">
-            <Row>
-              <Field marginRight="10px">
-                <Input type="date" title="수선처접수일" />
-              </Field>
-              <Field>
-                <SelectOption
-                  title="운송형태"
-                  // name={PRODUCT.SEASON}
-                  options={SHIPPING_OPTIONS}
-                  // value={data[PRODUCT.SEASON]}
-                  // onChange={handleValueChange}
-                />
-              </Field>
-            </Row>
-            <Row>
-              <Field marginRight="5px">
-                <SelectOption
-                  title="과실구분:"
-                  // name={PRODUCT.SEASON}
-                  options={OPTIONS}
-                  // value={data[PRODUCT.SEASON]}
-                  // onChange={handleValueChange}
-                  styleOptions={{ width: "70px" }}
-                />
-              </Field>
-              <Field marginRight="5px">
-                <SelectOption
-                  title="내용분석:"
-                  // name={PRODUCT.SEASON}
-                  options={OPTIONS}
-                  // value={data[PRODUCT.SEASON]}
-                  // onChange={handleValueChange}
-                  styleOptions={{ width: "70px" }}
-                />
-              </Field>
-              <Field marginRight="0px">
-                <SelectOption
-                  title="판정결과:"
-                  // name={PRODUCT.SEASON}
-                  options={OPTIONS}
-                  // value={data[PRODUCT.SEASON]}
-                  // onChange={handleValueChange}
-                  styleOptions={{ width: "70px" }}
-                />
-              </Field>
-            </Row>
-            {data.details?.map((detail, index) => (
-              <Row key={detail[DETAIL.ID]}>
-                <Field marginRight="10px">
-                  <SelectOption
-                    title={`수선내용${index + 1}:`}
-                    // name={PRODUCT.SEASON}
-                    options={OPTIONS}
-                    // value={data[PRODUCT.SEASON]}
-                    // onChange={handleValueChange}
-                  />
-                </Field>
-                {/* <Field>
-                <Input title="수량" styleOptions={{ width: "15px" }} />
-              </Field> */}
-                <Field marginRight="10px">
-                  <Input
-                    title={`수선비${index + 1}`}
-                    name={DETAIL.CHARGE}
-                    value={detail[DETAIL.CHARGE]}
-                    styleOptions={{ width: "70px" }}
-                  />
-                </Field>
-                <Field marginRight="0px">
-                  <Checkbox title={`재수선${index + 1}`} />
-                </Field>
-              </Row>
-            ))}
-          </Section>
-          <Section>
-            <TextArea
-              title="수선처설명:"
-              styleOptions={{ width: "290px", height: "100px" }}
-            />
-          </Section>
-        </SectionRow>
-        <Row>
-          <Field marginRight="10px">
-            <Input
-              type="date"
-              title="수선처발송일"
-              name={DETAIL.SEND_DATE}
-              value={
-                data[DETAIL.SEND_DATE]
-                  ? moment(data[DETAIL.SEND_DATE]).format("YYYY-MM-DD")
-                  : undefined
-              }
-            />
-          </Field>
-          <Field marginRight="10px">
-            <SelectOption
-              title="발송방법:"
-              // name={PRODUCT.SEASON}
-              options={OPTIONS}
-              // value={data[PRODUCT.SEASON]}
-              // onChange={handleValueChange}
-            />
-          </Field>
-          <Field marginRight="0px">
-            <Input title="발송비용" styleOptions={{ width: "70px" }} />
-          </Field>
-        </Row>
+      {repairData.length === 0 && <RepairInfo {...{options, handleValueChange}} data={{}}/> /** 수선처 데이터가 없는 경우 어떤 내용인지 볼수있는 부분 */}
+      {repairData.map((repair) => <RepairInfo key={repair[REPAIR.ID]} {...{options, handleValueChange}} data={repair}/>)}
+      {mfrData[MANUFACTURER.ID] && <ManufacturerInfo {...{options, handleValueChange}} data={mfrData}/>}
       </Container>
     </Wrapper>
   );
@@ -155,28 +38,21 @@ const DetailInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
 const Wrapper = styled.div`
   width: 50%;
   margin: 0px 5px 5px 15px;
-  padding: 10px;
-  border: 2px solid ${COLOR.BORDER_MAIN};
-  border-radius: 5px;
 `;
 
 const Container = styled.div`
   width: 100%;
-  padding: 7px 7px 20px 7px;
-  border: 2px solid ${COLOR.RED};
-  border-radius: 10px;
-`;
-
-const ImageButton = styled.button`
-  margin-top: 10px;
-  margin-left: 15px;
-  min-height: max-content;
-  height: 30px;
-  background-color: ${COLOR.MENU_MAIN};
-  color: ${COLOR.WHITE};
-  padding: 0 20px;
+  padding: 7px 7px 7px 7px;
+  border: 2px solid ${COLOR.BORDER_MAIN};
   border-radius: 5px;
-  border: 2px solid ${COLOR.BLUE};
+
+  > div {
+    border-top: 1px solid ${COLOR.BORDER_MAIN};
+  }
+
+  > div: first-child {
+    border-top: none;
+  }
 `;
 
 export default DetailInfo;

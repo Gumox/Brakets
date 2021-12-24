@@ -4,7 +4,7 @@ import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { OPTIONS, DEFAULT_OPTION } from "../../../constants/select-option";
-import { RECEIPT } from "../../../constants/field";
+import { RECEIPT, REPAIR, MANUFACTURER } from "../../../constants/field";
 import { Row, Field, Section, SectionRow } from "../../styled";
 import Input from "../../Input";
 import SelectOption from "../../SelectOption";
@@ -14,9 +14,12 @@ import Checkbox from "../../Checkbox";
 const ReceiptInfo = ({
   options,
   data = {},
+  mfrData = {},
+  repairData = [],
   handleValueChange = () => {},
   handleCheckboxChange = () => {},
 }) => {
+  console.log(repairData)
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
 
@@ -52,6 +55,7 @@ const ReceiptInfo = ({
                     ? moment(data[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
                     : undefined
                 }
+                onChange={handleValueChange}
               />
             </Field>
           </Row>
@@ -120,33 +124,42 @@ const ReceiptInfo = ({
       </SectionRow>
       {!isReview && (
         <>
-          <Row>
+        {repairData.map((repair, index) =>  (<Row key={repair["repair_detail_id"]}>
             <Field marginRight="10px">
               <SelectOption
-                title="수선처지정"
-                name={RECEIPT.REPAIR_PLACE_ID}
+                title={`수선처지정${index+1}`}
+                name={REPAIR.PLACE_ID}
                 options={[DEFAULT_OPTION, ...options.repairList]}
-                value={data[RECEIPT.REPAIR_PLACE_ID]}
-                onChange={handleValueChange}
+                value={repair[REPAIR.PLACE_ID]}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
+                disabled={true}
               />
             </Field>
             <Field>
               <Input
                 type="date"
-                title="발송일 to R"
-                name={RECEIPT.REPAIR_SEND_DATE}
+                title={`발송일 to R${index+1}`}
+                name={REPAIR.SEND_DATE}
                 value={
-                  data[RECEIPT.REPAIR_SEND_DATE]
-                    ? moment(data[RECEIPT.REPAIR_SEND_DATE]).format(
+                  repair[REPAIR.SEND_DATE]
+                    ? moment(repair[REPAIR.SEND_DATE]).format(
                         "YYYY-MM-DD"
                       )
                     : undefined
                 }
-                onChange={handleValueChange}
+                disabled={true}
               />
             </Field>
-          </Row>
+            <Field>
+              <Input
+                title={`총 비용${index+1}`}
+                name={REPAIR.TOTAL_PRICE}
+                value={repair[REPAIR.TOTAL_PRICE]}
+                styleOptions={{ width: "50px" }}
+                disabled={true}
+              />
+            </Field>
+          </Row>))}
           <Row>
             <Field marginRight="10px">
               <Input
@@ -161,16 +174,17 @@ const ReceiptInfo = ({
                 value={data[RECEIPT.MANUFACTURER_NAME] || ""}
                 onChange={handleValueChange}
                 styleOptions={{ width: "80px" }}
+                disabled={true}
               />
             </Field>
             <Field marginRight="10px">
               <Input
                 type="date"
                 title="발송일 to M"
-                name={RECEIPT.MANUFACTURER_SEND_DATE}
+                name={MANUFACTURER.SEND_DATE}
                 value={
-                  data[RECEIPT.MANUFACTURER_SEND_DATE]
-                    ? moment(data[RECEIPT.MANUFACTURER_SEND_DATE]).format(
+                  mfrData[MANUFACTURER.SEND_DATE]
+                    ? moment(mfrData[MANUFACTURER.SEND_DATE]).format(
                         "YYYY-MM-DD"
                       )
                     : undefined
@@ -181,7 +195,9 @@ const ReceiptInfo = ({
             <Field marginRight="0px">
               <Input
                 title="수선대체상품"
-                styleOptions={{ width: "70px", color: COLOR.RED }}
+                styleOptions={{ width: "20px" }}
+                value={mfrData[MANUFACTURER.SUBSTITUTE]}
+                disabled={true}
               />
             </Field>
           </Row>
@@ -189,8 +205,8 @@ const ReceiptInfo = ({
             <Field marginRight="10px">
               <Checkbox
                 name={RECEIPT.FREECHARGE}
-                value={parseInt(data[RECEIPT.FREECHARGE]) === 0 ? 1 : 0}
-                checked={parseInt(data[RECEIPT.FREECHARGE]) === 0}
+                value={parseInt(data[RECEIPT.FREECHARGE]) === 1 ? 1 : 0}
+                checked={parseInt(data[RECEIPT.FREECHARGE]) === 1}
                 onChange={handleValueChange}
               />
               <Input
@@ -199,7 +215,7 @@ const ReceiptInfo = ({
                 value={data[RECEIPT.CHARGE]}
                 onChange={handleValueChange}
                 styleOptions={{ width: "70px" }}
-                disabled={parseInt(data[RECEIPT.FREECHARGE]) !== 0}
+                disabled={parseInt(data[RECEIPT.FREECHARGE]) !== 1}
               />
             </Field>
             <Field>
@@ -208,7 +224,7 @@ const ReceiptInfo = ({
                 name={RECEIPT.CASHRECEIPT_NUM}
                 value={data[RECEIPT.CASHRECEIPT_NUM] || ""}
                 onChange={handleValueChange}
-                disabled={parseInt(data[RECEIPT.FREECHARGE]) !== 0}
+                disabled={parseInt(data[RECEIPT.FREECHARGE]) !== 1}
               />
             </Field>
           </Row>
@@ -311,10 +327,10 @@ const ReceiptInfo = ({
           <Input
             type="date"
             title="발송일 to S"
-            name={RECEIPT.STORE_SEND_DATE}
+            name={RECEIPT.COMPLETE_DATE}
             value={
-              data[RECEIPT.STORE_SEND_DATE]
-                ? moment(data[RECEIPT.STORE_SEND_DATE]).format("YYYY-MM-DD")
+              data[RECEIPT.COMPLETE_DATE]
+                ? moment(data[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD")
                 : undefined
             }
             onChange={handleValueChange}

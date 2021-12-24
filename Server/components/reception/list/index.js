@@ -4,7 +4,7 @@ import moment from "moment";
 
 import COLOR from "../../../constants/color";
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
-import { STORE_TYPE, RECEIPT_CATEGORY_TYPE, RECEIPT_TYPE } from "../../../constants/type";
+import { STORE_CATEGORY, RECEIPT_CATEGORY_TYPE, RECEIPT_TYPE } from "../../../constants/type";
 
 const ReceptionList = ({ data, handleDataClick = () => {} }) => {
   return (
@@ -41,14 +41,14 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
           {data.map((receipt) => (
             <TableRow
               key={receipt[RECEIPT.ID]}
-              onClick={() => handleDataClick(receipt[RECEIPT.CODE])}
+              onClick={() => handleDataClick(receipt[RECEIPT.ID])}
             >
               <TableData>{receipt[RECEIPT.CODE]}</TableData>
-              <TableData>{receipt[STORE.ID]}</TableData>
+              <TableData>{receipt[STORE.CODE]}</TableData>
               <TableData title={receipt[STORE.NAME]} width="200px">
                 {receipt[STORE.NAME]}
               </TableData>
-              <TableData width="70px">{STORE_TYPE[receipt[STORE.TYPE]]}</TableData>
+              <TableData width="70px">{STORE_CATEGORY[receipt[STORE.CATEGORY]]}</TableData>
               <TableData width="150px">{receipt[STORE.CONTACT]}</TableData>
               <TableData width="120px">
                 {receipt[RECEIPT.RECEIPT_DATE]

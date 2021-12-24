@@ -8,7 +8,7 @@ import Content from "../Content";
 import Modal from "../Modal";
 import Info from "./info";
 import List from "./list";
-import { PRODUCT, RECEIPT } from "../../constants/field";
+import { PRODUCT } from "../../constants/field";
 
 const Reception = ({ options, user }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
@@ -20,6 +20,7 @@ const Reception = ({ options, user }) => {
     () => setIsProductImageModalOpen(false),
     []
   );
+  const [targetBrandId, setTargetBrandId] = useState(options.brandList[0].value);
   const [inputData, setInputData] = useState({
     brandId: options.brandList[0].value,
     storeName: options.storeList[0].value,
@@ -27,7 +28,10 @@ const Reception = ({ options, user }) => {
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
     dateType: "all",
   });
-  const [targetData, setTargetData] = useState({});
+  const [targetReceiptData, setTargetReceiptData] = useState({});
+  const [targetMfrtData, setTargetMfrData] = useState({});
+  const [targetRepairData, setTargetRepairData] = useState([]);
+
   const [searchList, setSearchList] = useState([]);
   const handleInputCheckboxChange = useCallback(
     (e) => {
@@ -46,36 +50,44 @@ const Reception = ({ options, user }) => {
   const handleTargetCheckboxChange = useCallback(
     (e) => {
       console.log(e.target)
-      setTargetData({ ...targetData, [e.target.name]: e.target.checked });
+      setTargetReceiptData({ ...targetReceiptData, [e.target.name]: e.target.checked });
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [targetData]
+    [targetReceiptData]
   );
   const handleTargetValueChange = useCallback(
     (e) => {
-      setTargetData({ ...targetData, [e.target.name]: e.target.value });
+      setTargetReceiptData({ ...targetReceiptData, [e.target.name]: e.target.value });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [targetData]
+    [targetReceiptData]
   );
   const handleSearchButtonClick = useCallback(() => {
     axios
       .get("/api/receipt", { params: inputData })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
-  const searchTargetData = useCallback((receiptCode) => {
+  const searchTargetData = useCallback((receiptId) => {
     axios
-      .get(`/api/receipt/${receiptCode}`)
-      .then((response) => setTargetData({...response.data.data}));
+      .get(`/api/receipt/${receiptId}`)
+      .then((response) => setTargetReceiptData({...response.data.data}));
+    axios
+      .get(`/api/receipt/manufacturer/${receiptId}`)
+      .then((response) => setTargetMfrData({...response.data.data}));
+    axios
+      .get(`/api/receipt/repair/${receiptId}`)
+      .then((response) => setTargetRepairData(response.data.data));
   }, []);
 
-  useEffect(() => console.log(targetData), [targetData]);
+  useEffect(() => console.log(targetReceiptData), [targetReceiptData]);
   return (
     <Content>
       <Info
         options={options}
         inputData={inputData}
-        data={targetData}
+        data={targetReceiptData}
+        repairData={targetRepairData}
+        mfrData={targetMfrtData}
         {...{
           handleInputCheckboxChange,
           handleInputValueChange,
@@ -91,8 +103,8 @@ const Reception = ({ options, user }) => {
         <Modal handleCloseButtonClick={closeProductImage}>
           {
             <Image
-              src={targetData[PRODUCT.IMAGE]}
-              alt={targetData[PRODUCT.STYLE]}
+              src={targetReceiptData[PRODUCT.IMAGE]}
+              alt={targetReceiptData[PRODUCT.STYLE]}
               layout="fill"
               objectFit="contain"
             />

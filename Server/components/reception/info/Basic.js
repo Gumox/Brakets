@@ -27,7 +27,7 @@ const BasicInfo = ({ options, data = {}, handleValueChange = () => {}, handleCod
       <SelectOption
         title="브랜드:"
         name={"brandId"}
-        options={[DEFAULT_OPTION, ...options.brandList]}
+        options={options.brandList}
         value={data["brandId"]}
         onChange={handleValueChange}
         styleOptions={{ width: "200px" }}
