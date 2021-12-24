@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -15,15 +15,15 @@ import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
 
+import { ManufacturerContext, RepairContext } from "../../../store/Context";
 import RepairInfo from "./Repair";
 import ManufacturerInfo from "./Manufacturer";
 
 const DetailInfo = ({
-  data = {},
-  mfrData = {},
-  repairData = [],
   handleValueChange = () => {},
 }) => {
+  const repairData = useContext(RepairContext);
+  const mfrData = useContext(ManufacturerContext);
   return (
     <Wrapper>
       <Container>

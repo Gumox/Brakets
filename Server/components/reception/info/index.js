@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import { RepairContext, ManufacturerContext } from "../../../store/Context";
 import BasicInfo from "./Basic";
 import DetailInfo from "./Detail";
 import FilterInfo from "./Filter";
@@ -10,7 +11,6 @@ import StoreInfo from "./Store";
 
 const ReceptionInfo = ({
   inputData = {},
-  data = {},
   repairData = [],
   mfrData = {},
   handleInputCheckboxChange = () => {},
@@ -36,30 +36,24 @@ const ReceptionInfo = ({
           handleSearchButtonClick={handleSearchButtonClick}
         />
         <Section>
-          <StoreInfo
-            data={data}
-            handleValueChange={handleTargetValueChange}
-          />
+          <StoreInfo handleValueChange={handleTargetValueChange} />
           <ProducInfo
-            data={data}
             handleValueChange={handleTargetValueChange}
             handleProductImageClick={handleProductImageClick}
           />
         </Section>
         <Section>
-          <DetailInfo
-            data={data}
-            mfrData={mfrData}
-            repairData={repairData}
-            handleValueChange={handleTargetValueChange}
-          />
-          <ReceiptInfo
-            data={data}
-            mfrData={mfrData}
-            repairData={repairData}
-            handleValueChange={handleTargetValueChange}
-            handleCheckboxChange={handleTargetCheckboxChange}
-          />
+          <RepairContext.Provider value={repairData}>
+            <ManufacturerContext.Provider value={mfrData}>
+              <DetailInfo
+                handleValueChange={handleTargetValueChange}
+              />
+              <ReceiptInfo
+                handleValueChange={handleTargetValueChange}
+                handleCheckboxChange={handleTargetCheckboxChange}
+              />
+            </ManufacturerContext.Provider>
+          </RepairContext.Provider>
         </Section>
       </SubWrapper>
     </Wrapper>

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
-import { OptionContext } from "../../../store/Context";
+import { OptionContext, ReceiptContext } from "../../../store/Context";
 import COLOR from "../../../constants/color";
 import { PRODUCT, RECEIPT } from "../../../constants/field";
 import { Row, Field, Section, SectionRow } from "../../styled";
@@ -10,11 +10,11 @@ import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
 const ProducInfo = ({
-  data = {},
   handleValueChange = () => {},
   handleProductImageClick = () => {},
 }) => {
   const { seasonList } = useContext(OptionContext);
+  const data = useContext(ReceiptContext);
   return (
     <Wrapper>
       <SectionRow>

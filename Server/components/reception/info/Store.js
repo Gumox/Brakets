@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
-import { OptionContext } from "../../../store/Context";
+import { OptionContext, ReceiptContext } from "../../../store/Context";
 import COLOR from "../../../constants/color";
 import { CUSTOMER, STORE, RECEIPT, DETAIL } from "../../../constants/field";
 import {
@@ -14,8 +14,9 @@ import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 
-const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
+const StoreInfo = ({ handleValueChange = () => {} }) => {
   const { storeList, productCategoryList } = useContext(OptionContext);
+  const data = useContext(ReceiptContext);
   return (
     <Wrapper>
       <SectionRow>

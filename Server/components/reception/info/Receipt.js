@@ -8,6 +8,12 @@ import React, {
 import styled from "styled-components";
 import moment from "moment";
 
+import {
+  OptionContext,
+  ReceiptContext,
+  RepairContext,
+  ManufacturerContext,
+} from "../../../store/Context";
 import COLOR from "../../../constants/color";
 import { OPTIONS, DEFAULT_OPTION } from "../../../constants/select-option";
 import { RECEIPT, REPAIR, MANUFACTURER } from "../../../constants/field";
@@ -16,18 +22,17 @@ import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
-import { OptionContext } from "../../../store/Context";
 
 const ReceiptInfo = ({
-  data = {},
-  mfrData = {},
-  repairData = [],
   handleValueChange = () => {},
   handleCheckboxChange = () => {},
 }) => {
-  console.log(repairData);
   const { resultType, faultType, analysisType, repairList } =
     useContext(OptionContext);
+  const data = useContext(ReceiptContext);
+  const repairData = useContext(RepairContext);
+  const mfrData = useContext(ManufacturerContext);
+
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
 

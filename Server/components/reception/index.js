@@ -2,7 +2,10 @@ import React, { useState, useCallback, useEffect, useContext } from "react";
 import Image from "next/image";
 import axios from "axios";
 
-import { OptionContext } from "../../store/Context";
+import {
+  OptionContext,
+  ReceiptContext,
+} from "../../store/Context";
 import { DATE_SEARCH_TYPE_OPTIONS } from "../../constants/select-option";
 
 import Content from "../Content";
@@ -12,7 +15,7 @@ import List from "./list";
 import { PRODUCT } from "../../constants/field";
 
 const Reception = () => {
-  const {brandList, storeList, seasonList} = useContext(OptionContext)
+  const { brandList, storeList, seasonList } = useContext(OptionContext);
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -51,15 +54,21 @@ const Reception = () => {
   );
   const handleTargetCheckboxChange = useCallback(
     (e) => {
-      console.log(e.target)
-      setTargetReceiptData({ ...targetReceiptData, [e.target.name]: e.target.checked });
+      console.log(e.target);
+      setTargetReceiptData({
+        ...targetReceiptData,
+        [e.target.name]: e.target.checked,
+      });
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
     [targetReceiptData]
   );
   const handleTargetValueChange = useCallback(
     (e) => {
-      setTargetReceiptData({ ...targetReceiptData, [e.target.name]: e.target.value });
+      setTargetReceiptData({
+        ...targetReceiptData,
+        [e.target.name]: e.target.value,
+      });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [targetReceiptData]
@@ -72,10 +81,10 @@ const Reception = () => {
   const searchTargetData = useCallback((receiptId) => {
     axios
       .get(`/api/receipt/${receiptId}`)
-      .then((response) => setTargetReceiptData({...response.data.data}));
+      .then((response) => setTargetReceiptData({ ...response.data.data }));
     axios
       .get(`/api/receipt/manufacturer/${receiptId}`)
-      .then((response) => setTargetMfrData({...response.data.data}));
+      .then((response) => setTargetMfrData({ ...response.data.data }));
     axios
       .get(`/api/receipt/repair/${receiptId}`)
       .then((response) => setTargetRepairData(response.data.data));
@@ -84,21 +93,22 @@ const Reception = () => {
   useEffect(() => console.log(targetReceiptData), [targetReceiptData]);
   return (
     <Content>
-      <Info
-        inputData={inputData}
-        data={targetReceiptData}
-        repairData={targetRepairData}
-        mfrData={targetMfrtData}
-        {...{
-          handleInputCheckboxChange,
-          handleInputValueChange,
-          handleTargetValueChange,
-          handleTargetCheckboxChange,
-          handleSearchButtonClick,
-        }}
-        handleProductImageClick={openProductImage}
-        handleCodeEnter={searchTargetData}
-      />
+      <ReceiptContext.Provider value={targetReceiptData}>
+            <Info
+              inputData={inputData}
+              repairData={targetRepairData}
+              mfrData={targetMfrtData}
+              {...{
+                handleInputCheckboxChange,
+                handleInputValueChange,
+                handleTargetValueChange,
+                handleTargetCheckboxChange,
+                handleSearchButtonClick,
+              }}
+              handleProductImageClick={openProductImage}
+              handleCodeEnter={searchTargetData}
+            />
+      </ReceiptContext.Provider>
       <List data={searchList} handleDataClick={searchTargetData} />
       {isProductImageModalOpen && (
         <Modal handleCloseButtonClick={closeProductImage}>
