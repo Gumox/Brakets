@@ -17,7 +17,7 @@ const BlackText = styled.Text`
   color : black;
 `;
 const DropBackground= styled.View`
-    width: 220px;
+    width: 300px;
     border-radius:10px;
     font-color:#ffffff;
     border:2px solid #78909c;
