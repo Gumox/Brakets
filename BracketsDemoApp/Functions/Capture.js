@@ -18,13 +18,16 @@ import Container from "../components/Container";
 
 const BottomItemBox = styled.View`
   flex-direction: row;
-  width:100%
+  
   justify-content: space-around;
-  background-color : #000000;
+ 
 `;
 
-const TouchableView = styled.TouchableOpacity`
-    margin-bottom:10px
+const TouchableView = styled.TouchableHighlight`
+    flex:1
+    align-items: center;
+    padding:10px
+    background-color : #000000;
 `;
 const StepText = styled.Text`
   color : #FFFFFF
@@ -50,7 +53,7 @@ export default class Capture extends Component{
             
         </ViewShot>
         <BottomItemBox>
-            <TouchableView onPress={ ()=> {
+            <TouchableView underlayColor={"#CCC"} onPress={ ()=> {
             store.dispatch({type:'PHOTORESET',setPhoto:[]});
             store.dispatch({type:'DRAW',drawingImage: ""});
             navigation.replace("TakePhoto",{key:"RetakePhoto",index:selected.index});
@@ -58,7 +61,7 @@ export default class Capture extends Component{
             <StepText>다시 찍기</StepText>
             </TouchableView>
             
-            <TouchableView onPress={()=> 
+            <TouchableView underlayColor={"#CCC"} onPress={()=> 
                 { this.refs.viewShot.capture().then(uri => {
                     console.log("do something with ", uri);
                     store.dispatch({type:'PHOTO',photo: uri});
