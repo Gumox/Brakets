@@ -19,7 +19,6 @@ import RepairInfo from "./Repair";
 import ManufacturerInfo from "./Manufacturer";
 
 const DetailInfo = ({
-  options,
   data = {},
   mfrData = {},
   repairData = [],
@@ -28,9 +27,9 @@ const DetailInfo = ({
   return (
     <Wrapper>
       <Container>
-      {repairData.length === 0 && <RepairInfo {...{options, handleValueChange}} data={{}}/> /** 수선처 데이터가 없는 경우 어떤 내용인지 볼수있는 부분 */}
-      {repairData.map((repair) => <RepairInfo key={repair[REPAIR.ID]} {...{options, handleValueChange}} data={repair}/>)}
-      {mfrData[MANUFACTURER.ID] && <ManufacturerInfo {...{options, handleValueChange}} data={mfrData}/>}
+      {repairData.length === 0 && <RepairInfo {...{handleValueChange}} data={{}}/> /** 수선처 데이터가 없는 경우 어떤 내용인지 볼수있는 부분 */}
+      {repairData.map((repair) => <RepairInfo key={repair[REPAIR.ID]} {...{handleValueChange}} data={repair}/>)}
+      {mfrData[MANUFACTURER.ID] && <ManufacturerInfo {...{handleValueChange}} data={mfrData}/>}
       </Container>
     </Wrapper>
   );

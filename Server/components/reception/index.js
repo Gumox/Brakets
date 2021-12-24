@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import Image from "next/image";
 import axios from "axios";
 
+import { OptionContext } from "../../store/Context";
 import { DATE_SEARCH_TYPE_OPTIONS } from "../../constants/select-option";
 
 import Content from "../Content";
@@ -10,7 +11,8 @@ import Info from "./info";
 import List from "./list";
 import { PRODUCT } from "../../constants/field";
 
-const Reception = ({ options, user }) => {
+const Reception = () => {
+  const {brandList, storeList, seasonList} = useContext(OptionContext)
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -20,11 +22,11 @@ const Reception = ({ options, user }) => {
     () => setIsProductImageModalOpen(false),
     []
   );
-  const [targetBrandId, setTargetBrandId] = useState(options.brandList[0].value);
+  const [targetBrandId, setTargetBrandId] = useState(brandList[0].value);
   const [inputData, setInputData] = useState({
-    brandId: options.brandList[0].value,
-    storeName: options.storeList[0].value,
-    season: options.seasonList[0].value,
+    brandId: brandList[0].value,
+    storeName: storeList[0].value,
+    season: seasonList[0].value,
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
     dateType: "all",
   });
@@ -83,7 +85,6 @@ const Reception = ({ options, user }) => {
   return (
     <Content>
       <Info
-        options={options}
         inputData={inputData}
         data={targetReceiptData}
         repairData={targetRepairData}

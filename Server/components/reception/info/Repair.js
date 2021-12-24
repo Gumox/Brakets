@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
+import { OptionContext } from "../../../store/Context";
 import COLOR from "../../../constants/color";
 import { RECEIPT, REPAIR } from "../../../constants/field";
 import {
   OPTIONS,
   DEFAULT_OPTION,
   RECEIPT_TYPE_OPTIONS,
-TRANSPORT_OPTIONS,
+  TRANSPORT_OPTIONS,
   SHIPPING_OPTIONS,
 } from "../../../constants/select-option";
 import { Row, Field, Section, SectionRow } from "../../styled";
@@ -17,164 +18,165 @@ import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
 
-const RepairInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
+const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
+  const { repairList, faultType, resultType, analysisType, repairType } =
+    useContext(OptionContext);
   return (
     <Wrapper>
-        <SectionRow>
-          <Section marginRight="10px">
-            <Row>
-              <Field marginRight="0px">
-                <SelectOption
-                  title="수선처"
-                  name={REPAIR.PLACE_ID}
-                  options={[DEFAULT_OPTION, ...options.repairList]}
-                  value={data[REPAIR.PLACE_ID]} // details last index receiver
-                  // onChange={handleValueChange}
-                  styleOptions={{
-                    width: "120px",
-                    maxWidth: "120px",
-                    labelMarginRight: "20px",
-                  }}
-                />
-              </Field>
-            </Row>
-            <Row>
-              <Field marginRight="10px">
-                <Input 
-                  type="date" 
-                  title="수선처접수일" 
-                  name={REPAIR.REGISTER_DATE}
-                  value={
-                    data[REPAIR.REGISTER_DATE]
-                      ? moment(data[REPAIR.REGISTER_DATE]).format("YYYY-MM-DD")
-                      : undefined
-                  }
-                  
-                />
-              </Field>
-              <Field>
-                <SelectOption
-                  title="운송형태"
-                  name={REPAIR.DELIVERY_TYPE}
-                  options={[DEFAULT_OPTION, ...TRANSPORT_OPTIONS]}
-                  value={data[REPAIR.DELIVERY_TYPE]}
-                  // onChange={handleValueChange}
-                />
-              </Field>
-            </Row>
-            <Row>
+      <SectionRow>
+        <Section marginRight="10px">
+          <Row>
+            <Field marginRight="0px">
+              <SelectOption
+                title="수선처"
+                name={REPAIR.PLACE_ID}
+                options={[DEFAULT_OPTION, ...repairList]}
+                value={data[REPAIR.PLACE_ID]} // details last index receiver
+                // onChange={handleValueChange}
+                styleOptions={{
+                  width: "120px",
+                  maxWidth: "120px",
+                  labelMarginRight: "20px",
+                }}
+              />
+            </Field>
+          </Row>
+          <Row>
+            <Field marginRight="10px">
+              <Input
+                type="date"
+                title="수선처접수일"
+                name={REPAIR.REGISTER_DATE}
+                value={
+                  data[REPAIR.REGISTER_DATE]
+                    ? moment(data[REPAIR.REGISTER_DATE]).format("YYYY-MM-DD")
+                    : undefined
+                }
+              />
+            </Field>
+            <Field>
+              <SelectOption
+                title="운송형태"
+                name={REPAIR.DELIVERY_TYPE}
+                options={[DEFAULT_OPTION, ...TRANSPORT_OPTIONS]}
+                value={data[REPAIR.DELIVERY_TYPE]}
+                // onChange={handleValueChange}
+              />
+            </Field>
+          </Row>
+          <Row>
+            <Field marginRight="5px">
+              <SelectOption
+                title="과실구분:"
+                name={REPAIR.FAULT_ID}
+                options={[DEFAULT_OPTION, ...faultType]}
+                value={data[REPAIR.FAULT_ID]}
+                // onChange={handleValueChange}
+                styleOptions={{ width: "70px" }}
+              />
+            </Field>
+            <Field marginRight="5px">
+              <SelectOption
+                title="내용분석:"
+                name={REPAIR.ANALYSIS_ID}
+                options={[DEFAULT_OPTION, ...analysisType]}
+                value={data[REPAIR.ANALYSIS_ID]}
+                // onChange={handleValueChange}
+                styleOptions={{ width: "70px" }}
+              />
+            </Field>
+            <Field marginRight="0px">
+              <SelectOption
+                title="판정결과:"
+                name={REPAIR.RESULT_ID}
+                options={[DEFAULT_OPTION, ...resultType]}
+                value={data[REPAIR.RESULT_ID]}
+                // onChange={handleValueChange}
+                styleOptions={{ width: "70px" }}
+              />
+            </Field>
+          </Row>
+          {REPAIR.DETAILS.map((DETAIL, index) => (
+            <Row key={index + 1}>
               <Field marginRight="5px">
                 <SelectOption
-                  title="과실구분:"
-                  name={REPAIR.FAULT_ID}
-                  options={[DEFAULT_OPTION, ...options.faultType]}
-                  value={data[REPAIR.FAULT_ID]}
+                  title={`수선내용${index + 1}:`}
+                  name={DETAIL.TYPE_ID}
+                  options={[DEFAULT_OPTION, ...repairType]}
+                  value={data[DETAIL.TYPE_ID]}
                   // onChange={handleValueChange}
-                  styleOptions={{ width: "70px" }}
+                  disabled={data[DETAIL.TYPE_ID] === null}
                 />
               </Field>
               <Field marginRight="5px">
-                <SelectOption
-                  title="내용분석:"
-                  name={REPAIR.ANALYSIS_ID}
-                  options={[DEFAULT_OPTION, ...options.analysisType]}
-                  value={data[REPAIR.ANALYSIS_ID]}
-                  // onChange={handleValueChange}
+                <Input
+                  title="수량"
+                  name={DETAIL.COUNT}
+                  value={data[DETAIL.COUNT]}
+                  styleOptions={{ width: "15px" }}
+                  disabled={data[DETAIL.TYPE_ID] === null}
+                />
+              </Field>
+              <Field marginRight="5px">
+                <Input
+                  title={`수선비${index + 1}`}
+                  name={DETAIL.PRICE}
+                  value={data[DETAIL.PRICE]}
                   styleOptions={{ width: "70px" }}
+                  disabled={data[DETAIL.TYPE_ID] === null}
                 />
               </Field>
               <Field marginRight="0px">
-                <SelectOption
-                  title="판정결과:"
-                  name={REPAIR.RESULT_ID}
-                  options={[DEFAULT_OPTION, ...options.resultType]}
-                  value={data[REPAIR.RESULT_ID]}
-                  // onChange={handleValueChange}
-                  styleOptions={{ width: "70px" }}
+                <Checkbox
+                  title={`재수선${index + 1}`}
+                  name={DETAIL.REDO}
+                  checked={data[DETAIL.REDO]}
+                  disabled={data[DETAIL.TYPE_ID] === null}
                 />
               </Field>
             </Row>
-            {REPAIR.DETAILS.map((DETAIL, index) => (
-              <Row key={index+1}>
-                <Field marginRight="5px">
-                  <SelectOption
-                    title={`수선내용${index + 1}:`}
-                    name={DETAIL.TYPE_ID}
-                    options={[DEFAULT_OPTION, ...options.repairType]}
-                    value={data[DETAIL.TYPE_ID]}
-                    // onChange={handleValueChange}
-                    disabled={data[DETAIL.TYPE_ID] === null}
-                  />
-                </Field>
-                <Field marginRight="5px">
-                    <Input 
-                        title="수량" 
-                        name={DETAIL.COUNT}
-                        value={data[DETAIL.COUNT]}
-                        styleOptions={{ width: "15px" }} 
-                        disabled={data[DETAIL.TYPE_ID] === null}
-                    />
-                </Field>
-                <Field marginRight="5px">
-                  <Input
-                    title={`수선비${index + 1}`}
-                    name={DETAIL.PRICE}
-                    value={data[DETAIL.PRICE]}
-                    styleOptions={{ width: "70px" }}
-                    disabled={data[DETAIL.TYPE_ID] === null}
-                  />
-                </Field>
-                <Field marginRight="0px">
-                  <Checkbox 
-                    title={`재수선${index + 1}`}  
-                    name={DETAIL.REDO}
-                    checked={data[DETAIL.REDO]}
-                    disabled={data[DETAIL.TYPE_ID] === null}
-                  />
-                </Field>
-              </Row>
-            ))}
-          </Section>
-          <Section>
-            <TextArea
-              title="수선처설명:"
-              name={REPAIR.MESSAGE}
-              value={data[REPAIR.MESSAGE]}
-              styleOptions={{ width: "290px", height: "100px" }}
-            />
-          </Section>
-        </SectionRow>
-        <Row>
-          <Field marginRight="10px">
-            <Input
-              type="date"
-              title="수선처발송일"
-              name={REPAIR.COMPLETE_DATE}
-              value={
-                data[REPAIR.COMPLETE_DATE]
-                  ? moment(data[REPAIR.COMPLETE_DATE]).format("YYYY-MM-DD")
-                  : undefined
-              }
-            />
-          </Field>
-          <Field marginRight="10px">
-            <SelectOption
-              title="발송방법:"
-              name={REPAIR.SHIPMENT_TYPE}
-              options={[DEFAULT_OPTION, ...SHIPPING_OPTIONS]}
-              value={data[REPAIR.SHIPMENT_TYPE]}
-              // onChange={handleValueChange}
-            />
-          </Field>
-          <Field marginRight="0px">
-            <Input 
-                title="발송비용" 
-                name={REPAIR.SHIPMENT_PRICE}
-                value={data[REPAIR.SHIPMENT_PRICE]}
-                styleOptions={{ width: "70px" }} 
-            />
-          </Field>
-        </Row>
+          ))}
+        </Section>
+        <Section>
+          <TextArea
+            title="수선처설명:"
+            name={REPAIR.MESSAGE}
+            value={data[REPAIR.MESSAGE]}
+            styleOptions={{ width: "290px", height: "100px" }}
+          />
+        </Section>
+      </SectionRow>
+      <Row>
+        <Field marginRight="10px">
+          <Input
+            type="date"
+            title="수선처발송일"
+            name={REPAIR.COMPLETE_DATE}
+            value={
+              data[REPAIR.COMPLETE_DATE]
+                ? moment(data[REPAIR.COMPLETE_DATE]).format("YYYY-MM-DD")
+                : undefined
+            }
+          />
+        </Field>
+        <Field marginRight="10px">
+          <SelectOption
+            title="발송방법:"
+            name={REPAIR.SHIPMENT_TYPE}
+            options={[DEFAULT_OPTION, ...SHIPPING_OPTIONS]}
+            value={data[REPAIR.SHIPMENT_TYPE]}
+            // onChange={handleValueChange}
+          />
+        </Field>
+        <Field marginRight="0px">
+          <Input
+            title="발송비용"
+            name={REPAIR.SHIPMENT_PRICE}
+            value={data[REPAIR.SHIPMENT_PRICE]}
+            styleOptions={{ width: "70px" }}
+          />
+        </Field>
+      </Row>
     </Wrapper>
   );
 };

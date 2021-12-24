@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
+import { OptionContext } from "../../../store/Context";
 import COLOR from "../../../constants/color";
 import { PRODUCT, RECEIPT } from "../../../constants/field";
 import { Row, Field, Section, SectionRow } from "../../styled";
@@ -9,11 +10,11 @@ import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 
 const ProducInfo = ({
-  options,
   data = {},
   handleValueChange = () => {},
   handleProductImageClick = () => {},
 }) => {
+  const { seasonList } = useContext(OptionContext);
   return (
     <Wrapper>
       <SectionRow>
@@ -23,7 +24,7 @@ const ProducInfo = ({
               <SelectOption
                 title="시즌"
                 name={PRODUCT.SEASON}
-                options={options.seasonList}
+                options={seasonList}
                 value={data[PRODUCT.SEASON] || ""}
                 onChange={handleValueChange}
               />
@@ -71,7 +72,7 @@ const ProducInfo = ({
                 title="RFID코드"
                 name={PRODUCT.RFID}
                 styleOptions={{ width: "100px" }}
-                value={data[PRODUCT.RFID] || "" }
+                value={data[PRODUCT.RFID] || ""}
                 onChange={handleValueChange}
                 disabled={true}
               />
@@ -104,14 +105,19 @@ const ProducInfo = ({
           </Row>
         </Section>
         <Section>
-          {data[PRODUCT.IMAGE] && <ProductImage imageUrl={data[PRODUCT.IMAGE]} onClick={handleProductImageClick}/>}
+          {data[PRODUCT.IMAGE] && (
+            <ProductImage
+              imageUrl={data[PRODUCT.IMAGE]}
+              onClick={handleProductImageClick}
+            />
+          )}
         </Section>
       </SectionRow>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
-width: 40%;
+  width: 40%;
   margin: 0px 15px 5px 5px;
   padding: 10px;
   border: 2px solid ${COLOR.BORDER_MAIN};

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
+import { OptionContext } from "../../../store/Context";
 import COLOR from "../../../constants/color";
 import { CUSTOMER, STORE, RECEIPT, DETAIL } from "../../../constants/field";
 import {
@@ -13,7 +14,8 @@ import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 
-const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
+const StoreInfo = ({ data = {}, handleValueChange = () => {} }) => {
+  const { storeList, productCategoryList } = useContext(OptionContext);
   return (
     <Wrapper>
       <SectionRow>
@@ -23,7 +25,7 @@ const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <SelectOption
                 title="매장명"
                 name={STORE.ID}
-                options={options.storeList}
+                options={storeList}
                 value={data[STORE.ID]}
                 onChange={handleValueChange}
                 styleOptions={{ width: "180px", maxWidth: "180px" }}
@@ -58,8 +60,8 @@ const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
                 onChange={handleValueChange}
               />
             </Field>
-            </Row>
-            <Row>
+          </Row>
+          <Row>
             <Field marginRight="5px">
               <Input
                 title="고객명"
@@ -103,21 +105,25 @@ const StoreInfo = ({ options, data = {}, handleValueChange = () => {} }) => {
               <SelectOption
                 title="제품구분"
                 name={DETAIL.PRODUCT_CATEGORY_ID}
-                options={options.productCategoryList}
+                options={productCategoryList}
                 value={data[DETAIL.PRODUCT_CATEGORY_ID]} // details last index pcategory_id
                 // onChange={handleValueChange}
-                styleOptions={{ width: "120px", maxWidth: "120px",  color: COLOR.RED}}
+                styleOptions={{
+                  width: "120px",
+                  maxWidth: "120px",
+                  color: COLOR.RED,
+                }}
               />
             </Field>
           </Row>
         </Section>
         <Section>
-            <TextArea
-              title="매장접수내용"
-              value={data[RECEIPT.STORE_MESSAGE]}
-              styleOptions={{ width: "350px", height: "60px" }} // details first index message
-              disabled={true}
-            />
+          <TextArea
+            title="매장접수내용"
+            value={data[RECEIPT.STORE_MESSAGE]}
+            styleOptions={{ width: "350px", height: "60px" }} // details first index message
+            disabled={true}
+          />
         </Section>
       </SectionRow>
     </Wrapper>

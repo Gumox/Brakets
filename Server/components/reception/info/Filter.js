@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import styled from "styled-components";
 
+import { OptionContext } from "../../../store/Context";
 import COLOR from "../../../constants/color";
 import {
   DATE_SEARCH_TYPE_OPTIONS,
@@ -15,17 +16,18 @@ import SelectOption from "../../SelectOption";
 import Checkbox from "../../Checkbox";
 
 const FilterInfo = ({
-  options,
   data = {},
   handleCheckboxChange = () => {},
   handleValueChange = () => {},
   handleSearchButtonClick = () => {},
 }) => {
+  const { storeList, analysisType, resultType, seasonList } =
+    useContext(OptionContext);
   return (
     <Wrapper>
       <Title>조회</Title>
       <Row>
-        <Field marginRight="10px" >
+        <Field marginRight="10px">
           <Checkbox
             title="매장별"
             name="isStoreType"
@@ -38,7 +40,7 @@ const FilterInfo = ({
             title="매장명"
             name="storeName"
             disabled={!data["isStoreType"]}
-            options={options.storeList}
+            options={storeList}
             value={data["storeName"]}
             onChange={handleValueChange}
           />
@@ -115,7 +117,7 @@ const FilterInfo = ({
             <SelectOption
               title="내용분석"
               name="analysisId"
-              options={[...ANALYSIS_TYPE_OPTIONS, ...options.analysisType]}
+              options={[...ANALYSIS_TYPE_OPTIONS, ...analysisType]}
               value={data["analysisId"]}
               onChange={handleValueChange}
             />
@@ -124,7 +126,7 @@ const FilterInfo = ({
             <SelectOption
               title="판정결과"
               name="resultId"
-              options={[...RESULT_TYPE_OPTIONS, ...options.resultType]}
+              options={[...RESULT_TYPE_OPTIONS, ...resultType]}
               value={data["resultId"]}
               onChange={handleValueChange}
             />
@@ -145,7 +147,7 @@ const FilterInfo = ({
             title="시즌"
             name="season"
             disabled={!data["isStyleType"]}
-            options={options.seasonList}
+            options={seasonList}
             checked={data["season"]}
             onChange={handleValueChange}
           />

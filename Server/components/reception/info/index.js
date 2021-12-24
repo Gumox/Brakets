@@ -9,7 +9,6 @@ import ReceiptInfo from "./Receipt";
 import StoreInfo from "./Store";
 
 const ReceptionInfo = ({
-  options,
   inputData = {},
   data = {},
   repairData = [],
@@ -26,13 +25,11 @@ const ReceptionInfo = ({
     <Wrapper>
       <SubWrapper>
         <BasicInfo
-          options={options}
           data={inputData}
           handleValueChange={handleInputValueChange}
           handleCodeEnter={handleCodeEnter}
         />
         <FilterInfo
-          options={options}
           data={inputData}
           handleCheckboxChange={handleInputCheckboxChange}
           handleValueChange={handleInputValueChange}
@@ -40,12 +37,10 @@ const ReceptionInfo = ({
         />
         <Section>
           <StoreInfo
-            options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
           />
           <ProducInfo
-            options={options}
             data={data}
             handleValueChange={handleTargetValueChange}
             handleProductImageClick={handleProductImageClick}
@@ -53,14 +48,12 @@ const ReceptionInfo = ({
         </Section>
         <Section>
           <DetailInfo
-            options={options}
             data={data}
             mfrData={mfrData}
             repairData={repairData}
             handleValueChange={handleTargetValueChange}
           />
           <ReceiptInfo
-            options={options}
             data={data}
             mfrData={mfrData}
             repairData={repairData}

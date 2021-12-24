@@ -17,7 +17,6 @@ import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
 
 const ManufacturerInfo = ({
-  options,
   data = {},
   handleValueChange = () => {},
 }) => {

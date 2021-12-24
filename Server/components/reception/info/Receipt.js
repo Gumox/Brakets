@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -10,33 +16,37 @@ import Input from "../../Input";
 import SelectOption from "../../SelectOption";
 import TextArea from "../../TextArea";
 import Checkbox from "../../Checkbox";
+import { OptionContext } from "../../../store/Context";
 
 const ReceiptInfo = ({
-  options,
   data = {},
   mfrData = {},
   repairData = [],
   handleValueChange = () => {},
   handleCheckboxChange = () => {},
 }) => {
-  console.log(repairData)
+  console.log(repairData);
+  const { resultType, faultType, analysisType, repairList } =
+    useContext(OptionContext);
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
 
-  const resultType = useMemo(
+  const resultTypeMap = useMemo(
     () =>
-      options.resultType.reduce(
+      resultType.reduce(
         (prev, cur) => ({ ...prev, [cur.value]: cur.text }),
         {}
       ),
-    [options]
+    [resultType]
   );
   useEffect(() => {
-    if (!resultType[data[RECEIPT.RESULT_ID]]) return;
-    if (resultType[data[RECEIPT.RESULT_ID]].includes("수선")) setIsRepiar(true);
+    if (!resultTypeMap[data[RECEIPT.RESULT_ID]]) return;
+    if (resultTypeMap[data[RECEIPT.RESULT_ID]].includes("수선"))
+      setIsRepiar(true);
     else setIsRepiar(false);
 
-    if (resultType[data[RECEIPT.RESULT_ID]].includes("심의")) setIsReview(true);
+    if (resultTypeMap[data[RECEIPT.RESULT_ID]].includes("심의"))
+      setIsReview(true);
     else setIsReview(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data[RECEIPT.RESULT_ID]]);
@@ -64,7 +74,7 @@ const ReceiptInfo = ({
               <SelectOption
                 title="1.과실구분:"
                 name={RECEIPT.FAULT_ID}
-                options={[DEFAULT_OPTION, ...options.faultType]}
+                options={[DEFAULT_OPTION, ...faultType]}
                 value={data[RECEIPT.FAULT_ID]}
                 onChange={handleValueChange}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
@@ -76,7 +86,7 @@ const ReceiptInfo = ({
               <SelectOption
                 title="2.내용분석:"
                 name={RECEIPT.ANALYSIS_ID}
-                options={[DEFAULT_OPTION, ...options.analysisType]}
+                options={[DEFAULT_OPTION, ...analysisType]}
                 value={data[RECEIPT.ANALYSIS_ID]}
                 onChange={handleValueChange}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
@@ -88,7 +98,7 @@ const ReceiptInfo = ({
               <SelectOption
                 title="3.판정결과:"
                 name={RECEIPT.RESULT_ID}
-                options={[DEFAULT_OPTION, ...options.resultType]}
+                options={[DEFAULT_OPTION, ...resultType]}
                 value={data[RECEIPT.RESULT_ID]}
                 onChange={handleValueChange}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
@@ -124,42 +134,45 @@ const ReceiptInfo = ({
       </SectionRow>
       {!isReview && (
         <>
-        {repairData.map((repair, index) =>  (<Row key={repair["repair_detail_id"]}>
-            <Field marginRight="10px">
-              <SelectOption
-                title={`수선처지정${index+1}`}
-                name={REPAIR.PLACE_ID}
-                options={[DEFAULT_OPTION, ...options.repairList]}
-                value={repair[REPAIR.PLACE_ID]}
-                styleOptions={{ maxWidth: "160px", width: "160px" }}
-                disabled={true}
-              />
-            </Field>
-            <Field>
-              <Input
-                type="date"
-                title={`발송일 to R${index+1}`}
-                name={REPAIR.SEND_DATE}
-                value={
-                  repair[REPAIR.SEND_DATE]
-                    ? moment(repair[REPAIR.SEND_DATE]).format(
-                        "YYYY-MM-DD"
-                      )
-                    : undefined
-                }
-                disabled={true}
-              />
-            </Field>
-            <Field>
-              <Input
-                title={`총 비용${index+1}`}
-                name={REPAIR.TOTAL_PRICE}
-                value={repair[REPAIR.TOTAL_PRICE]}
-                styleOptions={{ width: "50px" }}
-                disabled={true}
-              />
-            </Field>
-          </Row>))}
+          {repairData.map((repair, index) => (
+            <Row key={repair["repair_detail_id"]}>
+              <Field marginRight="10px">
+                <SelectOption
+                  title={`수선처지정${index + 1}`}
+                  name={REPAIR.PLACE_ID}
+                  options={[DEFAULT_OPTION, ...repairList]}
+                  value={repair[REPAIR.PLACE_ID]}
+                  styleOptions={{ maxWidth: "160px", width: "160px" }}
+                  disabled={true}
+                />
+              </Field>
+              <Field>
+                <Input
+                  type="date"
+                  title={`발송일 to R${index + 1}`}
+                  name={REPAIR.SEND_DATE}
+                  value={
+                    repair[REPAIR.SEND_DATE]
+                      ? moment(repair[REPAIR.SEND_DATE]).format("YYYY-MM-DD")
+                      : undefined
+                  }
+                  disabled={true}
+                />
+              </Field>
+              <Field>
+                <Input
+                  title={`총 비용${index + 1}`}
+                  name={REPAIR.TOTAL_PRICE}
+                  value={repair[REPAIR.TOTAL_PRICE]}
+                  styleOptions={{ width: "50px" }}
+                  disabled={true}
+                />
+              </Field>
+            </Row>
+          ))}
+          <Row>
+            <RepairAddButton>수선처 추가</RepairAddButton>
+          </Row>
           <Row>
             <Field marginRight="10px">
               <Input
@@ -342,7 +355,7 @@ const ReceiptInfo = ({
   );
 };
 const Wrapper = styled.div`
-width: 50%;
+  width: 50%;
   position: relative;
   margin: 0px 15px 5px 5px;
   padding: 10px;
@@ -359,6 +372,18 @@ const CustomRow = styled.div`
   bottom: 0px;
 `;
 
+const RepairAddButton = styled.button`
+  min-height: max-content;
+  width: 100px;
+  height: 25px;
+  font-size: 13px;
+  font-weight: bold;
+  background-color: ${COLOR.TEXT_MAIN};
+  color: ${COLOR.WHITE};
+  border-radius: 5px;
+  border: none;
+`;
+
 const ReportButton = styled.button`
   min-height: max-content;
   width: ${({ width = "100px" }) => width};
@@ -369,6 +394,7 @@ const ReportButton = styled.button`
   border: 2px solid ${COLOR.BLUE};
   word-break: keep-all;
 `;
+
 const SaveButton = styled.button`
   min-height: max-content;
   width: 150px;

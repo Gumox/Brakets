@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
+import { OptionContext } from "../store/Context";
 import { getThisSeason, getCurrentSeasons } from "../utils/season";
 import { SEASON_OPTIONS } from "../constants/select-option";
 
@@ -13,7 +14,9 @@ const ReceptionPage = ({ options, user }) => {
   return (
     <>
       <Header path={router.pathname} />
-      <Reception options={options} user={user} />
+      <OptionContext.Provider value={options}>
+        <Reception />
+      </OptionContext.Provider>
     </>
   );
 };

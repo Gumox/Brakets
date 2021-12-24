@@ -4,15 +4,18 @@ import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
+import { OptionContext } from "../store/Context";
 import Header from "../components/Header";
 import PaidRepair from "../components/paid-repair";
 
-const PaidRepairPage = (props) => {
+const PaidRepairPage = ({options, user}) => {
   const router = useRouter();
   return (
     <>
       <Header path={router.pathname} />
-      <PaidRepair {...props}/>
+      <OptionContext.Provider value={options}>
+        <PaidRepair />
+      </OptionContext.Provider>
     </>
   );
 };
