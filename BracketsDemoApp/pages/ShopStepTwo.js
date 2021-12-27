@@ -7,6 +7,7 @@ import Container from '../components/Container';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import CenterText from '../components/CenterText';
+import TopInfoLess from '../components/TopInfoLess';
 import Bottom from '../components/Bottom';
 import store from '../store/store';
 const Label = styled.Text`
@@ -93,12 +94,7 @@ function ShopStepTwo({navigation}) {
     return (
         <Container>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
-            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision.name}</Text>
-                </View>
-                <Text>  </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
-            </View>
+            <TopInfoLess></TopInfoLess>
             <CenterText>
             
                 <TopIntro>제품 정보</TopIntro>

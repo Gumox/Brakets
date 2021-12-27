@@ -10,6 +10,7 @@ import StateBarVoid from '../components/StateBarVoid';
 //import AsyncStorage from '@react-native-community/async-storage';
 // import { AsyncStorage } from 'react-native';
 import { Alert } from 'react-native';
+import TopInfoLess from '../components/TopInfoLess';
 import Bottom from '../components/Bottom';
 import store from '../store/store';
 const Label = styled.Text`
@@ -43,11 +44,7 @@ function InputAlternativeNumber({navigation}) {
         <Container>
             <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
             
-            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision.name}</Text></View>
-                <Text>  </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
-            </View>
+            <TopInfoLess></TopInfoLess>
             <JustView>
                 <Label>대체 품번을 입력하세요</Label>
                     <Input

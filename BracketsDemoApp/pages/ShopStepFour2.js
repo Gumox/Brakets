@@ -3,6 +3,7 @@ import Contents from '../components/Contents';
 import ButtonBlack from '../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
+import TopInfo from '../components/TopInfo';
 import Bottom from '../components/Bottom';
 import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,Button} from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
@@ -151,13 +152,7 @@ function ShopStepFour2({navigation}) {
     return (
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
-            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision.name}</Text><Text  style={{fontWeight: "bold",fontSize:15}}> : </Text>
-                    <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement.name}</Text>
-                </View>
-                <Text>   </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
-            </View>
+            <TopInfo></TopInfo>
             <Contents>
                 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>

@@ -8,6 +8,8 @@ import _ from 'lodash';
 import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import { PERMISSIONS, RESULTS, request } from 'react-native-permissions'
+import TopInfo from '../components/TopInfo';
+import TopInfoLess from '../components/TopInfoLess';
 import Bottom from '../components/Bottom';
 import store from '../store/store';
 
@@ -56,10 +58,7 @@ function ShopStepOne( { navigation } ) {
     return (
         <Container>
             <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
-            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision.name}</Text></View>
-                <Text>  </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View></View>
+            <TopInfoLess/>
             <CenterText>
                 
                 <RegistText>제품 등록</RegistText>

@@ -11,6 +11,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
 import _ from 'lodash';
 import ShopStepFour2 from '../ShopStepFour2';
+import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom';
 
 const Label = styled.Text`
@@ -181,13 +182,7 @@ function ShopStepThree4({route,navigation}) {
         
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
-            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision.name}</Text><Text  style={{fontWeight: "bold",fontSize:15}}> : </Text>
-                    <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement.name}</Text>
-                </View>
-                <Text>  </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
-            </View>
+            <TopInfo></TopInfo>
             <Contents>
             <CenterView><TopIntro>수선 정보 확인</TopIntro></CenterView>
             
