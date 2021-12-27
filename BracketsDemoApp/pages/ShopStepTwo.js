@@ -77,7 +77,7 @@ function ShopStepTwo({navigation}) {
             console.log(data);
             store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
             console.log(store.getState().getProductCategory);
-            store.dispatch({type:'REQUIREMENT',requirement: "수선"});
+            store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:2}});
             
             setLoading(false);
            
@@ -94,7 +94,7 @@ function ShopStepTwo({navigation}) {
         <Container>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text>
+                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision.name}</Text>
                 </View>
                 <Text>  </Text>
                 <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
@@ -112,17 +112,17 @@ function ShopStepTwo({navigation}) {
 
                 }}>수선</SelectButton>
                 <SelectButton  iconImg = {<ImgIcon source={require('../Icons/exchange_blue.png')}/>} onPress={ ()=> {
-                     store.dispatch({type:'REQUIREMENT',requirement: "교환"});
+                     store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
                     store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
                     navigation.navigate( 'ScanScreen',{key:'ShopStepFour2'} )
                 }}>교환</SelectButton></CenterView>
                 <CenterView><SelectButton iconImg = {<ImgIcon source={require('../Icons/refund_blue.png')}/>} onPress={ ()=> {
-                    store.dispatch({type:'REQUIREMENT',requirement:  "환불"});
+                    store.dispatch({type:'REQUIREMENT',requirement:{name:"환불",id:3}});
                     store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
                     navigation.navigate( 'ScanScreen',{key:'ShopStepFour2'} )
                 }}>환불</SelectButton>
                 <SelectButton iconImg = {<ImgIcon source={require('../Icons/deliberating_blue.png')}/>} onPress={ ()=> {
-                     store.dispatch({type:'REQUIREMENT',requirement:  "심의"});
+                     store.dispatch({type:'REQUIREMENT',requirement:{name:"심의",id:4}});
                     store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
                     navigation.navigate( 'ScanScreen',{key:'ShopStepFour2'} )
                 }}>심의</SelectButton></CenterView>

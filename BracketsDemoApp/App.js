@@ -30,8 +30,7 @@ import ShopStepFour2 from './pages/ShopStepFour2';
 import ShopStepFive from './pages/ShopStepFive';
 import ShopStepComplete from './pages/ShopStepComplete';
 
-import Detail from './pages/Detail';
-import Form from './pages/Form';
+
 import InputAlternativeNumber from './pages/InputAlternativeNumber';
 import ProductInfo from './pages/ProductInfo';
 import ScanScreen from './Functions/ScanScreen';
@@ -83,8 +82,6 @@ function App() {
         <Stack.Screen name="ShopStepComplete" component={ShopStepComplete} options={{ title: '5단계' ,headerTitleAlign: 'center'}} />
 
 
-        <Stack.Screen name="Detail" component={Detail} />
-        <Stack.Screen name="Form" component={Form} options={{ title: '일기 작성' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="InputAlternativeNumber" component={InputAlternativeNumber} options={{ title: '대체 품번 입력' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ProductInfo" component={ProductInfo} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
 

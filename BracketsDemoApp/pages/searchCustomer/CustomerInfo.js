@@ -121,7 +121,11 @@ const styles = StyleSheet.create({
       },
     }
   });
-  
+  const ImgIcon =styled.Image`
+    width: 20px;
+    height: 20px;
+    margin-Right:5px;
+`;
 export default class CustomerInfo extends Component {
     constructor(props) {
         super(props);
@@ -169,7 +173,7 @@ export default class CustomerInfo extends Component {
                             <Input></Input>        
                         </CenterText>
                         <CenterText>
-                            <PrView><CautionText>아래 사항들은 고객이 직접 입력하셔야 합니다</CautionText></PrView>
+                            <PrView><ImgIcon source={require('../../Icons/caution.png')}/><CautionText>아래 사항들은 고객이 직접 입력하셔야 합니다</CautionText></PrView>
                             <PrView><Label>수선 관련 고지 사항</Label><TextPrassble>
                                 <Text>자세히 보기</Text></TextPrassble>
                                 <CheckBox
@@ -244,10 +248,13 @@ export default class CustomerInfo extends Component {
                         </View>
                         </View>
                         </View>
-                    </Modal>    
+                    </Modal>
+                    <View style ={{
+                        width :"100%",justifyContent:"center",alignItems:'center' ,borderTopColor:"#e2e2e2",borderTopWidth:1 }}>    
                     <Button onPress = {() => this.props.navigation.navigate('ShopStepOne')}>
                         접수하기
                     </Button>
+                    </View>
                 
                 <Bottom navigation={this.props.navigation}/>
             </Container>

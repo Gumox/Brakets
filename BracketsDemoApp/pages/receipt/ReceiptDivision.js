@@ -89,7 +89,7 @@ function ReceiptDivision({navigation}) {
             <TopIntro>접수 구분</TopIntro>
             <Label/>
             <ReceiptButton onPress={ ()=> {
-                store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: "고객용"});
+                store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"고객용",id:1}});
                 console.log(store.getState().receptionDivision);
                 navigation.navigate( 'SearchCustomer' ) }}>고객용 제품</ReceiptButton>
             

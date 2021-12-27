@@ -31,6 +31,11 @@ const Input = styled.TextInput`
     font-size: 20px;
     border-radius:10px
 `;
+const ImgIcon =styled.Image`
+    width: 20px;
+    height: 20px;
+    margin:10px;
+`;
 // 구조 분해 할당, Destructuring Assignment
 function SearchCustomer( { navigation } ) {
 
@@ -98,7 +103,7 @@ function SearchCustomer( { navigation } ) {
               getCustomer({"lastphone":pNumber})
               console.log("ㅇㅇㅇㅇ");
               console.log(data);
-              //navigation.navigate('CustomerInfo')
+              navigation.navigate('CustomerInfo')
             }
             else {
               Alert.alert(            
