@@ -35,4 +35,8 @@ deploy.log*
 .vercel
 
 # image file
-public/storage/*
+public/storage/receipt/*
+!public/storage/receipt/empty.txt
+
+public/storage/signature/*
+!public/storage/signature/empty.txt
