@@ -3,6 +3,7 @@ import Contents from '../components/Contents';
 import ButtonBlack from '../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
+import TopInfo from '../components/TopInfo';
 import Bottom from '../components/Bottom';
 import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,Button} from 'react-native';
 import StateBarSolid from '../components/StateBarSolid';
@@ -21,6 +22,14 @@ const Label = styled.Text`
     margin-Top: 12px;
     margin-bottom: 12px;
     margin-left:12px;
+`;
+const LabelPlus = styled.Text`
+    font-size: 12px;
+    margin-Top: 12px;
+    margin-bottom: 12px;
+    margin-left:12px;
+    color:#0000ff
+    margin-right: 10%
 `;
 const PrView = styled.View`
     flex-direction: row;
@@ -71,8 +80,8 @@ Date.prototype.addDays = function(days) {
     return date;
 }
 
-function useInput() {
-    const [date, setDate] = React.useState(new Date());
+const useInput=(inputDate)=> {
+    const [date, setDate] = React.useState(inputDate);
     const [mode, setMode] = React.useState('date');
     const [show, setShow] = React.useState(false);
 
@@ -88,6 +97,7 @@ function useInput() {
         const currentDate = selectedDate || date
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
+        console.log(currentDate)
     }
     return {
         date,
@@ -100,7 +110,7 @@ function useInput() {
 
 function ShopStepFour2({navigation}) {
     const dateInput1 = useInput(new Date())
-    const dateInput2 = useInput(new Date())
+    const dateInput2 = useInput(new Date().addDays(14))
       
 
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
@@ -139,17 +149,10 @@ function ShopStepFour2({navigation}) {
         }
       });
       
-    console.log(store.getState().requirement)
     return (
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
-            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text><Text  style={{fontWeight: "bold",fontSize:15}}> : </Text>
-                    <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement}</Text>
-                </View>
-                <Text>   </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
-            </View>
+            <TopInfo></TopInfo>
             <Contents>
                 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
@@ -211,7 +214,7 @@ function ShopStepFour2({navigation}) {
                         onChange={dateInput1.onChange}
                         />
                     )}
-                <Label> 고객 약속일</Label>
+                <PrView><Label> 고객 약속일 </Label><LabelPlus>기본 +14일</LabelPlus></PrView>
                 <TouchableView onPress={dateInput2.showDatepicker}>
                     <PrView>
                     <Label>{dateInput2.date.getFullYear()}년  {dateInput2.date.getMonth()+1}월  {dateInput2.date.getDate()}일</Label>

@@ -4,6 +4,7 @@ import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
+import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
@@ -66,16 +67,48 @@ function ShopStepThree( { navigation } ) {
       
       itemList.push({ label: i+'.'+obj.category_name, value: obj.category_name })
       var key = obj.category_name;
-      Categories.push({'category_name' :obj.category_name, 'receiver_name': obj.receiver_name});
+      Categories.push({'category_name' :obj.category_name, 'pcategory_id': obj.pcategory_id});
       var title = obj.receiver_name;
       i = i+1;
        //Categories.push(title : obj.receiver_name);
     }
-    console.log(obj.category_name+ " : " + obj.receiver_name);
+    console.log(obj.category_name+ " : " + obj.pcategory_id);
     
   });
-  if(itemList[0]==undefined){
-    itemList.push({ label: '...', value: '...' })
+
+
+
+  const [isLoading, setLoading] = React.useState(true);
+
+  const bodyData = {
+    "category": 1,
+    "receipt": 1,
+    "pcategory_id": 25
+
+  }
+    
+  const getRepairList = async () => {
+      
+      try {
+          const response = await fetch('http://13.125.232.214/api/getRepairList',{method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+              },
+          body: JSON.stringify(bodyData)
+          });
+          const json = await response.json();
+          
+
+          store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
+          store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:json.list[0].receiver_name });
+          setLoading(false);
+          
+      } catch (error) {
+          console.error(error);
+      } finally {
+          setLoading(false);
+      }
   }
   React.useEffect(()=>{
     console.log(Categories)
@@ -97,13 +130,7 @@ function ShopStepThree( { navigation } ) {
   return (
       <Container>
           <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
-          <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text><Text  style={{fontWeight: "bold",fontSize:15}}> : </Text>
-                  <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement}</Text>
-                </View>
-                <Text>  </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
-            </View>
+          <TopInfo></TopInfo>
           <CenterText>
               <Title>수선정보</Title>
           </CenterText>
@@ -140,9 +167,16 @@ function ShopStepThree( { navigation } ) {
               
               Categories.forEach(obj => {
                 if(value === obj.category_name){
-                  console.log("???????????"+obj.receiver_name);
+                  console.log("???????????"+obj.pcategory_id);
                   
-                  store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: obj.receiver_name});
+                  getRepairList(
+                    {
+                      "category": 1,
+                      "receipt": 1,
+                      "pcategory_id": obj.pcategory_id
+                    }
+                  )
+                  
                   
                   console.log("+++");
                   console.log(store.getState().basicRepairStore);
@@ -173,6 +207,7 @@ function ShopStepThree( { navigation } ) {
               );
               
             }else{
+              
               store.dispatch({type:'PHOTORESET',setPhoto:[]});
               store.dispatch({type:'PLUSINDEXNUMBER',plus:-ix});
               

@@ -7,14 +7,17 @@ export default createStore(function(state,action){
 
 
         return{
-            cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",
+            cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",customerSign:"",
+            receiverList:"",
             selectType:[],bagPicture:"", photoArr:[],indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
             typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:""}
     }
     if(action.type ==='PHOTO'){
         return{...state, photo: action.photo };
     }
-    
+    if(action.type ==='CUSTOMER_SIGN'){
+        return{...state, customerSign: action.customerSign };
+    }
     if(action.type ==='DETAIL_PHOTO'){
         return{...state, detailPhoto: action.detailPhoto };
     }
@@ -27,7 +30,9 @@ export default createStore(function(state,action){
     if(action.type ==='RECEPITION_DIVISION'){
         return{...state, receptionDivision: action.receptionDivision };
     }
-
+    if(action.type ==='RECIVER_LIST'){
+        return{...state, receiverList: action.receiverList };
+    }
     if(action.type ==='SERVICECAED'){
         return{...state, cardValue: action.value };
     }

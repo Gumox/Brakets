@@ -9,6 +9,7 @@ import StateBarVoid from '../components/StateBarVoid';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 import { Alert } from 'react-native';
+import TopInfoLess from '../components/TopInfoLess';
 import Bottom from '../components/Bottom';
 import store from '../store/store';
 
@@ -111,13 +112,12 @@ function ProductInfo({navigation, route}) {
     .catch(function(error){
         console.log(error)
         Alert.alert(            
-            "QR코드/Barcode 오류",             
-            "error",                   
+            "인터넷 연결 실패",                                
             [                              
                 { text: "확인"},
             ]
         )
-        //navigation.goBack()
+        navigation.goBack()
     })
 
 
@@ -127,10 +127,7 @@ function ProductInfo({navigation, route}) {
             <ContainView>
                 <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
                 
-                <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text></View>
-                <Text>  </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View></View>
+                <TopInfoLess/>
                 
                 <Contents>
                     

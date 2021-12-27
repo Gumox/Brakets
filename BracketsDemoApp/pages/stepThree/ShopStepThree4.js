@@ -6,6 +6,7 @@ import ContainView from '../../components/ContainView';
 import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler, Touchable} from 'react-native';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
+import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom';
 import store from '../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
@@ -98,25 +99,26 @@ function ShopStepThree4({route,navigation}) {
     const [itemList , setItemList] = React.useState([]);
     
     const productCategories = store.getState().getProductCategory;
-    
+    const  receiverList = store.getState(). receiverList;
+    console.log( receiverList);
+    console.log("AAAAAAAAAA");
     const ProductCategoriesClassify =()=>{
         var items  = [];
         var category = [];
         var i = 1;
         var j = 1;
         productCategories.forEach(obj => {
-            if(obj.receiver_name !== '아디다스코리아(본사)' ){
             
-                category.push({ label: i+'.'+obj.category_name, value: obj.category_name })
-                var key = obj.category_name;
-                i = i+1;
-            }
+            
+            category.push({ label: i+'.'+obj.category_name, value: obj.category_name })
+            var key = obj.category_name;
+            i = i+1;
            
-            if(selectedType === obj.category_name){
-                items.push({ label: j+'.'+obj.receiver_name, value: obj.receiver_name });
-                j = j+1;
-                
-            }
+            
+        });
+        receiverList.forEach(obj =>{
+            items.push({ label: j+'.'+obj.receiver_name, value: obj.receiver_name });
+            j = j+1;
         });
         setItemList(category);
         setSendList(items);
@@ -188,13 +190,7 @@ function ShopStepThree4({route,navigation}) {
         
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
-            <View style={{width:'100%',flexDirection:"row",justifyContent:"space-around",marginBottom:10}}>
-                <View style={{flexDirection:"row"}}><Text style={{fontWeight: "bold",fontSize:15}}>{store.getState().receptionDivision}</Text><Text  style={{fontWeight: "bold",fontSize:15}}> : </Text>
-                    <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement}</Text>
-                </View>
-                <Text>  </Text>
-                <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
-            </View>
+            <TopInfo></TopInfo>
             <Contents>
             <CenterView><TopIntro>수선 정보 확인</TopIntro></CenterView>
             <Label>제품 구분</Label>

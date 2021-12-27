@@ -10,7 +10,7 @@ import {
 import SketchDraw from 'react-native-sketch-draw';
 import store from '../../store/store';
 
-import RNImageTools from 'react-native-image-tools-wm';
+
 const SketchDrawConstants = SketchDraw.constants;
  
 const tools = {};
@@ -36,17 +36,8 @@ export default class DrawBoard extends Component {
         };
     }
  
-    isEraserToolSelected() {
-        return this.state.toolSelected === SketchDrawConstants.toolType.eraser.id;
-    }
  
-    toolChangeClick() {
-        this.setState({toolSelected: tools[this.state.toolSelected].nextId});
-    }
- 
-    getToolName() {
-        return tools[this.state.toolSelected].name;
-    }
+   
  
     onSketchSave(saveEvent) {
         this.props.onSave && this.props.onSave(saveEvent);
