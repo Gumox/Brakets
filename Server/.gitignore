@@ -33,3 +33,6 @@ deploy.log*
 
 # vercel
 .vercel
+
+# image file
+public/storage/*
