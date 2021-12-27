@@ -98,25 +98,26 @@ function ShopStepThree4({route,navigation}) {
     const [itemList , setItemList] = React.useState([]);
     
     const productCategories = store.getState().getProductCategory;
-    
+    const  receiverList = store.getState(). receiverList;
+    console.log( receiverList);
+    console.log("AAAAAAAAAA");
     const ProductCategoriesClassify =()=>{
         var items  = [];
         var category = [];
         var i = 1;
         var j = 1;
         productCategories.forEach(obj => {
-            if(obj.receiver_name !== '아디다스코리아(본사)' ){
             
-                category.push({ label: i+'.'+obj.category_name, value: obj.category_name })
-                var key = obj.category_name;
-                i = i+1;
-            }
+            
+            category.push({ label: i+'.'+obj.category_name, value: obj.category_name })
+            var key = obj.category_name;
+            i = i+1;
            
-            if(selectedType === obj.category_name){
-                items.push({ label: j+'.'+obj.receiver_name, value: obj.receiver_name });
-                j = j+1;
-                
-            }
+            
+        });
+        receiverList.forEach(obj =>{
+            items.push({ label: j+'.'+obj.receiver_name, value: obj.receiver_name });
+            j = j+1;
         });
         setItemList(category);
         setSendList(items);

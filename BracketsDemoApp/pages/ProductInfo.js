@@ -111,13 +111,12 @@ function ProductInfo({navigation, route}) {
     .catch(function(error){
         console.log(error)
         Alert.alert(            
-            "QR코드/Barcode 오류",             
-            "error",                   
+            "인터넷 연결 실패",                                
             [                              
                 { text: "확인"},
             ]
         )
-        //navigation.goBack()
+        navigation.goBack()
     })
 
 

@@ -58,7 +58,7 @@ function ShopStepTwo({navigation}) {
         "category": 1,
         "receipt": 1,
         "brand": 1,
-        "season": 1
+        "season": 0
     }
     
     const getProductCategory = async () => {

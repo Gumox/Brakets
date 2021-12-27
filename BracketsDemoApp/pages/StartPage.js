@@ -14,7 +14,7 @@ import store from '../store/store';
 import { Provider } from 'react-redux'
 import { getList } from '../Functions/GetSendList';
 import Bottom from '../components/Bottom';
-
+import { CheckBox } from 'react-native-elements';
 const BottomView = styled.View`
     flex: 0.4;
     flex-direction: row;
@@ -66,7 +66,7 @@ function StartPage( { navigation } ) {
     const state = {size:1};
     
     const [number,setNumber] =useState(store.getState().number);
-
+    const [check1, setCheck1] = useState(false);
     const x ={"key":2};
     
     //새로고침 함수
@@ -86,6 +86,7 @@ function StartPage( { navigation } ) {
     return(
         <Container>
             <Contents>
+                
                 <SelectButton iconImg = {<ImgIcon source={require('../Icons/repair_blue.png')}/>} onPress={ ()=> 
                     //navigation.navigate( 'CameraQR')}
                     {

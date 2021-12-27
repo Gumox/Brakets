@@ -21,6 +21,8 @@ target 'DempApp' do
 
   pod 'react-native-view-shot', :path => '../node_modules/react-native-view-shot'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'DempAppTests' do
     inherit! :complete
     # Pods for testing

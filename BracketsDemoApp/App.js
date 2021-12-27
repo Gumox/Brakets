@@ -8,16 +8,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StartPage from './pages/StartPage';
 
 import TakeOverPage from './pages/takeOver/TakeOverPage';
-import TakeOverPage2 from './pages/takeOver/TakeOverPage2';
-import TakeOverPage3 from './pages/takeOver/TakeOverPage3';
-import TakeOverPage4 from './pages/takeOver/TakeOverPage4';
 
 import LookupPage from './pages/lookup/LookupPage'
 import LookupPage2 from './pages/lookup/LookupPage2';
 import LookupPage3 from './pages/lookup/LookupPage3';
 import Setting from './pages/setting/Setting';
 import ReceiptDivision from './pages/receipt/ReceiptDivision';
-
+import SearchCustomer from './pages/searchCustomer/SearchCustomer';
 import ShopStepOne from './pages/ShopStepOne';
 import ShopStepTwo from './pages/ShopStepTwo';
 
@@ -42,6 +39,7 @@ import TakePhoto from './Functions/TakePhoto';
 import BarcodeScreen from './Functions/BarcodeScreen';
 import PhotoControl from './Functions/PhotoControl';
 import Capture from './Functions/Capture';
+import CustomerInfo from './pages/searchCustomer/CustomerInfo';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -51,9 +49,6 @@ function App() {
         <Stack.Screen name="StartPage" component={StartPage} />
 
         <Stack.Screen name="TakeOverPage" component={TakeOverPage} options={{  title: '인수' ,headerTitleAlign: 'center'}}/>
-        <Stack.Screen name="TakeOverPage2" component={TakeOverPage2} options={{  title: '인수' ,headerTitleAlign: 'center'}}/>
-        <Stack.Screen name="TakeOverPage3" component={TakeOverPage3} options={{  title: '인수' ,headerTitleAlign: 'center'}}/>
-        <Stack.Screen name="TakeOverPage4" component={TakeOverPage4} options={{  title: '인수' ,headerTitleAlign: 'center'}}/>
 
         <Stack.Screen name="LookupPage" component={LookupPage} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="LookupPage2" component={LookupPage2} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
@@ -63,6 +58,10 @@ function App() {
         
         
         <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{  title: '',headerTitleAlign: 'center' }} />
+
+        <Stack.Screen name="SearchCustomer" component={SearchCustomer} options={{  title: '',headerTitleAlign: 'center' }} />
+        <Stack.Screen name="CustomerInfo" component={CustomerInfo} options={{  title: '',headerTitleAlign: 'center' }} />
+        
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
 
         <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center'}} />
