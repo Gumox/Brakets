@@ -1,25 +1,25 @@
 import React, { useCallback, useContext, useState } from "react";
 import styled from "styled-components";
 
-import { OptionContext } from "../../../store/Context";
-import COLOR from "../../../constants/color";
+import { OptionContext } from "../../store/Context";
+import COLOR from "../../constants/color";
 import {
+  DEFAULT_OPTION,
   DATE_SEARCH_TYPE_OPTIONS,
   REGISTER_STEP_OPTIONS,
   SEND_OPTIONS,
   ANALYSIS_TYPE_OPTIONS,
   RESULT_TYPE_OPTIONS,
-} from "../../../constants/select-option";
-import { Row, Field } from "../../styled";
-import Input from "../../Input";
-import SelectOption from "../../SelectOption";
-import Checkbox from "../../Checkbox";
+} from "../../constants/select-option";
+import { Row, Field } from "../styled";
+import Input from "../Input";
+import SelectOption from "../SelectOption";
+import Checkbox from "../Checkbox";
 
 const FilterInfo = ({
-  data = {},
-  handleCheckboxChange = () => {},
-  handleValueChange = () => {},
-  handleSearchButtonClick = () => {},
+  inputData = {},
+  handleChangeInputData = () => {},
+  searchReceipts = () => {},
 }) => {
   const { storeList, analysisType, resultType, seasonList } =
     useContext(OptionContext);
@@ -31,18 +31,18 @@ const FilterInfo = ({
           <Checkbox
             title="매장별"
             name="isStoreType"
-            checked={data["isStoreType"]}
-            onChange={handleCheckboxChange}
+            checked={inputData["isStoreType"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <Field marginRight="10px">
           <SelectOption
             title="매장명"
             name="storeName"
-            disabled={!data["isStoreType"]}
-            options={storeList}
-            value={data["storeName"]}
-            onChange={handleValueChange}
+            disabled={!inputData["isStoreType"]}
+            options={[DEFAULT_OPTION, ...storeList]}
+            value={inputData["storeName"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <Field marginRight="5px">
@@ -50,8 +50,8 @@ const FilterInfo = ({
             title="날짜기준"
             name="dateOption"
             options={DATE_SEARCH_TYPE_OPTIONS}
-            value={data["dateOption"]}
-            onChange={handleValueChange}
+            value={inputData["dateOption"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <Field>
@@ -59,17 +59,17 @@ const FilterInfo = ({
             type="date"
             name="startDate"
             styleOptions={{ padding: "1px 0px" }}
-            value={data["startDate"]}
-            onChange={handleValueChange}
+            value={inputData["startDate"]}
+            onChange={handleChangeInputData}
           />
           <span>~</span>
           <Input
             type="date"
             name="endDate"
             styleOptions={{ padding: "1px 0px" }}
-            value={data["endDate"]}
-            disabled={data["dateType"] === "day"}
-            onChange={handleValueChange}
+            value={inputData["endDate"]}
+            disabled={inputData["dateType"] === "day"}
+            onChange={handleChangeInputData}
           />
           <div>
             <Field height="15px" marginRight="10px">
@@ -78,8 +78,8 @@ const FilterInfo = ({
                 title="기간전체"
                 name="dateType"
                 value="all"
-                checked={"all" === data["dateType"]}
-                onChange={handleValueChange}
+                checked={"all" === inputData["dateType"]}
+                onChange={handleChangeInputData}
               />
             </Field>
             <Field height="15px" marginRight="10px">
@@ -88,8 +88,8 @@ const FilterInfo = ({
                 title="하루만"
                 name="dateType"
                 value="day"
-                checked={"day" === data["dateType"]}
-                onChange={handleValueChange}
+                checked={"day" === inputData["dateType"]}
+                onChange={handleChangeInputData}
               />
             </Field>
           </div>
@@ -100,8 +100,8 @@ const FilterInfo = ({
               title="접수여부"
               name="hasRegistered"
               options={REGISTER_STEP_OPTIONS}
-              value={data["hasRegistered"]}
-              onChange={handleValueChange}
+              value={inputData["hasRegistered"]}
+              onChange={handleChangeInputData}
             />
           </Field>
           <Field marginRight="10px">
@@ -109,8 +109,8 @@ const FilterInfo = ({
               title="발송여부"
               name="hasSent"
               options={SEND_OPTIONS}
-              value={data["hasSent"]}
-              onChange={handleValueChange}
+              value={inputData["hasSent"]}
+              onChange={handleChangeInputData}
             />
           </Field>
           <Field marginRight="10px">
@@ -118,8 +118,8 @@ const FilterInfo = ({
               title="내용분석"
               name="analysisId"
               options={[...ANALYSIS_TYPE_OPTIONS, ...analysisType]}
-              value={data["analysisId"]}
-              onChange={handleValueChange}
+              value={inputData["analysisId"]}
+              onChange={handleChangeInputData}
             />
           </Field>
           <Field marginRight="0px">
@@ -127,8 +127,8 @@ const FilterInfo = ({
               title="판정결과"
               name="resultId"
               options={[...RESULT_TYPE_OPTIONS, ...resultType]}
-              value={data["resultId"]}
-              onChange={handleValueChange}
+              value={inputData["resultId"]}
+              onChange={handleChangeInputData}
             />
           </Field>
         </Row>
@@ -138,56 +138,56 @@ const FilterInfo = ({
           <Checkbox
             title="스타일별"
             name="isStyleType"
-            checked={data["isStyleType"]}
-            onChange={handleCheckboxChange}
+            checked={inputData["isStyleType"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <Field marginRight="10px">
           <SelectOption
             title="시즌"
             name="season"
-            disabled={!data["isStyleType"]}
-            options={seasonList}
-            checked={data["season"]}
-            onChange={handleValueChange}
+            disabled={!inputData["isStyleType"]}
+            options={[DEFAULT_OPTION, ...seasonList]}
+            checked={inputData["season"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <Field>
           <Input
             title="스타일"
             name="style"
-            disabled={!data["isStyleType"]}
-            value={data["style"]}
-            onChange={handleValueChange}
+            disabled={!inputData["isStyleType"]}
+            value={inputData["style"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <Field>
           <Input
             title="고객이름:"
             name="customerName"
-            value={data["customerName"]}
-            onChange={handleValueChange}
+            value={inputData["customerName"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <Field>
           <Input
             title="연락처(뒷4자리):"
             name="customerContact"
-            value={data["customerContact"]}
-            onChange={handleValueChange}
+            value={inputData["customerContact"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <Field>
           <Input
             title="업체명:"
             name="companyName"
-            value={data["companyName"]}
-            onChange={handleValueChange}
+            value={inputData["companyName"]}
+            onChange={handleChangeInputData}
           />
         </Field>
         <SmsButton>조회 대상 SMS 전송</SmsButton>
       </Row>
-      <SearchButton onClick={handleSearchButtonClick}>조회</SearchButton>
+      <SearchButton onClick={searchReceipts}>조회</SearchButton>
     </Wrapper>
   );
 };

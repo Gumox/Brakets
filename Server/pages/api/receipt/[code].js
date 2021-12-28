@@ -1,32 +1,42 @@
-import styled from "styled-components";
 import excuteQuery from "../db";
 
-async function getReceipt(query, values) {
+async function getReceipt(code) {
   const result = await excuteQuery({
     query: `SELECT receipt.receipt_id AS receipt_id,
                     receipt.receipt_code AS receipt_code,
+                    receipt.category AS receipt_category,
+                    receipt.receipt_type AS receipt_type,
                     receipt.store_id AS store_id,
-                    store.store_code AS store_code,
-                    store.name AS store_name,
-                    store.store_category AS store_category,
-                    store.contact AS store_contact,
+                    receipt.customer_id AS customer_id,
+                    receipt.pcategory_id AS pcategory_id,
+                    receipt.product_id AS product_id,
+                    receipt.product_code AS product_code,
+                    IF(receipt.substitute=0, "N", "Y") AS substitute,
+                    receipt.mfr_id AS manufacturer_id,
+                    mfr_store.store_code AS manufacturer_code,
+                    mfr_store.name AS manufacturer_name,
+                    receipt.store_message AS store_message,
                     receipt.receipt_date AS receipt_date,
                     receipt.due_date AS due_date,
                     receipt.register_date AS register_date,
-                    receipt.customer_id AS customer_id,
-                    receipt.category AS receipt_category,
-                    customer.name AS customer_name, 
-                    customer.phone AS customer_phone,
+                    receipt.complete_date AS complete_date,
+                    receipt.received_date AS received_date,
+                    receipt.fault_id AS fault_id,
+                    receipt.result_id AS result_id,
+                    receipt.analysis_id AS analysis_id,
+                    receipt.message AS receipt_message,
+                    receipt.freecharge AS freecharge,
+                    receipt.charge AS charge,
+                    receipt.cashreceipt_num AS cashreceipt_num,
                     product.season AS product_season,
                     product.style AS product_style,
-                    product.degree AS product_degree,
                     product.color AS product_color,
                     product.size AS product_size, 
-                    receipt.receipt_type AS receipt_type,
-                    receipt.cashreceipt_num AS cashreceipt_num,
-                    analysis_type.analysis_name AS analysis_name,
-                    result_type.result_name AS result_name,
-                    fault_type.fault_name AS fault_name,
+                    product.degree AS product_degree,
+                    product.image AS product_image,
+                    product.release_date AS product_release_date,
+                    customer.name AS customer_name,
+                    customer.phone AS customer_phone,
                     receipt.repair1_detail_id,
                     repair1.store_id AS repair1_store_id,
                     DATE_FORMAT(repair1.send_date, '%Y-%m-%d %H:%i:%s') AS repair1_send_date,  
@@ -49,6 +59,7 @@ async function getReceipt(query, values) {
                     repair1.repair3_price AS repair1_repair3_price,
                     repair1.repair3_redo AS repair1_repair3_redo,
                     DATE_FORMAT(repair1.complete_date, '%Y-%m-%d %H:%i:%s') AS repair1_complete_date,  
+                    (repair1.repair1_price + repair1.repair2_price + repair1.repair3_price) AS repair1_total,
                     repair1.shipment_type AS repair1_shipment_type,
                     repair1.shipment_price AS repair1_shipment_price,
                     receipt.repair2_detail_id,
@@ -73,6 +84,7 @@ async function getReceipt(query, values) {
                     repair2.repair3_price AS repair2_repair3_price,
                     repair2.repair3_redo AS repair2_repair3_redo,
                     DATE_FORMAT(repair2.complete_date, '%Y-%m-%d %H:%i:%s') AS repair2_complete_date,  
+                    (repair2.repair1_price + repair2.repair2_price + repair2.repair3_price) AS repair2_total,
                     repair2.shipment_type AS repair2_shipment_type,
                     repair2.shipment_price AS repair2_shipment_price,
                     receipt.repair3_detail_id,
@@ -97,6 +109,7 @@ async function getReceipt(query, values) {
                     repair3.repair3_price AS repair3_repair3_price,
                     repair3.repair3_redo AS repair3_repair3_redo,
                     DATE_FORMAT(repair3.complete_date, '%Y-%m-%d %H:%i:%s') AS repair3_complete_date,  
+                    (repair3.repair1_price + repair3.repair2_price + repair3.repair3_price) AS repair3_total,
                     repair3.shipment_type AS repair3_shipment_type,
                     repair3.shipment_price AS repair3_shipment_price,
                     receipt.mfr_detail_id,
@@ -106,20 +119,18 @@ async function getReceipt(query, values) {
                     IF(mfr.substitute=0, "N", "Y") AS mfr_substitute,
                     mfr.message AS mfr_message,
                     mfr.redo AS mfr_redo,
-                    DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date  
-            FROM receipt 
-            LEFT JOIN store ON receipt.store_id = store.store_id 
-            LEFT JOIN product ON receipt.product_id = product.product_id 
-            LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
-            LEFT JOIN analysis_type ON receipt.analysis_id = analysis_type.analysis_id
-            LEFT JOIN result_type ON receipt.result_id = result_type.result_id
-            LEFT JOIN fault_type ON receipt.fault_id = fault_type.fault_id
-            LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
-            LEFT JOIN repair_detail AS repair2 ON receipt.repair2_detail_id = repair2.repair_detail_id
-            LEFT JOIN repair_detail AS repair3 ON receipt.repair3_detail_id = repair3.repair_detail_id
-            LEFT JOIN mfr_detail AS mfr ON receipt.mfr_detail_id = mfr.mfr_detail_id
-            WHERE receipt.step = 1 ${query}`,
-    values,
+                    DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date,
+                    receipt.image  
+              FROM receipt 
+              LEFT JOIN product ON receipt.product_id = product.product_id 
+              LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
+              LEFT JOIN store AS mfr_store ON receipt.mfr_id = mfr_store.store_id
+              LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
+              LEFT JOIN repair_detail AS repair2 ON receipt.repair2_detail_id = repair2.repair_detail_id
+              LEFT JOIN repair_detail AS repair3 ON receipt.repair3_detail_id = repair3.repair_detail_id
+              LEFT JOIN mfr_detail AS mfr ON receipt.mfr_detail_id = mfr.mfr_detail_id
+              WHERE receipt.receipt_code = ?`,
+    values: [code],
   });
 
   return result;
@@ -131,133 +142,13 @@ const receipt = async (req, res) => {
     console.log(req.headers.referer);
     console.log("req.query");
     console.log(req.query);
+    const { code } = req.query;
     try {
-      const {
-        brandId, // 브랜드 id
-        isStoreType, // 매장별
-        storeName,  // 매장명
-        isStyleType,  // 스타일별
-        season, // 시즌
-        style,  // 스타일
-        dateOption, // 날짜기준
-        dateType, // 기간전체, 하루만
-        startDate, 
-        endDate,
-        year, // 월별 연도
-        month, // 월별 월
-        analysisId, // 내용분석 
-        resultId, // 판정결과
-        customerName, // 고객이름
-        customerContact,  // 연락처(뒷4자리)
-        companyName,  // 업체명
-        hasRegistered,  // 접수여부
-        hasSent,  // 발송여부
-        hasCharged, // 유상수선
-        hasCashReceipt, // 현금영수증번호
-      } = req.query;
-      let query = "";
-      let values = [];
-
-      if(brandId) {
-        query += " AND store.brand_id = ? ";
-        values = [...values, brandId];
-      }
-
-      if (isStoreType && isStoreType !== "false" && storeName) {
-        query += " AND receipt.store_id = ? ";
-        values = [...values, storeName];
-      }
-
-      if (isStyleType && isStyleType !== "false") {
-        if (season) {
-          query += " AND product.season = ? ";
-          values = [...values, season];
-        }
-        if (style && style.length > 0) {
-          query += " AND product.style = ? ";
-          values = [...values, style]
-        }
-      }
-
-      if (dateType === "all") {
-        if (startDate) {
-          query += ` AND DATE(receipt.${dateOption}) >= ? `;
-          values = [...values, startDate];
-        }
-        if (endDate) {
-          query += ` AND DATE(receipt.${dateOption}) <= ? `;
-          values = [...values, endDate];
-        }
-      } else if(dateType === "month") {
-        if(year) {
-          query += ` AND YEAR(receipt.${dateOption}) = ? `;
-          values = [...values, year];
-        }
-        if(month) {
-          query += ` AND MONTH(receipt.${dateOption}) = ? `;
-          values = [...values, month];
-        }
-      } else {
-        if (startDate) {
-          query += ` AND DATE(receipt.${dateOption}) = ? `;
-          values = [...values, startDate];
-        }
-      }
-
-      if(hasRegistered) {
-        if(hasRegistered === "true") {
-          query += ` AND receipt.register_date IS NOT NULL `;
-        } else {
-          query += ` AND receipt.register_date IS NULL `;
-        }
-      }
-
-      if(hasSent) {
-        if(hasSent === "true") {
-          query += ` AND receipt.send_date IS NOT NULL `;
-        } else {
-          query += ` AND receipt.send_date IS NULL `;
-        }
-      }
-
-      if (hasCharged) {
-        if(hasCharged === "true") {
-          query += " AND receipt.freecharge = 0 ";
-
-          if(hasCashReceipt && hasCashReceipt === "true") {
-            query += " AND receipt.cashreceipt_num IS NOT NULL "
-          }
-        }
-      }
-
-      if(analysisId) {
-        query += " AND receipt.analysis_id = ? ";
-        values = [...values, analysisId];
-      }
-
-      if(resultId) {
-        query += " AND receipt.result_id = ? ";
-        values = [...values, resultId];
-      }
-
-      if (customerName) {
-        query += " AND customer.name LIKE ? ";
-        values = [...values, `%${customerName}%`];
-      }
-
-      if (customerContact) {
-        query += " AND customer.phone LIKE ? ";
-        values = [...values, `%${customerContact}`];
-      }
-
-      if (companyName) {
-        query += " AND store.name LIKE ? ";
-        values = [...values, `%${companyName}%`];
-      }
-
-      const receipt = await getReceipt(query, values);
+      const receipt = await getReceipt(code);
       if (receipt.error) throw new Error(receipt.error);
-      res.status(200).json({ data: receipt });
+      if (receipt.length == 0) return res.status(204).send();
+
+      res.status(200).json({ data: { ...receipt[0]} });
     } catch (err) {
       console.log(err.message);
       res.status(500).json(err);

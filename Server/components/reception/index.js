@@ -1,21 +1,39 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
+import styled from "styled-components";
 import Image from "next/image";
 import axios from "axios";
 
 import {
   OptionContext,
   ReceiptContext,
+  RepairContext,
+  ManufacturerContext,
 } from "../../store/Context";
 import { DATE_SEARCH_TYPE_OPTIONS } from "../../constants/select-option";
+import {Row} from "../styled"
 
 import Content from "../Content";
 import Modal from "../Modal";
-import Info from "./info";
-import List from "./list";
-import { PRODUCT } from "../../constants/field";
+import BasicInfo from "./Basic";
+import DetailInfo from "./Detail";
+import FilterInfo from "./Filter";
+import ProducInfo from "./Product";
+import ReceiptInfo from "./Receipt";
+import StoreInfo from "./Store";
+import List from "./List";
+import { PRODUCT, RECEIPT } from "../../constants/field";
 
-const Reception = () => {
-  const { brandList, storeList, seasonList } = useContext(OptionContext);
+const Reception = ({
+  targetBrandId,
+  setTargetBrandId,
+  inputData, // 조회 조건
+  searchList, // 검색 결과 List
+  targetData, // 선택한 Receipt 내용
+  handleChangeInputData, // 조회 조건 수정
+  handleChangeTargetData, // Receipt 내용 수정
+  searchReceipts, // List 조회
+  getTargetData, // Receipt 조회
+}) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -25,105 +43,87 @@ const Reception = () => {
     () => setIsProductImageModalOpen(false),
     []
   );
-  const [targetBrandId, setTargetBrandId] = useState(brandList[0].value);
-  const [inputData, setInputData] = useState({
-    brandId: brandList[0].value,
-    storeName: storeList[0].value,
-    season: seasonList[0].value,
-    dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
-    dateType: "all",
-  });
-  const [targetReceiptData, setTargetReceiptData] = useState({});
-  const [targetMfrtData, setTargetMfrData] = useState({});
-  const [targetRepairData, setTargetRepairData] = useState([]);
-
-  const [searchList, setSearchList] = useState([]);
-  const handleInputCheckboxChange = useCallback(
-    (e) => {
-      setInputData({ ...inputData, [e.target.name]: e.target.checked });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [inputData]
+  const [isReceiptImageModalOpen, setIsReceiptImageModalOpen] = useState(false);
+  const openReceiptImage = useCallback(
+    () => setIsReceiptImageModalOpen(true),
+    []
   );
-  const handleInputValueChange = useCallback(
-    (e) => {
-      setInputData({ ...inputData, [e.target.name]: e.target.value });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [inputData]
+  const closeReceiptImage = useCallback(
+    () => setIsReceiptImageModalOpen(false),
+    []
   );
-  const handleTargetCheckboxChange = useCallback(
-    (e) => {
-      console.log(e.target);
-      setTargetReceiptData({
-        ...targetReceiptData,
-        [e.target.name]: e.target.checked,
-      });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [targetReceiptData]
-  );
-  const handleTargetValueChange = useCallback(
-    (e) => {
-      setTargetReceiptData({
-        ...targetReceiptData,
-        [e.target.name]: e.target.value,
-      });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [targetReceiptData]
-  );
-  const handleSearchButtonClick = useCallback(() => {
-    axios
-      .get("/api/receipt", { params: inputData })
-      .then((response) => setSearchList(response.data.data));
-  }, [inputData]);
-  const searchTargetData = useCallback((receiptId) => {
-    axios
-      .get(`/api/receipt/${receiptId}`)
-      .then((response) => setTargetReceiptData({ ...response.data.data }));
-    axios
-      .get(`/api/receipt/manufacturer/${receiptId}`)
-      .then((response) => setTargetMfrData({ ...response.data.data }));
-    axios
-      .get(`/api/receipt/repair/${receiptId}`)
-      .then((response) => setTargetRepairData(response.data.data));
-  }, []);
-
-  useEffect(() => console.log(targetReceiptData), [targetReceiptData]);
   return (
     <Content>
-      <ReceiptContext.Provider value={targetReceiptData}>
-            <Info
-              inputData={inputData}
-              repairData={targetRepairData}
-              mfrData={targetMfrtData}
-              {...{
-                handleInputCheckboxChange,
-                handleInputValueChange,
-                handleTargetValueChange,
-                handleTargetCheckboxChange,
-                handleSearchButtonClick,
-              }}
-              handleProductImageClick={openProductImage}
-              handleCodeEnter={searchTargetData}
+      <InfoWrapper>
+        <InfoSubWrapper>
+          <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData }} />
+          <FilterInfo
+            {...{ inputData, handleChangeInputData, searchReceipts }}
+          />
+          <Section>
+            <ProducInfo {...{ targetData, openProductImage }} />
+            <StoreInfo
+              {...{ targetData, handleChangeTargetData, openReceiptImage }}
             />
-      </ReceiptContext.Provider>
-      <List data={searchList} handleDataClick={searchTargetData} />
+          </Section>
+          <Section>
+            <DetailInfo {...{ targetData, handleChangeTargetData }} />
+            <ReceiptInfo {...{ targetData, handleChangeTargetData }} />
+          </Section>
+        </InfoSubWrapper>
+      </InfoWrapper>
+      <List {...{ searchList, getTargetData }} />
       {isProductImageModalOpen && (
         <Modal handleCloseButtonClick={closeProductImage}>
           {
             <Image
-              src={targetReceiptData[PRODUCT.IMAGE]}
-              alt={targetReceiptData[PRODUCT.STYLE]}
+              src={targetData[PRODUCT.IMAGE]}
+              alt={targetData[PRODUCT.STYLE]}
               layout="fill"
               objectFit="contain"
             />
           }
         </Modal>
       )}
+      {isReceiptImageModalOpen && (
+        <Modal handleCloseButtonClick={closeReceiptImage}>
+          <div>
+          <Image
+            src={targetData[RECEIPT.IMAGE]}
+            alt={"전체이미지"}
+            layout="fixed"
+            objectFit="contain"
+            width="200px"
+            height="200px"
+          />
+          </div>
+          <div>
+          <Image
+            src={targetData[RECEIPT.IMAGE]}
+            alt={"전체이미지"}
+            layout="fixed"
+            objectFit="contain"
+            width="200px"
+            height="200px"
+          />
+          </div>
+        </Modal>
+      )}
     </Content>
   );
 };
+
+const InfoWrapper = styled.div`
+  height: 65%;
+  overflow: scroll;
+`;
+
+const InfoSubWrapper = styled.div`
+  min-width: 1600px;
+`;
+
+const Section = styled.div`
+  display: flex;
+`;
 
 export default Reception;

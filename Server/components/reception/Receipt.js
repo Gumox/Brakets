@@ -13,25 +13,22 @@ import {
   ReceiptContext,
   RepairContext,
   ManufacturerContext,
-} from "../../../store/Context";
-import COLOR from "../../../constants/color";
-import { OPTIONS, DEFAULT_OPTION } from "../../../constants/select-option";
-import { RECEIPT, REPAIR, MANUFACTURER } from "../../../constants/field";
-import { Row, Field, Section, SectionRow } from "../../styled";
-import Input from "../../Input";
-import SelectOption from "../../SelectOption";
-import TextArea from "../../TextArea";
-import Checkbox from "../../Checkbox";
+} from "../../store/Context";
+import COLOR from "../../constants/color";
+import { OPTIONS, DEFAULT_OPTION } from "../../constants/select-option";
+import { RECEIPT, REPAIR, MANUFACTURER } from "../../constants/field";
+import { Row, Field, Section, SectionRow } from "../styled";
+import Input from "../Input";
+import SelectOption from "../SelectOption";
+import TextArea from "../TextArea";
+import Checkbox from "../Checkbox";
 
 const ReceiptInfo = ({
-  handleValueChange = () => {},
-  handleCheckboxChange = () => {},
+  targetData = {},
+  handleChangeTargetData = () => {},
 }) => {
   const { resultType, faultType, analysisType, repairList } =
     useContext(OptionContext);
-  const data = useContext(ReceiptContext);
-  const repairData = useContext(RepairContext);
-  const mfrData = useContext(ManufacturerContext);
 
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
@@ -45,16 +42,16 @@ const ReceiptInfo = ({
     [resultType]
   );
   useEffect(() => {
-    if (!resultTypeMap[data[RECEIPT.RESULT_ID]]) return;
-    if (resultTypeMap[data[RECEIPT.RESULT_ID]].includes("수선"))
+    if (!resultTypeMap[targetData[RECEIPT.RESULT_ID]]) return;
+    if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("수선"))
       setIsRepiar(true);
     else setIsRepiar(false);
 
-    if (resultTypeMap[data[RECEIPT.RESULT_ID]].includes("심의"))
+    if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("심의"))
       setIsReview(true);
     else setIsReview(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data[RECEIPT.RESULT_ID]]);
+  }, [targetData[RECEIPT.RESULT_ID]]);
   return (
     <Wrapper>
       <SectionRow>
@@ -66,11 +63,13 @@ const ReceiptInfo = ({
                 title="본사접수일"
                 name={RECEIPT.REGISTER_DATE}
                 value={
-                  data[RECEIPT.RECEIPT_DATE]
-                    ? moment(data[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
+                  targetData[RECEIPT.RECEIPT_DATE]
+                    ? moment(targetData[RECEIPT.REGISTER_DATE]).format(
+                        "YYYY-MM-DD"
+                      )
                     : undefined
                 }
-                onChange={handleValueChange}
+                onChange={handleChangeTargetData}
               />
             </Field>
           </Row>
@@ -80,8 +79,8 @@ const ReceiptInfo = ({
                 title="1.과실구분:"
                 name={RECEIPT.FAULT_ID}
                 options={[DEFAULT_OPTION, ...faultType]}
-                value={data[RECEIPT.FAULT_ID]}
-                onChange={handleValueChange}
+                value={targetData[RECEIPT.FAULT_ID]}
+                onChange={handleChangeTargetData}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
               />
             </Field>
@@ -92,8 +91,8 @@ const ReceiptInfo = ({
                 title="2.내용분석:"
                 name={RECEIPT.ANALYSIS_ID}
                 options={[DEFAULT_OPTION, ...analysisType]}
-                value={data[RECEIPT.ANALYSIS_ID]}
-                onChange={handleValueChange}
+                value={targetData[RECEIPT.ANALYSIS_ID]}
+                onChange={handleChangeTargetData}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
               />
             </Field>
@@ -104,8 +103,8 @@ const ReceiptInfo = ({
                 title="3.판정결과:"
                 name={RECEIPT.RESULT_ID}
                 options={[DEFAULT_OPTION, ...resultType]}
-                value={data[RECEIPT.RESULT_ID]}
-                onChange={handleValueChange}
+                value={targetData[RECEIPT.RESULT_ID]}
+                onChange={handleChangeTargetData}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
               />
             </Field>
@@ -114,13 +113,18 @@ const ReceiptInfo = ({
             <Row>
               {!isRepair && (
                 <Field>
-                  <Checkbox title="폐기" styleOptions={{ color: COLOR.RED }} />
+                  <Checkbox
+                    title="폐기"
+                    onChange={handleChangeTargetData}
+                    styleOptions={{ color: COLOR.RED }}
+                  />
                 </Field>
               )}
 
               <Field>
                 <Checkbox
                   title="수선미입고"
+                  onChange={handleChangeTargetData}
                   styleOptions={{ color: COLOR.RED }}
                 />
               </Field>
@@ -131,66 +135,62 @@ const ReceiptInfo = ({
           <TextArea
             title="본사설명:"
             name={RECEIPT.MESSAGE}
-            value={data[RECEIPT.MESSAGE] || ""}
-            onChange={handleValueChange}
+            value={targetData[RECEIPT.MESSAGE] || ""}
+            onChange={handleChangeTargetData}
             styleOptions={{ width: "500px" }}
           />
         </Section>
       </SectionRow>
       {!isReview && (
         <>
-          {repairData.map((repair, index) => (
-            <Row key={repair["repair_detail_id"]}>
+          {RECEIPT.REPAIR_DETAILS.map((REPAIR, index) => (
+            <Row key={REPAIR.PREFIX}>
               <Field marginRight="10px">
                 <SelectOption
                   title={`수선처지정${index + 1}`}
-                  name={REPAIR.PLACE_ID}
+                  name={`${REPAIR.PREFIX}${REPAIR.PLACE_ID}`}
                   options={[DEFAULT_OPTION, ...repairList]}
-                  value={repair[REPAIR.PLACE_ID]}
+                  value={targetData[`${REPAIR.PREFIX}${REPAIR.PLACE_ID}`]}
                   styleOptions={{ maxWidth: "160px", width: "160px" }}
-                  disabled={true}
+                  onChange={handleChangeTargetData}
                 />
               </Field>
               <Field>
                 <Input
                   type="date"
                   title={`발송일 to R${index + 1}`}
-                  name={REPAIR.SEND_DATE}
+                  name={`${REPAIR.PREFIX}${REPAIR.SEND_DATE}`}
                   value={
-                    repair[REPAIR.SEND_DATE]
-                      ? moment(repair[REPAIR.SEND_DATE]).format("YYYY-MM-DD")
+                    targetData[`${REPAIR.PREFIX}${REPAIR.SEND_DATE}`]
+                      ? moment(targetData[`${REPAIR.PREFIX}${REPAIR.SEND_DATE}`]).format("YYYY-MM-DD")
                       : undefined
                   }
-                  disabled={true}
+                  onChange={handleChangeTargetData}
                 />
               </Field>
               <Field>
                 <Input
                   title={`총 비용${index + 1}`}
-                  name={REPAIR.TOTAL_PRICE}
-                  value={repair[REPAIR.TOTAL_PRICE]}
+                  name={`${REPAIR.PREFIX}${REPAIR.TOTAL_PRICE}`}
+                  value={targetData[`${REPAIR.PREFIX}${REPAIR.TOTAL_PRICE}`]}
                   styleOptions={{ width: "50px" }}
-                  disabled={true}
+                  onChange={handleChangeTargetData}
                 />
               </Field>
             </Row>
           ))}
           <Row>
-            <RepairAddButton>수선처 추가</RepairAddButton>
-          </Row>
-          <Row>
             <Field marginRight="10px">
               <Input
                 title="생산업체"
                 name={RECEIPT.MANUFACTURER_CODE}
-                value={data[RECEIPT.MANUFACTURER_CODE] || ""}
-                onChange={handleValueChange}
+                value={targetData[RECEIPT.MANUFACTURER_CODE] || ""}
+                disabled={true}
                 styleOptions={{ width: "50px" }}
               />
               <Input
                 name={RECEIPT.MANUFACTURER_NAME}
-                value={data[RECEIPT.MANUFACTURER_NAME] || ""}
-                onChange={handleValueChange}
+                value={targetData[RECEIPT.MANUFACTURER_NAME] || ""}
                 styleOptions={{ width: "80px" }}
                 disabled={true}
               />
@@ -199,22 +199,22 @@ const ReceiptInfo = ({
               <Input
                 type="date"
                 title="발송일 to M"
-                name={MANUFACTURER.SEND_DATE}
+                name={RECEIPT.MANUFACTURER_DETAIL.SEND_DATE}
                 value={
-                  mfrData[MANUFACTURER.SEND_DATE]
-                    ? moment(mfrData[MANUFACTURER.SEND_DATE]).format(
+                  targetData[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]
+                    ? moment(targetData[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]).format(
                         "YYYY-MM-DD"
                       )
                     : undefined
                 }
-                onChange={handleValueChange}
+                onChange={handleChangeTargetData}
               />
             </Field>
             <Field marginRight="0px">
               <Input
                 title="수선대체상품"
                 styleOptions={{ width: "20px" }}
-                value={mfrData[MANUFACTURER.SUBSTITUTE]}
+                value={targetData[RECEIPT.MANUFACTURER_DETAIL.SUBSTITUTE]}
                 disabled={true}
               />
             </Field>
@@ -223,26 +223,26 @@ const ReceiptInfo = ({
             <Field marginRight="10px">
               <Checkbox
                 name={RECEIPT.FREECHARGE}
-                value={parseInt(data[RECEIPT.FREECHARGE]) === 1 ? 1 : 0}
-                checked={parseInt(data[RECEIPT.FREECHARGE]) === 1}
-                onChange={handleValueChange}
+                value={parseInt(targetData[RECEIPT.FREECHARGE]) === 1 ? 1 : 0}
+                checked={parseInt(targetData[RECEIPT.FREECHARGE]) === 1}
+                onChange={handleChangeTargetData}
               />
               <Input
                 title="유상수선비"
                 name={RECEIPT.CHARGE}
-                value={data[RECEIPT.CHARGE]}
-                onChange={handleValueChange}
+                value={targetData[RECEIPT.CHARGE]}
+                onChange={handleChangeTargetData}
                 styleOptions={{ width: "70px" }}
-                disabled={parseInt(data[RECEIPT.FREECHARGE]) !== 1}
+                disabled={parseInt(targetData[RECEIPT.FREECHARGE]) !== 1}
               />
             </Field>
             <Field>
               <Input
                 title="현금영수증번호"
                 name={RECEIPT.CASHRECEIPT_NUM}
-                value={data[RECEIPT.CASHRECEIPT_NUM] || ""}
-                onChange={handleValueChange}
-                disabled={parseInt(data[RECEIPT.FREECHARGE]) !== 1}
+                value={targetData[RECEIPT.CASHRECEIPT_NUM] || ""}
+                onChange={handleChangeTargetData}
+                disabled={parseInt(targetData[RECEIPT.FREECHARGE]) !== 1}
               />
             </Field>
           </Row>
@@ -251,25 +251,29 @@ const ReceiptInfo = ({
               <Field marginRight="10px">
                 <Input
                   title="고객구매금액"
+                  onChange={handleChangeTargetData}
                   styleOptions={{ width: "70px", color: COLOR.RED }}
                 />
               </Field>
               <Field marginRight="10px">
                 <Input
                   title="Tag가"
+                  onChange={handleChangeTargetData}
                   styleOptions={{ width: "70px", color: COLOR.RED }}
                 />
               </Field>
               <Field marginRight="10px">
                 <SelectOption
                   title="할인율"
-                  options={OPTIONS}
+                  options={[DEFAULT_OPTION, ...OPTIONS]}
+                  onChange={handleChangeTargetData}
                   styleOptions={{ maxWidth: "80px", color: COLOR.RED }}
                 />
               </Field>
               <Field marginRight="0px">
                 <Input
                   title="실판매가"
+                  onChange={handleChangeTargetData}
                   styleOptions={{ width: "70px", color: COLOR.RED }}
                 />
               </Field>
@@ -281,10 +285,14 @@ const ReceiptInfo = ({
               <Field>
                 <SelectOption
                   title="클레임가"
-                  options={OPTIONS}
+                  options={[DEFAULT_OPTION, ...OPTIONS]}
+                  onChange={handleChangeTargetData}
                   styleOptions={{ maxWidth: "70px", color: COLOR.RED }}
                 />
-                <Input styleOptions={{ width: "70px", color: COLOR.RED }} />
+                <Input
+                  onChange={handleChangeTargetData}
+                  styleOptions={{ width: "70px", color: COLOR.RED }}
+                />
               </Field>
             )}
             {/* {isRepair && <Field marginRight="400px" />}
@@ -294,8 +302,8 @@ const ReceiptInfo = ({
                   title="발송일 to S"
                   name={RECEIPT.STORE_SEND_DATE}
                   value={
-                    data[RECEIPT.STORE_SEND_DATE]
-                      ? moment(data[RECEIPT.STORE_SEND_DATE]).format(
+                    targetData[RECEIPT.STORE_SEND_DATE]
+                      ? moment(targetData[RECEIPT.STORE_SEND_DATE]).format(
                           "YYYY-MM-DD"
                         )
                       : undefined
@@ -314,7 +322,11 @@ const ReceiptInfo = ({
               <ReportButton width="68px">출력</ReportButton>
             </Field>
             <Field>
-              <Input type="date" title="심의의뢰일" />
+              <Input
+                type="date"
+                onChange={handleChangeTargetData}
+                title="심의의뢰일"
+              />
             </Field>
           </Row>
           <Row>
@@ -328,8 +340,8 @@ const ReceiptInfo = ({
                   title="발송일 to S"
                   name={RECEIPT.STORE_SEND_DATE}
                   value={
-                    data[RECEIPT.STORE_SEND_DATE]
-                      ? moment(data[RECEIPT.STORE_SEND_DATE]).format(
+                    targetData[RECEIPT.STORE_SEND_DATE]
+                      ? moment(targetData[RECEIPT.STORE_SEND_DATE]).format(
                           "YYYY-MM-DD"
                         )
                       : undefined
@@ -347,11 +359,11 @@ const ReceiptInfo = ({
             title="발송일 to S"
             name={RECEIPT.COMPLETE_DATE}
             value={
-              data[RECEIPT.COMPLETE_DATE]
-                ? moment(data[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD")
+              targetData[RECEIPT.COMPLETE_DATE]
+                ? moment(targetData[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD")
                 : undefined
             }
-            onChange={handleValueChange}
+            onChange={handleChangeTargetData}
           />
         </Field>
         <SaveButton>저장</SaveButton>
@@ -360,21 +372,20 @@ const ReceiptInfo = ({
   );
 };
 const Wrapper = styled.div`
-  width: 50%;
+  width: calc(100% - 780px);
   position: relative;
   margin: 0px 15px 5px 5px;
   padding: 10px;
   border: 2px solid ${COLOR.BORDER_MAIN};
   border-radius: 5px;
+  align-self: start;
 `;
 
 const CustomRow = styled.div`
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
 `;
 
 const RepairAddButton = styled.button`

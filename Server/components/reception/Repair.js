@@ -2,23 +2,23 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
-import { OptionContext } from "../../../store/Context";
-import COLOR from "../../../constants/color";
-import { RECEIPT, REPAIR } from "../../../constants/field";
+import { OptionContext } from "../../store/Context";
+import COLOR from "../../constants/color";
+import { RECEIPT } from "../../constants/field";
 import {
   OPTIONS,
   DEFAULT_OPTION,
   RECEIPT_TYPE_OPTIONS,
   TRANSPORT_OPTIONS,
   SHIPPING_OPTIONS,
-} from "../../../constants/select-option";
-import { Row, Field, Section, SectionRow } from "../../styled";
-import Input from "../../Input";
-import SelectOption from "../../SelectOption";
-import TextArea from "../../TextArea";
-import Checkbox from "../../Checkbox";
+} from "../../constants/select-option";
+import { Row, Field, Section, SectionRow } from "../styled";
+import Input from "../Input";
+import SelectOption from "../SelectOption";
+import TextArea from "../TextArea";
+import Checkbox from "../Checkbox";
 
-const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
+const RepairInfo = ({ REPAIR, targetData = {}, handleChangeTargetData = () => {} }) => {
   const { repairList, faultType, resultType, analysisType, repairType } =
     useContext(OptionContext);
   return (
@@ -29,10 +29,9 @@ const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
             <Field marginRight="0px">
               <SelectOption
                 title="수선처"
-                name={REPAIR.PLACE_ID}
+                name={`${REPAIR.PREFIX}${REPAIR.PLACE_ID}`}
                 options={[DEFAULT_OPTION, ...repairList]}
-                value={data[REPAIR.PLACE_ID]} // details last index receiver
-                // onChange={handleValueChange}
+                value={targetData[`${REPAIR.PREFIX}${REPAIR.PLACE_ID}`]}
                 styleOptions={{
                   width: "120px",
                   maxWidth: "120px",
@@ -46,10 +45,10 @@ const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
               <Input
                 type="date"
                 title="수선처접수일"
-                name={REPAIR.REGISTER_DATE}
+                name={`${REPAIR.PREFIX}${REPAIR.REGISTER_DATE}`}
                 value={
-                  data[REPAIR.REGISTER_DATE]
-                    ? moment(data[REPAIR.REGISTER_DATE]).format("YYYY-MM-DD")
+                  targetData[`${REPAIR.PREFIX}${REPAIR.REGISTER_DATE}`]
+                    ? moment(targetData[`${REPAIR.PREFIX}${REPAIR.REGISTER_DATE}`]).format("YYYY-MM-DD")
                     : undefined
                 }
               />
@@ -57,10 +56,9 @@ const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
             <Field>
               <SelectOption
                 title="운송형태"
-                name={REPAIR.DELIVERY_TYPE}
+                name={`${REPAIR.PREFIX}${REPAIR.DELIVERY_TYPE}`}
                 options={[DEFAULT_OPTION, ...TRANSPORT_OPTIONS]}
-                value={data[REPAIR.DELIVERY_TYPE]}
-                // onChange={handleValueChange}
+                value={targetData[`${REPAIR.PREFIX}${REPAIR.DELIVERY_TYPE}`]}
               />
             </Field>
           </Row>
@@ -68,30 +66,27 @@ const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
             <Field marginRight="5px">
               <SelectOption
                 title="과실구분:"
-                name={REPAIR.FAULT_ID}
+                name={`${REPAIR.PREFIX}${REPAIR.FAULT_ID}`}
                 options={[DEFAULT_OPTION, ...faultType]}
-                value={data[REPAIR.FAULT_ID]}
-                // onChange={handleValueChange}
+                value={targetData[`${REPAIR.PREFIX}${REPAIR.FAULT_ID}`]}
                 styleOptions={{ width: "70px" }}
               />
             </Field>
             <Field marginRight="5px">
               <SelectOption
                 title="내용분석:"
-                name={REPAIR.ANALYSIS_ID}
+                name={`${REPAIR.PREFIX}${REPAIR.ANALYSIS_ID}`}
                 options={[DEFAULT_OPTION, ...analysisType]}
-                value={data[REPAIR.ANALYSIS_ID]}
-                // onChange={handleValueChange}
+                value={targetData[`${REPAIR.PREFIX}${REPAIR.ANALYSIS_ID}`]}
                 styleOptions={{ width: "70px" }}
               />
             </Field>
             <Field marginRight="0px">
               <SelectOption
                 title="판정결과:"
-                name={REPAIR.RESULT_ID}
+                name={`${REPAIR.PREFIX}${REPAIR.RESULT_ID}`}
                 options={[DEFAULT_OPTION, ...resultType]}
-                value={data[REPAIR.RESULT_ID]}
-                // onChange={handleValueChange}
+                value={targetData[`${REPAIR.PREFIX}${REPAIR.RESULT_ID}`]}
                 styleOptions={{ width: "70px" }}
               />
             </Field>
@@ -101,37 +96,36 @@ const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
               <Field marginRight="5px">
                 <SelectOption
                   title={`수선내용${index + 1}:`}
-                  name={DETAIL.TYPE_ID}
+                  name={`${REPAIR.PREFIX}${DETAIL.TYPE_ID}`}
                   options={[DEFAULT_OPTION, ...repairType]}
-                  value={data[DETAIL.TYPE_ID]}
-                  // onChange={handleValueChange}
-                  disabled={data[DETAIL.TYPE_ID] === null}
+                  value={targetData[`${REPAIR.PREFIX}${DETAIL.TYPE_ID}`]}
+                  disabled={!targetData[`${REPAIR.PREFIX}${DETAIL.TYPE_ID}`]}
                 />
               </Field>
               <Field marginRight="5px">
                 <Input
                   title="수량"
-                  name={DETAIL.COUNT}
-                  value={data[DETAIL.COUNT]}
+                  name={`${REPAIR.PREFIX}${DETAIL.COUNT}`}
+                  value={targetData[`${REPAIR.PREFIX}${DETAIL.COUNT}`]}
                   styleOptions={{ width: "15px" }}
-                  disabled={data[DETAIL.TYPE_ID] === null}
+                  disabled={!targetData[`${REPAIR.PREFIX}${DETAIL.TYPE_ID}`]}
                 />
               </Field>
               <Field marginRight="5px">
                 <Input
                   title={`수선비${index + 1}`}
-                  name={DETAIL.PRICE}
-                  value={data[DETAIL.PRICE]}
+                  name={`${REPAIR.PREFIX}${DETAIL.PRICE}`}
+                  value={targetData[`${REPAIR.PREFIX}${DETAIL.PRICE}`]}
                   styleOptions={{ width: "70px" }}
-                  disabled={data[DETAIL.TYPE_ID] === null}
+                  disabled={!targetData[`${REPAIR.PREFIX}${DETAIL.TYPE_ID}`]}
                 />
               </Field>
               <Field marginRight="0px">
                 <Checkbox
                   title={`재수선${index + 1}`}
-                  name={DETAIL.REDO}
-                  checked={data[DETAIL.REDO]}
-                  disabled={data[DETAIL.TYPE_ID] === null}
+                  name={`${REPAIR.PREFIX}${DETAIL.REDO}`}
+                  checked={targetData[`${REPAIR.PREFIX}${DETAIL.REDO}`]}
+                  disabled={!targetData[`${REPAIR.PREFIX}${DETAIL.TYPE_ID}`]}
                 />
               </Field>
             </Row>
@@ -140,8 +134,8 @@ const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
         <Section>
           <TextArea
             title="수선처설명:"
-            name={REPAIR.MESSAGE}
-            value={data[REPAIR.MESSAGE]}
+            name={`${REPAIR.PREFIX}${REPAIR.MESSAGE}`}
+            value={targetData[`${REPAIR.PREFIX}${REPAIR.MESSAGE}`]}
             styleOptions={{ width: "290px", height: "100px" }}
           />
         </Section>
@@ -151,10 +145,10 @@ const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
           <Input
             type="date"
             title="수선처발송일"
-            name={REPAIR.COMPLETE_DATE}
+            name={`${REPAIR.PREFIX}${REPAIR.COMPLETE_DATE}`}
             value={
-              data[REPAIR.COMPLETE_DATE]
-                ? moment(data[REPAIR.COMPLETE_DATE]).format("YYYY-MM-DD")
+              targetData[`${REPAIR.PREFIX}${REPAIR.COMPLETE_DATE}`]
+                ? moment(targetData[`${REPAIR.PREFIX}${REPAIR.COMPLETE_DATE}`]).format("YYYY-MM-DD")
                 : undefined
             }
           />
@@ -162,17 +156,16 @@ const RepairInfo = ({ data = {}, handleValueChange = () => {} }) => {
         <Field marginRight="10px">
           <SelectOption
             title="발송방법:"
-            name={REPAIR.SHIPMENT_TYPE}
+            name={`${REPAIR.PREFIX}${REPAIR.SHIPMENT_TYPE}`}
             options={[DEFAULT_OPTION, ...SHIPPING_OPTIONS]}
-            value={data[REPAIR.SHIPMENT_TYPE]}
-            // onChange={handleValueChange}
+            value={targetData[`${REPAIR.PREFIX}${REPAIR.SHIPMENT_TYPE}`]}
           />
         </Field>
         <Field marginRight="0px">
           <Input
             title="발송비용"
-            name={REPAIR.SHIPMENT_PRICE}
-            value={data[REPAIR.SHIPMENT_PRICE]}
+            name={`${REPAIR.PREFIX}${REPAIR.SHIPMENT_PRICE}`}
+            value={targetData[`${REPAIR.PREFIX}${REPAIR.SHIPMENT_PRICE}`]}
             styleOptions={{ width: "70px" }}
           />
         </Field>

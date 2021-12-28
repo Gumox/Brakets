@@ -33,10 +33,18 @@ const addReceiptDetail = async ({mailbag}, {receipt_id, receipt_code, product_id
       });
 }
 
- const submitReceipt = async (receiptId) => {
+const addRepairDetail = async ({receiver, receipt_date}) => {
+  return excuteQuery({
+    query:
+      "INSERT INTO `repair_detail`(`store_id`, `send_date`) VALUES (?,?)",
+    values: [receiver, receipt_date],
+  });
+}
+
+ const submitReceipt = async (receiptId, reapirDetailId) => {
     return excuteQuery({
-      query: "UPDATE receipt SET step=1 WHERE receipt_id=?",
-      values: [receiptId],
+      query: "UPDATE receipt SET step=1, repair1_detail_id=? WHERE receipt_id=?",
+      values: [reapirDetailId, receiptId],
     });
   };
 
@@ -72,7 +80,17 @@ const addReceiptDetail = async ({mailbag}, {receipt_id, receipt_code, product_id
             throw new Error(addResults.error);
           }
 
-          const results = await submitReceipt(receiptId);
+          let repairDetailId;
+          if(receipt[0].receiver_type === 2) {
+            const addRepairResult = await addRepairDetail(receipt[0]);
+            if (addRepairResult.error) {
+              console.log(`add repair detail failed`);
+              throw new Error(addRepairResult.error);
+            }
+            repairDetailId = addRepairResult["insertId"];
+          }
+
+          const results = await submitReceipt(receiptId, repairDetailId);
           if (results.error) {
             console.log(`submit receipt failed`);
             throw new Error(results.error);

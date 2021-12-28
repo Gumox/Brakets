@@ -2,58 +2,61 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
-import { OptionContext, ReceiptContext } from "../../../store/Context";
-import COLOR from "../../../constants/color";
-import { PRODUCT, RECEIPT } from "../../../constants/field";
-import { Row, Field, Section, SectionRow } from "../../styled";
-import Input from "../../Input";
-import SelectOption from "../../SelectOption";
+import { OptionContext, ReceiptContext } from "../../store/Context";
+import COLOR from "../../constants/color";
+import { PRODUCT, RECEIPT } from "../../constants/field";
+import { Row, Field, Section, SectionRow } from "../styled";
+import Input from "../Input";
+import SelectOption from "../SelectOption";
+import { DEFAULT_OPTION } from "../../constants/select-option";
 
 const ProducInfo = ({
-  handleValueChange = () => {},
-  handleProductImageClick = () => {},
+  targetData = {},
+  openProductImage = () => {},
 }) => {
   const { seasonList } = useContext(OptionContext);
-  const data = useContext(ReceiptContext);
   return (
     <Wrapper>
       <SectionRow>
-        <Section>
+        <Section marginRight="0px">
           <Row>
             <Field marginRight="10px">
               <SelectOption
                 title="시즌"
                 name={PRODUCT.SEASON}
-                options={seasonList}
-                value={data[PRODUCT.SEASON] || ""}
-                onChange={handleValueChange}
+                options={[DEFAULT_OPTION, ...seasonList]}
+                value={targetData[PRODUCT.SEASON] || ""}
+                styleOptions={{ width: "100px" }}
+                disabled={true}
               />
             </Field>
             <Field marginRight="10px">
               <Input
                 title="스타일"
                 name={PRODUCT.STYLE}
-                styleOptions={{ width: "80px" }}
-                value={data[PRODUCT.STYLE] || ""}
-                onChange={handleValueChange}
+                value={targetData[PRODUCT.STYLE] || ""}
+                styleOptions={{ width: "110px" }}
+                disabled={true}
               />
             </Field>
+            </Row>
+            <Row>
             <Field marginRight="10px">
               <Input
                 title="차수"
                 name={PRODUCT.DEGREE}
                 styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.DEGREE] || ""}
-                onChange={handleValueChange}
+                value={targetData[PRODUCT.DEGREE] || ""}
+                disabled={true}
               />
             </Field>
             <Field marginRight="10px">
               <Input
                 title="컬러"
                 name={PRODUCT.COLOR}
-                styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.COLOR] || ""}
-                onChange={handleValueChange}
+                styleOptions={{ width: "40px" }}
+                value={targetData[PRODUCT.COLOR] || ""}
+                disabled={true}
               />
             </Field>
             <Field marginRight="10px">
@@ -61,54 +64,51 @@ const ProducInfo = ({
                 title="사이즈"
                 name={PRODUCT.SIZE}
                 styleOptions={{ width: "30px" }}
-                value={data[PRODUCT.SIZE] || ""}
-                onChange={handleValueChange}
+                value={targetData[PRODUCT.SIZE] || ""}
+                disabled={true}
               />
             </Field>
           </Row>
           <Row>
-            <Field marginRight="10px">
+            <Field marginRight="5px">
               <Input
                 title="RFID코드"
                 name={PRODUCT.RFID}
-                styleOptions={{ width: "100px" }}
-                value={data[PRODUCT.RFID] || ""}
-                onChange={handleValueChange}
+                styleOptions={{ width: "210px" }}
+                value={targetData[PRODUCT.RFID] || ""}
                 disabled={true}
               />
             </Field>
-            <Field marginRight="10px">
+            <Field marginRight="5px">
+              <Input
+                title="대체품번"
+                name={RECEIPT.SUBSTITUE}
+                value={targetData[RECEIPT.SUBSTITUE]}
+                styleOptions={{ width: "15px" }}
+                disabled={true}
+              />
+            </Field>
+            <Field marginRight="0px">
               <Input
                 type="date"
                 title="최초출고일"
                 name={PRODUCT.RELEASE_DATE}
-                styleOptions={{ padding: "1px 0px" }}
                 value={
-                  data[PRODUCT.RELEASE_DATE]
-                    ? moment(data[PRODUCT.RELEASE_DATE]).format("YYYY-MM-DD")
+                  targetData[PRODUCT.RELEASE_DATE]
+                    ? moment(targetData[PRODUCT.RELEASE_DATE]).format("YYYY-MM-DD")
                     : undefined
                 }
-                onChange={handleValueChange}
-                disabled={true}
-              />
-            </Field>
-            <Field marginRight="10px">
-              <Input
-                title="대체품번"
-                name={RECEIPT.SUBSTITUE}
-                styleOptions={{ width: "20px" }}
-                value={data[RECEIPT.SUBSTITUE]}
-                onChange={handleValueChange}
+                styleOptions={{ padding: "1px 0px" , width: "125px"}}
                 disabled={true}
               />
             </Field>
           </Row>
         </Section>
         <Section>
-          {data[PRODUCT.IMAGE] && (
+          {targetData[PRODUCT.IMAGE] && (
             <ProductImage
-              imageUrl={data[PRODUCT.IMAGE]}
-              onClick={handleProductImageClick}
+              imageUrl={targetData[PRODUCT.IMAGE]}
+              onClick={openProductImage}
             />
           )}
         </Section>
@@ -117,16 +117,17 @@ const ProducInfo = ({
   );
 };
 const Wrapper = styled.div`
-  width: 40%;
-  margin: 0px 15px 5px 5px;
+  width: 600px;
+  min-width: 600px;
+  margin: 0px 5px 5px 15px;
   padding: 10px;
   border: 2px solid ${COLOR.BORDER_MAIN};
   border-radius: 5px;
 `;
 
 const ProductImage = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 100%;
   background-color: ${COLOR.GRAY};
   background: center / contain no-repeat url(${({ imageUrl }) => imageUrl});
   color: ${COLOR.WHITE};

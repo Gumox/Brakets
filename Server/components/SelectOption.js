@@ -22,7 +22,7 @@ const SelectOption = ({
           {...styleOptions}
           name={name}
           onChange={onChange}
-          value={value}
+          value={value || ""}
           disabled={disabled}
         >
           {options.map(({ value, text }) => (

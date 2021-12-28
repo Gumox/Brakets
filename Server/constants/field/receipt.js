@@ -1,3 +1,6 @@
+import REPAIR from "./repair"
+import MANUFACTURER from "./manufacturer"
+
 const FIELD = {
     ID: 'receipt_id',
     CODE: 'receipt_code', // 서비스카드 번호
@@ -19,6 +22,31 @@ const FIELD = {
     RESULT_ID: 'result_id', // 판정결과
     RESULT_NAME: 'result_name', // 판정결과
 
+    REPAIR_DETAILS: [
+        {
+            PREFIX: 'repair1_',
+            ...REPAIR,
+        },
+        {
+            PREFIX: 'repair2_',
+            ...REPAIR,
+        },
+        {
+            PREFIX: 'repair3_',
+            ...REPAIR,
+        }
+    ],
+
+    MANUFACTURER_DETAIL : {
+        ID: 'mfr_detail_id', 
+        SEND_DATE: 'mfr_send_date', // 본사발송일
+        REGISTER_DATE: 'mfr_register_date', // 생산업체 접수일
+        COMPLETE_DATE: 'mfr_complete_date', // 생산업체 발송일
+        SUBSTITUTE: 'mfr_substitute', // 상품대체품목
+        MESSAGE: 'mfr_message', // 생산업체 설명
+        REDO: 'mfr_redo', // 재수선
+    },
+
     MESSAGE: 'receipt_message', // 본사설명
     FREECHARGE: 'freecharge', // 유상 | 무상
     CHARGE: 'charge', // 비용
@@ -27,6 +55,8 @@ const FIELD = {
 
     MANUFACTURER_CODE: 'manufacturer_code', // 생산업체 코드
     MANUFACTURER_NAME: 'manufacturer_name', // 생산업체 이름
+
+    IMAGE: 'image', // 전체 이미지
 }
 
 export default FIELD;

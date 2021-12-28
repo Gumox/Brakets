@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import moment from "moment";
 
-import COLOR from "../../../constants/color";
-import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
-import { STORE_CATEGORY, RECEIPT_CATEGORY_TYPE, RECEIPT_TYPE } from "../../../constants/type";
+import COLOR from "../../constants/color";
+import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../constants/field";
+import { STORE_CATEGORY, RECEIPT_CATEGORY_TYPE, RECEIPT_TYPE } from "../../constants/type";
 
-const ReceptionList = ({ data, handleDataClick = () => {} }) => {
+const ReceptionList = ({ searchList, getTargetData = () => {} }) => {
   return (
     <Wrapper>
       <Table>
@@ -38,10 +38,10 @@ const ReceptionList = ({ data, handleDataClick = () => {} }) => {
           </tr>
         </TableHeader>
         <tbody>
-          {data.map((receipt) => (
+          {searchList.map((receipt) => (
             <TableRow
               key={receipt[RECEIPT.ID]}
-              onClick={() => handleDataClick(receipt[RECEIPT.ID])}
+              onClick={() => getTargetData(receipt[RECEIPT.CODE])}
             >
               <TableData>{receipt[RECEIPT.CODE]}</TableData>
               <TableData>{receipt[STORE.CODE]}</TableData>

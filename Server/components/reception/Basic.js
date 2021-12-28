@@ -1,26 +1,27 @@
-import React, { useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import styled from "styled-components";
 
-import { OptionContext } from "../../../store/Context";
-import COLOR from "../../../constants/color";
-import { COMPANY, STORE, RECEIPT } from "../../../constants/field";
-import { DEFAULT_OPTION } from "../../../constants/select-option";
-import Input from "../../Input";
-import SelectOption from "../../SelectOption";
+import { OptionContext } from "../../store/Context";
+import COLOR from "../../constants/color";
+import { COMPANY, STORE, RECEIPT } from "../../constants/field";
+import { DEFAULT_OPTION } from "../../constants/select-option";
+import Input from "../Input";
+import SelectOption from "../SelectOption";
 
 const BasicInfo = ({
-  data = {},
-  handleValueChange = () => {},
-  handleCodeEnter = () => {},
+  targetBrandId,
+  setTargetBrandId = () => {},
+  getTargetData = () => {},
 }) => {
   const { brandList } = useContext(OptionContext);
+  const [receiptCode, setReceiptCode] = useState("");
   const handleKeyPress = useCallback(
     (e) => {
       if (e.key !== "Enter") return;
-      handleCodeEnter(data["receiptCode"]);
+      getTargetData(receiptCode);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data]
+    [receiptCode]
   );
   return (
     <Wrapper>
@@ -29,7 +30,6 @@ const BasicInfo = ({
         name={COMPANY.ID}
         type="text"
         value={process.env.HEADQUARTER_ID}
-        onChange={handleValueChange}
         disabled={true}
         styleOptions={{ width: "20px" }}
       />
@@ -37,16 +37,16 @@ const BasicInfo = ({
         title="브랜드:"
         name={"brandId"}
         options={brandList}
-        value={data["brandId"]}
-        onChange={handleValueChange}
+        value={targetBrandId}
+        onChange={(e) => setTargetBrandId(e.target.value)}
         styleOptions={{ width: "200px" }}
       />
       <Input
         title="서비스카드 번호 or RFID:"
         name={"receiptCode"}
         type="text"
-        value={data["receiptCode"]}
-        onChange={handleValueChange}
+        value={receiptCode}
+        onChange={(e) => setReceiptCode(e.target.value)}
         onKeyPress={handleKeyPress}
       />
       {/* <ScanButton>바코드/QR 스캔</ScanButton> */}

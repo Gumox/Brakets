@@ -21,7 +21,7 @@ const Input = ({
           {...styleOptions}
           type={type}
           name={name}
-          value={value}
+          value={value || ""}
           onChange={onChange}
           onKeyPress={onKeyPress}
           disabled={disabled}

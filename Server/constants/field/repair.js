@@ -1,5 +1,5 @@
 const FIELD = {
-    ID: 'repair_detail_id', 
+    ID: 'detail_id', 
     PLACE_ID: 'store_id', // 수선처 id
     SEND_DATE: 'send_date', // 본사발송일
     REGISTER_DATE: 'register_date', // 생산업체 접수일
@@ -8,16 +8,6 @@ const FIELD = {
     ANALYSIS_ID: 'analysis_id', // 내용분석
     RESULT_ID: 'result_id', // 판정결과
     MESSAGE: 'message', // 수선처 설명
-
-    TYPE_ID_1: 'repair1_type_id', // 수선 내용
-    COUNT_1: 'repair1_count', // 수량
-    PRICE_1: 'repair1_price', // 비용
-    TYPE_ID_2: 'repair2_type_id',
-    COUNT_2: 'repair2_count',
-    PRICE_2: 'repair2_price',
-    TYPE_ID_3: 'repair3_type_id',
-    COUNT_3: 'repair3_count',
-    PRICE_3: 'repair3_price',
 
     DETAILS: [
         {
