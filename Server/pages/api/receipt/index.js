@@ -5,16 +5,20 @@ async function getReceipt(query, values) {
   const result = await excuteQuery({
     query: `SELECT receipt.receipt_id AS receipt_id,
                     receipt.receipt_code AS receipt_code,
+                    receipt.category AS receipt_category,
+                    receipt.receipt_type AS receipt_type,
                     receipt.store_id AS store_id,
+                    receipt.customer_id AS customer_id,
+                    receipt.store_message AS store_message,
+                    receipt.message AS receipt_message,
+                    receipt.receipt_date AS receipt_date,
+                    receipt.register_date AS register_date,
+                    receipt.due_date AS due_date,
+                    receipt.complete_date AS complete_date,
                     store.store_code AS store_code,
                     store.name AS store_name,
                     store.store_category AS store_category,
                     store.contact AS store_contact,
-                    receipt.receipt_date AS receipt_date,
-                    receipt.due_date AS due_date,
-                    receipt.register_date AS register_date,
-                    receipt.customer_id AS customer_id,
-                    receipt.category AS receipt_category,
                     customer.name AS customer_name, 
                     customer.phone AS customer_phone,
                     product.season AS product_season,
@@ -22,12 +26,12 @@ async function getReceipt(query, values) {
                     product.degree AS product_degree,
                     product.color AS product_color,
                     product.size AS product_size, 
-                    receipt.receipt_type AS receipt_type,
                     receipt.cashreceipt_num AS cashreceipt_num,
                     analysis_type.analysis_name AS analysis_name,
                     result_type.result_name AS result_name,
                     fault_type.fault_name AS fault_name,
                     receipt.repair1_detail_id,
+                    repair1_store.name AS repair1_store_name,
                     repair1.store_id AS repair1_store_id,
                     DATE_FORMAT(repair1.send_date, '%Y-%m-%d %H:%i:%s') AS repair1_send_date,  
                     DATE_FORMAT(repair1.register_date, '%Y-%m-%d %H:%i:%s') AS repair1_register_date,  
@@ -49,9 +53,11 @@ async function getReceipt(query, values) {
                     repair1.repair3_price AS repair1_repair3_price,
                     repair1.repair3_redo AS repair1_repair3_redo,
                     DATE_FORMAT(repair1.complete_date, '%Y-%m-%d %H:%i:%s') AS repair1_complete_date,  
+                    (repair1.repair1_price + repair1.repair2_price + repair1.repair3_price) AS repair1_total,
                     repair1.shipment_type AS repair1_shipment_type,
                     repair1.shipment_price AS repair1_shipment_price,
                     receipt.repair2_detail_id,
+                    repair2_store.name AS repair2_store_name,
                     repair2.store_id AS repair2_store_id,
                     DATE_FORMAT(repair2.send_date, '%Y-%m-%d %H:%i:%s') AS repair2_send_date,  
                     DATE_FORMAT(repair2.register_date, '%Y-%m-%d %H:%i:%s') AS repair2_register_date,  
@@ -73,9 +79,11 @@ async function getReceipt(query, values) {
                     repair2.repair3_price AS repair2_repair3_price,
                     repair2.repair3_redo AS repair2_repair3_redo,
                     DATE_FORMAT(repair2.complete_date, '%Y-%m-%d %H:%i:%s') AS repair2_complete_date,  
+                    (repair2.repair1_price + repair2.repair2_price + repair2.repair3_price) AS repair2_total,
                     repair2.shipment_type AS repair2_shipment_type,
                     repair2.shipment_price AS repair2_shipment_price,
                     receipt.repair3_detail_id,
+                    repair3_store.name AS repair3_store_name,
                     repair3.store_id AS repair3_store_id,
                     DATE_FORMAT(repair3.send_date, '%Y-%m-%d %H:%i:%s') AS repair3_send_date,  
                     DATE_FORMAT(repair3.register_date, '%Y-%m-%d %H:%i:%s') AS repair3_register_date,  
@@ -97,9 +105,11 @@ async function getReceipt(query, values) {
                     repair3.repair3_price AS repair3_repair3_price,
                     repair3.repair3_redo AS repair3_repair3_redo,
                     DATE_FORMAT(repair3.complete_date, '%Y-%m-%d %H:%i:%s') AS repair3_complete_date,  
+                    (repair3.repair1_price + repair3.repair2_price + repair3.repair3_price) AS repair3_total,
                     repair3.shipment_type AS repair3_shipment_type,
                     repair3.shipment_price AS repair3_shipment_price,
                     receipt.mfr_detail_id,
+                    mfr_store.name AS manufacturer_name,
                     mfr.store_id AS mfr_store_id,
                     DATE_FORMAT(mfr.send_date, '%Y-%m-%d %H:%i:%s') AS mfr_send_date,  
                     DATE_FORMAT(mfr.register_date, '%Y-%m-%d %H:%i:%s') AS mfr_register_date,  
@@ -115,9 +125,13 @@ async function getReceipt(query, values) {
             LEFT JOIN result_type ON receipt.result_id = result_type.result_id
             LEFT JOIN fault_type ON receipt.fault_id = fault_type.fault_id
             LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
+            LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id
             LEFT JOIN repair_detail AS repair2 ON receipt.repair2_detail_id = repair2.repair_detail_id
+            LEFT JOIN store AS repair2_store ON repair2.store_id = repair2_store.store_id
             LEFT JOIN repair_detail AS repair3 ON receipt.repair3_detail_id = repair3.repair_detail_id
+            LEFT JOIN store AS repair3_store ON repair3.store_id = repair3_store.store_id
             LEFT JOIN mfr_detail AS mfr ON receipt.mfr_detail_id = mfr.mfr_detail_id
+            LEFT JOIN store AS mfr_store ON receipt.mfr_id = mfr_store.store_id
             WHERE receipt.step = 1 ${query}`,
     values,
   });

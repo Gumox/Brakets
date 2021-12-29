@@ -144,13 +144,13 @@ const ReceiptInfo = ({
       {!isReview && (
         <>
           {RECEIPT.REPAIR_DETAILS.map((REPAIR, index) => (
-            <Row key={REPAIR.PREFIX}>
+            <Row key={REPAIR.ID}>
               <Field marginRight="10px">
                 <SelectOption
                   title={`수선처지정${index + 1}`}
-                  name={`${REPAIR.PREFIX}${REPAIR.PLACE_ID}`}
+                  name={REPAIR.PLACE_ID}
                   options={[DEFAULT_OPTION, ...repairList]}
-                  value={targetData[`${REPAIR.PREFIX}${REPAIR.PLACE_ID}`]}
+                  value={targetData[REPAIR.PLACE_ID]}
                   styleOptions={{ maxWidth: "160px", width: "160px" }}
                   onChange={handleChangeTargetData}
                 />
@@ -159,10 +159,10 @@ const ReceiptInfo = ({
                 <Input
                   type="date"
                   title={`발송일 to R${index + 1}`}
-                  name={`${REPAIR.PREFIX}${REPAIR.SEND_DATE}`}
+                  name={REPAIR.SEND_DATE}
                   value={
-                    targetData[`${REPAIR.PREFIX}${REPAIR.SEND_DATE}`]
-                      ? moment(targetData[`${REPAIR.PREFIX}${REPAIR.SEND_DATE}`]).format("YYYY-MM-DD")
+                    targetData[REPAIR.SEND_DATE]
+                      ? moment(targetData[REPAIR.SEND_DATE]).format("YYYY-MM-DD")
                       : undefined
                   }
                   onChange={handleChangeTargetData}
@@ -171,8 +171,8 @@ const ReceiptInfo = ({
               <Field>
                 <Input
                   title={`총 비용${index + 1}`}
-                  name={`${REPAIR.PREFIX}${REPAIR.TOTAL_PRICE}`}
-                  value={targetData[`${REPAIR.PREFIX}${REPAIR.TOTAL_PRICE}`]}
+                  name={REPAIR.TOTAL_PRICE}
+                  value={targetData[REPAIR.TOTAL_PRICE]}
                   styleOptions={{ width: "50px" }}
                   onChange={handleChangeTargetData}
                 />

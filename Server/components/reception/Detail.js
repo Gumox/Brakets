@@ -25,7 +25,7 @@ const DetailInfo = ({ targetData = {}, handleChangeTargetData = () => {} }) => {
       <Container>
         {
           !targetData[
-            `${RECEIPT.REPAIR_DETAILS[0].PREFIX}${RECEIPT.REPAIR_DETAILS[0].ID}`
+          RECEIPT.REPAIR_DETAILS[0].ID
           ] && (
             <RepairInfo
               REPAIR={RECEIPT.REPAIR_DETAILS[0]}
@@ -34,10 +34,10 @@ const DetailInfo = ({ targetData = {}, handleChangeTargetData = () => {} }) => {
           ) /** 수선처 데이터가 없는 경우 어떤 내용인지 볼수있는 부분 */
         }
         {RECEIPT.REPAIR_DETAILS.filter(
-          (REPAIR) => targetData[`${REPAIR.PREFIX}${REPAIR.ID}`]
+          (REPAIR) => targetData[REPAIR.ID]
         ).map((REPAIR) => (
           <RepairInfo
-            key={REPAIR.PREFIX}
+            key={REPAIR.ID}
             REPAIR={REPAIR}
             {...{ targetData, handleChangeTargetData }}
           />
