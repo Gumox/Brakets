@@ -24,7 +24,7 @@ const productCategory = async (req, res) => {
       res.status(200).json({ data: category });
     } catch (err) {
       console.log(err.message);
-      res.status(400).json(err);
+      res.status(400).json({err: err.message});
     }
   }
 };

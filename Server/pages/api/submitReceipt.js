@@ -100,7 +100,7 @@ const addRepairDetail = async ({receiver, receipt_date}) => {
           res.status(200).json({ receipt_id: receiptId });
         } catch (err) {
           console.log(err.message);
-          res.status(400).json(err);
+          res.status(400).json({err: err.message});
         } finally {
           res.end();
         }

@@ -30,7 +30,7 @@ const controller = async (req, res) => {
       }
     } catch (err) {
       console.log(err.message);
-      res.status(400).json(err);
+      res.status(400).json({err: err.message});
     }
   }
 };

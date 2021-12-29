@@ -130,7 +130,7 @@ const saveDetailImage = async(receiptId, num, imagePath, storeId) => {
          res.status(200).json({ receipt_id: receiptId });
        } catch (err) {
          console.log(err.message);
-         res.status(400).json(err);
+         res.status(400).json({err: err.message});
        } finally {
          res.end();
        }
