@@ -24,7 +24,7 @@ const store = async (req, res) => {
       res.status(200).json({ data: stores });
     } catch (err) {
       console.log(err.message);
-      res.status(500).json(err);
+      res.status(400).json(err);
     }
   }
 };
