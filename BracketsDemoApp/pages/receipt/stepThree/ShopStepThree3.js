@@ -4,11 +4,11 @@
 import React, { useRef,Component } from 'react';
 import { AppRegistry,Alert,Text,  View, ImageBackground,StyleSheet,TouchableOpacity ,TouchableHighlight ,Modal ,Pressable, ScrollView} from 'react-native';
 import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
-import store from '../../store/store';
+import store from '../../../store/store';
 
 import { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
 
-import Button from '../../components/Button';
+import Button from '../../../components/Button';
 
   
 import DrawBoard from './DrawBoard';
@@ -37,7 +37,7 @@ export default function ShopStepThree3 ({navigation ,route}) {
     });*/
     
     var imagePath  =imageUri.replace("file://", "");
-    const [color,setColor] = React.useState("#333333");
+    const [color,setColor] = React.useState("#ff0000");
     const [modalVisible, setModalVisible] = React.useState(false);
     console.log(imagePath);
     return (

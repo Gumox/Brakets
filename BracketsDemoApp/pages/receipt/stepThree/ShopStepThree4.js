@@ -1,20 +1,20 @@
 import React,{useEffect} from 'react';
-import Contents from '../../components/Contents';
-import ButtonBlack from '../../components/ButtonBlack';
+import Contents from '../../../components/Contents';
+import ButtonBlack from '../../../components/ButtonBlack';
 import styled from 'styled-components/native';
-import ContainView from '../../components/ContainView';
+import ContainView from '../../../components/ContainView';
 import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler, Touchable} from 'react-native';
-import StateBarSolid from '../../components/StateBarSolid';
-import StateBarVoid from '../../components/StateBarVoid';
-import TopInfo from '../../components/TopInfo';
-import Bottom from '../../components/Bottom';
-import store from '../../store/store';
+import StateBarSolid from '../../../components/StateBarSolid';
+import StateBarVoid from '../../../components/StateBarVoid';
+import TopInfo from '../../../components/TopInfo';
+import Bottom from '../../../components/Bottom';
+import store from '../../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
 import _ from 'lodash';
 
-import { getList } from '../../Functions/GetSendList';
-import { changeSelectSend ,changeBasicSend,changeSelectType} from '../../Functions/SendDataFuctions';
+import { getList } from '../../../Functions/GetSendList';
+import { changeSelectSend ,changeBasicSend,changeSelectType} from '../../../Functions/SendDataFuctions';
 
 
 const Label = styled.Text`
@@ -97,21 +97,31 @@ function ShopStepThree4({route,navigation}) {
     const [sendList,setSendList] = React.useState([]);
 
     const [itemList , setItemList] = React.useState([]);
-    
     const productCategories = store.getState().getProductCategory;
-    const  receiverList = store.getState(). receiverList;
-    console.log( receiverList);
-    console.log("AAAAAAAAAA");
+    const  [receiverList,setReceiverList] = React.useState(store.getState(). receiverList);
+
+    
+
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log(productCategories)
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+
     const ProductCategoriesClassify =()=>{
         var items  = [];
         var category = [];
         var i = 1;
         var j = 1;
+        console.log("?????????????????*-*-*-*-*-*?????????????")
         productCategories.forEach(obj => {
             
-            
-            category.push({ label: i+'.'+obj.category_name, value: obj.category_name })
-            var key = obj.category_name;
+            console.log(obj)
+            category.push({ label: i+'.'+obj.category_name, value: obj.category_name });
             i = i+1;
            
             
@@ -125,8 +135,42 @@ function ShopStepThree4({route,navigation}) {
     } 
     
    
+    const getRepairList = async (id) => {
+        const bodyData = {
+          "category": 1,
+          "receipt": 1,
+          "season": 0,
+          "pcategory_id": id
+  
+          }
+        try {
+            const response = await fetch('http://34.64.182.76/api/getRepairList',{method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(bodyData)
+            });
+            const json = await response.json();
+            
     
-    const [List0,setList0] = React.useState( store.getState().basicRepairStore);
+            store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
+            store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:json.list[0].receiver_name });
+            
+            setReceiverList(store.getState(). receiverList);
+            
+            setSendList([]);
+            ProductCategoriesClassify();
+            console.log("YYYYYYY");
+            console.log(store.getState().basicRepairStore)
+         
+            
+        } catch (error) {
+          console.error(error);
+        } finally {
+
+        }
+    }
     //전단계 찍은 사진들 쌓은 부분 ---
     var photoOutput= [];
     var photoAdd;
@@ -163,14 +207,13 @@ function ShopStepThree4({route,navigation}) {
                     navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: index});
                 
                 }}>
-                <Image style={{width:40, height:40}} source ={require("../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
+                <Image style={{width:40, height:40}} source ={require("../../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
         );
     }
     // ---
     const [refreshing, setRefreshing] = React.useState(false);
     
 
-    var addDataList = [];
     
     React.useEffect(()=>{
         ProductCategoriesClassify();
@@ -203,13 +246,25 @@ function ShopStepThree4({route,navigation}) {
                 onValueChange={(value) =>
                 {
                     selectedTypeLists[0] = ( {key : 0 ,value : value});
-                   
-                    changeBasicSend(value,0);
+                    console.log("-*-*-*-*-*-*-*-*-*-*-*-*-")
+                    
+                    console.log("-*-*-*-*-*-*-*-*-*-*-*-*-")
+                    productCategories.forEach(obj => {
+                        if(value === obj.category_name){
+                            console.log("???????????"+obj.pcategory_id);
+                            
+                            getRepairList(obj.pcategory_id);
+                            
+                            
+                            console.log("+++");
+                            console.log(store.getState().basicRepairStore);
+                            
+                          }
+                    });
                     changeSelectType(value,0);
                    
                     setBasicSend(store.getState().basicRepairStore);
-                    setSendList([]);
-                    ProductCategoriesClassify();
+                    
                 
                 }
                 }
@@ -242,7 +297,6 @@ function ShopStepThree4({route,navigation}) {
                 
             </InfoView>
             
-            <Label/>
             </Contents>
             <CenterView>
                 <ButtonBlack onPress={ ()=>

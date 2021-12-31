@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import Container from "../../components/Container";
+import Container from "../../../components/Container";
 import ImageZoom from "react-native-image-pan-zoom";
-import store from "../../store/store";
+import store from "../../../store/store";
 
 import {  Alert ,Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text  } from "react-native";
 
 
-import Button from '../../components/Button';
-import CenterText from '../../components/CenterText';
+import Button from '../../../components/Button';
+import CenterText from '../../../components/CenterText';
 import _ from 'lodash';
-import StateBarSolid from '../../components/StateBarSolid';
-import StateBarVoid from '../../components/StateBarVoid';
-import ButtonBlack from '../../components/ButtonBlack';
+import StateBarSolid from '../../../components/StateBarSolid';
+import StateBarVoid from '../../../components/StateBarVoid';
+import ButtonBlack from '../../../components/ButtonBlack';
 import ViewShot from "react-native-view-shot";
 
 const CenterView =styled.View`

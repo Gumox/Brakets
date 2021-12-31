@@ -1,16 +1,17 @@
 import React from 'react';
-import Contents from '../components/Contents';
-import ButtonBlack from '../components/ButtonBlack';
+import Contents from '../../components/Contents';
+import ButtonBlack from '../../components/ButtonBlack';
 import styled from 'styled-components/native';
-import ContainView from '../components/ContainView';
-import TopInfo from '../components/TopInfo';
-import Bottom from '../components/Bottom';
+import ContainView from '../../components/ContainView';
+import TopInfo from '../../components/TopInfo';
+import Bottom from '../../components/Bottom';
 import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,Button} from 'react-native';
-import StateBarSolid from '../components/StateBarSolid';
-import StateBarVoid from '../components/StateBarVoid';
+import StateBarSolid from '../../components/StateBarSolid';
+import StateBarVoid from '../../components/StateBarVoid';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import store from '../store/store';
+import store from '../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
+import { split } from 'lodash';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;
@@ -108,7 +109,7 @@ const useInput=(inputDate)=> {
     }
 }
 
-function ShopStepFour2({navigation}) {
+function ShopStepFour({navigation}) {
     const dateInput1 = useInput(new Date())
     const dateInput2 = useInput(new Date().addDays(14))
       
@@ -148,6 +149,32 @@ function ShopStepFour2({navigation}) {
           },
         }
       });
+      const updateReceipt = async (receipt_id,code,receiptdate,duedate) => {
+        var formdata = new FormData();
+
+        formdata.append("step", "4");
+        formdata.append("receipt", receipt_id);
+        formdata.append("code", code);
+        formdata.append("receiptdate", receiptdate);
+        formdata.append("duedate", duedate);
+        console.log(formdata)
+
+        try {
+            const response = await fetch('http://34.64.182.76/api/updateReceipt',{method: 'POST',
+            headers: {
+                'Accept': '',
+                'Content-Type': 'multipart/form-data'
+                },
+            body: formdata
+            });
+            const json = await response.json();
+           
+        } catch (error) {
+            console.error(error);
+        } finally {
+
+        }
+    }
       
     return (
         <ContainView>
@@ -200,7 +227,7 @@ function ShopStepFour2({navigation}) {
                 <TouchableView onPress={dateInput1.showDatepicker}>
                     <PrView>
                     <Label>{dateInput1.date.getFullYear()}년  {dateInput1.date.getMonth()+1}월  {dateInput1.date.getDate()}일</Label>
-                    <ImgIcon source={require('../Icons/calendar.png')}/>
+                    <ImgIcon source={require('../../Icons/calendar.png')}/>
                     </PrView>
                 </TouchableView>
                 
@@ -218,7 +245,7 @@ function ShopStepFour2({navigation}) {
                 <TouchableView onPress={dateInput2.showDatepicker}>
                     <PrView>
                     <Label>{dateInput2.date.getFullYear()}년  {dateInput2.date.getMonth()+1}월  {dateInput2.date.getDate()}일</Label>
-                    <ImgIcon source={require('../Icons/calendar.png')}/>
+                    <ImgIcon source={require('../../Icons/calendar.png')}/>
                     </PrView>
                 </TouchableView>
                     {dateInput2.show && (
@@ -238,8 +265,16 @@ function ShopStepFour2({navigation}) {
                 <View style ={{margin:30}}/>
             </Contents>
             <CenterView>
-                <ButtonBlack onPress={ ()=>
-                    navigation.navigate( 'ShopStepFive' ) }>
+                <ButtonBlack onPress={ ()=>{
+                    
+                    const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
+                    console.log(recDate)
+                
+                    const dueDate =dateInput2.date.getFullYear()+'-'+(dateInput2.date.getMonth()+1)+'-'+dateInput2.date.getDate();
+
+                    updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate)
+                    navigation.navigate( 'ShopStepFive' ) 
+                }}>
                     다음: 5단계
                 </ButtonBlack>
             </CenterView>
@@ -249,4 +284,4 @@ function ShopStepFour2({navigation}) {
     
 }
 
-export default ShopStepFour2;
+export default ShopStepFour;

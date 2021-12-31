@@ -1,18 +1,18 @@
 import React from 'react';
-import Container from '../../components/Container';
-import Button from '../../components/Button';
+import Container from '../../../components/Container';
+import Button from '../../../components/Button';
 import styled from 'styled-components/native';
-import CenterText from '../../components/CenterText';
+import CenterText from '../../../components/CenterText';
 import _, { values } from 'lodash';
-import TopInfo from '../../components/TopInfo';
-import Bottom from '../../components/Bottom';
-import StateBarSolid from '../../components/StateBarSolid';
-import StateBarVoid from '../../components/StateBarVoid';
+import TopInfo from '../../../components/TopInfo';
+import Bottom from '../../../components/Bottom';
+import StateBarSolid from '../../../components/StateBarSolid';
+import StateBarVoid from '../../../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 import { Alert ,BackHandler,View,Text} from 'react-native';
-import store from '../../store/store';
-import { getList } from '../../Functions/GetSendList';
+import store from '../../../store/store';
+import { GetRepairList } from '../../../Functions/GetRepairList';
 
 const TopStateView = styled.View`
     flex-direction: row;
@@ -80,34 +80,43 @@ function ShopStepThree( { navigation } ) {
 
   const [isLoading, setLoading] = React.useState(true);
 
-  const bodyData = {
-    "category": 1,
-    "receipt": 1,
-    "pcategory_id": 25
-
-  }
+  
     
-  const getRepairList = async () => {
-      
-      try {
-          const response = await fetch('http://13.125.232.214/api/getRepairList',{method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-              },
-          body: JSON.stringify(bodyData)
-          });
-          const json = await response.json();
-          
+  const getRepairList = async (id) => {
+      const bodyData = {
+        "category": 1,
+        "receipt": 1,
+        "season": 0,
+        "pcategory_id": id
 
-          store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
-          store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:json.list[0].receiver_name });
-          setLoading(false);
+        }
+      try {
+        const response = await fetch('http://34.64.182.76/api/getRepairList',{method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+        body: JSON.stringify(bodyData)
+        });
+        const json = await response.json();
+        
+
+        store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
+        store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:json.list[0].receiver_name });
+        
+        console.log();console.log();
+        console.log();
+        console.log("YYYYYYY");
+        console.log(store.getState().basicRepairStore)
+        console.log();
+        console.log();
+        console.log("AAAAAAAa");
+        setLoading(false);
           
       } catch (error) {
-          console.error(error);
+        console.error(error);
       } finally {
-          setLoading(false);
+        setLoading(false);
       }
   }
   React.useEffect(()=>{
@@ -169,13 +178,7 @@ function ShopStepThree( { navigation } ) {
                 if(value === obj.category_name){
                   console.log("???????????"+obj.pcategory_id);
                   
-                  getRepairList(
-                    {
-                      "category": 1,
-                      "receipt": 1,
-                      "pcategory_id": obj.pcategory_id
-                    }
-                  )
+                  getRepairList(obj.pcategory_id);
                   
                   
                   console.log("+++");

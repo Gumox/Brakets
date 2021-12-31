@@ -90,6 +90,7 @@ function StartPage( { navigation } ) {
                 <SelectButton iconImg = {<ImgIcon source={require('../Icons/repair_blue.png')}/>} onPress={ ()=> 
                     //navigation.navigate( 'CameraQR')}
                     {
+                        store.dispatch({type:"STORE_CLEAR"})
                         navigation.navigate( 'ReceiptDivision' ) 
                         //getList("부자재",0);
                     }

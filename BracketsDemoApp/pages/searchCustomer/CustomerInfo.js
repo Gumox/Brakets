@@ -19,10 +19,12 @@ import {
     ImageBackground,
     Image,
     StyleSheet,
-    Modal
+    Modal,
+    Alert
 } from 'react-native';
 import SketchDraw from 'react-native-sketch-draw';
 import store from '../../store/store';
+import { PathToFlie } from '../../Functions/PathToFlie';
 
 const SketchDrawConstants = SketchDraw.constants;
  
@@ -147,9 +149,11 @@ export default class CustomerInfo extends Component {
         console.log(image);
         store.dispatch({type:'CUSTOMER_SIGN',customerSign: image});
         this.setState({modalVisible: false})
+        console.log(PathToFlie(image));
     }
     render(){
         var cstSign;
+        if(store.getState().customerSign == ""){console.log("''")}
         if(store.getState().customerSign != ""){
             console.log("this Sav :    "+store.getState().customerSign);
             cstSign =(
@@ -251,7 +255,43 @@ export default class CustomerInfo extends Component {
                     </Modal>
                     <View style ={{
                         width :"100%",justifyContent:"center",alignItems:'center' ,borderTopColor:"#e2e2e2",borderTopWidth:1 }}>    
-                    <Button onPress = {() => this.props.navigation.navigate('ShopStepOne')}>
+                    <Button onPress = {() => {
+                        if(this.state.check1 == false){
+                            Alert.alert(            
+                                "",             
+                                "수선 관련 고지 사항에 체크해주세요",                   
+                                [                              
+                                    { text: "확인"},
+                                ]
+                            )
+                        }else if(this.state.check2 == false){
+                            Alert.alert(            
+                                "",             
+                                "문자 수신 동의 여부에 체크해주세요",                   
+                                [                              
+                                    { text: "확인"},
+                                ]
+                            )
+                        }else if(this.state.check3 == false){
+                            Alert.alert(            
+                                "",             
+                                "개인 정보 동의 여부에 체크해주세요",                   
+                                [                              
+                                    { text: "확인"},
+                                ]
+                            )
+                        }else if(store.getState().customerSign == ""){
+                            Alert.alert(            
+                                "",             
+                                "고객 서명란에 싸인해주세요",                   
+                                [                              
+                                    { text: "확인"},
+                                ]
+                            )
+                        }else {
+                            this.props.navigation.navigate('ShopStepOne')
+                        }
+                    }}>
                         접수하기
                     </Button>
                     </View>

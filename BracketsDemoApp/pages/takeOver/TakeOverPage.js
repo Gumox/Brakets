@@ -13,6 +13,7 @@ import { size } from 'lodash';
 import styled from 'styled-components/native';
 import store from '../../store/store';
 import { Provider } from 'react-redux'
+import { CheckBox } from 'react-native-elements';
 
 const TouchableView = styled.TouchableOpacity`
     flex-direction:row;
@@ -59,6 +60,7 @@ const Check =styled.View`
     width : 40%;
     padding : 8px;
     align-items : center;
+    justify-content : center;
     `;
 const TotalMoney = styled.View`
     flex-direction : row;
@@ -103,28 +105,28 @@ function TakeOverPage( { navigation } ) {
     
     return(
         <Container>
-            <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
+            <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
                 <InfoView>
                   <Text>서비스 카드 번호</Text>
                       <Input  
-                        onChangeText = {onChangeText}
+                        
                         value = {text}
                             />
                   <Text>접수 구분</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                                   
                               />
                   <Text>고객명</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                                 
                               />
                   <Text>고객 연락처</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                                 
                               />
@@ -133,13 +135,13 @@ function TakeOverPage( { navigation } ) {
                 <InfoView>
                   <Text>매장 접수일</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                                 
                               />
                   <Text>고객 약속일</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                               />
                 </InfoView>
@@ -149,7 +151,7 @@ function TakeOverPage( { navigation } ) {
                       <HalfLine>
                           <Text>시즌</Text>
                               <Input  
-                                onChangeText = {onChangeText}
+                                
                                 value = {text}
                                     
                                     />
@@ -158,7 +160,7 @@ function TakeOverPage( { navigation } ) {
                       <HalfLine>
                           <Text>스타일</Text>
                               <Input  
-                                onChangeText = {onChangeText}
+                                
                                 value = {text}
                                       
                                     />
@@ -169,7 +171,7 @@ function TakeOverPage( { navigation } ) {
                           <HalfLine>
                               <Text>컬러</Text>
                                   <Input  
-                                  onChangeText = {onChangeText}
+                                  
                                   value = {text}
                                         
                                       />
@@ -178,7 +180,7 @@ function TakeOverPage( { navigation } ) {
                           <HalfLine>
                               <Text>사이즈</Text>
                                   <Input  
-                                  onChangeText = {onChangeText}
+                                  
                                   value = {text}
                                       
                                       />
@@ -187,25 +189,25 @@ function TakeOverPage( { navigation } ) {
                       
                         <Text>제품 바코드/qr코드 번호</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                                 
                               />
                     <Text>차수</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                                 
                               />
                     <Text>상품 교환</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                                 
                               />
                     <Text>판매가</Text>
                         <Input  
-                          onChangeText = {onChangeText}
+                          
                           value = {text}
                               />
               </InfoView>
@@ -213,20 +215,20 @@ function TakeOverPage( { navigation } ) {
               <InfoView>
                 <Text>과실 구분</Text>
                 <Input
-                onChangeText = {onChangeText}
+                
                 value = {text}
                         
                     />
 
                 <Text>내용 분석</Text>
                 <Input
-                onChangeText = {onChangeText}
+                
                 value = {text}
                         
                     />
               <Text>판정 결과</Text>
               <Input
-                onChangeText = {onChangeText}
+                
                 value = {text}
                     
                     />
@@ -237,20 +239,20 @@ function TakeOverPage( { navigation } ) {
               <InfoView>
                   <Text>수선처 접수일</Text>
                   <Input
-                  onChangeText = {onChangeText}
+                  
                   value = {text}
 
                       />
                       
                   <Text>수선처 발송일</Text>
                   <Input
-                  onChangeText = {onChangeText}
+                  
                   value = {text}
           
                       />
                 <Text>수선처 설명</Text>
                 <Input
-                  onChangeText = {onChangeText}
+                  
                   value = {text}
                 
                       />
@@ -260,36 +262,40 @@ function TakeOverPage( { navigation } ) {
               <InfoView>
                 <Text>본사 접수일</Text>
                 <Input  
-                  onChangeText = {onChangeText}
+                  
                   value = {text}
                     
                       />
                 <Text>본사 발송일</Text>
                 <Input  
-                  onChangeText = {onChangeText}
+                  
                   value = {text}
                         
                       />
                 <Text>본사 설명</Text>
                 <Input  
-                  onChangeText = {onChangeText}
+                  
                   value = {text}
                   
                       />
               </InfoView>
 
-              <Text>매장 인수일</Text>
+              <Text style={{marginBottom : 30}}>매장 인수일</Text>
               <Input  
-                  onChangeText = {onChangeText}
                   value = {text}
                       />
             <Half style = {{marginBottom : 50}}>
                 <Check>
                       <Text>유상수선 </Text>
-                      
+                      <CheckBox
+                            center
+                            checked={isSelected}
+                            checkedColor="red"
+                            onPress={() =>{setSelection(!isSelected)}}
+                        />
                   </Check>
                 <TotalMoney>
-                    <Text>수선비</Text>
+                    <Text style={{color : "#ff0000" ,fontSize :18 ,fontWeight :"bold"}}>수선비</Text>
                 </TotalMoney>
             </Half>
      
