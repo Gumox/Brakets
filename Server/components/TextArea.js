@@ -33,7 +33,7 @@ const Wrapper = styled.div`
 const CustomLabel = styled.div`
   white-space: nowrap;
   margin: 5px 0 0 0;
-  font-size: ${({ labelFontSize = "13px" }) => labelFontSize};
+  font-size: ${({ labelFontSize = "12px" }) => labelFontSize};
 `;
 
 const CustomTextArea = styled.textarea`

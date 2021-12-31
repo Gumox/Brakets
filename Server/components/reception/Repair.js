@@ -27,8 +27,6 @@ const RepairInfo = ({
     useContext(OptionContext);
   return (
     <Wrapper>
-      <SectionRow>
-        <Section marginRight="10px">
           <Row>
             <Field marginRight="0px">
               <SelectOption
@@ -68,6 +66,8 @@ const RepairInfo = ({
               />
             </Field>
           </Row>
+          <SectionRow>
+        <Section marginRight="0px" width="40%">
           <Row>
             <Field marginRight="5px">
               <SelectOption
@@ -75,28 +75,42 @@ const RepairInfo = ({
                 name={REPAIR.FAULT_ID}
                 options={[DEFAULT_OPTION, ...faultType]}
                 value={targetData[REPAIR.FAULT_ID]}
-                styleOptions={{ width: "70px" }}
+                styleOptions={{ width: "160px" , maxWidth: "160px" }}
               />
             </Field>
+            </Row>
+            <Row>
             <Field marginRight="5px">
               <SelectOption
                 title="내용분석:"
                 name={REPAIR.ANALYSIS_ID}
                 options={[DEFAULT_OPTION, ...analysisType]}
                 value={targetData[REPAIR.ANALYSIS_ID]}
-                styleOptions={{ width: "70px" }}
+                styleOptions={{ width: "160px" , maxWidth: "160px" }}
               />
             </Field>
+            </Row>
+            <Row>
             <Field marginRight="0px">
               <SelectOption
                 title="판정결과:"
                 name={REPAIR.RESULT_ID}
                 options={[DEFAULT_OPTION, ...resultType]}
                 value={targetData[REPAIR.RESULT_ID]}
-                styleOptions={{ width: "70px" }}
+                styleOptions={{ width: "160px" , maxWidth: "160px" }}
               />
             </Field>
           </Row>
+          </Section>
+        <Section width="100%">
+          <TextArea
+            title="수선처설명:"
+            name={REPAIR.MESSAGE}
+            value={targetData[REPAIR.MESSAGE]}
+            styleOptions={{ width: "100%", height: "60px" }}
+          />
+        </Section>
+      </SectionRow>
           {REPAIR.DETAILS.map((DETAIL, index) => (
             <Row key={index + 1}>
               <Field marginRight="5px">
@@ -106,6 +120,7 @@ const RepairInfo = ({
                   options={[DEFAULT_OPTION, ...repairType]}
                   value={targetData[DETAIL.TYPE_ID]}
                   disabled={!targetData[DETAIL.TYPE_ID]}
+                  styleOptions={{ width: "100px" , maxWidth: "100px" }}
                 />
               </Field>
               <Field marginRight="5px">
@@ -122,7 +137,7 @@ const RepairInfo = ({
                   title={`수선비${index + 1}`}
                   name={DETAIL.PRICE}
                   value={targetData[DETAIL.PRICE]}
-                  styleOptions={{ width: "70px" }}
+                  styleOptions={{ width: "100px" }}
                   disabled={!targetData[DETAIL.TYPE_ID]}
                 />
               </Field>
@@ -136,16 +151,6 @@ const RepairInfo = ({
               </Field>
             </Row>
           ))}
-        </Section>
-        <Section>
-          <TextArea
-            title="수선처설명:"
-            name={REPAIR.MESSAGE}
-            value={targetData[REPAIR.MESSAGE]}
-            styleOptions={{ width: "290px", height: "100px" }}
-          />
-        </Section>
-      </SectionRow>
       <Row>
         <Field marginRight="10px">
           <Input
@@ -172,7 +177,7 @@ const RepairInfo = ({
             title="발송비용"
             name={REPAIR.SHIPMENT_PRICE}
             value={targetData[REPAIR.SHIPMENT_PRICE]}
-            styleOptions={{ width: "70px" }}
+            styleOptions={{ width: "100px" }}
           />
         </Field>
       </Row>

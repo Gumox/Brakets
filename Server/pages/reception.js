@@ -19,6 +19,7 @@ const ReceptionPage = ({ options, user }) => {
   const [targetBrandId, setTargetBrandId] = useState(
     options.brandList[0].value
   ); // brandlist 중 첫번째 항목
+
   // Filter 입력 데이터
   const [inputData, setInputData] = useState({
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
@@ -27,12 +28,41 @@ const ReceptionPage = ({ options, user }) => {
   const [searchList, setSearchList] = useState([]); // 검색 결과 리스트
   const [targetData, setTargetData] = useState({}); // 리스트에서 선택한 데이터
 
+  useEffect(() => {
+    const getOptions = async () => {
+      const [stores, productCategories] = await Promise.all([
+        axios
+          .get(`${process.env.API_URL}/store/1`, {
+            params: { brandId: targetBrandId },
+          })
+          .then(({ data }) => data), // 매장
+        axios
+          .get(`${process.env.API_URL}/type/product-category`, {
+            params: { brandId: targetBrandId },
+          })
+          .then(({ data }) => data), // 제품구분
+      ]);
+
+      // 브랜드가 바뀌면 전체 페이지가 초기화
+      setInputData({
+        dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
+        dateType: "all",
+      })
+      setSearchList([]);
+      setTargetData({});
+      setSelectOptions({
+        ...selectOptions,
+        storeList: stores ? stores.data : [],
+        productCategoryList: productCategories ? productCategories.data : [],
+      });
+    };
+
+    getOptions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetBrandId]);
+
   const handleChangeInputData = useCallback(
     (e) => {
-      console.log(e.target.name);
-      console.log(e.target.type);
-      console.log(e.target.value);
-      console.log(e.target.checked);
       switch (e.target.type) {
         case "checkbox":
         case "radio":
@@ -113,8 +143,6 @@ export const getServerSideProps = async (ctx) => {
   }
   const [
     brands,
-    stores,
-    productCategories,
     repairShops,
     producers,
     faults,
@@ -123,10 +151,6 @@ export const getServerSideProps = async (ctx) => {
     repairs,
   ] = await Promise.all([
     axios.get(`${process.env.API_URL}/brand`).then(({ data }) => data), // 브랜드
-    axios.get(`${process.env.API_URL}/store/1`).then(({ data }) => data), // 매장
-    axios
-      .get(`${process.env.API_URL}/type/product-category`)
-      .then(({ data }) => data), // 제품구분
     axios.get(`${process.env.API_URL}/store/2`).then(({ data }) => data), // 수선처
     axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
     axios.get(`${process.env.API_URL}/type/fault`).then(({ data }) => data), // 과실구분
@@ -140,8 +164,8 @@ export const getServerSideProps = async (ctx) => {
       user,
       options: {
         brandList: brands ? brands.data : [],
-        storeList: stores ? stores.data : [],
-        productCategoryList: productCategories ? productCategories.data : [],
+        storeList: [], // 브랜드에 따라서 달라짐
+        productCategoryList: [], // 브랜드에 따라서 달라짐
         repairList: repairShops ? repairShops.data : [],
         producerList: producers ? producers.data : [],
         faultType: faults ? faults.data : [],

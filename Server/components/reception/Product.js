@@ -12,13 +12,14 @@ import { DEFAULT_OPTION } from "../../constants/select-option";
 
 const ProducInfo = ({
   targetData = {},
+  handleChangeTargetData = () => {},
   openProductImage = () => {},
 }) => {
   const { seasonList } = useContext(OptionContext);
   return (
     <Wrapper>
       <SectionRow>
-        <Section marginRight="0px">
+        <Section marginRight="0px" width="70%">
           <Row>
             <Field marginRight="10px">
               <SelectOption
@@ -27,7 +28,8 @@ const ProducInfo = ({
                 options={[DEFAULT_OPTION, ...seasonList]}
                 value={targetData[PRODUCT.SEASON] || ""}
                 styleOptions={{ width: "100px" }}
-                disabled={true}
+                onChange={handleChangeTargetData}
+                // disabled={true}
               />
             </Field>
             <Field marginRight="10px">
@@ -36,18 +38,20 @@ const ProducInfo = ({
                 name={PRODUCT.STYLE}
                 value={targetData[PRODUCT.STYLE] || ""}
                 styleOptions={{ width: "110px" }}
-                disabled={true}
+                onChange={handleChangeTargetData}
+                // disabled={true}
               />
             </Field>
-            </Row>
-            <Row>
+          </Row>
+          <Row>
             <Field marginRight="10px">
               <Input
                 title="차수"
                 name={PRODUCT.DEGREE}
                 styleOptions={{ width: "30px" }}
                 value={targetData[PRODUCT.DEGREE] || ""}
-                disabled={true}
+                onChange={handleChangeTargetData}
+                // disabled={true}
               />
             </Field>
             <Field marginRight="10px">
@@ -56,7 +60,8 @@ const ProducInfo = ({
                 name={PRODUCT.COLOR}
                 styleOptions={{ width: "40px" }}
                 value={targetData[PRODUCT.COLOR] || ""}
-                disabled={true}
+                onChange={handleChangeTargetData}
+                // disabled={true}
               />
             </Field>
             <Field marginRight="10px">
@@ -65,7 +70,8 @@ const ProducInfo = ({
                 name={PRODUCT.SIZE}
                 styleOptions={{ width: "30px" }}
                 value={targetData[PRODUCT.SIZE] || ""}
-                disabled={true}
+                onChange={handleChangeTargetData}
+                // disabled={true}
               />
             </Field>
           </Row>
@@ -76,7 +82,8 @@ const ProducInfo = ({
                 name={PRODUCT.RFID}
                 styleOptions={{ width: "210px" }}
                 value={targetData[PRODUCT.RFID] || ""}
-                disabled={true}
+                onChange={handleChangeTargetData}
+                // disabled={true}
               />
             </Field>
             <Field marginRight="5px">
@@ -85,9 +92,12 @@ const ProducInfo = ({
                 name={RECEIPT.SUBSTITUE}
                 value={targetData[RECEIPT.SUBSTITUE]}
                 styleOptions={{ width: "15px" }}
-                disabled={true}
+                onChange={handleChangeTargetData}
+                // disabled={true}
               />
             </Field>
+          </Row>
+          <Row>
             <Field marginRight="0px">
               <Input
                 type="date"
@@ -95,16 +105,18 @@ const ProducInfo = ({
                 name={PRODUCT.RELEASE_DATE}
                 value={
                   targetData[PRODUCT.RELEASE_DATE]
-                    ? moment(targetData[PRODUCT.RELEASE_DATE]).format("YYYY-MM-DD")
+                    ? moment(targetData[PRODUCT.RELEASE_DATE]).format(
+                        "YYYY-MM-DD"
+                      )
                     : undefined
                 }
-                styleOptions={{ padding: "1px 0px" , width: "125px"}}
+                styleOptions={{ padding: "1px 0px", width: "125px" }}
                 disabled={true}
               />
             </Field>
           </Row>
         </Section>
-        <Section>
+        <Section width="120px">
           {targetData[PRODUCT.IMAGE] && (
             <ProductImage
               imageUrl={targetData[PRODUCT.IMAGE]}
@@ -120,7 +132,7 @@ const Wrapper = styled.div`
   width: 600px;
   min-width: 600px;
   margin: 0px 5px 5px 15px;
-  padding: 10px;
+  padding: 10px 10px;
   border: 2px solid ${COLOR.BORDER_MAIN};
   border-radius: 5px;
 `;

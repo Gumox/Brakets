@@ -193,27 +193,29 @@ const receipt = async (req, res) => {
         }
       }
 
+      let dateColumn = dateOption;
+      if(dateColumn === "return_date") dateColumn = "complete_date";
       if (dateType === "all") {
         if (startDate) {
-          query += ` AND DATE(receipt.${dateOption}) >= ? `;
+          query += ` AND DATE(receipt.${dateColumn}) >= ? `;
           values = [...values, startDate];
         }
         if (endDate) {
-          query += ` AND DATE(receipt.${dateOption}) <= ? `;
+          query += ` AND DATE(receipt.${dateColumn}) <= ? `;
           values = [...values, endDate];
         }
       } else if(dateType === "month") {
         if(year) {
-          query += ` AND YEAR(receipt.${dateOption}) = ? `;
+          query += ` AND YEAR(receipt.${dateColumn}) = ? `;
           values = [...values, year];
         }
         if(month) {
-          query += ` AND MONTH(receipt.${dateOption}) = ? `;
+          query += ` AND MONTH(receipt.${dateColumn}) = ? `;
           values = [...values, month];
         }
       } else {
         if (startDate) {
-          query += ` AND DATE(receipt.${dateOption}) = ? `;
+          query += ` AND DATE(receipt.${dateColumn}) = ? `;
           values = [...values, startDate];
         }
       }

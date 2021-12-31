@@ -50,14 +50,14 @@ const DetailInfo = ({ targetData = {}, handleChangeTargetData = () => {} }) => {
   );
 };
 const Wrapper = styled.div`
-  width: 780px;
-  min-width: 780px;
+  width: 35%;
+  min-width: 600px;
   margin: 0px 5px 5px 15px;
 `;
 
 const Container = styled.div`
   width: 100%;
-  padding: 7px 7px 7px 7px;
+  padding: 0px 0px 0px 0px;
   border: 2px solid ${COLOR.BORDER_MAIN};
   border-radius: 5px;
 

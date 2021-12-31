@@ -24,19 +24,19 @@ const StoreInfo = ({
   return (
     <Wrapper>
       <SectionRow>
-        <Section marginRight="5px">
+        <Section marginRight="5px" width="90%">
           <Row>
-            <Field marginRight="10px">
+            <Field marginRight="5px">
               <SelectOption
                 title="매장명"
                 name={STORE.ID}
                 options={[DEFAULT_OPTION, ...storeList]}
                 value={targetData[STORE.ID]}
                 onChange={handleChangeTargetData}
-                styleOptions={{ width: "120px", maxWidth: "180px" }}
+                styleOptions={{ width: "180px", maxWidth: "180px" }}
               />
             </Field>
-            <Field marginRight="10px">
+            <Field marginRight="5px">
               <Input
                 type="date"
                 title="매장접수일"
@@ -53,7 +53,7 @@ const StoreInfo = ({
               />
             </Field>
 
-            <Field marginRight="10px">
+            <Field marginRight="5px">
               <Input
                 type="date"
                 title="고객약속일"
@@ -67,28 +67,13 @@ const StoreInfo = ({
                 onChange={handleChangeTargetData}
               />
             </Field>
-            <Field marginRight="10px">
-              <Input
-                title="고객명"
-                name={CUSTOMER.NAME}
-                styleOptions={{ width: "100px" }}
-                value={targetData[CUSTOMER.NAME] || ""}
-                onChange={handleChangeTargetData}
-              />
-            </Field>
-            <Field marginRight="0px">
-              <Input
-                title="고객연락처"
-                name={CUSTOMER.CONTACT}
-                styleOptions={{ width: "100px" }}
-                value={targetData[CUSTOMER.CONTACT] || ""}
-                onChange={handleChangeTargetData}
-              />
-            </Field>
+            
           </Row>
         </Section>
-        <Section>
-          {targetData[RECEIPT.ID] && <ImageButton onClick={openReceiptImage}>사진 보기</ImageButton>}
+        <Section width="120px">
+          {targetData[RECEIPT.ID] && (
+            <ImageButton onClick={openReceiptImage}>사진 보기</ImageButton>
+          )}
         </Section>
       </SectionRow>
 
@@ -112,25 +97,44 @@ const StoreInfo = ({
             styleOptions={{ width: "120px", maxWidth: "120px" }}
           />
         </Field>
-        <Field marginRight="40px">
+        <Field marginRight="5px">
           <SelectOption
             title="제품구분"
             name={DETAIL.PRODUCT_CATEGORY_ID}
-            options={productCategoryList}
+            options={[DEFAULT_OPTION, ...productCategoryList]}
             value={targetData[DETAIL.PRODUCT_CATEGORY_ID]}
             onChange={handleChangeTargetData}
             styleOptions={{
               width: "120px",
               maxWidth: "120px",
-              color: COLOR.RED,
             }}
           />
         </Field>
-        <Field height="80px">
+        <Field marginRight="5px">
+              <Input
+                title="고객명"
+                name={CUSTOMER.NAME}
+                styleOptions={{ width: "100px" }}
+                value={targetData[CUSTOMER.NAME] || ""}
+                onChange={handleChangeTargetData}
+              />
+            </Field>
+            <Field marginRight="0px">
+              <Input
+                title="고객연락처"
+                name={CUSTOMER.CONTACT}
+                styleOptions={{ width: "100px" }}
+                value={targetData[CUSTOMER.CONTACT] || ""}
+                onChange={handleChangeTargetData}
+              />
+            </Field>
+      </Row>
+      <Row>
+        <Field height="80px" width="100%">
           <TextArea
             title="매장접수내용"
             value={targetData[RECEIPT.STORE_MESSAGE]}
-            styleOptions={{ width: "350px", height: "calc(100% - 21px)" }}
+            styleOptions={{ width: "100%", height: "50px" }}
             disabled={true}
           />
         </Field>
@@ -141,7 +145,7 @@ const StoreInfo = ({
 const Wrapper = styled.div`
   width: calc(100% - 600px);
   margin: 0px 15px 5px 5px;
-  padding: 10px;
+  padding: 2px 10px 0px 10px;
   border: 2px solid ${COLOR.BORDER_MAIN};
   border-radius: 5px;
 `;
@@ -149,7 +153,7 @@ const Wrapper = styled.div`
 const ImageButton = styled.button`
   width: 120px;
   min-height: max-content;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   background-color: ${COLOR.BORDER_MAIN};
   color: ${COLOR.WHITE};

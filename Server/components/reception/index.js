@@ -3,15 +3,6 @@ import styled from "styled-components";
 import Image from "next/image";
 import axios from "axios";
 
-import {
-  OptionContext,
-  ReceiptContext,
-  RepairContext,
-  ManufacturerContext,
-} from "../../store/Context";
-import { DATE_SEARCH_TYPE_OPTIONS } from "../../constants/select-option";
-import {Row} from "../styled"
-
 import Content from "../Content";
 import Modal from "../Modal";
 import BasicInfo from "./Basic";
@@ -61,7 +52,7 @@ const Reception = ({
             {...{ inputData, handleChangeInputData, searchReceipts }}
           />
           <Section>
-            <ProducInfo {...{ targetData, openProductImage }} />
+            <ProducInfo {...{ targetData, handleChangeTargetData, openProductImage }} />
             <StoreInfo
               {...{ targetData, handleChangeTargetData, openReceiptImage }}
             />
@@ -119,7 +110,7 @@ const InfoWrapper = styled.div`
 `;
 
 const InfoSubWrapper = styled.div`
-  min-width: 1600px;
+  min-width: 1590px;
 `;
 
 const Section = styled.div`

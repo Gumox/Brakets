@@ -55,7 +55,7 @@ const ReceiptInfo = ({
   return (
     <Wrapper>
       <SectionRow>
-        <Section marginRight="10px">
+        <Section marginRight="10px" width="28%">
           <Row>
             <Field>
               <Input
@@ -63,11 +63,13 @@ const ReceiptInfo = ({
                 title="본사접수일"
                 name={RECEIPT.REGISTER_DATE}
                 value={
-                  targetData[RECEIPT.RECEIPT_DATE]
+                  targetData[RECEIPT.REGISTER_DATE]
                     ? moment(targetData[RECEIPT.REGISTER_DATE]).format(
                         "YYYY-MM-DD"
                       )
-                    : undefined
+                    : moment().format(
+                      "YYYY-MM-DD"
+                    )
                 }
                 onChange={handleChangeTargetData}
               />
@@ -116,7 +118,7 @@ const ReceiptInfo = ({
                   <Checkbox
                     title="폐기"
                     onChange={handleChangeTargetData}
-                    styleOptions={{ color: COLOR.RED }}
+                    styleOptions={{ color: COLOR.PURPLE }}
                   />
                 </Field>
               )}
@@ -125,22 +127,21 @@ const ReceiptInfo = ({
                 <Checkbox
                   title="수선미입고"
                   onChange={handleChangeTargetData}
-                  styleOptions={{ color: COLOR.RED }}
+                  styleOptions={{ color: COLOR.PURPLE }}
                 />
               </Field>
             </Row>
           )}
-        </Section>
-        <Section>
+        
           <TextArea
             title="본사설명:"
             name={RECEIPT.MESSAGE}
             value={targetData[RECEIPT.MESSAGE] || ""}
             onChange={handleChangeTargetData}
-            styleOptions={{ width: "500px" }}
+            styleOptions={{ width: "100%" }}
           />
-        </Section>
-      </SectionRow>
+                </Section>
+        <Section width="72%">
       {!isReview && (
         <>
           {RECEIPT.REPAIR_DETAILS.map((REPAIR, index) => (
@@ -173,7 +174,7 @@ const ReceiptInfo = ({
                   title={`총 비용${index + 1}`}
                   name={REPAIR.TOTAL_PRICE}
                   value={targetData[REPAIR.TOTAL_PRICE]}
-                  styleOptions={{ width: "50px" }}
+                  styleOptions={{ width: "100px" }}
                   onChange={handleChangeTargetData}
                 />
               </Field>
@@ -186,12 +187,12 @@ const ReceiptInfo = ({
                 name={RECEIPT.MANUFACTURER_CODE}
                 value={targetData[RECEIPT.MANUFACTURER_CODE] || ""}
                 disabled={true}
-                styleOptions={{ width: "50px" }}
+                styleOptions={{ width: "80px" }}
               />
               <Input
                 name={RECEIPT.MANUFACTURER_NAME}
                 value={targetData[RECEIPT.MANUFACTURER_NAME] || ""}
-                styleOptions={{ width: "80px" }}
+                styleOptions={{ width: "150px" }}
                 disabled={true}
               />
             </Field>
@@ -232,7 +233,7 @@ const ReceiptInfo = ({
                 name={RECEIPT.CHARGE}
                 value={targetData[RECEIPT.CHARGE]}
                 onChange={handleChangeTargetData}
-                styleOptions={{ width: "70px" }}
+                styleOptions={{ width: "100px" }}
                 disabled={parseInt(targetData[RECEIPT.FREECHARGE]) !== 1}
               />
             </Field>
@@ -248,18 +249,18 @@ const ReceiptInfo = ({
           </Row>
           {!isRepair && (
             <Row>
-              <Field marginRight="10px">
+              {/* <Field marginRight="10px">
                 <Input
                   title="고객구매금액"
                   onChange={handleChangeTargetData}
-                  styleOptions={{ width: "70px", color: COLOR.RED }}
+                  styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                 />
-              </Field>
+              </Field> */}
               <Field marginRight="10px">
                 <Input
                   title="Tag가"
                   onChange={handleChangeTargetData}
-                  styleOptions={{ width: "70px", color: COLOR.RED }}
+                  styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                 />
               </Field>
               <Field marginRight="10px">
@@ -267,14 +268,14 @@ const ReceiptInfo = ({
                   title="할인율"
                   options={[DEFAULT_OPTION, ...OPTIONS]}
                   onChange={handleChangeTargetData}
-                  styleOptions={{ maxWidth: "80px", color: COLOR.RED }}
+                  styleOptions={{ maxWidth: "80px", color: COLOR.PURPLE }}
                 />
               </Field>
               <Field marginRight="0px">
                 <Input
                   title="실판매가"
                   onChange={handleChangeTargetData}
-                  styleOptions={{ width: "70px", color: COLOR.RED }}
+                  styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                 />
               </Field>
             </Row>
@@ -287,11 +288,11 @@ const ReceiptInfo = ({
                   title="클레임가"
                   options={[DEFAULT_OPTION, ...OPTIONS]}
                   onChange={handleChangeTargetData}
-                  styleOptions={{ maxWidth: "70px", color: COLOR.RED }}
+                  styleOptions={{ maxWidth: "100px", color: COLOR.PURPLE }}
                 />
                 <Input
                   onChange={handleChangeTargetData}
-                  styleOptions={{ width: "70px", color: COLOR.RED }}
+                  styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                 />
               </Field>
             )}
@@ -364,18 +365,22 @@ const ReceiptInfo = ({
                 : undefined
             }
             onChange={handleChangeTargetData}
+            styleOptions={{labelFontSize: "18px", color: COLOR.RED}}
           />
         </Field>
         <SaveButton>저장</SaveButton>
       </CustomRow>
+      </Section>
+      </SectionRow>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
-  width: calc(100% - 780px);
+  width: 65%;
+  min-width: 950px;
   position: relative;
   margin: 0px 15px 5px 5px;
-  padding: 10px;
+  padding: 5px 10px;
   border: 2px solid ${COLOR.BORDER_MAIN};
   border-radius: 5px;
   align-self: start;
@@ -388,26 +393,14 @@ const CustomRow = styled.div`
   align-items: center;
 `;
 
-const RepairAddButton = styled.button`
-  min-height: max-content;
-  width: 100px;
-  height: 25px;
-  font-size: 13px;
-  font-weight: bold;
-  background-color: ${COLOR.TEXT_MAIN};
-  color: ${COLOR.WHITE};
-  border-radius: 5px;
-  border: none;
-`;
-
 const ReportButton = styled.button`
   min-height: max-content;
   width: ${({ width = "100px" }) => width};
-  background-color: ${COLOR.MENU_MAIN};
+  background-color: ${COLOR.FILTER_MAIN};
   color: ${COLOR.WHITE};
-  padding: 2px 5px;
+  padding: 2px 20px;
   border-radius: 5px;
-  border: 2px solid ${COLOR.BLUE};
+  border: none;
   word-break: keep-all;
 `;
 

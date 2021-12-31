@@ -1,10 +1,23 @@
 import excuteQuery from "../db";
 
-async function getStore(type) {
+// 매장
+async function getStore(type, brandId) {
   const result = await excuteQuery({
     query: `SELECT store_id AS value, name AS text
               FROM store 
-              WHERE store_type = ?`,
+              WHERE store_type=? AND brand_id=?`,
+    values: [type, brandId],
+  });
+
+  return result;
+}
+
+// 생산업체, 수선처,,
+async function getOtherStore(type) {
+  const result = await excuteQuery({
+    query: `SELECT store_id AS value, name AS text
+              FROM store 
+              WHERE store_type=?`,
     values: [type],
   });
 
@@ -16,9 +29,12 @@ const store = async (req, res) => {
     console.log("/api/store/{type}");
     console.log("req.query");
     console.log(req.query);
-    const { type } = req.query;
+    const { type, brandId } = req.query;
     try {
-      const stores = await getStore(type);
+      let stores;
+      if(brandId) stores = await getStore(type, brandId);
+      else stores = await getOtherStore(type);
+      
       if (stores.error) throw new Error(receipt.error);
 
       res.status(200).json({ data: stores });

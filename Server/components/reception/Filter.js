@@ -27,7 +27,7 @@ const FilterInfo = ({
     <Wrapper>
       <Title>조회</Title>
       <Row>
-        <Field marginRight="10px">
+        <Field marginRight="0px">
           <Checkbox
             title="매장별"
             name="isStoreType"
@@ -35,7 +35,7 @@ const FilterInfo = ({
             onChange={handleChangeInputData}
           />
         </Field>
-        <Field marginRight="10px">
+        <Field marginRight="5px">
           <SelectOption
             title="매장명"
             name="storeName"
@@ -43,6 +43,7 @@ const FilterInfo = ({
             options={[DEFAULT_OPTION, ...storeList]}
             value={inputData["storeName"]}
             onChange={handleChangeInputData}
+            styleOptions={{width: "180px", maxWidth: "180px"}}
           />
         </Field>
         <Field marginRight="5px">
@@ -72,7 +73,7 @@ const FilterInfo = ({
             onChange={handleChangeInputData}
           />
           <div>
-            <Field height="15px" marginRight="10px">
+            <Field height="15px" marginRight="5px">
               <Checkbox
                 type="radio"
                 title="기간전체"
@@ -82,7 +83,7 @@ const FilterInfo = ({
                 onChange={handleChangeInputData}
               />
             </Field>
-            <Field height="15px" marginRight="10px">
+            <Field height="15px" marginRight="5px">
               <Checkbox
                 type="radio"
                 title="하루만"
@@ -95,7 +96,7 @@ const FilterInfo = ({
           </div>
         </Field>
         <Row>
-          <Field marginRight="10px">
+          <Field marginRight="5px">
             <SelectOption
               title="접수여부"
               name="hasRegistered"
@@ -104,7 +105,7 @@ const FilterInfo = ({
               onChange={handleChangeInputData}
             />
           </Field>
-          <Field marginRight="10px">
+          <Field marginRight="5px">
             <SelectOption
               title="발송여부"
               name="hasSent"
@@ -113,7 +114,7 @@ const FilterInfo = ({
               onChange={handleChangeInputData}
             />
           </Field>
-          <Field marginRight="10px">
+          <Field marginRight="5px">
             <SelectOption
               title="내용분석"
               name="analysisId"
@@ -134,7 +135,7 @@ const FilterInfo = ({
         </Row>
       </Row>
       <Row>
-        <Field marginRight="10px">
+        <Field marginRight="0px">
           <Checkbox
             title="스타일별"
             name="isStyleType"
@@ -142,7 +143,7 @@ const FilterInfo = ({
             onChange={handleChangeInputData}
           />
         </Field>
-        <Field marginRight="10px">
+        <Field marginRight="2px">
           <SelectOption
             title="시즌"
             name="season"
@@ -193,7 +194,7 @@ const FilterInfo = ({
 };
 const Wrapper = styled.div`
   position: relative;
-  margin: 15px 10px 25px 10px;
+  margin: 10px 10px 5px 10px;
   padding: 10px;
   border: 2px solid ${COLOR.FILTER_MAIN};
   border-radius: 5px;
@@ -201,10 +202,10 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   position: absolute;
-  top: -10px;
+  top: -8px;
   width: 100px;
   height: 20px;
-  font-size: 13px;
+  font-size: 12px;
   text-align: center;
   color: ${COLOR.FILTER_MAIN};
   border: 2px solid ${COLOR.FILTER_MAIN};
