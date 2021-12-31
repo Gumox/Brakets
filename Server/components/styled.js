@@ -8,9 +8,10 @@ export const Row = styled.div`
 `;
 
 export const Field = styled.div`
+  width: ${({ width = "fit-content" }) => width};
   height: ${({ height = "30px" }) => height};
   display: flex;
-  align-items: ${({alignItems = "center"}) => alignItems};
+  align-items: ${({ alignItems = "center" }) => alignItems};
   margin-right: ${({ marginRight = "5px" }) => marginRight};
 
   > * {
@@ -20,6 +21,7 @@ export const Field = styled.div`
 
 export const Section = styled.div`
   margin-right: ${({ marginRight = "40px" }) => marginRight};
+  width: ${({ width = "50%" }) => width};
 
   & {
     align-self: stretch;
@@ -31,6 +33,7 @@ export const Section = styled.div`
 `;
 
 export const SectionRow = styled.div`
+  width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;

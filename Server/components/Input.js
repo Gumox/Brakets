@@ -21,7 +21,7 @@ const Input = ({
           {...styleOptions}
           type={type}
           name={name}
-          value={value}
+          value={value || ""}
           onChange={onChange}
           onKeyPress={onKeyPress}
           disabled={disabled}
@@ -40,7 +40,7 @@ const Wrapper = styled.div`
 const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: 5px;
-  font-size: ${({ labelFontSize = "13px" }) => labelFontSize};
+  font-size: ${({ labelFontSize = "12px" }) => labelFontSize};
   color: ${({ disabled, color }) =>
     color ? color : disabled ? COLOR.GRAY : COLOR.BLACK};
 `;
@@ -60,7 +60,7 @@ const CustomInput = styled.input`
 const InputBox = styled.div`
   width: 100%;
   height: 100%;
-  padding: ${({ padding = "1px 10px" }) => padding};
+  padding: ${({ padding = "1px 2px" }) => padding};
   border-radius: 5px;
   border: 1px solid 
     ${({ disabled }) => (disabled ? 'none' : COLOR.GRAY)};

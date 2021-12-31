@@ -84,10 +84,10 @@ export const SHIPPING_OPTIONS = [
 export const DATE_SEARCH_TYPE_OPTIONS = [
   {
     value: "receipt_date",
-    text: "매장등록일",
+    text: "매장접수일",
   },
   {
-    value: "send_date",
+    value: "complete_date",
     text: "매장발송일",
   },
   {

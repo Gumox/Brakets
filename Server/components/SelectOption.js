@@ -22,7 +22,7 @@ const SelectOption = ({
           {...styleOptions}
           name={name}
           onChange={onChange}
-          value={value}
+          value={value || ""}
           disabled={disabled}
         >
           {options.map(({ value, text }) => (
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: ${({ labelMarginRight = "5px" }) => labelMarginRight};
-  font-size: ${({ labelFontSize = "13px" }) => labelFontSize};
+  font-size: ${({ labelFontSize = "12px" }) => labelFontSize};
   color: ${({ disabled, color }) =>
     color ? color : disabled ? COLOR.GRAY : COLOR.BLACK};
 `;
@@ -56,7 +56,7 @@ const CustomSelect = styled.select`
   height: ${({ height = "20px" }) => height};
   outline: none;
   appearance: none;
-  padding: 3px 27px 3px 3px;
+  padding: 1px 27px 1px 3px;
   background: url('/arrow-down.png') 95% 50% no-repeat;
   background-size: 14px 7px;
   border: none;
@@ -66,7 +66,6 @@ const CustomSelect = styled.select`
 const SelectBox = styled.div`
   width: 100%;
   height: 100%;
-  padding: 1px 0px 1px 5px;
   border-radius: 5px;
   border: 1px solid ${COLOR.GRAY};
 `;

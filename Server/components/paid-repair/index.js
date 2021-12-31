@@ -7,7 +7,7 @@ import Modal from "../Modal";
 import SearchField from "./SearchField";
 import List from "./list"
 
-const Return = ({ options, user }) => {
+const Return = () => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -63,7 +63,6 @@ const Return = ({ options, user }) => {
   return (
     <Content>
       <SearchField
-        options={options}
         data={inputData}
         handleCheckboxChange={handleInputCheckboxChange}
         handleValueChange={handleInputValueChange}

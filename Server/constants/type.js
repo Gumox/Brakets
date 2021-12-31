@@ -23,3 +23,18 @@ export const RECEIPT_TYPE = {
     3: "환불",
     4: "심의",
 }
+
+export const TRANSPORT_TYPE = {
+    1: "매장행낭",
+    2: "본사행낭",
+    3: "택배",
+    4: "퀵배송",
+    5: "기타",
+}
+
+export const SHIPPING_TYPE = {
+    1: "퀵",
+    2: "택배",
+    3: "행낭",
+    4: "기타",
+}

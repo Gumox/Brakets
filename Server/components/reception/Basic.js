@@ -1,18 +1,28 @@
-import React, { useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import styled from "styled-components";
 
-import COLOR from "../../../constants/color";
-import { COMPANY, STORE, RECEIPT } from "../../../constants/field";
-import { DEFAULT_OPTION } from "../../../constants/select-option";
-import Input from "../../Input";
-import SelectOption from "../../SelectOption";
+import { OptionContext } from "../../store/Context";
+import COLOR from "../../constants/color";
+import { COMPANY, STORE, RECEIPT } from "../../constants/field";
+import { DEFAULT_OPTION } from "../../constants/select-option";
+import Input from "../Input";
+import SelectOption from "../SelectOption";
 
-const BasicInfo = ({ options, data = {}, handleValueChange = () => {}, handleCodeEnter = () => {} }) => {
-  const handleKeyPress = useCallback((e) => {
-    if (e.key !== "Enter") return;
-    handleCodeEnter(data["receiptCode"]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+const BasicInfo = ({
+  targetBrandId,
+  setTargetBrandId = () => {},
+  getTargetData = () => {},
+}) => {
+  const { brandList } = useContext(OptionContext);
+  const [receiptCode, setReceiptCode] = useState("");
+  const handleKeyPress = useCallback(
+    (e) => {
+      if (e.key !== "Enter") return;
+      getTargetData(receiptCode);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [receiptCode]
+  );
   return (
     <Wrapper>
       <Input
@@ -20,24 +30,23 @@ const BasicInfo = ({ options, data = {}, handleValueChange = () => {}, handleCod
         name={COMPANY.ID}
         type="text"
         value={process.env.HEADQUARTER_ID}
-        onChange={handleValueChange}
         disabled={true}
         styleOptions={{ width: "20px" }}
       />
       <SelectOption
         title="브랜드:"
         name={"brandId"}
-        options={options.brandList}
-        value={data["brandId"]}
-        onChange={handleValueChange}
+        options={brandList}
+        value={targetBrandId}
+        onChange={(e) => setTargetBrandId(e.target.value)}
         styleOptions={{ width: "200px" }}
       />
       <Input
         title="서비스카드 번호 or RFID:"
         name={"receiptCode"}
         type="text"
-        value={data["receiptCode"]}
-        onChange={handleValueChange}
+        value={receiptCode}
+        onChange={(e) => setReceiptCode(e.target.value)}
         onKeyPress={handleKeyPress}
       />
       {/* <ScanButton>바코드/QR 스캔</ScanButton> */}

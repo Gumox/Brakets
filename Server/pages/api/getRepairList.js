@@ -8,10 +8,10 @@ async function getHeadquarters() {
     });
 }
 
-async function getRepairPlaces(pcategoryId) {
+async function getRepairPlaces(pcategoryId, season) {
     return excuteQuery({
-        query: "SELECT receiver_id, receiver_name FROM product_category WHERE pcategory_id=?",
-        values: [pcategoryId]
+        query: "SELECT receiver_id, receiver_name FROM pcategory_store WHERE pcategory_id=? AND season_type=?",
+        values: [pcategoryId, season]
     });
 
 }
@@ -23,6 +23,7 @@ const controller =  async (req, res) => {
     const category = req.body.category; 	//1:고객용 2:매장용 3:선처리
     const receipt = req.body.receipt; 	//1: 수선 2: 교환 3: 환불 4: 심의
     const pcategoryId = req.body.pcategory_id; 	//pcategory id
+    const season = req.body.season || 0; 	//0: 당시즌 1: 과시즌 
 
     try{
         const headquarters = await getHeadquarters();
@@ -30,7 +31,7 @@ const controller =  async (req, res) => {
 
         let repairPlaces = [];
         if(category == 1 && receipt == 1) {
-            repairPlaces = await getRepairPlaces(pcategoryId);
+            repairPlaces = await getRepairPlaces(pcategoryId, season);
             if (repairPlaces.error) throw new Error(repairPlaces.error);
         }
 
@@ -42,7 +43,7 @@ const controller =  async (req, res) => {
 
     }catch(err){
         console.log(err.message);
-        res.status(500).json(err);
+        res.status(400).json({err: err.message});
     }
   }
 };

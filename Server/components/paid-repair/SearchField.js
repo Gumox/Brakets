@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 
+import { OptionContext } from "../../store/Context";
 import { YEARLY_OPTIONS, MONTHLY_OPTIONS } from "../../constants/select-option";
 import COLOR from "../../constants/color";
 import Input from "../Input";
@@ -9,12 +10,13 @@ import Checkbox from "../Checkbox";
 import { Row, Field } from "../styled";
 
 const SearchField = ({
-  options,
   data = {},
   handleCheckboxChange = () => {},
   handleValueChange = () => {},
   handleSearchButtonClick = () => {},
 }) => {
+  const { storeList } = useContext(OptionContext);
+
   return (
     <Wrapper>
       <Row>
@@ -31,7 +33,7 @@ const SearchField = ({
             title="매장명"
             name="storeName"
             disabled={!data["isStoreType"]}
-            options={options.storeList}
+            options={storeList}
             value={data["storeName"]}
             onChange={handleValueChange}
           />
