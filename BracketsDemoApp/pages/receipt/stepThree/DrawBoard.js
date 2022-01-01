@@ -8,7 +8,7 @@ import {
     Image
 } from 'react-native';
 import SketchDraw from 'react-native-sketch-draw';
-import store from '../../store/store';
+import store from '../../../store/store';
 
 
 const SketchDrawConstants = SketchDraw.constants;

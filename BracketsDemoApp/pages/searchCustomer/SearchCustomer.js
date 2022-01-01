@@ -8,6 +8,7 @@ import Bottom from '../../components/Bottom';
 import CustomerSearchBox from './CustomerSearchBox';
 import CustomSearch from './CustomSearch';
 import { Alert } from 'react-native';
+import store from '../../store/store';
 const Title = styled.Text`
   font-size : 24px;
   font-weight : bold;
@@ -31,11 +32,7 @@ const Input = styled.TextInput`
     font-size: 20px;
     border-radius:10px
 `;
-const ImgIcon =styled.Image`
-    width: 20px;
-    height: 20px;
-    margin:10px;
-`;
+
 // 구조 분해 할당, Destructuring Assignment
 function SearchCustomer( { navigation } ) {
 
@@ -70,6 +67,7 @@ function SearchCustomer( { navigation } ) {
         console.log(json.body);
         parseData(json.body);
         setLoading(false);
+        navigation.navigate('CustomerInfo')
     
     } catch (error) {
         
@@ -99,11 +97,13 @@ function SearchCustomer( { navigation } ) {
 
           <Button onPress = {() =>{ 
             if(pNumber != null&&pNumber.length>3){
+              
               setData([]);
-              getCustomer({"lastphone":pNumber})
-              console.log("ㅇㅇㅇㅇ");
               console.log(data);
-              navigation.navigate('CustomerInfo')
+              store.dispatch({type:'CUSTOMER_SIGN',customerSign: ""});
+              getCustomer({"lastphone":pNumber})
+              
+             
             }
             else {
               Alert.alert(            

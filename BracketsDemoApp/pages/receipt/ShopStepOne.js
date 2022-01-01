@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import Container from '../components/Container';
-import Button from '../components/Button';
+import Container from '../../components/Container';
+import Button from '../../components/Button';
 import styled from 'styled-components/native';
-import CenterText from '../components/CenterText';
+import CenterText from '../../components/CenterText';
 import _ from 'lodash';
-import StateBarSolid from '../components/StateBarSolid';
-import StateBarVoid from '../components/StateBarVoid';
+import StateBarSolid from '../../components/StateBarSolid';
+import StateBarVoid from '../../components/StateBarVoid';
 import { PERMISSIONS, RESULTS, request } from 'react-native-permissions'
-import TopInfo from '../components/TopInfo';
-import TopInfoLess from '../components/TopInfoLess';
-import Bottom from '../components/Bottom';
-import store from '../store/store';
+import TopInfo from '../../components/TopInfo';
+import TopInfoLess from '../../components/TopInfoLess';
+import Bottom from '../../components/Bottom';
+import store from '../../store/store';
 
 const Alternative = styled.Text`
     font-size: 15px;

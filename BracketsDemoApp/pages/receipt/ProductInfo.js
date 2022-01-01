@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
-import Contents from '../components/Contents';
-import Button from '../components/Button';
+import Contents from '../../components/Contents';
+import Button from '../../components/Button';
 import styled from 'styled-components/native';
-import ContainView from '../components/ContainView';
+import ContainView from '../../components/ContainView';
 import { Image, View, Text} from 'react-native';
-import StateBarSolid from '../components/StateBarSolid';
-import StateBarVoid from '../components/StateBarVoid';
+import StateBarSolid from '../../components/StateBarSolid';
+import StateBarVoid from '../../components/StateBarVoid';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 import { Alert } from 'react-native';
-import TopInfoLess from '../components/TopInfoLess';
-import Bottom from '../components/Bottom';
-import store from '../store/store';
+import TopInfoLess from '../../components/TopInfoLess';
+import Bottom from '../../components/Bottom';
+import store from '../../store/store';
+import { PathToFlie } from '../../Functions/PathToFlie';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -30,7 +31,8 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
+    color:#000000
 `;
 const CenterView =styled.View`
     align-items: center;
@@ -66,9 +68,11 @@ function ProductInfo({navigation, route}) {
     const [size, setSize] = useState('')
     const [measure, setMeasure] = useState('')
     const [imageFile, setImageFile] = useState('')
+    const [pid, setPid] = useState('')
+    const [mfrid, setMfrid] = useState('')
     
     const option = {
-        url: 'http://13.125.232.214/api/getProductInfo',
+        url: 'http://34.64.182.76/api/getProductInfo',
         method: 'POST',
 
         // 
@@ -94,9 +98,10 @@ function ProductInfo({navigation, route}) {
             setColorValue(response.data.body[0].color),
             setSize(response.data.body[0].size),
             setMeasure(response.data.body[0].degree),
-            setImageFile(response.data.body[0].image)
-
-            // console.log(response.data.body[0].qrcode)
+            setImageFile(response.data.body[0].image),
+            setMfrid(response.data.body[0].mfr_id),
+            setPid(response.data.body[0].product_id)
+            
         ) : (
             //navigation.goBack(),
             Alert.alert(            
@@ -121,6 +126,52 @@ function ProductInfo({navigation, route}) {
     })
 
 
+
+   
+    
+    const addReceipt = async () => {
+        var formdata = new FormData();
+
+        formdata.append("store", 2);// 임시
+        formdata.append("staff", 2);// 임시
+        formdata.append("category", store.getState().receptionDivision.id);
+        formdata.append("customer", 7);//임시
+        formdata.append("pid", serialInput);
+        formdata.append("pcode", codeInput);
+        formdata.append("substitute", 0);//임시
+        formdata.append("mfrid", mfrid);
+
+        formdata.append("signature",  PathToFlie(store.getState().customerSign));
+        console.log(formdata)
+        
+        try {
+            const response = await fetch('http://34.64.182.76/api/addReceipt',{method: 'POST',
+            headers: {
+                'Accept': '',
+                'Content-Type': 'multipart/form-data'
+                },
+            body: formdata
+            });
+            const json = await response.json();
+            
+            console.log(json);
+            if(json.receipt_id != undefined){
+
+                store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
+            }
+            console.log(store.getState().receipt_id + "...........")
+           
+            
+            
+        } catch (error) {
+            console.error(error);
+        } finally {
+            
+        }
+        
+
+    }
+
     return (
        
         
@@ -139,9 +190,6 @@ function ProductInfo({navigation, route}) {
                         editable={false} 
                         selectTextOnFocus={false}
                         value = {codeInput}
-                        // onChange = { () =>
-                        //     alert("코드 변경 불가")
-                        // }
                     />
 
                     <Label>스타일 No.</Label>
@@ -150,11 +198,6 @@ function ProductInfo({navigation, route}) {
                         editable={false} 
                         selectTextOnFocus={false}
                         value = {serialInput}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setSerialInput(text);
-                        //   }
-                        // }
                     />
 
                     <Label>제품명</Label>
@@ -163,11 +206,6 @@ function ProductInfo({navigation, route}) {
                         editable={false} 
                         selectTextOnFocus={false}
                         value = {productName}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setProuctName(text);
-                        //   }
-                        // }
                     />
 
                     <Label>시즌</Label>
@@ -176,11 +214,6 @@ function ProductInfo({navigation, route}) {
                         editable={false} 
                         selectTextOnFocus={false}
                         value = {season}
-                        // onChange={(event) => {
-                        //     const {eventCount, target, text} = event.nativeEvent;
-                        //     setSeason(text);
-                        //   }
-                        // }
                         
                     />
                     
@@ -194,11 +227,6 @@ function ProductInfo({navigation, route}) {
                                 editable={false} 
                                 selectTextOnFocus={false}
                                 value = {colorValue}
-                                // onChange={(event) => {
-                                //     const {eventCount, target, text} = event.nativeEvent;
-                                //     setColorValue(text);
-                                //     }
-                                // }
                             />
 
                             <Label>사이즈</Label>
@@ -207,11 +235,6 @@ function ProductInfo({navigation, route}) {
                                 editable={false} 
                                 selectTextOnFocus={false}
                                 value = {size}
-                                // onChange={(event) => {
-                                //     const {eventCount, target, text} = event.nativeEvent;
-                                //     setSize(text);
-                                //     }
-                                // }
                                 style={{ width: 150 }}
                             />
 
@@ -221,11 +244,6 @@ function ProductInfo({navigation, route}) {
                                 editable={false} 
                                 selectTextOnFocus={false}
                                 value = {measure}
-                                // onChange={(event) => {
-                                //     const {eventCount, target, text} = event.nativeEvent;
-                                //     setMeasure(text);
-                                //     }
-                                // }
                                 style={{ width: 150 }}
                             />
                             
@@ -251,7 +269,10 @@ function ProductInfo({navigation, route}) {
 
                 <CenterView>
 
-                    <Button  onPress={ ()=> navigation.navigate( 'ShopStepTwo',
+                    <Button  onPress={ ()=> {
+                        console.log(codeInput)
+                        addReceipt();
+                        navigation.navigate( 'ShopStepTwo',
                             { 
                             codeType: codeType, 
                             code: codeInput, 
@@ -263,7 +284,9 @@ function ProductInfo({navigation, route}) {
                             measure: measure,
                             imageFile: imageFile
                             }
-                    ) }>
+                        )
+
+                    }}>
 
                         2단계: 접수 유형 선택
                     </Button>

@@ -1,13 +1,13 @@
 import React from 'react';
-import Container from '../components/Container';
-import Button from '../components/Button';
+import Container from '../../components/Container';
+import Button from '../../components/Button';
 import styled from 'styled-components/native';
-import CenterText from '../components/CenterText';
+import CenterText from '../../components/CenterText';
 import _ from 'lodash';
-import StateBarSolid from '../components/StateBarSolid';
-import TopInfo from '../components/TopInfo';
-import Bottom from '../components/Bottom'
-import store from '../store/store';
+import StateBarSolid from '../../components/StateBarSolid';
+import TopInfo from '../../components/TopInfo';
+import Bottom from '../../components/Bottom'
+import store from '../../store/store';
 import { Modal ,StyleSheet,View,Pressable,Image,Text} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 
@@ -32,21 +32,12 @@ const GrayText = styled.Text`
     font-size: 17px;
     color:#858585;
 `;
-const CompleteV = styled.View`
-    margin-bottom:25px;
-    height:50px;
-    background-color:#78909c;
-    width:50px;
-    align-items: center;
-    justify-content: center;
-    border-radius:25px;
-`;
-const VText = styled.Text`
-    font-size: 30px;
-    align-items: center;
-    color:#ffffff;
-`;
 
+const PrView = styled.View`
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+`;
 const TopStateView = styled.View`
     
     flex-direction: row;
@@ -93,34 +84,7 @@ const CodeView = styled.View`
     border-radius:8px
 `;
 
-
-// 구조 분해 할당, Destructuring Assignment
-function ShopStepOne( { navigation } ) {
-    const [barcode, setBarcode] = React.useState(store.getState().cardValue);
-    const [bag, setBag] = React.useState(store.getState().bagCodeValue);
-    
-
-    const cardImgUri = store.getState().card;
-    const bagImgUri =store.getState().bagPicture;
-
-
-    const [modalVisible, setModalVisible] = React.useState(false);
-    const [modalVisible2, setModalVisible2] = React.useState(false);
-
-    const sendForRepir =store.getState().basicRepairStore;
-    const [repairShop,setRepairShop] =React.useState(null);
-    
-    const set =new Set(sendForRepir);
-    React.useEffect(()=>{
-        if(set.size === 1){
-            setRepairShop(sendForRepir[0].basicSend);
-        }else{
-            setRepairShop("본사")
-        }
-    },[]);
-
-
-    const styles = StyleSheet.create({
+const styles = StyleSheet.create({
         centeredView: {
           flex: 1,
           justifyContent: "center",
@@ -151,6 +115,56 @@ function ShopStepOne( { navigation } ) {
             alignItems: "center",
         }
       });
+// 구조 분해 할당, Destructuring Assignment
+function ShopStepOne( { navigation } ) {
+    const [barcode, setBarcode] = React.useState(store.getState().cardValue);
+    const [bag, setBag] = React.useState(store.getState().bagCodeValue);
+    
+
+    const cardImgUri = store.getState().card;
+    const bagImgUri =store.getState().bagPicture;
+
+
+    const [modalVisible, setModalVisible] = React.useState(false);
+    const [modalVisible2, setModalVisible2] = React.useState(false);
+
+    const sendForRepir =store.getState().basicRepairStore;
+    const [repairShop,setRepairShop] =React.useState(null);
+    
+    const set =new Set(sendForRepir);
+
+    React.useEffect(()=>{
+        if(set.size === 1){
+            setRepairShop(sendForRepir[0].basicSend);
+        }else{
+            setRepairShop("본사")
+        }
+    },[]);
+    
+    const submitReceipt = async (receipt_id,bag_code) => {
+        var formdata = new FormData();
+
+        formdata.append("receipt", receipt_id);
+        formdata.append("mailbag", bag_code);
+        console.log(formdata)
+
+        try {
+            const response = await fetch('http://34.64.182.76/api/submitReceipt',{method: 'POST',
+            headers: {
+                'Accept': '',
+                'Content-Type': 'multipart/form-data'
+                },
+            body: formdata
+            });
+            const json = await response.json();
+           
+        } catch (error) {
+            console.error(error);
+        } finally {
+
+        }
+    }
+    
 
 
     return (
@@ -160,10 +174,10 @@ function ShopStepOne( { navigation } ) {
             <CenterText>
                 
                 
-                <CompleteV><VText>✓</VText></CompleteV>
+                <Image source={require('../../Icons/complete_blue.png')} style={{width:60,height:60,marginBottom:10}}></Image>
                 <RegistText>접수 완료</RegistText>
-                <BlueText>수선 접수가 정상적으로 완료</BlueText>
-                <GrayText>되었습니다</GrayText>
+                <PrView><BlueText>완료</BlueText><GrayText> 버튼을 누르시면</GrayText></PrView>
+                <PrView><BlueText>수선 접수</BlueText><GrayText> 가</GrayText><BlueText> 완료</BlueText><GrayText> 됩니다</GrayText></PrView>
 
             </CenterText>
             
@@ -200,7 +214,7 @@ function ShopStepOne( { navigation } ) {
                     
                     
                     
-                    <TouchableView onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label><ImgIcon source={require('../Icons/image.png')}/></TouchableView>
+                    <TouchableView onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label><ImgIcon source={require('../../Icons/image.png')}/></TouchableView>
                    
                 <GrayText>받는 곳</GrayText>
                 <DataView><Label>{repairShop}</Label></DataView>
@@ -229,10 +243,14 @@ function ShopStepOne( { navigation } ) {
                         </View>
                         </View>
                     </Modal>
-                <TouchableView onPress={() => setModalVisible2(!modalVisible)}><Label>{bag}</Label><ImgIcon source={require('../Icons/image.png')}/></TouchableView>
+                <TouchableView onPress={() => setModalVisible2(!modalVisible)}><Label>{bag}</Label><ImgIcon source={require('../../Icons/image.png')}/></TouchableView>
                 
             </InfoView>  
-            <Button onPress={ ()=> navigation.popToTop()}>
+            <Button onPress={ ()=>{
+                    submitReceipt(store.getState().receipt_id,bag)
+                    store.dispatch({type:"STORE_CLEAR"})
+                    navigation.popToTop()
+                }}>
                 완료
             </Button>
             <Bottom navigation={navigation}/>

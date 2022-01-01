@@ -5,13 +5,17 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Linking
+  Linking,
+  Image,
+  Dimensions,
+  View
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Container from '../components/Container';
 import { RNCamera } from 'react-native-camera';
 import store from '../store/store';
+
 
 export default class ScanScreen extends Component {
   
@@ -45,7 +49,7 @@ export default class ScanScreen extends Component {
         })
         
         if(route.params.key !=null){
-          if(route.params.key ==='ShopStepFour2'){
+          if(route.params.key ==='ShopStepFour'){
             store.dispatch({type:'SERVICECAED',value:check});
 
             if (this.camera) {
@@ -86,16 +90,27 @@ export default class ScanScreen extends Component {
     
     return (
       <Container>
-      <QRCodeScanner
-        showMarker={true}
-        onRead={this.onSuccess.bind(this)}
-        cameraProps={{
-          ref: ref => {
-            this.camera = ref;
-          },
-        }}
-       
-      />
+        <View style ={{backgroundColor:"#000000"}}>
+          <QRCodeScanner
+            onRead={this.onSuccess.bind(this)}
+            cameraProps={{
+              ref: ref => {
+                this.camera = ref;
+              },
+            }}
+          
+          />
+          <Image source={require('../Icons/scan_blue.png')}
+            style ={{
+              width: (Dimensions.get('window').width)/2,
+              height:(Dimensions.get('window').width)/2,
+              position : 'absolute',
+              left:(Dimensions.get('window').width)/4,
+              top:(Dimensions.get('window').height)/3,
+              opacity:0.6
+            }}
+          />
+        </View>
       
     
       </Container>
@@ -104,4 +119,3 @@ export default class ScanScreen extends Component {
     );
   }
 }
-AppRegistry.registerComponent('default', () => ScanScreen);

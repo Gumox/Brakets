@@ -96,12 +96,12 @@ function ReceiptDivision({navigation}) {
             <ReceiptButton onPress={ ()=> {
                 store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"선처리",id:2}});
                 console.log(store.getState().receptionDivision);
-                navigation.navigate( 'ShopStepOne' ) }}>매장용-선처리 제품</ReceiptButton>
+                navigation.navigate( 'SearchCustomer' ) }}>매장용-선처리 제품</ReceiptButton>
 
             <ReceiptButton onPress={ ()=> {
                 store.dispatch({type:'RECEPITION_DIVISION',receptionDivision:{name:"매장용",id:3} });
                 console.log(store.getState().receptionDivision);
-                navigation.navigate( 'ShopStepOne' ) }}>매장용 제품</ReceiptButton>
+                navigation.navigate( 'SearchCustomer' ) }}>매장용 제품</ReceiptButton>
             </Container>
             <Bottom navigation={navigation}/>
         </Container>

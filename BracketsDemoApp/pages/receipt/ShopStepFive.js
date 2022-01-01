@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import Container from '../components/Container';
-import Button from '../components/Button';
+import Container from '../../components/Container';
+import Button from '../../components/Button';
 import styled from 'styled-components/native';
-import CenterText from '../components/CenterText';
+import CenterText from '../../components/CenterText';
 import _ from 'lodash';
-import Contents from '../components/Contents';
-import TopInfo from '../components/TopInfo';
-import Bottom from '../components/Bottom';
-import StateBarSolid from '../components/StateBarSolid';
-import store from '../store/store';
+import Contents from '../../components/Contents';
+import TopInfo from '../../components/TopInfo';
+import Bottom from '../../components/Bottom';
+import StateBarSolid from '../../components/StateBarSolid';
+import store from '../../store/store';
 
 
 const RegistText= styled.Text`
@@ -34,7 +34,6 @@ const TopStateView = styled.View`
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepFive( { navigation } ) {
     //console.log(store.getState().recDate);
-    console.log(store.getState().cardValue + ":s5");
     
     return (
         <Container>

@@ -15,24 +15,23 @@ import LookupPage3 from './pages/lookup/LookupPage3';
 import Setting from './pages/setting/Setting';
 import ReceiptDivision from './pages/receipt/ReceiptDivision';
 import SearchCustomer from './pages/searchCustomer/SearchCustomer';
-import ShopStepOne from './pages/ShopStepOne';
-import ShopStepTwo from './pages/ShopStepTwo';
+import ShopStepOne from './pages/receipt/ShopStepOne';
+import ShopStepTwo from './pages/receipt/ShopStepTwo';
 
 
-import ShopStepThree from './pages/stepThree/ShopStepThree';
-import ShopStepThree2 from './pages/stepThree/ShopStepThree2';
-import ShopStepThree3 from './pages/stepThree/ShopStepThree3';
-import ShopStepThree4 from './pages/stepThree/ShopStepThree4';
-import ShopStepThree5 from './pages/stepThree/ShopStepThree5';
+import ShopStepThree from './pages/receipt/stepThree/ShopStepThree';
+import ShopStepThree2 from './pages/receipt/stepThree/ShopStepThree2';
+import ShopStepThree3 from './pages/receipt/stepThree/ShopStepThree3';
+import ShopStepThree4 from './pages/receipt/stepThree/ShopStepThree4';
+import ShopStepThree5 from './pages/receipt/stepThree/ShopStepThree5';
 
-import ShopStepFour from './pages/ShopStepFour';
-import ShopStepFour2 from './pages/ShopStepFour2';
-import ShopStepFive from './pages/ShopStepFive';
-import ShopStepComplete from './pages/ShopStepComplete';
+import ShopStepFour from './pages/receipt/ShopStepFour';
+import ShopStepFive from './pages/receipt/ShopStepFive';
+import ShopStepComplete from './pages/receipt/ShopStepComplete';
 
 
-import InputAlternativeNumber from './pages/InputAlternativeNumber';
-import ProductInfo from './pages/ProductInfo';
+import InputAlternativeNumber from './pages/receipt/InputAlternativeNumber';
+import ProductInfo from './pages/receipt/ProductInfo';
 import ScanScreen from './Functions/ScanScreen';
 import TakePhoto from './Functions/TakePhoto';
 import BarcodeScreen from './Functions/BarcodeScreen';
@@ -75,7 +74,6 @@ function App() {
         
 
         <Stack.Screen name="ShopStepFour" component={ShopStepFour} options={{ title: '4단계' ,headerTitleAlign: 'center'}} />
-        <Stack.Screen name="ShopStepFour2" component={ShopStepFour2} options={{ title: '4단계' ,headerTitleAlign: 'center'}} />
 
         <Stack.Screen name="ShopStepFive" component={ShopStepFive} options={{ title: '5단계' ,headerTitleAlign: 'center'}} />
 
@@ -86,7 +84,7 @@ function App() {
         <Stack.Screen name="ProductInfo" component={ProductInfo} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
 
 
-        <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{ title: 'QR 코드 스캔' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{  headerShown: false }} />
         <Stack.Screen name="TakePhoto" component={TakePhoto} options={{ headerShown: false }}  />
         <Stack.Screen name="BarcodeScreen" component={BarcodeScreen}  options={{ title: '스캔' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="PhotoControl" component={PhotoControl} options={{ headerShown: false }}  />
