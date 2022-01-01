@@ -24,9 +24,9 @@ const ProducInfo = ({
             <Field marginRight="10px">
               <SelectOption
                 title="시즌"
-                name={PRODUCT.SEASON}
+                name={PRODUCT.SEASON_ID}
                 options={[DEFAULT_OPTION, ...seasonList]}
-                value={targetData[PRODUCT.SEASON] || ""}
+                value={targetData[PRODUCT.SEASON_ID] || ""}
                 styleOptions={{ width: "100px" }}
                 onChange={handleChangeTargetData}
                 // disabled={true}

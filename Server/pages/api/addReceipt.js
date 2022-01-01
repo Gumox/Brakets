@@ -4,11 +4,12 @@ import excuteQuery from "./db";
 
 /**
  * 1단계
+ * 접수 구분 category:category
  * 매장 store:store_id
  * 직원 staff:staff_id
- * 접수 구분 category:category
  * 고객 customer:customer_id
  * 제품 pid:product_id, pcode:product_code, substitute:substitute, mfrid:mfr_id
+ * 브랜드 brand: brand_id
  * 서명 signature:signature
  */
 
@@ -21,11 +22,12 @@ const addReceipt = async ({
   pcode,
   substitute,
   mfrid,
+  brand,
 }) => {
   return excuteQuery({
     query:
-      "INSERT INTO `receipt`(`store_id`, `staff_id`, `customer_id`,`category`, `product_id`, `product_code`, `substitute`, `mfr_id`) VALUES (?,?,?,?,?,?,?,?)",
-    values: [store, staff, customer, category, pid, pcode, substitute, mfrid],
+      "INSERT INTO `receipt`(`store_id`, `staff_id`, `customer_id`,`category`, `product_id`, `product_code`, `substitute`, `mfr_id`, `brand_id`) VALUES (?,?,?,?,?,?,?,?,?)",
+    values: [store, staff, customer, category, pid, pcode, substitute, mfrid, brand],
   });
 };
 
@@ -44,9 +46,11 @@ export const config = {
 
 const controller = async (req, res) => {
   if (req.method === "POST") {
+    console.log(`[${new Date().toISOString()}] /api/addReceipt`);
     const form = new formidable.IncomingForm();
     form.parse(req, async function (err, fields, files) {
       console.log(fields);
+      console.log(files);
       // console.log(files.signature);
       try {
         if (err) throw new Error(err);
@@ -76,7 +80,7 @@ const controller = async (req, res) => {
           throw new Error(results.error);
         }
 
-        console.log("add Receipt (step 2)");
+        console.log("add Receipt (step 1)");
         res.status(200).json({ receipt_id: receiptId });
       } catch (err) {
         console.log(err.message);

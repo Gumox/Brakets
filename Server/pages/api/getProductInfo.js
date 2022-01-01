@@ -1,4 +1,7 @@
 import excuteQuery from "./db";
+/**
+ * 1단계 제품정보 조회
+ */
 
 async function getProductInfo(code) {
   return excuteQuery({
@@ -9,7 +12,7 @@ async function getProductInfo(code) {
 
 const controller = async (req, res) => {
   if (req.method === "POST") {
-    console.log("req");
+    console.log(`[${new Date().toISOString()}] /api/getProductInfo`);
     console.log(req.body);
     const code = req.body.code;
 

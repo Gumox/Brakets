@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useContext } from "react";
 import styled from "styled-components";
 
-import { OptionContext } from "../../store/Context";
+import { OptionContext, UserContext } from "../../store/Context";
 import COLOR from "../../constants/color";
 import { COMPANY, STORE, RECEIPT } from "../../constants/field";
 import { DEFAULT_OPTION } from "../../constants/select-option";
@@ -13,6 +13,7 @@ const BasicInfo = ({
   setTargetBrandId = () => {},
   getTargetData = () => {},
 }) => {
+  const {headquarter_id: headquarterId} = useContext(UserContext);
   const { brandList } = useContext(OptionContext);
   const [receiptCode, setReceiptCode] = useState("");
   const handleKeyPress = useCallback(
@@ -27,9 +28,8 @@ const BasicInfo = ({
     <Wrapper>
       <Input
         title="회사코드:"
-        name={COMPANY.ID}
         type="text"
-        value={process.env.HEADQUARTER_ID}
+        value={headquarterId}
         disabled={true}
         styleOptions={{ width: "20px" }}
       />
