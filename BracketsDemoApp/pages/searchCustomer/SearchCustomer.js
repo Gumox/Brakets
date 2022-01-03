@@ -40,22 +40,22 @@ function SearchCustomer( { navigation } ) {
 
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
-  const items =[];
+  const customers =[];
   const parseData=(body)=>{
   
         
     for (let i = 0; i < body.length; i++) {
         console.log(body[i].name);
         console.log(body[i].phone);
-        items.push({name:body[i].name + " : "+body[i].phone,cName:body[i].name,cPhone:body[i].phone})
-        console.log(items)
+        customers.push({cName:body[i].name,cPhone:body[i].phone,cId: body[i].customer_id})
+        console.log(customers)
     }
 
 }
   const getCustomer = async (bodyData) => {
             
     try {
-        const response = await fetch('http://13.125.232.214/api/getCustomer ',{method: 'POST',
+        const response = await fetch('http://34.64.182.76/api/getCustomer ',{method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -67,10 +67,11 @@ function SearchCustomer( { navigation } ) {
         console.log(json.body);
         parseData(json.body);
         setLoading(false);
-        navigation.navigate('CustomerInfo')
-    
+        console.log("?????-------*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-")
+        navigation.navigate('CustomerSearchList',{customers:customers})
     } catch (error) {
-        
+        console.log(error)
+        console.log("?????-------")
     } finally {
         setLoading(false);
     }
@@ -97,7 +98,7 @@ function SearchCustomer( { navigation } ) {
 
           <Button onPress = {() =>{ 
             if(pNumber != null&&pNumber.length>3){
-              
+
               setData([]);
               console.log(data);
               store.dispatch({type:'CUSTOMER_SIGN',customerSign: ""});

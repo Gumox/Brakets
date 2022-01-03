@@ -9,7 +9,7 @@ function TopInfo(props) {
                 <Text  style={{fontWeight: "bold",fontSize:15}}>{store.getState().requirement.name}</Text>
             </View>
             <Text>  </Text>
-            <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>홍길동</Text><Text> 님 진행중</Text></View>
+            <View style={{flexDirection:"row"}}><Text style ={{fontWeight:"bold"}}>{store.getState().customer.cName}</Text><Text> 님 진행중</Text></View>
         </View>
     )
 }

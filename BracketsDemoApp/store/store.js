@@ -8,12 +8,15 @@ export default createStore(function(state,action){
 
         return{
             cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",customerSign:"",
-            receiverList:"",
+            receiverList:"",customer:"",
             selectType:[],bagPicture:"", photoArr:[],indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
             typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:"",receipt_id: 0}
     }
     if(action.type ==='PHOTO'){
         return{...state, photo: action.photo };
+    }
+    if(action.type ==='CUSTOMER'){
+        return{...state, customer: action.customer };
     }
     if(action.type ==='CUSTOMER_SIGN'){
         return{...state, customerSign: action.customerSign };

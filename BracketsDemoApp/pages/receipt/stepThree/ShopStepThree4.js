@@ -102,15 +102,7 @@ function ShopStepThree4({route,navigation}) {
 
     
 
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log(productCategories)
-    console.log()
-    console.log()
-    console.log()
-    console.log()
+    
 
     const ProductCategoriesClassify =()=>{
         var items  = [];

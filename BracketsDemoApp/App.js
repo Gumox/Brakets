@@ -38,6 +38,8 @@ import BarcodeScreen from './Functions/BarcodeScreen';
 import PhotoControl from './Functions/PhotoControl';
 import Capture from './Functions/Capture';
 import CustomerInfo from './pages/searchCustomer/CustomerInfo';
+import CustomerSearchList from './pages/searchCustomer/CustomerSearchList'
+
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -58,6 +60,7 @@ function App() {
         <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{  title: '',headerTitleAlign: 'center' }} />
 
         <Stack.Screen name="SearchCustomer" component={SearchCustomer} options={{  title: '',headerTitleAlign: 'center' }} />
+        <Stack.Screen name="CustomerSearchList" component={CustomerSearchList} options={{  title: '',headerTitleAlign: 'center' }} />
         <Stack.Screen name="CustomerInfo" component={CustomerInfo} options={{  title: '',headerTitleAlign: 'center' }} />
         
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />

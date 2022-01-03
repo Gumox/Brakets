@@ -172,9 +172,9 @@ export default class CustomerInfo extends Component {
                             <Title>고객 정보</Title>
                             <Label/>
                             <BtView><Label>이름</Label><Label/></BtView>
-                            <Input></Input>
+                            <Input value ={store.getState().customer.cName}></Input>
                             <BtView><Label>연락처</Label><Label/></BtView>
-                            <Input></Input>        
+                            <Input value ={store.getState().customer.cPhone}></Input>        
                         </CenterText>
                         <CenterText>
                             <PrView><ImgIcon source={require('../../Icons/caution.png')}/><CautionText>아래 사항들은 고객이 직접 입력하셔야 합니다</CautionText></PrView>

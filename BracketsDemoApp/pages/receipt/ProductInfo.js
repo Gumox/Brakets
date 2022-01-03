@@ -133,9 +133,10 @@ function ProductInfo({navigation, route}) {
         var formdata = new FormData();
 
         formdata.append("store", 2);// 임시
-        formdata.append("staff", 2);// 임시
-        formdata.append("category", store.getState().receptionDivision.id);
-        formdata.append("customer", 7);//임시
+        formdata.append("brand", 2);// 임시
+        formdata.append("staff", store.getState().receptionDivision.id);
+        formdata.append("customer", store.getState().customer.cId);//임시
+        
         formdata.append("pid", serialInput);
         formdata.append("pcode", codeInput);
         formdata.append("substitute", 0);//임시
