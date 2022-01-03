@@ -38,8 +38,8 @@ const FIELD = {
   },
 
   MESSAGE: `receipt_message`, // 본사설명
-  FREECHARGE: `freecharge`, // 유상 | 무상
-  CHARGE: `charge`, // 비용
+  PAID: `paid`, // 유상 | 무상
+  FEE: `fee`, // 비용
   CASHRECEIPT_NUM: `cashreceipt_num`, // 현금영수증 번호
   STORE_SEND_DATE: `send_date`, // 발송일 to S(store)
 

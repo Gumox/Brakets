@@ -21,8 +21,10 @@ async function getReceipt(query, values) {
                     store.contact AS store_contact,
                     customer.name AS customer_name, 
                     customer.phone AS customer_phone,
-                    product.season AS product_season,
-                    product.style AS product_style,
+                    product.season_id AS product_season_id,
+                    season_type.season_name AS product_season_name,
+                    product.style_id AS product_style_id,
+                    style_type.style_code AS product_style_code,
                     product.degree AS product_degree,
                     product.color AS product_color,
                     product.size AS product_size, 
@@ -120,6 +122,8 @@ async function getReceipt(query, values) {
             FROM receipt 
             LEFT JOIN store ON receipt.store_id = store.store_id 
             LEFT JOIN product ON receipt.product_id = product.product_id 
+            LEFT JOIN season_type ON product.season_id = season_type.season_id
+            LEFT JOIN style_type ON product.style_id = style_type.style_id
             LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
             LEFT JOIN analysis_type ON receipt.analysis_id = analysis_type.analysis_id
             LEFT JOIN result_type ON receipt.result_id = result_type.result_id
@@ -173,7 +177,7 @@ const receipt = async (req, res) => {
       let values = [];
 
       if(brandId) {
-        query += " AND store.brand_id = ? ";
+        query += " AND receipt.brand_id = ? ";
         values = [...values, brandId];
       }
 
@@ -184,11 +188,11 @@ const receipt = async (req, res) => {
 
       if (isStyleType && isStyleType !== "false") {
         if (season) {
-          query += " AND product.season = ? ";
+          query += " AND product.season_id = ? ";
           values = [...values, season];
         }
         if (style && style.length > 0) {
-          query += " AND product.style = ? ";
+          query += " AND product.style_id = ? ";
           values = [...values, style]
         }
       }
@@ -238,7 +242,7 @@ const receipt = async (req, res) => {
 
       if (hasCharged) {
         if(hasCharged === "true") {
-          query += " AND receipt.freecharge = 0 ";
+          query += " AND receipt.paid = 1 ";
 
           if(hasCashReceipt && hasCashReceipt === "true") {
             query += " AND receipt.cashreceipt_num IS NOT NULL "

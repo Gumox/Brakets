@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-import { OptionContext } from "../store/Context";
+import { UserContext, OptionContext } from "../store/Context";
 import { getThisSeason, getCurrentSeasons } from "../utils/season";
 import {
   SEASON_OPTIONS,
@@ -30,7 +30,7 @@ const ReceptionPage = ({ options, user }) => {
 
   useEffect(() => {
     const getOptions = async () => {
-      const [stores, productCategories] = await Promise.all([
+      const [stores, productCategories, seasons] = await Promise.all([
         axios
           .get(`${process.env.API_URL}/store/1`, {
             params: { brandId: targetBrandId },
@@ -41,24 +41,30 @@ const ReceptionPage = ({ options, user }) => {
             params: { brandId: targetBrandId },
           })
           .then(({ data }) => data), // 제품구분
+        axios
+          .get(`${process.env.API_URL}/product/season`, {
+            params: { brandId: targetBrandId },
+          })
+          .then(({ data }) => data), // 시즌
       ]);
 
       // 브랜드가 바뀌면 전체 페이지가 초기화
       setInputData({
         dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
         dateType: "all",
-      })
+      });
       setSearchList([]);
       setTargetData({});
       setSelectOptions({
         ...selectOptions,
         storeList: stores ? stores.data : [],
         productCategoryList: productCategories ? productCategories.data : [],
+        seasonList: seasons? seasons.data: [],
       });
     };
 
     getOptions();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetBrandId]);
 
   const handleChangeInputData = useCallback(
@@ -101,7 +107,7 @@ const ReceptionPage = ({ options, user }) => {
 
   useEffect(() => console.log(targetData), [targetData]);
   return (
-    <>
+    <UserContext.Provider value={user}>
       <Header path={router.pathname} />
       <OptionContext.Provider value={selectOptions}>
         <Reception
@@ -115,7 +121,7 @@ const ReceptionPage = ({ options, user }) => {
           }}
         />
       </OptionContext.Provider>
-    </>
+    </UserContext.Provider>
   );
 };
 
@@ -141,24 +147,39 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  const [
-    brands,
-    repairShops,
-    producers,
-    faults,
-    analysis,
-    results,
-    repairs,
-  ] = await Promise.all([
-    axios.get(`${process.env.API_URL}/brand`).then(({ data }) => data), // 브랜드
-    axios.get(`${process.env.API_URL}/store/2`).then(({ data }) => data), // 수선처
-    axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
-    axios.get(`${process.env.API_URL}/type/fault`).then(({ data }) => data), // 과실구분
-    axios.get(`${process.env.API_URL}/type/analysis`).then(({ data }) => data), // 내용분석
-    axios.get(`${process.env.API_URL}/type/result`).then(({ data }) => data), // 판정결과
-    axios.get(`${process.env.API_URL}/type/repair`).then(({ data }) => data), // 수선내용
-  ]);
-  const seasons = SEASON_OPTIONS; // TODO: 본사에서 API 제공 필요
+
+  const { headquarter_id: headquarterId } = user;
+
+  const [brands, repairShops, producers, faults, analysis, results, repairs] =
+    await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/brand`, { params: { headquarterId } })
+        .then(({ data }) => data), // 브랜드
+      axios
+        .get(`${process.env.API_URL}/store/2`, { params: { brandId: headquarterId } })
+        .then(({ data }) => data), // 수선처
+      axios
+        .get(`${process.env.API_URL}/store/3`)
+        .then(({ data }) => data), // 생산업체
+      axios
+        .get(`${process.env.API_URL}/type/fault`, { params: { headquarterId } })
+        .then(({ data }) => data), // 과실구분
+      axios
+        .get(`${process.env.API_URL}/type/analysis`, {
+          params: { headquarterId },
+        })
+        .then(({ data }) => data), // 내용분석
+      axios
+        .get(`${process.env.API_URL}/type/result`, {
+          params: { headquarterId },
+        })
+        .then(({ data }) => data), // 판정결과
+      axios
+        .get(`${process.env.API_URL}/type/repair`, {
+          params: { headquarterId },
+        })
+        .then(({ data }) => data), // 수선내용
+    ]);
   return {
     props: {
       user,
@@ -172,7 +193,7 @@ export const getServerSideProps = async (ctx) => {
         analysisType: analysis ? analysis.data : [],
         resultType: results ? results.data : [],
         repairType: repairs ? repairs.data : [],
-        seasonList: seasons,
+        seasonList: [],
       },
     },
   };

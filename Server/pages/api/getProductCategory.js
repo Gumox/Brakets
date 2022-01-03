@@ -11,7 +11,7 @@ async function getProductCategory(brand) {
 
 const controller =  async (req, res) => {
   if (req.method === "POST") {
-    console.log("req");
+    console.log(`[${new Date().toISOString()}] /api/getProductCategory`);
     console.log(req.body);
     // const category = req.body.category; 	//1:고객용 2:매장용 3:선처리
     // const receipt = req.body.receipt; 	//1: 수선 2: 교환 3: 환불 4: 심의

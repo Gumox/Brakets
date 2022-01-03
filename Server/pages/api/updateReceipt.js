@@ -79,6 +79,7 @@ const saveDetailImage = async(receiptId, num, imagePath, storeId) => {
  };
  
  const controller = async (req, res) => {
+  console.log(`[${new Date().toISOString()}] /api/updateReceipt`);
    if (req.method === "POST") {
      const form = new formidable.IncomingForm();
      form.parse(req, async function (err, fields, files) {

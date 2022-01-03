@@ -1,4 +1,7 @@
 import excuteQuery from "./db";
+/**
+ * 0단계 고객 조회
+ */
 
 async function getCustomer(name, phone) {
   let query = "SELECT * FROM customer ";
@@ -10,17 +13,15 @@ async function getCustomer(name, phone) {
   else if (typeof phone !== "undefined")
     query += " WHERE phone LIKE '%" + phone + "'";
 
-  //console.log("qq" + query);
-
-    return excuteQuery({
-      query: query,
-      values: [],
-    });
+  return excuteQuery({
+    query: query,
+    values: [],
+  });
 }
 
 const controller = async (req, res) => {
   if (req.method === "POST") {
-    console.log("req");
+    console.log(`[${new Date().toISOString()}] /api/getCustomer`);
     console.log(req.body);
 
     const name = req.body.name;
@@ -34,11 +35,11 @@ const controller = async (req, res) => {
         res.status(200).json({ body: result });
       } else {
         console.log("No Customer");
-        res.status(204).send();
+        res.status(204).json({ message: "No Customer" });
       }
     } catch (err) {
       console.log(err.message);
-      res.status(400).json({err: err.message});
+      res.status(400).json({ err: err.message });
     }
   }
 };

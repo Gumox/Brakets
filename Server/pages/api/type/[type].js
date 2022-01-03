@@ -1,9 +1,10 @@
 import excuteQuery from "../db";
 
-async function getType(type) {
+async function getType(type, headquarterId) {
   const result = await excuteQuery({
     query: `SELECT ${type}_id AS value, ${type}_name AS text
-              FROM ${type}_type `,
+              FROM ${type}_type WHERE headquarter_id=?`,
+    values: [headquarterId],
   });
 
   return result;
@@ -15,18 +16,17 @@ const store = async (req, res) => {
     console.log("/api/type/{type}");
     console.log("req.query");
     console.log(req.query);
-    const { type } = req.query;
+    const { type, headquarterId } = req.query;
     try {
-      if (!TYPE_CATEGORY.includes(type))
-        return res.status(204).send();
+      if (!TYPE_CATEGORY.includes(type)) return res.status(204).send();
 
-      const types = await getType(type);
+      const types = await getType(type, headquarterId);
       if (types.error) throw new Error(receipt.error);
 
       res.status(200).json({ data: types });
     } catch (err) {
       console.log(err.message);
-      res.status(400).json({err: err.message});
+      res.status(400).json({ err: err.message });
     }
   }
 };

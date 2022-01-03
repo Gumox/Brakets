@@ -25,16 +25,18 @@ async function getReceipt(code) {
                     receipt.result_id AS result_id,
                     receipt.analysis_id AS analysis_id,
                     receipt.message AS receipt_message,
-                    receipt.freecharge AS freecharge,
-                    receipt.charge AS charge,
+                    receipt.paid AS paid,
+                    receipt.fee AS fee,
                     receipt.cashreceipt_num AS cashreceipt_num,
-                    product.season AS product_season,
-                    product.style AS product_style,
+                    product.season_id AS product_season_id,
+                    product.style_id AS product_style_id,
+                    style_type.style_code AS product_style_code,
                     product.color AS product_color,
                     product.size AS product_size, 
                     product.degree AS product_degree,
                     product.image AS product_image,
                     product.release_date AS product_release_date,
+                    product.tag_price AS product_tag_price,
                     customer.name AS customer_name,
                     customer.phone AS customer_phone,
                     receipt.repair1_detail_id,
@@ -123,6 +125,7 @@ async function getReceipt(code) {
                     receipt.image  
               FROM receipt 
               LEFT JOIN product ON receipt.product_id = product.product_id 
+              LEFT JOIN style_type ON product.style_id = style_type.style_id
               LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
               LEFT JOIN store AS mfr_store ON receipt.mfr_id = mfr_store.store_id
               LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
@@ -147,7 +150,7 @@ const receipt = async (req, res) => {
       const receipt = await getReceipt(code);
       if (receipt.error) throw new Error(receipt.error);
       if (receipt.length == 0) return res.status(204).send();
-
+console.log(receipt)
       res.status(200).json({ data: { ...receipt[0]} });
     } catch (err) {
       console.log(err.message);

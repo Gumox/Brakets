@@ -12,8 +12,8 @@ async function getStore(type, brandId) {
   return result;
 }
 
-// 생산업체, 수선처,,
-async function getOtherStore(type) {
+// 생산업체
+async function getManufacturer(type) {
   const result = await excuteQuery({
     query: `SELECT store_id AS value, name AS text
               FROM store 
@@ -32,8 +32,8 @@ const store = async (req, res) => {
     const { type, brandId } = req.query;
     try {
       let stores;
-      if(brandId) stores = await getStore(type, brandId);
-      else stores = await getOtherStore(type);
+      if(!brandId) stores = await getManufacturer(type);
+      else stores = await getStore(type, brandId);
       
       if (stores.error) throw new Error(receipt.error);
 

@@ -1,15 +1,15 @@
 const FIELD = {
-  SEASON: "product_season", // 시즌
+  SEASON_ID: "product_season_id", // 시즌 id
+  SEASON: "product_season_name", // 시즌
   COLOR: "product_color", // 컬러
-  STYLE: "product_style", // 스타일
+  STYLE_ID: "product_style_id", // 스타일 id
+  STYLE: "product_style_code", // 스타일
   SIZE: "product_size", // 사이즈
   DEGREE: "product_degree", // 차수
   IMAGE: "product_image", // 이미지
   RELEASE_DATE: "product_release_date", // 최초출고일
   RFID: "product_code", // RFID 코드
-  
-  SUBSTITUE_CODE: "product_substitue_code",
-  PRICE: "product_price",
+  TAG_PRICE: "product_tag_price", // Tag가
 };
 
 export default FIELD;

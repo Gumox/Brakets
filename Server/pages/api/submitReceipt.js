@@ -28,8 +28,8 @@ const getReceipt = async(receiptId) => {
 const addReceiptDetail = async ({mailbag}, {receipt_id, receipt_code, product_id, product_code, store_id, receipt_date, receiver, receiver_type}) => {
     return excuteQuery({
         query:
-          "INSERT INTO `receipt_detail`(`receipt_id`, `receipt_code`, `num`, `mailbag`, `product_id`,`product_code`, `sender`, `send_date`, `receiver`, `receiver_type`) VALUES (?,?,?,?,?,?,?,?,?,?)",
-        values: [receipt_id, receipt_code, 1, mailbag, product_id, product_code, store_id, receipt_date, receiver, receiver_type],
+          "INSERT INTO `receipt_detail`(`receipt_id`, `receipt_code`, `mailbag`, `product_id`,`product_code`, `sender`, `send_date`, `receiver`, `receiver_type`) VALUES (?,?,?,?,?,?,?,?,?)",
+        values: [receipt_id, receipt_code, mailbag, product_id, product_code, store_id, receipt_date, receiver, receiver_type],
       });
 }
 
@@ -57,6 +57,7 @@ const addRepairDetail = async ({receiver, receipt_date}) => {
   
 
   const controller = async (req, res) => {
+    console.log(`[${new Date().toISOString()}] /api/submitReceipt`);
     if (req.method === "POST") {
       const form = new formidable.IncomingForm(); // 행낭 사진 업로드 해야할 수도 있기 때문에 form-data
       form.parse(req, async function (err, fields, files) {
