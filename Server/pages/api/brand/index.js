@@ -2,7 +2,7 @@ import excuteQuery from "../db";
 
 async function getBrand(headquarterId) {
   const result = await excuteQuery({
-    query: `SELECT brand_id AS value, brand_name AS text
+    query: `SELECT brand_id AS value, brand_name AS text, service_date
               FROM brand WHERE headquarter_id=?`,
     values: [headquarterId],
   });
