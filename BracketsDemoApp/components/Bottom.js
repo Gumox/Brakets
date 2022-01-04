@@ -34,7 +34,7 @@ function Bottom  (props){
               접수
           </BottomButtonText>
       </BottomButton>
-      <BottomButton onPress = {() => props.navigation.navigate( 'TakeOverPage')}>
+      <BottomButton onPress = {() => props.navigation.navigate( 'CheckBarcode')}>
           <BottomButtonText>
               인수
           </BottomButtonText>

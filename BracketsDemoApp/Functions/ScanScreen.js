@@ -58,7 +58,7 @@ export default class ScanScreen extends Component {
               const imgUri = data.uri;
              
               store.dispatch({type:'TAKE',take:imgUri});
-             
+              this.props.navigation.replace(route.params.key);
             }
 
           }
@@ -72,11 +72,16 @@ export default class ScanScreen extends Component {
               const imgUri = data.uri;
              
               store.dispatch({type:'BAGTAG',bagTag:imgUri});
-             
+              this.props.navigation.replace(route.params.key);
             }
           }
+          else if(route.params.key === 'TakeOverPage'){
+
+            this.props.navigation.replace(route.params.key,{code:check});
+
+          }
           
-            this.props.navigation.replace(route.params.key);
+          
            
             
             

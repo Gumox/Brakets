@@ -141,4 +141,3 @@ functionButton: {
     backgroundColor: '#39579A', justifyContent: 'center', alignItems: 'center', borderRadius: 5,
 }
 })
-AppRegistry.registerComponent('example', () => ShopStepThree3);

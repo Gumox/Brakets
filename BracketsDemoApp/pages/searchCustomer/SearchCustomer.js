@@ -5,8 +5,6 @@ import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
 import Bottom from '../../components/Bottom';
-import CustomerSearchBox from './CustomerSearchBox';
-import CustomSearch from './CustomSearch';
 import { Alert } from 'react-native';
 import store from '../../store/store';
 const Title = styled.Text`

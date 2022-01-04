@@ -3,9 +3,11 @@ import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
+import { ScrollView ,View} from 'react-native';
 import Bottom from '../../components/Bottom';
 import Contents from '../../components/Contents';
 import ContainView from '../../components/ContainView';
+import Container from '../../components/Container';
 
 
 const Alternative = styled.Text`
@@ -14,10 +16,11 @@ const Alternative = styled.Text`
 `;
 
 const Label = styled.Text`
-    font-size: 15px;
+    font-size: 20px;
     margin-Top: 12px;
     margin-bottom: 12px;
     margin-left:12px;
+    font-weight :bold;
 `;
 
 const InputView = styled.View`
@@ -36,6 +39,16 @@ const Title = styled.Text`
   font-size : 24px;
   font-weight : bold;
 `;
+const PrView = styled.View`
+    flex-direction: row;
+    align-items: center;
+    width: 95%
+`;
+const ScrollItme = styled.View`
+    margin-left:20px;
+    margin-right:20px;
+    width:150px
+`;
 
 // 구조 분해 할당, Destructuring Assignment
 function LookupPage2({ navigation }) {
@@ -44,41 +57,40 @@ function LookupPage2({ navigation }) {
     const [addr, setAddr] = useState("010-1111-1111");
 
     return (
-        <>
-            <ContainView>
-                <CenterText>
-                    <Title>고객 정보</Title>
-                </CenterText>
+        
+        <Container>
+            <CenterText>
+                <Title>조회 결과</Title>
+            </CenterText>
 
-                <Contents>
-                    <Label>이름</Label>
-                    <Input
-                        editable={false}
-                        selectTextOnFocus={true}
-                        value = {name}
-                        /* onChange={() => }*/
-                    />
+            <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5,width:"85%",height:"45%"}}>
+                <ScrollView horizontal ={true} style={{marginBottom:15}}>
+                    <PrView>
+                        <Label/>
+                        <ScrollItme><Label>접수일</Label></ScrollItme>
+                        <Label>구분</Label>
+                        <ScrollItme><Label>고객명</Label></ScrollItme>
+                        <ScrollItme><Label>고객 연락처</Label></ScrollItme>
+                        <ScrollItme><Label>서비스 번호</Label></ScrollItme>
+                        <ScrollItme><Label>상태</Label></ScrollItme>
+                    </PrView>
+                </ScrollView>
+                <Label/>
+                
+                
+                
 
-                    <Label>연락처</Label>
-                    <Input
-                        editable={false}
-                        selectTextOnFocus={true}
-                        value = {addr}
-                    /* onChange = { () => } */
-                    />
-                </Contents>
-                <InputView>
-                    <Alternative onPress={() => navigation.navigate('LookupPage3')}>
-                        고객 정보 변경하기
-                    </Alternative>
-                    <Button>
-                        접수하기
-                    </Button>
-                </InputView>
-                <Bottom navigation={navigation} />
-            </ContainView>
-        </>
+            </ScrollView>
+            <Button onPress = {() =>{ 
+        
+                navigation.navigate('LookupPage3')
 
+
+                }}>
+                접수하기
+            </Button>
+            <Bottom navigation={navigation} />
+        </Container>
     )
 }
 export default LookupPage2;

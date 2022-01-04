@@ -5,7 +5,6 @@ import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
 import Bottom from '../../components/Bottom';
-import CustomSearch from './CustomSearch';
 import Contents from '../../components/Contents'; 
 import { CheckBox, Icon } from 'react-native-elements';
 
