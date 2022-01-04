@@ -337,7 +337,19 @@ function TakeOverPage( { route,navigation } ) {
                     <Text>판매가</Text>
                         <InputText>{productPrice}</InputText>
               </InfoView>
-
+              <InfoView>
+                    <Text>제품 구분</Text>
+                        <InputText>{}</InputText>
+                        
+                    <Text>제품 사진 (수선전)</Text>
+                    <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
+                    </ScrollView>
+                    <Text>제품 사진 (수선 후)</Text>
+                    <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
+                    </ScrollView>
+                    <Text>매장 접수 내용</Text>
+                        <InputText>{}</InputText>
+              </InfoView>
               <InfoView>
                 <Text>과실 구분</Text>
                 <InputText>{checkMistake}</InputText>
