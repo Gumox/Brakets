@@ -59,7 +59,7 @@ const ReceptionPage = ({ options, user }) => {
         ...selectOptions,
         storeList: stores ? stores.data : [],
         productCategoryList: productCategories ? productCategories.data : [],
-        seasonList: seasons? seasons.data: [],
+        seasonList: seasons ? seasons.data : [],
       });
     };
 
@@ -100,8 +100,8 @@ const ReceptionPage = ({ options, user }) => {
     });
     setSearchList(data.data);
   }, [inputData, targetBrandId]);
-  const getTargetData = useCallback(async (receiptId) => {
-    const { data } = await axios.get(`/api/receipt/${receiptId}`);
+  const getTargetData = useCallback(async (receiptCode) => {
+    const { data } = await axios.get(`/api/receipt/${receiptCode}`);
     setTargetData(data.data);
   }, []);
 
@@ -156,11 +156,11 @@ export const getServerSideProps = async (ctx) => {
         .get(`${process.env.API_URL}/brand`, { params: { headquarterId } })
         .then(({ data }) => data), // 브랜드
       axios
-        .get(`${process.env.API_URL}/store/2`, { params: { brandId: headquarterId } })
+        .get(`${process.env.API_URL}/store/2`, {
+          params: { brandId: headquarterId },
+        })
         .then(({ data }) => data), // 수선처
-      axios
-        .get(`${process.env.API_URL}/store/3`)
-        .then(({ data }) => data), // 생산업체
+      axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
       axios
         .get(`${process.env.API_URL}/type/fault`, { params: { headquarterId } })
         .then(({ data }) => data), // 과실구분
