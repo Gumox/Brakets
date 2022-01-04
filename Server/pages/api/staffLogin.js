@@ -43,7 +43,7 @@ export async function staffLogin(type, store, kid, uid, phone, name) {
       state = 1;
     } else if (type === "logout") {
       state = 2;
-	}
+    }
 
     //로그 기록
     if (staffid != 0) {
