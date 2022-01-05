@@ -1,5 +1,15 @@
 import excuteQuery from "../db";
 
+async function getImageList(code) {
+  const result = await excuteQuery({
+    query: `SELECT num, type, before_image, before_store_id, after_image, after_store_id FROM receipt_image
+            LEFT JOIN receipt ON receipt_image.receipt_id = receipt.receipt_id
+            WHERE receipt.receipt_code = ?`,
+    values: [code],
+  });
+  return result;
+}
+
 async function getReceipt(code) {
   const result = await excuteQuery({
     query: `SELECT receipt.receipt_id AS receipt_id,
@@ -156,10 +166,12 @@ const receipt = async (req, res) => {
     const { code } = req.query;
     try {
       const receipt = await getReceipt(code);
+      const imageResult = await getImageList(code);
       if (receipt.error) throw new Error(receipt.error);
       if (receipt.length == 0) return res.status(204).send();
       console.log(receipt);
-      res.status(200).json({ data: { ...receipt[0] } });
+      console.log(imageResult);
+      res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult });
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });
