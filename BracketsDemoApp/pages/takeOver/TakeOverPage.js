@@ -149,7 +149,7 @@ function TakeOverPage( { route,navigation } ) {
 
 
     const getTargetData = useCallback(async (receiptId) => {
-        const { data } = await axios.get(`http://34.64.182.76/api/receipt/${receiptId}`);
+        const { data } = await axios.get(`http://localhost:3000/api/receipt/${receiptId}`);
         const readData = data.data;
         //console.log(readData)
         const keys= Object.keys(readData)
