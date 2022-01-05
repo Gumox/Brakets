@@ -67,12 +67,12 @@ function ShopStepThree( { navigation } ) {
       
       itemList.push({ label: i+'.'+obj.category_name, value: obj.category_name })
       var key = obj.category_name;
-      Categories.push({'category_name' :obj.category_name, 'pcategory_id': obj.pcategory_id});
+      Categories.push({'category_name' :obj.category_name, 'pcategory_id': obj.pcategory_id, 'service_date':  obj.service_date});
       var title = obj.receiver_name;
       i = i+1;
        //Categories.push(title : obj.receiver_name);
     }
-    console.log(obj.category_name+ " : " + obj.pcategory_id);
+    console.log(obj.category_name+ " : " + obj.pcategory_id+"    "+obj.service_date);
     
   });
 
@@ -86,7 +86,7 @@ function ShopStepThree( { navigation } ) {
       const bodyData = {
         "category": 1,
         "receipt": 1,
-        "season": 0,
+        "season": 2,
         "pcategory_id": id
 
         }
@@ -104,7 +104,7 @@ function ShopStepThree( { navigation } ) {
         store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:json.list[0].receiver_name });
         
-        console.log();console.log();
+        console.log();console.log(json.list);
         console.log();
         console.log("YYYYYYY");
         console.log(store.getState().basicRepairStore)
@@ -179,8 +179,8 @@ function ShopStepThree( { navigation } ) {
                   console.log("???????????"+obj.pcategory_id);
                   
                   getRepairList(obj.pcategory_id);
-                  
-                  
+                  console.log(obj.service_date)
+                  store.dispatch({type:"SERVICE_DATE",serviceDate:obj.service_date});
                   console.log("+++");
                   console.log(store.getState().basicRepairStore);
                   

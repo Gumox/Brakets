@@ -8,7 +8,7 @@ export default createStore(function(state,action){
 
         return{
             cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",customerSign:"",
-            receiverList:"",customer:"",
+            receiverList:"",customer:"",serviceDate:"",
             selectType:[],bagPicture:"", photoArr:[],indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
             typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:"",receipt_id: 0}
     }
@@ -20,6 +20,9 @@ export default createStore(function(state,action){
     }
     if(action.type ==='CUSTOMER_SIGN'){
         return{...state, customerSign: action.customerSign };
+    }
+    if(action.type ==='SERVICE_DATE'){
+        return{...state, serviceDate: action.serviceDate };
     }
     if(action.type ==='DETAIL_PHOTO'){
         return{...state, detailPhoto: action.detailPhoto };

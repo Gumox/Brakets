@@ -110,8 +110,10 @@ const useInput=(inputDate)=> {
 }
 
 function ShopStepFour({navigation}) {
+    const service_date =store.getState().serviceDate;
+    console.log(service_date)
     const dateInput1 = useInput(new Date())
-    const dateInput2 = useInput(new Date().addDays(14))
+    const dateInput2 = useInput(new Date().addDays(service_date))
       
 
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
@@ -241,24 +243,12 @@ function ShopStepFour({navigation}) {
                         onChange={dateInput1.onChange}
                         />
                     )}
-                <PrView><Label> 고객 약속일 </Label><LabelPlus>기본 +14일</LabelPlus></PrView>
-                <TouchableView onPress={dateInput2.showDatepicker}>
+                <PrView><Label> 고객 약속일 </Label><LabelPlus>+{service_date}일</LabelPlus></PrView>
+                <TouchableView >
                     <PrView>
                     <Label>{dateInput2.date.getFullYear()}년  {dateInput2.date.getMonth()+1}월  {dateInput2.date.getDate()}일</Label>
-                    <ImgIcon source={require('../../Icons/calendar.png')}/>
                     </PrView>
                 </TouchableView>
-                    {dateInput2.show && (
-                        <DateTimePicker
-                        testID="dateTimePicker2"
-                        value={dateInput2.date}
-                        mode={dateInput2.mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={dateInput2.onChange}
-                        />
-                    )}
-  
                 
 
                 </InfoView>

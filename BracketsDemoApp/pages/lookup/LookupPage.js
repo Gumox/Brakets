@@ -103,6 +103,7 @@ const useInput=(inputDate)=> {
       setShow(Platform.OS === 'ios');
       setDate(currentDate);
       console.log(currentDate)
+      console.log("getTime    "+currentDate.getTime());
   }
   const  formatDate = ()=> {
     var month = '' + (date.getMonth() + 1),

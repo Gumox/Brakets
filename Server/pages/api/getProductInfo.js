@@ -5,7 +5,7 @@ import excuteQuery from "./db";
 
 async function getProductInfo(code) {
   return excuteQuery({
-    query: "SELECT * FROM product WHERE qrcode=? OR barcode=?",
+    query: "SELECT * FROM product LEFT JOIN season_type ON product.season_id = season_type.season_id WHERE qrcode=? OR barcode=?",
     values: [code, code],
   });
 }

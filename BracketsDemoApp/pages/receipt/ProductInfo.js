@@ -94,7 +94,7 @@ function ProductInfo({navigation, route}) {
 
             setSerialInput(String(response.data.body[0].product_id)),
             setProuctName(response.data.body[0].name),
-            setSeason(response.data.body[0].season),
+            setSeason(response.data.body[0].season_name),
             setColorValue(response.data.body[0].color),
             setSize(response.data.body[0].size),
             setMeasure(response.data.body[0].degree),
@@ -134,7 +134,8 @@ function ProductInfo({navigation, route}) {
 
         formdata.append("store", 2);// 임시
         formdata.append("brand", 2);// 임시
-        formdata.append("staff", store.getState().receptionDivision.id);
+        formdata.append("staff", 23);// 임시
+        formdata.append("category", store.getState().receptionDivision.id);
         formdata.append("customer", store.getState().customer.cId);//임시
         
         formdata.append("pid", serialInput);
