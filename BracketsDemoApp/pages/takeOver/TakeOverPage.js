@@ -134,6 +134,8 @@ function TakeOverPage( { route,navigation } ) {
     const [contentAnalysis,setContentAnalysis] = useState();//내용분석
     const [result,setResult] = useState();                  //판정결과
 
+    const [receiptType,setReceiptType] = useState();        //제품구분
+    const [storeMessage,setStoreMessage] =useState();       // 매장 접수 내용
     const [repairShop,setRepairShop] = useState();          //수선처 
     const [repairShopDate,setRepairShopDate] = useState();  //수선처 접수일
     const [repairShopSendDate,setRepairShopSendDate] = useState();//수선처 발송일
@@ -144,10 +146,10 @@ function TakeOverPage( { route,navigation } ) {
     const [mainCenterSendDescription,setMainCenterSendDescription] = useState();//본사설명
 
     
-    const [repairPrice,setRepairPrice] = useState("30000");        //수선비
+    const [repairPrice,setRepairPrice] = useState();        //수선비
     const [isSelected , setSelection] = useState(false);    //유상수선유무
 
-
+    const [requstImage,setRequstImage] = useState();
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(`http://34.64.182.76/api/receipt/${receiptId}`);
         const readData = data.data;
@@ -177,9 +179,23 @@ function TakeOverPage( { route,navigation } ) {
         setProductSize(readData["product_size"])                 //제품 사이즈
         setProductCode(readData["product_code"])                 //제품 코드
         setNumbering(readData["product_degree"])                 //차수
-        setProductExchange(readData[""])                         //제품 교환
+        setProductExchange(+readData["image"])                         //제품 교환
         setProductPrice(readData["product_tag_price"])           //제품가격
-        
+
+        if(readData["receipt_type"] == 1){
+            setReceiptType("수선")
+        }
+        else if(readData["receipt_type"] == 2){
+            setReceiptType("교환")
+        }
+        else if(readData["receipt_type"] == 3){
+            setReceiptType("환불")
+        }
+        else if(readData["receipt_type"] == 4){
+            setReceiptType("심의")
+        }
+        setRequstImage(readData[""])
+        setStoreMessage(readData["store_message"])               //매장 접수 내용
         setCheckMistake(readData["fault_id"])                    //과실 구분
         setContentAnalysis(readData["analysis_id"])              //내용분석
         setResult(readData["result_id"])                         //판정결과
@@ -233,6 +249,8 @@ function TakeOverPage( { route,navigation } ) {
                 </View>
             );
         }
+        
+        console.log(data.imageList)
         
         
     }, [])
@@ -345,16 +363,18 @@ function TakeOverPage( { route,navigation } ) {
               </InfoView>
               <InfoView>
                     <Text>제품 구분</Text>
-                        <InputText>{}</InputText>
-                        
-                    <Text>제품 사진 (수선전)</Text>
+                    <InputText>{receiptType}</InputText>
+                    <Text>제품 전체 사진</Text>
+                    {/*<View><Image style={{width:90, height:100 ,marginLeft:2}} source={{uri: }}/></View>*/}
+
+                    <Text>제품 세부 사진 (수선전)</Text>
                     <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
                     </ScrollView>
-                    <Text>제품 사진 (수선 후)</Text>
+                    <Text>제품 세부 사진 (수선 후)</Text>
                     <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
                     </ScrollView>
                     <Text>매장 접수 내용</Text>
-                        <InputText>{}</InputText>
+                        <InputText>{storeMessage}</InputText>
               </InfoView>
               <InfoView>
                 <Text>과실 구분</Text>
@@ -378,6 +398,7 @@ function TakeOverPage( { route,navigation } ) {
                 <InputText>{repairShopSendDescription}</InputText>
 
               </InfoView>
+              
 
               <InfoView>
                 <Text>본사 접수일</Text>

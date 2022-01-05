@@ -1,9 +1,10 @@
 import excuteQuery from './db';
 
-
 async function getProductCategory(brand) {
         return excuteQuery({
-            query: "SELECT pcategory_id, category_name FROM product_category WHERE brand_id=? ORDER BY category_name",
+            query: `SELECT pcategory_id, category_name,brand.service_date FROM product_category 
+                    LEFT JOIN brand ON brand.brand_id = product_category.brand_id
+                    WHERE product_category.brand_id=? ORDER BY category_name`,
             values: [brand]
         });
 
