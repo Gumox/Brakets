@@ -149,7 +149,7 @@ function TakeOverPage( { route,navigation } ) {
 
 
     const getTargetData = useCallback(async (receiptId) => {
-        const { data } = await axios.get(`http://localhost:3000/api/receipt/${receiptId}`);
+        const { data } = await axios.get(`http://34.64.182.76/api/receipt/${receiptId}`);
         const readData = data.data;
         //console.log(readData)
         const keys= Object.keys(readData)
@@ -159,13 +159,19 @@ function TakeOverPage( { route,navigation } ) {
         });
         
         setCardCode(readData["receipt_code"])                    //서비스카드번호
-        setCheckReceipt(readData["receipt_category"])            //접수구분
+        if( readData["receipt_category"] == 1){                  //접수구분
+            setCheckReceipt("고객용") 
+        }else if( readData["receipt_category"] == 2){
+            setCheckReceipt("선처리") 
+        }else if( readData["receipt_category"] == 3){
+            setCheckReceipt("메장용") 
+        }           
         setCustomerName(readData["customer_name"])               //고객이름
         setCustomerPhone(readData["customer_phone"])             //고객연락처
         setReceiptDate(formatDate(readData["receipt_date"]))     //매장접수일
         
         setAppointmentDate(formatDate(readData["due_date"]))     //고객약속일
-        setSeason(readData["product_season_id"])               //시즌
+        setSeason(readData["product_season_name"])               //시즌
         setProductStyle(readData["product_style_code"])          //제품 스타일
         setProductColor(readData["product_color"])               //제품 색상
         setProductSize(readData["product_size"])                 //제품 사이즈
