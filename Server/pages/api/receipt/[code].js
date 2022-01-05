@@ -29,6 +29,7 @@ async function getReceipt(code) {
                   receipt.fee AS fee,
                   receipt.cashreceipt_num AS cashreceipt_num,
                   product.season_id AS product_season_id,
+                  season_type.season_name AS product_season_name,
                   product.style_id AS product_style_id,
                   style_type.style_code AS product_style_code,
                   product.color AS product_color,
@@ -132,6 +133,7 @@ async function getReceipt(code) {
               LEFT JOIN repair_detail AS repair2 ON receipt.repair2_detail_id = repair2.repair_detail_id
               LEFT JOIN repair_detail AS repair3 ON receipt.repair3_detail_id = repair3.repair_detail_id
               LEFT JOIN mfr_detail AS mfr ON receipt.mfr_detail_id = mfr.mfr_detail_id
+              LEFT JOIN season_type ON product.season_id = season_type.season_id
               WHERE receipt.receipt_code = ?`,
     values: [code],
   });
