@@ -159,7 +159,7 @@ function LookupPage( { navigation } ) {
     console.log("press")
     console.log(name)
     console.log(std)
-    const { data } = await axios.get("http://34.64.182.76/api/receipt", {
+    const { data } = await axios.get("http://34.64.182.76/api/lookup", {
       params: { 
         customerName:name,
         lastphone:phone,

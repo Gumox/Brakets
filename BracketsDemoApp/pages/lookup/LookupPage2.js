@@ -3,7 +3,7 @@ import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
-import { ScrollView ,View} from 'react-native';
+import { ScrollView ,TouchableHighlight,View,Dimensions} from 'react-native';
 import Bottom from '../../components/Bottom';
 import Contents from '../../components/Contents';
 import ContainView from '../../components/ContainView';
@@ -16,6 +16,25 @@ const Alternative = styled.Text`
 `;
 
 const Label = styled.Text`
+    flex:1
+    font-size: 20px;
+    margin-Top: 12px;
+    margin-bottom: 12px;
+    margin-left:12px;
+    font-weight :bold;
+    min-width:15px;
+    max-height:30px;
+`;
+
+const PhoneLabel = styled.Text`
+    font-size: 20px;
+    margin-Top: 12px;
+    margin-bottom: 12px;
+    margin-left:12px;
+    font-weight :bold;
+    width:150px
+`;
+const DivLabel = styled.Text`
     font-size: 20px;
     margin-Top: 12px;
     margin-bottom: 12px;
@@ -49,46 +68,83 @@ const ScrollItme = styled.View`
     margin-right:20px;
     width:150px
 `;
-
+/*const [checkReceipt,setCheckReceipt] = useState();
+        console.log(obj)
+        if( obj["receipt_category"] == 1){                  //접수구분
+            setCheckReceipt("고객") 
+        }else if( obj["receipt_category"] == 2){
+            setCheckReceipt("선처리") 
+        }else if( obj["receipt_category"] == 3){
+            setCheckReceipt("메장") 
+        }  */
 // 구조 분해 할당, Destructuring Assignment
-function LookupPage2({ navigation }) {
+function LookupPage2({ route,navigation }) {
 
-    const [name, setName] = useState("가가가");
-    const [addr, setAddr] = useState("010-1111-1111");
-
+    const scrollMinSize =(Dimensions.get('window').height)*0.45
+    const data =route.params.data 
+    var inData=[];
+    const  formatDate = (inputDate)=> {
+        var month = '' + (inputDate.getMonth() + 1),
+            day = '' + inputDate.getDate(),
+            year = inputDate.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+        const value = [year, month, day].join('-');
+        return value
+      }
+    for (let index = 0; index < data.length; index++) {
+        const obj = data[index];
+        const keys= Object.keys(obj);
+        const indexKey = index;
+        var raw = (
+            <TouchableHighlight key = {indexKey} underlayColor={"#CCC"} 
+                onPress={() => {
+                    navigation.navigate('LookupInfo',{data:obj})
+                }}>
+                <PrView>
+                    <Label>{index+1}</Label>
+                    <ScrollItme><Label>{formatDate(new Date(obj["receipt_date"]))}</Label></ScrollItme>
+                    <DivLabel>구분</DivLabel>
+                    <ScrollItme><Label>{obj["customer_name"]}</Label></ScrollItme>
+                    <ScrollItme><PhoneLabel>{obj["customer_phone"]}</PhoneLabel></ScrollItme>
+                    <ScrollItme><Label>{obj["receipt_code"]}</Label></ScrollItme>
+                    <DivLabel>상태{obj[""]}</DivLabel>
+                    <DivLabel/>
+                </PrView>
+            </TouchableHighlight>
+        )
+        inData[index] = raw;
+        
+    };
+    console.log(inData.length)
     return (
         
         <Container>
             <CenterText>
                 <Title>조회 결과</Title>
             </CenterText>
-
-            <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5,width:"85%",height:"45%"}}>
-                <ScrollView horizontal ={true} style={{marginBottom:15}}>
+            <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5,width:"85%",height: scrollMinSize, marginBottom:"5%"}}>
+            
+                <ScrollView  horizontal ={true} style={{minHeight: scrollMinSize*1.3}}>
+                    <View style={{flexDirection:"column"}}>
                     <PrView>
                         <Label/>
                         <ScrollItme><Label>접수일</Label></ScrollItme>
-                        <Label>구분</Label>
+                        <DivLabel>구분</DivLabel>
                         <ScrollItme><Label>고객명</Label></ScrollItme>
-                        <ScrollItme><Label>고객 연락처</Label></ScrollItme>
-                        <ScrollItme><Label>서비스 번호</Label></ScrollItme>
-                        <ScrollItme><Label>상태</Label></ScrollItme>
+                        <ScrollItme><PhoneLabel>고객 연락처</PhoneLabel></ScrollItme>
+                        <ScrollItme><Label>서비스 카드</Label></ScrollItme>
+                        <DivLabel>상태</DivLabel>
                     </PrView>
+                    {inData}
+                    <Label/>
+                    </View>
                 </ScrollView>
-                <Label/>
                 
-                
-                
-
             </ScrollView>
-            <Button onPress = {() =>{ 
-        
-                navigation.navigate('LookupPage3')
-
-
-                }}>
-                접수하기
-            </Button>
             <Bottom navigation={navigation} />
         </Container>
     )

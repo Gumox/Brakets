@@ -167,28 +167,52 @@ const lookup = async (req, res) => {
       if(dateColumn === "return_date") dateColumn = "complete_date";
       if (dateType === "all") {
         if (startDate) {
-          query += `WHERE DATE(receipt.${dateColumn}) >= ? `;
+          if(query == ""){
+            query += `WHERE DATE(receipt.${dateColumn}) >= ? `;
+          }else{
+
+            query += ` AND DATE(receipt.${dateColumn}) >= ? `;
+          }
           values = [...values, startDate];
         }
         if (endDate) {
-          query += ` AND DATE(receipt.${dateColumn}) <= ? `;
+          if(query == ""){
+            query += `WHERE DATE(receipt.${dateColumn}) <= ? `;
+          }else{
+            query += ` AND DATE(receipt.${dateColumn}) <= ? `;
+            
+          }
           values = [...values, endDate];
+          
         }
       } 
       
 
 
       if (customerName) {
-        query += " AND customer.name LIKE ? ";
-        values = [...values, `%${customerName}%`];
+        if(query == ""){
+          query += `WHERE customer.name LIKE ? `;
+        }else{
+          query += " AND customer.name LIKE ? ";
+        }
+          values = [...values, `%${customerName}%`];
+         
+        
       }
 
       if (customerContact) {
-        query += " AND customer.phone LIKE ? ";
+        if(query == ""){
+          query += `WHERE customer.phone LIKE ? `;
+        }else{
+          query += " AND customer.phone LIKE ? ";
+        }
         values = [...values, `%${customerContact}`];
+        
+        
       }
 
-
+      console.log(query)
+      
       const lookUp = await getLookup(query, values);
       if (lookUp.error) throw new Error(lookUp.error);
       res.status(200).json({ data: lookUp });

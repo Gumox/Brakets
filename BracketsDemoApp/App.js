@@ -29,6 +29,11 @@ import CheckBarcode from './pages/takeOver/CheckBarcode';
 import LookupPage from './pages/lookup/LookupPage'
 import LookupPage2 from './pages/lookup/LookupPage2';
 import LookupPage3 from './pages/lookup/LookupPage3';
+import LookupInfo from './pages/lookup/LookupInfo';
+import LookupInfo2 from './pages/lookup/LookupInfo2';
+import LookupInfo3 from './pages/lookup/LookupInfo3';
+import LookupInfo4 from './pages/lookup/LookupInfo4';
+
 import Setting from './pages/setting/Setting';
 
 import InputAlternativeNumber from './pages/receipt/InputAlternativeNumber';
@@ -77,6 +82,10 @@ function App() {
         <Stack.Screen name="LookupPage" component={LookupPage} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="LookupPage2" component={LookupPage2} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="LookupPage3" component={LookupPage3} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="LookupInfo" component={LookupInfo} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="LookupInfo2" component={LookupInfo2} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="LookupInfo3" component={LookupInfo3} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
+        <Stack.Screen name="LookupInfo4" component={LookupInfo4} options={{ title: '조회' ,headerTitleAlign: 'center'}} />
 
         <Stack.Screen name="Setting" component={Setting} options={{  title: '설정' ,headerTitleAlign: 'center'}}/>
         

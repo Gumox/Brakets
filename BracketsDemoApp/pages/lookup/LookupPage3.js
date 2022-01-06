@@ -40,54 +40,22 @@ const Title = styled.Text`
 `;
 
 // 구조 분해 할당, Destructuring Assignment
-function LookupPage3({ navigation }) {
-
-    const [name, setName] = React.useState("가가가");
-    const [addr, setAddr] = React.useState("010-1111-1111");
+function LookupPage3({ route,navigation }) {
+    const data =route.params.data
+    console.log(data)
     
     return (
         <ContainView>
             <CenterText>
-                <Title>고객 정보 변경</Title>
+
             </CenterText>
-
-            <Contents>
-                <Label>이름</Label>
-                <Input
-                    editable={true}
-                    selectTextOnFocus={true}
-                    value = {name}
-                    onChange={(event) => {
-                        const {eventCount, target, text} = event.nativeEvent;
-                        setName(text);
-                    }
-                        }
-                />
-
-                <Label>연락처</Label>
-                <Input
-                    editable={true}
-                    selectTextOnFocus={true}
-                    value = {addr}
-                    onChange={(event) => {
-                        const {eventCount, target, text} = event.nativeEvent;
-                        setAddr(text);
-                    }
-                }
-                />
-            </Contents>
+            
             <InputView>
-            <Button onPress={() =>
-            (
-                Alert.alert(
-                    "고객 정보 변경",
-                    "변경된 고객 정보가 저장되었습니다.",
-                    [
-                        { text: "확인" },
-                    ]),
-                navigation.goBack()
-            )
-            }>
+            <Button onPress={() =>{
+                
+                navigation.popToTop()
+                
+            }}>
                 변경 사항 저장
             </Button >
             </InputView>
