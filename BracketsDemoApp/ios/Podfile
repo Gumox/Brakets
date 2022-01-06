@@ -13,15 +13,8 @@ target 'DempApp' do
   )
 
   permissions_path = '../node_modules/react-native-permissions/ios'
+
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
-
-  pod 'P41Sketch', :path => '../node_modules/react-native-sketch-draw'
-
-  pod 'RNImageTools', :path => '../node_modules/react-native-image-tools-wm'
-
-  pod 'react-native-view-shot', :path => '../node_modules/react-native-view-shot'
-
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'DempAppTests' do
     inherit! :complete

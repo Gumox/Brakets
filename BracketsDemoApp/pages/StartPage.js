@@ -5,16 +5,9 @@ import SelectButton from '../components/SelectButton';
 
 import _ from 'lodash';
 
-import { Image,Text,Button, View } from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DateObject from "react-date-object";
-import { size } from 'lodash';
 import styled from 'styled-components/native';
 import store from '../store/store';
-import { Provider } from 'react-redux'
-import { getList } from '../Functions/GetSendList';
-import Bottom from '../components/Bottom';
-import { CheckBox } from 'react-native-elements';
+
 const BottomView = styled.View`
     flex: 0.4;
     flex-direction: row;
@@ -51,12 +44,14 @@ const TouchableView = styled.TouchableOpacity`
     
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
+
 const ImgIcon =styled.Image`
     width: 45px;
     height: 45px;
 `;
+
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -80,8 +75,6 @@ function StartPage( { navigation } ) {
 
    
     //console.log("여기는 start 입니다");
-    
-
     
     return(
         <Container>
