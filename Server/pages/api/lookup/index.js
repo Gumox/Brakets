@@ -26,6 +26,8 @@ async function getLookup(query, values) {
                     product.style_id AS product_style_id,
                     style_type.style_code AS product_style_code,
                     product.degree AS product_degree,
+                    receipt.product_code AS product_code,
+                    product.tag_price AS product_tag_price,
                     product.color AS product_color,
                     product.size AS product_size, 
                     receipt.cashreceipt_num AS cashreceipt_num,
