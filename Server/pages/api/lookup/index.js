@@ -120,7 +120,8 @@ async function getLookup(query, values) {
                     IF(mfr.substitute=0, "N", "Y") AS mfr_substitute,
                     mfr.message AS mfr_message,
                     mfr.redo AS mfr_redo,
-                    DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date  
+                    DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date ,
+                    receipt.image  
             FROM receipt 
             LEFT JOIN store ON receipt.store_id = store.store_id 
             LEFT JOIN product ON receipt.product_id = product.product_id 
