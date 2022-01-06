@@ -151,51 +151,17 @@ const lookup = async (req, res) => {
     console.log(req.query);
     try {
       const {
-        brandId, // 브랜드 id
-        isStoreType, // 매장별
-        storeName,  // 매장명
-        isStyleType,  // 스타일별
-        season, // 시즌
-        style,  // 스타일
         dateOption, // 날짜기준
         dateType, // 기간전체, 하루만
         startDate, 
         endDate,
-        year, // 월별 연도
-        month, // 월별 월
-        analysisId, // 내용분석 
-        resultId, // 판정결과
         customerName, // 고객이름
         customerContact,  // 연락처(뒷4자리)
-        companyName,  // 업체명
-        hasRegistered,  // 접수여부
-        hasSent,  // 발송여부
-        hasCharged, // 유상수선
-        hasCashReceipt, // 현금영수증번호
       } = req.query;
       let query = "";
       let values = [];
 
-      if(brandId) {
-        query += " AND receipt.brand_id = ? ";
-        values = [...values, brandId];
-      }
-
-      if (isStoreType && isStoreType !== "false" && storeName) {
-        query += " AND receipt.store_id = ? ";
-        values = [...values, storeName];
-      }
-
-      if (isStyleType && isStyleType !== "false") {
-        if (season) {
-          query += " AND product.season_id = ? ";
-          values = [...values, season];
-        }
-        if (style && style.length > 0) {
-          query += " AND product.style_id = ? ";
-          values = [...values, style]
-        }
-      }
+      
 
       let dateColumn = dateOption;
       if(dateColumn === "return_date") dateColumn = "complete_date";
@@ -208,57 +174,9 @@ const lookup = async (req, res) => {
           query += ` AND DATE(receipt.${dateColumn}) <= ? `;
           values = [...values, endDate];
         }
-      } else if(dateType === "month") {
-        if(year) {
-          query += ` AND YEAR(receipt.${dateColumn}) = ? `;
-          values = [...values, year];
-        }
-        if(month) {
-          query += ` AND MONTH(receipt.${dateColumn}) = ? `;
-          values = [...values, month];
-        }
-      } else {
-        if (startDate) {
-          query += ` AND DATE(receipt.${dateColumn}) = ? `;
-          values = [...values, startDate];
-        }
-      }
+      } 
+      
 
-      if(hasRegistered) {
-        if(hasRegistered === "true") {
-          query += ` AND receipt.register_date IS NOT NULL `;
-        } else {
-          query += ` AND receipt.register_date IS NULL `;
-        }
-      }
-
-      if(hasSent) {
-        if(hasSent === "true") {
-          query += ` AND receipt.send_date IS NOT NULL `;
-        } else {
-          query += ` AND receipt.send_date IS NULL `;
-        }
-      }
-
-      if (hasCharged) {
-        if(hasCharged === "true") {
-          query += " AND receipt.paid = 1 ";
-
-          if(hasCashReceipt && hasCashReceipt === "true") {
-            query += " AND receipt.cashreceipt_num IS NOT NULL "
-          }
-        }
-      }
-
-      if(analysisId) {
-        query += " AND receipt.analysis_id = ? ";
-        values = [...values, analysisId];
-      }
-
-      if(resultId) {
-        query += " AND receipt.result_id = ? ";
-        values = [...values, resultId];
-      }
 
       if (customerName) {
         query += " AND customer.name LIKE ? ";
@@ -270,10 +188,6 @@ const lookup = async (req, res) => {
         values = [...values, `%${customerContact}`];
       }
 
-      if (companyName) {
-        query += " AND store.name LIKE ? ";
-        values = [...values, `%${companyName}%`];
-      }
 
       const lookUp = await getLookup(query, values);
       if (lookUp.error) throw new Error(lookUp.error);
