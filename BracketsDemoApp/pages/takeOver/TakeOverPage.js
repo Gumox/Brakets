@@ -162,11 +162,11 @@ function TakeOverPage( { route,navigation } ) {
         
         setCardCode(readData["receipt_code"])                    //서비스카드번호
         if( readData["receipt_category"] == 1){                  //접수구분
-            setCheckReceipt("고객용") 
+            setCheckReceipt("고객") 
         }else if( readData["receipt_category"] == 2){
             setCheckReceipt("선처리") 
         }else if( readData["receipt_category"] == 3){
-            setCheckReceipt("메장용") 
+            setCheckReceipt("매장") 
         }           
         setCustomerName(readData["customer_name"])               //고객이름
         setCustomerPhone(readData["customer_phone"])             //고객연락처

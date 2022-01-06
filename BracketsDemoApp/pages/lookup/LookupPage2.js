@@ -99,6 +99,20 @@ function LookupPage2({ route,navigation }) {
         const obj = data[index];
         const keys= Object.keys(obj);
         const indexKey = index;
+        var prdDiv = ""
+        var checkReceipt =""
+        if( obj["receipt_category"] == 1){                  //접수구분
+            checkReceipt ="고객" ;
+        }else if( obj["receipt_category"] == 2){
+            checkReceipt ="선처리"; 
+        }else if( obj["receipt_category"] == 3){
+            checkReceipt = "매장"; 
+        }      
+        if(obj["step"] == 0){
+            prdDiv="접수중";
+        }else if(obj["step"] == 1){
+            prdDiv="접수 완료";
+        }
         var raw = (
             <TouchableHighlight key = {indexKey} underlayColor={"#CCC"} 
                 onPress={() => {
@@ -107,11 +121,11 @@ function LookupPage2({ route,navigation }) {
                 <PrView>
                     <Label>{index+1}</Label>
                     <ScrollItme><Label>{formatDate(new Date(obj["receipt_date"]))}</Label></ScrollItme>
-                    <DivLabel>구분</DivLabel>
+                    <DivLabel>{checkReceipt}</DivLabel>
                     <ScrollItme><Label>{obj["customer_name"]}</Label></ScrollItme>
                     <ScrollItme><PhoneLabel>{obj["customer_phone"]}</PhoneLabel></ScrollItme>
                     <ScrollItme><Label>{obj["receipt_code"]}</Label></ScrollItme>
-                    <DivLabel>상태{obj[""]}</DivLabel>
+                    <DivLabel>{prdDiv}</DivLabel>
                     <DivLabel/>
                 </PrView>
             </TouchableHighlight>
