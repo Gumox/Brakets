@@ -9,6 +9,7 @@ import ContainView from '../../components/ContainView';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../../store/store';
 import axios from 'axios';
+import ip from '../../serverIp/Ip';
 const Title = styled.Text`
   font-size : 24px;
   font-weight : bold;
@@ -160,7 +161,7 @@ function LookupPage( { navigation } ) {
     console.log("press")
     console.log(name)
     console.log(std)
-    const { data } = await axios.get("http://34.64.182.76/api/lookup", {
+    const { data } = await axios.get(ip+"/api/lookup", {
       params: { 
         customerName:name,
         lastphone:phone,
