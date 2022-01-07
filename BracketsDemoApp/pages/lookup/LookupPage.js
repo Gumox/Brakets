@@ -44,7 +44,8 @@ const PrView = styled.View`
 const PxView = styled.View`
     flex-direction: row;
     align-items: center;
-    width: 95%
+    justify-content: center;
+    width: 300px;
 `;
 const ImgIcon =styled.Image`
     width: 20px;
@@ -53,7 +54,7 @@ const ImgIcon =styled.Image`
 `;
 
 const TouchableView = styled.TouchableOpacity`
-    width: 44%;
+    width: 48%;
     border-radius:10px;
     font-color:#ffffff;
     border:2px solid #78909c;
@@ -134,7 +135,7 @@ const useInput=(inputDate)=> {
 function LookupPage( { navigation } ) {
   const [name,setName] = useState(null)
   const [pNumber,setPnumber] = useState(null);
-
+  const cal ='../../Icons/calendar.png';
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
   const customers =[];
@@ -186,7 +187,7 @@ function LookupPage( { navigation } ) {
           <TouchableView onPress={startDate.showDatepicker}>
               <PrView>
               <View style={{flex :1}}><Text style={styles.Lavel}>{startDate.reDate}</Text></View>
-              <View style={{flex :0.3}}><ImgIcon source={require('../../Icons/calendar.png')}/></View>
+              <View style={{flex :0.3}}><ImgIcon source={require(cal)}/></View>
               </PrView>
           </TouchableView>
           {startDate.show && (

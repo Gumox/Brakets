@@ -4,9 +4,9 @@ import Contents from '../../components/Contents';
 import SelectButton from '../../components/SelectButton';
 import Button from '../../components/Button';
 import Bottom from '../../components/Bottom';
-import _, { reduce, sortedLastIndex } from 'lodash';
+import _, { reduce, set, sortedLastIndex } from 'lodash';
 import axios from "axios";
-import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert} from "react-native";
+import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert, Modal,Pressable} from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
@@ -14,6 +14,8 @@ import styled from 'styled-components/native';
 import store from '../../store/store';
 import { Provider } from 'react-redux'
 import { CheckBox } from 'react-native-elements';
+import ImageZoom from 'react-native-image-pan-zoom';
+import ip from '../../serverIp/Ip';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -97,18 +99,32 @@ const styles = StyleSheet.create({
         fontSize:(Dimensions.get('window').width)*0.04,
         margin:10,
     },
+    outView :{
+        backgroundColor:"#000000",
+        flex:1,
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    centerView:{
+
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    inView:{
+        justifyContent:"center",
+        alignItems:"center"
+    },
       
   })
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
+
 const  formatDate = (inputDate)=> {
     const sp =  inputDate;
     const date = sp.split("T")
     
     return date[0]
 }
- 
+
+
 function TakeOverPage( { route,navigation } ) {
     const state = {size:1};
     
@@ -135,6 +151,9 @@ function TakeOverPage( { route,navigation } ) {
     const [result,setResult] = useState();                  //판정결과
 
     const [receiptType,setReceiptType] = useState();        //제품구분
+    const [image,setImage] =useState();                     //제품 전체 사진
+    const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
+    const [afterImages,setAfterImages] =useState([]);        //제품 수선 후 세부 사진      
     const [storeMessage,setStoreMessage] =useState();       // 매장 접수 내용
     const [repairShop,setRepairShop] = useState();          //수선처 
     const [repairShopDate,setRepairShopDate] = useState();  //수선처 접수일
@@ -149,16 +168,23 @@ function TakeOverPage( { route,navigation } ) {
     const [repairPrice,setRepairPrice] = useState();        //수선비
     const [isSelected , setSelection] = useState(false);    //유상수선유무
 
-    const [requstImage,setRequstImage] = useState();
+   
+    
+    const [requestImageModalVisible,setRequestImageModalVisible] = useState(false)
+    
+    const winW = Dimensions.get('window').width;
+    const winH = Dimensions.get('window').height
+    
     const getTargetData = useCallback(async (receiptId) => {
-        const { data } = await axios.get(`http://34.64.182.76/api/receipt/${receiptId}`);
+        const { data } = await axios.get(ip+`/api/receipt/${receiptId}`);
+        
         const readData = data.data;
         //console.log(readData)
         const keys= Object.keys(readData)
         
-        keys.forEach(element => {
+        /*keys.forEach(element => {
             console.log( element + " : "+readData[element])
-        });
+        });*/
         
         setCardCode(readData["receipt_code"])                    //서비스카드번호
         if( readData["receipt_category"] == 1){                  //접수구분
@@ -194,7 +220,29 @@ function TakeOverPage( { route,navigation } ) {
         else if(readData["receipt_type"] == 4){
             setReceiptType("심의")
         }
-        setRequstImage(readData[""])
+        
+        setImage(ip + readData["image"])                         //제품 전체 사진 
+
+
+        const beforeImgList =[]                                  //제품 수선 전 사진
+        const afterImgList =[]                                   //제품 수선 후 사진
+        for (let i = 0; i < data.imageList.length; i++) {
+            const element = data.imageList[i];
+            
+            beforeImgList.push(ip+element["before_image"])
+            if(element["after_image"] === null){
+                afterImgList.push(element["after_image"])
+            }
+            else{
+                afterImgList.push(ip+element["after_image"])
+            }
+        }
+        
+        setBeforeImages(beforeImgList)
+        setAfterImages(afterImgList)
+        console.log(beforeImages);
+        console.log(afterImages);
+        
         setStoreMessage(readData["store_message"])               //매장 접수 내용
         setCheckMistake(readData["fault_id"])                    //과실 구분
         setContentAnalysis(readData["analysis_id"])              //내용분석
@@ -250,8 +298,6 @@ function TakeOverPage( { route,navigation } ) {
             );
         }
         
-        console.log(data.imageList)
-        
         
     }, [])
 
@@ -296,9 +342,38 @@ function TakeOverPage( { route,navigation } ) {
             formatDate
         }
     }
-        const [selectDay,setSelectDay] =useState();
-        const tDate = useInput(new Date()); 
-    React.useEffect(()=>{
+    const [selectDay,setSelectDay] =useState();
+    const tDate = useInput(new Date()); 
+    
+    var beforeImageViews =[];
+    var afterImageViews =[];
+
+    for (let i = 0; i < beforeImages.length; i++) {
+        const element = beforeImages[i];
+        const key = i
+        const before =(
+            <Pressable key ={key}>
+                <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
+            </Pressable>
+        )
+        beforeImageViews[key] =(before)
+    }
+    
+    for (let i = 0; i < afterImages.length; i++) {
+        const element = afterImages[i];
+        const key = i
+        if(element !== null){
+            const before =(
+                <Pressable key ={key}>
+                    <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
+                </Pressable>
+            )
+            beforeImageViews[key] =(before)
+        }else{
+            console.log(" in null \n")
+        }
+    }
+    useEffect(()=>{
         console.log(route.params.code)
         getTargetData(route.params.code);
         
@@ -363,16 +438,52 @@ function TakeOverPage( { route,navigation } ) {
               </InfoView>
               <InfoView>
                     <Text>제품 구분</Text>
-                    <InputText>{receiptType}</InputText>
+                    <Text style={{fontSize:20,padding:15}}>{receiptType}</Text>
                     <Text>제품 전체 사진</Text>
-                    {/*<View><Image style={{width:90, height:100 ,marginLeft:2}} source={{uri: }}/></View>*/}
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={requestImageModalVisible}
+                        onRequestClose={() => {
+                        setRequestImageModalVisible(!requestImageModalVisible);
+                        }}
+                    >
+                        <View style={styles.outView} >
+                        <View style={styles.centerView} >    
+                        <View style={styles.inView}>
+                            
+                            <ImageZoom cropWidth={winW}
+                                    cropHeight={winH}
+                                    imageWidth={300}
+                                    imageHeight={400}>
+                                    <Image style={{width:300, height:400}}
+                                    source={{uri:image}}/>
+                            </ImageZoom>
+                            
+                        </View>
+                        </View>
+                        </View>
+                    </Modal>
+                        <View style ={{justifyContent:"center", width:"100%"}}>
+                            <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
+                            setRequestImageModalVisible(!requestImageModalVisible);}}>
+                            <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: image}}/>
+                            </Pressable>
+                        </View>
 
                     <Text>제품 세부 사진 (수선전)</Text>
-                    <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
-                    </ScrollView>
+                    <View style={{alignItems:"center"}}>
+                        <ScrollView  horizontal ={true}>
+                            {beforeImageViews}
+                        </ScrollView>
+                    </View>
                     <Text>제품 세부 사진 (수선 후)</Text>
-                    <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
-                    </ScrollView>
+                    
+                    <View style={{alignItems:"center"}}>
+                        <ScrollView style={{height : 150}} horizontal ={true}>
+                            {afterImageViews}    
+                        </ScrollView>
+                    </View>
                     <Text>매장 접수 내용</Text>
                         <InputText>{storeMessage}</InputText>
               </InfoView>

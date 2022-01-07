@@ -88,7 +88,10 @@ const styles = StyleSheet.create({
 })
  
 function LookupInfo2( { route,navigation } ) {
+    const data =route.params.data;
     
+    const keys= Object.keys(data)
+
     const [season,setSeason] = useState();                  //시즌
     const [productStyle,setProductStyle] = useState();      //제품 스타일
     const [productColor,setProductColor] = useState();      //제품 색상
@@ -96,7 +99,26 @@ function LookupInfo2( { route,navigation } ) {
     const [productCode,setProductCode] = useState();        //제품 코드
     const [numbering,setNumbering] = useState();            //차수
     const [productExchange,setProductExchange] = useState();//제품 교환
-    const [productPrice,setProductPrice] = useState();      //제품가격
+    const [productPrice,setProductPrice] = useState();      //제품가격 
+
+    useEffect(()=>{
+        var price = Number(data["product_tag_price"]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        console.log(typeof price)
+        console.log(price)
+        console.log(typeof price)
+        setSeason(data["product_season_name"])               //시즌
+        setProductStyle(data["product_style_code"])          //제품 스타일
+        setProductColor(data["product_color"])               //제품 색상
+        setProductSize(data["product_size"])                 //제품 사이즈
+        setProductCode(data["product_code"])                 //제품 코드
+        setNumbering(data["product_degree"])                 //차수
+        setProductExchange(+data["image"])                   //제품 교환
+        setProductPrice(price)           //제품가격
+
+
+        
+    },[]);
+    
    
     
     return(
@@ -140,7 +162,7 @@ function LookupInfo2( { route,navigation } ) {
               
      
             </Contents> 
-            <Button onPress={ ()=> navigation.navigate( 'LookupInfo3') }>
+            <Button onPress={ ()=> navigation.navigate( 'LookupInfo3',{data:data}) }>
                 다음
             </Button>
 

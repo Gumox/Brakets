@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 import Bottom from '../../components/Bottom';
 import _, { reduce, sortedLastIndex } from 'lodash';
 import axios from "axios";
-import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert} from "react-native";
+import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert, Modal, Pressable} from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
@@ -14,6 +14,8 @@ import styled from 'styled-components/native';
 import store from '../../store/store';
 import { Provider } from 'react-redux'
 import { CheckBox } from 'react-native-elements';
+import ImageZoom from 'react-native-image-pan-zoom';
+import ip from '../../serverIp/Ip';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -102,11 +104,28 @@ const styles = StyleSheet.create({
         fontSize:(Dimensions.get('window').width)*0.04,
         margin:10,
     },
+    outView :{
+        backgroundColor:"#000000",
+        flex:1,
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    centerView:{
+
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    inView:{
+        justifyContent:"center",
+        alignItems:"center"
+    },
       
 })
  
 function LookupInfo3( { route,navigation } ) {
-
+    const data =route.params.data;
+    
+    const keys= Object.keys(data)
     const [receiptType,setReceiptType] = useState();        //제품구분
     const [storeMessage,setStoreMessage] =useState();       // 매장 접수 내용
     const [repairShop,setRepairShop] = useState();          //수선처 
@@ -122,12 +141,34 @@ function LookupInfo3( { route,navigation } ) {
     const [contentAnalysis,setContentAnalysis] = useState();//내용분석
     const [result,setResult] = useState();                  //판정결과
 
+    const [requestImageModalVisible,setRequestImageModalVisible] = useState(false)
+    var requestImage =ip;
+    requestImage += data["image"];
+    useEffect(()=>{
 
-    const [requstImage,setRequstImage] = useState();
-   
-
+        if(data["receipt_type"] == 1){
+            setReceiptType("수선")
+        }
+        else if(data["receipt_type"] == 2){
+            setReceiptType("교환")
+        }
+        else if(data["receipt_type"] == 3){
+            setReceiptType("환불")
+        }
+        else if(data["receipt_type"] == 4){
+            setReceiptType("심의")
+        }
+        setStoreMessage(data["store_message"])               //매장 접수 내용
+        setCheckMistake(data["fault_id"])                    //과실 구분
+        setContentAnalysis(data["analysis_id"])              //내용분석
+        setResult(data["result_id"])                         //판정결과
+        
+       
+         
+    },[]);
     
-    
+    const winW = Dimensions.get('window').width;
+    const winH = Dimensions.get('window').height
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
@@ -137,9 +178,37 @@ function LookupInfo3( { route,navigation } ) {
 
                     <InputText>{receiptType}</InputText>
                     <TopText>제품 전체 사진</TopText>
-
-                    {/*<View><Image style={{width:90, height:100 ,marginLeft:2}} source={{uri: }}/></View>*/}
-
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={requestImageModalVisible}
+                        onRequestClose={() => {
+                        setRequestImageModalVisible(!requestImageModalVisible);
+                        }}
+                    >
+                        <View style={styles.outView} >
+                        <View style={styles.centerView} >    
+                        <View style={styles.inView}>
+                            
+                            <ImageZoom cropWidth={winW}
+                                    cropHeight={winH}
+                                    imageWidth={300}
+                                    imageHeight={400}>
+                                    <Image style={{width:300, height:400}}
+                                    source={{uri:requestImage}}/>
+                            </ImageZoom>
+                            
+                        </View>
+                        </View>
+                        </View>
+                    </Modal>
+                        <View style ={{justifyContent:"center", width:"100%"}}>
+                            <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
+                            setRequestImageModalVisible(!requestImageModalVisible);}}>
+                            <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: requestImage}}/>
+                            </Pressable>
+                        </View>
+                    
                     <TopText>제품 세부 사진 (수선전)</TopText>
 
                     <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
@@ -164,7 +233,7 @@ function LookupInfo3( { route,navigation } ) {
             </InfoView>
      
         </Contents>
-            <Button onPress={ ()=> navigation.navigate( 'LookupInfo4') }>
+            <Button onPress={ ()=> navigation.navigate( 'LookupInfo4',{data:data}) }>
                 다음
             </Button>
             

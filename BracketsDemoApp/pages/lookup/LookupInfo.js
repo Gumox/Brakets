@@ -78,10 +78,16 @@ const styles = StyleSheet.create({
     },
       
 })
- 
+const  formatDate = (inputDate)=> {
+    const sp =  inputDate;
+    const date = sp.split("T")
+    
+    return date[0]
+}
 function LookupInfo( { route,navigation } ) {
     const data =route.params.data;
     
+    const keys= Object.keys(data)
     const [number,setNumber] =useState(store.getState().number);
     const [text, onChangeText] = useState();
 
@@ -93,9 +99,27 @@ function LookupInfo( { route,navigation } ) {
     const [appointmentDate,setAppointmentDate] = useState();//고객약속일
     
     
+    
+    console.log(keys)
+    useEffect(()=>{
+        setCardCode(data["receipt_code"])                    //서비스카드번호
+        if( data["receipt_category"] == 1){                  //접수구분
+            setCheckReceipt("고객") 
+        }else if( data["receipt_category"] == 2){
+            setCheckReceipt("선처리") 
+        }else if( data["receipt_category"] == 3){
+            setCheckReceipt("매장") 
+        }           
+        setCustomerName(data["customer_name"])               //고객이름
+        setCustomerPhone(data["customer_phone"])             //고객연락처
+        setReceiptDate(formatDate(data["receipt_date"]))     //매장접수일
+        
+        setAppointmentDate(formatDate(data["due_date"]))     //고객약속일
 
+
+    },[]);
     
-    
+        
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
@@ -121,7 +145,7 @@ function LookupInfo( { route,navigation } ) {
                
      
             </Contents>
-            <Button onPress={ ()=> navigation.navigate( 'LookupInfo2') }>
+            <Button onPress={ ()=> navigation.navigate( 'LookupInfo2',{data:data}) }>
                 다음
             </Button>
 

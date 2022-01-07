@@ -105,7 +105,9 @@ const styles = StyleSheet.create({
 })
  
 function LookupInfo4( { route,navigation } ) {
-
+    const data =route.params.data;
+    
+    const keys= Object.keys(data)
     const [repairShop,setRepairShop] = useState();          //수선처 
     const [repairShopDate,setRepairShopDate] = useState();  //수선처 접수일
     const [repairShopSendDate,setRepairShopSendDate] = useState();//수선처 발송일
@@ -123,9 +125,9 @@ function LookupInfo4( { route,navigation } ) {
    
 
     const useInput=(inputDate)=> {
-        const [date, setDate] = React.useState(inputDate);
-        const [mode, setMode] = React.useState('date');
-        const [show, setShow] = React.useState(false);
+        const [date, setDate] = useState(inputDate);
+        const [mode, setMode] = useState('date');
+        const [show, setShow] = useState(false);
         
         const showMode = (currentMode) => {
             setShow(true);
@@ -165,9 +167,24 @@ function LookupInfo4( { route,navigation } ) {
     }
         const [selectDay,setSelectDay] =useState();
         const tDate = useInput(new Date()); 
-    React.useEffect(()=>{
+    useEffect(()=>{
+
+        setRepairShop(data["repair1_store_name"])            //수선처 
+        setRepairShopDate(data["repair1_register_date"])     //수선처 접수일
+        setRepairShopSendDate(data["repair1_complete_date"])     //수선처 발송일
+        setRepairShopSendDescription(data["repair1_message"])//수선처 설명
+
+        setMainCenterDate(data["register_date"])             //본사 접수일
+        setMainCenterSendDate(data["complete_date"])         //본사 발송일
+        setMainCenterSendDescription(data["receipt_message"])//본사설명
 
 
+        setRepairPrice(data["fee"])                          //수선비
+        if(data["paid"] =="1"){                              //유상수선유무
+            setSelection(true)
+        }else(
+            setSelection(false)
+        )
     },[]);
     var repairShops =[]
     
