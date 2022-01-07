@@ -12,44 +12,33 @@ import axios from 'axios';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-// api에 값 날려서,
-// 등록된 정보인지 확인
-
-// 등록된 정보라면
-// 다음 페이지로 이동 -> await로 맞춰주기
-
-// 등록되지 않은 정보라면
-// alert
-// 초기화면
-// useState 사용해서 저장한 값 모두 지우기
-
-//---------------------- 완료 ----------------------
-
-
-// AsyncStorage 사용해서, 자동 로그인 구현
-// 토큰 값 사용 (?)
-
 
 
 function Login({ navigation }): React.ReactElement {
 
   const [userId, setUserID] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [result, setResult] = useState('');
+
   const isFirstRun = useRef(true);
-  useEffect (() => {
+
+  useEffect(() => {
+
     if (isFirstRun.current) {
       isFirstRun.current = false;
       return;
     }
 
     const option = {
+
       url: `http://34.64.182.76/api/auth/store?email=${userEmail}&userId=${userId}`,
       // url: `http://34.64.182.76/api/auth/store?email=$&userId=`,
+      // 잘못된 url 예시
+
       method: 'GET',
       header: {
         'Content-Type': 'application/json'
       },
+
     }
 
     axios(option)
@@ -71,36 +60,34 @@ function Login({ navigation }): React.ReactElement {
         )
       })
 
-    console.log("Effect was run");
+    // console.log("Effect was run");
+    console.log(new Date());
   }, [userId, userEmail]);
 
   function saveId(_userEmail) {
     AsyncStorage.setItem('user_id', _userEmail, () => {
-      // console.log('userId saved: ' + _userEmail)
+      console.log('userId saved: ' + _userEmail)
       navigation.navigate('ReceiptDivision');
     });
   }
 
   const savedResultId = AsyncStorage.getItem('user_id', (err, result) => {
     //user_id에 담긴 아이디 불러오기
-    // console.log("load saved userId " + result);
-    navigation.navigate('ReceiptDivision');
+    if (result !== null) {
+      console.log("load saved userId " + result);
+      navigation.navigate('ReceiptDivision');
+    }
+    console.log("load saved userId " + result);
   });
 
-
-
-
   const signInWithKakao = async (): Promise<void> => {
-    
+
     const token: KakaoOAuthToken = await login();
 
     await getProfile();
 
     console.log("(sign in)user id: " + userId);
     console.log("(sign in)user email: " + userEmail);
-
-    
-
   };
 
   const signOutWithKakao = async (): Promise<void> => {
@@ -136,9 +123,9 @@ function Login({ navigation }): React.ReactElement {
         <Label> 카카오 로그인 </Label>
       </Button>
 
-      <Button onPress={() => getProfile()}>
+      {/* <Button onPress={() => getProfile()}>
         <Label> 프로필 정보 </Label>
-      </Button>
+      </Button> */}
     </Container>
   );
 }
