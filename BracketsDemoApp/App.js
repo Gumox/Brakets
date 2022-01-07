@@ -59,7 +59,7 @@ function App() {
         <Stack.Screen name="StartPage" component={StartPage} />
 
         {/*접수*/}
-        <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{  title: '',headerTitleAlign: 'center' }} />
+        <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{headerShown: false}} />
         <Stack.Screen name="InputAlternativeNumber" component={InputAlternativeNumber} options={{ title: '대체 품번 입력' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ProductInfo" component={ProductInfo} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center'}} />
