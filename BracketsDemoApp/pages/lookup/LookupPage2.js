@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState ,useCallback} from 'react';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
 import { ScrollView ,TouchableHighlight,View,Dimensions} from 'react-native';
+import ip from '../../serverIp/Ip';
 import Bottom from '../../components/Bottom';
 import Contents from '../../components/Contents';
 import ContainView from '../../components/ContainView';
@@ -68,16 +69,6 @@ const ScrollItme = styled.View`
     margin-right:20px;
     width:150px
 `;
-/*const [checkReceipt,setCheckReceipt] = useState();
-        console.log(obj)
-        if( obj["receipt_category"] == 1){                  //접수구분
-            setCheckReceipt("고객") 
-        }else if( obj["receipt_category"] == 2){
-            setCheckReceipt("선처리") 
-        }else if( obj["receipt_category"] == 3){
-            setCheckReceipt("메장") 
-        }  */
-// 구조 분해 할당, Destructuring Assignment
 function LookupPage2({ route,navigation }) {
 
     const scrollMinSize =(Dimensions.get('window').height)*0.45
@@ -94,7 +85,19 @@ function LookupPage2({ route,navigation }) {
             day = '0' + day;
         const value = [year, month, day].join('-');
         return value
-      }
+    }
+    
+    const getImages = useCallback(async (code) => {
+
+        console.log("press")
+        const { data } = await axios.get(ip+"/api/lookup/images", {
+          params: { 
+            code: code
+          },
+        })
+        console.log(data.data)
+      }, []);
+
     for (let index = 0; index < data.length; index++) {
         const obj = data[index];
         const keys= Object.keys(obj);
@@ -116,7 +119,8 @@ function LookupPage2({ route,navigation }) {
         var raw = (
             <TouchableHighlight key = {indexKey} underlayColor={"#CCC"} 
                 onPress={() => {
-                    navigation.navigate('LookupInfo',{data:obj})
+                    getImages(obj["receipt_code"])
+                    //navigation.navigate('LookupInfo',{data:obj})
                 }}>
                 <PrView>
                     <Label>{index+1}</Label>
@@ -133,7 +137,7 @@ function LookupPage2({ route,navigation }) {
         inData[index] = raw;
         
     };
-    console.log(inData.length)
+    
     return (
         
         <Container>
