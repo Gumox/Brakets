@@ -28,7 +28,7 @@ const Input = styled.TextInput`
     width: 100%;
     padding: 8px;
     font-size: 20px;
-    border-radius:10px
+    border-radius:10px;
 `;
 
 // 구조 분해 할당, Destructuring Assignment
@@ -45,8 +45,8 @@ function SearchCustomer( { navigation } ) {
     for (let i = 0; i < body.length; i++) {
         console.log(body[i].name);
         console.log(body[i].phone);
-        customers.push({cName:body[i].name,cPhone:body[i].phone,cId: body[i].customer_id})
-        console.log(customers)
+        customers.push({cName:body[i].name,cPhone:body[i].phone,cId: body[i].customer_id});
+        console.log(customers);
     }
 
 }

@@ -47,7 +47,7 @@ function Bottom  (props){
       </BottomButton>
       <BottomButton onPress = {() => props.navigation.navigate( 'Setting')}>
           <BottomButtonText>
-              MY
+              설정
           </BottomButtonText>
       </BottomButton>
             
