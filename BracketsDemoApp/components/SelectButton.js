@@ -6,17 +6,15 @@ const Container = styled.TouchableOpacity`
     height:120px;
     background: #78909c;    
     border-radius:12px;
-    margin:10px
+    margin:10px;
 `;
 
 const Label = styled.Text`
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;
-    paddingTop : 20px;
-    paddingLeft : 20px;
-
-        
+    padding-Top : 20px;
+    padding-Left : 20px;
 `;
 function SelectButton(props) {
     return (
