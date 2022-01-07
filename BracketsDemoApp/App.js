@@ -5,6 +5,7 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Login from './pages/Login';
 import StartPage from './pages/StartPage';
 
 import ReceiptDivision from './pages/receipt/ReceiptDivision';
@@ -52,6 +53,9 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator >
+
+
+        <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="StartPage" component={StartPage} />
 
         {/*접수*/}
