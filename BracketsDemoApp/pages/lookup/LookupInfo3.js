@@ -50,6 +50,7 @@ const Input = styled.TextInput`
     border-radius:10px
 `;
 const InputText = styled.Text`
+    color:#000000
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -93,6 +94,7 @@ const Btn = styled.TouchableOpacity`
     border-radius:12px;    
 `;
 const TopText = styled.Text`
+    color:#000000
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -124,7 +126,11 @@ const styles = StyleSheet.create({
  
 function LookupInfo3( { route,navigation } ) {
     const data =route.params.data;
+    const images = route.params.images;
+    console.log(images)
     
+    const winW = Dimensions.get('window').width;
+    const winH = Dimensions.get('window').height;
     const keys= Object.keys(data)
     const [receiptType,setReceiptType] = useState();        //제품구분
     const [storeMessage,setStoreMessage] =useState();       // 매장 접수 내용
@@ -144,6 +150,10 @@ function LookupInfo3( { route,navigation } ) {
     const [requestImageModalVisible,setRequestImageModalVisible] = useState(false)
     var requestImage =ip;
     requestImage += data["image"];
+    
+    const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
+    const [afterImages,setAfterImages] =useState([]);        //제품 수선 후 세부 사진   
+
     useEffect(()=>{
 
         if(data["receipt_type"] == 1){
@@ -158,17 +168,71 @@ function LookupInfo3( { route,navigation } ) {
         else if(data["receipt_type"] == 4){
             setReceiptType("심의")
         }
+        
         setStoreMessage(data["store_message"])               //매장 접수 내용
         setCheckMistake(data["fault_id"])                    //과실 구분
         setContentAnalysis(data["analysis_id"])              //내용분석
         setResult(data["result_id"])                         //판정결과
         
-       
+        const beforeImgList =[]                                  //제품 수선 전 사진
+        const afterImgList =[]                                   //제품 수선 후 사진
+        for (let i = 0; i < images.length; i++) {
+            const element = images[i];
+            console.log(i+":"+element)
+            
+            beforeImgList.push(ip+element["before_image"])
+            if(element["after_image"] === null){
+                afterImgList.push(element["after_image"])
+            }
+            else{
+                afterImgList.push(ip+element["after_image"])
+            }
+        }
+        setBeforeImages(beforeImgList)
+        setAfterImages(afterImgList)
          
     },[]);
     
-    const winW = Dimensions.get('window').width;
-    const winH = Dimensions.get('window').height
+    var beforeImageViews =[];
+    var afterImageViews =[];
+    for (let i = 0; i < beforeImages.length; i++) {
+        const element = beforeImages[i];
+        const key = i
+        const before =(
+            <View key ={key}>
+                <Pressable 
+                    onPress={()=>{
+                        console.log("hihihi")
+                    
+                    }}>
+                    <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
+                </Pressable>
+            </View>
+
+        )
+        beforeImageViews[key] =(before)
+    }
+    
+    for (let i = 0; i < afterImages.length; i++) {
+        const element = afterImages[i];
+        const key = i;
+        var visible = false;
+        if(element !== null){
+            const after =(
+                <View key ={key}>
+                    <Pressable onPress={()=>{
+                        
+                        console.log("hihihi")
+                    }}>
+                        <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
+                    </Pressable>
+                </View>
+            )
+            afterImageViews[key] =(after)
+        }else{
+            console.log(" in null \n")
+        }
+    }
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
@@ -209,14 +273,19 @@ function LookupInfo3( { route,navigation } ) {
                             </Pressable>
                         </View>
                     
-                    <TopText>제품 세부 사진 (수선전)</TopText>
-
-                    <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
-                    </ScrollView>
-                    <TopText>제품 세부 사진 (수선 후)</TopText>
-
-                    <ScrollView style={{borderWidth:2,borderColor:"#78909c",borderRadius:5, height : 150}} horizontal ={true}>
-                    </ScrollView>
+                    <Text style={{color:"#000000"}}>제품 세부 사진 (수선전)</Text>
+                    <View style={{alignItems:"center"}}>
+                        <ScrollView style={{height : 150}} horizontal ={true}>
+                            {beforeImageViews}
+                        </ScrollView>
+                    </View>
+                    <Text style={{color:"#000000"}}>제품 세부 사진 (수선 후)</Text>
+                    
+                    <View style={{alignItems:"center"}}>
+                        <ScrollView style={{height : 150}} horizontal ={true}>
+                            {afterImageViews}    
+                        </ScrollView>
+                    </View>
                     <TopText>매장 접수 내용</TopText>
 
                         <InputText>{storeMessage}</InputText>

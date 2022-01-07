@@ -48,6 +48,7 @@ const Input = styled.TextInput`
     border-radius:10px
 `;
 const InputText = styled.Text`
+    color:#000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -73,6 +74,7 @@ const TotalMoney = styled.View`
 
     `;
 const TopText = styled.Text`
+    color:#000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
 function LookupInfo2( { route,navigation } ) {
     const data =route.params.data;
     
+    const images = route.params.images;
     const keys= Object.keys(data)
 
     const [season,setSeason] = useState();                  //시즌
@@ -162,7 +165,7 @@ function LookupInfo2( { route,navigation } ) {
               
      
             </Contents> 
-            <Button onPress={ ()=> navigation.navigate( 'LookupInfo3',{data:data}) }>
+            <Button onPress={ ()=> navigation.navigate( 'LookupInfo3',{data:data ,images :images}) }>
                 다음
             </Button>
 

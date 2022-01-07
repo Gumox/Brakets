@@ -9,6 +9,7 @@ import Bottom from '../../components/Bottom';
 import Contents from '../../components/Contents';
 import ContainView from '../../components/ContainView';
 import Container from '../../components/Container';
+import axios from 'axios';
 
 
 const Alternative = styled.Text`
@@ -25,6 +26,7 @@ const Label = styled.Text`
     font-weight :bold;
     min-width:15px;
     max-height:30px;
+    color :#000000
 `;
 
 const PhoneLabel = styled.Text`
@@ -34,6 +36,7 @@ const PhoneLabel = styled.Text`
     margin-left:12px;
     font-weight :bold;
     width:150px
+    color :#000000
 `;
 const DivLabel = styled.Text`
     font-size: 20px;
@@ -41,6 +44,7 @@ const DivLabel = styled.Text`
     margin-bottom: 12px;
     margin-left:12px;
     font-weight :bold;
+    color :#000000
 `;
 
 const InputView = styled.View`
@@ -53,11 +57,13 @@ const Input = styled.TextInput`
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
+    color :#000000
 `;
 
 const Title = styled.Text`
   font-size : 24px;
   font-weight : bold;
+  color :#000000;
 `;
 const PrView = styled.View`
     flex-direction: row;
@@ -87,7 +93,7 @@ function LookupPage2({ route,navigation }) {
         return value
     }
     
-    const getImages = useCallback(async (code) => {
+    const getImages = useCallback(async (code,obj) => {
 
         console.log("press")
         const { data } = await axios.get(ip+"/api/lookup/images", {
@@ -96,6 +102,8 @@ function LookupPage2({ route,navigation }) {
           },
         })
         console.log(data.data)
+        
+        navigation.navigate('LookupInfo',{data:obj,images: data.data})
       }, []);
 
     for (let index = 0; index < data.length; index++) {
@@ -119,8 +127,7 @@ function LookupPage2({ route,navigation }) {
         var raw = (
             <TouchableHighlight key = {indexKey} underlayColor={"#CCC"} 
                 onPress={() => {
-                    getImages(obj["receipt_code"])
-                    //navigation.navigate('LookupInfo',{data:obj})
+                    getImages(obj["receipt_code"],obj)
                 }}>
                 <PrView>
                     <Label>{index+1}</Label>

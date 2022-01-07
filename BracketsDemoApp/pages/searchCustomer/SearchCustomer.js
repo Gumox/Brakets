@@ -10,6 +10,7 @@ import store from '../../store/store';
 const Title = styled.Text`
   font-size : 24px;
   font-weight : bold;
+  color:#000000
 `;
 
 const BlackText = styled.Text`

@@ -45,9 +45,11 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
+    color:#000000
 `;
 const InputText = styled.Text`
+    color:#000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -66,6 +68,7 @@ const HalfLine = styled.View`
     height : 100%;
 `;
 const TopText = styled.Text`
+    color:#000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -75,6 +78,7 @@ const styles = StyleSheet.create({
         flex:1,
         fontSize:(Dimensions.get('window').width)*0.04,
         margin:10,
+        color:"#000000"
     },
       
 })
@@ -86,7 +90,7 @@ const  formatDate = (inputDate)=> {
 }
 function LookupInfo( { route,navigation } ) {
     const data =route.params.data;
-    
+    const images = route.params.images;
     const keys= Object.keys(data)
     const [number,setNumber] =useState(store.getState().number);
     const [text, onChangeText] = useState();
@@ -100,7 +104,7 @@ function LookupInfo( { route,navigation } ) {
     
     
     
-    console.log(keys)
+    console.log(images)
     useEffect(()=>{
         setCardCode(data["receipt_code"])                    //서비스카드번호
         if( data["receipt_category"] == 1){                  //접수구분
@@ -145,7 +149,7 @@ function LookupInfo( { route,navigation } ) {
                
      
             </Contents>
-            <Button onPress={ ()=> navigation.navigate( 'LookupInfo2',{data:data}) }>
+            <Button onPress={ ()=> navigation.navigate( 'LookupInfo2',{data:data , images:images}) }>
                 다음
             </Button>
 

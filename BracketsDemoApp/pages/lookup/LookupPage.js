@@ -31,6 +31,7 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     border-radius:10px
+    color: #000000
 `;
 const Label = styled.Text`
     font-size: 12px;
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
   Lavel:{
     fontSize:(Dimensions.get('window').width)*0.04,
     margin:10,
+    color:"#000000"
   },
     
 })
