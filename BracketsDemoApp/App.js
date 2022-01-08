@@ -55,8 +55,8 @@ function App() {
       <Stack.Navigator >
 
 
-        <Stack.Screen name="Login" component={Login}/>
-        <Stack.Screen name="StartPage" component={StartPage} />
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+        {/* <Stack.Screen name="StartPage" component={StartPage} /> */}
 
         {/*접수*/}
         <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{headerShown: false}} />

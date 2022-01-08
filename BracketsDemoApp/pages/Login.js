@@ -11,7 +11,13 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import store from '../store/store';
 
+// 자동 로그인 시 설정 창 정보
+
+// redirect 
+
+// android emul
 
 
 function Login({ navigation }): React.ReactElement {
@@ -44,7 +50,8 @@ function Login({ navigation }): React.ReactElement {
     axios(option)
       .then(
         response => (response.status == '200') && (response.data.data[0].name) ? (
-          saveId(userEmail)
+          saveId(response.data.data[0].name, userEmail)
+          // console.log(response.data.data[0])
         ) : (
           console.log("response" + response)
         )
@@ -62,23 +69,38 @@ function Login({ navigation }): React.ReactElement {
 
     // console.log("Effect was run");
     console.log(new Date());
-  }, [userId, userEmail]);
+  });
 
-  function saveId(_userEmail) {
-    AsyncStorage.setItem('user_id', _userEmail, () => {
-      console.log('userId saved: ' + _userEmail)
-      navigation.navigate('ReceiptDivision');
-    });
+  function saveId(_userName, _userEmail) {
+
+    AsyncStorage.setItem(
+      'userInfo',
+      JSON.stringify({
+        'userEmail': _userEmail,
+        'userName': _userName
+      }), () => {
+        console.log('user id and user email\'s saved: ' + _userName, _userEmail);
+        store.dispatch({ type: 'storeStaffId', storeStaffId: _userEmail });
+        store.dispatch({ type: 'storeName', storeName: _userName })
+        navigation.replace('ReceiptDivision');
+      });
+
+
   }
 
-  const savedResultId = AsyncStorage.getItem('user_id', (err, result) => {
-    //user_id에 담긴 아이디 불러오기
-    if (result !== null) {
-      console.log("load saved userId " + result);
-      navigation.navigate('ReceiptDivision');
-    }
+  const savedResultId = AsyncStorage.getItem('userInfo', (err, result) => {
+      //user_id에 담긴 아이디 불러오기
+  if (result !== null) {
+    const UserInfo = JSON.parse(result);
+    console.log('닉네임 : ' + UserInfo.userEmail); // 출력 => 닉네임 : User1 
+    console.log('휴대폰 : ' + UserInfo.userName); //  출력 => 휴대폰 : 010-xxxx-xxxx
     console.log("load saved userId " + result);
+    navigation.replace('ReceiptDivision');
+  }
+  console.log('asdasd'+JSON.parse(result));
   });
+
+
 
   const signInWithKakao = async (): Promise<void> => {
 
