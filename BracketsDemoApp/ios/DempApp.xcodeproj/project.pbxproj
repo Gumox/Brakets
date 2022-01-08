@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* DempAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* DempAppTests.m */; };
-		04A24E292786DE29006111ED /* SwiftBridgeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A24E282786DE29006111ED /* SwiftBridgeHeader.swift */; };
+		047366FB2789608600782078 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047366FA2789608600782078 /* SwiftBridge.swift */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -31,9 +31,9 @@
 		00E356EE1AD99517003FC87E /* DempAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DempAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* DempAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DempAppTests.m; sourceTree = "<group>"; };
+		047366FA2789608600782078 /* SwiftBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
+		047366FC2789626900782078 /* DempApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DempApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		0479DEC24997142739C53427 /* Pods-DempApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DempApp.release.xcconfig"; path = "Target Support Files/Pods-DempApp/Pods-DempApp.release.xcconfig"; sourceTree = "<group>"; };
-		04A24E272786DE29006111ED /* DempApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DempApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		04A24E282786DE29006111ED /* SwiftBridgeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBridgeHeader.swift; sourceTree = "<group>"; };
 		11BEFB33379B49E9A4A9FF90 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* DempApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DempApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = DempApp/AppDelegate.h; sourceTree = "<group>"; };
@@ -107,12 +107,12 @@
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				047366FA2789608600782078 /* SwiftBridge.swift */,
+				047366FC2789626900782078 /* DempApp-Bridging-Header.h */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				04A24E282786DE29006111ED /* SwiftBridgeHeader.swift */,
-				04A24E272786DE29006111ED /* DempApp-Bridging-Header.h */,
 			);
 			name = DempApp;
 			sourceTree = "<group>";
@@ -457,7 +457,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				04A24E292786DE29006111ED /* SwiftBridgeHeader.swift in Sources */,
+				047366FB2789608600782078 /* SwiftBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

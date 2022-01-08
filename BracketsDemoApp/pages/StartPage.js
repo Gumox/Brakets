@@ -95,5 +95,3 @@ function StartPage( { navigation } ) {
     )
 }
 export default StartPage;
-
-

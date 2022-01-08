@@ -1,106 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import Container from '../../components/Container';
-import Contents from '../../components/Contents';
-import SelectButton from '../../components/SelectButton';
+import React from 'react';
+import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import _ from 'lodash';
 
-import { Image, Text, View } from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DateObject from "react-date-object";
-import { size } from 'lodash';
+import Container from '../../components/Container';
+import Contents from '../../components/Contents';
 import styled from 'styled-components/native';
 import store from '../../store/store';
-import { Provider } from 'react-redux';
 import Bottom from '../../components/Bottom';
 import Button from '../../components/Button';
-import { createIconSetFromFontello } from 'react-native-vector-icons';
-import { Alert } from 'react-native';
 
 
-const BottomView = styled.View`
-    flex: 0.4;
-    flex-direction: row;
-    align-items: flex-end;
-    /* background: red; */
+const Label = styled.Text`
+    font-size: 20px;
+    margin-Top: 12px;
+    margin-bottom: 12px;
+    margin-left:12px;
 `;
 
-const BottomButton = styled.TouchableOpacity`
-    width: 25%;
-    height: 30%;
-    background: #78909c;
-    border-color: red;
-    align-items: center;
-    justify-content: center;
+const View = styled.View`
+    flex;
 `;
 
-const BottomButtonText = styled.Text`
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
+const OverallView = styled.View`
+    padding: 8px;
+    padding-bottom: 30px;
+    font-size: 20px;
+    border : 1.5px;
+    border-radius:10px;
+    margin-top: 30px
+    margin-bottom: 30px;
+    width: 350px;
 `;
 
-const BottomEmptySpace = styled.View`
-    background: #78909c;
+const FirstTextView = styled.TextInput`
     width: 100%;
-    height: 3%;
-`;
-
-
-const TouchableView = styled.TouchableOpacity`
-    
-    flex-direction:row;
-    justify-content:space-around;
-    
+    padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px;
+    color:#000000;
 `;
 
-const ImgIcon = styled.Image`
-    width: 20px;
-    height: 20px;
+const SecondTextView = styled.TextInput`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#bdbdbd;
+    border-radius:10px;
+    color:#000000;
+    margin-top: 20px;
+    margin-bottom: 5px;
 `;
-
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-}
 
 
 function Setting({ navigation }) {
 
-    const state = { size: 1 };
+    // const savedResultId = AsyncStorage.getItem('user_id', (err, result) => {
+    //     console.log("load saved userId " + result);
+    // });
 
-    const [number, setNumber] = useState(store.getState().number);
-    console.log("store number in setting page" + number);
-
-    const x = { "key": 2 };
-
-    //새로고침 함수
-    const [refreshing, setRefreshing] = React.useState(false);
-    const OnRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(1000).then(() => {
-            setRefreshing(false)
-
-            console.log("is refreshing")
-        });
-    }, [])
-
-    const savedResultId = AsyncStorage.getItem('user_id', (err, result) => {
+    const savedResultId = AsyncStorage.getItem('userInfo', (err, result) => {
         //user_id에 담긴 아이디 불러오기
-        console.log("load saved userId " + result);
-        // navigation.navigate('ReceiptDivision');
+        if (result !== null) {
+            const UserInfo = JSON.parse(result);
+            console.log('닉네임 : ' + UserInfo.userEmail); // 출력 => 닉네임 : User1 
+            console.log('휴대폰 : ' + UserInfo.userName); //  출력 => 휴대폰 : 010-xxxx-xxxx
+            console.log("load saved userId " + result);
+
+            return UserInfo.userName;
+        }
     });
 
-
+    const storeName = store.getState().storeName;
+    const storeEmail = store.getState().storeStaffId;
 
     return (
         <Container>
-            <Contents>
 
-                {/* <Text>설정</Text> */}
+            <Contents>
+                <OverallView>
+                    <SecondTextView
+                        editable={false}
+                        selectTextOnFocus={false}
+                        value={'storeName'}
+                    />
+                    <FirstTextView
+                        editable={false}
+                        selectTextOnFocus={false}
+                        value={storeName}
+                    />
+                    <SecondTextView
+                        editable={false}
+                        selectTextOnFocus={false}
+                        value={'storeEmail'}
+                    />
+                    <FirstTextView
+                        editable={false}
+                        selectTextOnFocus={false}
+                        value={storeEmail}
+                    />
+                </OverallView>
             </Contents>
 
             <Button onPress={() =>
@@ -111,12 +111,13 @@ function Setting({ navigation }) {
                         {
                             text: "네",
                             onPress: () => (
-                                AsyncStorage.removeItem('user_id'),
-                                navigation.navigate('Login')
+                                AsyncStorage.removeItem('userInfo'),
+                                console.log('123'),
+                                navigation.replace('Login')
                             ),
                         },
-                        { 
-                            text: "아니요", 
+                        {
+                            text: "아니요",
                             onPress: () => console.log("Logout cancel"),
                         }
                     ],
@@ -126,9 +127,8 @@ function Setting({ navigation }) {
                 로그아웃
             </Button>
 
-            <Button onPress={() => console.log(savedResultId)
-                // console.log(savedResultId)
-            }>
+            <Button onPress={() => console.log("123123"+savedResultId)}
+            >
                 조회
             </Button>
 
