@@ -127,11 +127,6 @@ function Setting({ navigation }) {
                 로그아웃
             </Button>
 
-            <Button onPress={() => console.log("123123"+savedResultId)}
-            >
-                조회
-            </Button>
-
             <Bottom navigation={navigation} />
         </Container >
     )

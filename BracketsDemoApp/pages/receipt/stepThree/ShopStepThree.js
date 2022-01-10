@@ -12,6 +12,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 import { Alert ,BackHandler,View,Text} from 'react-native';
 import store from '../../../store/store';
+import ip from '../../../serverIp/Ip';
 import { GetRepairList } from '../../../Functions/GetRepairList';
 
 const TopStateView = styled.View`
@@ -85,14 +86,15 @@ function ShopStepThree( { navigation } ) {
     
   const getRepairList = async (id) => {
       const bodyData = {
-        "category": 1,
-        "receipt": 1,
-        "season": 2,
+        "category": store.getState().receptionDivision.id,
+        "receipt": store.getState().requirement.id,
+        "season_id": store.getState().season_id,
         "pcategory_id": id
 
         }
+        console.log(bodyData)
       try {
-        const response = await fetch('http://34.64.182.76/api/getRepairList',{method: 'POST',
+        const response = await fetch(ip+'/api/getRepairList',{method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -106,7 +108,7 @@ function ShopStepThree( { navigation } ) {
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:json.list[0].receiver_name });
         
         console.log();console.log(json.list);
-        console.log();
+        console.log(json);
         console.log("YYYYYYY");
         console.log(store.getState().basicRepairStore)
         console.log();

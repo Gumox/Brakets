@@ -12,6 +12,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { split } from 'lodash';
+import ip from '../../serverIp/Ip';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;
@@ -165,7 +166,7 @@ function ShopStepFour({navigation}) {
         console.log(formdata)
 
         try {
-            const response = await fetch('http://34.64.182.76/api/updateReceipt',{method: 'POST',
+            const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
                 'Content-Type': 'multipart/form-data'

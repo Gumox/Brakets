@@ -143,7 +143,7 @@ export default class CustomerInfo extends Component {
             check3: false
         };
     }
- 
+    
     onSketchSave(saveEvent) {
         this.props.onSave && this.props.onSave(saveEvent);
         
@@ -152,7 +152,6 @@ export default class CustomerInfo extends Component {
         console.log(image);
         store.dispatch({type:'CUSTOMER_SIGN',customerSign: image});
         this.setState({modalVisible: false})
-        console.log(PathToFlie(image));
     }
     render(){
         var cstSign;
@@ -181,9 +180,9 @@ export default class CustomerInfo extends Component {
                         </CenterText>
                         <CenterText>
                             <PrView><ImgIcon source={require('../../Icons/caution.png')}/><CautionText>아래 사항들은 고객이 직접 입력하셔야 합니다</CautionText></PrView>
-                            <PrView><Label>수선 관련 고지 사항</Label><TextPrassble>
-                                <Text style={{color:"#000000"}}
-style={{color:"#000000"}}>자세히 보기</Text></TextPrassble>
+                            <PrView><Label>수선 관련 고지 사항</Label>
+                            <TextPrassble onPress={()=>{ this.props.navigation.navigate("Notice")}}>
+                                <Text style={{color:"#000000"}} style={{color:"#000000"}}>자세히 보기</Text></TextPrassble>
                                 <CheckBox
                                     center
                                     checked={this.state.check1}
@@ -194,7 +193,8 @@ style={{color:"#000000"}}>자세히 보기</Text></TextPrassble>
                                     }}
                                 />
                             </PrView>
-                            <PrView><Label>문자 수신 동의 여부</Label><TextPrassble><Text style={{color:"#000000"}} >자세히 보기</Text></TextPrassble>
+                            <PrView><Label>문자 수신 동의 여부</Label>
+                            <TextPrassble onPress={()=>{this.props.navigation.navigate("SmsNotice")}}><Text style={{color:"#000000"}} >자세히 보기</Text></TextPrassble>
                                 <CheckBox
                                     center
                                     checked={this.state.check2}
@@ -205,7 +205,8 @@ style={{color:"#000000"}}>자세히 보기</Text></TextPrassble>
                                     }}
                                 />
                             </PrView>
-                            <PrView><Label>개인 정보 동의 여부</Label><TextPrassble><Text style={{color:"#000000"}} >자세히 보기</Text></TextPrassble>
+                            <PrView><Label>개인 정보 동의 여부</Label>
+                            <TextPrassble onPress={()=>{this.props.navigation.navigate("PrivacyNotice")}}><Text style={{color:"#000000"}} >자세히 보기</Text></TextPrassble>
                                 <CheckBox
                                     center
                                     checked={this.state.check3}

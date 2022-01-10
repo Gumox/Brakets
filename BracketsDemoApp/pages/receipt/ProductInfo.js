@@ -13,6 +13,7 @@ import TopInfoLess from '../../components/TopInfoLess';
 import Bottom from '../../components/Bottom';
 import store from '../../store/store';
 import { PathToFlie } from '../../Functions/PathToFlie';
+import ip from '../../serverIp/Ip';
 
 const Label = styled.Text`
     color:#000000;
@@ -74,7 +75,7 @@ function ProductInfo({navigation, route}) {
     const [mfrid, setMfrid] = useState('')
     
     const option = {
-        url: 'http://34.64.182.76/api/getProductInfo',
+        url: ip+'/api/getProductInfo',
         method: 'POST',
 
         // 
@@ -102,7 +103,11 @@ function ProductInfo({navigation, route}) {
             setMeasure(response.data.body[0].degree),
             setImageFile(response.data.body[0].image),
             setMfrid(response.data.body[0].mfr_id),
-            setPid(response.data.body[0].product_id)
+            setPid(response.data.body[0].product_id),
+            
+            store.dispatch({type:'SEASON_ID',season_id: response.data.body[0].season_id}),
+            console.log(store.getState().season_id)
+            
             
         ) : (
             //navigation.goBack(),
@@ -134,11 +139,11 @@ function ProductInfo({navigation, route}) {
     const addReceipt = async () => {
         var formdata = new FormData();
 
-        formdata.append("store", 2);// 임시
-        formdata.append("brand", 2);// 임시
-        formdata.append("staff", 23);// 임시
+        formdata.append("store", store.getState().store_id);
+        formdata.append("brand", store.getState().brand_id);
+        formdata.append("staff", store.getState().userInfo[0].staff_id);
         formdata.append("category", store.getState().receptionDivision.id);
-        formdata.append("customer", store.getState().customer.cId);//임시
+        formdata.append("customer", store.getState().customer.cId);
         
         formdata.append("pid", serialInput);
         formdata.append("pcode", codeInput);
@@ -149,7 +154,7 @@ function ProductInfo({navigation, route}) {
         console.log(formdata)
         
         try {
-            const response = await fetch('http://34.64.182.76/api/addReceipt',{method: 'POST',
+            const response = await fetch(ip+'/api/addReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
                 'Content-Type': 'multipart/form-data'
@@ -164,7 +169,19 @@ function ProductInfo({navigation, route}) {
                 store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
             }
             console.log(store.getState().receipt_id + "...........")
-           
+            navigation.navigate( 'ShopStepTwo',
+                { 
+                codeType: codeType, 
+                code: codeInput, 
+                serialInput: serialInput,
+                productName: productName,
+                season: season,
+                colorValue: colorValue,
+                size: size,
+                measure: measure,
+                imageFile: imageFile
+                }
+            )
             
             
         } catch (error) {
@@ -276,19 +293,7 @@ function ProductInfo({navigation, route}) {
                     <Button  onPress={ ()=> {
                         console.log(codeInput)
                         addReceipt();
-                        navigation.navigate( 'ShopStepTwo',
-                            { 
-                            codeType: codeType, 
-                            code: codeInput, 
-                            serialInput: serialInput,
-                            productName: productName,
-                            season: season,
-                            colorValue: colorValue,
-                            size: size,
-                            measure: measure,
-                            imageFile: imageFile
-                            }
-                        )
+                        
 
                     }}>
 

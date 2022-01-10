@@ -8,10 +8,10 @@ export default createStore(function(state,action){
 
         return{
             cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",customerSign:"",
-            receiverList:"",customer:"",serviceDate:"",startDate:"",endDate:"",
+            receiverList:"",customer:"",serviceDate:"",startDate:"",endDate:"",brand_id:"",store_id:"",season_id:0,
             selectType:[],bagPicture:"", photoArr:[],indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
             typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:"",receipt_id: 0, 
-            storeStaffId: "", storeName: ""}
+            storeStaffId: "", storeName: "",userInfo:""}
     }
     if(action.type ==='PHOTO'){
         return{...state, photo: action.photo };
@@ -127,11 +127,23 @@ export default createStore(function(state,action){
             bagPicture:"",indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
             basicRepairStore : "",drawingImage:"",receipt_id: 0}
     }
+    if(action.type === 'SEASON_ID'){
+        return{...state,  season_id: action.season_id};
+    }
     if(action.type === 'storeStaffId'){
         return{...state,  storeStaffId: action.storeStaffId};
     }
     if(action.type === 'storeName'){
         return{...state,  storeName: action.storeName};
+    }
+    if(action.type === 'USER_INFO'){
+        return{...state,  userInfo: action.userInfo};
+    }
+    if(action.type === 'BRAND_ID'){
+        return{...state,  brand_id: action.brand_id};
+    }
+    if(action.type === 'STORE_ID'){
+        return{...state,  store_id: action.store_id};
     }
 
     return state;

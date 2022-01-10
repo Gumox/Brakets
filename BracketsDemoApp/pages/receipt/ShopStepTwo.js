@@ -10,6 +10,8 @@ import CenterText from '../../components/CenterText';
 import TopInfoLess from '../../components/TopInfoLess';
 import Bottom from '../../components/Bottom';
 import store from '../../store/store';
+import ip from '../../serverIp/Ip';
+
 const Label = styled.Text`
     font-size: 15px;
     margin: 20px;
@@ -58,16 +60,14 @@ function ShopStepTwo({navigation}) {
     const [data, setData] = React.useState([]);
     const [isLoading, setLoading] = React.useState(true);
     const bodyData = {
-        "category": 1,
-        "receipt": 1,
-        "brand": 1,
+        "brand": store.getState().brand_id,
        
     }
     
     const getProductCategory = async () => {
         
         try {
-            const response = await fetch('http://34.64.182.76/api/getProductCategory',{method: 'POST',
+            const response = await fetch(ip+'/api/getProductCategory',{method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ function ShopStepTwo({navigation}) {
             console.log(data);
             store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
             console.log(store.getState().getProductCategory);
-            store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:2}});
+            store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:1}});
             
             setLoading(false);
            
@@ -101,7 +101,7 @@ function ShopStepTwo({navigation}) {
         console.log(formdata)
 
         try {
-            const response = await fetch('http://34.64.182.76//api/updateReceipt',{method: 'POST',
+            const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
                 'Content-Type': 'multipart/form-data'

@@ -12,6 +12,7 @@ import Picker from 'react-native-picker-select';
 import _ from 'lodash';
 import TopInfo from '../../../components/TopInfo';
 import Bottom from '../../../components/Bottom';
+import ip from '../../../serverIp/Ip';
 import { PathToFlie } from '../../../Functions/PathToFlie';
 
 const Label = styled.Text`
@@ -114,7 +115,7 @@ function ShopStepThree4({route,navigation}) {
         formdata.append("pcategory", pcategory_id);
         formdata.append("message",request );
         formdata.append("receiver",receiver_id )
-        formdata.append("store", 2);//임시
+        formdata.append("store", store.getState().store_id);//임시
 
         formdata.append("image",  PathToFlie(indexUriList[0]));
         formdata.append("image1", PathToFlie(indexUriList[1]));
@@ -124,7 +125,7 @@ function ShopStepThree4({route,navigation}) {
         console.log(formdata)
 
         try {
-            const response = await fetch('http://34.64.182.76//api/updateReceipt',{method: 'POST',
+            const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
                 'Content-Type': 'multipart/form-data'

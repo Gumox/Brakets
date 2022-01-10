@@ -12,7 +12,7 @@ import store from '../../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
 import _ from 'lodash';
-
+import ip from '../../../serverIp/Ip';
 import { getList } from '../../../Functions/GetSendList';
 import { changeSelectSend ,changeBasicSend,changeSelectType} from '../../../Functions/SendDataFuctions';
 
@@ -132,14 +132,14 @@ function ShopStepThree4({route,navigation}) {
    
     const getRepairList = async (id) => {
         const bodyData = {
-          "category": 1,
-          "receipt": 1,
-          "season": 0,
-          "pcategory_id": id
+            "category": store.getState().receptionDivision.id,
+            "receipt": store.getState().requirement.id,
+            "season_id": store.getState().season_id,
+            "pcategory_id": id
   
           }
         try {
-            const response = await fetch('http://34.64.182.76/api/getRepairList',{method: 'POST',
+            const response = await fetch(ip+'/api/getRepairList',{method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

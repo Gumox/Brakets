@@ -9,9 +9,10 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Alert } from 'react-native';
+import { Alert ,Image } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import store from '../store/store';
+import ip from '../serverIp/Ip';
 
 // 자동 로그인 시 설정 창 정보
 
@@ -36,7 +37,7 @@ function Login({ navigation }): React.ReactElement {
 
     const option = {
 
-      url: `http://34.64.182.76/api/auth/store?email=${userEmail}&userId=${userId}`,
+      url: ip+`/api/auth/store?email=${userEmail}&userId=${userId}`,
       // url: `http://34.64.182.76/api/auth/store?email=$&userId=`,
       // 잘못된 url 예시
 
@@ -50,8 +51,10 @@ function Login({ navigation }): React.ReactElement {
     axios(option)
       .then(
         response => (response.status == '200') && (response.data.data[0].name) ? (
-          saveId(response.data.data[0].name, userEmail)
-          // console.log(response.data.data[0])
+          savedInfo(response.data.data),
+          console.log(response.data.data),
+          saveId(response.data.data[0].name, userEmail),
+          console.log()
         ) : (
           console.log("response" + response)
         )
@@ -87,20 +90,41 @@ function Login({ navigation }): React.ReactElement {
 
 
   }
+  function savedInfo(data){
+    AsyncStorage.setItem(
+      'info',
+      JSON.stringify({
+        "data":data
+      }), () => {
+        store.dispatch({ type: 'USER_INFO', userInfo: data })
+        console.log("sssssss")
+        console.log(data)
+        console.log(store.getState().userInfo)
+        console.log("sssssss")
+      });
+  }
+  const savedResultInfo = AsyncStorage.getItem('info', (err, result) => {
+    if (result !== null) {
+      const UserInfo =  JSON.parse(result);
+      console.log(UserInfo.data[0])
+      store.dispatch({ type: 'USER_INFO', userInfo: UserInfo.data })
+      console.log("sssssss")
+      console.log(store.getState().userInfo[0].staff_id)
+    }
+    })
 
   const savedResultId = AsyncStorage.getItem('userInfo', (err, result) => {
       //user_id에 담긴 아이디 불러오기
   if (result !== null) {
     const UserInfo = JSON.parse(result);
-    console.log('닉네임 : ' + UserInfo.userEmail); // 출력 => 닉네임 : User1 
-    console.log('휴대폰 : ' + UserInfo.userName); //  출력 => 휴대폰 : 010-xxxx-xxxx
-    console.log("load saved userId " + result);
-    navigation.replace('ReceiptDivision');
+    //console.log(UserInfo)
+      store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
+      store.dispatch({ type: 'storeName', storeName: UserInfo.userName })
+      navigation.replace('ReceiptDivision');
   }
   console.log('asdasd'+JSON.parse(result));
   });
-
-
+ 
 
   const signInWithKakao = async (): Promise<void> => {
 
@@ -136,14 +160,11 @@ function Login({ navigation }): React.ReactElement {
 
   return (
     <Container>
-      <ResultView>
-      </ResultView>
-      <MiddleView>
-
-      </MiddleView>
+      <ImgIcon source={require('../Icons/App_Icon.png')}/>
       <Button onPress={() => signInWithKakao()}>
         <Label> 카카오 로그인 </Label>
-      </Button>
+        </Button>
+
 
       {/* <Button onPress={() => getProfile()}>
         <Label> 프로필 정보 </Label>
@@ -153,14 +174,21 @@ function Login({ navigation }): React.ReactElement {
 }
 
 export default Login;
+const ImgIcon =styled.Image`
+    width: 200px;
+    height: 200px;
+    margin-bottom: 30px;
+    border-radius:15px;
+    border: 3px solid #78909c;
 
+`;
 const Container = styled.View`
       flex: 1;
       align-self: stretch;
       overflow: scroll;
       background-color: ${({ theme }) => theme.background};
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       overflow: hidden;
     `;
@@ -170,6 +198,7 @@ const ResultView = styled.View`
     `;
 
 const Button = styled.TouchableOpacity`
+        
         width: 75%;
         height: 50px;
         background: #F7E314;
@@ -186,4 +215,6 @@ const Label = styled.Text`
     `;
 
 const MiddleView = styled.View`
+  flex:1;
+
     `;

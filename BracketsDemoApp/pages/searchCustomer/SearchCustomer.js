@@ -7,6 +7,7 @@ import _, { values } from 'lodash';
 import Bottom from '../../components/Bottom';
 import { Alert } from 'react-native';
 import store from '../../store/store';
+import ip from '../../serverIp/Ip';
 const Title = styled.Text`
   color :#000000
   font-size : 24px;
@@ -57,14 +58,14 @@ function SearchCustomer( { navigation } ) {
   const getCustomer = async (bodyData) => {
             
     try {
-        const response = await fetch('http://34.64.182.76/api/getCustomer ',{method: 'POST',
+        const response = await fetch(ip+'/api/getCustomer ',{method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
             },
         body: JSON.stringify(bodyData)
         });
-        console.log(response.body.data);
+        console.log(response.body);
         const json = await response.json(); // !!!
         setData(json.body);
         console.log(json.body);

@@ -45,7 +45,10 @@ import BarcodeScreen from './Functions/BarcodeScreen';
 import PhotoControl from './Functions/PhotoControl';
 import Capture from './Functions/Capture';
 import CustomerInfo from './pages/searchCustomer/CustomerInfo';
-import CustomerSearchList from './pages/searchCustomer/CustomerSearchList'
+import CustomerSearchList from './pages/searchCustomer/CustomerSearchList';
+import Notice from './pages/searchCustomer/Notice'
+import SmsNotice from './pages/searchCustomer/SmsNotice';
+import PrivacyNotice from './pages/searchCustomer/PrivacyNotice';
 
 const Stack = createNativeStackNavigator();
 
@@ -96,10 +99,13 @@ function App() {
         
         
         
-        {/*고객 검색*/}
+        {/*고객*/}
         <Stack.Screen name="SearchCustomer" component={SearchCustomer} options={{  title: '',headerTitleAlign: 'center' }} />
         <Stack.Screen name="CustomerSearchList" component={CustomerSearchList} options={{  title: '',headerTitleAlign: 'center' }} />
         <Stack.Screen name="CustomerInfo" component={CustomerInfo} options={{  title: '',headerTitleAlign: 'center' }} />
+        <Stack.Screen name="Notice" component={Notice} options={{  title: '수선 관련 고지 사항',headerTitleAlign: 'center' }} />
+        <Stack.Screen name="SmsNotice" component={SmsNotice} options={{  title: '문자 수신 동의 여부',headerTitleAlign: 'center' }} />
+        <Stack.Screen name="PrivacyNotice" component={PrivacyNotice} options={{  title: '개인 정보 동의 여부',headerTitleAlign: 'center' }} />
         
         {/*기능*/}
         <Stack.Screen name="ScanScreen" component={ScanScreen}  options={{  headerShown: false }} />

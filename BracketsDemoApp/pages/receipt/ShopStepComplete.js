@@ -10,6 +10,7 @@ import Bottom from '../../components/Bottom'
 import store from '../../store/store';
 import { Modal ,StyleSheet,View,Pressable,Image,Text} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
+import ip from '../../serverIp/Ip';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -151,7 +152,7 @@ function ShopStepOne( { navigation } ) {
         console.log(formdata)
 
         try {
-            const response = await fetch('http://34.64.182.76/api/submitReceipt',{method: 'POST',
+            const response = await fetch(ip+'/api/submitReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
                 'Content-Type': 'multipart/form-data'
