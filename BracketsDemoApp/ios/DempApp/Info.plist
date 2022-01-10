@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>2658f16cb7bd3a364eb61a0bcbed6b26</string>
+				<string>kakao2658f16cb7bd3a364eb61a0bcbed6b26</string>
 			</array>
 		</dict>
 	</array>
@@ -37,6 +37,7 @@
 	<string>2658f16cb7bd3a364eb61a0bcbed6b26</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>kakao0123456789</string>
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>

@@ -10,7 +10,8 @@ export default createStore(function(state,action){
             cardValue:"",card:"",bagCodeValue:"",receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",customerSign:"",
             receiverList:"",customer:"",serviceDate:"",startDate:"",endDate:"",
             selectType:[],bagPicture:"", photoArr:[],indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
-            typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:"",receipt_id: 0}
+            typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:"",receipt_id: 0, 
+            storeStaffId: "", storeName: ""}
     }
     if(action.type ==='PHOTO'){
         return{...state, photo: action.photo };
@@ -126,5 +127,12 @@ export default createStore(function(state,action){
             bagPicture:"",indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
             basicRepairStore : "",drawingImage:"",receipt_id: 0}
     }
+    if(action.type === 'storeStaffId'){
+        return{...state,  storeStaffId: action.storeStaffId};
+    }
+    if(action.type === 'storeName'){
+        return{...state,  storeName: action.storeName};
+    }
+
     return state;
 }) 

@@ -64,7 +64,8 @@ function SearchCustomer( { navigation } ) {
             },
         body: JSON.stringify(bodyData)
         });
-        const json = await response.json();
+        console.log(response.body.data);
+        const json = await response.json(); // !!!
         setData(json.body);
         console.log(json.body);
         parseData(json.body);
