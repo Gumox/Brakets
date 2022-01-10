@@ -15,6 +15,7 @@ import store from '../../store/store';
 import { PathToFlie } from '../../Functions/PathToFlie';
 
 const Label = styled.Text`
+    color:#000000;
     font-size: 15px;
     margin-Top: 12px;
     margin-bottom: 12px;
@@ -38,6 +39,7 @@ const CenterView =styled.View`
     align-items: center;
 `;
 const TopIntro =styled.Text`
+    color:#000000;
     font-size: 25px;
     font-weight: bold;
     margin: 15px;

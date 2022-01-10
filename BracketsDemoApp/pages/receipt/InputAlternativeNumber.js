@@ -18,6 +18,7 @@ const Label = styled.Text`
     font-weight: bold;
     margin-bottom: 12px;
     justify-content: center;
+    color:#000000;
 `;
 
 const Input = styled.TextInput`
@@ -26,7 +27,8 @@ const Input = styled.TextInput`
     font-size: 20px;
     margin-top: 30px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
+    color:#000000;
 `;
 const TopStateView = styled.View`
     

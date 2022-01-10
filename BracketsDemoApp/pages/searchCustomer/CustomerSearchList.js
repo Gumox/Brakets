@@ -18,6 +18,7 @@ import Bottom from '../../components/Bottom';
 
 
 const Label = styled.Text`
+    color:#000000;
     font-size: 18px;
     margin:12px;
 `;
@@ -31,6 +32,7 @@ const BtView = styled.View`
     width: 75%;
 `;
 const Input = styled.TextInput`
+    color:#000000
     width: 80%;
     padding: 8px;
     font-size: 20px;
@@ -44,6 +46,7 @@ const ContentsScroll = styled.ScrollView`
     align-content: center;
 `;
 const CustomerListText = styled.Text`
+    color:#000000;
     width : 95%;
     height : 15%;
     border-top: 2px solid;
@@ -51,6 +54,7 @@ const CustomerListText = styled.Text`
     
 `;
 const Title = styled.Text`
+    color:#000000;
   font-size : 24px;
   font-weight : bold;
 `;

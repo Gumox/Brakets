@@ -14,6 +14,7 @@ import store from '../../store/store';
 
 const RegistText= styled.Text`
     font-weight: bold;
+    color:#000000;
     font-size: 30px;
 `;
 const BlueText = styled.Text`
@@ -29,6 +30,7 @@ const TopStateView = styled.View`
     
     flex-direction: row;
     padding:24px;
+    color:#000000;
     justify-content: center;
 `;
 // 구조 분해 할당, Destructuring Assignment

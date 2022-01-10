@@ -18,6 +18,7 @@ import { changeSelectSend ,changeBasicSend,changeSelectType} from '../../../Func
 
 
 const Label = styled.Text`
+    color:#000000;
     font-size: 15px;
     margin-Top: 12px;
     margin-bottom: 12px;
@@ -28,6 +29,7 @@ const PrView = styled.View`
     justify-content:space-between;
 `;
 const Input = styled.TextInput`
+    color:#000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -38,6 +40,7 @@ const CenterView =styled.View`
     align-items: center;
 `;
 const TopIntro =styled.Text`
+    color:#000000;
     font-size: 25px;
     font-weight: bold;
     margin: 15px;

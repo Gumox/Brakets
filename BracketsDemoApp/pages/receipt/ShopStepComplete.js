@@ -13,6 +13,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 
 const Label = styled.Text`
     font-size: 15px;
+    color:#000000;
     margin-Top: 12px;
     margin-bottom: 12px;
     margin-left:12px;
@@ -21,6 +22,7 @@ const Label = styled.Text`
 const RegistText= styled.Text`
     font-weight: bold;
     font-size: 30px;
+    color:#000000;
     margin-bottom:10px;
 `;
 const BlueText = styled.Text`

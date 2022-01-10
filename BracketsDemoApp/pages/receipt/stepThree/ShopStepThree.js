@@ -24,6 +24,7 @@ const Oneline = styled.View`
   flex-direction : row;
 `;
 const Title = styled.Text`
+  color:#000000;
   font-size : 24px;
   font-weight : bold;
 `;

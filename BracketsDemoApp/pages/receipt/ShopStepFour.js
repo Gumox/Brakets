@@ -19,6 +19,7 @@ const TouchableView = styled.TouchableOpacity`
     border-radius:10px;
 `;
 const Label = styled.Text`
+    color:#000000;
     font-size: 15px;
     margin-Top: 12px;
     margin-bottom: 12px;
@@ -37,6 +38,7 @@ const PrView = styled.View`
     justify-content:space-between;
 `;
 const Input = styled.TextInput`
+    color:#000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -49,6 +51,7 @@ const CenterView =styled.View`
 const TopIntro =styled.Text`
     font-size: 25px;
     font-weight: bold;
+    color:#000000;
     margin: 15px;
 `;
 const DateView = styled.View`

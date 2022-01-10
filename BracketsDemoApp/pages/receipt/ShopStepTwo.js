@@ -13,6 +13,7 @@ import store from '../../store/store';
 const Label = styled.Text`
     font-size: 15px;
     margin: 20px;
+    color:#000000;
 `;
 const PView = styled.View`
     
@@ -26,6 +27,7 @@ const CenterView =styled.View`
     
 `;
 const TopIntro =styled.Text`
+    color:#000000;
     font-size: 25px;
     font-weight: bold;
     margin: 15px;

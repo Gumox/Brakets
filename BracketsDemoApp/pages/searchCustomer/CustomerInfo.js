@@ -41,11 +41,13 @@ tools[SketchDrawConstants.toolType.eraser.id] = {
 };
 
 const Title = styled.Text`
+    color:#000000;
   font-size : 24px;
   font-weight : bold;
 `;
 
 const BlackText = styled.Text`
+    color:#000000;
   margin-Top : 15px ;
   font-size : 15px;
   color : black;
@@ -58,6 +60,7 @@ const DropBackground= styled.View`
     margin-top:10px;
 `;
 const Label = styled.Text`
+    color:#000000;
     font-size: 18px;
     margin:12px;
 `;
@@ -71,6 +74,7 @@ const BtView = styled.View`
     width: 75%;
 `;
 const Input = styled.TextInput`
+    color:#000000;
     width: 80%;
     padding: 8px;
     font-size: 20px;
@@ -178,7 +182,8 @@ export default class CustomerInfo extends Component {
                         <CenterText>
                             <PrView><ImgIcon source={require('../../Icons/caution.png')}/><CautionText>아래 사항들은 고객이 직접 입력하셔야 합니다</CautionText></PrView>
                             <PrView><Label>수선 관련 고지 사항</Label><TextPrassble>
-                                <Text>자세히 보기</Text></TextPrassble>
+                                <Text style={{color:"#000000"}}
+style={{color:"#000000"}}>자세히 보기</Text></TextPrassble>
                                 <CheckBox
                                     center
                                     checked={this.state.check1}
@@ -189,7 +194,7 @@ export default class CustomerInfo extends Component {
                                     }}
                                 />
                             </PrView>
-                            <PrView><Label>문자 수신 동의 여부</Label><TextPrassble><Text>자세히 보기</Text></TextPrassble>
+                            <PrView><Label>문자 수신 동의 여부</Label><TextPrassble><Text style={{color:"#000000"}} >자세히 보기</Text></TextPrassble>
                                 <CheckBox
                                     center
                                     checked={this.state.check2}
@@ -200,7 +205,7 @@ export default class CustomerInfo extends Component {
                                     }}
                                 />
                             </PrView>
-                            <PrView><Label>개인 정보 동의 여부</Label><TextPrassble><Text>자세히 보기</Text></TextPrassble>
+                            <PrView><Label>개인 정보 동의 여부</Label><TextPrassble><Text style={{color:"#000000"}} >자세히 보기</Text></TextPrassble>
                                 <CheckBox
                                     center
                                     checked={this.state.check3}
@@ -235,8 +240,8 @@ export default class CustomerInfo extends Component {
                         <View style={styles.modalView} >
                             <View style={{flex: 1, flexDirection: 'column',width:"100%",height:"100%"}}>
                                 <PrView>
-                                    <Pressable  onPress={() => { this.refs.sketchRef.clearSketch() }}><Text>Clear</Text></Pressable>
-                                    <Pressable onPress={()=>{this.refs.sketchRef.saveSketch()}}><Text>Save</Text></Pressable>
+                                    <Pressable style={{height:20}} onPress={() => { this.refs.sketchRef.clearSketch() }}><Text style={{color:"#000000"}}>Clear</Text></Pressable>
+                                    <Pressable style={{height:20}} onPress={()=>{this.refs.sketchRef.saveSketch()}}><Text style={{color:"#000000"}}>Save</Text></Pressable>
                                 </PrView>
                                 <SketchDraw style={{flex: 1 }} ref="sketchRef"
                                 selectedTool={this.state.toolSelected} 

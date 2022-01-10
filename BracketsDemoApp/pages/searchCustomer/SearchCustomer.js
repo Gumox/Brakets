@@ -8,12 +8,14 @@ import Bottom from '../../components/Bottom';
 import { Alert } from 'react-native';
 import store from '../../store/store';
 const Title = styled.Text`
+  color :#000000
   font-size : 24px;
   font-weight : bold;
   color:#000000
 `;
 
 const BlackText = styled.Text`
+  color :#000000
   margin-Top : 15px ;
   font-size : 15px;
   color : black;
@@ -26,6 +28,7 @@ const DropBackground= styled.View`
     margin-top:10px;
 `;
 const Input = styled.TextInput`
+    color:#000000
     width: 100%;
     padding: 8px;
     font-size: 20px;

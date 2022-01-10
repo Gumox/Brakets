@@ -55,7 +55,8 @@ function App() {
       <Stack.Navigator >
 
 
-        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Login" component={Login} />
+
         <Stack.Screen name="StartPage" component={StartPage} />
 
         {/*접수*/}

@@ -15,6 +15,7 @@ import Bottom from '../../../components/Bottom';
 import { PathToFlie } from '../../../Functions/PathToFlie';
 
 const Label = styled.Text`
+    color:#000000;
     font-size: 15px;
     margin-Top: 12px;
     margin-bottom: 12px;
@@ -31,6 +32,7 @@ const CenterView =styled.View`
 const TopIntro =styled.Text`
     font-size: 25px;
     font-weight: bold;
+    color:#000000;
     margin: 15px;
 `;
 const TopStateView = styled.View`
@@ -51,12 +53,14 @@ const Input = styled.Text`
     padding: 8px;
     font-size: 20px;
     border : 1.5px;
+    color:#000000;
     border-radius:10px
 `;
 const SendText = styled.Text`
     width: 100%;
     padding: 8px;
     font-size: 20px;
+    color:#000000;
     background-color:#d6d6d6;
     border-radius:10px
 `;

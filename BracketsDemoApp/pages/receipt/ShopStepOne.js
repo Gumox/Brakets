@@ -14,10 +14,12 @@ import Bottom from '../../components/Bottom';
 import store from '../../store/store';
 
 const Alternative = styled.Text`
+    color:#000000;
     font-size: 15px;
     align-items: center;
 `;
 const RegistText= styled.Text`
+    color:#000000;
     font-weight: bold;
     font-size: 30px;
     margin-bottom:50px;
