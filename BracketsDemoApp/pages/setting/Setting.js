@@ -9,7 +9,8 @@ import styled from 'styled-components/native';
 import store from '../../store/store';
 import Bottom from '../../components/Bottom';
 import Button from '../../components/Button';
-
+import ReceiptButton from '../../components/ReceiptButton';
+import CenterText from '../../components/CenterText';
 
 const Label = styled.Text`
     font-size: 20px;
@@ -26,11 +27,10 @@ const OverallView = styled.View`
     padding: 8px;
     padding-bottom: 30px;
     font-size: 20px;
-    border : 1.5px;
     border-radius:10px;
     margin-top: 30px
     margin-bottom: 30px;
-    width: 350px;
+    width: 300px;
 `;
 
 const FirstTextView = styled.TextInput`
@@ -78,7 +78,7 @@ function Setting({ navigation }) {
     return (
         <Container>
 
-            <Contents>
+            <CenterText>
                 <OverallView>
                     <SecondTextView
                         editable={false}
@@ -90,42 +90,33 @@ function Setting({ navigation }) {
                         selectTextOnFocus={false}
                         value={storeName}
                     />
-                    <SecondTextView
-                        editable={false}
-                        selectTextOnFocus={false}
-                        value={'storeEmail'}
-                    />
-                    <FirstTextView
-                        editable={false}
-                        selectTextOnFocus={false}
-                        value={storeEmail}
-                    />
                 </OverallView>
-            </Contents>
+                <ReceiptButton onPress={() =>
+                    Alert.alert(
+                        "로그아웃",
+                        "로그아웃 하시겠습니까?",
+                        [
+                            {
+                                text: "네",
+                                onPress: () => (
+                                    AsyncStorage.removeItem('userInfo'),
+                                    console.log('123'),
+                                    navigation.replace('Login')
+                                ),
+                            },
+                            {
+                                text: "아니요",
+                                onPress: () => console.log("Logout cancel"),
+                            }
+                        ],
+                        { cancelable: false }
+                    )
+                }>
+                    로그아웃
+                </ReceiptButton>
+            </CenterText>
 
-            <Button onPress={() =>
-                Alert.alert(
-                    "로그아웃",
-                    "로그아웃 하시겠습니까?",
-                    [
-                        {
-                            text: "네",
-                            onPress: () => (
-                                AsyncStorage.removeItem('userInfo'),
-                                console.log('123'),
-                                navigation.replace('Login')
-                            ),
-                        },
-                        {
-                            text: "아니요",
-                            onPress: () => console.log("Logout cancel"),
-                        }
-                    ],
-                    { cancelable: false }
-                )
-            }>
-                로그아웃
-            </Button>
+            
 
             <Bottom navigation={navigation} />
         </Container >

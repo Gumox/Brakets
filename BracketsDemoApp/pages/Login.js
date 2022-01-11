@@ -9,7 +9,7 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Alert ,Image } from 'react-native';
+import { Alert ,Image ,View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import store from '../store/store';
 import ip from '../serverIp/Ip';
@@ -160,7 +160,7 @@ function Login({ navigation }): React.ReactElement {
 
   return (
     <Container>
-      <ImgIcon source={require('../Icons/App_Icon.png')}/>
+      <ImageView><ImgIcon source={require('../Icons/Suseon_OK_Icon.png')}/></ImageView>
       <Button onPress={() => signInWithKakao()}>
         <Label> 카카오 로그인 </Label>
         </Button>
@@ -177,10 +177,14 @@ export default Login;
 const ImgIcon =styled.Image`
     width: 200px;
     height: 200px;
-    margin-bottom: 30px;
     border-radius:15px;
-    border: 3px solid #78909c;
-
+`;
+const ImageView = styled.View`
+  width: 205px;
+  height: 205px;
+  border-radius:15px;
+  justify-content: center;
+  align-items: center
 `;
 const Container = styled.View`
       flex: 1;
