@@ -73,7 +73,7 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - kakao-login (3.4.2):
+  - kakao-login (3.4.3):
     - KakaoSDK (~> 2.4.0)
     - KakaoSDKAuth (~> 2.4.0)
     - KakaoSDKCommon (~> 2.4.0)
@@ -417,10 +417,6 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNImagesCombineLibrary (1.0.27):
-    - React
-  - RNImageTools (1.5.8):
-    - React
   - RNPermissions (3.1.0):
     - React-Core
   - RNScreens (3.8.0):
@@ -504,8 +500,6 @@ DEPENDENCIES:
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
-  - RNImagesCombineLibrary (from `../node_modules/react-native-images-combine`)
-  - RNImageTools (from `../node_modules/react-native-image-tools-wm`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSketchCanvas (from `../node_modules/@terrylinla/react-native-sketch-canvas`)"
@@ -623,10 +617,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
-  RNImagesCombineLibrary:
-    :path: "../node_modules/react-native-images-combine"
-  RNImageTools:
-    :path: "../node_modules/react-native-image-tools-wm"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNScreens:
@@ -656,7 +646,7 @@ SPEC CHECKSUMS:
   FlipperKit: d8d346844eca5d9120c17d441a2f38596e8ed2b9
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
-  kakao-login: c3a28605d3d2576625781c7643d5e3350e02e719
+  kakao-login: f5633a612ae8af34edacf4f9d8bed87964a18117
   KakaoSDK: 1e80d6877c0eac6a310f93c73fb15ca56c05f2bd
   KakaoSDKAuth: fcba1c9ede431683f5bdd84c835a96981cb115a5
   KakaoSDKCommon: 0912aa0c7db051ae8dc07a35395cf644f7728f95
@@ -703,8 +693,6 @@ SPEC CHECKSUMS:
   RNCPicker: f7a40b21b915b7a187624d52f52b7bc2f73ea413
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNImagesCombineLibrary: eb6763df426b2240123647b2a0efdd50f864f930
-  RNImageTools: 81a1663d9f0bcc72c3b80fd048be7240b3a1e2de
   RNPermissions: 4b54095940aea8c03fa3e6c92d4ac3647b31ed4e
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
   RNSketchCanvas: 9c28adb5381543ed55cc98ce6de46479cb3cb12c

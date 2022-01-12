@@ -535,6 +535,7 @@
 				DEVELOPMENT_TEAM = 3SP22LXNPS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = DempApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -562,6 +563,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3SP22LXNPS;
 				INFOPLIST_FILE = DempApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
