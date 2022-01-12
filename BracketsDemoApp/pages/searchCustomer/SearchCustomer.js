@@ -5,11 +5,7 @@ import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
 import Bottom from '../../components/Bottom';
-<<<<<<< HEAD
 import { Alert, Pressable } from 'react-native';
-=======
-import { Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
->>>>>>> PickerModal
 import store from '../../store/store';
 import ip from '../../serverIp/Ip';
 
@@ -68,7 +64,6 @@ function SearchCustomer({ navigation }) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(bodyData)
-<<<<<<< HEAD
         });
         console.log("is hear?")
         console.log(response.body);
@@ -79,18 +74,6 @@ function SearchCustomer({ navigation }) {
         setLoading(false);
         console.log("?????-------*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-")
         navigation.navigate('CustomerSearchList',{customers:customers})
-=======
-      });
-
-      const json = await response.json(); 
-
-      setData(json.body);
-      console.log(json.body);
-      parseData(json.body);
-      setLoading(false);
-      console.log("?????-------*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-")
-      navigation.navigate('CustomerSearchList', { customers: customers })
->>>>>>> PickerModal
     } catch (error) {
       console.log(error)
       console.log("?????-------")
@@ -116,7 +99,6 @@ function SearchCustomer({ navigation }) {
               }}
               onSubmitEditing={(event) => (getCustomer({ "lastphone": pNumber }))}
             ></Input>
-<<<<<<< HEAD
             </DropBackground>
           </CenterText>
             <Pressable onPress={()=>{
@@ -126,13 +108,6 @@ function SearchCustomer({ navigation }) {
             </Pressable>
           <Button onPress = {() =>{ 
             if(pNumber != null&&pNumber.length>3){
-=======
-          </DropBackground>
-        </CenterText>
-
-        <Button onPress={() => {
-          if (pNumber != null && pNumber.length > 3) {
->>>>>>> PickerModal
 
             setData([]);
             console.log(data);
