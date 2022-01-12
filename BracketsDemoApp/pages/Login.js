@@ -9,16 +9,10 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Alert ,Image ,View} from 'react-native';
+import { Alert, Image, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import store from '../store/store';
 import ip from '../serverIp/Ip';
-
-// 자동 로그인 시 설정 창 정보
-
-// redirect 
-
-// android emul
 
 
 function Login({ navigation }): React.ReactElement {
@@ -37,7 +31,7 @@ function Login({ navigation }): React.ReactElement {
 
     const option = {
 
-      url: ip+`/api/auth/store?email=${userEmail}&userId=${userId}`,
+      url: ip + `/api/auth/store?email=${userEmail}&userId=${userId}`,
       // url: `http://34.64.182.76/api/auth/store?email=$&userId=`,
       // 잘못된 url 예시
 
@@ -90,11 +84,11 @@ function Login({ navigation }): React.ReactElement {
 
 
   }
-  function savedInfo(data){
+  function savedInfo(data) {
     AsyncStorage.setItem(
       'info',
       JSON.stringify({
-        "data":data
+        "data": data
       }), () => {
         store.dispatch({ type: 'USER_INFO', userInfo: data })
         console.log("sssssss")
@@ -105,26 +99,25 @@ function Login({ navigation }): React.ReactElement {
   }
   const savedResultInfo = AsyncStorage.getItem('info', (err, result) => {
     if (result !== null) {
-      const UserInfo =  JSON.parse(result);
+      const UserInfo = JSON.parse(result);
       console.log(UserInfo.data[0])
       store.dispatch({ type: 'USER_INFO', userInfo: UserInfo.data })
-      console.log("sssssss")
       console.log(store.getState().userInfo[0].staff_id)
     }
-    })
+  })
 
   const savedResultId = AsyncStorage.getItem('userInfo', (err, result) => {
-      //user_id에 담긴 아이디 불러오기
-  if (result !== null) {
-    const UserInfo = JSON.parse(result);
-    //console.log(UserInfo)
+    //user_id에 담긴 아이디 불러오기
+    if (result !== null) {
+      const UserInfo = JSON.parse(result);
+      //console.log(UserInfo)
       store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
       store.dispatch({ type: 'storeName', storeName: UserInfo.userName })
       navigation.replace('ReceiptDivision');
-  }
-  console.log('asdasd'+JSON.parse(result));
+    }
+    console.log('asdasd' + JSON.parse(result));
   });
- 
+
 
   const signInWithKakao = async (): Promise<void> => {
 
@@ -158,67 +151,58 @@ function Login({ navigation }): React.ReactElement {
     const message = await unlink();
   };
 
+
   return (
     <Container>
-      <ImageView><ImgIcon source={require('../Icons/Suseon_OK_Icon.png')}/></ImageView>
+      <ImageView><ImgIcon source={require('../Icons/Suseon_OK_Icon.png')} /></ImageView>
       <Button onPress={() => signInWithKakao()}>
         <Label> 카카오 로그인 </Label>
-        </Button>
-
-
-      {/* <Button onPress={() => getProfile()}>
-        <Label> 프로필 정보 </Label>
-      </Button> */}
+      </Button>
     </Container>
   );
 }
 
 export default Login;
-const ImgIcon =styled.Image`
+
+const ImgIcon = styled.Image`
     width: 200px;
     height: 200px;
     border-radius:15px;
 `;
 const ImageView = styled.View`
-  width: 205px;
-  height: 205px;
-  border-radius:15px;
-  justify-content: center;
-  align-items: center
+    width: 205px;
+    height: 205px;
+    border-radius:15px;
+    justify-content: center;
+    align-items: center;
 `;
 const Container = styled.View`
-      flex: 1;
-      align-self: stretch;
-      overflow: scroll;
-      background-color: ${({ theme }) => theme.background};
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
+    flex: 1;
+    align-self: stretch;
+    overflow: scroll;
+    background-color: ${({ theme }) => theme.background};
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     `;
-
 const ResultView = styled.View`
-      flex: 1;
+    flex: 1;
     `;
-
 const Button = styled.TouchableOpacity`
-        
-        width: 75%;
-        height: 50px;
-        background: #F7E314;
-        justify-content: center;
-        align-items: center;
-        margin:15px;
-        border-radius:12px;
+    width: 75%;
+    height: 50px;
+    background: #F7E314;
+    justify-content: center;
+    align-items: center;
+    margin:15px;
+    border-radius:12px;
     `;
-
 const Label = styled.Text`
-        font-size: 16px;
-        font-weight: bold;
-        color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
     `;
-
 const MiddleView = styled.View`
-  flex:1;
-
+    flex:1;
     `;

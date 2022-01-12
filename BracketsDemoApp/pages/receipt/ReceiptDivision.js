@@ -26,7 +26,7 @@ const BlueText = styled.Text`
     font-weight: bold;
     font-size: 20px;
     color:#78909c;
-    margin-Top:50px
+    margin-Top:50px;
 `;
 const GrayText = styled.Text`
     font-size: 20px;
@@ -76,7 +76,7 @@ const TouchableView = styled.TouchableOpacity`
     
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 
 const PicckerView = styled.View`
@@ -86,17 +86,18 @@ const PicckerView = styled.View`
 `;
 function ReceiptDivision({navigation}) {
    
-    const [itemList,setItemList]= useState([]);
-    const info =store.getState().userInfo;
-    const [seletStore,setSeletStore] =useState(null); 
+    const [itemList, setItemList]= useState([]);
+    const info = store.getState().userInfo;
+    const [seletStore, setSeletStore] = useState(null); 
     
     useEffect(()=>{
         var i =1;
         var list =[]
+        console.log('receipt division: ' + info)
         info.forEach(obj => {
             list.push({ label: i+'.'+obj.name, value: obj.store_id ,brandId: obj.brand_id })
             i = i +1;
-        });
+        })
         setItemList(list)
         console.log(itemList)
     },[]);
@@ -121,8 +122,6 @@ function ReceiptDivision({navigation}) {
                                 store.dispatch({type:"BRAND_ID",brand_id:obj.brandId })
                                 setSeletStore(value)
                             }
-                            
-
                         });
                         console.log(store.getState().store_id)
                         console.log(store.getState().brand_id)
@@ -152,7 +151,7 @@ function ReceiptDivision({navigation}) {
                 
             }}>고객용 제품</ReceiptButton>
             
-            <ReceiptButton onPress={ ()=> {
+            <ReceiptButton onPress={ () => {
                 if(seletStore === null){
                     Alert.alert(            
                         "",             
