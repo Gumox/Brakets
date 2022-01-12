@@ -8,6 +8,7 @@ import Bottom from '../../components/Bottom';
 import { Alert, Pressable } from 'react-native';
 import store from '../../store/store';
 import ip from '../../serverIp/Ip';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 const Title = styled.Text`
   color :#000000
