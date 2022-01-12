@@ -72,13 +72,21 @@ function SearchCustomer( { navigation } ) {
         console.log(json.body);
         parseData(json.body);
         setLoading(false);
-        console.log("?????-------*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-")
         navigation.navigate('CustomerSearchList',{customers:customers})
     } catch (error) {
         console.log(error)
         console.log("?????-------")
+        if(data == null || data == ""){
+          Alert.alert(            
+            "",             
+            "고객 정보가 없습니다",                   
+            [                              
+                { text: "확인"},
+            ]
+          )
+        }
     } finally {
-        setLoading(false);
+        setLoading(false);  
     }
 }
 
