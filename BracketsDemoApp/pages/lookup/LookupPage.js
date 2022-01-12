@@ -236,7 +236,7 @@ function LookupPage({ navigation }) {
               }>
               <PrView>
                 <View style={{ flex: 1 }}><Text style={styles.Lavel}>{startDate.reDate}</Text></View>
-                <View style={{ flex: 0.3 }}><ImgIcon source={require(cal)} /></View>
+                <View style={{ flex: 0.25 }}><ImgIcon source={require(cal)} /></View>
               </PrView>
             </TouchableView>
 
@@ -246,6 +246,7 @@ function LookupPage({ navigation }) {
                 mode="date"
                 onConfirm={handleConfirmFirst}
                 onCancel={hideDatePickerFrist}
+                locale='ko-kr'
             />) : (
               <DateTimePicker
                   testID="startDateTimePicker"
@@ -276,7 +277,7 @@ function LookupPage({ navigation }) {
               }>
               <PrView>
                 <View style={{ flex: 1 }}><Text style={styles.Lavel}>{endDate.reDate}</Text></View>
-                <View style={{ flex: 0.3 }}><ImgIcon source={require('../../Icons/calendar.png')} /></View>
+                <View style={{ flex: 0.25 }}><ImgIcon source={require('../../Icons/calendar.png')} /></View>
               </PrView>
             </TouchableView>
 
@@ -288,6 +289,7 @@ function LookupPage({ navigation }) {
                   handleConfirmSecond
                 }
                 onCancel={hideDatePickerSecond}
+                locale='ko-kr'
             />) : (
               <DateTimePicker
                 testID="endDateTimePicker2"
