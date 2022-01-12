@@ -73,15 +73,6 @@ const PicckerView = styled.View`
 `;
 function ReceiptDivision({navigation}) {
    
-<<<<<<< HEAD
-    const [itemList,setItemList] = useState([]);
-    const info =store.getState().userInfo;
-    const [seletStore,setSeletStore] = useState(null); 
-    
-    useEffect(()=>{
-        let i = 1;
-        let list = []
-=======
     const [itemList, setItemList]= useState([]);
     const info = store.getState().userInfo;
     const [seletStore, setSeletStore] = useState(null); 
@@ -90,7 +81,6 @@ function ReceiptDivision({navigation}) {
         var i =1;
         var list =[]
         console.log('receipt division: ' + info)
->>>>>>> PickerModal
         info.forEach(obj => {
             list.push({ label: i+'.'+obj.name, value: obj.store_id, brandId: obj.brand_id })
             i = i +1;
