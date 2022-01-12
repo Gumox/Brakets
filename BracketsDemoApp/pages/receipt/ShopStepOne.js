@@ -57,6 +57,7 @@ const check = async () => {
 function ShopStepOne( { navigation } ) {
     state = {nextPage:'InputAlternativeNumber'};
     check();
+    console.log(store.getState().customer)
     return (
         <Container>
             <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>

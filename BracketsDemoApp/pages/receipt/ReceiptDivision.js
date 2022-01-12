@@ -46,20 +46,7 @@ const BottomView = styled.View`
     /* background: red; */
 `;
 
-const BottomButton = styled.TouchableOpacity`
-    width: 25%;
-    height: 30%;
-    background: #78909c;
-    border-color: red;
-    align-items: center;
-    justify-content: center;
-`;
 
-const BottomButtonText = styled.Text`
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-`;
 
 const BottomEmptySpace = styled.View`
     background: #78909c;
@@ -81,20 +68,20 @@ const TouchableView = styled.TouchableOpacity`
 
 const PicckerView = styled.View`
     width:200px;
-    border: 3px solid #797979;
+    border:3px solid #797979;
     border-radius:12px;
 `;
 function ReceiptDivision({navigation}) {
    
-    const [itemList,setItemList]= useState([]);
+    const [itemList,setItemList] = useState([]);
     const info =store.getState().userInfo;
-    const [seletStore,setSeletStore] =useState(null); 
+    const [seletStore,setSeletStore] = useState(null); 
     
     useEffect(()=>{
-        var i =1;
-        var list =[]
+        let i = 1;
+        let list = []
         info.forEach(obj => {
-            list.push({ label: i+'.'+obj.name, value: obj.store_id ,brandId: obj.brand_id })
+            list.push({ label: i+'.'+obj.name, value: obj.store_id, brandId: obj.brand_id })
             i = i +1;
         });
         setItemList(list)
@@ -110,8 +97,8 @@ function ReceiptDivision({navigation}) {
             <TopIntro>접수 구분</TopIntro>
             <PicckerView>
                 <RNPickerSelect
-                placeholder = {{label : '매장을 선택하세요',value: null }}
-                style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : '#000000'} }
+                placeholder = {{label : '매장을 선택하세요', value: null }}
+                style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : '#000000', color:"#000000"} }
                 onValueChange={(value) => 
                     {   
                         itemList.forEach(obj => {

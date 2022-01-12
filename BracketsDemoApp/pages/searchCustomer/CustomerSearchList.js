@@ -70,9 +70,10 @@ export default function CustomerSearchList({route, navigation}){
         
         var customer =(
             <View key = {key} style ={{justifyContent:'center',alignItems:"center" }} >
-                <TouchableHighlight underlayColor={"#CCC"} style={{ width:"80%", borderRadius :15 , backgroundColor: '#d6d6d6' ,margin:10}} onPress={()=>{ 
+                <TouchableHighlight underlayColor={"#CCC"} style={{ width:"80%",backgroundColor:"#ffffff",  borderBottomColor: '#d6d6d6' ,borderBottomWidth:3,margin:2}} onPress={()=>{ 
                     setCName(customers[key].cName);
                     setCPhone(customers[key].cPhone);
+                    console.log(customers[key])
                     store.dispatch({type:'CUSTOMER',customer: customers[key]});
                     console.log(store.getState().customer)
                     }}>

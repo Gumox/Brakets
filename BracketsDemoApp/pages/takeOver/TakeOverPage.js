@@ -43,6 +43,7 @@ const InfoView =styled.View`
 `;
 
 const Input = styled.TextInput`
+    color: #000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -50,6 +51,7 @@ const Input = styled.TextInput`
     border-radius:10px
 `;
 const InputText = styled.Text`
+    color: #000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
@@ -92,12 +94,15 @@ const Btn = styled.TouchableOpacity`
     margin:15px;
     border-radius:12px;    
 `;
-
+const InText = styled.Text`
+    color:#000000;
+`;
 const styles = StyleSheet.create({
     Lavel:{
         flex:1,
         fontSize:(Dimensions.get('window').width)*0.04,
         margin:10,
+        color: '#000000',
     },
     outView :{
         backgroundColor:"#000000",
@@ -268,14 +273,14 @@ function TakeOverPage( { route,navigation } ) {
         if(readData["repair2_store_id"] != null){
             const repair2_store =(
                 <View>
-                    <Text style={{marginBottom:10}}>수선처 2 : {repairShop}</Text>
+                    <Text style={{marginBottom:10 ,color: '#000000'}}>수선처 2 : {repairShop}</Text>
                     <InfoView>
-                        <Text>수선처 2 접수일</Text>
+                        <InText>수선처 2 접수일</InText>
                         <InputText>{repairShopDate}</InputText>
                             
-                        <Text>수선처 2 발송일</Text>
+                        <InText>수선처 2 발송일</InText>
                         <InputText>{repairShopSendDate}</InputText>
-                        <Text>수선처 2 설명</Text>
+                        <InText>수선처 2 설명</InText>
                         <InputText>{repairShopSendDescription}</InputText>
                     </InfoView>
                 </View>
@@ -284,14 +289,14 @@ function TakeOverPage( { route,navigation } ) {
         if(readData["repair3_store_id"] != null){
             const repair2_store =(
                 <View>
-                    <Text style={{marginBottom:10}}>수선처 3 : {repairShop}</Text>
+                    <Text style={{marginBottom:10,color: '#000000'}}>수선처 3 : {repairShop}</Text>
                     <InfoView>
-                        <Text>수선처 3 접수일</Text>
+                        <InText>수선처 3 접수일</InText>
                         <InputText>{repairShopDate}</InputText>
                             
-                        <Text>수선처 3 발송일</Text>
+                        <InText>수선처 3 발송일</InText>
                         <InputText>{repairShopSendDate}</InputText>
-                        <Text>수선처 3 설명</Text>
+                        <InText>수선처 3 설명</InText>
                         <InputText>{repairShopSendDescription}</InputText>
                     </InfoView>
                 </View>
@@ -385,61 +390,61 @@ function TakeOverPage( { route,navigation } ) {
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
                 <InfoView>
-                  <Text>서비스 카드 번호</Text>
+                  <InText>서비스 카드 번호</InText>
                       <InputText>{cardCode}
                             </InputText>
-                  <Text>접수 구분</Text>
+                  <InText>접수 구분</InText>
                         <InputText>{checkReceipt}</InputText>
-                  <Text>고객명</Text>
+                  <InText>고객명</InText>
                         <InputText>{customerName}</InputText>
-                  <Text>고객 연락처</Text>
+                  <InText>고객 연락처</InText>
                         <InputText>{customerPhone}</InputText>
                 </InfoView>
 
                 <InfoView>
-                  <Text>매장 접수일</Text>
+                  <InText>매장 접수일</InText>
                         <InputText>{receiptDate}</InputText>
-                  <Text>고객 약속일</Text>
+                  <InText>고객 약속일</InText>
                         <InputText>{appointmentDate}</InputText>
                 </InfoView>
 
                 <InfoView>
                     <Half>
                       <HalfLine>
-                          <Text>시즌</Text>
+                          <InText>시즌</InText>
                               <InputText>{season}</InputText>
                       </HalfLine>
 
                       <HalfLine>
-                          <Text>스타일</Text>
+                          <InText>스타일</InText>
                               <InputText>{productStyle}</InputText>
                       </HalfLine>
                     </Half>
 
                     <Half>
                           <HalfLine>
-                              <Text>컬러</Text>
+                              <InText>컬러</InText>
                                   <InputText>{productColor}</InputText>
                           </HalfLine>
 
                           <HalfLine>
-                              <Text>사이즈</Text>
+                              <InText>사이즈</InText>
                                   <InputText>{productSize}</InputText>
                             </HalfLine>
                         </Half>
                       
-                        <Text>제품 바코드/qr코드 번호</Text>
+                        <InText>제품 바코드/qr코드 번호</InText>
                         <InputText>{productCode}</InputText>
-                    <Text>차수</Text>
+                    <InText>차수</InText>
                         <InputText>{numbering}</InputText>
                    
-                    <Text>판매가</Text>
+                    <InText>판매가</InText>
                         <InputText>{productPrice}</InputText>
               </InfoView>
               <InfoView>
-                    <Text>제품 구분</Text>
-                    <Text style={{fontSize:20,padding:15}}>{receiptType}</Text>
-                    <Text>제품 전체 사진</Text>
+                    <InText>제품 구분</InText>
+                    <InText style={{fontSize:20,padding:15}}>{receiptType}</InText>
+                    <InText>제품 전체 사진</InText>
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -471,56 +476,56 @@ function TakeOverPage( { route,navigation } ) {
                             </Pressable>
                         </View>
 
-                    <Text>제품 세부 사진 (수선전)</Text>
+                    <InText>제품 세부 사진 (수선전)</InText>
                     <View style={{alignItems:"center"}}>
                         <ScrollView  horizontal ={true}>
                             {beforeImageViews}
                         </ScrollView>
                     </View>
-                    <Text>제품 세부 사진 (수선 후)</Text>
+                    <InText>제품 세부 사진 (수선 후)</InText>
                     
                     <View style={{alignItems:"center"}}>
                         <ScrollView style={{height : 150}} horizontal ={true}>
                             {afterImageViews}    
                         </ScrollView>
                     </View>
-                    <Text>매장 접수 내용</Text>
+                    <InText>매장 접수 내용</InText>
                         <InputText>{storeMessage}</InputText>
               </InfoView>
               <InfoView>
-                <Text>과실 구분</Text>
+                <InText>과실 구분</InText>
                 <InputText>{checkMistake}</InputText>
 
-                <Text>내용 분석</Text>
+                <InText>내용 분석</InText>
                 <InputText>{contentAnalysis}</InputText>
-              <Text>판정 결과</Text>
+              <InText>판정 결과</InText>
               <InputText>{result}</InputText>
 
             </InfoView>
 
-            <Text style={{marginBottom:10}}>수선처 : {repairShop}</Text>
+            <Text style={{marginBottom:10, color: '#000000'}}>수선처 : {repairShop}</Text>
               <InfoView>
-                  <Text>수선처 접수일</Text>
+                  <InText>수선처 접수일</InText>
                   <InputText>{repairShopDate}</InputText>
                       
-                  <Text>수선처 발송일</Text>
+                  <InText>수선처 발송일</InText>
                   <InputText>{repairShopSendDate}</InputText>
-                <Text>수선처 설명</Text>
+                <InText>수선처 설명</InText>
                 <InputText>{repairShopSendDescription}</InputText>
 
               </InfoView>
               
 
               <InfoView>
-                <Text>본사 접수일</Text>
+                <InText>본사 접수일</InText>
                 <InputText>{mainCenterDate}</InputText>
-                <Text>본사 발송일</Text>
+                <InText>본사 발송일</InText>
                 <InputText>{mainCenterSendDate}</InputText>
-                <Text>본사 설명</Text>
+                <InText>본사 설명</InText>
                 <InputText>{mainCenterSendDescription}</InputText>
               </InfoView>
 
-              <Text style={{marginBottom : 10, marginLeft:10}}>매장 인수일</Text>
+              <Text style={{marginBottom : 10, marginLeft:10 ,color: '#000000'}}>매장 인수일</Text>
               <TouchableView onPress={tDate.showDatepicker}>
               <PrView>
               <Text style={styles.Lavel}>{selectDay}</Text>
@@ -539,7 +544,7 @@ function TakeOverPage( { route,navigation } ) {
               )}
             <Half style = {{marginBottom : 50}}>
                 <Check>
-                      <Text>유상수선 </Text>
+                      <InText>유상수선 </InText>
                       <CheckBox
                             center
                             checked={isSelected}

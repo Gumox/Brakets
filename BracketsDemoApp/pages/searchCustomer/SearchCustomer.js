@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
 import Bottom from '../../components/Bottom';
-import { Alert } from 'react-native';
+import { Alert, Pressable } from 'react-native';
 import store from '../../store/store';
 import ip from '../../serverIp/Ip';
 const Title = styled.Text`
@@ -65,6 +65,7 @@ function SearchCustomer( { navigation } ) {
             },
         body: JSON.stringify(bodyData)
         });
+        console.log("is hear?")
         console.log(response.body);
         const json = await response.json(); // !!!
         setData(json.body);
@@ -99,7 +100,11 @@ function SearchCustomer( { navigation } ) {
             ></Input>
             </DropBackground>
           </CenterText>
-
+            <Pressable onPress={()=>{
+                navigation.navigate("AddCustomer")
+            }}>
+              <BlackText>신규 고객 등록</BlackText>
+            </Pressable>
           <Button onPress = {() =>{ 
             if(pNumber != null&&pNumber.length>3){
 

@@ -44,6 +44,7 @@ import TakePhoto from './Functions/TakePhoto';
 import BarcodeScreen from './Functions/BarcodeScreen';
 import PhotoControl from './Functions/PhotoControl';
 import Capture from './Functions/Capture';
+import AddCustomer from './pages/searchCustomer/addCustomer/AddCustomer'
 import CustomerInfo from './pages/searchCustomer/CustomerInfo';
 import CustomerSearchList from './pages/searchCustomer/CustomerSearchList';
 import Notice from './pages/searchCustomer/Notice'
@@ -103,6 +104,7 @@ function App() {
         <Stack.Screen name="SearchCustomer" component={SearchCustomer} options={{  title: '',headerTitleAlign: 'center' }} />
         <Stack.Screen name="CustomerSearchList" component={CustomerSearchList} options={{  title: '',headerTitleAlign: 'center' }} />
         <Stack.Screen name="CustomerInfo" component={CustomerInfo} options={{  title: '',headerTitleAlign: 'center' }} />
+        <Stack.Screen name="AddCustomer" component={AddCustomer} options={{  title: '',headerTitleAlign: 'center' }} />
         <Stack.Screen name="Notice" component={Notice} options={{  title: '수선 관련 고지 사항',headerTitleAlign: 'center' }} />
         <Stack.Screen name="SmsNotice" component={SmsNotice} options={{  title: '문자 수신 동의 여부',headerTitleAlign: 'center' }} />
         <Stack.Screen name="PrivacyNotice" component={PrivacyNotice} options={{  title: '개인 정보 동의 여부',headerTitleAlign: 'center' }} />

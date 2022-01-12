@@ -15,6 +15,7 @@ import store from '../../store/store';
 const RegistText= styled.Text`
     font-weight: bold;
     font-size: 30px;
+    color : #000000;
 `;
 const BlueText = styled.Text`
     font-weight: bold;
