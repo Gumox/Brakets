@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 
 const Container = styled.View`
-    flex: 1
+    flex: 1;
 `;
 
 const ButtonView = styled.View`
@@ -27,7 +27,7 @@ class BarcodeScreen extends Component {
        /* console.log(scanResult.data);
        console.log(scanResult.type); */
 
-       var codeType = ''
+       var codeType = '';
        
         if (scanResult.data !== null) {
 
@@ -39,6 +39,8 @@ class BarcodeScreen extends Component {
                     codeType = 'barcode'
                 }
         }
+        console.log(scanResult.data);
+        
         this.props.navigation.replace(
             'ProductInfo',
             {codeType: codeType, code: scanResult.data, serial: ''})
