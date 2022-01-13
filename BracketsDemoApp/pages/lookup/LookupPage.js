@@ -295,9 +295,11 @@ function LookupPage({ navigation }) {
 
             <TouchableView onPress={
               // startDate.showDatepicker
-               
+              Platform.OS === 'ios' ? (
+                showDatePickerSecond
+              ): (
                 endDate.showDatepicker
-                
+                )
               }>
               <PrView>
                 <View style={{ flex: 1 }}><Text style={styles.Lavel}>{endDate.reDate}</Text></View>
