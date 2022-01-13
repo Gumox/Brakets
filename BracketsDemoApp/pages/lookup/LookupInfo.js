@@ -46,7 +46,7 @@ const Input = styled.TextInput`
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px;
-    color:#000000
+    color:#000000;
 `;
 const InputText = styled.Text`
     color:#000000;
@@ -54,7 +54,7 @@ const InputText = styled.Text`
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const Half = styled.View`
     width : 100%;
