@@ -11,6 +11,7 @@ import RepairDetail from './pages/RepairDetail'
 
 import Picture from './functions/Picture';
 import DetectCode from './functions/DetectCode'
+import Login from './pages/Login';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,8 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
 
+        <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+
         <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{  title: '' ,headerTitleAlign: 'center'}}/>
         <Stack.Screen name="PhotoStepOne" component = {PhotoStepOne} options={ {  title: '' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="PhotoStepTwo" component = {PhotoStepTwo} options={ {  title: '' ,headerTitleAlign: 'center'} } />
@@ -28,7 +31,6 @@ function App() {
         <Stack.Screen name="Picture" component = {Picture} options={ {  title: '' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="DetectCode" component = {DetectCode} options={ {  title: '' ,headerTitleAlign: 'center'} } />
 
-      
       </Stack.Navigator>
     </NavigationContainer>
   );
