@@ -33,7 +33,6 @@ function Login({ navigation }): React.ReactElement {
 
       url: ip + `/api/auth/store?email=${userEmail}&userId=${userId}`,
       // url: `http://34.64.182.76/api/auth/store?email=$&userId=`,
-      // 잘못된 url 예시
 
       method: 'GET',
       header: {
@@ -64,8 +63,7 @@ function Login({ navigation }): React.ReactElement {
         )
       })
 
-    // console.log("Effect was run");
-    console.log(new Date());
+    // console.log(new Date());
   });
 
   function saveId(_userName, _userEmail) {
@@ -91,10 +89,8 @@ function Login({ navigation }): React.ReactElement {
         "data": data
       }), () => {
         store.dispatch({ type: 'USER_INFO', userInfo: data })
-        console.log("sssssss")
         console.log(data)
         console.log(store.getState().userInfo)
-        console.log("sssssss")
       });
   }
   const savedResultInfo = AsyncStorage.getItem('info', (err, result) => {
@@ -115,7 +111,6 @@ function Login({ navigation }): React.ReactElement {
       store.dispatch({ type: 'storeName', storeName: UserInfo.userName })
       navigation.replace('ReceiptDivision');
     }
-    console.log('asdasd' + JSON.parse(result));
   });
 
 
