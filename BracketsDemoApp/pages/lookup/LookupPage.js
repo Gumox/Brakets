@@ -222,16 +222,18 @@ function LookupPage({ navigation }) {
 
   if(Platform.OS === 'ios'){
     console.log("ios")
-    startDatePicker = (isDatePickerVisibleFirst&&(
+    startDatePicker = (
       <DateTimePickerModal
+        isVisible={isDatePickerVisibleFirst}
         mode="date"
         onConfirm={handleConfirmFirst}
         onCancel={hideDatePickerFrist}
         locale='ko-kr'
       />
-    ))
-    endDatePicker = (isDatePickerVisibleSecond&&(
+    )
+    endDatePicker = (
     <DateTimePickerModal
+        isVisible={isDatePickerVisibleSecond}
         mode="date"
         onConfirm={
           handleConfirmSecond
@@ -239,7 +241,7 @@ function LookupPage({ navigation }) {
         onCancel={hideDatePickerSecond}
         locale='ko-kr'
     />
-    ))
+    )
   }else{
     console.log("and")
     startDatePicker = (startDate.show && (
@@ -299,7 +301,7 @@ function LookupPage({ navigation }) {
                 showDatePickerSecond
               ): (
                 endDate.showDatepicker
-                )
+              )
               }>
               <PrView>
                 <View style={{ flex: 1 }}><Text style={styles.Lavel}>{endDate.reDate}</Text></View>
