@@ -1,11 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Contents from '../../components/Contents';
 import ButtonBlack from '../../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../../components/ContainView';
 import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom';
-import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,Button} from 'react-native';
+import {Alert, Image, View,Text, StyleSheet,Modal ,Pressable,Dimensions,Button} from 'react-native';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -79,45 +79,74 @@ const InfoView =styled.View`
     padding:15px;
 `;
 
+const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    xView:{
+        backgroundColor: "#78909c",
+        borderRadius: 20,
+    },
+    modalView: {
+      margin: 10,
+      backgroundColor: "white",
+      borderRadius: 20,
+      paddingRight: 5,
+      paddingLeft: 5,
+      paddingTop: 15,
+      paddingBottom: 15,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+    }
+  });
 Date.prototype.addDays = function(days) {
     var date = new Date(this.valueOf());
     date.setDate(date.getDate() + days);
     return date;
 }
 
-const useInput=(inputDate)=> {
-    const [date, setDate] = React.useState(inputDate);
-    const [mode, setMode] = React.useState('date');
-    const [show, setShow] = React.useState(false);
 
-    const showMode = (currentMode) => {
-        setShow(true);
-        setMode(currentMode);
-    };
-    const showDatepicker = () => {
-        showMode('date');
-    };
-
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date
-        setShow(Platform.OS === 'ios');
-        setDate(currentDate);
-        console.log(currentDate)
-    }
-    return {
-        date,
-        showDatepicker,
-        show,
-        mode,
-        onChange
-    }
-}
 
 function ShopStepFour({navigation}) {
+    const useInput=(inputDate)=> {
+        const [date, setDate] = React.useState(inputDate);
+        const [mode, setMode] = React.useState('date');
+        const [show, setShow] = React.useState(false);
+    
+        const showMode = (currentMode) => {
+            setShow(true);
+            setMode(currentMode);
+        };
+        const showDatepicker = () => {
+            showMode('date');
+        };
+    
+        const onChange = (event, selectedDate) => {
+            const currentDate = selectedDate || date
+            setShow(Platform.OS === 'ios');
+            setDate(currentDate);
+            setDateInput2(currentDate.addDays(service_date))
+            console.log(currentDate)
+        }
+        return {
+            date,
+            showDatepicker,
+            show,
+            mode,
+            onChange
+        }
+    }
     const service_date =store.getState().serviceDate;
     console.log(service_date)
     const dateInput1 = useInput(new Date())
-    const dateInput2 = useInput(new Date().addDays(service_date))
+    const [dateInput2,setDateInput2] = useState(new Date().addDays(service_date))
       
 
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
@@ -127,34 +156,8 @@ function ShopStepFour({navigation}) {
     
     const cardImgUri =store.getState().card;
 
+    
 
-    const styles = StyleSheet.create({
-        centeredView: {
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 22
-        },
-        xView:{
-            backgroundColor: "#78909c",
-            borderRadius: 20,
-        },
-        modalView: {
-          margin: 10,
-          backgroundColor: "white",
-          borderRadius: 20,
-          paddingRight: 5,
-          paddingLeft: 5,
-          paddingTop: 15,
-          paddingBottom: 15,
-          alignItems: "center",
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 2
-          },
-        }
-      });
       const updateReceipt = async (receipt_id,code,receiptdate,duedate) => {
         var formdata = new FormData();
 
@@ -174,7 +177,8 @@ function ShopStepFour({navigation}) {
             body: formdata
             });
             const json = await response.json();
-           
+            console.log(json)
+            navigation.navigate( 'ShopStepFive' ) 
         } catch (error) {
             console.error(error);
         } finally {
@@ -250,7 +254,7 @@ function ShopStepFour({navigation}) {
                 <PrView><Label> 고객 약속일 </Label><LabelPlus>+{service_date}일</LabelPlus></PrView>
                 <TouchableView >
                     <PrView>
-                    <Label>{dateInput2.date.getFullYear()}년  {dateInput2.date.getMonth()+1}월  {dateInput2.date.getDate()}일</Label>
+                    <Label>{dateInput2.getFullYear()}년  {dateInput2.getMonth()+1}월  {dateInput2.getDate()}일</Label>
                     </PrView>
                 </TouchableView>
                 
@@ -264,10 +268,10 @@ function ShopStepFour({navigation}) {
                     const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
                     console.log(recDate)
                 
-                    const dueDate =dateInput2.date.getFullYear()+'-'+(dateInput2.date.getMonth()+1)+'-'+dateInput2.date.getDate();
+                    const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
 
                     updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate)
-                    navigation.navigate( 'ShopStepFive' ) 
+                    
                 }}>
                     다음: 5단계
                 </ButtonBlack>

@@ -152,7 +152,7 @@ function ShopStepOne( { navigation } ) {
         console.log(formdata)
 
         try {
-            const response = await fetch(ip+'/api/submitReceipt',{method: 'POST',
+            const response = await fetch('http://localhost:3000/api/submitReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
                 'Content-Type': 'multipart/form-data'
@@ -160,6 +160,7 @@ function ShopStepOne( { navigation } ) {
             body: formdata
             });
             const json = await response.json();
+            console.log(json)
            
         } catch (error) {
             console.error(error);
@@ -251,8 +252,8 @@ function ShopStepOne( { navigation } ) {
             </InfoView>  
             <Button onPress={ ()=>{
                     submitReceipt(store.getState().receipt_id,bag)
-                    store.dispatch({type:"STORE_CLEAR"})
-                    navigation.popToTop()
+                    /*store.dispatch({type:"STORE_CLEAR"})
+                    navigation.popToTop()*/
                 }}>
                 완료
             </Button>
