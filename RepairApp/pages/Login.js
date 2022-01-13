@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
     KakaoOAuthToken,
     KakaoProfile,
@@ -9,17 +9,34 @@ import {
   } from '@react-native-seoul/kakao-login';
 import styled from 'styled-components';
 
+function Login({navigation}) {
 
-function Login() {
+    const isFirstRun = useRef(true);
 
     const [result, setResult] = useState();
+    const [test, setTest] = useState();
+
+    useEffect(() => {
+
+        // if (isFirstRun.current) {
+        //   isFirstRun.current = false;
+        //   return;
+        // }
+
+        console.log("effect run")
+        console.log(result)
+        if(result !== null){
+        navigation.replace('RepairStepOne');
+        }
+
+      }, [result]);
 
     const signInWithKakao = async (): Promise<void> => {
         const token: KakaoOAuthToken = await login();
       
         setResult(JSON.stringify(token));
         console.log(JSON.stringify(token));
-        getProfile();
+        await getProfile();
       };
       
       const signOutWithKakao = async (): Promise<void> => {
@@ -31,7 +48,10 @@ function Login() {
       const getProfile = async (): Promise<void> => {
         const profile: KakaoProfile = await getKakaoProfile();
       
-        setResult(JSON.stringify(profile));
+        setResult(JSON.stringify(profile.email));
+        console.log("log: " + JSON.stringify(profile.email));
+        console.log("result is: "+result);
+
       };
       
       const unlinkKakao = async (): Promise<void> => {
