@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text,} from 'react-native';
+import { Text,Image,Dimensions,View} from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import styled from 'styled-components';
 import Button from '../components/Button';
@@ -30,18 +30,37 @@ class DetectCode extends Component {
     render() {
         return (
             <Container>
-                <RNCamera
-                    ref={(ref) => {
-                        this.camera = ref;
-                    }}
-                    captureAudio={false}
-                    autoFocus = { RNCamera.Constants.AutoFocus.on }
-                    type = { RNCamera.Constants.Type.back} 
-                    onBarCodeRead = { this.onBarCodeRead.bind(this) }
-                    style = { styles.preview }
-                >
-                </RNCamera>
-
+                <View style={{ flex:1}}>
+                    <RNCamera
+                        ref={(ref) => {
+                            this.camera = ref;
+                        }}
+                        captureAudio={false}
+                        autoFocus = { RNCamera.Constants.AutoFocus.on }
+                        type = { RNCamera.Constants.Type.back} 
+                        onBarCodeRead = { this.onBarCodeRead.bind(this) }
+                        style = { styles.preview }
+                    >
+                    </RNCamera>
+                    <View
+                        style ={{
+                        position : 'absolute',
+                        left: 0,
+                        top: 0,
+                        width: (Dimensions.get('window').width),
+                        height: (Dimensions.get('window').height)*0.8,
+                        justifyContent:"center",
+                        alignItems:"center",
+                        }}
+                    >
+                        <Image source={require('../Icons/scan_yellow.png')} 
+                        style={{
+                            width: (Dimensions.get('window').width)/2,
+                            height:(Dimensions.get('window').width)/2,
+                            opacity:0.6,
+                            }}/>
+                    </View>
+                </View>
                 <ButtonView>
                     <Button
                         // onPress={ ()=> this.props.navigation.navigate('InputAlternativeNumber')}
@@ -64,12 +83,15 @@ const Container = styled.View`
 `;
 
 const ButtonView = styled.View`
-  align-items: center;
+    background-color:#000000;
+    flex:0.25;
+    justify-content: center;
+    align-items: center;
 `;
 
 const styles = {
     preview: {
-        flex: 0.9,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     }

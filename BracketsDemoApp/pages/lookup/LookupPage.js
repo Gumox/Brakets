@@ -215,8 +215,55 @@ function LookupPage({ navigation }) {
     //console.log(data.data)
     navigation.navigate('LookupPage2', { data: data.data })
   }, []);
+  
+  let startDatePicker;
+                          
+  let endDatePicker;
 
-
+  if(Platform.OS === 'ios'){
+    console.log("ios")
+    startDatePicker = (isDatePickerVisibleFirst&&(
+      <DateTimePickerModal
+        mode="date"
+        onConfirm={handleConfirmFirst}
+        onCancel={hideDatePickerFrist}
+        locale='ko-kr'
+      />
+    ))
+    endDatePicker = (isDatePickerVisibleSecond&&(
+    <DateTimePickerModal
+        mode="date"
+        onConfirm={
+          handleConfirmSecond
+        }
+        onCancel={hideDatePickerSecond}
+        locale='ko-kr'
+    />
+    ))
+  }else{
+    console.log("and")
+    startDatePicker = (startDate.show && (
+      <DateTimePicker
+        testID="startDateTimePicker"
+        value={startDate.date}
+        mode={startDate.mode}
+        is24Hour={true}
+        display="default"
+        onChange={(event, selectedDate) => {
+          startDate.onChange(event, selectedDate)
+        }}
+      />
+    ))
+    endDatePicker = (endDate.show && (
+    <DateTimePicker
+      testID="endDateTimePicker2"
+      value={endDate.date}
+      mode={endDate.mode}
+      is24Hour={true}
+      display="default"
+      onChange={endDate.onChange}
+    />))
+  }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -240,28 +287,7 @@ function LookupPage({ navigation }) {
               </PrView>
             </TouchableView>
 
-            {(Platform.OS === 'ios') ? 
-              (<DateTimePickerModal
-                isVisible={isDatePickerVisibleFirst}
-                mode="date"
-                onConfirm={handleConfirmFirst}
-                onCancel={hideDatePickerFrist}
-                locale='ko-kr'
-            />) : (
-              <DateTimePicker
-                  testID="startDateTimePicker"
-                  value={startDate.date}
-                  mode={startDate.mode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={(event, selectedDate) => {
-                    startDate.onChange(event, selectedDate)
-                  }}
-                />
-            )}
-              {/* {startDate.show && (
-                
-              ) */}
+            {startDatePicker}
 
             
             <View style={{ justifyContent: "center", alignItems: "center", margin: "1%" }}><Text>~</Text></View>
@@ -269,11 +295,9 @@ function LookupPage({ navigation }) {
 
             <TouchableView onPress={
               // startDate.showDatepicker
-              Platform.OS === 'ios' ? (
-                showDatePickerSecond
-              ): (
+              
                 endDate.showDatepicker
-                )
+                
               }>
               <PrView>
                 <View style={{ flex: 1 }}><Text style={styles.Lavel}>{endDate.reDate}</Text></View>
@@ -281,25 +305,7 @@ function LookupPage({ navigation }) {
               </PrView>
             </TouchableView>
 
-            {(Platform.OS === 'ios') ? 
-              (<DateTimePickerModal
-                isVisible={isDatePickerVisibleSecond}
-                mode="date"
-                onConfirm={
-                  handleConfirmSecond
-                }
-                onCancel={hideDatePickerSecond}
-                locale='ko-kr'
-            />) : (
-              <DateTimePicker
-                testID="endDateTimePicker2"
-                value={endDate.date}
-                mode={endDate.mode}
-                is24Hour={true}
-                display="default"
-                onChange={endDate.onChange}
-              />
-            )}
+            {endDatePicker}
             {/* {endDate.show &&  */}
           </PxView>
 
