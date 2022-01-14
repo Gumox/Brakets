@@ -12,6 +12,7 @@ import RepairMore from './pages/RepairMore';
 import MailbagScan from './pages/MailbagScan';
 import RepairInfo from './pages/RepairInfo';
 import ProductSend from './pages/ProductSend';
+import PhotoDraw from './functions/PhotoDraw';
 
 import Picture from './functions/Picture';
 import DetectCode from './functions/DetectCode'
@@ -41,6 +42,7 @@ function App() {
 
         <Stack.Screen name="Picture" component = {Picture} options={ {  title: '' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} />
+        <Stack.Screen name="PhotoDraw" component = {PhotoDraw} options={ { headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>

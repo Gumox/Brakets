@@ -180,13 +180,15 @@ function RepairMore({ navigation, route }) {
                     <View style={{minWidth: 100}}>
                         <Label>전체 사진</Label>
                         <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
-                            <Image
-                                style={{ width: 150, height: 150 }}
-                                resizeMode='contain'
-                                source={
-                                    { uri: Ip+image }
-                                }
-                            />
+                            <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image })}}>
+                                <Image
+                                    style={{ width: 150, height: 150 }}
+                                    resizeMode='contain'
+                                    source={
+                                        { uri: Ip+image }
+                                    }
+                                />
+                            </Pressable>
                             <View style={{justifyContent:"center",alignItems:"center"}}>
                                 <SmallLabel>
                                 전체 사진을 클릭한 후,
