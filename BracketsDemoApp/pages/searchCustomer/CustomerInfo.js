@@ -7,7 +7,8 @@ import _, { values } from 'lodash';
 import Bottom from '../../components/Bottom';
 import Contents from '../../components/Contents'; 
 import { CheckBox, Icon } from 'react-native-elements';
-
+import ViewShot from "react-native-view-shot";
+import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 
 import {
     View,
@@ -25,20 +26,7 @@ import SketchDraw from 'react-native-sketch-draw';
 import store from '../../store/store';
 import { PathToFlie } from '../../Functions/PathToFlie';
 
-const SketchDrawConstants = SketchDraw.constants;
- 
-const tools = {};
- 
-tools[SketchDrawConstants.toolType.pen.id] = {
-    id: SketchDrawConstants.toolType.pen.id,
-    name: SketchDrawConstants.toolType.pen.name,
-    nextId: SketchDrawConstants.toolType.eraser.id
-};
-tools[SketchDrawConstants.toolType.eraser.id] = {
-    id: SketchDrawConstants.toolType.eraser.id,
-    name: SketchDrawConstants.toolType.eraser.name,
-    nextId: SketchDrawConstants.toolType.pen.id
-};
+
 
 const Title = styled.Text`
     color:#000000;
@@ -131,12 +119,14 @@ const styles = StyleSheet.create({
     height: 20px;
     margin-Right:5px;
 `;
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 export default class CustomerInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             color: '#FFFFFF',
-            toolSelected: SketchDrawConstants.toolType.pen.id,
             modalVisible: false,
             check1: false,
             check2: false,
@@ -144,15 +134,7 @@ export default class CustomerInfo extends Component {
         };
     }
     
-    onSketchSave(saveEvent) {
-        this.props.onSave && this.props.onSave(saveEvent);
-        
-        const image = "file://"+saveEvent.localFilePath;
-
-        console.log(image);
-        store.dispatch({type:'CUSTOMER_SIGN',customerSign: image});
-        this.setState({modalVisible: false})
-    }
+    
     render(){
         var cstSign;
         if(store.getState().customerSign == ""){console.log("''")}
@@ -239,16 +221,30 @@ export default class CustomerInfo extends Component {
                         <View style={styles.centeredView}>
                         <View style ={styles.xView} >    
                         <View style={styles.modalView} >
+                           
                             <View style={{flex: 1, flexDirection: 'column',width:"100%",height:"100%"}}>
                                 <PrView>
-                                    <Pressable style={{height:20}} onPress={() => { this.refs.sketchRef.clearSketch() }}><Text style={{color:"#000000"}}>Clear</Text></Pressable>
-                                    <Pressable style={{height:20}} onPress={()=>{this.refs.sketchRef.saveSketch()}}><Text style={{color:"#000000"}}>Save</Text></Pressable>
+                                    <Pressable style={{height:20}} onPress={() => { this.refs.canvasRef.clear() }}><Text style={{color:"#000000"}}>Clear</Text></Pressable>
+                                    <Pressable style={{height:20}} onPress={()=>{
+
+                                        this.refs.viewShot.capture().then(uri => {
+
+                                            console.log("do something with ", uri);
+                                            store.dispatch({type:'CUSTOMER_SIGN',customerSign: uri});
+                                            this.setState({modalVisible: false})
+                                            
+                                        })
+
+                                    }}><Text style={{color:"#000000"}}>Save</Text></Pressable>
                                 </PrView>
-                                <SketchDraw style={{flex: 1 }} ref="sketchRef"
-                                selectedTool={this.state.toolSelected} 
-                                toolColor={"#000000"} 
-                                onSaveSketch={this.onSketchSave.bind(this)}
+                                <ViewShot ref="viewShot" style ={{flex:1}}>
+                                <SketchCanvas
+                                    ref="canvasRef"
+                                    style={{ flex: 1 }}
+                                    strokeColor={'#000000'}
+                                    strokeWidth={5}
                                 />
+                                </ViewShot>
                 
                                 
                             </View>

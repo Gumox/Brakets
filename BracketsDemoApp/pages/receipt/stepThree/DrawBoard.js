@@ -7,64 +7,46 @@ import {
     ImageBackground,
     Image
 } from 'react-native';
-import SketchDraw from 'react-native-sketch-draw';
 import store from '../../../store/store';
+import ViewShot from 'react-native-view-shot';
+import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 
 
-const SketchDrawConstants = SketchDraw.constants;
- 
-const tools = {};
- 
-tools[SketchDrawConstants.toolType.pen.id] = {
-    id: SketchDrawConstants.toolType.pen.id,
-    name: SketchDrawConstants.toolType.pen.name,
-    nextId: SketchDrawConstants.toolType.eraser.id
-};
-tools[SketchDrawConstants.toolType.eraser.id] = {
-    id: SketchDrawConstants.toolType.eraser.id,
-    name: SketchDrawConstants.toolType.eraser.name,
-    nextId: SketchDrawConstants.toolType.pen.id
-};
- 
+
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
 export default class DrawBoard extends Component {
  
     constructor(props) {
         super(props);
-        this.state = {
-            color: '#FFFFFF',
-            toolSelected: SketchDrawConstants.toolType.pen.id
-        };
     }
  
  
    
  
-    onSketchSave(saveEvent) {
-        this.props.onSave && this.props.onSave(saveEvent);
-        //console.log(saveEvent.localFilePath)
-        const params = this.props.children[1];
-        console.log("");
-        console.log("");
-        console.log("");
-        console.log("");
-        console.log(params)
-        console.log("");
-        console.log("");
-        const imageUri ="file://"+saveEvent.localFilePath;
-        
-        const image1 = "file://"+this.props.localSourceImagePath;
-        const image2 = "file://"+saveEvent.localFilePath;
+    onSketchSave() {
+        this.refs.viewShot.capture().then(uri => {
 
-        store.dispatch({type:'DRAW',drawingImage: image2});
-            if(params === undefined){
+            console.log("do something with ", uri);
+            store.dispatch({type:'DRAW',drawingImage: uri});
+            //store.dispatch({type:'PHOTO',photo: uri});
+            const params = this.props.children[1];
+            wait(250).then(() => {
+        
+                if(params === undefined){
                 
-                this.props.navigation.replace("ShopStepThree2");
-                
-            }else if(params['toGo'] == 'PhotoControl'){
-                
-                this.props.navigation.replace('Capture');
-               
-            }
+                    this.props.navigation.replace("ShopStepThree2");
+                    
+                }else if(params['toGo'] == 'PhotoControl'){
+                    
+                    this.props.navigation.replace('Capture');
+                    
+                }  
+            });
+            
+        })
         
     }
     
@@ -76,18 +58,22 @@ export default class DrawBoard extends Component {
         return (
             <View style={{flex: 1, flexDirection: 'column' ,width : Dimensions.get('window').width, height : Dimensions.get('window').height}}>
                 
-                <SketchDraw style={{flex: 1 }} ref="sketchRef"
-                selectedTool={this.state.toolSelected} 
-                toolColor={this.props.children[0]} //Yelow Example! you can changIT!
-                onSaveSketch={this.onSketchSave.bind(this)}
-                />
+                <ViewShot ref="viewShot" style ={{flex:1}}>
+                    <SketchCanvas
+                        ref="canvasRef"
+                        style={{ flex: 1 }}
+                        strokeColor={this.props.children[0]}
+                        strokeWidth={5}
+                    />
+                </ViewShot>
+ 
  
                 <View style={{ flexDirection: 'row', backgroundColor: '#000',marginTop:10 , height : '10%'}}>
-                    <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center', paddingVertical:20 }} onPress={() => { this.refs.sketchRef.clearSketch() }}>
+                    <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center', paddingVertical:20 }} onPress={() => { this.refs.canvasRef.clear() }}>
                         <Text style={{color:'#fff',fontWeight:'600'}}>CLEAR</Text>
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center', paddingVertical:20, borderLeftWidth:1, borderRightWidth:1, borderColor:'#000' }} onPress={() => { {
-                        this.refs.sketchRef.saveSketch()
+                        this.onSketchSave();
                        
                     } }}>
                         <Text style={{color:'#fff',fontWeight:'600'}}>저장</Text>
