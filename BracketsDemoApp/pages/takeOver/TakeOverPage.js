@@ -180,19 +180,19 @@ function TakeOverPage( { route,navigation } ) {
     const winW = Dimensions.get('window').width;
     const winH = Dimensions.get('window').height;
     const putReceiptComplete = async (pCode,cDate) => {
-        
-        var formdata = new FormData();
-
-        formdata.append("code", pCode);
-        formdata.append("date", cDate);
-        console.log(formdata)
+        const bodyData={
+            code : pCode,
+            date : cDate
+        }
+       
         
         try {
             const response = await fetch(ip+`/api/receipt/complete`,{method: 'PUT',
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
                 },
-            body: formdata
+            body: bodyData
             });
             const json = await response.json();
             console.log(json)
@@ -604,7 +604,7 @@ function TakeOverPage( { route,navigation } ) {
                         ]
                     )
                 }else{
-                    putReceiptComplete(cardCode,tDate.date);
+                    putReceiptComplete(cardCode,selectDay);
                 }
               }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
             </Half> 
