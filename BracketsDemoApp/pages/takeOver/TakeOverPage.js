@@ -178,7 +178,30 @@ function TakeOverPage( { route,navigation } ) {
     const [requestImageModalVisible,setRequestImageModalVisible] = useState(false)
     
     const winW = Dimensions.get('window').width;
-    const winH = Dimensions.get('window').height
+    const winH = Dimensions.get('window').height;
+    const putReceiptComplete = async (pCode,cDate) => {
+        const bodyData={
+            code : pCode,
+            date : cDate
+        }
+        
+        try {
+            const response = await fetch(ip+`/api/receipt/complete`,{method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(bodyData)
+            });
+            const json = await response.json();
+            console.log(json)
+           
+        } catch (error) {
+            console.error(error);
+        } finally {
+            
+        }
+    }
     
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(ip+`/api/receipt/${receiptId}`);
@@ -579,6 +602,8 @@ function TakeOverPage( { route,navigation } ) {
                             { text: "확인"},
                         ]
                     )
+                }else{
+                    putReceiptComplete(cardCode,selectDay);
                 }
               }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
             </Half> 

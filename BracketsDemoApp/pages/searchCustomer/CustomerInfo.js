@@ -22,7 +22,6 @@ import {
     Modal,
     Alert
 } from 'react-native';
-import SketchDraw from 'react-native-sketch-draw';
 import store from '../../store/store';
 import { PathToFlie } from '../../Functions/PathToFlie';
 
