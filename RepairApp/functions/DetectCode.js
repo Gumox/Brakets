@@ -22,8 +22,9 @@ class DetectCode extends Component {
             if(String(scanResult.type).substring(8) === 'Code128'){
                 console.log(scanResult.data)
             }
+            this.props.navigation.replace('RepairDetail',{data: scanResult.data})
         }
-        this.props.navigation.replace('RepairDetail',{data: scanResult.data})
+        
         return;
     }
 

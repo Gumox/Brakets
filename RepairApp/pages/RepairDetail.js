@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, Alert } from 'react-native';
+import { Text, Image, Alert, View } from 'react-native';
 import dayjs from 'dayjs';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RNPickerSelect from 'react-native-picker-select';
@@ -13,8 +13,9 @@ import { TextInput } from 'react-native-gesture-handler';
 
 
 function RepairDetail({ navigation, route }) {
-
-    const [cardId, setCardID] = useState('');
+    const code = route.params.data;
+    console.log(code)
+    const [cardId, setCardID] = useState(code);
     const [brandNum, setBrandNum] = useState('');
     const [storeName, setStoreName] = useState('');
     const [customerName, setCustomerName] = useState('');
@@ -130,7 +131,7 @@ function RepairDetail({ navigation, route }) {
                 <OverallView>
                     <PictureView>
                         <Label>전체 사진</Label>
-                        <ContainImg>
+                        <View style = {{justifyContent: "center", alignItems: "center"}}>
                             <Image
                                 style={{ width: 120, height: 120 }}
                                 resizeMode='contain'
@@ -138,7 +139,7 @@ function RepairDetail({ navigation, route }) {
                                     { uri: "https://image.adidas.co.kr/upload/prod/basic/source/H41391-05-01.jpg" }
                                 }
                             />
-                        </ContainImg>
+                        </View>
                     </PictureView>
 
                     <Label>근접 사진</Label>
@@ -297,21 +298,21 @@ export default RepairDetail;
 const DatePickerButton = styled.TouchableOpacity``;
 
 const DateInput = styled.TextInput`
+    color: #000000; 
     width: 100%;
     padding: 8px;
     font-size: 20px;
     border : 1.5px;
     border-radius:10px
-    height: 35px;
+    height: 50px;
 `;
 
 const PickerView = styled.TouchableOpacity`
     width: 100%;
-    padding: 8px;
     font-size: 20px;
     border : 1.5px;
     border-radius:10px
-    height: 35px;
+    height: 50px;
 `;
 
 const PictureView = styled.View`
@@ -359,12 +360,14 @@ const AttachImg = styled.TouchableOpacity`
 const Label = styled.Text`
     font-size: 15px;
     margin: 12px;
+    color: #000000;
 `;
 
 const SmallLabel = styled.Text`
     font-size: 12px;
     margin-bottom: 7px;
     padding-left: 45px;
+    color: #000000;
 `;
 
 const Input = styled.TextInput`
@@ -372,8 +375,9 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     border : 1.5px;
+    color: #000000;
     border-radius:10px
-    height: 35px;
+    height: 50px;
 `;
 
 const BiggerInput = styled.TextInput`
@@ -381,6 +385,7 @@ const BiggerInput = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     border : 1.5px;
+    color: #000000;
     border-radius:10px
     height: 100px;
 `;
