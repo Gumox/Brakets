@@ -88,11 +88,10 @@ function ShopStepThree2 ({ navigation ,route}) {
   React.useEffect(() => {
     wait(250).then(() => {
       if(imgUri2 != ""){
-        //capture();
+        capture();
       }
     });
     console.log("??")
-    //capture();
   }, [])
 
   
