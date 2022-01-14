@@ -18,7 +18,7 @@ const complete = async (req, res) => {
       const result = await setCompleteDate(code, date);
       if (result.error) throw new Error(result.error);
       console.log(result);
-      res.status(200).json({ message: "complete" });
+      res.status(200).json({ message: "Take" });
 
     } catch (err) {
       console.log(err.message);
