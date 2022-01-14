@@ -6,8 +6,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // importing pages
 import RepairStepOne from './pages/RepairStepOne';
 import PhotoStepOne from './pages/PhotoStepOne';
-import PhotoStepTwo from './pages/PhotoStepTwo';
+import PhotoStep from './pages/PhotoStep';
 import RepairDetail from './pages/RepairDetail'
+import RepairMore from './pages/RepairMore';
+import MailbagScan from './pages/MailbagScan';
+import RepairInfo from './pages/RepairInfo';
+import ProductSend from './pages/ProductSend';
 
 import Picture from './functions/Picture';
 import DetectCode from './functions/DetectCode'
@@ -24,9 +28,16 @@ function App() {
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
 
         <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{  title: '' ,headerTitleAlign: 'center'}}/>
+
         <Stack.Screen name="PhotoStepOne" component = {PhotoStepOne} options={ {  title: '' ,headerTitleAlign: 'center'} } />
-        <Stack.Screen name="PhotoStepTwo" component = {PhotoStepTwo} options={ {  title: '' ,headerTitleAlign: 'center'} } />
-        <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선내역' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="RepairMore" component = {RepairMore} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
+
+        
+        <Stack.Screen name="ProductSend" component = {ProductSend} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="RepairInfo" component = {RepairInfo} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="MailbagScan" component = {MailbagScan} options={ {  title: '수선 ok' ,headerTitleAlign: 'center'} } />
 
         <Stack.Screen name="Picture" component = {Picture} options={ {  title: '' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} />

@@ -6,19 +6,19 @@ function Bottom(props){
   return(
   <BottomView>
 
-      <BottomButton onPress = { () => (console.log('todo implement'))}>
+      <BottomButton onPress = { () =>  props.navigation.navigate('PhotoStep')}>
           <BottomButtonText>
               수선 촬영
           </BottomButtonText>
       </BottomButton>
 
-      <BottomButton onPress = { () => (console.log('todo implement'))}>
+      <BottomButton onPress = { () =>  props.navigation.navigate('MailbagScan')}>
           <BottomButtonText>
               행낭 스캔
           </BottomButtonText>
       </BottomButton>
 
-      <BottomButton onPress = { () => (console.log('todo implement'))}>
+      <BottomButton onPress = { () => props.navigation.navigate('RepairStepOne')}>
           <BottomButtonText>
               홈
           </BottomButtonText>

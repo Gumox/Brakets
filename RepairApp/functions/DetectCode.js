@@ -13,7 +13,8 @@ class DetectCode extends Component {
     }    
 
     onBarCodeRead(scanResult) {
-
+        console.log(this.props.route.params['toGo'])
+        
        console.log(scanResult.data);
        console.log(scanResult.type);
               
@@ -22,9 +23,19 @@ class DetectCode extends Component {
             if(String(scanResult.type).substring(8) === 'Code128'){
                 console.log(scanResult.data)
             }
+        }
+        if(this.props.route.params['toGo'] === "RepairMore"){
+            this.props.navigation.replace('RepairMore',{data: scanResult.data})
+        }
+        else if(this.props.route.params['toGo'] === "RepairInfo"){
+            this.props.navigation.replace('RepairInfo',{data: scanResult.data})
+        }
+        else if(this.props.route.params['toGo'] === "ProductSend"){
+            this.props.navigation.replace('ProductSend',{data: scanResult.data})
+        }
+        else{
             this.props.navigation.replace('RepairDetail',{data: scanResult.data})
         }
-        
         return;
     }
 

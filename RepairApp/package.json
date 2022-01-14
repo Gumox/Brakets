@@ -17,6 +17,7 @@
     "@react-native-seoul/kakao-login": "^3.4.3",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "axios": "^0.24.0",
     "dayjs": "^1.10.7",
     "install": "^0.13.0",
     "native": "^0.3.3",

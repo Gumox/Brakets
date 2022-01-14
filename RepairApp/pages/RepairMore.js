@@ -13,7 +13,7 @@ import Bottom from '../components/Bottom';
 import { TextInput } from 'react-native-gesture-handler';
 import Ip from '../serverIp/Ip';
 
-function RepairDetail({ navigation, route }) {
+function RepairMore({ navigation, route }) {
     const code = route.params.data;
     
     const [cardId, setCardID] = useState(code);
@@ -68,7 +68,7 @@ function RepairDetail({ navigation, route }) {
         const element = beforeImages[i];
         const key = i
         const before =(
-            <View  style ={{flexDirection:"row",justifyContent : "space-between"}}> 
+            <View  key = {key}  style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                 <Pressable >
                     <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                 </Pressable>
@@ -177,18 +177,30 @@ function RepairDetail({ navigation, route }) {
                 </OverallView>
 
                 <OverallView>
-                    <PictureView>
+                    <View style={{minWidth: 100}}>
                         <Label>전체 사진</Label>
-                        <View style = {{justifyContent: "center", alignItems: "center"}}>
+                        <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
                             <Image
-                                style={{ width: 120, height: 120 }}
+                                style={{ width: 150, height: 150 }}
                                 resizeMode='contain'
                                 source={
                                     { uri: Ip+image }
                                 }
                             />
+                            <View style={{justifyContent:"center",alignItems:"center"}}>
+                                <SmallLabel>
+                                전체 사진을 클릭한 후,
+                                </SmallLabel>
+                                <SmallLabel>
+                                추가 수선이 필요한 부위를 
+                                </SmallLabel>
+                                <SmallLabel>
+                                표시하세요
+                                </SmallLabel>
+                            </View>
+                            
                         </View>
-                    </PictureView>
+                    </View>
 
                     <Label>근접 사진</Label>
                     <EnlargedPictureView>
@@ -208,57 +220,6 @@ function RepairDetail({ navigation, route }) {
                 </OverallView>
 
 
-                <OverallView>
-                    <Label>수선처 발송일</Label>
-                    <DatePickerButton onPress={(showDatePicker)}>
-                    
-                        <DateInput
-                            pointerEvents="none"
-                            editable={false}
-                            value={shippingDate}
-                        />
-
-                        <DateTimePickerModal
-                            isVisible={isDatePickerVisible}
-                            mode="date"
-                            locale='ko-kr'
-                            onConfirm={handleConfirm}
-                            onCancel={hideDatePicker}
-                        />
-                    </DatePickerButton>
-
-                    <Label>발송 방법</Label>
-                    <PickerView>
-                        <RNPickerSelect
-                            placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
-                            onValueChange={(value) => setShippingMethod(value)}
-                            items={[
-                                { label: '1. ', value: '1.' }
-                            ]}
-                        />
-                    </PickerView>
-
-                    <Label>발송 비용</Label>
-                    <Input
-                        editable={true}
-                        selectTextOnFocus={false}
-                        value={shippingCost}
-                        onChangeText={text => setShippingCost(text)}
-                    />
-
-                    <Label>받는 곳</Label>
-                    <PickerView>
-                        <RNPickerSelect
-                            placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
-                            style={{ border: 'solid', marginBottom: '50', borderWidth: '3', borderColor: 'black' }}
-                            onValueChange={(value) => setShippingPlace(value)}
-                            items={[
-                                { label: '1. ', value: '1. ' }
-                            ]}
-                        />
-                    </PickerView>
-
-                </OverallView>
 
 
                 <BottomView>
@@ -296,7 +257,7 @@ function RepairDetail({ navigation, route }) {
 }
 
 
-export default RepairDetail;
+export default RepairMore;
 
 const DatePickerButton = styled.TouchableOpacity``;
 

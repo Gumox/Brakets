@@ -5,7 +5,7 @@ import ReceiptButton from '../components/ReceiptButton';
 import Bottom from '../components/Bottom';
 
 
-function PhotoStepTwo({ navigation }) {
+export default function PhotoStep({ navigation }) {
 
 
     return (
@@ -22,7 +22,7 @@ function PhotoStepTwo({ navigation }) {
                     수선 완료 사진 촬영 
                 </ReceiptButton>
 
-                <ReceiptButton onPress={() => console.log('DetectCode')}>
+                <ReceiptButton onPress={() => navigation.navigate('DetectCode',{toGo : "RepairMore"})}>
                     추가 수선 필요 부위 촬영
                 </ReceiptButton>
 
@@ -33,7 +33,6 @@ function PhotoStepTwo({ navigation }) {
     )
 }
 
-export default PhotoStepTwo;
 
 const Label = styled.Text`
     font-size: 15px;
