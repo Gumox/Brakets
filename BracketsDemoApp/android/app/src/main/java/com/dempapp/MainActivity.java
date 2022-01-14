@@ -22,11 +22,7 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "DempApp";
   }
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(null);
-    
-  }
+  
    private void getHashKey(){
     PackageInfo packageInfo = null;
     try {

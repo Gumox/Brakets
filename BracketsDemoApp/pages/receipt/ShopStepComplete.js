@@ -152,7 +152,7 @@ function ShopStepOne( { navigation } ) {
         console.log(formdata)
 
         try {
-            const response = await fetch('http://localhost:3000/api/submitReceipt',{method: 'POST',
+            const response = await fetch(ip+'/api/submitReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
                 'Content-Type': 'multipart/form-data'

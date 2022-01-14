@@ -29,7 +29,7 @@ function App() {
         <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선내역' ,headerTitleAlign: 'center'} } />
 
         <Stack.Screen name="Picture" component = {Picture} options={ {  title: '' ,headerTitleAlign: 'center'} } />
-        <Stack.Screen name="DetectCode" component = {DetectCode} options={ {  title: '' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>
