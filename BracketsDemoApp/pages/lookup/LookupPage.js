@@ -144,8 +144,12 @@ function LookupPage({ navigation }) {
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
   const customers = [];
-  const startDate = useInput(new Date().addDays(-30));
-  const endDate = useInput(new Date().addDays(30));
+  const dateForm =  new Date()
+  console.log(dateForm)
+  dateForm.setDate(1)
+  console.log(dateForm)
+  const startDate = useInput(dateForm);
+  const endDate = useInput(new Date());
 
   const [isDatePickerVisibleFirst, setDatePickerVisibilityFirst] = useState(false);
   const [isDatePickerVisibleSecond, setDatePickerVisibilitySecond] = useState(false);

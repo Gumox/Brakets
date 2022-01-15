@@ -24,8 +24,8 @@ const Label = styled.Text`
     margin-bottom: 12px;
     margin-left:12px;
     font-weight :bold;
-    min-width:15px;
-    max-height:30px;
+    minWidth:25px;
+    maxHeight:30px;
     color :#000000
 `;
 
@@ -130,7 +130,7 @@ function LookupPage2({ route,navigation }) {
                     getImages(obj["receipt_code"],obj)
                 }}>
                 <PrView>
-                    <Label>{index+1}</Label>
+                    <Label>{indexKey+1}</Label>
                     <ScrollItme><Label>{formatDate(new Date(obj["receipt_date"]))}</Label></ScrollItme>
                     <DivLabel>{checkReceipt}</DivLabel>
                     <ScrollItme><Label>{obj["customer_name"]}</Label></ScrollItme>

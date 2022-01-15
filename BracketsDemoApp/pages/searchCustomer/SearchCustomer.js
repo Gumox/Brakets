@@ -5,20 +5,20 @@ import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import _, { values } from 'lodash';
 import Bottom from '../../components/Bottom';
-import { Alert, Pressable } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 import store from '../../store/store';
 import ip from '../../serverIp/Ip';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback,TouchableHighlight } from 'react-native';
 
 const Title = styled.Text`
   color :#000000
   font-size : 24px;
   font-weight : bold;
   color:#000000;
+  marginBottom:15px
 `;
 const BlackText = styled.Text`
   color :#000000
-  margin-Top : 15px ;
   font-size : 15px;
   color : black;
 `;
@@ -110,11 +110,11 @@ function SearchCustomer({ navigation }) {
             ></Input>
             </DropBackground>
           </CenterText>
-            <Pressable onPress={()=>{
+          <TouchableHighlight underlayColor={"#CCC"} style ={{margin:20 ,minWidth:200,minHeight:50, borderRadius:20}} onPress={()=>{
                 navigation.navigate("AddCustomer")
             }}>
-              <BlackText>신규 고객 등록</BlackText>
-            </Pressable>
+              <View style={{minWidth:200,minHeight:50,justifyContent:"center",alignItems:"center"}}><BlackText>신규 고객 등록</BlackText></View>
+            </TouchableHighlight>
           <Button onPress = {() =>{ 
             if(pNumber != null&&pNumber.length>3){
 

@@ -147,9 +147,17 @@ export default class AddCustomer extends Component {
         };
     }
     addCustomer = async (name,phone) => {
+        let setPhone ;
+        if(phone.length == 10){
+            setPhone = phone.slice(0,3)+"-"+phone.slice(3,6)+"-"+phone.slice(6,10);
+            console.log(setPhone)
+        }else if(phone.length == 11){
+            setPhone =  phone.slice(0,3)+"-"+phone.slice(3,7)+"-"+phone.slice(7,11)
+            console.log(setPhone)
+        }
         const bodyData ={
             name: name,
-            phone: phone
+            phone: setPhone
         }
         console.log(bodyData)
         try {
@@ -161,6 +169,15 @@ export default class AddCustomer extends Component {
             body: JSON.stringify(bodyData)
             });
             const json = await response.json();
+            if(json.customer_id != ""||json.customer_id != null){
+                Alert.alert(
+                    "",
+                    "고객 등록이 완료 되었습니다",
+                    [
+                      { text: "확인" },
+                    ]
+                  )
+            }
             console.log(json)
             const newCustomer ={
                 cId: json.customer_id,
@@ -168,6 +185,7 @@ export default class AddCustomer extends Component {
                 cPhone: phone
             }
             console.log(newCustomer)
+
             store.dispatch({type:'CUSTOMER',customer: newCustomer });
             this.props.navigation.navigate('ShopStepOne')
         } catch (error) {
@@ -217,6 +235,7 @@ export default class AddCustomer extends Component {
                              }}></Input>
                             <BtView><Label>연락처</Label><Label/></BtView>
                             <Input
+                                maxLength={11}
                                 keyboardType='numeric'
                                 onChangeText={(value)=> {
                                     console.log(value)

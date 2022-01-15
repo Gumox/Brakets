@@ -8,20 +8,20 @@ const BottomView = styled.View`
 const BottomButton = styled.TouchableOpacity`
     width: 25%;
     height: 100%;
-    background: #858585;
+    background: #BBDEFB;
     align-items: center;
     justify-content: center;
 `;
 const BottomButtonText = styled.Text`
     font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 `;
 const BottomItemBox = styled.View`
   flex-direction: row;
   width:100%
   justify-content: space-between;
-  background-color :#858585;
+  background-color :#BBDEFB;
   margin-left : 20px;
   margin-right : 20px;
 `;

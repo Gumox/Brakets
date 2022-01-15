@@ -252,8 +252,8 @@ function ShopStepOne( { navigation } ) {
             </InfoView>  
             <Button onPress={ ()=>{
                     submitReceipt(store.getState().receipt_id,bag)
-                    /*store.dispatch({type:"STORE_CLEAR"})
-                    navigation.popToTop()*/
+                    store.dispatch({type:"STORE_CLEAR"})
+                    navigation.popToTop()
                 }}>
                 완료
             </Button>
