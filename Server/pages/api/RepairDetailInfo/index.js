@@ -21,6 +21,10 @@ async function getReceipt(code) {
               product.color,
               product.size,
               receipt.store_message,
+              repair1_detail_id,
+              repair2_detail_id,
+              repair3_detail_id,
+              mfr_detail_id,
               receipt.image
               FROM receipt 
               LEFT JOIN brand ON brand.brand_id = receipt.brand_id
