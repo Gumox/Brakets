@@ -28,7 +28,7 @@ function App() {
 
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
 
-        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{  title: '' ,headerTitleAlign: 'center'}}/>
+        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{headerShown: false}}/>
 
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />

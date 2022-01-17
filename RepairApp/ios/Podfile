@@ -12,9 +12,7 @@ target 'RepairApp' do
     :hermes_enabled => false
   )
 
-  pod 'react-native-view-shot', :path => '../node_modules/react-native-view-shot'
 
-  pod 'RNSketchCanvas', :path => '../node_modules/@terrylinla/react-native-sketch-canvas'
 
   target 'RepairAppTests' do
     inherit! :complete
