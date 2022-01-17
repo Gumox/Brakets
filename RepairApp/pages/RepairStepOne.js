@@ -8,7 +8,7 @@ import Container from '../components/Container'
 import CenterText from '../components/CenterText'
 import Button from '../components/Button'
 import Bottom from '../components/Bottom'
-import { Alert } from 'react-native';
+import { Alert ,View} from 'react-native';
 
 
 
@@ -56,7 +56,7 @@ function RepairStepOne({ navigation }) {
 
 
       <Button onPress={() => {(text !== null) ? (
-          navigation.navigate('PhotoStepTwo')
+          navigation.navigate('PhotoStep')
       ) : (
           Alert.alert('회사를 선택해주세요.')
           )}}>
@@ -74,15 +74,15 @@ const MiddleView = styled.View`
     align-items: center;
     margin-top: 100px;
     margin-bottom: 100px;
+    min-height:100px;
 `;
 
 const Input = styled.TouchableOpacity`
     width: 70%;
-    padding: 8px;
     font-size: 20px;
     border : 1.5px;
     border-radius:10px
-    height: 35px;
+    height: 50%;
 `;
 
 const Title = styled.Text`

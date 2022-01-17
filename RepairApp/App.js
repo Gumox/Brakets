@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // importing pages
 import RepairStepOne from './pages/RepairStepOne';
-import PhotoStepOne from './pages/PhotoStepOne';
 import PhotoStep from './pages/PhotoStep';
 import RepairDetail from './pages/RepairDetail'
 import RepairMore from './pages/RepairMore';
@@ -17,6 +16,7 @@ import PhotoDraw from './functions/PhotoDraw';
 import Picture from './functions/Picture';
 import DetectCode from './functions/DetectCode'
 import Login from './pages/Login';
+import TakePhoto from './functions/TakePhoto';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,7 +30,6 @@ function App() {
 
         <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{  title: '' ,headerTitleAlign: 'center'}}/>
 
-        <Stack.Screen name="PhotoStepOne" component = {PhotoStepOne} options={ {  title: '' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="RepairMore" component = {RepairMore} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
@@ -43,6 +42,7 @@ function App() {
         <Stack.Screen name="Picture" component = {Picture} options={ {  title: '' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} />
         <Stack.Screen name="PhotoDraw" component = {PhotoDraw} options={ { headerShown: false }} />
+        <Stack.Screen name="TakePhoto" component = {TakePhoto} options={ { headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>

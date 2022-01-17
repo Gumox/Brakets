@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useCallback } from 'react';
-import { Text, Image, Alert, View, Pressable } from 'react-native';
+import { Text, Image, Alert, View, Pressable, BackHandler } from 'react-native';
 import dayjs from 'dayjs';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RNPickerSelect from 'react-native-picker-select';
@@ -12,6 +12,7 @@ import SmallButton from '../components/SmallButton';
 import Bottom from '../components/Bottom';
 import { TextInput } from 'react-native-gesture-handler';
 import Ip from '../serverIp/Ip';
+import store from '../store/store';
 
 function RepairDetail({ navigation, route }) {
     const code = route.params.data;
@@ -27,7 +28,7 @@ function RepairDetail({ navigation, route }) {
 
     const [image,setImage] = useState('')
 
-    const [shippingDate, setShippingDate] = useState('');
+    const [shippingDate, setShippingDate] = useState(null);
     const [shippingMethod, setShippingMethod] = useState('');
     const [shippingCost, setShippingCost] = useState('');
     const [shippingPlace, setShippingPlace] = useState('');
@@ -62,18 +63,26 @@ function RepairDetail({ navigation, route }) {
         
     });
     
-    var beforeImageViews =[];
-
+    let beforeImageViews =[];
+    let after ="";
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
         const key = i
+        let afterImage = "../Icons/camera.png"
+        
+        let photo ='afterImageUri'+(key+1);
+        
+        if(store.getState()[photo] != ""){
+            console.log("image inside: "+store.getState()[photo] )
+            afterImage = store.getState()[photo]
+        }
         const before =(
             <View  style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                 <Pressable >
                     <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                 </Pressable>
-                <Pressable >
-                    <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30}} source={{uri : element}}></Image>
+                <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
+                    <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : afterImage}}></Image>
                 </Pressable>
             </View>
         )
@@ -211,13 +220,13 @@ function RepairDetail({ navigation, route }) {
                 <OverallView>
                     <Label>수선처 발송일</Label>
                     <DatePickerButton onPress={(showDatePicker)}>
-                    
-                        <DateInput
-                            pointerEvents="none"
-                            editable={false}
-                            value={shippingDate}
-                        />
-
+                        <PrView>
+                            <DateInput
+                                pointerEvents="none"
+                                editable={false}
+                                value={shippingDate}
+                            />
+                        </PrView>
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
                             mode="date"
@@ -233,7 +242,8 @@ function RepairDetail({ navigation, route }) {
                             placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
                             onValueChange={(value) => setShippingMethod(value)}
                             items={[
-                                { label: '1. ', value: '1.' }
+                                { label: '행낭', value: '행낭' },
+                                { label: '택배', value: '택배' }
                             ]}
                         />
                     </PickerView>
@@ -241,6 +251,7 @@ function RepairDetail({ navigation, route }) {
                     <Label>발송 비용</Label>
                     <Input
                         editable={true}
+                        keyboardType='numeric'
                         selectTextOnFocus={false}
                         value={shippingCost}
                         onChangeText={text => setShippingCost(text)}
@@ -253,7 +264,8 @@ function RepairDetail({ navigation, route }) {
                             style={{ border: 'solid', marginBottom: '50', borderWidth: '3', borderColor: 'black' }}
                             onValueChange={(value) => setShippingPlace(value)}
                             items={[
-                                { label: '1. ', value: '1. ' }
+                                { label: storeName, value: storeName },
+                                { label: '본사', value: '본사' }
                             ]}
                         />
                     </PickerView>
@@ -273,7 +285,7 @@ function RepairDetail({ navigation, route }) {
 
                     <SmallButton
                         onPress={() => {
-                            (btnDisabled == true) ? (
+                            (shippingDate == null) ? (
                                 Alert.alert('수선처 발송일을 입력해주세요')
                             ) : (
                             console.log('저장 기능 구현')
@@ -298,7 +310,11 @@ function RepairDetail({ navigation, route }) {
 
 export default RepairDetail;
 
-const DatePickerButton = styled.TouchableOpacity``;
+const DatePickerButton = styled.TouchableOpacity`
+
+    justify-content: center;
+    align-items: center;`
+    ;
 
 const DateInput = styled.TextInput`
     color: #000000; 
@@ -338,29 +354,10 @@ const MiddleView = styled.View`
 
 const BottomView = styled.View`
     flex-direction: row;
-    margin-bottom:30px;                
-`;
-
-const ContainImg = styled.View`
-    margin-top: 15px;
-    background-color:#d6d6d6;
-    border-radius:12px;
+    margin-bottom:30px;
     justify-content: center;
-    align-items: center;
-    width: 120px;
-    height: 120px;
+    align-items: center;                
 `;
-
-const AttachImg = styled.TouchableOpacity`
-    margin-top: 15px;
-    background-color:#d6d6d6;
-    border-radius:12px;
-    justify-content: center;
-    align-items: center;
-    width: 120px;
-    height: 120px;
-`;
-
 const Label = styled.Text`
     font-size: 15px;
     margin: 12px;
@@ -400,4 +397,10 @@ const OverallView = styled.View`
     border : 1.5px;
     border-radius:10px;
     margin-bottom: 30px;
+`;
+const PrView = styled.View`
+    flex-direction: row;
+    align-items: center;
+    width: 95%
+    justify-content: center;
 `;

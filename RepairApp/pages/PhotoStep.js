@@ -18,7 +18,7 @@ export default function PhotoStep({ navigation }) {
                 <Label />
                 <ReceiptButton onPress={() =>
                     // console.log('aaa')}>
-                    navigation.navigate('DetectCode')}>
+                    navigation.navigate('DetectCode',{toGo : ""})}>
                     수선 완료 사진 촬영 
                 </ReceiptButton>
 
