@@ -7,7 +7,6 @@ import excuteQuery from "../../db";
  * 0단계 고객 수정
  */
 
-
 const saveDetailImage = async(receiptId,num,imagePath, storeId) => {
     return excuteQuery({
         query:"UPDATE receipt_image SET after_image=?, after_store_id=? WHERE receipt_id=? AND num=?",
@@ -22,7 +21,7 @@ export const config = {
   };
 
 const controller = async (req, res) => {
-  if (req.method === "POST") {
+  if (req.method === "PUT") {
     console.log(`[${new Date().toISOString()}] /api/RepairShop/sendRepairInfo/updateAfterImage`);
     const form = new formidable.IncomingForm();
     form.parse(req, async function (err, fields, files) {

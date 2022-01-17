@@ -11,6 +11,7 @@ import ContainView from '../components/ContainView';
 import SmallButton from '../components/SmallButton';
 import Bottom from '../components/Bottom';
 import { TextInput } from 'react-native-gesture-handler';
+import { PathToFlie } from '../functions/PathToFlie';
 import Ip from '../serverIp/Ip';
 import store from '../store/store';
 
@@ -62,7 +63,62 @@ function RepairDetail({ navigation, route }) {
         setBeforeImages(beforeImgList)
         
     });
+    const postUpdateAfterImage = async (receiver_id,store_id,image1,image2,image3,image4) => {
+        var formdata = new FormData();
+
+        formdata.append("receiver", receiver_id )//받는곳
+        formdata.append("store", store_id) //수선처
+
+        formdata.append("image1", PathToFlie(image1));//수선사진들
+        formdata.append("image2", PathToFlie(image2));
+        formdata.append("image3", PathToFlie(image3));
+        formdata.append("image4", PathToFlie(image4));
+        console.log(formdata)
+
+        try {
+            const response = await fetch(Ip+'/api/RepairShop/sendRepairInfo/updateAfterImage',{method: 'PUT',
+            headers: {
+                'Accept': '',
+                'Content-Type': 'multipart/form-data'
+                },
+            body: formdata
+            });
+            const json = await response.json();
+            console.log(json)
+           
+        } catch (error) {
+            console.error(error);
+        } finally {
+
+        }
+        
+    }
     
+    const postSendRepairInfo = async (date,sendType,sendPay,repair_detail_id) => {
+        const bodyData={
+                    
+            complete_date: date,
+            shipment_type: sendType,
+            shipment_price: sendPay,
+            repair_detail_id:25
+        }
+        try {
+            const response = await fetch(Ip+'/api/RepairShop/sendRepairInfo',{method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(bodyData)
+            });
+            const json = await response.json();
+            console.log(json.body);
+            
+           
+        } catch (error) {
+            console.error(error);
+        } finally {
+        }
+    }
     let beforeImageViews =[];
     let after ="";
     for (let i = 0; i < beforeImages.length; i++) {
@@ -77,7 +133,7 @@ function RepairDetail({ navigation, route }) {
             afterImage = store.getState()[photo]
         }
         const before =(
-            <View  style ={{flexDirection:"row",justifyContent : "space-between"}}> 
+            <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                 <Pressable >
                     <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                 </Pressable>
@@ -242,8 +298,9 @@ function RepairDetail({ navigation, route }) {
                             placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
                             onValueChange={(value) => setShippingMethod(value)}
                             items={[
-                                { label: '행낭', value: '행낭' },
-                                { label: '택배', value: '택배' }
+                                { label: '행낭', value: 1 },
+                                { label: '택배', value: 2},
+                                { label: '퀵', value: 3 }
                             ]}
                         />
                     </PickerView>

@@ -35,9 +35,7 @@ function RepairMore({ navigation, route }) {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [btnDisabled, setBtnDiabled] = useState(true);
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
-    
-    let photoAdd;
-    
+   
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
         console.log(data)
