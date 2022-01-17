@@ -28,7 +28,7 @@ function Login({ navigation }) {
         'userEmail': _userEmail
       }), () => {
         console.log('user email\'s saved: ' + _userEmail);
-        store.dispatch({ type: 'userEmail', userEmail: _userEmail });
+        store.dispatch({ type: 'USER_EMAIL', userEmail: _userEmail });
       });
   }
 
@@ -36,7 +36,7 @@ function Login({ navigation }) {
     AsyncStorage.getItem('userInfo', (err, result) => {
       if (result !== null) {
         console.log(result);
-        // store.dispatch({ type: 'USER_EMAIL', userInfo: userInfo.data });
+        store.dispatch({ type: 'USER_EMAIL', userEmail: result });
         navigation.replace('RepairStepOne')
       }
       
