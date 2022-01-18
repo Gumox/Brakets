@@ -17,6 +17,7 @@ async function getReceipt(code) {
               brand.brand_name,
               brand.brand_code,
               store.name AS store_name,
+              receipt.store_id AS store_id,
               customer.name AS customer_name,
               style_type.style_code,
               product.color,
