@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import ViewShot from 'react-native-view-shot';
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
+import store from '../store/store';
 
 
 
@@ -29,19 +30,11 @@ export default class DrawBoard extends Component {
         this.refs.viewShot.capture().then(uri => {
 
             console.log("do something with ", uri);
+            store.dispatch({type:"STORE_ADD_REPAIR_IMAGE",addRepairImageUri:uri})
             
             const params = this.props.children[1];
             wait(250).then(() => {
-        
-                if(params === undefined){
-                
-                    this.props.navigation.replace("ShopStepThree2");
-                    
-                }else if(params['toGo'] == 'PhotoControl'){
-                    
-                    this.props.navigation.replace('Capture');
-                    
-                }  
+                this.props.navigation.replace("RepairMore",{data:this.props.code}); 
             });
             
         })

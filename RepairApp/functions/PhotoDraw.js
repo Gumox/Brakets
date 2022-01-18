@@ -19,6 +19,8 @@ import DrawBoard from "./DrawBoard";
 export default function PhotoDraw({navigation, route}){
     const params = route.params;
     const imageUri = route.params.photo;
+    const code = params.code;
+    console.log(code)
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;   
     const [color,setColor] = React.useState("#ff0000");
@@ -75,7 +77,7 @@ export default function PhotoDraw({navigation, route}){
                 setModalVisible(!modalVisible)
                 }}><Text></Text></TouchableHighlight>
             </View>
-            <DrawBoard navigation={navigation}>{color}{params}</DrawBoard>
+            <DrawBoard navigation={navigation} code={code}>{color}{params}</DrawBoard>
             </ImageBackground>
         </View>
            

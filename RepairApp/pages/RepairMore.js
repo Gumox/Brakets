@@ -12,6 +12,7 @@ import SmallButton from '../components/SmallButton';
 import Bottom from '../components/Bottom';
 import { TextInput } from 'react-native-gesture-handler';
 import Ip from '../serverIp/Ip';
+import store from '../store/store';
 
 function RepairMore({ navigation, route }) {
     const code = route.params.data;
@@ -59,19 +60,26 @@ function RepairMore({ navigation, route }) {
         setBeforeImages(beforeImgList)
         
     });
+    let beforeImageViews =[];
     
-    var beforeImageViews =[];
-
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
         const key = i
+        let afterImage = "../Icons/camera.png"
+        
+        let photo ='afterImageUri'+(key+1);
+        
+        if(store.getState()[photo] != ""){
+            console.log("image inside: "+store.getState()[photo] )
+            afterImage = store.getState()[photo]
+        }
         const before =(
-            <View  key = {key}  style ={{flexDirection:"row",justifyContent : "space-between"}}> 
+            <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                 <Pressable >
                     <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                 </Pressable>
                 <Pressable >
-                    <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30}} source={{uri : element}}></Image>
+                    <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : afterImage}}></Image>
                 </Pressable>
             </View>
         )
@@ -79,9 +87,8 @@ function RepairMore({ navigation, route }) {
     }
     useEffect(() => {
         getTargetData(code);
-        console.log("shipping date is: " + shippingDate);
 
-    }, [shippingDate]);
+    }, []);
 
     
 
@@ -178,7 +185,7 @@ function RepairMore({ navigation, route }) {
                     <View style={{minWidth: 100}}>
                         <Label>전체 사진</Label>
                         <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
-                            <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image })}}>
+                            <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image ,code:code})}}>
                                 <Image
                                     style={{ width: 150, height: 150 }}
                                     resizeMode='contain'

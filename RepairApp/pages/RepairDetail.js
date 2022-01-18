@@ -17,10 +17,12 @@ import store from '../store/store';
 
 function RepairDetail({ navigation, route }) {
     const code = route.params.data;
-    const shop = 0;
+    const shop = store.getState().shopId;
     const [cardId, setCardID] = useState(code);
     const [brandNum, setBrandNum] = useState('');
     const [storeName, setStoreName] = useState('');
+    const [receiptId,setReceiptId] = useState(0)
+    const [storeId,setStoreId ] = useState(0);
     const [customerName, setCustomerName] = useState('');
     const [styleNum, setStyleNum] = useState('');
     const [color, setColor] = useState('');
@@ -35,6 +37,7 @@ function RepairDetail({ navigation, route }) {
     const [shippingPlace, setShippingPlace] = useState('');
 
     const [repairShop,setRepairShop] = useState('')
+    const [repairDetailId,setRepairDetailId] = useState('')
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [btnDisabled, setBtnDiabled] = useState(true);
@@ -47,6 +50,8 @@ function RepairDetail({ navigation, route }) {
         console.log(data)
         setBrandNum(data.data['brand_name'])
         setStoreName(data.data['store_name'])
+        setReceiptId(data.data['receipt_id'])
+        setStoreId(data.data['store_id'])
         setCustomerName(data.data['customer_name'])
         setStyleNum(data.data['style_code'])
         setColor(data.data['color'])
@@ -54,12 +59,15 @@ function RepairDetail({ navigation, route }) {
         setRequire(data.data["store_message"])
         setImage(data.data["image"])
 
-        if(data.data["repair1_detail_id"]===shop){
-
-        }else if(data.data["repair2_detail_id"]===shop){
-
-        }else if(data.data["repair3_detail_id"]===shop)
-
+        if(data.data["repair1_store_id"]===shop){
+            console.log(data.data["repair1_store_id"]+" : "+shop)
+            setRepairShop(data.data["repair1_store_id"])
+            setRepairDetailId(data.data["repair1_detail_id"])
+        }else if(data.data["repair2_store_id"]===shop){
+            console.log(data.data["repair2_store_id"]+" : "+shop)
+        }else if(data.data["repair3_store_id"]===shop){
+            console.log(data.data["repair3_store_id"]+" : "+shop)
+        }
         
                               
         for (let i = 0; i < data.imageList.length; i++) {
@@ -72,10 +80,10 @@ function RepairDetail({ navigation, route }) {
         setBeforeImages(beforeImgList)
         
     });
-    const postUpdateAfterImage = async (receiver_id,store_id,image1,image2,image3,image4) => {
+    const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,image2,image3,image4) => {
         var formdata = new FormData();
 
-        formdata.append("receiver", receiver_id )//받는곳
+        formdata.append("receipt", receipt_id )//받는곳
         formdata.append("store", store_id) //수선처
 
         formdata.append("image1", PathToFlie(image1));//수선사진들
@@ -93,7 +101,16 @@ function RepairDetail({ navigation, route }) {
             body: formdata
             });
             const json = await response.json();
-            console.log(json)
+            console.log(json.msg)
+            if(json.msg == 'images saved'){
+                navigation.popToTop();
+                if(sendType === 1){
+                    navigation.navigate("MailbagScan")
+                }
+                else{
+                    navigation.navigate("PhotoStep")
+                }
+            }
            
         } catch (error) {
             console.error(error);
@@ -111,6 +128,7 @@ function RepairDetail({ navigation, route }) {
             shipment_price: sendPay,
             repair_detail_id:repair_detail_id
         }
+        console.log(bodyData)
         try {
             const response = await fetch(Ip+'/api/RepairShop/sendRepairInfo',{method: 'PUT',
             headers: {
@@ -120,7 +138,7 @@ function RepairDetail({ navigation, route }) {
             body: JSON.stringify(bodyData)
             });
             const json = await response.json();
-            console.log(json.body);
+            console.log(json);
             
            
         } catch (error) {
@@ -155,7 +173,7 @@ function RepairDetail({ navigation, route }) {
     }
     useEffect(() => {
         getTargetData(code);
-        console.log("shipping date is: " + shippingDate);
+       
 
     }, [shippingDate]);
 
@@ -171,7 +189,9 @@ function RepairDetail({ navigation, route }) {
 
     const handleConfirm = (date) => {
         console.log("A date has been picked: ", date.toLocaleDateString('ko-kr'));
-        setShippingDate(date.toLocaleDateString('ko-kr'));
+        let curruntDate =date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+        console.log(curruntDate)
+        setShippingDate(curruntDate);   
         console.log("shipping date is" + shippingDate);
         hideDatePicker();
     };
@@ -328,10 +348,13 @@ function RepairDetail({ navigation, route }) {
                         <RNPickerSelect
                             placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
                             style={{ border: 'solid', marginBottom: '50', borderWidth: '3', borderColor: 'black' }}
-                            onValueChange={(value) => setShippingPlace(value)}
+                            onValueChange={(value) => {
+                                setShippingPlace(value)
+                                store.dispatch({type:"SHIPPING_PLACE", shippingPlace:shippingPlace})
+                            }}
                             items={[
-                                { label: storeName, value: storeName },
-                                { label: '본사', value: '본사' }
+                                { label: storeName, value: storeId },
+                                { label: '본사', value: 1 }
                             ]}
                         />
                     </PickerView>
@@ -351,13 +374,14 @@ function RepairDetail({ navigation, route }) {
 
                     <SmallButton
                         onPress={() => {
-                            (shippingDate == null) ? (
+                            if(shippingDate == null){
                                 Alert.alert('수선처 발송일을 입력해주세요')
-                            ) : (
-                            console.log('저장 기능 구현')
-                               /*postSendRepairInfo(shippingDate,,shippingCost,repairShop),
-                               postUpdateAfterImage()*/
-                        )
+                            } 
+                            else {
+                                console.log('저장 기능 구현');
+                                postSendRepairInfo(shippingDate,shippingMethod,shippingCost,repairDetailId)
+                                postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
+                            }
                         }
 
                         }
@@ -394,7 +418,7 @@ const DateInput = styled.TextInput`
     height: 50px;
 `;
 
-const PickerView = styled.TouchableOpacity`
+const PickerView = styled.View`
     width: 100%;
     font-size: 20px;
     border : 1.5px;

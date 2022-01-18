@@ -2,8 +2,7 @@ export function PathToFlie(path){
 
     
     
-    if(path == undefined || path == '' || path == null){
-        console.log(path+" : "+ null)
+    if(path == undefined || path == '' || path == null){ 
         return null;
     }
     else {

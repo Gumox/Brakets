@@ -31,15 +31,44 @@ function Login({ navigation }) {
         store.dispatch({ type: 'USER_EMAIL', userEmail: _userEmail });
       });
   }
+  function saveStaffInfo(info){
+    console.log(info);
+    AsyncStorage.setItem(
+      'staffInfo',
+      JSON.stringify({
+        'info': info
+      }), () => {
+        console.log('staff\'s info saved: ' + info);
+        store.dispatch({ type: 'STAFF_INFO', info: info });
+      });
+  }
+  function check(info){
+    if(info === null || info === undefined){
+      
+    }else{
+      console.log(info)
+      navigation.replace('RepairStepOne',{info: info})
+    }
+  }
 
   function loadInfo(){
+    
     AsyncStorage.getItem('userInfo', (err, result) => {
       if (result !== null) {
         console.log(result);
         store.dispatch({ type: 'USER_EMAIL', userEmail: result });
-        navigation.replace('RepairStepOne')
       }
-      
+    })
+    AsyncStorage.getItem('staffInfo', (err, result) => {
+      if (result !== null) {
+        const staffInfo = JSON.parse(result)
+        console.log("in get Item")
+        console.log(result);
+        
+        store.dispatch({type:'STAFF_INFO',staffInfo:staffInfo.info});
+        console.log(store.getState().staffInfo);
+        navigation.replace('RepairStepOne',{info:staffInfo.info})
+      }
     })
 }
   useEffect(() => {
@@ -66,9 +95,10 @@ function Login({ navigation }) {
       .then(
         response => (response.status == '200') ? (
           console.log("success"),
-          console.log(response.data.data),
+          console.log(response.data.body),
           saveInfo(result),
-          navigation.replace('RepairStepOne')
+          saveStaffInfo(response.data.data),
+          check(response.data.data)
         ) : (
           console.log("response" + response.data),
           console.log(option.url)

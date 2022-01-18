@@ -2,40 +2,56 @@ import React from 'react';
 import styled from 'styled-components'
 
 import RNPickerSelect from 'react-native-picker-select';
-import { useState } from 'react';
+import { useState ,useEffect } from 'react';
 
 import Container from '../components/Container'
 import CenterText from '../components/CenterText'
 import Button from '../components/Button'
 import Bottom from '../components/Bottom'
-import { Alert ,View} from 'react-native';
+import { Alert ,Text,Pressable,View} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import store from '../store/store';
 
-
-
-function PickerScreen() {
-  return (
-    <Container>
-      <RNPickerSelect
-        onValueChange={(value) => console.log(value)}
-        items={[
-          { label: 'Football', value: 'football' },
-          { label: 'Baseball', value: 'baseball' },
-          { label: 'Hockey', value: 'hockey' },
-        ]}
-      />
-    </Container>
-  );
-}
-
-function RepairStepOne({ navigation }) {
-
+function RepairStepOne({ navigation,route }) {
+  const staffInfo = store.getState().staffInfo
+  const [items,setItems]=useState([]);
+  let item =[];
   const [text, setText] = useState("");
-
+  
+  useEffect(() => {
+      
+    staffInfo.forEach((elt,index) => {
+      console.log(elt)
+      store.dispatch({type:'SHOP_ID',shopId:elt.store_id});
+      item.push({label:elt.brand_name, value: elt.brand_id})
+    });
+    setItems(item)
+  }, []);
   const placeHolder = "회사를 선택해주세요.";
 
   return (
     <Container>
-
+      <View style={{width:"100%",flexDirection:"row-reverse"}}><Pressable style={{margin:20}} onPress={() =>
+                    Alert.alert(
+                        "로그아웃",
+                        "로그아웃 하시겠습니까?",
+                        [
+                            {
+                                text: "네",
+                                onPress: () => (
+                                    AsyncStorage.removeItem('userInfo'),
+                                    AsyncStorage.removeItem('staffInfo'),
+                                    console.log('123'),
+                                    navigation.replace('Login')
+                                ),
+                            },
+                            {
+                                text: "아니요",
+                                onPress: () => console.log("Logout cancel"),
+                            }
+                        ],
+                        { cancelable: false }
+                    )}><Text>로그아웃</Text></Pressable></View>
       <CenterText>
         <Title>회사 설정</Title>
       </CenterText>
@@ -46,17 +62,21 @@ function RepairStepOne({ navigation }) {
         <RNPickerSelect
             placeholder = {{label : '회사를 선택하세요.',value: null}}
             style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
-            onValueChange={(value) => setText(value)}
-                items={[
-                    { label: 'A사', value: 'A사(AAA)'}
-                ]}
+            onValueChange={(value) => {
+                setText(value);
+                console.log(store.getState().shopId);
+                console.log(text)
+              }}
+                items={
+                    items
+                }
             />
         </Input>
       </MiddleView>
 
 
       <Button onPress={() => {(text !== null) ? (
-          navigation.navigate('PhotoStep')
+          navigation.navigate('PhotoStep',{id:text})
       ) : (
           Alert.alert('회사를 선택해주세요.')
           )}}>
@@ -77,7 +97,7 @@ const MiddleView = styled.View`
     min-height:100px;
 `;
 
-const Input = styled.TouchableOpacity`
+const Input = styled.View`
     width: 70%;
     font-size: 20px;
     border : 1.5px;

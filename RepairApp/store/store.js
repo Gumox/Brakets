@@ -5,11 +5,12 @@ export default createStore(function(state,action){
     
     if(state === undefined){
         return{
-            afterImageUris:[],afterImageUri1:"",afterImageUri2:"",afterImageUri3:"",afterImageUri4:"",afterImageUri5:"",userEmail:""
+            addRepairImageUri:null,afterImageUri1:null,afterImageUri2:null,afterImageUri3:null,afterImageUri4:null,afterImageUri5:null,
+            userEmail:"",staffInfo:[],shopId:0,shippingPlace:""
         }
     }
-    if(action.type === 'STORE_AFTER_IMAGE'){
-        return{...state,  afterImageUris:  [...state.afterImageUris,action.afterImageUris]};
+    if(action.type === 'STORE_ADD_REPAIR_IMAGE'){
+        return{...state,  addRepairImageUri:  action.addRepairImageUri};
     }
     if(action.type === 'STORE_AFTER_IMAGE1'){
         return{...state,  afterImageUri1: action.afterImageUri1};
@@ -28,6 +29,15 @@ export default createStore(function(state,action){
     }
     if(action.type === 'USER_EMAIL'){
         return{...state,  userEmail: action.userEmail};
+    }
+    if(action.type === 'STAFF_INFO'){
+        return{...state,  staffInfo: action.staffInfo};
+    }
+    if(action.type === 'SHOP_ID'){
+        return{...state,  shopId: action.shopId};
+    }
+    if(action.type === 'SHIPPING_PLACE'){
+        return{...state,  shippingPlace: action.shippingPlace};
     }
     return state;
 })

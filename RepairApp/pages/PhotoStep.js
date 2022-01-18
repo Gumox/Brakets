@@ -5,8 +5,9 @@ import ReceiptButton from '../components/ReceiptButton';
 import Bottom from '../components/Bottom';
 
 
-export default function PhotoStep({ navigation }) {
-
+export default function PhotoStep({ navigation,route }) {
+    /*const brand = route.params.id;
+    console.log("id: "+brand)*/
 
     return (
 

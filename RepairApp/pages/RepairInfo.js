@@ -6,7 +6,9 @@ import Bottom from '../components/Bottom';
 import axios from "axios";
 import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert} from "react-native";
 import styled from 'styled-components/native';
+import ip from '../serverIp/Ip';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import store from '../store/store';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -84,12 +86,55 @@ const styles = StyleSheet.create({
  
 export default function RepairInfo( { route,navigation } ) {
     const data =route.params.data;
+    const [brand,setBrand] = useState('');
+    const [storeName,setStoreName] = useState('');
+    const [shippingDate,setShippingDate] =useState('');
+    const [send,setSend] = useState('')
     
     const images = route.params.images;
     const keys= Object.keys(data)
+    const getTargetData = useCallback(async (receiptId) => {
+        const { data } = await axios.get(ip+`/api/RepairDetailInfo?code=${receiptId}`);
+        console.log(data)
+        if(data === null ||data === ''){
+            alertFunction();
+            navigation.goBack();
+        }
+        else{
+            console.log()
+            console.log()
+            console.log()
+            console.log()
+            setBrand(data.data['brand_name'])
+            setStoreName(data.data["store_name"])
+            if(data.data["repair1_store_id"] === store.getState().shopId){
+                console.log("repair1")
+                setShippingDate(data.data["repair1_complete_date"])
+            }else if(data.data["repair2_store_id"] === store.getState().shopId){
+                console.log("repair2")
+                setShippingDate(data.data["repair2_complete_date"])
+            }else if(data.data["repair3_store_id"] === store.getState().shopId){
+                console.log("repair3")
+                setShippingDate(data.data["repair3_complete_date"])
+            }
+        }
+        
+    });
+    useEffect(() => {
+        getTargetData(data);
+      
 
-    
-    
+    }, []);
+
+    const alertFunction = ()=>{
+        Alert.alert(
+            "서비스카드 오류",
+            "올바른 서비스 카드가 아닙니다",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+    }
    
     
     return(
@@ -99,15 +144,15 @@ export default function RepairInfo( { route,navigation } ) {
 
                 <InfoView>
                     <TopText>서비스 카드 번호</TopText>
-                    <InputText></InputText>
+                    <InputText>{data}</InputText>
                     <TopText>브랜드</TopText>
-                    <InputText></InputText>
+                    <InputText>{brand}</InputText>
                     <TopText>매장명</TopText>
-                    <InputText></InputText>     
+                    <InputText>{storeName}</InputText>     
                 </InfoView>
                 
                 <TopText>수선처 발송일</TopText>
-                <InputText></InputText>
+                <InputText>{shippingDate}</InputText>
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
