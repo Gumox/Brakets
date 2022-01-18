@@ -45,9 +45,7 @@ function Login({ navigation }): React.ReactElement {
       .then(
         response => (response.status == '200') && (response.data.data[0].name) ? (
           savedInfo(response.data.data),
-          console.log(response.data.data),
-          saveId(response.data.data[0].name, userEmail),
-          console.log()
+          saveId(response.data.data[0].name, userEmail)
         ) : (
           console.log("response" + response)
         )
@@ -62,8 +60,6 @@ function Login({ navigation }): React.ReactElement {
           ]
         )
       })
-
-    // console.log(new Date());
   });
 
   function saveId(_userName, _userEmail) {
@@ -79,9 +75,9 @@ function Login({ navigation }): React.ReactElement {
         store.dispatch({ type: 'storeName', storeName: _userName })
         navigation.replace('ReceiptDivision');
       });
-
-
   }
+
+
   function savedInfo(data) {
     AsyncStorage.setItem(
       'info',

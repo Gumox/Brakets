@@ -4,10 +4,8 @@ import { createStore } from "redux";
 export default createStore(function(state,action){
     
     if(state === undefined){
-
-
         return{
-            afterImageUris:[],afterImageUri1:"",afterImageUri2:"",afterImageUri3:"",afterImageUri4:"",afterImageUri5:""
+            afterImageUris:[],afterImageUri1:"",afterImageUri2:"",afterImageUri3:"",afterImageUri4:"",afterImageUri5:"",userEmail:""
         }
     }
     if(action.type === 'STORE_AFTER_IMAGE'){
@@ -27,6 +25,9 @@ export default createStore(function(state,action){
     }
     if(action.type === 'STORE_AFTER_IMAGE5'){
         return{...state,  afterImageUri5: action.afterImageUri5};
+    }
+    if(action.type === 'USER_EMAIL'){
+        return{...state,  userEmail: action.userEmail};
     }
     return state;
 })
