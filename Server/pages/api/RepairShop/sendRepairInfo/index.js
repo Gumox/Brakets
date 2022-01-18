@@ -67,7 +67,7 @@ const sendRepairInfo = async (req, res) => {
 
             console.log(result)
             
-        if (result.changedRows) {
+        if (result) {
             console.log("update RepairInfo");
             //res.json({body});
             res.status(200).json({ changed: result.changedRows});
