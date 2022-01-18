@@ -29,30 +29,35 @@ const controller = async (req, res) => {
             if (err) throw new Error(err);
             const receiptId = parseInt(fields["receipt"]);
             const storeId = parseInt(fields["store"]);
-
-            const images = ["image1", "image2", "image3", "image4", "image5"];
+            
+            const images = ["image1", "image2", "image3", "image4"];
+            console.log(receiptId)
             console.log(files)
+            console.log("*****************************")
             images.forEach(async (image, index) => {
                 if(!files[image]) return
-                const key =index+1;
-                console.log(key)
+                const key = (index+1);
                 const extension = files[image].name.split(".").pop();
-                const filePath = `/storage/repair/${receiptId}_${key}.${extension}`;
-                console.log(filePath)
-                const oldPath = files[image].path;
-                const newPath = `./public${filePath}`;
-                console.log(oldPath)
-                console.log(newPath)
-                // 파일 저장 (formidable 은 임시로 파일 저장해둠, 원하는 위치로 rename)
-                fs.rename(oldPath, newPath, (err) => {
-                    if (err) throw new Error(err);
-                });
-                    
-                const saveResult = await saveDetailImage(receiptId,key,filePath, storeId);
-                console.log(saveResult)
-                if(saveResult.error){ 
-                    throw new Error(saveResult.error);
+                if(extension === ''){
+                    console.log("is null")
+                   
+                }else{
+                    const filePath = `/storage/repair/${receiptId}_${key}.${extension}`;
+                    console.log(filePath)
+                    const oldPath = files[image].path;
+                    const newPath = `./public${filePath}`;
+                    // 파일 저장 (formidable 은 임시로 파일 저장해둠, 원하는 위치로 rename)
+                    fs.rename(oldPath, newPath, (err) => {
+                        if (err) throw new Error(err);
+                    });
+                        
+                    const saveResult = await saveDetailImage(receiptId,key,filePath, storeId);
+                    console.log(saveResult)
+                    if(saveResult.error){ 
+                        throw new Error(saveResult.error);
+                    }
                 }
+                
             });
             res.status(200).json({msg:"images saved"});
         }catch (err) {
