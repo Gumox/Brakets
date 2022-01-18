@@ -299,7 +299,9 @@ const MiddleView = styled.View`
 
 const BottomView = styled.View`
     flex-direction: row;
-    margin-bottom:30px;                
+    margin-bottom:30px;
+    justify-content: center;
+    align-items: center;                
 `;
 
 const ContainImg = styled.View`

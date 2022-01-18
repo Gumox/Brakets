@@ -17,7 +17,7 @@ import store from '../store/store';
 
 function RepairDetail({ navigation, route }) {
     const code = route.params.data;
-    
+    const shop = 0;
     const [cardId, setCardID] = useState(code);
     const [brandNum, setBrandNum] = useState('');
     const [storeName, setStoreName] = useState('');
@@ -34,12 +34,14 @@ function RepairDetail({ navigation, route }) {
     const [shippingCost, setShippingCost] = useState('');
     const [shippingPlace, setShippingPlace] = useState('');
 
+    const [repairShop,setRepairShop] = useState('')
+
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [btnDisabled, setBtnDiabled] = useState(true);
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     
     let photoAdd;
-    
+    let beforeImgList =[]   
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
         console.log(data)
@@ -51,8 +53,15 @@ function RepairDetail({ navigation, route }) {
         setSize(data.data['size'])
         setRequire(data.data["store_message"])
         setImage(data.data["image"])
+
+        if(data.data["repair1_detail_id"]===shop){
+
+        }else if(data.data["repair2_detail_id"]===shop){
+
+        }else if(data.data["repair3_detail_id"]===shop)
+
         
-        const beforeImgList =[]                         
+                              
         for (let i = 0; i < data.imageList.length; i++) {
             const element = data.imageList[i];
             
@@ -100,7 +109,7 @@ function RepairDetail({ navigation, route }) {
             complete_date: date,
             shipment_type: sendType,
             shipment_price: sendPay,
-            repair_detail_id:25
+            repair_detail_id:repair_detail_id
         }
         try {
             const response = await fetch(Ip+'/api/RepairShop/sendRepairInfo',{method: 'PUT',
@@ -346,6 +355,8 @@ function RepairDetail({ navigation, route }) {
                                 Alert.alert('수선처 발송일을 입력해주세요')
                             ) : (
                             console.log('저장 기능 구현')
+                               /*postSendRepairInfo(shippingDate,,shippingCost,repairShop),
+                               postUpdateAfterImage()*/
                         )
                         }
 
