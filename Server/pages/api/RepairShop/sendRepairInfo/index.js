@@ -58,9 +58,7 @@ const sendRepairInfo = async (req, res) => {
     const repair_detail_id  = req.body.repair_detail_id ;
 
     console.log("store : "+ store)
-    if (!store) {
-        return res.status(400).send();
-    }
+    
     try {
         
         //const result = await addRepairDetail(store , send_date, register_date, delivery_type, message, complete_date, shipment_type,  shipment_price);
