@@ -33,7 +33,6 @@ const controller = async (req, res) => {
             const images = ["image1", "image2", "image3", "image4"];
             console.log(receiptId)
             console.log(files)
-            console.log("*****************************")
             images.forEach(async (image, index) => {
                 if(!files[image]) return
                 const key = (index+1);
