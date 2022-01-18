@@ -26,13 +26,19 @@ async function getReceipt(code) {
               repair2_detail_id,
               repair3_detail_id,
               mfr_detail_id,
+              repair1.store_id AS repair1_store_id,
+              repair2.store_id AS repair2_store_id,
+              repair3.store_id AS repair3_store_id,
               receipt.image
               FROM receipt 
               LEFT JOIN brand ON brand.brand_id = receipt.brand_id
               LEFT JOIN store ON store.store_id = receipt.store_id
               LEFT JOIN customer ON customer.customer_id = receipt.customer_id
               LEFT JOIN product ON product.product_id = receipt.product_id
-              LEFT JOIN style_type ON style_type.style_id = product.style_id  
+              LEFT JOIN style_type ON style_type.style_id = product.style_id
+              LEFT JOIN repair_detail AS repair1 ON repair1.repair_detail_id = receipt.repair1_detail_id
+              LEFT JOIN repair_detail AS repair2 ON repair2.repair_detail_id = receipt.repair2_detail_id
+              LEFT JOIN repair_detail AS repair3 ON repair3.repair_detail_id = receipt.repair3_detail_id
               WHERE receipt.receipt_code = ?`,
     values: [code],
   });
