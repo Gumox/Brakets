@@ -23,7 +23,7 @@ class DetectCode extends Component {
             if(String(scanResult.type).substring(8) === 'Code128'){
                 console.log(scanResult.data)
             }
-            
+
             if(this.props.route.params['toGo'] != undefined){
                 if(this.props.route.params['toGo'] === "RepairMore"){
                     this.props.navigation.replace('RepairMore',{data: scanResult.data})
@@ -69,11 +69,12 @@ class DetectCode extends Component {
                         alignItems:"center",
                         }}
                     >
-                        <Image source={require('../Icons/scan_yellow.png')} 
-                        style={{
-                            width: (Dimensions.get('window').width)/2,
-                            height:(Dimensions.get('window').width)/2,
-                            opacity:0.6,
+                        <Image 
+                            source={require('../Icons/scan_yellow.png')} 
+                            style={{
+                                width: (Dimensions.get('window').width)/2,
+                                height:(Dimensions.get('window').width)/2,
+                                opacity:0.6,
                             }}/>
                     </View>
                 </View>
