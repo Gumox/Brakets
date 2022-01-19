@@ -4,10 +4,34 @@ import Bottom from '../components/Bottom';
 import Button from '../components/Button';
 import { Text } from 'react-native';
 
+function FindRoute({navigation}, _route, _prdCode){
 
-function InputAlternativeNumber({ navigation }) {
+    if(_route != undefined){
+
+        switch(_route) {
+            case "RepairMore":
+                navigation.replace('RepairMore', {data: _prdCode});
+                break;
+            case "RepairInfo":
+                navigation.replace('RepairInfo', {data: _prdCode})
+                break;
+            case "ProductSend":
+                navigation.replace('ProductSend', {data: _prdCode})
+                break;
+            default:
+                navigation.replace('RepairDetail', {data: _prdCode})
+          }
+        
+    }
+    console.error("undefined value");
+    // console.log(_route);
+}
+
+
+function InputAlternativeNumber({ navigation, route }) {
 
     const [prdCode, setPrdCode] = useState('');
+    const test = route.params['toGo'];
 
     return (
         <>
@@ -30,12 +54,12 @@ function InputAlternativeNumber({ navigation }) {
 
                 </OverallView>
                 <Button
-                    onPress = {() => navigation.replace('RepairDetail', {data: prdCode})}
+                    onPress = {() => FindRoute({navigation}, route.params, prdCode)}
                 >
                     <Text>
                         조회
                     </Text>
-                    
+
                 </Button>
 
             </Container>
