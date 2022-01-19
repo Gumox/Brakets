@@ -16,7 +16,6 @@ target 'DempApp' do
 
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
 
-  pod 'RNSketchCanvas', :path => '../node_modules/@terrylinla/react-native-sketch-canvas'
 
   target 'DempAppTests' do
     inherit! :complete
