@@ -28,7 +28,7 @@ function RepairDetail({ navigation, route }) {
     const [color, setColor] = useState('');
     const [size, setSize] = useState('');
     const [require,setRequire] = useState('');
-
+    const [datas,setDatas] = useState([])
     const [image,setImage] = useState('')
 
     const [shippingDate, setShippingDate] = useState(null);
@@ -44,41 +44,71 @@ function RepairDetail({ navigation, route }) {
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     
     let photoAdd;
-    let beforeImgList =[]   
+    let beforeImgList =[]
+    const alertFunctionCode = ()=>{
+        Alert.alert(
+            "서비스 카드 바코드를 찾을수 없습니다",
+            "\n올바른 서비스 카드가 아닙니다",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          navigation.goBack();
+    }  
+    const alertFunction = ()=>{
+        Alert.alert(
+            "브랜드 불일치",
+            "올바른 브랜드를 선택해 주세요",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          navigation.goBack();
+    }   
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
         console.log(data)
-        setBrandNum(data.data['brand_name'])
-        setStoreName(data.data['store_name'])
-        setReceiptId(data.data['receipt_id'])
-        setStoreId(data.data['store_id'])
-        setCustomerName(data.data['customer_name'])
-        setStyleNum(data.data['style_code'])
-        setColor(data.data['color'])
-        setSize(data.data['size'])
-        setRequire(data.data["store_message"])
-        setImage(data.data["image"])
+        if(data.data === undefined){
+            console.log("undefined")
+            alertFunctionCode();
+        }
+        else{
+            setDatas(data.data)
+            if(data.data["brand_name"]!==store.getState().brand["label"]){
+                console.log("Not same")
+                alertFunction();
+            }
+            setBrandNum(data.data['brand_name'])
+            setStoreName(data.data['store_name'])
+            setReceiptId(data.data['receipt_id'])
+            setStoreId(data.data['store_id'])
+            setCustomerName(data.data['customer_name'])
+            setStyleNum(data.data['style_code'])
+            setColor(data.data['color'])
+            setSize(data.data['size'])
+            setRequire(data.data["store_message"])
+            setImage(data.data["image"])
 
-        if(data.data["repair1_store_id"]===shop){
-            console.log(data.data["repair1_store_id"]+" : "+shop)
-            setRepairShop(data.data["repair1_store_id"])
-            setRepairDetailId(data.data["repair1_detail_id"])
-        }else if(data.data["repair2_store_id"]===shop){
-            console.log(data.data["repair2_store_id"]+" : "+shop)
-        }else if(data.data["repair3_store_id"]===shop){
-            console.log(data.data["repair3_store_id"]+" : "+shop)
-        }
-        
-                              
-        for (let i = 0; i < data.imageList.length; i++) {
-            const element = data.imageList[i];
+            if(data.data["repair1_store_id"]===shop){
+                console.log(data.data["repair1_store_id"]+" : "+shop)
+                setRepairShop(data.data["repair1_store_id"])
+                setRepairDetailId(data.data["repair1_detail_id"])
+            }else if(data.data["repair2_store_id"]===shop){
+                console.log(data.data["repair2_store_id"]+" : "+shop)
+            }else if(data.data["repair3_store_id"]===shop){
+                console.log(data.data["repair3_store_id"]+" : "+shop)
+            }
             
-            beforeImgList.push(Ip+element["before_image"])
+                                
+            for (let i = 0; i < data.imageList.length; i++) {
+                const element = data.imageList[i];
+                
+                beforeImgList.push(Ip+element["before_image"])
+                
+            }
             
-        }
-        
-        setBeforeImages(beforeImgList)
-        
+            setBeforeImages(beforeImgList)
+        }    
     });
     const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,image2,image3,image4) => {
         var formdata = new FormData();
@@ -195,6 +225,17 @@ function RepairDetail({ navigation, route }) {
         console.log("shipping date is" + shippingDate);
         hideDatePicker();
     };
+    const setShipping=(value)=>{
+        let items=[
+            { label: storeName, value: storeId },
+            { label: '본사', value: 1 }
+        ]
+        items.forEach(obj => {
+            if(obj.value === value){
+                store.dispatch({type:"SHIPPING_PLACE", shippingPlace:obj.label})
+            }
+        });
+    }
 
     const nowTime = dayjs();
 
@@ -350,7 +391,7 @@ function RepairDetail({ navigation, route }) {
                             style={{ border: 'solid', marginBottom: '50', borderWidth: '3', borderColor: 'black' }}
                             onValueChange={(value) => {
                                 setShippingPlace(value)
-                                store.dispatch({type:"SHIPPING_PLACE", shippingPlace:shippingPlace})
+                                setShipping(value)
                             }}
                             items={[
                                 { label: storeName, value: storeId },

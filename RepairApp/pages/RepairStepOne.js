@@ -18,6 +18,18 @@ function RepairStepOne({ navigation,route }) {
   let item =[];
   const [text, setText] = useState("");
   
+  const setBrand = (value) => {
+    staffInfo.forEach((obj,index)=>{
+      if(obj.brand_id === value){
+        console.log("label: "+obj.brand_name+" value: "+value)
+        store.dispatch({type:"SET_BRAND",brand:{label: obj.brand_name,value:value}})
+        console.log()
+        
+      }
+    })
+    console.log(store.getState())
+  }
+  
   useEffect(() => {
       
     staffInfo.forEach((elt,index) => {
@@ -60,12 +72,13 @@ function RepairStepOne({ navigation,route }) {
       <MiddleView>
         <Input>
         <RNPickerSelect
-            placeholder = {{label : '회사를 선택하세요.',value: null}}
-            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
+            placeholder = {store.getState().brand}
+            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
             onValueChange={(value) => {
+                setBrand(value)
                 setText(value);
-                console.log(store.getState().shopId);
-                console.log(text)
+                //console.log(store.getState().shopId);
+                //console.log(text)
               }}
                 items={
                     items

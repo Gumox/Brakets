@@ -6,7 +6,7 @@ export default createStore(function(state,action){
     if(state === undefined){
         return{
             addRepairImageUri:null,afterImageUri1:null,afterImageUri2:null,afterImageUri3:null,afterImageUri4:null,afterImageUri5:null,
-            userEmail:"",staffInfo:[],shopId:0,shippingPlace:""
+            userEmail:"",staffInfo:[],shopId:0,shippingPlace:"",brand:{label : '회사를 선택하세요.',value: null}
         }
     }
     if(action.type === 'STORE_ADD_REPAIR_IMAGE'){
@@ -38,6 +38,12 @@ export default createStore(function(state,action){
     }
     if(action.type === 'SHIPPING_PLACE'){
         return{...state,  shippingPlace: action.shippingPlace};
+    }
+    if(action.type === 'SET_BRAND'){
+        return{...state,  brand: action.brand};
+    }
+    if(action.type === "IMAGE_RESET"){
+        return{...state,afterImageUri1:null,afterImageUri2:null,afterImageUri3:null,afterImageUri4:null}
     }
     return state;
 })

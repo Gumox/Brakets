@@ -135,7 +135,8 @@ export default function RepairInfo( { route,navigation } ) {
             ]
           );
     }
-   
+    
+    console.log(store.getState())
     
     return(
         <Container>
@@ -156,7 +157,7 @@ export default function RepairInfo( { route,navigation } ) {
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
-                <InputText></InputText>
+                <InputText>{store.getState().shippingPlace}</InputText>
                 <TopText/>
                 
         
