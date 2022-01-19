@@ -42,8 +42,6 @@ function RepairDetail({ navigation, route }) {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [btnDisabled, setBtnDiabled] = useState(true);
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
-    
-    let photoAdd;
     let beforeImgList =[]
     const alertFunctionCode = ()=>{
         Alert.alert(
@@ -135,9 +133,11 @@ function RepairDetail({ navigation, route }) {
             if(json.msg == 'images saved'){
                 navigation.popToTop();
                 if(sendType === 1){
+                    store.dispatch({type:"IMAGE_RESET", reset:null})
                     navigation.navigate("MailbagScan")
                 }
                 else{
+                    store.dispatch({type:"IMAGE_RESET", reset:null})
                     navigation.navigate("PhotoStep")
                 }
             }
@@ -366,6 +366,7 @@ function RepairDetail({ navigation, route }) {
                     <PickerView>
                         <RNPickerSelect
                             placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
+                            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
                             onValueChange={(value) => setShippingMethod(value)}
                             items={[
                                 { label: '행낭', value: 1 },
@@ -388,7 +389,7 @@ function RepairDetail({ navigation, route }) {
                     <PickerView>
                         <RNPickerSelect
                             placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
-                            style={{ border: 'solid', marginBottom: '50', borderWidth: '3', borderColor: 'black' }}
+                            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
                             onValueChange={(value) => {
                                 setShippingPlace(value)
                                 setShipping(value)
@@ -404,8 +405,10 @@ function RepairDetail({ navigation, route }) {
 
 
                 <BottomView>
-                    <SmallButton onPress={() =>
-                        navigation.navigate('RepairStepOne')
+                    <SmallButton onPress={() =>{
+                        store.dispatch({type:"IMAGE_RESET", reset:null})
+                        navigation.replace('RepairStepOne')
+                        }
 
                     }>
                         <Text>

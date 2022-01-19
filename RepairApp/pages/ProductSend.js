@@ -7,6 +7,7 @@ import axios from "axios";
 import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert} from "react-native";
 import styled from 'styled-components/native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import store from '../store/store';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -83,15 +84,26 @@ const styles = StyleSheet.create({
 })
  
 export default function ProductSend( { route,navigation } ) {
-    const data =route.params.data;
-    
+    const code = route.params.data;
+    const datas = route.params.datas;
+    console.log(route.params.datas)
     const images = route.params.images;
-    const keys= Object.keys(data)
-
+    const place =store.getState().shippingPlace;
     
+    const formatDate = (inputDate) => {
+        var month = '' + (inputDate.getMonth() + 1),
+          day = '' + inputDate.getDate(),
+          year = inputDate.getFullYear();
     
-   
-    
+        if (month.length < 2)
+          month = '0' + month;
+        if (day.length < 2)
+          day = '0' + day;
+        const value = [year, month, day].join('-');
+        return value
+      }
+      const date = formatDate(new Date(datas[4].shippingDate))
+    console.log(store.getState().shippingPlace)
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
@@ -99,21 +111,21 @@ export default function ProductSend( { route,navigation } ) {
 
                 <InfoView>
                     <TopText>서비스 카드 번호</TopText>
-                    <InputText></InputText>
+                    <InputText>{datas[0].code}</InputText>
                     <TopText>브랜드</TopText>
-                    <InputText></InputText>
+                    <InputText>{datas[1].brand}</InputText>
                     <TopText>매장명</TopText>
-                    <InputText></InputText>     
+                    <InputText>{datas[2].storeName}</InputText>     
                 </InfoView>
                 
                 <TopText>수선처 발송일</TopText>
-                <InputText></InputText>
+                <InputText>{date}</InputText>
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
-                <InputText></InputText>
+                <InputText>{place}</InputText>
                 <TopText>행낭 바코드 번호</TopText>
-                <InputText></InputText>
+                <InputText>{code}</InputText>
                 <TopText/>
                 
         

@@ -30,7 +30,7 @@ class DetectCode extends Component {
                     this.props.navigation.replace('RepairInfo',{data: scanResult.data})
                 }
                 else if(this.props.route.params['toGo'] === "ProductSend"){
-                    this.props.navigation.replace('ProductSend',{data: scanResult.data})
+                    this.props.navigation.replace('ProductSend',{data: scanResult.data,datas: this.props.route.params['datas']})
                 }
                 else{
                     this.props.navigation.replace('RepairDetail',{data: scanResult.data})
