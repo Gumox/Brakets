@@ -36,10 +36,13 @@ function RepairMore({ navigation, route }) {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [btnDisabled, setBtnDiabled] = useState(true);
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
-   
+    const [afterImages,setAfterImages] =useState([]);
+
+
+    const takeNeedPhotos =store.getState().needPhotos;
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
-        console.log(data)
+       
         setBrandNum(data.data['brand_name'])
         setStoreName(data.data['store_name'])
         setCustomerName(data.data['customer_name'])
@@ -49,47 +52,146 @@ function RepairMore({ navigation, route }) {
         setRequire(data.data["store_message"])
         setImage(data.data["image"])
         
-        const beforeImgList =[]                         
+        const beforeImgList =[];
+        const afterImgList =[];                       
         for (let i = 0; i < data.imageList.length; i++) {
             const element = data.imageList[i];
             
             beforeImgList.push(Ip+element["before_image"])
-            
+            if(element["after_image"] !== null || element["after_image"]!==undefined){
+                afterImgList.push(Ip+element["after_image"])
+            }
         }
-        
         setBeforeImages(beforeImgList)
-        
+        setAfterImages(afterImgList)
     });
     let beforeImageViews =[];
-    
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
+        const obj = afterImages[i]
         const key = i
         let afterImage = "../Icons/camera.png"
-        
+        if(obj !== null || obj === undefined){
+            afterImage = obj
+        }
+        let before;
         let photo ='afterImageUri'+(key+1);
         
-        if(store.getState()[photo] != ""){
-            console.log("image inside: "+store.getState()[photo] )
-            afterImage = store.getState()[photo]
-        }
-        const before =(
+        before =(
             <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
-                <Pressable >
+                <Pressable onPress={()=>{navigation.replace("PhotoControl",{img:element})}}>
                     <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                 </Pressable>
                 <Pressable >
-                    <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : afterImage}}></Image>
+                    <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30}} source={{uri : afterImage}}></Image>
                 </Pressable>
             </View>
         )
         beforeImageViews[key] =(before)
     }
+    let pullImage;
+    const message =(
+        <View style={{justifyContent:"center",alignItems:"center"}}>
+                        <SmallLabel>
+                        전체 사진을 클릭한 후,
+                        </SmallLabel>
+                        <SmallLabel>
+                        추가 수선이 필요한 부위를 
+                        </SmallLabel>
+                        <SmallLabel>
+                        표시하세요
+                        </SmallLabel>
+        </View>
+    )
+    if(store.getState().photo !==null){
+        pullImage =(
+            <View style={{minWidth: 100}}>
+                <Label>전체 사진</Label>
+                <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
+                    <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image ,code:code})}}>
+                        <Image
+                            style={{ width: 150, height: 150 }}
+                            resizeMode='contain'
+                            source={
+                                { uri: store.getState().photo }
+                            }
+                        />
+                    </Pressable>
+                    {message}
+                </View>
+            </View>
+        )
+    }else{
+        pullImage =(
+            <View style={{minWidth: 100}}>
+                <Label>전체 사진</Label>
+                <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
+                    <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image ,code:code})}}>
+                        <Image
+                            style={{ width: 150, height: 150 }}
+                            resizeMode='contain'
+                            source={
+                                { uri: Ip+image }
+                            }
+                        />
+                    </Pressable>
+                    {message}
+                </View>
+            </View>
+        )
+    }
     useEffect(() => {
         getTargetData(code);
-
     }, []);
+    const repairNeedImage = store.getState().addRepairImageUri;
+    let repairNeeds =[];
+    if(repairNeedImage !== null){
+        let set =(<View key={0} style ={{flexDirection:"row",justifyContent : "space-between"}}><Label>추가 사진</Label></View>)
+        repairNeeds[0]= (set)
+        takeNeedPhotos.forEach((obj,index) => {
+            let photo=(
+                <View key={index+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
 
+                <Pressable onPress={() => {navigation.navigate("AddPhotoControl",{img:obj.photo,code:code})}}>
+                    <Image
+                        style={{ width: 100, height: 120 , padding:10, marginLeft:30}}
+                        resizeMode='contain'
+                        source={
+                            { uri: obj.photo }
+                        }
+                    />
+                </Pressable>
+                
+                <Pressable >
+                <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
+
+                </View>
+                </Pressable>
+            </View>
+            )
+            repairNeeds[index+1]=(photo)
+
+        });
+        let need = (
+            <View key={takeNeedPhotos.length+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
+
+                <Pressable onPress={() => {navigation.navigate('TakePhoto',{key:"need",code:code})}}>
+                    <View style={{width:100,height:120,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
+                        <Text style={{color:"#ffffff", fontSize:20}}>필요 수선 부위 추가</Text>
+                    </View>
+                </Pressable>
+                
+                <Pressable >
+                <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
+
+                </View>
+                </Pressable>
+            </View>
+        );
+        repairNeeds[((takeNeedPhotos).length)+1]=(need)
+        
+        
+    }
     
 
     const showDatePicker = () => {
@@ -182,32 +284,7 @@ function RepairMore({ navigation, route }) {
                 </OverallView>
 
                 <OverallView>
-                    <View style={{minWidth: 100}}>
-                        <Label>전체 사진</Label>
-                        <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
-                            <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image ,code:code})}}>
-                                <Image
-                                    style={{ width: 150, height: 150 }}
-                                    resizeMode='contain'
-                                    source={
-                                        { uri: Ip+image }
-                                    }
-                                />
-                            </Pressable>
-                            <View style={{justifyContent:"center",alignItems:"center"}}>
-                                <SmallLabel>
-                                전체 사진을 클릭한 후,
-                                </SmallLabel>
-                                <SmallLabel>
-                                추가 수선이 필요한 부위를 
-                                </SmallLabel>
-                                <SmallLabel>
-                                표시하세요
-                                </SmallLabel>
-                            </View>
-                            
-                        </View>
-                    </View>
+                    {pullImage}
 
                     <Label>근접 사진</Label>
                     <EnlargedPictureView>
@@ -224,6 +301,7 @@ function RepairMore({ navigation, route }) {
 
                     </EnlargedPictureView>
                     {beforeImageViews}
+                    {repairNeeds}
                 </OverallView>
 
 

@@ -113,6 +113,9 @@ export default class TakePhoto extends Component {
         }
         
         this.props.navigation.replace("RepairDetail",{data:route.params.data});
+      }else{
+        store.dispatch({type:'NEED_PHOTOS',needPhotos:{photo:imgUri}});
+        this.props.navigation.replace("RepairMore",{data:route.params.code});
       }
      
     }  

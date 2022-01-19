@@ -34,7 +34,7 @@ export default class DrawBoard extends Component {
             
             const params = this.props.children[1];
             wait(250).then(() => {
-                this.props.navigation.replace("RepairMore",{data:this.props.code}); 
+                this.props.navigation.replace("DrawStep",{data:this.props.code,image:this.props.image}); 
             });
             
         })
@@ -54,7 +54,7 @@ export default class DrawBoard extends Component {
                         ref="canvasRef"
                         style={{ flex: 1 }}
                         strokeColor={this.props.children[0]}
-                        strokeWidth={5}
+                        strokeWidth={14}
                     />
                 </ViewShot>
  

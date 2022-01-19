@@ -7,6 +7,7 @@ import axios from "axios";
 import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert} from "react-native";
 import styled from 'styled-components/native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import ip from '../serverIp/Ip';
 import store from '../store/store';
 
 const TouchableView = styled.TouchableOpacity`
@@ -89,7 +90,7 @@ export default function ProductSend( { route,navigation } ) {
     console.log(route.params.datas)
     const images = route.params.images;
     const place =store.getState().shippingPlace;
-    
+
     const formatDate = (inputDate) => {
         var month = '' + (inputDate.getMonth() + 1),
           day = '' + inputDate.getDate(),
@@ -101,8 +102,37 @@ export default function ProductSend( { route,navigation } ) {
           day = '0' + day;
         const value = [year, month, day].join('-');
         return value
-      }
-      const date = formatDate(new Date(datas[4].shippingDate))
+    }
+    const postupdateMailBag = async (to,from,code,receipt_id) => {
+        const bodyData ={
+                    
+            to:to,
+            from:from,
+            code:code,
+            receipt_id:receipt_id
+
+        }
+        console.log(bodyData)
+        try {
+            const response = await fetch(ip+'/api/RepairShop/updateMailBag',{method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(bodyData)
+            });
+            const json = await response.json();
+            console.log(json.body);
+            navigation.popToTop();
+            navigation.navigate("MailbagScan")
+           
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    console.log(store.getState().shopId)
+
+    const date = formatDate(new Date(datas[5].shippingDate))
     console.log(store.getState().shippingPlace)
     return(
         <Container>
@@ -111,11 +141,11 @@ export default function ProductSend( { route,navigation } ) {
 
                 <InfoView>
                     <TopText>서비스 카드 번호</TopText>
-                    <InputText>{datas[0].code}</InputText>
+                    <InputText>{datas[1].code}</InputText>
                     <TopText>브랜드</TopText>
-                    <InputText>{datas[1].brand}</InputText>
+                    <InputText>{datas[2].brand}</InputText>
                     <TopText>매장명</TopText>
-                    <InputText>{datas[2].storeName}</InputText>     
+                    <InputText>{datas[3].storeName}</InputText>     
                 </InfoView>
                 
                 <TopText>수선처 발송일</TopText>
@@ -123,14 +153,14 @@ export default function ProductSend( { route,navigation } ) {
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
-                <InputText>{place}</InputText>
+                <InputText>{place.name}</InputText>
                 <TopText>행낭 바코드 번호</TopText>
                 <InputText>{code}</InputText>
                 <TopText/>
                 
         
             </Contents> 
-            <Button onPress={ ()=> {} }>
+            <Button onPress={ ()=> {postupdateMailBag(store.getState().shopId,place.id,code,datas[0].receipt_id)} }>
                 완료
             </Button>
 

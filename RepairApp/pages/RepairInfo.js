@@ -82,10 +82,12 @@ export default function RepairInfo( { route,navigation } ) {
             navigation.goBack();
         }
         else{
+            console.log(data.data["receipt_id"])
             setBrand(data.data['brand_name'])
             setStoreName(data.data["store_name"])
             setStoreId(data.data['store_id'])
-            
+
+            datas.push({receipt_id:data.data["receipt_id"]})
             datas.push({code:code})
             datas.push({brand:data.data['brand_name']})
             datas.push({storeName:data.data["store_name"]})
@@ -103,6 +105,7 @@ export default function RepairInfo( { route,navigation } ) {
                 setShippingDate( formatDate(new Date(data.data["repair3_complete_date"])))
                 datas.push({shippingDate:data.data["repair3_complete_date"]})
             }
+
     
         }
         
@@ -117,7 +120,7 @@ export default function RepairInfo( { route,navigation } ) {
         ]
         items.forEach(obj => {
             if(obj.value === value){
-                store.dispatch({type:"SHIPPING_PLACE", shippingPlace:obj.label})
+                store.dispatch({type:"SHIPPING_PLACE", shippingPlace:{name:obj.label,id:obj.value}})
             }
         });
     }

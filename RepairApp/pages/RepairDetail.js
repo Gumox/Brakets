@@ -365,13 +365,14 @@ function RepairDetail({ navigation, route }) {
                     <Label>발송 방법</Label>
                     <PickerView>
                         <RNPickerSelect
-                            placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
+                            placeholder={{ label: '행낭', value: 1 }}
                             style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
                             onValueChange={(value) => setShippingMethod(value)}
                             items={[
                                 { label: '행낭', value: 1 },
                                 { label: '택배', value: 2},
-                                { label: '퀵', value: 3 }
+                                { label: '퀵', value: 3 },
+                                { label: '행낭 - 행낭 바코드 X', value: 4 }
                             ]}
                         />
                     </PickerView>

@@ -77,7 +77,7 @@ export default function PhotoDraw({navigation, route}){
                 setModalVisible(!modalVisible)
                 }}><Text></Text></TouchableHighlight>
             </View>
-            <DrawBoard navigation={navigation} code={code}>{color}{params}</DrawBoard>
+            <DrawBoard navigation={navigation} code={code} image ={imageUri}>{color}{params}</DrawBoard>
             </ImageBackground>
         </View>
            

@@ -18,7 +18,9 @@ import Picture from './functions/Picture';
 import DetectCode from './functions/DetectCode'
 import Login from './pages/Login';
 import TakePhoto from './functions/TakePhoto';
-
+import DrawStep from './functions/DrawStep';
+import PhotoControl from './functions/PhotoControl';
+import AddPhotoControl from './functions/AddPhotoControl';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +50,9 @@ function App() {
         <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} />
         <Stack.Screen name="PhotoDraw" component = {PhotoDraw} options={ { headerShown: false }} />
         <Stack.Screen name="TakePhoto" component = {TakePhoto} options={ { headerShown: false }} />
+        <Stack.Screen name="DrawStep" component = {DrawStep} options={ { headerShown: false }} />
+        <Stack.Screen name="PhotoControl" component = {PhotoControl} options={ { headerShown: false }} />
+        <Stack.Screen name="AddPhotoControl" component = {AddPhotoControl} options={ { headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>
