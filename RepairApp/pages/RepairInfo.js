@@ -27,13 +27,20 @@ const InfoView =styled.View`
     margin-bottom : 30px;
 `;
 
+const Input = styled.TextInput`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
 const InputText = styled.Text`
     color:#000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 
 const TopText = styled.Text`

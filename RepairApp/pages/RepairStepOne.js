@@ -6,8 +6,9 @@ import Container from '../components/Container';
 import CenterText from '../components/CenterText';
 import Button from '../components/Button';
 import Bottom from '../components/Bottom';
-import RNPickerSelect from 'react-native-picker-select';
 
+
+import RNPickerSelect from 'react-native-picker-select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import store from '../store/store';
 
@@ -42,7 +43,6 @@ function RepairStepOne({ navigation, route }) {
 
   return (
     <Container>
-      <SafeAreaView style={{ flex: 0, backgroundColor: 'red' }} />
       <View style={{ width: "100%", flexDirection: "row-reverse" }}>
         <Pressable
           style={{ margin: 20 }}

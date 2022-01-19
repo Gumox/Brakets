@@ -1,7 +1,8 @@
 
 import React from 'react';
+import { Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // importing pages
 import RepairStepOne from './pages/RepairStepOne';
@@ -31,23 +32,36 @@ function App() {
 
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
 
-        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{headerShown: false}}/>
+        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null}}/>
 
-        <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '수선 촬영 선택' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 
-        <Stack.Screen name="InputAlternativeNumber" component = {InputAlternativeNumber} options={ {  title: '' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="InputAlternativeNumber" component = {InputAlternativeNumber} options={ {  title: '대체 코드 입력' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 
 
-        <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
-        <Stack.Screen name="RepairMore" component = {RepairMore} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
+        <Stack.Screen name="RepairMore" component = {RepairMore} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 
         
-        <Stack.Screen name="ProductSend" component = {ProductSend} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
-        <Stack.Screen name="RepairInfo" component = {RepairInfo} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
-        <Stack.Screen name="MailbagScan" component = {MailbagScan} options={ {  title: '수선 ok' ,headerTitleAlign: 'center'} } />
+        <Stack.Screen name="ProductSend" component = {ProductSend} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
+        <Stack.Screen name="RepairInfo" component = {RepairInfo} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
+        <Stack.Screen name="MailbagScan" component = {MailbagScan} options={ {  title: '수선 ok' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 
-        <Stack.Screen name="Picture" component = {Picture} options={ {  title: '' ,headerTitleAlign: 'center'} } />
-        <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} />
+        <Stack.Screen name="Picture" component = {Picture} options={ {  title: '', headerTintColor: "black"} } />
+        {/* <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} /> */}
+        <Stack.Screen 
+          name="DetectCode" 
+          component = {DetectCode} 
+          options={ 
+            (
+              Platform.OS == 'ios'
+            ) ? (
+              {headerShown: true, title: '', headerTintColor: "black"}
+            ) : (
+              {headerShown: false}
+            )}
+          />
+
         <Stack.Screen name="PhotoDraw" component = {PhotoDraw} options={ { headerShown: false }} />
         <Stack.Screen name="TakePhoto" component = {TakePhoto} options={ { headerShown: false }} />
         <Stack.Screen name="DrawStep" component = {DrawStep} options={ { headerShown: false }} />
