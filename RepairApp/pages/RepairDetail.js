@@ -468,7 +468,7 @@ const PickerView = styled.View`
 `;
 
 const PictureView = styled.View`
-    minWidth: 100px;
+    min-Width: 100px;
     justify-content: center;
     align-items: center;
 `;
