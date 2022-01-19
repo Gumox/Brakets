@@ -77,8 +77,7 @@ class DetectCode extends Component {
                 </View>
                 <ButtonView>
                     <Button
-                        // onPress={ ()=> this.props.navigation.navigate('InputAlternativeNumber')}
-                        onPress = {() => this.props.navigation.navigate('RepairDetail')}
+                        onPress = {() => this.props.navigation.navigate('RepairDetail', {data: null})}
                         >
                         <Text>
                             코드 번호 수동 입력
