@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // importing pages
 import RepairStepOne from './pages/RepairStepOne';
@@ -29,7 +29,7 @@ function App() {
 
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
 
-        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{headerShown: false}}/>
+        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null}}/>
 
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '' ,headerTitleAlign: 'center'} } />
 
