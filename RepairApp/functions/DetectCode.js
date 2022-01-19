@@ -19,9 +19,11 @@ class DetectCode extends Component {
               
         if (scanResult.data !== null) {
 
+            // TODO: Code Type 종류 구분
             if(String(scanResult.type).substring(8) === 'Code128'){
                 console.log(scanResult.data)
             }
+            
             if(this.props.route.params['toGo'] != undefined){
                 if(this.props.route.params['toGo'] === "RepairMore"){
                     this.props.navigation.replace('RepairMore',{data: scanResult.data})
@@ -77,7 +79,7 @@ class DetectCode extends Component {
                 </View>
                 <ButtonView>
                     <Button
-                        onPress = {() => this.props.navigation.navigate('RepairDetail', {data: null})}
+                        onPress = {() => this.props.navigation.navigate('InputAlternativeNumber')}
                         >
                         <Text>
                             코드 번호 수동 입력
