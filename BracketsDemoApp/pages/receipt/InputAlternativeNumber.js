@@ -7,12 +7,11 @@ import styled from 'styled-components/native';
 import JustView from '../../components/JustView';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
-//import AsyncStorage from '@react-native-community/async-storage';
-// import { AsyncStorage } from 'react-native';
 import { Alert } from 'react-native';
 import TopInfoLess from '../../components/TopInfoLess';
 import Bottom from '../../components/Bottom';
 import store from '../../store/store';
+
 const Label = styled.Text`
     font-size: 20px;
     font-weight: bold;

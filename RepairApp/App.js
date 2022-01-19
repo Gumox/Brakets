@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // importing pages
 import RepairStepOne from './pages/RepairStepOne';
 import PhotoStep from './pages/PhotoStep';
+import InputAlternativeNumber from './pages/InputAlternativeNumber';
 import RepairDetail from './pages/RepairDetail'
 import RepairMore from './pages/RepairMore';
 import MailbagScan from './pages/MailbagScan';
@@ -31,6 +32,10 @@ function App() {
         <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{headerShown: false}}/>
 
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '' ,headerTitleAlign: 'center'} } />
+
+        <Stack.Screen name="InputAlternativeNumber" component = {InputAlternativeNumber} options={ {  title: '' ,headerTitleAlign: 'center'} } />
+
+
         <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
         <Stack.Screen name="RepairMore" component = {RepairMore} options={ {  title: '수선 내역' ,headerTitleAlign: 'center'} } />
 
