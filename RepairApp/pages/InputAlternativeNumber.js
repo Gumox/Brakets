@@ -23,7 +23,7 @@ function FindRoute({navigation}, _route, _prdCode){
           }
         
     }
-    console.error("undefined value");
+    // console.error("undefined value");
     // console.log(_route);
 }
 
