@@ -45,7 +45,6 @@ function InputAlternativeNumber({ navigation, route }) {
                     <InputView>
                         <Input                         
                         editable={true}
-                        // keyboardType='numeric'
                         selectTextOnFocus={false}
                         value={prdCode}
                         onChangeText={text => setPrdCode(text)}
