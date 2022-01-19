@@ -36,10 +36,8 @@ function InputAlternativeNumber({ navigation, route }) {
     return (
         <>
             <Container>
-                <OverallView>
-
                     <TitleView>
-                        <Label> 코드 입력 </Label>
+                        <Label> 대체 코드 입력 </Label>
                     </TitleView>
 
                     <InputView>
@@ -50,8 +48,6 @@ function InputAlternativeNumber({ navigation, route }) {
                         onChangeText={text => setPrdCode(text)}
                     />
                     </InputView>
-
-                </OverallView>
                 <Button
                     onPress = {() => FindRoute({navigation}, route.params, prdCode)}
                 >
@@ -75,6 +71,7 @@ const Container = styled.View`
     margin-left: 10px;
     margin-right: 10px
     align-Items: center;
+    justify-content: center;
 `;
 
 const OverallView = styled.View`
@@ -93,10 +90,11 @@ const TitleView = styled.View`
 
 const InputView = styled.View`
     margin: 10px;
+    width: 90%;
 `;
 
 const Label = styled.Text`
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     color:#000000;
 `;
