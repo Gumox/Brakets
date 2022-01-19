@@ -6,6 +6,7 @@ import Bottom from '../components/Bottom';
 import Button from '../components/Button';
 import CenterText from '../components/CenterText';
 import styled from 'styled-components';
+
 const RegistText= styled.Text`
     font-weight: bold;
     color:#000000;
@@ -30,8 +31,8 @@ const TopStateView = styled.View`
 const PrView = styled.View`
     flex-direction: row;
     align-items: center;
-    marginTop:10px;
-    marginBottom:10px;
+    margin-Top:10px;
+    margin-Bottom:10px;
     justify-content: center;
 `;
 // 구조 분해 할당, Destructuring Assignment
