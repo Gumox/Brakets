@@ -18,7 +18,7 @@ const Container = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     margin:15px;
-    border-radius:12px
+    border-radius:12px;
 `;
 
 const Label = styled.Text`
