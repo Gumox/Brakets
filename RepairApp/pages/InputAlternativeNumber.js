@@ -35,6 +35,7 @@ function InputAlternativeNumber({ navigation }) {
                     <Text>
                         조회
                     </Text>
+                    
                 </Button>
 
             </Container>
