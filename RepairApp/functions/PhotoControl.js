@@ -12,7 +12,7 @@ const ImgView = styled.View`
     width:100%
     height:45px
     align-items: center;
-    flexDirection: row-reverse;
+    flex-Direction: row-reverse;
 `;
 
 
