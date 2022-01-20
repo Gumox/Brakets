@@ -41,7 +41,7 @@ const controller = async (req, res) => {
                     console.log("is null")
                    
                 }else{
-                    const filePath = `/storage/repair/${receiptId}_${key}.${extension}`;
+                    const filePath = `/storage/receipt/repair${receiptId}_${key}.${extension}`;
                     console.log(filePath)
                     const oldPath = files[image].path;
                     const newPath = `./public${filePath}`;
