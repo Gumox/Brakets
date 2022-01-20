@@ -43,10 +43,9 @@ function RepairStepOne({ navigation, route }) {
 
   return (
     <Container>
-      <View style={{ width: "100%", flexDirection: "row-reverse" }}>
-        <Pressable
-          style={{ margin: 20 }}
-          onPress={() =>
+
+      <MiddleView>
+        <Button onPress={() =>
             Alert.alert(
               "로그아웃",
               "로그아웃 하시겠습니까?",
@@ -66,43 +65,11 @@ function RepairStepOne({ navigation, route }) {
                 }
               ],
               { cancelable: false }
-            )}>
-              <Text>로그아웃</Text>
-            </Pressable>
-        </View>
-      <CenterText>
-        <Title>회사 설정</Title>
-      </CenterText>
-
-      <BlackText>회사를 설정하세요</BlackText>
-      <MiddleView>
-        <Input>
-          <RNPickerSelect
-            placeholder={store.getState().brand}
-            style={{ border: 'solid', marginBottom: '50', borderWidth: '3', borderColor: 'black', placeholder: { color: '#AD8E5F' } }}
-            onValueChange={(value) => {
-              setBrand(value)
-              setText(value);
-              //console.log(store.getState().shopId);
-              //console.log(text)
-            }}
-            items={
-              items
-            }
-          />
-        </Input>
+            )}>로그아웃</Button>
       </MiddleView>
 
 
-      <Button onPress={() => {
-        (text !== null) ? (
-          navigation.navigate('PhotoStep', { id: text })
-        ) : (
-          Alert.alert('회사를 선택해주세요.')
-        )
-      }}>
-        조회
-      </Button>
+     
       <Bottom navigation={navigation} />
     </Container>
   )
@@ -115,6 +82,7 @@ const ContainerSafeView = styled.SafeAreaView`
 `;
 
 const MiddleView = styled.View`
+    flex: 1;
     flex-direction: row;
     align-items: center;
     margin-top: 100px;

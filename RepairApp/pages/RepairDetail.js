@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useCallback } from 'react';
-import { Text, Image, Alert, View, Pressable, BackHandler } from 'react-native';
+import { Text, Image, Alert, View, Pressable, BackHandler,TextInput} from 'react-native';
 import dayjs from 'dayjs';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RNPickerSelect from 'react-native-picker-select';
@@ -10,7 +10,6 @@ import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
 import SmallButton from '../components/SmallButton';
 import Bottom from '../components/Bottom';
-import { TextInput } from 'react-native-gesture-handler';
 import { PathToFlie } from '../functions/PathToFlie';
 import Ip from '../serverIp/Ip';
 import store from '../store/store';
@@ -28,12 +27,12 @@ function RepairDetail({ navigation, route }) {
     const [color, setColor] = useState('');
     const [size, setSize] = useState('');
     const [require,setRequire] = useState('');
-    const [datas,setDatas] = useState([])
     const [image,setImage] = useState('')
 
     const [shippingDate, setShippingDate] = useState(null);
     const [shippingMethod, setShippingMethod] = useState('');
-    const [shippingCost, setShippingCost] = useState('');
+    const [shippingCost, setShippingCost] = useState("0");
+    const [datas,setDatas] =useState([])
     const [shippingPlace, setShippingPlace] = useState('');
 
     const [repairShop,setRepairShop] = useState('')
@@ -52,17 +51,7 @@ function RepairDetail({ navigation, route }) {
             ]
           );
           navigation.goBack();
-    }  
-    const alertFunction = ()=>{
-        Alert.alert(
-            "브랜드 불일치",
-            "올바른 브랜드를 선택해 주세요",
-            [
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-          );
-          navigation.goBack();
-    }   
+    }     
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
         console.log(data)
@@ -72,10 +61,6 @@ function RepairDetail({ navigation, route }) {
         }
         else{
             setDatas(data.data)
-            if(data.data["brand_name"]!==store.getState().brand["label"]){
-                console.log("Not same")
-                alertFunction();
-            }
             setBrandNum(data.data['brand_name'])
             setStoreName(data.data['store_name'])
             setReceiptId(data.data['receipt_id'])
@@ -346,13 +331,12 @@ function RepairDetail({ navigation, route }) {
                 <OverallView>
                     <Label>수선처 발송일</Label>
                     <DatePickerButton onPress={(showDatePicker)}>
-                        <PrView>
+                        
                             <DateInput
                                 pointerEvents="none"
                                 editable={false}
                                 value={shippingDate}
                             />
-                        </PrView>
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
                             mode="date"
@@ -383,9 +367,8 @@ function RepairDetail({ navigation, route }) {
                         keyboardType='numeric'
                         selectTextOnFocus={false}
                         value={shippingCost}
-                        onChangeText={text => setShippingCost(text)}
+                        onChangeText={vlaue => setShippingCost(vlaue)}
                     />
-
                     <Label>받는 곳</Label>
                     <PickerView>
                         <RNPickerSelect
@@ -448,9 +431,7 @@ function RepairDetail({ navigation, route }) {
 export default RepairDetail;
 
 const DatePickerButton = styled.TouchableOpacity`
-
-    justify-content: center;
-    align-items: center;`
+    `
     ;
 
 const DateInput = styled.TextInput`
@@ -515,6 +496,7 @@ const Input = styled.TextInput`
     color: #000000;
     border-radius:10px
     height: 50px;
+    
 `;
 
 const BiggerInput = styled.TextInput`

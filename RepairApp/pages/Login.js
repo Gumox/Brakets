@@ -47,7 +47,7 @@ function Login({ navigation }) {
       
     }else{
       console.log(info)
-      navigation.replace('RepairStepOne',{info: info})
+      navigation.replace('PhotoStep',{info: info})
     }
   }
 
@@ -67,7 +67,7 @@ function Login({ navigation }) {
         
         store.dispatch({type:'STAFF_INFO',staffInfo:staffInfo.info});
         console.log(store.getState().staffInfo);
-        navigation.replace('RepairStepOne',{info:staffInfo.info})
+        navigation.replace('PhotoStep',{info:staffInfo.info})
       }
     })
 }
