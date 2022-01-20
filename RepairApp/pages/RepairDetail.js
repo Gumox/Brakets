@@ -45,6 +45,8 @@ function RepairDetail({ navigation, route }) {
     
     let beforeImgList = []
     let afterImgList = []
+
+    console.log("------------ : "+Ip+image)
     const alertFunctionCode = ()=>{
         Alert.alert(
             "서비스 카드 바코드를 찾을수 없습니다",
@@ -57,13 +59,11 @@ function RepairDetail({ navigation, route }) {
     }     
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
-        console.log(data)
         if(data.data === undefined){
             console.log("undefined")
             alertFunctionCode();
         }
         else{
-            setDatas(data.data)
             setBrandNum(data.data['brand_name'])
             setStoreName(data.data['store_name'])
             setReceiptId(data.data['receipt_id'])
@@ -74,6 +74,7 @@ function RepairDetail({ navigation, route }) {
             setSize(data.data['size'])
             setRequire(data.data["store_message"])
             setImage(data.data["image"])
+            console.log("???????"+Ip+data.data["image"])
 
             if(data.data["repair1_store_id"]===shop){
                 console.log(data.data["repair1_store_id"]+" : "+shop)
@@ -196,6 +197,7 @@ function RepairDetail({ navigation, route }) {
             )
         }
         else{
+            console.log("000000")
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                     <Pressable >

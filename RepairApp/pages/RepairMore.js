@@ -10,7 +10,7 @@ import SmallButton from '../components/SmallButton';
 import Bottom from '../components/Bottom';
 import Ip from '../serverIp/Ip';
 import store from '../store/store';
-import PostRepairNeedPoint from '../functions/PostRepairNeedPoint';
+import { PathToFlie } from '../functions/PathToFlie';
 
 function RepairMore({ navigation, route }) {
     const code = route.params.data;
@@ -27,12 +27,12 @@ function RepairMore({ navigation, route }) {
     const [image,setImage] = useState('')
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     const [afterImages,setAfterImages] =useState([]);
+    const [needImages,setNeedImages] =useState([]);
 
-
-    const takeNeedPhotos =store.getState().needPhotos;
+    const [takeNeedPhotos,setTakeNeedPhotos] = useState(store.getState().needPhotos);
     const getTargetData = useCallback(async (code) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${code}`);
-       
+        console.log(data)
         setBrandNum(data.data['brand_name'])
         setStoreName(data.data['store_name'])
         setReceiptId(data.data['receipt_id'])
@@ -42,6 +42,7 @@ function RepairMore({ navigation, route }) {
         setSize(data.data['size'])
         setRequire(data.data["store_message"])
         setImage(data.data["image"])
+        console.log(data.needRepairImage)
         
         const beforeImgList =[];
         const afterImgList =[];                       
@@ -53,9 +54,60 @@ function RepairMore({ navigation, route }) {
                 afterImgList.push(Ip+element["after_image"])
             }
         }
+        const needImages =[]
+        data.needRepairImage.forEach((obj,index) => {
+            needImages.push({photo:Ip+obj["need_point_image"]})
+            
+        });
         setBeforeImages(beforeImgList)
         setAfterImages(afterImgList)
+        console.log()
+        console.log()
+        console.log()
+        console.log()
+        store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:needImages})
+        
+        console.log(store.getState().needPhotos)
+        setTakeNeedPhotos(store.getState().needPhotos)
     });
+
+    const postRepairNeedPoint = async (receipt_id,image,takeNeedPhotos) => {
+        var formdata = new FormData();
+
+        formdata.append("receipt", receipt_id);
+        formdata.append("store", store.getState().shopId);
+        formdata.append("image",  PathToFlie(image));
+        if(takeNeedPhotos != null|| takeNeedPhotos != undefined ||takeNeedPhotos !== []){
+
+            formdata.append("image1", PathToFlie(takeNeedPhotos[0].photo));
+            formdata.append("image2", PathToFlie(takeNeedPhotos[1].photo));
+            formdata.append("image3", PathToFlie(takeNeedPhotos[2].photo));
+            formdata.append("image4", PathToFlie(takeNeedPhotos[3].photo));
+            
+        }
+        console.log(formdata)
+
+        try {
+            const response = await fetch(Ip+'/api/needRepair',{method: 'POST',
+            headers: {
+                'Accept': '',
+                'Content-Type': 'multipart/form-data'
+                },
+            body: formdata
+            });
+            const json = await response.json();
+            console.log(json)
+           
+        } catch (error) {
+            console.error(error);
+        } finally {
+
+        }
+    }
+
+
+
+
     let beforeImageViews =[];
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
@@ -95,6 +147,7 @@ function RepairMore({ navigation, route }) {
         </View>
     )
     if(store.getState().photo !==null){
+        console.log("store.getState().photo : "+store.getState().photo)
         pullImage =(
             <View style={{minWidth: 100}}>
                 <Label>전체 사진</Label>
@@ -113,6 +166,7 @@ function RepairMore({ navigation, route }) {
             </View>
         )
     }else{
+        console.log("store.getState().photo : "+image)
         pullImage =(
             <View style={{minWidth: 100}}>
                 <Label>전체 사진</Label>
@@ -136,7 +190,7 @@ function RepairMore({ navigation, route }) {
     }, []);
     const repairNeedImage = store.getState().addRepairImageUri;
     let repairNeeds =[];
-    if(repairNeedImage !== null){
+    if(repairNeedImage !== null || store.getState().needPhotos !== []){
         let set =(<View key={0} style ={{flexDirection:"row",justifyContent : "space-between"}}><Label>추가 사진</Label></View>)
         repairNeeds[0]= (set)
         takeNeedPhotos.forEach((obj,index) => {
@@ -295,7 +349,7 @@ function RepairMore({ navigation, route }) {
 
                     <SmallButton
                         onPress={() => {
-                            PostRepairNeedPoint(receiptId,repairNeedImage,takeNeedPhotos)
+                            postRepairNeedPoint(receiptId,store.getState().photo,takeNeedPhotos)
                             store.dispatch({type:"STORE_ADD_REPAIR_IMAGE",addRepairImageUri:null})
                             store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:[]})
                             navigation.popToTop();

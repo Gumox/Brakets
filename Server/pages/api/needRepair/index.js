@@ -83,7 +83,6 @@ import fs from "fs";
                             const check = await needPointCheck(filePath)
                             console.log(check[0])
                             if(check[0] !== undefined){
-                                console.log("mmmmmmmmmmmm")
                                 console.log(check[0].repair_need_id)
                                 const saveResult = await updateNeedPoint(filePath,check[0].repair_need_id);
                                 //console.log(saveResult)
