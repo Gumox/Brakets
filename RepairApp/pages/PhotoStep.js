@@ -24,11 +24,17 @@ export default function PhotoStep({ navigation,route }) {
                 <Label />
                 <ReceiptButton onPress={() =>
                     // console.log('aaa')}>
-                    navigation.navigate('DetectCode',{toGo : ""})}>
+                    {
+                    store.dispatch({type:'STATE_RESET',photo: null})
+                    navigation.navigate('DetectCode',{toGo : ""})
+                    }}>
                     수선 완료 사진 촬영 
                 </ReceiptButton>
 
-                <ReceiptButton onPress={() => navigation.navigate('DetectCode',{toGo : "RepairMore"})}>
+                <ReceiptButton onPress={() => {
+                    store.dispatch({type:'STATE_RESET',photo: null})
+                    navigation.navigate('DetectCode',{toGo : "RepairMore"})
+                }}>
                     추가 수선 필요 부위 촬영
                 </ReceiptButton>
 

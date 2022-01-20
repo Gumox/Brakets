@@ -54,5 +54,11 @@ export default createStore(function(state,action){
     if(action.type === "SET_NEED_PHOTOS"){
         return{...state,  needPhotos: action.needPhotos};
     }
+    if(action.type === "STATE_RESET"){
+        return{...state, addRepairImageUri:null,afterImageUri1:null,
+            afterImageUri2:null,afterImageUri3:null,afterImageUri4:null,afterImageUri5:null,
+            photo: null,needPhotos:[]
+        };
+    }
     return state;
 })

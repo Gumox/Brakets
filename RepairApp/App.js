@@ -22,6 +22,7 @@ import TakePhoto from './functions/TakePhoto';
 import DrawStep from './functions/DrawStep';
 import PhotoControl from './functions/PhotoControl';
 import AddPhotoControl from './functions/AddPhotoControl';
+import check from './pages/check';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ function App() {
 
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
 
+        <Stack.Screen name="check" component={check} options={{headerShown: false}}/>
         <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null}}/>
 
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '수선 촬영 선택' ,headerTitleAlign: 'center', headerTintColor: "black"} } />

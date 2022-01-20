@@ -100,8 +100,8 @@ function DrawStep ({ navigation ,route}) {
       <BottomItemBox>
 
       <TouchableView underlayColor={"#CCC"} onPress={ ()=> {
-          navigation.goback();
-      }}><StepText>다시 그리기</StepText></TouchableView>
+          navigation.goBack();
+      }}><StepText>취소</StepText></TouchableView>
       <TouchableView  underlayColor={"#CCC"} onPress={()=> 
         {
           console.log(store.getState().photo)
