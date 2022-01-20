@@ -18,7 +18,7 @@ import styled from 'styled-components';
 
 
 //카메라 멘트 정렬
-const CameraView = styled.View` 
+const CameraView = styled.View`
   flex : 1;
   align-items : center;
   justify-content : center;
@@ -50,6 +50,7 @@ const PressButton = styled.View`
   flex-direction : row;
   justify-content : space-between;
   align-items : center;
+  padding: 5px;
   
 `;
 const CancelView = styled.View`
@@ -60,7 +61,7 @@ const CancelView = styled.View`
 `;
 const CancelText = styled.Text`
   color : white;
-  margin-right : 10px;
+  margin-right : 15px;
 `;
 const ImgIcon =styled.Image`
     width: 30px;

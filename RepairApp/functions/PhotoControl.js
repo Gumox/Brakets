@@ -4,6 +4,7 @@ import Container from "../components/Container";
 import ImageZoom from "react-native-image-pan-zoom";
 import { Image ,Pressable,View,Text,Dimensions,StyleSheet,BackHandler} from "react-native";
 import styled from "styled-components";
+import { SafeAreaView } from "react-native";
 
 
 
@@ -11,7 +12,7 @@ const ImgView = styled.View`
     width:100%
     height:45px
     align-items: center;
-    flexDirection: row-reverse
+    flexDirection: row-reverse;
 `;
 
 
@@ -23,8 +24,8 @@ const TouchableView = styled.TouchableHighlight`
     background-color : #000000;
 `;
 const StepText = styled.Text`
-  color : #FFFFFF
-  font-size:15px
+  color : #FFFFFF;
+  font-size:15px;
 `;
 const styles = StyleSheet.create({
     centeredView: {
@@ -59,10 +60,15 @@ export default function PhotoControl({ navigation ,route}){
     
 
     return(
-        <Container style = {{backgroundColor : '#000000' }}>
-            <ImgView  >
+
+      <>
+      <SafeAreaView style={{flex: 0, backgroundColor: '#000'}}/>
+      <Container style = {{backgroundColor : '#000000' }}>
+            <ImgView>
+            
             <TouchableView underlayColor={"#CCC"} style={{borderRadius:15}} onPress ={ () =>{navigation.goBack()}}>
-                <Text style = {{color : "#ffffff"}}>✕</Text></TouchableView>
+                <Text style = {{color : "#ffffff"}}>✕</Text>
+            </TouchableView>
             
             </ImgView>  
             <View >
@@ -76,7 +82,9 @@ export default function PhotoControl({ navigation ,route}){
                 </ImageZoom>
                 
             </View>
-            
         </Container>
+        <SafeAreaView style={{flex: 0, backgroundColor: '#000'}}/>
+      </>
+        
     )
 }

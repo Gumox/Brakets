@@ -62,14 +62,6 @@ function DrawStep ({ navigation ,route}) {
   const imageD = { uri: imgUri2 };
   
   console.log("has")
-  drawingImage = (
-    <View style={styles.image}>
-      
-      <Image source={imageP} resizeMode="cover" style={styles.image1}/>
-      <Image source={imageD} resizeMode="cover" style={styles.image2}/>
-      
-    </View>
-  )
   
 
   const capture = () =>{
@@ -92,8 +84,13 @@ function DrawStep ({ navigation ,route}) {
   return (
     <ContainerBlack>
       <ViewShot ref={viewShot} style ={styles.img} options={{format: 'jpg', quality: 0.9}}>
+        <View style={styles.image}>
+        
+        <Image source={imageP} resizeMode="cover" style={styles.image1}/>
+        <Image source={imageD} resizeMode="cover" style={styles.image2}/>
+        
+        </View>
       
-      {drawingImage}
       
       </ViewShot>
                     
