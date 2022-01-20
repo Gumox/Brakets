@@ -122,7 +122,7 @@ function RepairMore({ navigation, route }) {
         
         before =(
             <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
-                <Pressable onPress={()=>{navigation.replace("PhotoControl",{img:element})}}>
+                <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
                     <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                 </Pressable>
                 <Pressable >
@@ -236,9 +236,6 @@ function RepairMore({ navigation, route }) {
             );
             repairNeeds[((takeNeedPhotos).length)+1]=(need)
         }
-        
-        
-        
     }
 
     return (
