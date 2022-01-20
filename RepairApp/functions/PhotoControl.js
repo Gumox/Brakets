@@ -62,10 +62,10 @@ export default function PhotoControl({ navigation ,route}){
     return(
 
       <>
-      <SafeAreaView style={{flex: 0, backgroundColor: '#000'}}/>
-      <Container style = {{backgroundColor : '#000000' }}>
+      <SafeAreaView style={{flex: 0,backgroundColor: '#000'}}/>
+      <Container style = {{backgroundColor : '#000000', padding: 10 }}>
             <ImgView>
-            
+
             <TouchableView underlayColor={"#CCC"} style={{borderRadius:15}} onPress ={ () =>{navigation.goBack()}}>
                 <Text style = {{color : "#ffffff"}}>✕</Text>
             </TouchableView>
@@ -83,7 +83,7 @@ export default function PhotoControl({ navigation ,route}){
                 
             </View>
         </Container>
-        <SafeAreaView style={{flex: 0, backgroundColor: '#000'}}/>
+        <SafeAreaView style={{flex: 0,backgroundColor: '#000'}}/>
       </>
         
     )
