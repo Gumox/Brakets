@@ -445,6 +445,8 @@ const DateInput = styled.TextInput`
 `;
 
 const PickerView = styled.View`
+    padding-left: 5px;
+    justify-content: center;
     width: 100%;
     font-size: 20px;
     border : 1.5px;
