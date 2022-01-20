@@ -9,7 +9,17 @@ async function getImageList(code) {
   });
   return result;
 }
-
+async function getRepairNeed_Point(id) {
+  const result = await excuteQuery({
+    query: `SELECT repair_need_point.repair_need_id ,repair_need_point.receipt_id, 
+                   repair_need_point.store_id, repair_need_point.need_pont_image
+            FROM repair_need_point
+            LEFT JOIN receipt ON repair_need_point.receipt_id = receipt.receipt_id
+            WHERE receipt.receipt_code = ?`,
+    values: [id],
+  });
+  return result;
+}
 async function getReceipt(code) {
   const result = await excuteQuery({
     query: `SELECT 
@@ -63,11 +73,13 @@ const RepairDetailInfo = async (req, res) => {
     try {
       const receipt = await getReceipt(code);
       const imageResult = await getImageList(code);
+      const needRepairImageResult = await getRepairNeed_Point(code)
+      console.log(needRepairImageResult)
       if (receipt.error) throw new Error(receipt.error);
       if (receipt.length == 0) return res.status(204).send();
       console.log(receipt);
       console.log(imageResult);
-      res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult });
+      res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult , needRepairImage: needRepairImageResult });
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });
