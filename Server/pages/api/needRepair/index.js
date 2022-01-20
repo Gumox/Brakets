@@ -12,23 +12,23 @@ import fs from "fs";
   }
   const needPointCheck = async (image, receipt_id) => {
     return excuteQuery({
-      query: "SELECT * FROM repair_need_point WHERE need_pont_image = ?",
+      query: "SELECT * FROM repair_need_point WHERE need_point_image = ?",
       values: [image],
     });
   }
   const updateNeedPoint = async (image, repair_need_id ) => {
       console.log(image, repair_need_id )
     return excuteQuery({
-      query: "UPDATE repair_need_point SET need_pont_image=? WHERE repair_need_id =?",
+      query: "UPDATE repair_need_point SET need_point_image=? WHERE repair_need_id =?",
       values: [image,repair_need_id ],
     });
   }
-  const insertNeedPoint = async (receipt_id,store_id, need_pont_image) => {
-      console.log(receipt_id,store_id, need_pont_image)
+  const insertNeedPoint = async (receipt_id,store_id, need_point_image) => {
+      console.log(receipt_id,store_id, need_point_image)
       return excuteQuery({
         query:
-          "INSERT INTO `repair_need_point`(`receipt_id`, `store_id`,`need_pont_image`) VALUES (?,?,?)",
-        values: [receipt_id,store_id,need_pont_image],
+          "INSERT INTO `repair_need_point`(`receipt_id`, `store_id`,`need_point_image`) VALUES (?,?,?)",
+        values: [receipt_id,store_id,need_point_image],
       });
     }
     export const config = {
