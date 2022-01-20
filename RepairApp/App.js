@@ -31,7 +31,7 @@ function App() {
 
         <Stack.Screen name="Login" component={Login} options={{headerShown: false, headerTintColor: "black"}}/>
 
-        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null}}/>
+        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null, headerTintColor: "black"}}/>
 
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '수선 촬영 선택' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 

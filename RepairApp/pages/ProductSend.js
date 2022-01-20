@@ -40,7 +40,7 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const InputText = styled.Text`
     color:#000000;
@@ -48,7 +48,7 @@ const InputText = styled.Text`
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const Half = styled.View`
     width : 100%;
@@ -137,7 +137,6 @@ export default function ProductSend( { route,navigation } ) {
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
-
 
                 <InfoView>
                     <TopText>서비스 카드 번호</TopText>
