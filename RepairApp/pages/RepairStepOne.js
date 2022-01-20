@@ -31,13 +31,13 @@ function RepairStepOne({ navigation, route }) {
   }
 
   useEffect(() => {
-
-    staffInfo.forEach((elt, index) => {
-      console.log(elt)
-      store.dispatch({ type: 'SHOP_ID', shopId: elt.store_id });
-      item.push({ label: elt.brand_name, value: elt.brand_id })
-    });
-    setItems(item)
+    console.log(staffInfo);
+      staffInfo.forEach((elt, index) => {
+        store.dispatch({ type: 'SHOP_ID', shopId: elt.store_id });
+        item.push({ label: elt.brand_name, value: elt.brand_id })
+      });
+      setItems(item)
+    
   }, []);
   const placeHolder = "회사를 선택해주세요.";
 
@@ -94,8 +94,11 @@ const Input = styled.View`
     width: 70%;
     font-size: 20px;
     border : 1.5px;
+    align-items: center;
+    justify-content: center
     border-radius:10px
-    height: 50%;
+    height: 40%;
+    padding-left: 5px;
 `;
 
 const Title = styled.Text`
