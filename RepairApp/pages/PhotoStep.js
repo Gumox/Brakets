@@ -3,12 +3,17 @@ import styled from 'styled-components/native';
 import Container from '../components/Container';
 import ReceiptButton from '../components/ReceiptButton';
 import Bottom from '../components/Bottom';
-
+import store from '../store/store';
 
 export default function PhotoStep({ navigation,route }) {
     /*const brand = route.params.id;
     console.log("id: "+brand)*/
+    const staffInfo = store.getState().staffInfo
+    staffInfo.forEach((elt, index) => {
+        console.log(elt.store_id)
+        store.dispatch({ type: 'SHOP_ID', shopId: elt.store_id });
 
+    });
     return (
 
         <Container>

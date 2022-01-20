@@ -1,8 +1,6 @@
 import React, { useState, useEffect,useCallback } from 'react';
 import { Text, Image, Alert, View, Pressable } from 'react-native';
 import dayjs from 'dayjs';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import RNPickerSelect from 'react-native-picker-select';
 import axios from "axios";
 
 import Contents from '../components/Contents';
@@ -10,14 +8,15 @@ import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
 import SmallButton from '../components/SmallButton';
 import Bottom from '../components/Bottom';
-import { TextInput } from 'react-native-gesture-handler';
 import Ip from '../serverIp/Ip';
 import store from '../store/store';
+import PostRepairNeedPoint from '../functions/PostRepairNeedPoint';
 
 function RepairMore({ navigation, route }) {
     const code = route.params.data;
     
     const [cardId, setCardID] = useState(code);
+    const [receiptId, setReceiptId] = useState(code);
     const [brandNum, setBrandNum] = useState('');
     const [storeName, setStoreName] = useState('');
     const [customerName, setCustomerName] = useState('');
@@ -25,26 +24,18 @@ function RepairMore({ navigation, route }) {
     const [color, setColor] = useState('');
     const [size, setSize] = useState('');
     const [require,setRequire] = useState('');
-
     const [image,setImage] = useState('')
-
-    const [shippingDate, setShippingDate] = useState('');
-    const [shippingMethod, setShippingMethod] = useState('');
-    const [shippingCost, setShippingCost] = useState('');
-    const [shippingPlace, setShippingPlace] = useState('');
-
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [btnDisabled, setBtnDiabled] = useState(true);
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     const [afterImages,setAfterImages] =useState([]);
 
 
     const takeNeedPhotos =store.getState().needPhotos;
-    const getTargetData = useCallback(async (receiptId) => {
-        const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
+    const getTargetData = useCallback(async (code) => {
+        const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${code}`);
        
         setBrandNum(data.data['brand_name'])
         setStoreName(data.data['store_name'])
+        setReceiptId(data.data['receipt_id'])
         setCustomerName(data.data['customer_name'])
         setStyleNum(data.data['style_code'])
         setColor(data.data['color'])
@@ -172,44 +163,29 @@ function RepairMore({ navigation, route }) {
             repairNeeds[index+1]=(photo)
 
         });
-        let need = (
-            <View key={takeNeedPhotos.length+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
+        if(store.getState().needPhotos.length<4){
+            let need = (
+                <View key={takeNeedPhotos.length+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
 
-                <Pressable onPress={() => {navigation.navigate('TakePhoto',{key:"need",code:code})}}>
-                    <View style={{width:100,height:120,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
-                        <Text style={{color:"#ffffff", fontSize:20}}>필요 수선 부위 추가</Text>
+                    <Pressable onPress={() => {navigation.navigate('TakePhoto',{key:"need",code:code})}}>
+                        <View style={{width:100,height:120,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
+                            <Text style={{color:"#ffffff", fontSize:20}}>필요 수선 부위 추가</Text>
+                        </View>
+                    </Pressable>
+                    
+                    <Pressable >
+                    <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
+
                     </View>
-                </Pressable>
-                
-                <Pressable >
-                <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
-
+                    </Pressable>
                 </View>
-                </Pressable>
-            </View>
-        );
-        repairNeeds[((takeNeedPhotos).length)+1]=(need)
+            );
+            repairNeeds[((takeNeedPhotos).length)+1]=(need)
+        }
+        
         
         
     }
-    
-
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
-
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
-
-    const handleConfirm = (date) => {
-        console.log("A date has been picked: ", date.toLocaleDateString('ko-kr'));
-        setShippingDate(date.toLocaleDateString('ko-kr'));
-        console.log("shipping date is" + shippingDate);
-        hideDatePicker();
-    };
-
-    const nowTime = dayjs();
 
     return (
         <ContainView>
@@ -319,15 +295,12 @@ function RepairMore({ navigation, route }) {
 
                     <SmallButton
                         onPress={() => {
-                            (btnDisabled == true) ? (
-                                Alert.alert('수선처 발송일을 입력해주세요')
-                            ) : (
-                            console.log('저장 기능 구현')
-                        )
-                        }
-
-                        }
-                    >
+                            PostRepairNeedPoint(receiptId,repairNeedImage,takeNeedPhotos)
+                            store.dispatch({type:"STORE_ADD_REPAIR_IMAGE",addRepairImageUri:null})
+                            store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:[]})
+                            navigation.popToTop();
+                            navigation.navigate("PhotoStep")
+                    }}>
                         <Text>
                             저장
                         </Text>

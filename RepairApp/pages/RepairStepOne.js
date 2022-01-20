@@ -14,32 +14,15 @@ import store from '../store/store';
 
 function RepairStepOne({ navigation, route }) {
   const staffInfo = store.getState().staffInfo
-  const [items, setItems] = useState([]);
-  let item = [];
-  const [text, setText] = useState("");
 
-  const setBrand = (value) => {
-    staffInfo.forEach((obj, index) => {
-      if (obj.brand_id === value) {
-        console.log("label: " + obj.brand_name + " value: " + value)
-        store.dispatch({ type: "SET_BRAND", brand: { label: obj.brand_name, value: value } })
-        console.log()
-
-      }
-    })
-    console.log(store.getState())
-  }
-
+ 
   useEffect(() => {
     console.log(staffInfo);
       staffInfo.forEach((elt, index) => {
         store.dispatch({ type: 'SHOP_ID', shopId: elt.store_id });
-        item.push({ label: elt.brand_name, value: elt.brand_id })
       });
-      setItems(item)
     
   }, []);
-  const placeHolder = "회사를 선택해주세요.";
 
   return (
     <Container>

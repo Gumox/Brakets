@@ -41,7 +41,10 @@ function RepairDetail({ navigation, route }) {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [btnDisabled, setBtnDiabled] = useState(true);
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
-    let beforeImgList =[]
+    const [afterImages,setAfterImages] =useState([]);
+    
+    let beforeImgList = []
+    let afterImgList = []
     const alertFunctionCode = ()=>{
         Alert.alert(
             "서비스 카드 바코드를 찾을수 없습니다",
@@ -87,10 +90,13 @@ function RepairDetail({ navigation, route }) {
                 const element = data.imageList[i];
                 
                 beforeImgList.push(Ip+element["before_image"])
+                afterImgList.push(Ip+element["after_image"])
                 
             }
             
             setBeforeImages(beforeImgList)
+            setAfterImages(afterImgList)
+            console.log(afterImgList)
         }    
     });
     const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,image2,image3,image4) => {
@@ -165,6 +171,8 @@ function RepairDetail({ navigation, route }) {
     let after ="";
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
+        const obj = afterImages[i];
+        console.log(obj)
         const key = i
         let afterImage = "../Icons/camera.png"
         
@@ -174,16 +182,31 @@ function RepairDetail({ navigation, route }) {
             console.log("image inside: "+store.getState()[photo] )
             afterImage = store.getState()[photo]
         }
-        const before =(
-            <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
-                <Pressable >
-                    <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
-                </Pressable>
-                <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
-                    <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : afterImage}}></Image>
-                </Pressable>
-            </View>
-        )
+        let before;
+        if(obj!==null||obj!==undefined||obj!==''){
+            before=(
+                <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
+                    <Pressable >
+                        <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
+                    </Pressable>
+                    <Pressable >
+                        <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : obj}}></Image>
+                    </Pressable>
+                </View>
+            )
+        }
+        else{
+            before=(
+                <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
+                    <Pressable >
+                        <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
+                    </Pressable>
+                    <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
+                        <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : afterImage}}></Image>
+                    </Pressable>
+                </View>
+            )
+        }
         beforeImageViews[key] =(before)
     }
     useEffect(() => {
