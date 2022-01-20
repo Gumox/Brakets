@@ -4,13 +4,25 @@ import fs from "fs";
 /**
  * 0단계 고객 수정
  */
- async function updateReceiptImage(image, receipt_id) {
+ const updateReceiptImage = async (image, receipt_id) => {
     return excuteQuery({
       query: "UPDATE receipt SET image=? WHERE receipt_id=?",
       values: [image,receipt_id],
     });
   }
-  
+  const needPointCheck = async (image, receipt_id) => {
+    return excuteQuery({
+      query: "SELECT * FROM repair_need_point WHERE need_pont_image = ?",
+      values: [image],
+    });
+  }
+  const updateNeedPoint = async (image, repair_need_id ) => {
+      console.log(image, repair_need_id )
+    return excuteQuery({
+      query: "UPDATE repair_need_point SET need_pont_image=? WHERE repair_need_id =?",
+      values: [image,repair_need_id ],
+    });
+  }
   const insertNeedPoint = async (receipt_id,store_id, need_pont_image) => {
       console.log(receipt_id,store_id, need_pont_image)
       return excuteQuery({
@@ -68,13 +80,25 @@ import fs from "fs";
                                 throw new Error(ImageResult.error);
                             }
                         }else{
-                            console.log(index)
-                            console.log(receiptId+" "+storeId+" "+filePath)
-                            console.log("???????")
-                            const saveResult = await insertNeedPoint(receiptId,storeId,filePath);
-                            //console.log(saveResult)
-                            if(saveResult.error){ 
-                                throw new Error(saveResult.error);
+                            const check = await needPointCheck(filePath)
+                            console.log(check[0])
+                            if(check[0] !== undefined){
+                                console.log("mmmmmmmmmmmm")
+                                console.log(check[0].repair_need_id)
+                                const saveResult = await updateNeedPoint(filePath,check[0].repair_need_id);
+                                //console.log(saveResult)
+                                if(saveResult.error){ 
+                                    throw new Error(saveResult.error);
+                                }
+                                
+                            }else{
+                                console.log(index)
+                                console.log("???????")
+                                const saveResult = await insertNeedPoint(receiptId,storeId,filePath);
+                                //console.log(saveResult)
+                                if(saveResult.error){ 
+                                    throw new Error(saveResult.error);
+                                }
                             }
                         }
                     }
