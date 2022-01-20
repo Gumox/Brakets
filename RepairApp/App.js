@@ -30,9 +30,9 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerStyle:{backgroundColor:"#FBDCA7"}}}>
 
-        <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+        <Stack.Screen name="Login" component={Login} options={{headerShown: false, headerTintColor: "black"}}/>
 
-        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null}}/>
+        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null, headerTintColor: "black"}}/>
 
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '수선 촬영 선택' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 
@@ -62,7 +62,20 @@ function App() {
             )}
           />
 
-        <Stack.Screen name="PhotoDraw" component = {PhotoDraw} options={ { headerShown: false }} />
+        <Stack.Screen 
+          name="PhotoDraw"
+          component = {PhotoDraw} 
+          options={ 
+            (
+              Platform.OS == 'ios'
+            ) ? (
+              {headerShown: true, title: '', headerTintColor: "black"}
+            ) : (
+              {headerShown: false}
+            )}
+        />
+        
+        
         <Stack.Screen name="TakePhoto" component = {TakePhoto} options={ { headerShown: false }} />
         <Stack.Screen name="DrawStep" component = {DrawStep} options={ { headerShown: false }} />
         <Stack.Screen name="PhotoControl" component = {PhotoControl} options={ { headerShown: false }} />

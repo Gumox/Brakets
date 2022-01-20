@@ -12,6 +12,7 @@ import StateBarSolid from '../components/StateBarSolid';
 import StateBarVoid from '../components/StateBarVoid';
 import ButtonBlack from '../components/ButtonBlack';
 import ViewShot from "react-native-view-shot";
+import { SafeAreaView } from "react-native";
 
 const CenterView =styled.View`
   flex:1;
@@ -21,19 +22,19 @@ const CenterView =styled.View`
 
 const BottomItemBox = styled.View`
   flex-direction: row;
-  
-  justify-content: space-around;
- 
+  height: 10%;
 `;
 const TouchableView = styled.TouchableHighlight`
-    flex:1
+    flex:1;
     align-items: center;
+    justify-content: center;
     padding:10px
     background-color : #000000;
+    height: 100%;
 `;
 const StepText = styled.Text`
-  color : #FFFFFF
-  font-size:15px
+  color : #FFFFFF;
+  font-size:15px;
 `;
 const ContainerBlack = styled.View`
   
@@ -91,6 +92,7 @@ function DrawStep ({ navigation ,route}) {
 
   return (
     <ContainerBlack>
+     
       <ViewShot ref={viewShot} style ={styles.img} options={{format: 'jpg', quality: 0.9}}>
       
       {drawingImage}
@@ -99,18 +101,23 @@ function DrawStep ({ navigation ,route}) {
                     
       <BottomItemBox>
 
-      <TouchableView underlayColor={"#CCC"} onPress={ ()=> {
-          navigation.goback();
-      }}><StepText>다시 그리기</StepText></TouchableView>
-      <TouchableView  underlayColor={"#CCC"} onPress={()=> 
-        {
+      <TouchableView 
+          underlayColor={"#CCC"} 
+          onPress={ ()=> { navigation.goback() }}
+      >
+        <StepText>다시 그리기</StepText>
+      </TouchableView>
+
+      <TouchableView
+        underlayColor={"#CCC"} 
+        onPress={()=> {
           console.log(store.getState().photo)
-          navigation.replace("RepairMore",{data:route.params.data})
+          navigation.replace("RepairMore", {data:route.params.data})
         }
-      }><StepText>사진 사용</StepText></TouchableView>
-    
+      }>
+        <StepText>사진 사용</StepText>
+      </TouchableView>
       </BottomItemBox>
-  
     </ContainerBlack>
 
   );
