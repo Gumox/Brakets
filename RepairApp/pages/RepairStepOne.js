@@ -37,7 +37,7 @@ function RepairStepOne({ navigation, route }) {
                   onPress: () => (
                     AsyncStorage.removeItem('userInfo'),
                     AsyncStorage.removeItem('staffInfo'),
-                    navigation.replace('Login')
+                    navigation.reset({routes: [{name: 'Login'}]})
                   ),
                 },
                 {
