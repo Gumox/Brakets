@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import { View,Text } from 'react-native';
 import Container from '../../components/Container';
-import Contents from '../../components/Contents';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
-import JustView from '../../components/JustView';
-import StateBarSolid from '../../components/StateBarSolid';
-import StateBarVoid from '../../components/StateBarVoid';
 import { Alert } from 'react-native';
-import TopInfoLess from '../../components/TopInfoLess';
 import Bottom from '../../components/Bottom';
-import store from '../../store/store';
+import { set } from 'lodash';
 
 const Label = styled.Text`
     font-size: 20px;
@@ -29,51 +23,48 @@ const Input = styled.TextInput`
     border-radius:10px;
     color:#000000;
 `;
-const TopStateView = styled.View`
-    
-    flex-direction: row;
-    padding:24px;
+const AlternativeCodeView = styled.View`
+    align-items: center;
     justify-content: center;
+    margin-top: 45%;
+    margin-bottom: 15%;
 `;
-function InputAlternativeNumber({navigation}) {
-   
-    
-    const [input, setInput] = useState('');
 
+function InputAlternativeNumber({ navigation, route }) {
+
+    const [input, setInput] = useState('');
+    const key = route.params.key;
 
     return (
-        <Container>
-            <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
-            
-            <TopInfoLess></TopInfoLess>
-            <JustView>
-                <Label>대체 품번을 입력하세요</Label>
+        <>
+            <Container>
+                <AlternativeCodeView>
+                    <Label>대체 코드를 입력하세요.</Label>
                     <Input
-                        value = {input}
-                        onChange={(event) => {
-                            const {eventCount, target, text} = event.nativeEvent;
-                            setInput(text);
-                            }
-                        }
-                style={{ width: 250 }}/>
-            </JustView>
-            <Button 
-                onPress={ () => (input != '') ? (
-                        navigation.navigate( 'ProductInfo', {codeType: 'qrcode', code: input} )
+                        value={input}
+                        onChangeText={text => setInput(text)}
+                        style = {{width: 300}}
+                    />
+                </AlternativeCodeView>
+
+                <Button
+                    onPress={() => (input != '') ? (
+                        navigation.navigate(key, { codeType: 'qrcode', code: input })
                     ) : (
-                        Alert.alert(            
-                            "입력 코드 오류",             
-                            "코드를 입력하세요",                   
-                            [                              
-                                { text: "확인"},
+                        Alert.alert(
+                            "입력 코드 오류",
+                            "코드를 입력하세요",
+                            [
+                                { text: "확인" },
                             ]
                         )
-                    )                   
+                    )
                     }>
                     다음
-            </Button>
-            <Bottom navigation={navigation}/>
-        </Container>
+                </Button>
+            </Container>
+            <Bottom navigation={navigation} />
+        </>
     )
 }
 
