@@ -83,7 +83,7 @@ function Setting({ navigation }) {
                     <SecondTextView
                         editable={false}
                         selectTextOnFocus={false}
-                        value={'storeName'}
+                        value={'매장명'}
                     />
                     <FirstTextView
                         editable={false}
