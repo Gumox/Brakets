@@ -37,8 +37,6 @@ const PrView = styled.View`
 `;
 // 구조 분해 할당, Destructuring Assignment
 export default function MailbagScan( { navigation } ) {
-    //console.log(store.getState().recDate);
-    
     return (
         <Container>
             <CenterText>

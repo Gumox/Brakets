@@ -56,17 +56,14 @@ function DrawStep ({ navigation ,route}) {
 
   const imgUri2 =store.getState().addRepairImageUri;
 
-  console.log(" imgUri2 : "+ imgUri2 )
   const imageP = { uri: imgUri };
   var drawingImage
   const imageD = { uri: imgUri2 };
   
-  console.log("has")
   
 
   const capture = () =>{
     viewShot.current.capture().then(uri => {
-      console.log('do something with ', uri);
       store.dispatch({type:'PHOTO',photo: uri});
     });
   }
@@ -76,7 +73,6 @@ function DrawStep ({ navigation ,route}) {
         capture();
       }
     });
-    console.log("??")
   }, [])
 
   
@@ -101,7 +97,6 @@ function DrawStep ({ navigation ,route}) {
       }}><StepText>취소</StepText></TouchableView>
       <TouchableView  underlayColor={"#CCC"} onPress={()=> 
         {
-          console.log(store.getState().photo)
           navigation.replace("RepairMore",{data:route.params.data})
         }
       }><StepText>사진 사용</StepText></TouchableView>

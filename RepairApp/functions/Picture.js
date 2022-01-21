@@ -16,14 +16,11 @@ function Picture({ navigation, route }) {
     const order = route.params.order;
 
     const takePhoto = async () => {
-        // console.log('cameraRef', cameraRef);
         if (cameraRef) {
             const data = await cameraRef.current.takePictureAsync({
                 quality: 1,
                 exif: true,
             });
-            console.log('order is '+ order);
-            console.log('firstPicture uri is: ', data.uri);
 
             setClicked(true);
 

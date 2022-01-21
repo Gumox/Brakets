@@ -32,7 +32,6 @@ function RepairMore({ navigation, route }) {
     const [takeNeedPhotos,setTakeNeedPhotos] = useState(store.getState().needPhotos);
     const getTargetData = useCallback(async (code) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${code}`);
-        console.log(data)
         setBrandNum(data.data['brand_name'])
         setStoreName(data.data['store_name'])
         setReceiptId(data.data['receipt_id'])
@@ -42,7 +41,6 @@ function RepairMore({ navigation, route }) {
         setSize(data.data['size'])
         setRequire(data.data["store_message"])
         setImage(data.data["image"])
-        console.log(data.needRepairImage)
         
         const beforeImgList =[];
         const afterImgList =[];                       
@@ -56,18 +54,14 @@ function RepairMore({ navigation, route }) {
         }
         const needImages =[]
         data.needRepairImage.forEach((obj,index) => {
-            needImages.push({photo:Ip+obj["need_point_image"]})
+            needImages.push({photo:Ip+obj["need_point_image"] , repair_need_id:obj["repair_need_id"]})
+            console.log(needImages)
             
         });
         setBeforeImages(beforeImgList)
         setAfterImages(afterImgList)
-        console.log()
-        console.log()
-        console.log()
-        console.log()
         store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:needImages})
         
-        console.log(store.getState().needPhotos)
         setTakeNeedPhotos(store.getState().needPhotos)
     });
 
@@ -147,7 +141,6 @@ function RepairMore({ navigation, route }) {
         </View>
     )
     if(store.getState().photo !==null){
-        console.log("store.getState().photo : "+store.getState().photo)
         pullImage =(
             <View style={{minWidth: 100}}>
                 <Label>전체 사진</Label>
@@ -166,7 +159,6 @@ function RepairMore({ navigation, route }) {
             </View>
         )
     }else{
-        console.log("store.getState().photo : "+image)
         pullImage =(
             <View style={{minWidth: 100}}>
                 <Label>전체 사진</Label>
@@ -368,26 +360,6 @@ function RepairMore({ navigation, route }) {
 
 export default RepairMore;
 
-const DatePickerButton = styled.TouchableOpacity``;
-
-const DateInput = styled.TextInput`
-    color: #000000; 
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    border : 1.5px;
-    border-radius:10px
-    height: 50px;
-`;
-
-const PickerView = styled.TouchableOpacity`
-    width: 100%;
-    font-size: 20px;
-    border : 1.5px;
-    border-radius:10px
-    height: 50px;
-`;
-
 const PictureView = styled.View`
     minWidth: 100px;
     justify-content: center;
@@ -411,26 +383,6 @@ const BottomView = styled.View`
     margin-bottom:30px;
     justify-content: center;
     align-items: center;                
-`;
-
-const ContainImg = styled.View`
-    margin-top: 15px;
-    background-color:#d6d6d6;
-    border-radius:12px;
-    justify-content: center;
-    align-items: center;
-    width: 120px;
-    height: 120px;
-`;
-
-const AttachImg = styled.TouchableOpacity`
-    margin-top: 15px;
-    background-color:#d6d6d6;
-    border-radius:12px;
-    justify-content: center;
-    align-items: center;
-    width: 120px;
-    height: 120px;
 `;
 
 const Label = styled.Text`

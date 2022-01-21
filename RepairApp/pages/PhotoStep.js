@@ -6,8 +6,6 @@ import Bottom from '../components/Bottom';
 import store from '../store/store';
 
 export default function PhotoStep({ navigation,route }) {
-    /*const brand = route.params.id;
-    console.log("id: "+brand)*/
     const staffInfo = store.getState().staffInfo
     staffInfo.forEach((elt, index) => {
         console.log(elt.store_id)
@@ -23,7 +21,6 @@ export default function PhotoStep({ navigation,route }) {
                 <TopIntro>수선 촬영 선택</TopIntro>
                 <Label />
                 <ReceiptButton onPress={() =>
-                    // console.log('aaa')}>
                     {
                     store.dispatch({type:'STATE_RESET',photo: null})
                     navigation.navigate('DetectCode',{toGo : ""})

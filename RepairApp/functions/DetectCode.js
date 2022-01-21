@@ -14,8 +14,6 @@ class DetectCode extends Component {
 
     onBarCodeRead(scanResult) {
         
-       console.log(scanResult.data);
-       console.log(scanResult.type);
               
         if (scanResult.data !== null) {
 

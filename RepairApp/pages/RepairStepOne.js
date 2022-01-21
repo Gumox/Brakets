@@ -17,7 +17,6 @@ function RepairStepOne({ navigation, route }) {
 
  
   useEffect(() => {
-    console.log(staffInfo);
       staffInfo.forEach((elt, index) => {
         store.dispatch({ type: 'SHOP_ID', shopId: elt.store_id });
       });
@@ -38,7 +37,6 @@ function RepairStepOne({ navigation, route }) {
                   onPress: () => (
                     AsyncStorage.removeItem('userInfo'),
                     AsyncStorage.removeItem('staffInfo'),
-                    console.log('123'),
                     navigation.replace('Login')
                   ),
                 },

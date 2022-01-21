@@ -85,13 +85,11 @@ export default function RepairInfo({ route, navigation }) {
     }
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(ip + `/api/RepairDetailInfo?code=${receiptId}`);
-        console.log(data)
         if (data === null || data === '') {
             alertFunction();
             navigation.goBack();
         }
         else {
-            console.log(data.data["receipt_id"])
             setBrand(data.data['brand_name'])
             setStoreName(data.data["store_name"])
             setStoreId(data.data['store_id'])
@@ -102,15 +100,12 @@ export default function RepairInfo({ route, navigation }) {
             datas.push({ storeName: data.data["store_name"] })
             datas.push({ storeId: data.data['store_id'] })
             if (data.data["repair1_store_id"] === store.getState().shopId) {
-                console.log("repair1")
                 setShippingDate(formatDate(new Date(data.data["repair1_complete_date"])))
                 datas.push({ shippingDate: data.data["repair1_complete_date"] })
             } else if (data.data["repair2_store_id"] === store.getState().shopId) {
-                console.log("repair2")
                 setShippingDate(formatDate(new Date(data.data["repair2_complete_date"])))
                 datas.push({ shippingDate: data.data["repair2_complete_date"] })
             } else if (data.data["repair3_store_id"] === store.getState().shopId) {
-                console.log("repair3")
                 setShippingDate(formatDate(new Date(data.data["repair3_complete_date"])))
                 datas.push({ shippingDate: data.data["repair3_complete_date"] })
             }
@@ -142,8 +137,6 @@ export default function RepairInfo({ route, navigation }) {
             ]
         );
     }
-
-    console.log(store.getState())
 
     return (
         <Container>

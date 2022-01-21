@@ -46,7 +46,7 @@ function RepairDetail({ navigation, route }) {
     let beforeImgList = []
     let afterImgList = []
 
-    console.log("------------ : "+Ip+image)
+    
     const alertFunctionCode = ()=>{
         Alert.alert(
             "서비스 카드 바코드를 찾을수 없습니다",
@@ -74,16 +74,16 @@ function RepairDetail({ navigation, route }) {
             setSize(data.data['size'])
             setRequire(data.data["store_message"])
             setImage(data.data["image"])
-            console.log("???????"+Ip+data.data["image"])
 
             if(data.data["repair1_store_id"]===shop){
-                console.log(data.data["repair1_store_id"]+" : "+shop)
                 setRepairShop(data.data["repair1_store_id"])
                 setRepairDetailId(data.data["repair1_detail_id"])
             }else if(data.data["repair2_store_id"]===shop){
-                console.log(data.data["repair2_store_id"]+" : "+shop)
+                setRepairShop(data.data["repair2_store_id"])
+                setRepairDetailId(data.data["repair2_detail_id"])
             }else if(data.data["repair3_store_id"]===shop){
-                console.log(data.data["repair3_store_id"]+" : "+shop)
+                setRepairShop(data.data["repair3_store_id"])
+                setRepairDetailId(data.data["repair3_detail_id"])
             }
             
                                 
@@ -97,7 +97,6 @@ function RepairDetail({ navigation, route }) {
             
             setBeforeImages(beforeImgList)
             setAfterImages(afterImgList)
-            console.log(afterImgList)
         }    
     });
     const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,image2,image3,image4) => {
@@ -173,14 +172,12 @@ function RepairDetail({ navigation, route }) {
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
         const obj = afterImages[i];
-        console.log(obj)
         const key = i
         let afterImage = "../Icons/camera.png"
         
         let photo ='afterImageUri'+(key+1);
         
         if(store.getState()[photo] != ""){
-            console.log("image inside: "+store.getState()[photo] )
             afterImage = store.getState()[photo]
         }
         let before;
@@ -197,7 +194,6 @@ function RepairDetail({ navigation, route }) {
             )
         }
         else{
-            console.log("000000")
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                     <Pressable >
@@ -228,11 +224,8 @@ function RepairDetail({ navigation, route }) {
     };
 
     const handleConfirm = (date) => {
-        console.log("A date has been picked: ", date.toLocaleDateString('ko-kr'));
         let curruntDate =date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-        console.log(curruntDate)
         setShippingDate(curruntDate);   
-        console.log("shipping date is" + shippingDate);
         hideDatePicker();
     };
     const setShipping=(value)=>{
@@ -431,7 +424,6 @@ function RepairDetail({ navigation, route }) {
                                 Alert.alert('수선처 발송일을 입력해주세요')
                             } 
                             else {
-                                console.log('저장 기능 구현');
                                 postSendRepairInfo(shippingDate,shippingMethod,shippingCost,repairDetailId)
                                 postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
                             }

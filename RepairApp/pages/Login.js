@@ -46,7 +46,6 @@ function Login({ navigation }) {
     if(info === null || info === undefined){
       
     }else{
-      console.log(info)
       navigation.replace('PhotoStep',{info: info})
     }
   }
@@ -55,18 +54,14 @@ function Login({ navigation }) {
     
     AsyncStorage.getItem('userInfo', (err, result) => {
       if (result !== null) {
-        console.log(result);
         store.dispatch({ type: 'USER_EMAIL', userEmail: result });
       }
     })
     AsyncStorage.getItem('staffInfo', (err, result) => {
       if (result !== null) {
         const staffInfo = JSON.parse(result)
-        console.log("in get Item")
-        console.log(result);
         
         store.dispatch({type:'STAFF_INFO',staffInfo:staffInfo.info});
-        console.log(store.getState().staffInfo);
         navigation.replace('PhotoStep',{info:staffInfo.info})
       }
     })
@@ -134,8 +129,6 @@ function Login({ navigation }) {
     const profile: KakaoProfile = await getKakaoProfile();
 
     setResult(profile.email);
-    console.log("log: " + JSON.stringify(profile.email));
-    console.log("result is: " + result);
 
   };
 

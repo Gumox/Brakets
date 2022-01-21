@@ -83,21 +83,14 @@ export default class TakePhoto extends Component {
   onSuccess = async (e) => {
   const {route}=this.props;
 
-  console.log("to go: "+route.params.key);
-
-
-    //console.log("go");
     if (this.camera) {
       const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
       const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
       const imgUri = data.uri;
       RNCamera.Constants.AutoFocus.on
       
-      console.log (imgUri);
-      console.log(route.params.store)
       if (route.params.key === 'CloseShot'){
         if(route.params.store == 1){
-          console.log("save")
           store.dispatch({type:'STORE_AFTER_IMAGE1',afterImageUri1:imgUri});
         }
         else if(route.params.store == 2){
@@ -124,10 +117,6 @@ export default class TakePhoto extends Component {
   
   render() {
     const {route}=this.props;
-    console.log("to go: "+route.params.key);
-    //console.log(route.params.key);
-    console.log(route.params.value);
-    //console.log(store.getState().photoArr);
     var readText1 = " ";
     var readText2 = " ";
     var readText3 = " ";

@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
 export default function ProductSend( { route,navigation } ) {
     const code = route.params.data;
     const datas = route.params.datas;
-    console.log(route.params.datas)
     const images = route.params.images;
     const place =store.getState().shippingPlace;
 
@@ -130,10 +129,8 @@ export default function ProductSend( { route,navigation } ) {
             console.error(error);
         }
     }
-    console.log(store.getState().shopId)
 
     const date = formatDate(new Date(datas[5].shippingDate))
-    console.log(store.getState().shippingPlace)
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
