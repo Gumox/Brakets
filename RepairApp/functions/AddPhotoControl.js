@@ -12,6 +12,7 @@ import axios from "axios";
 const BottomItemBox = styled.View`
   flex-direction: row;
   justify-content: space-around;
+  minHeight:50px;
  
 `;
 
@@ -20,6 +21,7 @@ const TouchableView = styled.TouchableHighlight`
     align-items: center;
     padding:10px
     background-color : #000000;
+    minHeight:50px;
 `;
 
 export default function AddPhotoControl({ navigation ,route}){
@@ -52,7 +54,7 @@ export default function AddPhotoControl({ navigation ,route}){
     return(
         <Container style = {{backgroundColor : '#000000'}}>
             
-            <View >
+            <View>
                             
                 <ImageZoom cropWidth={Dimensions.get('window').width-10}
                         cropHeight={ Dimensions.get('window').height-50}

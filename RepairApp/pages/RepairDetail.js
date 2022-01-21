@@ -91,7 +91,10 @@ function RepairDetail({ navigation, route }) {
                 const element = data.imageList[i];
                 
                 beforeImgList.push(Ip+element["before_image"])
-                afterImgList.push(Ip+element["after_image"])
+                if(element["after_image"]!==null){
+                    afterImgList.push(Ip+element["after_image"])
+                }
+               
                 
             }
             
@@ -181,10 +184,11 @@ function RepairDetail({ navigation, route }) {
             afterImage = store.getState()[photo]
         }
         let before;
-        if(obj!==null||obj!==undefined||obj!==''){
+        if(obj!==undefined){
+            console.log(obj)
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
-                    <Pressable >
+                    <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
                         <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
                     <Pressable >
@@ -196,7 +200,7 @@ function RepairDetail({ navigation, route }) {
         else{
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
-                    <Pressable >
+                    <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
                         <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
                     <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
@@ -317,6 +321,7 @@ function RepairDetail({ navigation, route }) {
                 <OverallView>
                     <PictureView>
                         <Label>전체 사진</Label>
+                        <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:Ip+image})}}>
                         <View style = {{justifyContent: "center", alignItems: "center"}}>
                             <Image
                                 style={{ width: 120, height: 120 }}
@@ -326,6 +331,7 @@ function RepairDetail({ navigation, route }) {
                                 }
                             />
                         </View>
+                        </Pressable>
                     </PictureView>
 
                     <Label>근접 사진</Label>

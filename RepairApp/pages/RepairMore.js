@@ -92,7 +92,8 @@ function RepairMore({ navigation, route }) {
             });
             const json = await response.json();
             console.log(json)
-           
+            navigation.popToTop();
+            navigation.navigate("PhotoStep")
         } catch (error) {
             console.error(error);
         } finally {
@@ -342,8 +343,6 @@ function RepairMore({ navigation, route }) {
                             postRepairNeedPoint(receiptId,store.getState().photo,takeNeedPhotos)
                             store.dispatch({type:"STORE_ADD_REPAIR_IMAGE",addRepairImageUri:null})
                             store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:[]})
-                            navigation.popToTop();
-                            navigation.navigate("PhotoStep")
                     }}>
                         <Text>
                             저장
