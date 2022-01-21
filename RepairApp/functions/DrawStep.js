@@ -3,14 +3,10 @@ import styled from "styled-components";
 import Container from "../components/Container";
 import store from "../store/store";
 
-import {  Alert ,Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text  } from "react-native";
+import { Image, View, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native";
 
-import Button from '../components/Button';
-import CenterText from '../components/CenterText';
 import _ from 'lodash';
-import StateBarSolid from '../components/StateBarSolid';
-import StateBarVoid from '../components/StateBarVoid';
-import ButtonBlack from '../components/ButtonBlack';
 import ViewShot from "react-native-view-shot";
 
 const CenterView =styled.View`
@@ -21,19 +17,20 @@ const CenterView =styled.View`
 
 const BottomItemBox = styled.View`
   flex-direction: row;
-  
   justify-content: space-around;
  
 `;
 const TouchableView = styled.TouchableHighlight`
-    flex:1
+    min-height: 10%;
+    width: 50%;
     align-items: center;
     padding:10px
     background-color : #000000;
+    justify-content: center;
 `;
 const StepText = styled.Text`
-  color : #FFFFFF
-  font-size:15px
+  color : #FFFFFF;
+  font-size:15px;
 `;
 const ContainerBlack = styled.View`
   
@@ -59,8 +56,6 @@ function DrawStep ({ navigation ,route}) {
   const imageP = { uri: imgUri };
   var drawingImage
   const imageD = { uri: imgUri2 };
-  
-  
 
   const capture = () =>{
     viewShot.current.capture().then(uri => {
@@ -78,32 +73,35 @@ function DrawStep ({ navigation ,route}) {
   
 
   return (
-    <ContainerBlack>
-      <ViewShot ref={viewShot} style ={styles.img} options={{format: 'jpg', quality: 0.9}}>
-        <View style={styles.image}>
+    <>
+      <SafeAreaView style={{flex: 0,backgroundColor: '#000'}}/>
+      <ContainerBlack>
+        <ViewShot ref={viewShot} style ={styles.img} options={{format: 'jpg', quality: 0.9}}>
+          <View style={styles.image}>
+          
+          <Image source={imageP} resizeMode="cover" style={styles.image1}/>
+          <Image source={imageD} resizeMode="cover" style={styles.image2}/>
+          
+          </View>
         
-        <Image source={imageP} resizeMode="cover" style={styles.image1}/>
-        <Image source={imageD} resizeMode="cover" style={styles.image2}/>
-        
-        </View>
-      
-      
-      </ViewShot>
-                    
-      <BottomItemBox>
+        </ViewShot>
+                      
+        <BottomItemBox>
 
-      <TouchableView underlayColor={"#CCC"} onPress={ ()=> {
-          navigation.goBack();
-      }}><StepText>취소</StepText></TouchableView>
-      <TouchableView  underlayColor={"#CCC"} onPress={()=> 
-        {
-          navigation.replace("RepairMore",{data:route.params.data})
-        }
-      }><StepText>사진 사용</StepText></TouchableView>
+          <TouchableView underlayColor={"#CCC"} onPress={ ()=> { navigation.goBack(); }}>
+            <StepText>취소</StepText>
+          </TouchableView>
+
+          <TouchableView  underlayColor={"#CCC"} onPress={()=> 
+            { navigation.replace("RepairMore",{data:route.params.data})
+            }
+          }><StepText>사진 사용</StepText></TouchableView>
+      
+        </BottomItemBox>
     
-      </BottomItemBox>
-  
-    </ContainerBlack>
+      </ContainerBlack>
+    </>
+    
 
   );
 }
