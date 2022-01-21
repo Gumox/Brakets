@@ -39,7 +39,8 @@ function Login({ navigation }) {
         'info': info
       }), () => {
         console.log('staff\'s info saved: ' + info);
-        store.dispatch({ type: 'STAFF_INFO', info: info });
+        store.dispatch({ type: 'STAFF_INFO', staffInfo: info });
+        console.log(store.getState())
       });
   }
   function check(info){
