@@ -73,10 +73,11 @@ function RepairMore({ navigation, route }) {
         formdata.append("image",  PathToFlie(image));
         if(takeNeedPhotos != null|| takeNeedPhotos != undefined ||takeNeedPhotos !== []){
 
-            formdata.append("image1", PathToFlie(takeNeedPhotos[0].photo));
-            formdata.append("image2", PathToFlie(takeNeedPhotos[1].photo));
-            formdata.append("image3", PathToFlie(takeNeedPhotos[2].photo));
-            formdata.append("image4", PathToFlie(takeNeedPhotos[3].photo));
+            takeNeedPhotos.forEach((obj,index) => {
+                const img = 'image'+(index+1)
+                console.log(img)
+                formdata.append(img, PathToFlie(takeNeedPhotos[index].photo))
+            });
             
         }
         console.log(formdata)

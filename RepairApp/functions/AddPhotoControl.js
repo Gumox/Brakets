@@ -32,18 +32,19 @@ export default function AddPhotoControl({ navigation ,route}){
             if(selected !== obj.photo){
                 changeData.push(obj)
             }else{
+
                 if(obj.repair_need_id !== undefined){
-                    console.log(obj.repair_need_id)
                     deleteFunction(obj.repair_need_id)
                 }
             }
         });
+
         
         store.dispatch({type:"SET_NEED_PHOTOS",needPhotos: changeData});
     }
     
     const deleteFunction = useCallback(async (id) => {
-        const { data } = await axios.get(ip + `/api/needRepair/deleteNeedImage?repair_need_id=${id}`);
+        const { data } = await axios.post(ip + `/api/needRepair/deleteNeedImage?repair_need_id=${id}`);
         console.log(data)
     });
 
