@@ -22,12 +22,12 @@ const BottomItemBox = styled.View`
 const TouchableView = styled.TouchableHighlight`
     flex:1
     align-items: center;
-    padding:10px
+    padding:10px;
     background-color : #000000;
 `;
 const StepText = styled.Text`
-  color : #FFFFFF
-  font-size:15px
+  color : #FFFFFF;
+  font-size:15px;
 `;
 const styles = StyleSheet.create({
     centeredView: {
