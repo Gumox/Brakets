@@ -39,21 +39,15 @@ import fs from "fs";
   const controller = async (req, res) => {
     if (req.method === "POST") {
         console.log(`[${new Date().toISOString()}] api/needRepair`);
-        //console.log(req.body);
         
         const form = new formidable.IncomingForm();
-        console.log(">>>>>>")
         form.parse(req, async function (err, fields, files) {
-            console.log("<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>")
             try {
                 if (err) throw new Error(err);
-            console.log("<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>")
                 const receiptId = parseInt(fields["receipt"]);
                 const storeId = parseInt(fields["store"]);
                 
                 const images = ["image","image1", "image2", "image3", "image4"];
-                //console.log(receiptId)
-                //console.log(files)
                 images.forEach(async (image, index) => {
                     if(!files[image]) return
                     const key = (index);
@@ -75,7 +69,7 @@ import fs from "fs";
                         if(index == 0) {
                             console.log(receiptId+" "+storeId+" "+filePath)
                             const ImageResult = await updateReceiptImage(filePath,receiptId);
-                            //console.log(ImageResult)
+                            
                             if(ImageResult.error){ 
                                 throw new Error(ImageResult.error);
                             }
@@ -85,14 +79,11 @@ import fs from "fs";
                             if(check[0] !== undefined){
                                 console.log(check[0].repair_need_id)
                                 const saveResult = await updateNeedPoint(filePath,check[0].repair_need_id);
-                                //console.log(saveResult)
                                 if(saveResult.error){ 
                                     throw new Error(saveResult.error);
                                 }
                                 
                             }else{
-                                console.log(index)
-                                console.log("???????")
                                 const saveResult = await insertNeedPoint(receiptId,storeId,filePath);
                                 //console.log(saveResult)
                                 if(saveResult.error){ 
