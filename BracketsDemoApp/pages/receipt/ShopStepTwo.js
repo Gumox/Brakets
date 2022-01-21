@@ -38,7 +38,7 @@ const BlueText = styled.Text`
     font-weight: bold;
     font-size: 20px;
     color:#78909c;
-    margin-Top:40px
+    margin-Top:40px;
 `;
 const GrayText = styled.Text`
     font-size: 20px;
