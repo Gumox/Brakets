@@ -2,6 +2,7 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import { setCookie } from "../../../../utils/cookies";
 import excuteQuery from "../../db";
+import store from "../../../../store/store";
 
 const REQUEST_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
 const REQUEST_TOKEN_INFO_URL = "https://kapi.kakao.com/v2/user/me";
@@ -35,17 +36,18 @@ const kakao = async (req, res) => {
 
     // DB 에서 해당 ID or Email 조회 (본사, 최고관리자 중에서 조회)
     const result = await excuteQuery({
-      query: `SELECT staff.staff_id, id, email, staff.name, level, store.brand_id AS headquarter_id
+      query: `SELECT staff.staff_id, id, email, staff.name, level, store.brand_id AS headquarter_id,staff.level
               FROM staff 
               JOIN staff_store ON staff.staff_id = staff_store.staff_id 
               JOIN store ON staff_store.store_id = store.store_id
-              WHERE level<2 AND store_type=0 AND (id=? OR email=?)`,
+              WHERE (id=? OR email=?)`,
       values: [userId, email],
     });
     if (result.error) {
       console.log(result.error);
     }
     const user = result[0];
+    console.log(user)
     if (!user) {
       // 없으면
       // login 페이지로 redirect
@@ -60,14 +62,27 @@ const kakao = async (req, res) => {
         });
         // console.log(result)
       }
+      
       // 해당 데이터로 token 만들어서 cookie 에 넣고
       // 메인 페이지로 redirect
-      const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
-      setCookie(res, "token", token, {
+      
+      if(user.level >2){
+        const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
+        setCookie(res, "token", token, {
+        httpOnly: true,
+        path: "/repairReception",
+        });
+        res.redirect("/repairReception")
+        
+        
+      }else if(user.level <2){
+        const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
+        setCookie(res, "token", token, {
         httpOnly: true,
         path: "/",
-      });
-      res.redirect("/");
+        });
+        res.redirect("/");
+      }
     }
   }
 };

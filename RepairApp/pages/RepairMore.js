@@ -41,7 +41,7 @@ function RepairMore({ navigation, route }) {
         setSize(data.data['size'])
         setRequire(data.data["store_message"])
         setImage(data.data["image"])
-        
+        store.dispatch({type:"IMG",img:Ip+data.data["image"]})
         const beforeImgList =[];
         const afterImgList =[];                       
         for (let i = 0; i < data.imageList.length; i++) {
@@ -63,6 +63,8 @@ function RepairMore({ navigation, route }) {
         store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:needImages})
         
         setTakeNeedPhotos(store.getState().needPhotos)
+        console.log("error : "+Ip+data.data["image"])
+        
     });
 
     const postRepairNeedPoint = async (receipt_id,image,takeNeedPhotos) => {

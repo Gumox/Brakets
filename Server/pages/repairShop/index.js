@@ -14,15 +14,6 @@ const Home = () => {
     <Wrapper>
       <Title>수선 OK</Title>
       <Logout onClick={handleLogout}>Logout</Logout>
-      <CuetomLink onClick={() => router.push("/reception")}>
-        수선접수/처리
-      </CuetomLink>
-      <CuetomLink onClick={() => router.push("/return")}>
-        하자반품
-      </CuetomLink>
-      <CuetomLink onClick={() => router.push("/claim")}>
-        업체클레임
-      </CuetomLink>
       <CuetomLink onClick={() => router.push("/repairReception")}>
         수선처
       </CuetomLink>

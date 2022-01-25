@@ -102,13 +102,13 @@ function Login({ navigation }) {
       )
       .catch(function (error) {
         console.log(error)
-        console.log(option.url)
+        console.log(option.url)/*
         Alert.alert(
           "등록된 정보가 존재하지 않습니다.",
           [
             { text: "확인" },
           ]
-        )
+        )*/
       })
   }, [result]);
 

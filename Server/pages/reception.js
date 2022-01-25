@@ -14,7 +14,7 @@ import Reception from "../components/reception";
 
 const ReceptionPage = ({ options, user }) => {
   const router = useRouter();
-
+  console.log(options)
   const [selectOptions, setSelectOptions] = useState(options); // 전체 페이지에서 사용하는 select options
   const [targetBrandId, setTargetBrandId] = useState(
     options.brandList[0].value

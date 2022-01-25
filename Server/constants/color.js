@@ -17,6 +17,7 @@ const COLOR = {
   CYAN_BLUE: "#0066FF",
   MINT: "#3EB489",
   ORANGE: "#FF8000",
+  BRAUN:"#7A6443",
 };
 
 export default COLOR;

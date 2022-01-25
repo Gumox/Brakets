@@ -60,5 +60,8 @@ export default createStore(function(state,action){
             photo: null,needPhotos:[]
         };
     }
+    if(action.type === "IMG"){
+        return{...state, img: action.img};
+    }
     return state;
 })
