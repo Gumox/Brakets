@@ -104,7 +104,7 @@ export const getServerSideProps = async (ctx) => {
   };
 };
 
-export default  repairReception;
+export default  RepairReception;
 
 
 
