@@ -22,7 +22,6 @@ import TakePhoto from './functions/TakePhoto';
 import DrawStep from './functions/DrawStep';
 import PhotoControl from './functions/PhotoControl';
 import AddPhotoControl from './functions/AddPhotoControl';
-import check from './pages/check';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -31,8 +30,6 @@ function App() {
       <Stack.Navigator screenOptions={{headerStyle:{backgroundColor:"#FBDCA7"}}}>
 
         <Stack.Screen name="Login" component={Login} options={{headerShown: false, headerTintColor: "black"}}/>
-
-        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null, headerTintColor: "black"}}/>
 
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '수선 촬영 선택' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 
@@ -45,8 +42,10 @@ function App() {
         <Stack.Screen name="ProductSend" component = {ProductSend} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
         <Stack.Screen name="RepairInfo" component = {RepairInfo} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
         <Stack.Screen name="MailbagScan" component = {MailbagScan} options={ {  title: '수선 ok' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
-        
-        <Stack.Screen name="check" component = {check} options={ {  title: '', headerTintColor: "black"} } />
+
+
+        <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null, headerTintColor: "black"}}/>
+
         <Stack.Screen name="Picture" component = {Picture} options={ {  title: '', headerTintColor: "black"} } />
         {/* <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} /> */}
         <Stack.Screen 

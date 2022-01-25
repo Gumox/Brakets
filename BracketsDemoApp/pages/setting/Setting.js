@@ -83,7 +83,7 @@ function Setting({ navigation }) {
                     <SecondTextView
                         editable={false}
                         selectTextOnFocus={false}
-                        value={'storeName'}
+                        value={'매장명'}
                     />
                     <FirstTextView
                         editable={false}
@@ -101,8 +101,8 @@ function Setting({ navigation }) {
                                 onPress: () => (
                                     AsyncStorage.removeItem('userInfo'),
                                     console.log('123'),
-                                    navigation.replace('Login')
-                                ),
+                                    navigation.reset({routes: [{name: 'Login'}]})
+                                    )
                             },
                             {
                                 text: "아니요",

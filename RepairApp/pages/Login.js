@@ -21,52 +21,42 @@ function Login({ navigation }) {
 
   const [result, setResult] = useState();
 
-  function saveInfo(_userEmail){
-    AsyncStorage.setItem(
-      'userInfo',
-      JSON.stringify({
-        'userEmail': _userEmail
-      }), () => {
-        console.log('user email\'s saved: ' + _userEmail);
-        store.dispatch({ type: 'USER_EMAIL', userEmail: _userEmail });
-      });
-  }
-  function saveStaffInfo(info){
-    console.log(info);
+  function SaveInfo(_info, _userEmail) {
+
     AsyncStorage.setItem(
       'staffInfo',
       JSON.stringify({
-        'info': info
+        'info': _info,
+        'userEmail': _userEmail
       }), () => {
-        console.log('staff\'s info saved: ' + info);
-        store.dispatch({ type: 'STAFF_INFO', staffInfo: info });
-        console.log(store.getState())
-      });
+        store.dispatch({ type: 'USER_EMAIL', userEmail: _userEmail });
+        store.dispatch({ type: 'STAFF_INFO', staffInfo: _info });
+      })
   }
-  function check(info){
-    if(info === null || info === undefined){
-      
-    }else{
-      navigation.replace('PhotoStep',{info: info})
+
+  function loadInfo() {
+
+    AsyncStorage.getItem('staffInfo', (err, result) => {
+      if (result !== null) {
+        const staffInfo = JSON.parse(result);
+
+        store.dispatch({ type: 'USER_EMAIL', userEmail: staffInfo.userEmail });
+        store.dispatch({ type: 'STAFF_INFO', staffInfo: staffInfo.info });
+
+        navigation.replace('PhotoStep', { info: staffInfo.info });
+      }
+    })
+  }
+
+  function check(info) {
+    if (info === null || info === undefined) {
+
+    } else {
+      navigation.replace('PhotoStep', { info: info })
     }
   }
 
-  function loadInfo(){
-    
-    AsyncStorage.getItem('userInfo', (err, result) => {
-      if (result !== null) {
-        store.dispatch({ type: 'USER_EMAIL', userEmail: result });
-      }
-    })
-    AsyncStorage.getItem('staffInfo', (err, result) => {
-      if (result !== null) {
-        const staffInfo = JSON.parse(result)
-        
-        store.dispatch({type:'STAFF_INFO',staffInfo:staffInfo.info});
-        navigation.replace('PhotoStep',{info:staffInfo.info})
-      }
-    })
-}
+
   useEffect(() => {
 
     if (isFirstRun.current) {
@@ -78,12 +68,10 @@ function Login({ navigation }) {
     const option = {
 
       url: ip + `/api/auth/repair?email=${result}`,
-
       method: 'GET',
       header: {
         'Content-Type': 'application/json'
       },
-
     }
 
 
@@ -92,8 +80,8 @@ function Login({ navigation }) {
         response => (response.status == '200') ? (
           console.log("success"),
           console.log(response.data.body),
-          saveInfo(result),
-          saveStaffInfo(response.data.data),
+
+          SaveInfo(response.data.data, result),
           check(response.data.data)
         ) : (
           console.log("response" + response.data),
@@ -130,7 +118,6 @@ function Login({ navigation }) {
     const profile: KakaoProfile = await getKakaoProfile();
 
     setResult(profile.email);
-
   };
 
   const unlinkKakao = async (): Promise<void> => {
@@ -149,10 +136,6 @@ function Login({ navigation }) {
 }
 
 export default Login;
-
-
-
-
 
 
 const ImgIcon = styled.Image`
