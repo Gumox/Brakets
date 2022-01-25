@@ -6,14 +6,12 @@ export default function inquiry() {
             <RepairHeader />
             <p><h3>조회</h3><hr></hr>
             회사 설정 : 
-                <select name="company" >OnChange(this)">
+                <select name="company" >
                     <option value="com">회사1</option>
                     <option value="comp">회사2</option>
                     <option value="compa">회사3</option>
                     <option value="compan">회사4</option> 
                 </select>
-                
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             서비스 카드 번호 : 
                 <input></input> 
                 <h6>⚠️직접 입력 후 엔터를 누르거나 바코드 리더기를 이용해주세요</h6>
