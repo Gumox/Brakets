@@ -6,7 +6,7 @@ export default function inquiry() {
             <RepairHeader />
             <p><h3>조회</h3><hr></hr>
             회사 설정 : 
-                <select name="company" onchange="handleOnChange(this)">
+                <select name="company" >OnChange(this)">
                     <option value="com">회사1</option>
                     <option value="comp">회사2</option>
                     <option value="compa">회사3</option>
@@ -23,21 +23,21 @@ export default function inquiry() {
             조회 조건
             <br></br><br></br>
                 수선처 : 
-                <select name="soosun" onchange="handleOnChange(this)">
+                <select name="soosun" >
                     <option value="soo">수선처1</option>
                     <option value="soos">수선처2</option>
                     <option value="soosu">수선처3</option>
                 </select>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 브랜드 : 
-                <select name="brand" onchange="handleOnChange(this)">
+                <select name="brand" >
                     <option value="br">브랜드1</option>
                     <option value="bra">브랜드2</option>
                     <option value="bran">브랜드3</option>
                 </select>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 날짜 기준 : 
-                <select name="date_standard" onchange="handleOnChange(this)">
+                <select name="date_standard" >
                     <option value="d">매장접수일</option>
                     <option value="da">수선처접수일</option>
                     <option value="dat">수선처발송일</option>
