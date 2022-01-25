@@ -70,9 +70,9 @@ const kakao = async (req, res) => {
         const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
         setCookie(res, "token", token, {
         httpOnly: true,
-        path: "/repairReception",
+        path: "/RepairReception",
         });
-        res.redirect("/repairReception")
+        res.redirect("/RepairReception")
         
         
       }else if(user.level <2){
