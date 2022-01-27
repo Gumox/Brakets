@@ -1,5 +1,4 @@
 import React,{useState} from 'react';
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import RepairHeader from '../components/RepairHeader'
 import styled from 'styled-components';
 import COLOR from '../constants/color';
