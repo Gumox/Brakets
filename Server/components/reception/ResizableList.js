@@ -1,7 +1,15 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import moment from "moment";
 import { useTable, useBlockLayout, useResizeColumns } from 'react-table';
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../constants/field";
+import {
+    STORE_CATEGORY,
+    RECEIPT_CATEGORY_TYPE,
+    RECEIPT_TYPE,
+    TRANSPORT_TYPE,
+    SHIPPING_TYPE,
+  } from "../../constants/type";
 
 
 
@@ -38,10 +46,10 @@ function Table({ columns, data }) {
             <div>
                 <div {...getTableProps()} className="table">
                     <div>
-                        {headerGroups.map(headerGroup => (
-                            <div {...headerGroup.getHeaderGroupProps()} className="tr">
-                                {headerGroup.headers.map(column => (
-                                    <div {...column.getHeaderProps()} className="th">
+                        {headerGroups.map((headerGroup,i) => (
+                            <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
+                                {headerGroup.headers.map((column,j) => (
+                                    <div key={j} {...column.getHeaderProps()} className="th">
                                         {column.render('Header')}
                                         {/* Use column.getResizerProps to hook up the events correctly */}
                                         <div
@@ -59,10 +67,10 @@ function Table({ columns, data }) {
                         {rows.map((row, i) => {
                             prepareRow(row)
                             return (
-                                <div {...row.getRowProps()} className="tr">
-                                    {row.cells.map(cell => {
+                                <div key={i} {...row.getRowProps()} className="tr">
+                                    {row.cells.map((cell,j) => {
                                         return (
-                                            <div {...cell.getCellProps()} className="td">
+                                            <div key={j} {...cell.getCellProps()} className="td">
                                                 {cell.render('Cell')}
                                             </div>
                                         )
@@ -84,6 +92,7 @@ function Table({ columns, data }) {
 
 const ResizableList = ({ searchList, getTargetData = () => { } }) => {
 
+    console.log(`search list is ${searchList}`)
 
     const columns = React.useMemo(() => [
         {Header: '서비스카드 번호',  accessor: '서비스카드 번호',},
@@ -129,8 +138,36 @@ const ResizableList = ({ searchList, getTargetData = () => { } }) => {
     console.log("log is")
     const data = searchList.map((receipt) =>(
         {
-        "서비스카드 번호":receipt[RECEIPT.CODE],
-        
+        '서비스카드 번호':receipt[RECEIPT.CODE],
+        '매장코드':receipt[STORE.CODE],
+        '매장명':receipt[STORE.NAME],
+        '매장구분':STORE_CATEGORY[receipt[STORE.CATEGORY]],
+        '매장연락처':receipt[STORE.CONTACT],
+        '매장접수일':receipt[RECEIPT.RECEIPT_DATE] ? moment(receipt[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD") : "",
+        '고객ID':receipt[CUSTOMER.ID],
+        '접수구분':RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]],
+        '고객':receipt[CUSTOMER.NAME],
+        '고객연락처':receipt[CUSTOMER.CONTACT],
+        '시즌':receipt[PRODUCT.SEASON],
+        '스타일':receipt[PRODUCT.STYLE],
+        '차수':receipt[PRODUCT.DEGREE],
+        '컬러':receipt[PRODUCT.COLOR],
+        '사이즈':receipt[PRODUCT.SIZE],
+        '판매가':receipt[PRODUCT.PRICE],
+        '고객요구':RECEIPT_TYPE[receipt[RECEIPT.TYPE]],
+        '매장접수내용':receipt[RECEIPT.STORE_MESSAGE],
+        '고객약속일':receipt[RECEIPT.DUE_DATE]
+        ? moment(receipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
+        : "",
+        '본사접수일':receipt[RECEIPT.REGISTER_DATE]
+        ? moment(receipt[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
+        : "",
+        '발송일toS':receipt[RECEIPT.COMPLETE_DATE]
+        ? moment(receipt[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD")
+        : "",
+        '과실구분':receipt[RECEIPT.FAULT_NAME],
+        '내용분석':receipt[RECEIPT.ANALYSIS_NAME],
+        '판정결과':receipt[RECEIPT.RESULT_NAME],
         }
     ))
     console.log(data)
