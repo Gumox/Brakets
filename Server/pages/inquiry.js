@@ -2,7 +2,6 @@ import React,{useState} from 'react';
 import RepairHeader from '../components/RepairHeader'
 import styled from 'styled-components';
 import COLOR from '../constants/color';
-import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import axios from 'axios';
 import store from '../store/store';
 export default function Inquiry() {
