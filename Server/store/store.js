@@ -5,11 +5,11 @@ export default createStore(function(state,action){
     
     if(state === undefined){
         return{
-            user:[]
+            company:[]
         }
     }
-    if(action.type === "USER"){
-        return{...state, user: action.user};
+    if(action.type === "COMPANY"){
+        return{...state, company: action.company};
     }
     return state;
 })

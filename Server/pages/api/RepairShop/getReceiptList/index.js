@@ -5,14 +5,38 @@ import excuteQuery from "../../db";
 
 async function getReceiptList(query,values) {
     const result = await excuteQuery({
-        query: `SELECT receipt.receipt_code,
-                       brand.headquarter_id,
-                       brand.brand_name,
-                       product.name
+        query: `SELECT  receipt.receipt_code,
+                        receipt.receipt_date,
+                        receipt.receipt_id,
+                        receipt.store_message,
+                        receipt.message,
+                        store.name AS store_name,
+                        store.contact AS store_contact,
+                        brand.headquarter_id,
+                        brand.brand_name,
+                        store.name,
+                        product.degree,
+                        season_type.season_name,
+                        season_type.season_code,
+                        style_type.style_code,
+                        product.color,
+                        product.size,
+                        product.degree,
+                        mfr.name AS mfr_name,
+                        mfr.store_id AS mfr_id,
+                        customer.name AS customer_name,
+                        customer.phone  AS customer_phone,
+                        product.name AS product_name,
+                        receipt.image
                 FROM receipt 
                 LEFT JOIN receipt_detail ON receipt.receipt_id = receipt_detail.receipt_id
                 LEFT JOIN product ON product.product_id = receipt.product_id
+                LEFT JOIN store ON store.store_id = receipt.store_id
+                LEFT JOIN season_type ON season_type.season_id = product.season_id
+                LEFT JOIN style_type ON style_type.style_id  = product.style_id 
                 LEFT JOIN brand ON brand.brand_id = product.brand_id
+                LEFT JOIN store AS mfr ON mfr.store_id = product.mfr_id
+                LEFT JOIN customer ON customer.customer_id  =  receipt.customer_id
                 WHERE receipt.receiver = ? ${query} `,
         values,
       });
