@@ -8,6 +8,7 @@ async function getReceiptList(query,values) {
         query: `SELECT  receipt.receipt_code,
                         receipt.receipt_date,
                         receipt.receipt_id,
+                        receipt.receipt_date,
                         receipt.store_message,
                         receipt.message,
                         store.name AS store_name,
