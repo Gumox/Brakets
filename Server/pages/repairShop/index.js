@@ -45,7 +45,7 @@ export const getServerSideProps = async (ctx) => {
       }
     }
   }
-  return { props: {} };
+  return { props: {user} };
 };
 
 const Wrapper = styled.div`

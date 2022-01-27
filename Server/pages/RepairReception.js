@@ -5,10 +5,7 @@ import COLOR from "../constants/color";
 import ip from "../constants/ip";
 import axios from "axios";
 import _ from "lodash";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 import RepairReceiptModal from "../components/RepairReceiptModal";
-import formatDate from "../functions/formatDate";
 import store from "../store/store";
 
 
@@ -27,8 +24,12 @@ function RepairReception({options,user}) {
   store.dispatch({type:"COMPANY",company:selectItems})
 
   const handleSelect = (e) => {
+    if(e.target.value === "전체"){
+      setSelectedCompany(null)
+    }else{
       setSelectedCompany(e.target.value)
       console.log(e.target.value)
+    }
   };
   const getOptions = async () => {
     const [data] = await Promise.all([
