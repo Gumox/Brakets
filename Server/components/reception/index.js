@@ -12,6 +12,7 @@ import ProducInfo from "./Product";
 import ReceiptInfo from "./Receipt";
 import StoreInfo from "./Store";
 import List from "./List";
+import ResizableList from "./ResizableList";
 import { PRODUCT, RECEIPT } from "../../constants/field";
 
 const Reception = ({
@@ -63,7 +64,9 @@ const Reception = ({
           </Section>
         </InfoSubWrapper>
       </InfoWrapper>
-      <List {...{ searchList, getTargetData }} />
+
+      <ResizableList {...{ searchList, getTargetData }} />
+      {/* <List {...{ searchList, getTargetData }} /> */}
       {isProductImageModalOpen && (
         <Modal handleCloseButtonClick={closeProductImage}>
           {
