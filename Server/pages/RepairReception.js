@@ -33,7 +33,7 @@ function RepairReception({options,user}) {
   const getOptions = async () => {
     const [data] = await Promise.all([
       axios
-        .get(`http://localhost:3000/api/RepairShop/getReceiptList`,{
+        .get(ip+`/api/RepairShop/getReceiptList`,{
           params: { shop_id: shop_id,hq_id:selectedCompany, code:code},})
         .then(({ data }) => data),
     ]);
@@ -109,13 +109,10 @@ export const getServerSideProps = async (ctx) => {
     axios.get(ip+`/api/auth/repair?email=${email}`)
     .then(({ data }) => data),
   ]);
-  console.log("*******************************************************************")
-  console.log(companys.body[0].store_id)
-  console.log("*******************************************************************")
   const[list,images] =await Promise.all([
-    axios.get(`http://localhost:3000/api/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
+    axios.get(ip+`/api/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
     .then(({ data }) => data),
-    axios.get(`http://localhost:3000/api/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
+    axios.get(ip+`/api/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
     .then(({ data }) => data),
   ])
   return {
