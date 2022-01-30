@@ -12,8 +12,8 @@ import {
   } from "../../constants/type";
 
 
+function Table({ columns, data, searchList, getTargetData }) {
 
-function Table({ columns, data }) {
     const defaultColumn = React.useMemo(
         () => ({
             minWidth: 100,
@@ -67,7 +67,9 @@ function Table({ columns, data }) {
                         {rows.map((row, i) => {
                             prepareRow(row)
                             return (
-                                <div key={i} {...row.getRowProps()} className="tr">
+                                <div key={i} {...row.getRowProps(
+                                    {onClick: () => (getTargetData(row.original["서비스카드 번호"]))}
+                                )} className="tr">
                                     {row.cells.map((cell,j) => {
                                         return (
                                             <div key={j} {...cell.getCellProps()} className="td">
@@ -81,8 +83,6 @@ function Table({ columns, data }) {
                     </div>
                 </div>
             </div>
-
-
             {/* <pre>
                 <code>{JSON.stringify(state, null, 2)}</code>
             </pre> */}
@@ -131,11 +131,24 @@ const ResizableList = ({ searchList, getTargetData = () => { } }) => {
         {Header: '총수선처3', accessor: '총수선처3',},
         {Header: '수선처접수일3', accessor: '수선처접수일3',},
         {Header: '재수선3', accessor: '재수선3',},
+        {Header: '생산업체', accessor: '생산업체',},
+        {Header: '발송일toM', accessor: '발송일toM',},
+        {Header: '본사설명', accessor: '본사설명',},
+        {Header: '현금연수증번호', accessor: '현금연수증번호',},
+        {Header: '수선처설명1', accessor: '수선처설명1',},
+        {Header: '운송형태1', accessor: '운송형태1',},
+        {Header: '발송방법1', accessor: '발송방법1',},
+        {Header: '발송비용1', accessor: '발송비용1',},
+        {Header: '수선처설명2', accessor: '수선처설명2',},
+        {Header: '운송형태2', accessor: '운송형태2',},
+        {Header: '발송방법2', accessor: '발송방법2',},
+        {Header: '발송비용2', accessor: '발송비용2',},
+        {Header: '수선처설명3', accessor: '수선처설명3',},
+        {Header: '운송형태3', accessor: '운송형태3',},
+        {Header: '발송방법3', accessor: '발송방법3',},
+        {Header: '발송비용3', accessor: '발송비용3',},
         ],[])
 
-
-
-    console.log("log is")
     const data = searchList.map((receipt) =>(
         {
         '서비스카드 번호':receipt[RECEIPT.CODE],
@@ -168,15 +181,59 @@ const ResizableList = ({ searchList, getTargetData = () => { } }) => {
         '과실구분':receipt[RECEIPT.FAULT_NAME],
         '내용분석':receipt[RECEIPT.ANALYSIS_NAME],
         '판정결과':receipt[RECEIPT.RESULT_NAME],
+        // '수선처1'
+        // '총수선처1'
+        // '수선처접수일1'
+        // '재수선1'
+        // '수선처2'
+        // '총수선처2'
+        // '수선처접수일2'
+        // '재수선2'
+        // '수선처3'
+        // '총수선처3'
+        // '수선처접수일3'
+        // '재수선3'
+        // '수선처1'
+        // '총수선처1'
+        // '수선처접수일1'
+        // '재수선1'
+        // '수선처2'
+        // '총수선처2'
+        // '수선처접수일2'
+        // '재수선2'
+        // '수선처3'
+        // '총수선처3'
+        // '수선처접수일3'
+        // '재수선3'
+
+        '생산업체':receipt[RECEIPT.MANUFACTURER_NAME],
+        '발송일toM':receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]
+        ? moment(
+            receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]
+          ).format("YYYY-MM-DD")
+        : "",
+        '본사설명':receipt[RECEIPT.MESSAGE],
+        '현금연수증번호':receipt[RECEIPT.CASHRECEIPT_NUM]
+        // '수선처설명1'
+        // '운송형태1'
+        // '발송방법1'
+        // '발송비용1'
+        // '수선처설명2'
+        // '운송형태2'
+        // '발송방법2'
+        // '발송비용2'
+        // '수선처설명3'
+        // '운송형태3'
+        // '발송방법3'
+        // '발송비용3'
         }
     ))
     console.log(data)
 
-
     return (
         <Wrapper>
             <Styles>
-                <Table columns={columns} data={data} />
+                <Table columns={columns} data={data} searchList={searchList} getTargetData={getTargetData}/>
             </Styles>
         </Wrapper>
 
@@ -239,7 +296,6 @@ const Styles = styled.div`
         ${'' /* prevents from scrolling while dragging on touch devices */}
         touch-action:none;
       }
-
     }
   }
 `
