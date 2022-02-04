@@ -1,11 +1,19 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import moment from "moment";
 import { useTable, useBlockLayout, useResizeColumns } from 'react-table';
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../constants/field";
+import {
+    STORE_CATEGORY,
+    RECEIPT_CATEGORY_TYPE,
+    RECEIPT_TYPE,
+    TRANSPORT_TYPE,
+    SHIPPING_TYPE,
+  } from "../../constants/type";
 
 
+function Table({ columns, data, searchList, getTargetData }) {
 
-function Table({ columns, data }) {
     const defaultColumn = React.useMemo(
         () => ({
             minWidth: 100,
@@ -38,10 +46,10 @@ function Table({ columns, data }) {
             <div>
                 <div {...getTableProps()} className="table">
                     <div>
-                        {headerGroups.map(headerGroup => (
-                            <div {...headerGroup.getHeaderGroupProps()} className="tr">
-                                {headerGroup.headers.map(column => (
-                                    <div {...column.getHeaderProps()} className="th">
+                        {headerGroups.map((headerGroup,i) => (
+                            <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
+                                {headerGroup.headers.map((column,j) => (
+                                    <div key={j} {...column.getHeaderProps()} className="th">
                                         {column.render('Header')}
                                         {/* Use column.getResizerProps to hook up the events correctly */}
                                         <div
@@ -59,10 +67,12 @@ function Table({ columns, data }) {
                         {rows.map((row, i) => {
                             prepareRow(row)
                             return (
-                                <div {...row.getRowProps()} className="tr">
-                                    {row.cells.map(cell => {
+                                <div key={i} {...row.getRowProps(
+                                    {onClick: () => (getTargetData(row.original["서비스카드 번호"]))}
+                                )} className="tr">
+                                    {row.cells.map((cell,j) => {
                                         return (
-                                            <div {...cell.getCellProps()} className="td">
+                                            <div key={j} {...cell.getCellProps()} className="td">
                                                 {cell.render('Cell')}
                                             </div>
                                         )
@@ -73,8 +83,6 @@ function Table({ columns, data }) {
                     </div>
                 </div>
             </div>
-
-
             {/* <pre>
                 <code>{JSON.stringify(state, null, 2)}</code>
             </pre> */}
@@ -84,6 +92,7 @@ function Table({ columns, data }) {
 
 const ResizableList = ({ searchList, getTargetData = () => { } }) => {
 
+    console.log(`search list is ${searchList}`)
 
     const columns = React.useMemo(() => [
         {Header: '서비스카드 번호',  accessor: '서비스카드 번호',},
@@ -122,24 +131,109 @@ const ResizableList = ({ searchList, getTargetData = () => { } }) => {
         {Header: '총수선처3', accessor: '총수선처3',},
         {Header: '수선처접수일3', accessor: '수선처접수일3',},
         {Header: '재수선3', accessor: '재수선3',},
+        {Header: '생산업체', accessor: '생산업체',},
+        {Header: '발송일toM', accessor: '발송일toM',},
+        {Header: '본사설명', accessor: '본사설명',},
+        {Header: '현금연수증번호', accessor: '현금연수증번호',},
+        {Header: '수선처설명1', accessor: '수선처설명1',},
+        {Header: '운송형태1', accessor: '운송형태1',},
+        {Header: '발송방법1', accessor: '발송방법1',},
+        {Header: '발송비용1', accessor: '발송비용1',},
+        {Header: '수선처설명2', accessor: '수선처설명2',},
+        {Header: '운송형태2', accessor: '운송형태2',},
+        {Header: '발송방법2', accessor: '발송방법2',},
+        {Header: '발송비용2', accessor: '발송비용2',},
+        {Header: '수선처설명3', accessor: '수선처설명3',},
+        {Header: '운송형태3', accessor: '운송형태3',},
+        {Header: '발송방법3', accessor: '발송방법3',},
+        {Header: '발송비용3', accessor: '발송비용3',},
         ],[])
 
-
-
-    console.log("log is")
     const data = searchList.map((receipt) =>(
         {
-        "서비스카드 번호":receipt[RECEIPT.CODE],
-        
+        '서비스카드 번호':receipt[RECEIPT.CODE],
+        '매장코드':receipt[STORE.CODE],
+        '매장명':receipt[STORE.NAME],
+        '매장구분':STORE_CATEGORY[receipt[STORE.CATEGORY]],
+        '매장연락처':receipt[STORE.CONTACT],
+        '매장접수일':receipt[RECEIPT.RECEIPT_DATE] ? moment(receipt[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD") : "",
+        '고객ID':receipt[CUSTOMER.ID],
+        '접수구분':RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]],
+        '고객':receipt[CUSTOMER.NAME],
+        '고객연락처':receipt[CUSTOMER.CONTACT],
+        '시즌':receipt[PRODUCT.SEASON],
+        '스타일':receipt[PRODUCT.STYLE],
+        '차수':receipt[PRODUCT.DEGREE],
+        '컬러':receipt[PRODUCT.COLOR],
+        '사이즈':receipt[PRODUCT.SIZE],
+        '판매가':receipt[PRODUCT.PRICE],
+        '고객요구':RECEIPT_TYPE[receipt[RECEIPT.TYPE]],
+        '매장접수내용':receipt[RECEIPT.STORE_MESSAGE],
+        '고객약속일':receipt[RECEIPT.DUE_DATE]
+        ? moment(receipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
+        : "",
+        '본사접수일':receipt[RECEIPT.REGISTER_DATE]
+        ? moment(receipt[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
+        : "",
+        '발송일toS':receipt[RECEIPT.COMPLETE_DATE]
+        ? moment(receipt[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD")
+        : "",
+        '과실구분':receipt[RECEIPT.FAULT_NAME],
+        '내용분석':receipt[RECEIPT.ANALYSIS_NAME],
+        '판정결과':receipt[RECEIPT.RESULT_NAME],
+        // '수선처1'
+        // '총수선처1'
+        // '수선처접수일1'
+        // '재수선1'
+        // '수선처2'
+        // '총수선처2'
+        // '수선처접수일2'
+        // '재수선2'
+        // '수선처3'
+        // '총수선처3'
+        // '수선처접수일3'
+        // '재수선3'
+        // '수선처1'
+        // '총수선처1'
+        // '수선처접수일1'
+        // '재수선1'
+        // '수선처2'
+        // '총수선처2'
+        // '수선처접수일2'
+        // '재수선2'
+        // '수선처3'
+        // '총수선처3'
+        // '수선처접수일3'
+        // '재수선3'
+
+        '생산업체':receipt[RECEIPT.MANUFACTURER_NAME],
+        '발송일toM':receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]
+        ? moment(
+            receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]
+          ).format("YYYY-MM-DD")
+        : "",
+        '본사설명':receipt[RECEIPT.MESSAGE],
+        '현금연수증번호':receipt[RECEIPT.CASHRECEIPT_NUM]
+        // '수선처설명1'
+        // '운송형태1'
+        // '발송방법1'
+        // '발송비용1'
+        // '수선처설명2'
+        // '운송형태2'
+        // '발송방법2'
+        // '발송비용2'
+        // '수선처설명3'
+        // '운송형태3'
+        // '발송방법3'
+        // '발송비용3'
         }
     ))
     console.log(data)
 
-
     return (
         <Wrapper>
             <Styles>
-                <Table columns={columns} data={data} />
+                <Table columns={columns} data={data} searchList={searchList} getTargetData={getTargetData}/>
             </Styles>
         </Wrapper>
 
@@ -202,7 +296,6 @@ const Styles = styled.div`
         ${'' /* prevents from scrolling while dragging on touch devices */}
         touch-action:none;
       }
-
     }
   }
 `
