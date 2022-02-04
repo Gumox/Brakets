@@ -1,28 +1,38 @@
 
-import React from "react";
+import React,{useEffect,useState} from "react";
 import styled from "styled-components";
 import COLOR from "../constants/color";
 import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import formatDate from "../functions/formatDate";
+import RepairHistory from "./RepairHistory";
+import RepairReturn from "./RepairReturn";
+import RepairOthers from "./RepairOthers";
+import axios from "axios";
 import ip from "../constants/ip";
-
 function RepairReceiptModal (props) {
-
+  
   const el =props.item;
   const info = props.info;
-  console.log(el.receipt_id)
-  
   const imageList = props.images;
-  const fullImage = ip+el.image
+  const fullImage = ip+el.image;
+  const hq_id = el.headquarter_id;
+  const [faultItems,setFaultItems] = useState([])
+  const [judgmentItems,setJudgmentItems] = useState([])
+  const [analysisItems,setAnalysisItems] = useState([])
+  const [repiarType,setRepiarType] = useState([])
+  const [selectJudgment,setSelectJudgment] = useState(null)
+  const [selectFault,setSelectFault] =useState(null)
+  const [selectAnalysis,setSelectAnalysis] =useState(null)
+
   let images= [];
-  imageList.forEach((obj,index) => {
+  imageList.forEach((obj) => {
     if(obj.receipt_id === el.receipt_id){
       images.push(obj)
     }
   });
   let imageView =[];
   images.forEach((obj,index)=>{
-    console.log(el.receipt_id+" : "+index)
     const uri = ip + obj.before_image
     let img = (
       <div key={index} style={{display:"flex",flexDirection:"column",alignItems:"center",margin:10}}>
@@ -33,7 +43,102 @@ function RepairReceiptModal (props) {
     )
     imageView[index] = (img);
   })
+
+  const getSelectList = async (api) => {
+    const [data] = await Promise.all([
+      axios
+        .get(`http://localhost:3000/api/`+api,{
+          params: { hq_id:hq_id},})
+        .then(({ data }) => data),
+    ]);
+    //setSelectItems(data.body)
+    return(data.body);
+  }
+  
+
+  const setSelectList = (selectItems,text) => {
+    let type = text +"_name";
+    if(text === "repair_type"){
+      type = "text";
+    }
+    const code = text +"_code";
+
+    let resultItems =[];
+    if(selectItems !== undefined){
+      selectItems.map((item,index) => {
+        let resultItem;                    
+        if(item.level == 1){
+            resultItem =(
+              <option value={item[code]} key={item[type]}>
+              {item[type]}
+              </option>
+            )
+        }else if(item.level == 0){
+            resultItem =(
+              <option disabled value={item[code]} key={item[type]} style={{backgroundColor:`${COLOR.LIGHT_GRAY}`}}>
+              {item[type]}
+              </option>
+            )
+        }
+        resultItems[index] = (resultItem)
+      })
+    }
+    return(resultItems)
+  }
+  const getRepairType= async()=>{
+    const [data] = await Promise.all([
+        axios
+        .get(`http://localhost:3000/api/type/repair`,{
+        params: { headquarterId: 2},})
+        .then(({ data }) => data),
+    ]);
+    console.log(data)
+    return(data.data);
+}
   let date = formatDate(new Date(el.receipt_date))
+  let faultLists = setSelectList(faultItems,"fault")
+  let judgmentLists = setSelectList(judgmentItems,"judgment")
+  let analysisLists = setSelectList(analysisItems,"analysis")
+  let repiarTypeList = setSelectList(repiarType,"repair_type")
+  
+  let selectJudgmentBox;
+  if(selectJudgment == 3){
+    selectJudgmentBox =(
+      <RepairHistory infos = {{fault:selectFault,analysis:selectAnalysis}} selectList={repiarTypeList} ></RepairHistory>
+    )
+  }else if(selectJudgment == 7){
+    selectJudgmentBox =(
+      <RepairReturn reciver={"매장"}></RepairReturn>
+    )
+  }else if(selectJudgment == 8){
+    selectJudgmentBox =(
+      <RepairReturn reciver={"본사"}></RepairReturn>
+    )
+  }else if(selectJudgment == 11){
+    selectJudgmentBox =(
+      <RepairOthers></RepairOthers>
+    )
+  }else{
+    selectJudgmentBox =(
+      <></>
+    )
+  }
+  useEffect(async () => {
+    const fI = await getSelectList('faultDivision')
+    const jI = await getSelectList('judgmentResult')
+    const aI = await getSelectList('analysisType')
+    const typeInfo = await getRepairType();
+
+    fI.unshift({faultItems_name:"선택",level:1})
+    jI.unshift({judgmentResult_name:"선택",level:1})
+    aI.unshift({analysisType_name:"선택",level:1})
+    typeInfo.unshift({text:"선택",level:1})
+
+    setFaultItems(fI)
+    setJudgmentItems(jI)
+    setAnalysisItems(aI)
+    setRepiarType(typeInfo)
+  },[]);
   return (
     <Popup  trigger={
       <PrView ><ContainText>
@@ -95,40 +200,54 @@ function RepairReceiptModal (props) {
           <div style={{marginLeft:20,marginRight:20,flex:1}}>
             <LaView>
               <RightItemBox><ItemTextTop>수선처 접수일</ItemTextTop><ItemTextBottom>{formatDate(new Date(el.receipt_date))}</ItemTextBottom></RightItemBox>
-              <RightItemBox><ItemTextTop>운송 형태</ItemTextTop><ItemTextBottom>???</ItemTextBottom></RightItemBox>
+              <RightItemBox><ItemTextTop>운송 형태</ItemTextTop><ItemTextBottom>
+                  <select onChange={(e)=>{console.log("020202")}}  style={styles.selectStyle} >
+                  <option value={1} key={'매장행낭'}>매장행낭</option>
+                  <option value={2} key={'본사행낭'}>본사행낭</option>
+                  <option value={3} key={'택배'}>택배</option>
+                  <option value={4} key={'퀵배송'}>퀵배송</option>
+                  <option value={5} key={'행낭 (행낭 바코드 X)'}>행낭 (행낭 바코드 X)</option>
+                  </select>
+              </ItemTextBottom></RightItemBox>
             </LaView>
             <LaView>
               <RightItemBox>
                 <ItemTextTop>과실구분</ItemTextTop>
-                <ItemTextBottom>???</ItemTextBottom>
+                <ItemTextBottom>
+                  <select onChange={(e)=>{setSelectFault(e.target.value)}}  style={styles.selectStyle} >
+                    { 
+                      faultLists
+                    }
+                  </select>
+                </ItemTextBottom>
               </RightItemBox>
               <RightItemBox>
                 <ItemTextTop>냬용분석</ItemTextTop>
-                <ItemTextBottom>???</ItemTextBottom>
+                <ItemTextBottom>
+                  <select onChange={(e)=>{setSelectAnalysis(e.target.value)}}  style={styles.selectStyle} >
+                    {
+                      analysisLists
+                    }
+                  </select>
+                </ItemTextBottom>
               </RightItemBox>
               <RightItemBox>
                 <ItemTextTop>판정결과</ItemTextTop>
-                <ItemTextBottom>???</ItemTextBottom>
+                <ItemTextBottom>
+                  <select onChange={(e)=>{setSelectJudgment(e.target.value)}}  style={styles.selectStyle} >
+                    {
+                      judgmentLists
+                    }
+                  </select>
+                </ItemTextBottom>
               </RightItemBox>
             </LaView>
-            <LaView><ItemText>수선 내역</ItemText></LaView>
-            <Line2/>
-            <ItemText>매장 접수 내용</ItemText>
-            <LaView>?</LaView>
-            <LaView>?</LaView>
-            <ItemText>수선처 설명</ItemText>
-            <ItemTable></ItemTable>
+            
+              {selectJudgmentBox}
+
+            
           </div>
-          <div style={{marginLeft:20,marginRight:20}}>
-            <LaView>
-              <div style={{fontSize:15,color:`${COLOR.RED}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>유상수선비</div>
-              <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, borderBottomColor:`${COLOR.RED}`}}></input>
-            </LaView>
-            <LaView>
-              <div style={{fontSize:15,color:`${COLOR.BLACK}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>현금영수증 번호</div>
-              <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}}></input>
-            </LaView>
-          </div>
+          
         </Half>
     </Container> 
     </Popup>
@@ -141,8 +260,18 @@ export default RepairReceiptModal;
 const styles = {
   contentStyle:{
   maxWidth: "95%",
-  minWidth: 1400,
+  minWidth: 1450,
   maxHeight:"98%"
+  },
+  selectStyle:{
+    marginLeft:10,
+    marginRight:10,
+    borderTop:0,
+    borderLeft:0,
+    borderRight:0,
+    paddingBottom:5,
+    borderBottomWidth:2,
+    borderColor:COLOR.BRAUN
   }
 };
 const Line =styled.div`
@@ -163,9 +292,8 @@ const Line2 =styled.div`
 `;
 const Half = styled.div`
   flex:1;
-  max-height: 700px;
-  overflow: scroll;
-
+  height: 700px;
+  overflow-y: scroll;
 `
 const ContainText =styled.div`
   display: flex;
@@ -175,7 +303,7 @@ const ContainText =styled.div`
 const Container =styled.div`
   display: flex;
   justify-content: center;
-  max-height: 1000px;
+  max-height: 95%;
 `;
 const LaView = styled.div`
   padding:10px;

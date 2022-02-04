@@ -6,7 +6,6 @@ import styled from "styled-components";
 import MENUS from "../constants/repairMenu";
 import COLOR from "../constants/color";
 import RepairHeaderButton from "./RepairHeaderButton";
-import Ok  from "../icons/OK_image.png"
 
 const Header = ({ path }) => {
   const router = useRouter();
@@ -26,7 +25,8 @@ const Header = ({ path }) => {
         <Wrapper>
             
         <MenuWrapper> 
-            <h1 style={{marginLeft:"5%"}}>수선OK</h1>
+            <h1 style={{marginLeft:"5%"}}>수선</h1>
+            <OkImage src="/icons/OK_image.png" width={81} height={52} />
             <div style={{margin:"15%"}}/>
             {MENUS.map((menu) => (
             <RepairHeaderButton key={menu.link} {...menu} path={path} />
@@ -42,9 +42,10 @@ const Header = ({ path }) => {
 
 
 const OkImage =styled.img`
-    margin-left: 20px;
-    width:80px;
-    height: 60px;
+    margin-left: 2px;
+    width:81px;
+    margin-top: 5px; 
+    height: 52px;
 `;
 const Wrapper = styled.div`
     flex:1

@@ -1,10 +1,10 @@
 import excuteQuery from "../db"
 
-async function getFaultDivision(id) {
+async function getJudgmentResult(id) {
     const result = await excuteQuery({
         query: `SELECT  *
-                FROM fault_type 
-                WHERE headquarter_id = ?`,
+                FROM judgment_result 
+                WHERE hq_id = ?`,
         values:[id],
       });
     
@@ -24,7 +24,7 @@ const controller = async (req, res) => {
         
 
     try {
-      const result = await getFaultDivision(hq_id);
+      const result = await getJudgmentResult(hq_id);
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("result");

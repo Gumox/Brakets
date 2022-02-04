@@ -2,7 +2,7 @@ import excuteQuery from "../db";
 
 async function getRepairType(headquarterId) {
   return excuteQuery({
-    query: `SELECT repair_id AS value, repair_name AS text
+    query: `SELECT repair_id AS value, repair_name AS text,repair_type_code,repair_price,level
               FROM repair_type WHERE headquarter_id=?`,
     values: [headquarterId],
   });

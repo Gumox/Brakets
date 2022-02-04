@@ -25,20 +25,18 @@ function RepairReception({options,user}) {
 
   const handleSelect = (e) => {
     if(e.target.value === "전체"){
-      setSelectedCompany(null)
+      setSelectedCompany()
     }else{
       setSelectedCompany(e.target.value)
-      console.log(e.target.value)
     }
   };
   const getOptions = async () => {
     const [data] = await Promise.all([
       axios
-        .get(ip+`/api/RepairShop/getReceiptList`,{
+        .get(`http://localhost:3000/api/RepairShop/getReceiptList`,{
           params: { shop_id: shop_id,hq_id:selectedCompany, code:code},})
         .then(({ data }) => data),
     ]);
-    console.log(data.body)
     setListData(data.body)
   }
   let lists =[];
@@ -105,15 +103,14 @@ export const getServerSideProps = async (ctx) => {
       : {}
   );
   const {email :email} =user
-  //console.log("email???? ??? ??? "+email)
   const [companys] = await Promise.all([
     axios.get(ip+`/api/auth/repair?email=${email}`)
     .then(({ data }) => data),
   ]);
   const[list,images] =await Promise.all([
-    axios.get(ip+`/api/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
+    axios.get(`http://localhost:3000/api/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
     .then(({ data }) => data),
-    axios.get(ip+`/api/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
+    axios.get(`http://localhost:3000/api/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
     .then(({ data }) => data),
   ])
   return {

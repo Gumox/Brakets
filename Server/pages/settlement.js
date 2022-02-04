@@ -1,5 +1,5 @@
 import RepairHeader from '../components/RepairHeader'
-export default function settlement()  {
+export default function Settlement()  {
     return(
     <div>
         <RepairHeader />
