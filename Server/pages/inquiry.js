@@ -1,25 +1,105 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect,useCallback,useRef} from 'react';
 import RepairHeader from '../components/RepairHeader'
 import styled from 'styled-components';
 import COLOR from '../constants/color';
 import axios from 'axios';
 import store from '../store/store';
+import InquiryTable from '../components/InquiryTable';
+import sortInquiryData from '../functions/sortInquiryData';
+import { CSVLink } from "react-csv";
+import headers from '../constants/inquiryTableHeader';
 export default function Inquiry() {
    
-  
+    const [shopId,setShopId] = useState(store.getState().shop);
+    const [data,setData] = useState([]);
     const [selectedCompany,setSelectedCompany] = useState(null)
-    const companyList = store.getState().company
-    const handleSelect = (e) => {
-        setSelectedCompany(e.target.value)
-        console.log(selectedCompany)
-    };
+    const [brand,setBrand] = useState(null)
+    const [code,setCode] = useState(null)
+    const [startDate,setStartDate] = useState(null)
+    const [endDate,setEndDate] = useState(null)
+    const [dateOption,setDateOption] = useState("receipt_date")
+    const [brandList,setBrandList] = useState([])
+    const [companyList,setCompanyList] = useState(store.getState().company);
+    
+    
+    const getData = async(params)=>{
+        console.log(params)
+        const[datas] =await Promise.all([
+            axios.get(`${process.env.API_URL}/RepairShop/getInquiryInfo`, {
+                params: params,
+              })
+            .then(({ data }) => data),
+          ])
+          return datas;
+    }
+    const getBrandList = async()=>{
+        const[datas] =await Promise.all([
+            axios.get(`${process.env.API_URL}/brand/AllBrandList`)
+            .then(({ data }) => data.data),
+          ])
+          return datas;
+    }
+    const setTable = async(params) =>{
+        let datas = [];
+        datas = await getData(params)
+        let sort =await sortInquiryData(datas.body, shopId)
+        setData(sort)
+    }
+    const handleKeyPress = useCallback(
+        (e,code) => {
+            console.log("do")
+          if (e.key !== "Enter") return;
+          setTable({
+            shop_id: localStorage.getItem('SHOP'),
+            brand : brand,
+            code : code,
+            startDate : startDate,
+            endDate : endDate,
+            dateOption : dateOption 
+        });
+        },[]
+      );
+    useEffect(async () => {
+        let list =await getBrandList();
+        list.unshift({brand_id: "",brand_name: "전체"})
+        setBrandList(list);
+        setShopId(localStorage.getItem('SHOP'))
+        setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
+        setTable({
+            shop_id: localStorage.getItem('SHOP'),
+            brand : brand,
+            code : code,
+            startDate : startDate,
+            endDate : endDate,
+            dateOption : dateOption 
+        });
+        return () => setLoading(false);
+      },[]);
     return(
-        <div>
+        <div style={{height:"100%",overflowY: "scroll"}}>
             <RepairHeader/>
             <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
-            <h3>접수</h3><hr/>
+            <TopView>
+                <h2>조회</h2>
+
+                <CSVLink data={data} headers={headers} filename='조회목록'>
+                <img src='/icons/excel.png' width={45} height={40}/>
+                </CSVLink>
+            </TopView>
+            <hr/>
                 <Container>회사 설정 :
-                <select onChange={(e)=>handleSelect(e)}  style={{marginLeft:10,marginRight: 10}} >
+                <select style={{marginLeft:10,marginRight: 10}} 
+                    onChange={(e)=>{
+                        setSelectedCompany(e.target.value)
+                        setTable({
+                            shop_id: shopId,
+                            brand : brand,
+                            code : code,
+                            startDate : startDate,
+                            endDate : endDate,
+                            dateOption : dateOption 
+                        });
+                    }}>
                     {companyList.map((item) => (
                         <option value={item.key} key={item.key}>
                         {item.name}
@@ -30,74 +110,69 @@ export default function Inquiry() {
                 
             
             서비스 카드 번호 : 
-                <input style={{marginLeft:15}}></input> <button 
-                    style={{width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
-                    onClick={()=>{getOptions()}}
-                    >확인</button>  
+                <input style={{marginLeft:15}} onChange={(e)=>{setCode(e.target.value)
+                console.log(code)}} onKeyPress={(e)=>{handleKeyPress(e,code)}}></input>
                   </Container> 
                 <div style={{color :"#ff0000"}}><h6>⚠️직접 입력 후 엔터를 누르거나 바코드 리더기를 이용해주세요</h6></div>
   
                 조회 조건
                 <br/>
+                <br/>
                 <Container>
-                    수선처 : 
-                    <select name="soosun"  style={{marginLeft:10,marginRight: 10}} >
-                        <option value="soo">수선처1</option>
-                        <option value="soos">수선처2</option>
-                        <option value="soosu">수선처3</option>
+                    <div style={{height:25,marginLeft:20,justifyContent:"center",alignItems:"center",display:"flex",fontSize:13,paddingBottom:2}}>브랜드 : </div> 
+                    <select name="brand"  style={{marginLeft:10,marginRight: 10, height:25}} onChange={(e)=>{
+                            setBrand(e.target.value)
+                            setTable({
+                                shop_id: shopId,
+                                brand : e.target.value,
+                                code : code,
+                                startDate : startDate,
+                                endDate : endDate,
+                                dateOption : dateOption 
+                            });
+                        }}>
+                        {   
+                            brandList.map((item,index)=>(
+                                <option key={index} value={item.brand_id}>{item.brand_name}</option>
+                            ))
+                        }
                     </select>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    브랜드 : 
-                    <select name="brand"  style={{marginLeft:10,marginRight: 10}} >
-                        <option value="br">브랜드1</option>
-                        <option value="bra">브랜드2</option>
-                        <option value="bran">브랜드3</option>
-                    </select>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    날짜 기준 : 
-                    <select name="date_standard"  style={{marginLeft:10,marginRight: 10}} >
-                        <option value="d">매장접수일</option>
+                    <div style={{height:25,justifyContent:"center",alignItems:"center",display:"flex",fontSize:13,paddingBottom:2}}>날짜 기준 :</div> 
+                    <select name="date_standard"  style={{marginLeft:10,marginRight: 10, height:25}}  onChange={(e)=>{setDateOption(e.target.value)}}>
+                        <option value="complete_date">매장접수일</option>
                         <option value="da">수선처접수일</option>
                         <option value="dat">수선처발송일</option>
                     </select>
                     
-                    <input type="date" ></input>
+                    <input type="date" onChange={(e)=>{
+                        setStartDate(e.target.value)
+                        setTable({
+                            shop_id: shopId,
+                            brand : brand,
+                            code : code,
+                            startDate : e.target.value,
+                            endDate : endDate,
+                            dateOption : dateOption 
+                        });
+                        }}/>
                     
-                    <input type="date" ></input>
+                    <input type="date" onChange={(e)=>{
+                        setEndDate(e.target.value)
+                        setTable({
+                            shop_id: shopId,
+                            brand : brand,
+                            code : code,
+                            startDate : startDate,
+                            endDate : e.target.value,
+                            dateOption : dateOption 
+                        });
+                        }}/>
                 </Container>
             <Line/>
             <ItemTable >
                 <ContainerScroll >
-                <LaView><Container>
-                    <ItemView>서비스 번호</ItemView>
-                    <ItemView>매장접수일</ItemView>
-                    <ItemView>매장명</ItemView>
-                    <ItemView>브랜드</ItemView>
-                    <ItemView>시즌</ItemView>
-                    <ItemView>스타일</ItemView>
-                    <ItemView>컬러</ItemView>
-                    <ItemView>사이즈</ItemView>
-                    <ItemView>과실구분</ItemView>
-                    <ItemView>내용분석</ItemView>
-                    <ItemView>판정결과</ItemView>
-                    <ItemView>수선처</ItemView>
-                    <ItemView>수선처 접수일</ItemView>
-                    <ItemView>수선처발송일</ItemView>
-                    <ItemView>수선내용 1</ItemView>
-                    <ItemView>수선내용 2</ItemView>
-                    <ItemView>수선내용 3</ItemView>
-                    <ItemView>매장접수 내용</ItemView>
-                </Container></LaView>
-
-
-                <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
-                <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
-                <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
-                <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
-                <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
-                <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
-                <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
-
+                    <InquiryTable data = {data}></InquiryTable>
                 </ContainerScroll>
               
               
@@ -106,6 +181,30 @@ export default function Inquiry() {
         </div>
     )
 }
+
+export const getServerSideProps = async (ctx) => {
+    console.log(ctx.req.headers.cookie)
+    const {
+      data: { isAuthorized,user },
+    } = await axios.get(
+      `${process.env.API_URL}/auth`,
+      ctx.req
+        ? {
+            withCredentials: true,
+            headers: {
+              cookie: ctx.req.headers.cookie || {},
+            },
+            
+          }
+          
+        : {}
+    );
+    console.log("******************************************")
+    console.log(isAuthorized)
+    console.log("******************************************")
+    return { props: {} };
+  };
+
 const Line =styled.div`
   border:1px solid  ${COLOR.BRAUN};
   width :100%
@@ -121,28 +220,7 @@ const ItemTable = styled.div`
   min-height:200px;
 
 `;
-const LaView = styled.div`
-  padding:10px;
-  display: flex;  
-  align-items:center;
 
-`;
-const PrView = styled.div`
-  padding:10px;
-  display: flex;  
-  align-items:center;
-
-  &: hover {
-    background-color: ${COLOR.BRAUN};
-  }
-`;
-const ItemView = styled.div`
-  font-size :12px;
-  min-height: 20px;
-  width :100px;
-  display: flex;  
-  justify-content:center
-  `;
 const Container = styled.div`
     display:flex; 
     min-height: 20px;
@@ -152,12 +230,18 @@ const Container = styled.div`
 const ContainerScroll = styled.div`
     margin-top:12px;
     overflow: scroll;
-    maxHeight: 400px;
-    maxWidth: 100%
+    max-height: 400px;
+    min-height:200px;
+    max-width: 100%
 
     &::-webkit-scrollbar{
         display: none;
     }
 
 `;
-
+const TopView = styled.div`
+    padding:10px;
+    display: flex;  
+    align-items:center;
+    justify-content: space-between;      
+`;

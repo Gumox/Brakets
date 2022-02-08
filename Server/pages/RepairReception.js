@@ -2,26 +2,28 @@ import React,{useState, useCallback, useEffect} from "react";
 import RepairHeader from "../components/RepairHeader"
 import styled from "styled-components";
 import COLOR from "../constants/color";
-import ip from "../constants/ip";
 import axios from "axios";
 import _ from "lodash";
 import RepairReceiptModal from "../components/RepairReceiptModal";
 import store from "../store/store";
-
+import headers from "../constants/repairReceptionTableHeader";
+import { CSVLink } from "react-csv";
 
 function RepairReception({options,user}) {
   const option =options.companys
+  console.log(options.info[0])
   const shop_id =options.info[0].store_id
   const email = user.email
   const [selectedCompany,setSelectedCompany] = useState(null)
   const [listData,setListData] = useState(options.list)
   const [code,setCode] = useState(null)
-
-
+  
+ 
   let selectList = [{name:"전체",key:null}];
   option.map((item)=>(selectList.push({name:item.headquarter_name,key:item.hq_id})))
   const  selectItems = _.uniqBy(selectList,"key")
   store.dispatch({type:"COMPANY",company:selectItems})
+  store.dispatch({type:"SHOP",shop:shop_id})
 
   const handleSelect = (e) => {
     if(e.target.value === "전체"){
@@ -33,7 +35,7 @@ function RepairReception({options,user}) {
   const getOptions = async () => {
     const [data] = await Promise.all([
       axios
-        .get(`http://localhost:3000/api/RepairShop/getReceiptList`,{
+        .get(`${process.env.API_URL}/RepairShop/getReceiptList`,{
           params: { shop_id: shop_id,hq_id:selectedCompany, code:code},})
         .then(({ data }) => data),
     ]);
@@ -48,11 +50,24 @@ function RepairReception({options,user}) {
     )
     lists[index] = items;
   })
+  useEffect(()=>{
+    console.log(selectItems)
+    localStorage.setItem('COMPANY',JSON.stringify(selectItems));
+    localStorage.setItem('SHOP',shop_id)
+    localStorage.setItem('SHOP_NAME',options.info[0].name)  
+  },[])
   return(
-      <div>
+      <div style={{height:"100%",overflowY: "scroll"}}>
           <RepairHeader/>
           <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
-          <h3>접수</h3><hr/>
+          <TopView>
+                <h2>접수</h2>
+
+                <CSVLink data={listData} headers={headers} filename='접수목록'>
+                <img src='/icons/excel.png' width={45} height={40} />
+                </CSVLink>
+          </TopView>
+            <hr/>
               <Container>회사 설정 :
               <select onChange={(e)=>handleSelect(e)}  style={{marginLeft:10,marginRight: 10}} >
               {selectItems.map((item) => (
@@ -89,6 +104,7 @@ function RepairReception({options,user}) {
 
 
 export const getServerSideProps = async (ctx) => {
+  console.log(ctx.req.headers.cookie)
   const {
     data: { isAuthorized, user },
   } = await axios.get(
@@ -102,15 +118,18 @@ export const getServerSideProps = async (ctx) => {
         }
       : {}
   );
+  console.log("......................................")
+  console.log(isAuthorized)
+  console.log("......................................")
   const {email :email} =user
   const [companys] = await Promise.all([
-    axios.get(ip+`/api/auth/repair?email=${email}`)
+    axios.get(`${process.env.API_URL}/auth/repair?email=${email}`)
     .then(({ data }) => data),
   ]);
   const[list,images] =await Promise.all([
-    axios.get(`http://localhost:3000/api/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
+    axios.get(`${process.env.API_URL}/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
     .then(({ data }) => data),
-    axios.get(`http://localhost:3000/api/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
+    axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
     .then(({ data }) => data),
   ])
   return {
@@ -123,7 +142,6 @@ export const getServerSideProps = async (ctx) => {
         images: images.body
       }
     }
-      
   };
 };
 
@@ -169,4 +187,11 @@ const Container = styled.div`
     min-height: 20px;
     align-items: flex-start;
 `;
+const TopView = styled.div`
+    padding:10px;
+    display: flex;  
+    align-items:center;
+    justify-content: space-between;      
+`;
+
 export default  RepairReception;

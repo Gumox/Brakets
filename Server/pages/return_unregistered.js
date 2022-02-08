@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import RepairHeader from '../components/RepairHeader'
 import styled from 'styled-components';
 import COLOR from '../constants/color';
@@ -8,20 +8,24 @@ import store from '../store/store';
 export default function Return_unregistered() {
     
     const [selectedCompany,setSelectedCompany] = useState(null)
-    const companyList = store.getState().company
-    const handleSelect = (e) => {
-        setSelectedCompany(e.target.value)
-        console.log(selectedCompany)
-    };
+    const [companyList,setCompanyList] = useState(store.getState().company)
+    const shop_id = store.getState().shop
+    
+    const getInfo = async(shop_id)=>{
+
+    }
+    useEffect(()=>{
+        setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
+    },[])
     return(
         <div style={{minWidth:1150, overflowY:"scroll"}}>
             <RepairHeader/>
             <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
-                <h3>미등록 반송</h3>
+                <h2>미등록 반송</h2>
                 <Line/>
                 <Container>
                     <div style={{display:'flex',alignItems:"center",justifyContent:"center",width:"100%",fontSize:15,fontWeight:"bold",msOverflowStyle:"none"}}>회사 설정 :
-                    <select onChange={(e)=>handleSelect(e)}  style={{marginLeft:10,marginRight: 10,minWidth:200,minHeight:30}} >
+                    <select onChange={(e)=>{}}  style={{marginLeft:10,marginRight: 10,minWidth:200,minHeight:30}} >
                         {companyList.map((item) => (
                             <option value={item.key} key={item.key}>
                             {item.name}
@@ -92,7 +96,8 @@ export default function Return_unregistered() {
                 
                 <br/>
                 <br/>
-                
+            <div style={{display:"flex",flexDirection:"row-reverse",width:"100%"}}><CustomButton>저장</CustomButton></div>
+            
             <Line/>
             <ItemTable >
                 <div style={{marginTop:12,overflowY:"scroll",maxHeight: 400,maxWidth:"100%"}}>
@@ -161,4 +166,19 @@ const Container = styled.div`
     display:flex; 
     min-height: 20px;
     align-items: flex-start;
+`;
+const CustomButton = styled.div`
+  width:45px;
+  height:30px;
+  font-size:15px;
+  color: #ffffff;
+  display:flex;
+  margin:10px;
+  align-items: center;
+  background-color: ${COLOR.BRAUN};
+  border-radius : 7px;
+  justify-content : center;
+  &: hover {
+    background-color: ${COLOR.GRAY};
+  }
 `;

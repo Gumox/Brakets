@@ -2,35 +2,38 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLOR from "../constants/color";
+import formatDate from "../functions/formatDate";
 const RepairHistory = (props) => {
     const info = props.infos;
     const selectTypeList = props.selectList;
-    console.log(info)
-    const [storeRecept,setStoreRecept] = useState([])
+    const shop = props.shop;
+    const receipt_id = props.receipt;
+    const [message, setMessage] = useState("")
+    const [storeRecept,setStoreRecept] = useState([{data: 0}])
     const [repairType1,setRepairType1] = useState(null)
     const [repairType2,setRepairType2] = useState(null)
     const [repairType3,setRepairType3] = useState(null)
     
-    const [repairCount1,setRepairCount1] = useState(null)
-    const [repairCount2,setRepairCount2] = useState(null)
-    const [repairCount3,setRepairCount3] = useState(null)
+    const [repairCount1,setRepairCount1] = useState(0)
+    const [repairCount2,setRepairCount2] = useState(0)
+    const [repairCount3,setRepairCount3] = useState(0)
 
-    const [repairCost1,setRepairCost1] = useState(null)
-    const [repairCost2,setRepairCost2] = useState(null)
-    const [repairCost3,setRepairCost3] = useState(null)
+    const [repairCost1,setRepairCost1] = useState(0)
+    const [repairCost2,setRepairCost2] = useState(0)
+    const [repairCost3,setRepairCost3] = useState(0)
     
     const [repairRedo1,setRepairRedo1] = useState(false)
     const [repairRedo2,setRepairRedo2] = useState(false)
     const [repairRedo3,setRepairRedo3] = useState(false)
 
     const [boxSize,setBoxSize] = useState(290);
+
     const inputRepair = () =>{
         let arr = [];
         storeRecept.map((el)=>{arr.push(el)})
         let index = storeRecept.length
         let newLine = {data: index};
         if(index<3){
-            console.log(index+" : " + storeRecept)
             arr.push(newLine)
             setBoxSize( boxSize - 55);
             setStoreRecept(arr)
@@ -41,46 +44,47 @@ const RepairHistory = (props) => {
         storeRecept.map((obj,index)=>{
             if(value !== index){
                 arr.push(obj)
-                console.log(obj)
             }
         })
         setBoxSize( boxSize + 55);
         setStoreRecept(arr)
     }
     
-    const onSave = async(
+    const onSave = async() =>{
+        let res;
+        const today = formatDate(new Date())
+        const body = {
+            receipt_id:receipt_id,
+            store_id: shop,
+            register_date: today,
+            fault_id: info.fault,
+            result_id: info.result,
+            analysis_id: info.analysis,
+            delivery_type: info.delivery,
+            message: message,
 
-    ) =>{
-        const today = new Date()
-        const[result] =await Promise.all([
-            axios.get(`http://localhost:3000/api/RepairShop/setRepairinfo`,{
-            body: { 
-                
-                    store_id:55,
-                    register_date:today,
-                    fault_id:3,
-                    result_id:1,
-                    analysis_id:1,
-                    delivery_type:1,
-                    message:"",
+            repair1_type_id: repairType1,
+            repair1_count: repairCount1,
+            repair1_price: repairCost1,
+            repair1_redo: repairRedo1,
+            repair2_type_id: repairType2,
+            repair2_count: repairCount2,
+            repair2_price: repairCost2,
+            repair2_redo: repairRedo2,
+            repair3_type_id: repairType3,
+            repair3_count: repairCount3,
+            repair3_price: repairCost3,
+            repair3_redo: repairRedo3 
+        }
 
-                    repair1_type_id:1,
-                    repair1_count:1,
-                    repair1_price:3000,
-                    repair1_redo:0,
-                    repair2_type_id:null,
-                    repair2_count:0,
-                    repair2_price:0,
-                    repair2_redo:0,
-                    repair3_type_id:null,
-                    repair3_count:0,
-                    repair3_price:0,
-                    repair3_redo:0
-                
-                  },})
-            
-            .then(({ data }) => data),
-          ])
+          fetch(`${process.env.API_URL}/RepairShop/setRepairinfo`, {
+          method: "POST",
+          headers: {
+            'Content-type': 'application/json'
+        },
+          body: JSON.stringify(body)
+        })
+        .then(response => res =response.json())
     }
     return(
         <div>
@@ -114,15 +118,14 @@ const RepairHistory = (props) => {
                             </LaView>
                             <LaView>
                                 <ItemsView >
-                                <select style={{borderWidth:0,borderBottomWidth:2 ,marginLeft:15}} 
+                                <select style={{borderWidth:0,borderBottomWidth:2 ,marginLeft:15}}
                                     onChange={(e)=>{
-                                        console.log("key: "+key)
                                         if(key+1 === 1){
-                                            setRepairCount1(e.target.value)
+                                            setRepairType1(e.target.value)
                                         }else if(key+1 === 2){
-                                            setRepairCount2(e.target.value)
+                                            setRepairType2(e.target.value)
                                         }else if(key+1 === 3){
-                                            setRepairCount3(e.target.value)
+                                            setRepairType3(e.target.value)
                                         }
                                     }}>
                                     {
@@ -134,11 +137,11 @@ const RepairHistory = (props) => {
                                     <input type="number" min="0" style={{width:30,borderWidth:0,borderBottomWidth:2}} 
                                         onChange={(e)=>{
                                             if(key+1 === 1){
-                                                setRepairType1(e.target.value)
+                                                setRepairCount1(e.target.value)
                                             }else if(key+1 === 2){
-                                                setRepairType2(e.target.value)
+                                                setRepairCount2(e.target.value)
                                             }else if(key+1 === 3){
-                                                setRepairType3(e.target.value)
+                                                setRepairCount3(e.target.value)
                                             }
                                         }}
                                     />
@@ -148,7 +151,6 @@ const RepairHistory = (props) => {
                                         onChange={(e)=>{
                                             if(key+1 === 1){
                                                 setRepairCost1(e.target.value)
-                                                console.log(e.target.value)
                                             }else if(key+1 === 2){
                                                 setRepairCost2(e.target.value)
                                             }else if(key+1 === 3){
@@ -169,11 +171,15 @@ const RepairHistory = (props) => {
             }
             <ItemText>수선처 설명</ItemText>
             <ItemTable>
-              <input style={{margin:5,minHeight:60,width:"98%",border:0}}></input>
+              <input style={{margin:5,minHeight:60,width:"98%",border:0}}
+                onChange ={(e)=>{
+                    setMessage(e.target.value)
+                }}
+              ></input>
             </ItemTable>
             <div style={{height:boxSize, display:"flex",flexDirection:"column-reverse",alignItems:"center"}}>
                 
-            <CustomButton>저장</CustomButton>
+            <CustomButton onClick={()=>{onSave()}}>저장</CustomButton>
             <LaView >
                 <div style={{marginTop:20,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"center"}}>
                     <CheckBox type="checkbox"/>
