@@ -1,5 +1,5 @@
 
-import React,{useEffect,useState} from "react";
+import React,{useCallback, useEffect,useState} from "react";
 import styled from "styled-components";
 import COLOR from "../constants/color";
 import Popup from 'reactjs-popup';
@@ -46,13 +46,14 @@ function RepairReceiptModal (props) {
     imageView[index] = (img);
   })
 
-  const getSelectList = useEffect (async (api) => {
+  const getSelectList = useCallback(async (api) => {
     const [data] = await Promise.all([
       axios
         .get(`${process.env.API_URL}/`+api,{
           params: { hq_id:hq_id},})
         .then(({ data }) => data),
     ]);
+    //setSelectItems(data.body)
     return(data.body);
   },[])
   
@@ -87,7 +88,7 @@ function RepairReceiptModal (props) {
     }
     return(resultItems)
   }
-  const getRepairType= async()=>{
+  const getRepairType= useCallback(async()=>{
     const [data] = await Promise.all([
         axios
         .get(`${process.env.API_URL}/type/repair`,{
@@ -95,7 +96,7 @@ function RepairReceiptModal (props) {
         .then(({ data }) => data),
     ]);
     return(data.data);
-}
+},[])
   let date = formatDate(new Date(el.receipt_date))
   let faultLists = setSelectList(faultItems,"fault")
   let judgmentLists = setSelectList(judgmentItems,"judgment")
@@ -152,7 +153,7 @@ function RepairReceiptModal (props) {
       setRepiarType(typeInfo)
     }
     fetchData();
-  },[getSelectList]);
+  },[]);
   return (
     <div suppressHydrationWarning={true}>
        {process.browser &&

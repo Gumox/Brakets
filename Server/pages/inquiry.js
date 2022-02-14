@@ -87,8 +87,8 @@ export default function Inquiry() {
             });
         }
         fetchData();
-        return () => setLoading(false);
-      },[setTable,brand, code, dateOption, endDate,  startDate]);
+        
+      },[]);
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
             <RepairHeader/>

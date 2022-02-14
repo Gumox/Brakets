@@ -9,7 +9,7 @@ import store from "../store/store";
 import headers from "../constants/repairReceptionTableHeader";
 import checkDisable from "../functions/checkDisable";
 import { CSVLink } from "react-csv";
-import Image from 'next/image'
+import Image from 'next/image';
 
 function RepairReception({options,user}) {
   const option =options.companys
@@ -60,7 +60,7 @@ function RepairReception({options,user}) {
     localStorage.setItem('SHOP_NAME',options.info[0].name)
     console.log(user)
     localStorage.setItem('USER',JSON.stringify(user))
-  },[options.info, selectItems,shop_id,user])
+  },[])
   return(
       <div style={{height:"100%",overflowY: "scroll"}}>
           <RepairHeader/>
