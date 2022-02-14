@@ -123,8 +123,6 @@ export default function ProductSend( { route,navigation } ) {
             const json = await response.json();
             console.log(json.body);
             navigation.popToTop();
-            navigation.navigate("MailbagScan")
-           
         } catch (error) {
             console.error(error);
         }
