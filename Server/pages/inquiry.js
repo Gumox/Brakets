@@ -67,24 +67,27 @@ export default function Inquiry() {
         });
         },[]
       );
-    useEffect(async () => {
-        let list =await getBrandList();
-        list.unshift({brand_id: "",brand_name: "전체"})
-        setBrandList(list);
-        setShopId(localStorage.getItem('SHOP'))
-        setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
-        let user = JSON.parse(localStorage.getItem('USER'))
-        setDisable(checkDisable(user.level))
-        setTable({
-            shop_id: localStorage.getItem('SHOP'),
-            brand : brand,
-            code : code,
-            startDate : startDate,
-            endDate : endDate,
-            dateOption : dateOption 
-        });
+    useEffect(() => {
+        const fetchData = async () => {
+            let list =await getBrandList();
+            list.unshift({brand_id: "",brand_name: "전체"})
+            setBrandList(list);
+            setShopId(localStorage.getItem('SHOP'))
+            setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
+            let user = JSON.parse(localStorage.getItem('USER'))
+            setDisable(checkDisable(user.level))
+            setTable({
+                shop_id: localStorage.getItem('SHOP'),
+                brand : brand,
+                code : code,
+                startDate : startDate,
+                endDate : endDate,
+                dateOption : dateOption 
+            });
+        }
+        fetchData();
         return () => setLoading(false);
-      },[]);
+      },[brand,code,startDate,endDate,dateOption ]);
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
             <RepairHeader/>

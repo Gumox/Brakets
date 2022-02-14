@@ -1,4 +1,4 @@
-import React,{useMemo} from 'react'
+import React,{useMemo,useCallback} from 'react'
 import styled from 'styled-components'
 import { useTable } from 'react-table'
 const Styles = styled.div`
@@ -179,7 +179,7 @@ function InquiryTable( props ) {
         },
   ]
   
-    const columns = useMemo(() => columnData, []);
+    const columns = useMemo(() => columnData, [props]);
     const data = props.data;
     
     

@@ -11,6 +11,8 @@ import RepairOthers from "./RepairOthers";
 import axios from "axios";
 import ip from "../constants/ip";
 import store from "../store/store";
+import Image from 'next/image';
+
 function RepairReceiptModal (props) {
   const el =props.item;
   const info = props.info;
@@ -38,8 +40,7 @@ function RepairReceiptModal (props) {
     let img = (
       <div key={index} style={{display:"flex",flexDirection:"column",alignItems:"center",margin:10}}>
         <div style={{fontSize:15,fontWeight:"bold",margin:10}}>세부 이미지 {index+1}</div>
-        <img src={uri}
-        alt="Trulli" width="200" height="150"/>
+        <DetailImg src={uri} alt="세부이미지" />
       </div>
     )
     imageView[index] = (img);
@@ -201,8 +202,8 @@ function RepairReceiptModal (props) {
                       borderStyle:"solid",minHeight:380,margin:30,alignItems:"center",
                       justifyContent:"center",display:"flex",flexDirection:"column"}}>
             <div style={{fontSize:15,fontWeight:"bold",margin:10}}>전체 이미지</div>
-            <img src={fullImage} style={{margin:10}}
-              alt="Trulli" width="200" height="150"></img>
+            <DetailImg src={fullImage} style={{margin:10}}
+              alt="전체이미지"></DetailImg>
           
             {imageView}
           </div>
@@ -290,6 +291,10 @@ const styles = {
     borderColor:COLOR.BRAUN
   }
 };
+const DetailImg = styled.img`
+  width:270px;
+  height:480px;
+`;
 const Line =styled.div`
   margin:10px;
   height:2px;

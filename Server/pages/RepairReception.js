@@ -9,6 +9,7 @@ import store from "../store/store";
 import headers from "../constants/repairReceptionTableHeader";
 import checkDisable from "../functions/checkDisable";
 import { CSVLink } from "react-csv";
+import Image from 'next/image'
 
 function RepairReception({options,user}) {
   const option =options.companys
@@ -68,7 +69,7 @@ function RepairReception({options,user}) {
                 <h2>접수</h2>
 
                 <CSVLink data={listData} headers={headers} filename='접수목록.csv'>
-                <img alt="excel" src='/icons/excel.png' width={45} height={40} />
+                <Image alt="excel" src='/icons/excel.png' width={45} height={40} />
                 </CSVLink>
           </TopView>
             <hr/>

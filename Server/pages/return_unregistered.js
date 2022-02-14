@@ -11,7 +11,7 @@ import { getBrandList,getRepairShopList,getTargetInfo,insertData,getReturnList,d
 import unregisteredListControll from '../functions/unregisteredListControll';
 import headers from '../constants/retrunTableHeader';
 import checkDisable from '../functions/checkDisable';
-
+import Image from 'next/image'
 
 export default function Return_unregistered() {
     
@@ -85,23 +85,26 @@ export default function Return_unregistered() {
         },[]
       );
     
-    useEffect( async()=>{
-        setShopName(localStorage.getItem('SHOP_NAME'))
-        setCompanyList(JSON.parse(localStorage.getItem('COMPANY'))) 
-        setShopId(localStorage.getItem('SHOP'))
-        let list =await getBrandList();
-        list.unshift({brand_id: "",brand_name: "전체"})
+    useEffect( ()=>{
+        const fetchData = async () => {
+            setShopName(localStorage.getItem('SHOP_NAME'))
+            setCompanyList(JSON.parse(localStorage.getItem('COMPANY'))) 
+            setShopId(localStorage.getItem('SHOP'))
+            let list =await getBrandList();
+            list.unshift({brand_id: "",brand_name: "전체"})
 
-        let list2 =await getRepairShopList();
-        list2.unshift({store_id: "",name: "전체"})
-        let user = JSON.parse(localStorage.getItem('USER'))
-        setDisable(checkDisable(user.level))
+            let list2 =await getRepairShopList();
+            list2.unshift({store_id: "",name: "전체"})
+            let user = JSON.parse(localStorage.getItem('USER'))
+            setDisable(checkDisable(user.level))
 
-        let returnListData = await getReturnList(localStorage.getItem('SHOP')*1,localStorage.getItem('SHOP_NAME'))
-        setReturnList(returnListData)
-        setResultList(returnListData)
-        setBrandList(list);
-        setRepairShopList(list2)
+            let returnListData = await getReturnList(localStorage.getItem('SHOP')*1,localStorage.getItem('SHOP_NAME'))
+            setReturnList(returnListData)
+            setResultList(returnListData)
+            setBrandList(list);
+            setRepairShopList(list2)
+        }
+        fetchData();
     },[])
     return(
         
@@ -111,7 +114,7 @@ export default function Return_unregistered() {
                 <TopView>
                 <h2>미등록 반송</h2>
                 <CSVLink data={resultList} headers={headers} filename='조회목록'>
-                    <img src='/icons/excel.png' width={45} height={40}/>
+                    <Image src='/icons/excel.png' width={45} height={40}/>
                 </CSVLink>
             </TopView>
                 <Line/>
