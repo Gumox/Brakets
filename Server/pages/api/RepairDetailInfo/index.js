@@ -23,7 +23,7 @@ async function getRepairNeed_Point(id) {
 async function getReceipt(code) {
   const result = await excuteQuery({
     query: `SELECT 
-              receipt_id,
+              receipt.receipt_id,
               brand.brand_name,
               brand.brand_code,
               store.name AS store_name,
