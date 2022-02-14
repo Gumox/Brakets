@@ -149,7 +149,6 @@ function RepairReceiptModal (props) {
     setJudgmentItems(jI)
     setAnalysisItems(aI)
     setRepiarType(typeInfo)
-    return () => setLoading(false);
   },[]);
   return (
     <div suppressHydrationWarning={true}>
