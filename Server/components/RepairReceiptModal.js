@@ -149,7 +149,8 @@ function RepairReceiptModal (props) {
     setJudgmentItems(jI)
     setAnalysisItems(aI)
     setRepiarType(typeInfo)
-  },[setFaultItems,setJudgmentItems,setAnalysisItems,setRepiarType]);
+    return () => setLoading(false);
+  },[]);
   return (
     <div suppressHydrationWarning={true}>
        {process.browser &&

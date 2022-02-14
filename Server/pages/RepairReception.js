@@ -59,7 +59,8 @@ function RepairReception({options,user}) {
     localStorage.setItem('SHOP_NAME',options.info[0].name)
     console.log(user)
     localStorage.setItem('USER',JSON.stringify(user))
-  },[])
+    return () => setLoading(false);
+  },[options.info, selectItems,shop_id,user])
   return(
       <div style={{height:"100%",overflowY: "scroll"}}>
           <RepairHeader/>
@@ -68,7 +69,7 @@ function RepairReception({options,user}) {
                 <h2>접수</h2>
 
                 <CSVLink data={listData} headers={headers} filename='접수목록.csv'>
-                <img src='/icons/excel.png' width={45} height={40} />
+                <img alt="excel" src='/icons/excel.png' width={45} height={40} />
                 </CSVLink>
           </TopView>
             <hr/>

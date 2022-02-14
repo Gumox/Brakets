@@ -50,6 +50,7 @@ export default function Settlement()  {
             )
         }
         setSelectShopOption(selectShop)
+        return () => setLoading(false);
     },[])   
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
