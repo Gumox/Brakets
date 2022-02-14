@@ -49,8 +49,8 @@ function Table({ columns, data }) {
         <thead>
           {headerGroups.map((headerGroup,i) => (
             <tr key={i} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              {headerGroup.headers.map((column,j) => (
+                <th key={j} {...column.getHeaderProps()}>{column.render('Header')}</th>
               ))}
             </tr>
           ))}
@@ -60,8 +60,8 @@ function Table({ columns, data }) {
             prepareRow(row)
             return (
               <tr key={i}{...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                {row.cells.map((cell,j) => {
+                  return <td key={j} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
               </tr>
             )
