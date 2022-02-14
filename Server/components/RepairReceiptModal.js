@@ -46,16 +46,15 @@ function RepairReceiptModal (props) {
     imageView[index] = (img);
   })
 
-  const getSelectList = async (api) => {
+  const getSelectList = useEffect (async (api) => {
     const [data] = await Promise.all([
       axios
         .get(`${process.env.API_URL}/`+api,{
           params: { hq_id:hq_id},})
         .then(({ data }) => data),
     ]);
-    //setSelectItems(data.body)
     return(data.body);
-  }
+  },[])
   
 
   const setSelectList = (selectItems,text) => {

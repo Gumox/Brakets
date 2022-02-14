@@ -54,7 +54,7 @@ export default function Inquiry() {
             let result  =dateOptionListcontroll(sort,params)
             setData(result)
         }
-    });
+    },[setData]);
     const handleKeyPress = useCallback(
         (e,code) => {
           if (e.key !== "Enter") return;
@@ -88,7 +88,7 @@ export default function Inquiry() {
         }
         fetchData();
         return () => setLoading(false);
-      },[setTable]);
+      },[setTable,brand, code, dateOption, endDate,  startDate]);
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
             <RepairHeader/>

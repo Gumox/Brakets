@@ -179,7 +179,7 @@ function InquiryTable( props ) {
         },
   ]
   
-    const columns = useMemo(() => columnData, [props]);
+    const columns = useMemo(() => columnData, [columnData]);
     const data = props.data;
     
     
