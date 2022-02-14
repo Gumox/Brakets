@@ -125,31 +125,34 @@ function RepairReceiptModal (props) {
       <></>
     )
   }
-  useEffect(async () => {
-    const fI = await getSelectList('faultDivision')
-    const jI = await getSelectList('judgmentResult')
-    const aI = await getSelectList('analysisType')
-    const typeInfo = await getRepairType();
-    
-    store.dispatch({type:"ANALYSIS",analysis:aI});
-    store.dispatch({type:"JUDIMENT",judiment:jI});
-    store.dispatch({type:"FAULT",fault:fI});
-    store.dispatch({type:"REPAIR_TYPE",repair_type:typeInfo});
+  useEffect( () => {
+    const fetchData = async () => {
+      const fI = await getSelectList('faultDivision')
+      const jI = await getSelectList('judgmentResult')
+      const aI = await getSelectList('analysisType')
+      const typeInfo = await getRepairType();
+      
+      store.dispatch({type:"ANALYSIS",analysis:aI});
+      store.dispatch({type:"JUDIMENT",judiment:jI});
+      store.dispatch({type:"FAULT",fault:fI});
+      store.dispatch({type:"REPAIR_TYPE",repair_type:typeInfo});
 
-    localStorage.setItem('ANALYSIS',JSON.stringify(aI));
-    localStorage.setItem('JUDIMENT',JSON.stringify(jI));
-    localStorage.setItem('FAULT',JSON.stringify(fI));
-    localStorage.setItem('REPAIR_TYPE',JSON.stringify(typeInfo));
+      localStorage.setItem('ANALYSIS',JSON.stringify(aI));
+      localStorage.setItem('JUDIMENT',JSON.stringify(jI));
+      localStorage.setItem('FAULT',JSON.stringify(fI));
+      localStorage.setItem('REPAIR_TYPE',JSON.stringify(typeInfo));
 
-    fI.unshift({faultItems_name:"선택",level:1})
-    jI.unshift({judgmentResult_name:"선택",level:1})
-    aI.unshift({analysisType_name:"선택",level:1})
-    typeInfo.unshift({text:"선택",level:1})
+      fI.unshift({faultItems_name:"선택",level:1})
+      jI.unshift({judgmentResult_name:"선택",level:1})
+      aI.unshift({analysisType_name:"선택",level:1})
+      typeInfo.unshift({text:"선택",level:1})
 
-    setFaultItems(fI)
-    setJudgmentItems(jI)
-    setAnalysisItems(aI)
-    setRepiarType(typeInfo)
+      setFaultItems(fI)
+      setJudgmentItems(jI)
+      setAnalysisItems(aI)
+      setRepiarType(typeInfo)
+    }
+    fetchData();
   },[]);
   return (
     <div suppressHydrationWarning={true}>
