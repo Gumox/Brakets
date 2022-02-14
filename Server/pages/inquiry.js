@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import COLOR from '../constants/color';
 import axios from 'axios';
 import store from '../store/store';
-import InquiryTable from '../components/InquiryTable';
+//import InquiryTable from '../components/InquiryTable';
 import sortInquiryData from '../functions/sortInquiryData';
 import dateOptionListcontroll from '../functions/dateOptionListcontroll';
 import { CSVLink } from "react-csv";
@@ -197,7 +197,8 @@ export default function Inquiry() {
             <Line/>
             <ItemTable >
                 <ContainerScroll >
-                    <InquiryTable data = {data}></InquiryTable>
+                    {
+                        }
                 </ContainerScroll>
               
               
