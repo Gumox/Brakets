@@ -105,7 +105,7 @@ export default function Return_unregistered() {
             setRepairShopList(list2)
         }
         fetchData();
-    },[])
+    },[shopName])
     return(
         
         <div style={{minWidth:1150, overflowY:"auto"}}>
@@ -114,7 +114,7 @@ export default function Return_unregistered() {
                 <TopView>
                 <h2>미등록 반송</h2>
                 <CSVLink data={resultList} headers={headers} filename='조회목록'>
-                    <Image src='/icons/excel.png' width={45} height={40}/>
+                    <Image alt='excel' src='/icons/excel.png' width={45} height={40}/>
                 </CSVLink>
             </TopView>
                 <Line/>

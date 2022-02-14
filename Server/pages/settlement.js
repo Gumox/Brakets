@@ -24,32 +24,36 @@ export default function Settlement()  {
         setStateAtTwo(list)
         location.reload()
     }
-    useEffect(async()=>{
-        setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
-        setShopName(localStorage.getItem('SHOP_NAME'))
-        let user = JSON.parse(localStorage.getItem('USER'))
-        setUserInfo(user)
-        setDisable(checkDisable(user.level))
-        let selectShop
-    
-        if(!checkDisable(user.level)){
-            let list = await getSettlementData({repairShop: localStorage.getItem('SHOP')})
-            
-            setSettlementList(list.data)
-            selectShop=(
-                <div>{localStorage.getItem('SHOP_NAME')}</div>
-            )
-        }else{
-            let list = await getSettlementData({repairShop:null})
-            
-            setSettlementList(list.data)
-            selectShop=(
-                <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} >
-                                    
-                </select>
-            )
+    useEffect(()=>{
+        const fetchData = async () => {
+        
+            setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
+            setShopName(localStorage.getItem('SHOP_NAME'))
+            let user = JSON.parse(localStorage.getItem('USER'))
+            setUserInfo(user)
+            setDisable(checkDisable(user.level))
+            let selectShop
+        
+            if(!checkDisable(user.level)){
+                let list = await getSettlementData({repairShop: localStorage.getItem('SHOP')})
+                
+                setSettlementList(list.data)
+                selectShop=(
+                    <div>{localStorage.getItem('SHOP_NAME')}</div>
+                )
+            }else{
+                let list = await getSettlementData({repairShop:null})
+                
+                setSettlementList(list.data)
+                selectShop=(
+                    <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} >
+                                        
+                    </select>
+                )
+            }
+            setSelectShopOption(selectShop)
         }
-        setSelectShopOption(selectShop)
+        fetchData();
     },[])   
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
