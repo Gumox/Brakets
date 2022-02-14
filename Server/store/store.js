@@ -5,7 +5,7 @@ export default createStore(function(state,action){
     
     if(state === undefined){
         return{
-            company:[],shop:"",analysis:[],judiment:[],fault:[],repair_type:[]
+            company:[],shop:"",analysis:[],judiment:[],fault:[],repair_type:[],selected:[]
         }
     }
     if(action.type === "COMPANY"){
@@ -26,5 +26,12 @@ export default createStore(function(state,action){
     if(action.type === "REPAIR_TYPE"){
         return{...state, repair_type: action.repair_type};
     }
+    if(action.type === "SET_SELECTED"){
+        return{...state, selected:  [...state.selected,action.selected]};
+    }
+    if(action.type === "RESET_SELECTED"){
+        return{...state, selected: action.selected};
+    }
+    
     return state;
 })

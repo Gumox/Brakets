@@ -4,6 +4,7 @@ import excuteQuery from "../../db";
  * 0단계 고객 수정
  */
 const addRepairDetail = async (
+  receipt_id,
   store,
   register_date,
   fault_id,
@@ -26,8 +27,8 @@ const addRepairDetail = async (
 ) => {
   return excuteQuery({
     query:
-      "INSERT INTO `repair_detail`(`store_id`, `register_date`,`fault_id`,`result_id`,`analysis_id`, `delivery_type`, `message`,`repair1_type_id`,`repair1_count`,`repair1_price`,`repair1_redo`,`repair2_type_id`,`repair2_count`,`repair2_price`,`repair2_redo`,`repair3_type_id`,`repair3_count`,`repair3_price`,`repair3_redo` ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-    values: [store,  register_date, fault_id,result_id,analysis_id,delivery_type, message, repair1_type_id,repair1_count,repair1_price,repair1_redo,repair2_type_id,repair2_count,repair2_price,repair2_redo,repair3_type_id,repair3_count,repair3_price,repair3_redo],
+      "INSERT INTO `repair_detail`(`receipt_id`,`store_id`, `register_date`,`fault_id`,`result_id`,`analysis_id`, `delivery_type`, `message`,`repair1_type_id`,`repair1_count`,`repair1_price`,`repair1_redo`,`repair2_type_id`,`repair2_count`,`repair2_price`,`repair2_redo`,`repair3_type_id`,`repair3_count`,`repair3_price`,`repair3_redo` ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+    values: [receipt_id,store,  register_date, fault_id,result_id,analysis_id,delivery_type, message, repair1_type_id,repair1_count,repair1_price,repair1_redo,repair2_type_id,repair2_count,repair2_price,repair2_redo,repair3_type_id,repair3_count,repair3_price,repair3_redo],
   });
 };
 
@@ -80,7 +81,7 @@ const sendRepairInfo = async (req, res) => {
     try {
         const info = await getReceiptInfo(receipt_id)
         if(info[0] !== undefined){
-          const result = await addRepairDetail(store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
+          const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
               repair1_type_id,repair1_count,repair1_price,repair1_redo,
               repair2_type_id,repair2_count,repair2_price,repair2_redo,
               repair3_type_id,repair3_count,repair3_price,repair3_redo,

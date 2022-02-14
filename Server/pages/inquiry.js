@@ -6,8 +6,10 @@ import axios from 'axios';
 import store from '../store/store';
 import InquiryTable from '../components/InquiryTable';
 import sortInquiryData from '../functions/sortInquiryData';
+import dateOptionListcontroll from '../functions/dateOptionListcontroll';
 import { CSVLink } from "react-csv";
 import headers from '../constants/inquiryTableHeader';
+import checkDisable from '../functions/checkDisable';
 export default function Inquiry() {
    
     const [shopId,setShopId] = useState(store.getState().shop);
@@ -20,10 +22,10 @@ export default function Inquiry() {
     const [dateOption,setDateOption] = useState("receipt_date")
     const [brandList,setBrandList] = useState([])
     const [companyList,setCompanyList] = useState(store.getState().company);
+    const [disable,setDisable] = useState(true)
     
     
     const getData = async(params)=>{
-        console.log(params)
         const[datas] =await Promise.all([
             axios.get(`${process.env.API_URL}/RepairShop/getInquiryInfo`, {
                 params: params,
@@ -41,13 +43,19 @@ export default function Inquiry() {
     }
     const setTable = async(params) =>{
         let datas = [];
-        datas = await getData(params)
-        let sort =await sortInquiryData(datas.body, shopId)
-        setData(sort)
+        if(params.dateOption === "receipt_date"){
+            datas = await getData(params)
+            let sort =await sortInquiryData(datas.body,params)
+            setData(sort)
+        }else{
+            datas = await getData(params)
+            let sort =await sortInquiryData(datas.body,params)
+            let result  =dateOptionListcontroll(sort,params)
+            setData(result)
+        }
     }
     const handleKeyPress = useCallback(
         (e,code) => {
-            console.log("do")
           if (e.key !== "Enter") return;
           setTable({
             shop_id: localStorage.getItem('SHOP'),
@@ -65,6 +73,8 @@ export default function Inquiry() {
         setBrandList(list);
         setShopId(localStorage.getItem('SHOP'))
         setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
+        let user = JSON.parse(localStorage.getItem('USER'))
+        setDisable(checkDisable(user.level))
         setTable({
             shop_id: localStorage.getItem('SHOP'),
             brand : brand,
@@ -88,7 +98,7 @@ export default function Inquiry() {
             </TopView>
             <hr/>
                 <Container>회사 설정 :
-                <select style={{marginLeft:10,marginRight: 10}} 
+                <select disabled={disable} style={{marginLeft:10,marginRight: 10}} 
                     onChange={(e)=>{
                         setSelectedCompany(e.target.value)
                         setTable({
@@ -110,8 +120,8 @@ export default function Inquiry() {
                 
             
             서비스 카드 번호 : 
-                <input style={{marginLeft:15}} onChange={(e)=>{setCode(e.target.value)
-                console.log(code)}} onKeyPress={(e)=>{handleKeyPress(e,code)}}></input>
+                <input  disabled={disable} style={{marginLeft:15}} onChange={(e)=>{setCode(e.target.value)
+                }} onKeyPress={(e)=>{handleKeyPress(e,code)}}></input>
                   </Container> 
                 <div style={{color :"#ff0000"}}><h6>⚠️직접 입력 후 엔터를 누르거나 바코드 리더기를 이용해주세요</h6></div>
   
@@ -120,7 +130,7 @@ export default function Inquiry() {
                 <br/>
                 <Container>
                     <div style={{height:25,marginLeft:20,justifyContent:"center",alignItems:"center",display:"flex",fontSize:13,paddingBottom:2}}>브랜드 : </div> 
-                    <select name="brand"  style={{marginLeft:10,marginRight: 10, height:25}} onChange={(e)=>{
+                    <select disabled={disable} name="brand"  style={{marginLeft:10,marginRight: 10, height:25}} onChange={(e)=>{
                             setBrand(e.target.value)
                             setTable({
                                 shop_id: shopId,
@@ -139,13 +149,24 @@ export default function Inquiry() {
                     </select>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div style={{height:25,justifyContent:"center",alignItems:"center",display:"flex",fontSize:13,paddingBottom:2}}>날짜 기준 :</div> 
-                    <select name="date_standard"  style={{marginLeft:10,marginRight: 10, height:25}}  onChange={(e)=>{setDateOption(e.target.value)}}>
+                    <select disabled={disable} name="date_standard"  style={{marginLeft:10,marginRight: 10, height:25}} 
+                        onChange={(e)=>{
+                            setDateOption(e.target.value)
+                            setTable({
+                                shop_id: shopId,
+                                brand : brand,
+                                code : code,
+                                startDate : startDate,
+                                endDate : endDate,
+                                dateOption : e.target.value 
+                            });
+                        }}>
                         <option value="complete_date">매장접수일</option>
-                        <option value="da">수선처접수일</option>
-                        <option value="dat">수선처발송일</option>
+                        <option value="register_date">수선처접수일</option>
+                        <option value="send_date">수선처발송일</option>
                     </select>
                     
-                    <input type="date" onChange={(e)=>{
+                    <input disabled={disable} type="date" onChange={(e)=>{
                         setStartDate(e.target.value)
                         setTable({
                             shop_id: shopId,
@@ -157,7 +178,7 @@ export default function Inquiry() {
                         });
                         }}/>
                     
-                    <input type="date" onChange={(e)=>{
+                    <input disabled={disable} type="date" onChange={(e)=>{
                         setEndDate(e.target.value)
                         setTable({
                             shop_id: shopId,
@@ -182,28 +203,7 @@ export default function Inquiry() {
     )
 }
 
-export const getServerSideProps = async (ctx) => {
-    console.log(ctx.req.headers.cookie)
-    const {
-      data: { isAuthorized,user },
-    } = await axios.get(
-      `${process.env.API_URL}/auth`,
-      ctx.req
-        ? {
-            withCredentials: true,
-            headers: {
-              cookie: ctx.req.headers.cookie || {},
-            },
-            
-          }
-          
-        : {}
-    );
-    console.log("******************************************")
-    console.log(isAuthorized)
-    console.log("******************************************")
-    return { props: {} };
-  };
+
 
 const Line =styled.div`
   border:1px solid  ${COLOR.BRAUN};

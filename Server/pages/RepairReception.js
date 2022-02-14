@@ -7,6 +7,7 @@ import _ from "lodash";
 import RepairReceiptModal from "../components/RepairReceiptModal";
 import store from "../store/store";
 import headers from "../constants/repairReceptionTableHeader";
+import checkDisable from "../functions/checkDisable";
 import { CSVLink } from "react-csv";
 
 function RepairReception({options,user}) {
@@ -17,6 +18,7 @@ function RepairReception({options,user}) {
   const [selectedCompany,setSelectedCompany] = useState(null)
   const [listData,setListData] = useState(options.list)
   const [code,setCode] = useState(null)
+  const [disable,setDisable] = useState(checkDisable(user.level))
   
  
   let selectList = [{name:"전체",key:null}];
@@ -54,7 +56,9 @@ function RepairReception({options,user}) {
     console.log(selectItems)
     localStorage.setItem('COMPANY',JSON.stringify(selectItems));
     localStorage.setItem('SHOP',shop_id)
-    localStorage.setItem('SHOP_NAME',options.info[0].name)  
+    localStorage.setItem('SHOP_NAME',options.info[0].name)
+    console.log(user)
+    localStorage.setItem('USER',JSON.stringify(user))
   },[])
   return(
       <div style={{height:"100%",overflowY: "scroll"}}>
@@ -63,13 +67,13 @@ function RepairReception({options,user}) {
           <TopView>
                 <h2>접수</h2>
 
-                <CSVLink data={listData} headers={headers} filename='접수목록'>
+                <CSVLink data={listData} headers={headers} filename='접수목록.csv'>
                 <img src='/icons/excel.png' width={45} height={40} />
                 </CSVLink>
           </TopView>
             <hr/>
               <Container>회사 설정 :
-              <select onChange={(e)=>handleSelect(e)}  style={{marginLeft:10,marginRight: 10}} >
+              <select disabled={disable} onChange={(e)=>handleSelect(e)}  style={{marginLeft:10,marginRight: 10}} >
               {selectItems.map((item) => (
                   <option value={item.key} key={item.key}>
                   {item.name}
@@ -80,7 +84,7 @@ function RepairReception({options,user}) {
               
           
           서비스 카드 번호 : 
-              <input style={{marginLeft:15}} onChange={(e)=>{setCode(e.target.value)}}></input> <button 
+              <input disabled={disable} style={{marginLeft:15}} onChange={(e)=>{setCode(e.target.value)}}></input> <button 
                   style={{width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
                   onClick={()=>{getOptions()}}
                   >확인</button>  
@@ -118,9 +122,7 @@ export const getServerSideProps = async (ctx) => {
         }
       : {}
   );
-  console.log("......................................")
-  console.log(isAuthorized)
-  console.log("......................................")
+  console.log(user)
   const {email :email} =user
   const [companys] = await Promise.all([
     axios.get(`${process.env.API_URL}/auth/repair?email=${email}`)
@@ -165,15 +167,6 @@ const LaView = styled.div`
   display: flex;  
   align-items:center;
 
-`;
-const PrView = styled.div`
-  padding:10px;
-  display: flex;  
-  align-items:center;
-
-  &: hover {
-    background-color: ${COLOR.BRAUN};
-  }
 `;
 const ItemView = styled.div`
   font-size :12px;

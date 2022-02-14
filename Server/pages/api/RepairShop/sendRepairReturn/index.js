@@ -4,6 +4,7 @@ import excuteQuery from "../../db";
  * 0단계 고객 수정
  */
 const addRepairDetail = async (
+  receipt_id,
   store,
   register_date,
   fault_id,
@@ -15,7 +16,9 @@ const addRepairDetail = async (
   shipment_type,
   shipment_price
 ) => {
-    console.log({store,
+    console.log({
+        receipt_id,
+        store,
         register_date,
         fault_id,
         result_id,
@@ -29,8 +32,8 @@ const addRepairDetail = async (
     })
   return excuteQuery({
     query:
-      "INSERT INTO `repair_detail`(`store_id`, `register_date`,`fault_id`,`result_id`,`analysis_id`, `delivery_type`, `message`,`complete_date`,`shipment_type`,`shipment_price`) VALUES (?,?,?,?,?,?,?,?,?,?)",
-    values: [store,  register_date, fault_id, result_id, analysis_id, delivery_type, message, complete_date, shipment_type, shipment_price],
+      "INSERT INTO `repair_detail`(`receipt_id`,`store_id`, `register_date`,`fault_id`,`result_id`,`analysis_id`, `delivery_type`, `message`,`complete_date`,`shipment_type`,`shipment_price`) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+    values: [receipt_id,store,  register_date, fault_id, result_id, analysis_id, delivery_type, message, complete_date, shipment_type, shipment_price],
   });
 };
 
@@ -57,7 +60,6 @@ const sendRepairInfo = async (req, res) => {
     const store = req.body.store_id;
     const register_date = req.body.register_date;
     const fault_id = req.body.fault_id;
-
     const result_id = req.body.result_id;
     
     const analysis_id = req.body.analysis_id;
@@ -75,7 +77,7 @@ const sendRepairInfo = async (req, res) => {
     try {
         const info = await getReceiptInfo(receipt_id)
         if(info[0] !== undefined){
-          const result = await addRepairDetail(store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
+          const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
                 complete_date,shipment_type,shipment_price);
             
             console.log(result)

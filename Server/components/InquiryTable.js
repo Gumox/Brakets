@@ -71,7 +71,6 @@ function Table({ columns, data }) {
     )
   }
 function InquiryTable( props ) {
-    console.log(props)
     const columnData = [
         {
             accessor: 'receipt_code',
@@ -132,17 +131,17 @@ function InquiryTable( props ) {
             accessor: 'edited_at',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>,
             Header: '수선처',
-        },
+        },*/
         {
-            accessor: 'edited_at',
+            accessor: 'register_date',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>,
             Header: '수선처 접수일',
         },
         {
-            accessor: 'edited_at',
+            accessor: 'send_date',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>,
             Header: '수선처발송일',
-        },*/
+        },
         {
             accessor: 'repair1_name',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>,

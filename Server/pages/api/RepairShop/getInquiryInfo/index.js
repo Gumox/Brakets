@@ -36,6 +36,8 @@ async function getReceiptList(query,values) {
                         repair1_detail.repair2_price AS repair1_detail_repair2_price,
                         repair1_detail.repair3_type_id AS repair1_detail_repair3_type_id,
                         repair1_detail.repair3_price AS repair1_detail_repair3_price,
+                        repair1_detail.register_date AS repair1_register_date,
+                        repair1_detail.send_date AS repair1_send_date, 
                         repair2_detail.store_id AS repair2_store_id,
                         repair2_detail.repair_detail_id  AS repair2_detail_repair_detail_id ,
                         repair2_detail.fault_id AS repair2_detail_fault_id,
@@ -47,6 +49,8 @@ async function getReceiptList(query,values) {
                         repair2_detail.repair2_price AS repair2_detail_repair2_price,
                         repair2_detail.repair3_type_id AS repair2_detail_repair3_type_id,
                         repair2_detail.repair3_price AS repair2_detail_repair3_price,
+                        repair2_detail.register_date AS repair2_register_date,
+                        repair2_detail.send_date AS repair2_send_date,
                         repair3_detail.store_id AS repair3_store_id,
                         repair3_detail.repair_detail_id  AS repair3_detail_repair_detail_id ,
                         repair3_detail.fault_id AS repair3_detail_fault_id,
@@ -57,7 +61,9 @@ async function getReceiptList(query,values) {
                         repair3_detail.repair2_type_id AS repair3_detail_repair2_type_id,
                         repair3_detail.repair2_price AS repair3_detail_repair2_price,
                         repair3_detail.repair3_type_id AS repair3_detail_repair3_type_id,
-                        repair3_detail.repair3_price AS repair3_detail_repair3_price
+                        repair3_detail.repair3_price AS repair3_detail_repair3_price,
+                        repair3_detail.register_date AS repair3_register_date,
+                        repair3_detail.send_date AS repair3_send_date 
                 FROM receipt 
                 LEFT JOIN receipt_detail ON receipt.receipt_id = receipt_detail.receipt_id
                 LEFT JOIN product ON product.product_id = receipt.product_id
@@ -103,17 +109,17 @@ const controller = async (req, res) => {
             query += " AND receipt.receipt_code = ? ";
             values = [...values, code];
         }
-        
-        if (startDate !== null || endDate !== null) {
-            if (startDate) {
-            query += ` AND DATE(receipt.${dateOption}) > ? `;
-            values = [...values, startDate];
-            console.log(" ........  "+query)
-            }
-            if (endDate) {
-            query += ` AND DATE(receipt.${dateOption}) <= ? `;
-            values = [...values, endDate];
-            }
+        if(dateOption ==="receipt_date"){
+          if (startDate !== null || endDate !== null) {
+              if (startDate) {
+              query += ` AND DATE(receipt.receipt_date) > ? `;
+              values = [...values, startDate];
+              }
+              if (endDate) {
+              query += ` AND DATE(receipt.receipt_date) <= ? `;
+              values = [...values, endDate];
+              }
+          }
         }  
 
     try {
