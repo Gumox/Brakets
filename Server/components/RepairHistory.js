@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLOR from "../constants/color";
 import formatDate from "../functions/formatDate";
+import image from "next/image";
 const RepairHistory = (props) => {
     const info = props.infos;
     const selectTypeList = props.selectList;
@@ -112,7 +113,7 @@ const RepairHistory = (props) => {
                                     }}/>
                                 </div>
                                 <ItemText2>재수선</ItemText2>
-                                <img src="/icons/trash.png" width={25} height={25} 
+                                <image  src="/icons/trash.png" width={25} height={25} 
                                     onClick={()=>{deleteRepair(key)}}
                                 />
                             </LaView>

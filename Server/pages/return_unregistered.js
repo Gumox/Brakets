@@ -82,7 +82,7 @@ export default function Return_unregistered() {
                 alert("잘못된 서비스카드 번호 입니다")
             }
           }
-        },[]
+        },[shopName]
       );
     
     useEffect( ()=>{
@@ -105,7 +105,7 @@ export default function Return_unregistered() {
             setRepairShopList(list2)
         }
         fetchData();
-    },[shopName])
+    },[])
     return(
         
         <div style={{minWidth:1150, overflowY:"auto"}}>

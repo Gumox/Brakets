@@ -66,7 +66,7 @@ export default function Inquiry() {
             endDate : endDate,
             dateOption : dateOption 
         });
-        },[]
+        },[brand, dateOption, endDate, setTable,startDate]
       );
     useEffect(() => {
         const fetchData = async () => {
