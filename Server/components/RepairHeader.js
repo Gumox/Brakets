@@ -33,8 +33,8 @@ const Header = ({ path }) => {
             ))}
         </MenuWrapper>
         </Wrapper>
+        <Line/>
         </>
-        <hr color="#7A6443"></hr>
     </div>
   );
 };
@@ -66,8 +66,14 @@ const Top =styled.div`
     background-color: ${COLOR.BRAUN};
 `;
 
-const Title =styled.div`
-    flex:0.5;
+
+const Line =styled.div`
+  border:1px solid  ${COLOR.BRAUN};
+  width :100%
+  margin:2px;
+  height:2px;
+  margin-top:10px;
+  background-color: ${COLOR.BRAUN}
 `;
 const MenuWrapper = styled.div`
     width: 100%;

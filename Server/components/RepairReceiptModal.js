@@ -10,8 +10,10 @@ import RepairReturn from "./RepairReturn";
 import RepairOthers from "./RepairOthers";
 import axios from "axios";
 import ip from "../constants/ip";
+import store from "../store/store";
+import Image from 'next/image';
+
 function RepairReceiptModal (props) {
-  
   const el =props.item;
   const info = props.info;
   const imageList = props.images;
@@ -21,9 +23,10 @@ function RepairReceiptModal (props) {
   const [judgmentItems,setJudgmentItems] = useState([])
   const [analysisItems,setAnalysisItems] = useState([])
   const [repiarType,setRepiarType] = useState([])
-  const [selectJudgment,setSelectJudgment] = useState(null)
-  const [selectFault,setSelectFault] =useState(null)
-  const [selectAnalysis,setSelectAnalysis] =useState(null)
+  const [selectJudgment,setSelectJudgment] = useState(0)
+  const [selectFault,setSelectFault] =useState(0)
+  const [selectAnalysis,setSelectAnalysis] = useState(0)
+  const [deliveryType,setDeliveryType] = useState(1)
 
   let images= [];
   imageList.forEach((obj) => {
@@ -37,23 +40,21 @@ function RepairReceiptModal (props) {
     let img = (
       <div key={index} style={{display:"flex",flexDirection:"column",alignItems:"center",margin:10}}>
         <div style={{fontSize:15,fontWeight:"bold",margin:10}}>세부 이미지 {index+1}</div>
-        <img src={uri}
-        alt="Trulli" width="200" height="150"/>
+        <DetailImg src={uri} alt="세부이미지" />
       </div>
     )
     imageView[index] = (img);
   })
 
-  const getSelectList = async (api) => {
+  const getSelectList = useEffect (async (api) => {
     const [data] = await Promise.all([
       axios
-        .get(`http://localhost:3000/api/`+api,{
+        .get(`${process.env.API_URL}/`+api,{
           params: { hq_id:hq_id},})
         .then(({ data }) => data),
     ]);
-    //setSelectItems(data.body)
     return(data.body);
-  }
+  },[])
   
 
   const setSelectList = (selectItems,text) => {
@@ -66,16 +67,17 @@ function RepairReceiptModal (props) {
     let resultItems =[];
     if(selectItems !== undefined){
       selectItems.map((item,index) => {
-        let resultItem;                    
+        let resultItem;
+        const key = index;                    
         if(item.level == 1){
             resultItem =(
-              <option value={item[code]} key={item[type]}>
+              <option value={item[code]} key={key}>
               {item[type]}
               </option>
             )
         }else if(item.level == 0){
             resultItem =(
-              <option disabled value={item[code]} key={item[type]} style={{backgroundColor:`${COLOR.LIGHT_GRAY}`}}>
+              <option disabled value={item[code]} key={key} style={{backgroundColor:`${COLOR.LIGHT_GRAY}`}}>
               {item[type]}
               </option>
             )
@@ -88,11 +90,10 @@ function RepairReceiptModal (props) {
   const getRepairType= async()=>{
     const [data] = await Promise.all([
         axios
-        .get(`http://localhost:3000/api/type/repair`,{
+        .get(`${process.env.API_URL}/type/repair`,{
         params: { headquarterId: 2},})
         .then(({ data }) => data),
     ]);
-    console.log(data)
     return(data.data);
 }
   let date = formatDate(new Date(el.receipt_date))
@@ -104,43 +105,59 @@ function RepairReceiptModal (props) {
   let selectJudgmentBox;
   if(selectJudgment == 3){
     selectJudgmentBox =(
-      <RepairHistory infos = {{fault:selectFault,analysis:selectAnalysis}} selectList={repiarTypeList} ></RepairHistory>
+      <RepairHistory infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType, result: selectJudgment}} selectList={repiarTypeList} shop={info.store_id} receipt={el.receipt_id}></RepairHistory>
     )
   }else if(selectJudgment == 7){
     selectJudgmentBox =(
-      <RepairReturn reciver={"매장"}></RepairReturn>
+      <RepairReturn reciver={"매장"} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgment}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgment == 8){
     selectJudgmentBox =(
-      <RepairReturn reciver={"본사"}></RepairReturn>
+      <RepairReturn reciver={"본사"} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgment}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgment == 11){
     selectJudgmentBox =(
-      <RepairOthers></RepairOthers>
+      <RepairOthers infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgment}} shop={info.store_id} receipt={el.receipt_id}></RepairOthers>
     )
   }else{
     selectJudgmentBox =(
       <></>
     )
   }
-  useEffect(async () => {
-    const fI = await getSelectList('faultDivision')
-    const jI = await getSelectList('judgmentResult')
-    const aI = await getSelectList('analysisType')
-    const typeInfo = await getRepairType();
+  useEffect( () => {
+    const fetchData = async () => {
+      const fI = await getSelectList('faultDivision')
+      const jI = await getSelectList('judgmentResult')
+      const aI = await getSelectList('analysisType')
+      const typeInfo = await getRepairType();
+      
+      store.dispatch({type:"ANALYSIS",analysis:aI});
+      store.dispatch({type:"JUDIMENT",judiment:jI});
+      store.dispatch({type:"FAULT",fault:fI});
+      store.dispatch({type:"REPAIR_TYPE",repair_type:typeInfo});
 
-    fI.unshift({faultItems_name:"선택",level:1})
-    jI.unshift({judgmentResult_name:"선택",level:1})
-    aI.unshift({analysisType_name:"선택",level:1})
-    typeInfo.unshift({text:"선택",level:1})
+      localStorage.setItem('ANALYSIS',JSON.stringify(aI));
+      localStorage.setItem('JUDIMENT',JSON.stringify(jI));
+      localStorage.setItem('FAULT',JSON.stringify(fI));
+      localStorage.setItem('REPAIR_TYPE',JSON.stringify(typeInfo));
 
-    setFaultItems(fI)
-    setJudgmentItems(jI)
-    setAnalysisItems(aI)
-    setRepiarType(typeInfo)
-  },[]);
+      fI.unshift({faultItems_name:"선택",level:1})
+      jI.unshift({judgmentResult_name:"선택",level:1})
+      aI.unshift({analysisType_name:"선택",level:1})
+      typeInfo.unshift({text:"선택",level:1})
+
+      setFaultItems(fI)
+      setJudgmentItems(jI)
+      setAnalysisItems(aI)
+      setRepiarType(typeInfo)
+    }
+    fetchData();
+  },[getSelectList]);
   return (
-    <Popup  trigger={
+    <div suppressHydrationWarning={true}>
+       {process.browser &&
+    <Popup  
+      trigger={
       <PrView ><ContainText>
                 <ItemView>{el.receipt_code}</ItemView>
                 <ItemView>{date}</ItemView>
@@ -187,8 +204,8 @@ function RepairReceiptModal (props) {
                       borderStyle:"solid",minHeight:380,margin:30,alignItems:"center",
                       justifyContent:"center",display:"flex",flexDirection:"column"}}>
             <div style={{fontSize:15,fontWeight:"bold",margin:10}}>전체 이미지</div>
-            <img src={fullImage} style={{margin:10}}
-              alt="Trulli" width="200" height="150"></img>
+            <DetailImg src={fullImage} style={{margin:10}}
+              alt="전체이미지"></DetailImg>
           
             {imageView}
           </div>
@@ -201,7 +218,7 @@ function RepairReceiptModal (props) {
             <LaView>
               <RightItemBox><ItemTextTop>수선처 접수일</ItemTextTop><ItemTextBottom>{formatDate(new Date(el.receipt_date))}</ItemTextBottom></RightItemBox>
               <RightItemBox><ItemTextTop>운송 형태</ItemTextTop><ItemTextBottom>
-                  <select onChange={(e)=>{console.log("020202")}}  style={styles.selectStyle} >
+                  <select onChange={(e)=>{setDeliveryType(e.target.value)}}  style={styles.selectStyle} >
                   <option value={1} key={'매장행낭'}>매장행낭</option>
                   <option value={2} key={'본사행낭'}>본사행낭</option>
                   <option value={3} key={'택배'}>택배</option>
@@ -251,6 +268,8 @@ function RepairReceiptModal (props) {
         </Half>
     </Container> 
     </Popup>
+    }
+    </div>
     
   );
   
@@ -274,6 +293,10 @@ const styles = {
     borderColor:COLOR.BRAUN
   }
 };
+const DetailImg = styled.img`
+  width:270px;
+  height:480px;
+`;
 const Line =styled.div`
   margin:10px;
   height:2px;

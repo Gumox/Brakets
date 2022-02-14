@@ -12,23 +12,28 @@ const addRepairDetail = async (
   analysis_id,
   delivery_type,
   message,
-  repair1_type_id,
-  repair1_count,
-  repair1_price,
-  repair1_redo,
-  repair2_type_id,
-  repair2_count,
-  repair2_price,
-  repair2_redo,
-  repair3_type_id,
-  repair3_count,
-  repair3_price,
-  repair3_redo
+  complete_date,
+  shipment_type,
+  shipment_price
 ) => {
+    console.log({
+        receipt_id,
+        store,
+        register_date,
+        fault_id,
+        result_id,
+        analysis_id,
+        delivery_type,
+        message,
+        complete_date,
+        shipment_type,
+        shipment_price
+
+    })
   return excuteQuery({
     query:
-      "INSERT INTO `repair_detail`(`receipt_id`,`store_id`, `register_date`,`fault_id`,`result_id`,`analysis_id`, `delivery_type`, `message`,`repair1_type_id`,`repair1_count`,`repair1_price`,`repair1_redo`,`repair2_type_id`,`repair2_count`,`repair2_price`,`repair2_redo`,`repair3_type_id`,`repair3_count`,`repair3_price`,`repair3_redo` ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-    values: [receipt_id,store,  register_date, fault_id,result_id,analysis_id,delivery_type, message, repair1_type_id,repair1_count,repair1_price,repair1_redo,repair2_type_id,repair2_count,repair2_price,repair2_redo,repair3_type_id,repair3_count,repair3_price,repair3_redo],
+      "INSERT INTO `repair_detail`(`receipt_id`,`store_id`, `register_date`,`fault_id`,`result_id`,`analysis_id`, `delivery_type`, `message`,`complete_date`,`shipment_type`,`shipment_price`) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+    values: [receipt_id,store,  register_date, fault_id, result_id, analysis_id, delivery_type, message, complete_date, shipment_type, shipment_price],
   });
 };
 
@@ -56,24 +61,15 @@ const sendRepairInfo = async (req, res) => {
     const register_date = req.body.register_date;
     const fault_id = req.body.fault_id;
     const result_id = req.body.result_id;
+    
     const analysis_id = req.body.analysis_id;
     const delivery_type = req.body.delivery_type; 
     const message = req.body.message; 
+    
+    const complete_date =req.body.complete_date
+    const shipment_type =req.body.shipment_type
+    const shipment_price =req.body.shipment_price
 
-    const repair1_type_id = req.body.repair1_type_id;
-    const repair1_count = req.body.repair1_count;
-    const repair1_price = req.body.repair1_price;
-    const repair1_redo	= req.body.repair1_redo;
-
-    const repair2_type_id = req.body.repair2_type_id;
-    const repair2_count = req.body.repair2_count;
-    const repair2_price = req.body.repair2_price;
-    const repair2_redo	= req.body.repair2_redo;
-
-    const repair3_type_id = req.body.repair3_type_id;
-    const repair3_count = req.body.repair3_count;
-    const repair3_price = req.body.repair3_price;
-    const repair3_redo	= req.body.repair3_redo;
 
     console.log("store")
     console.log(req.body)
@@ -82,10 +78,7 @@ const sendRepairInfo = async (req, res) => {
         const info = await getReceiptInfo(receipt_id)
         if(info[0] !== undefined){
           const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
-              repair1_type_id,repair1_count,repair1_price,repair1_redo,
-              repair2_type_id,repair2_count,repair2_price,repair2_redo,
-              repair3_type_id,repair3_count,repair3_price,repair3_redo,
-              );
+                complete_date,shipment_type,shipment_price);
             
             console.log(result)
             const id = result.insertId
