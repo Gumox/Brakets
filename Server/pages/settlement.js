@@ -31,18 +31,17 @@ export default function Settlement()  {
         setUserInfo(user)
         setDisable(checkDisable(user.level))
         let selectShop
-    
+        let list = await getSettlementData({repairShop: localStorage.getItem('SHOP')})
+        let list2 = await getSettlementData({repairShop:null})
         if(!checkDisable(user.level)){
-            let list = await getSettlementData({repairShop: localStorage.getItem('SHOP')})
             
             setSettlementList(list.data)
             selectShop=(
                 <div>{localStorage.getItem('SHOP_NAME')}</div>
             )
         }else{
-            let list = await getSettlementData({repairShop:null})
             
-            setSettlementList(list.data)
+            setSettlementList(list2.data)
             selectShop=(
                 <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} >
                                     
