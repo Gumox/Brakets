@@ -4,6 +4,7 @@ import styled from "styled-components";
 import COLOR from "../constants/color";
 import axios from "axios";
 import _ from "lodash";
+import RepairReceiptModal from "../components/RepairReceiptModal";
 import store from "../store/store";
 import headers from "../constants/repairReceptionTableHeader";
 import checkDisable from "../functions/checkDisable";
@@ -47,9 +48,7 @@ function RepairReception({options,user}) {
   listData.forEach((el,index) => {
       let items=(
         <div key={index}>
-          {
-          //<RepairReceiptModal item={el} info ={options.info[0]} images ={options.images}></RepairReceiptModal>
-          }
+          <RepairReceiptModal item={el} info ={options.info[0]} images ={options.images}></RepairReceiptModal>
         </div>
     )
     lists[index] = items;
