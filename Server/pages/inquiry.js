@@ -7,7 +7,6 @@ import store from '../store/store';
 //import InquiryTable from '../components/InquiryTable';
 import sortInquiryData from '../functions/sortInquiryData';
 import dateOptionListcontroll from '../functions/dateOptionListcontroll';
-import { CSVLink } from "react-csv";
 import headers from '../constants/inquiryTableHeader';
 import checkDisable from '../functions/checkDisable';
 import Image from 'next/image'
@@ -96,9 +95,7 @@ export default function Inquiry() {
             <TopView>
                 <h2>조회</h2>
 
-                <CSVLink data={data} headers={headers} filename='조회목록'>
-                <Image alt='excel' src='/icons/excel.png' width={45} height={40}/>
-                </CSVLink>
+                
             </TopView>
             <hr/>
                 <Container>회사 설정 :

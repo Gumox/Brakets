@@ -6,7 +6,6 @@ import axios from 'axios';
 import _, { set } from "lodash";
 import formatDate from '../functions/formatDate';
 import store from '../store/store';
-import { CSVLink } from "react-csv";
 import { getBrandList,getRepairShopList,getTargetInfo,insertData,getReturnList,deleteRegist} from '../functions/useInReturnUnregistered';
 import unregisteredListControll from '../functions/unregisteredListControll';
 import headers from '../constants/retrunTableHeader';
@@ -113,9 +112,7 @@ export default function Return_unregistered() {
             <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
                 <TopView>
                 <h2>미등록 반송</h2>
-                <CSVLink data={resultList} headers={headers} filename='조회목록'>
-                    <Image alt='excel' src='/icons/excel.png' width={45} height={40}/>
-                </CSVLink>
+                
             </TopView>
                 <Line/>
                 <Container>
