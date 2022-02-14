@@ -102,7 +102,6 @@ export default function Return_unregistered() {
         setResultList(returnListData)
         setBrandList(list);
         setRepairShopList(list2)
-        return () => setLoading(false);
     },[])
     return(
         
