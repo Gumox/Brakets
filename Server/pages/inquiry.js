@@ -42,7 +42,7 @@ export default function Inquiry() {
           ])
           return datas;
     }
-    const setTable = async(params) =>{
+    const setTable =useCallback( async(params) =>{
         let datas = [];
         if(params.dateOption === "receipt_date"){
             datas = await getData(params)
@@ -54,7 +54,7 @@ export default function Inquiry() {
             let result  =dateOptionListcontroll(sort,params)
             setData(result)
         }
-    }
+    });
     const handleKeyPress = useCallback(
         (e,code) => {
           if (e.key !== "Enter") return;
@@ -88,7 +88,7 @@ export default function Inquiry() {
         }
         fetchData();
         return () => setLoading(false);
-      },[brand,code,startDate,endDate,dateOption ]);
+      },[setTable]);
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
             <RepairHeader/>

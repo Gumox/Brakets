@@ -153,7 +153,7 @@ function RepairReceiptModal (props) {
       setRepiarType(typeInfo)
     }
     fetchData();
-  },[]);
+  },[getSelectList]);
   return (
     <div suppressHydrationWarning={true}>
        {process.browser &&
