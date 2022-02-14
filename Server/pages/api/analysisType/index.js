@@ -22,6 +22,7 @@ const controller = async (req, res) => {
             hq_id
         } = req.query;
         
+
     try {
       const result = await getAnalysisType(hq_id);
       if (result.error) throw new Error(result.error);

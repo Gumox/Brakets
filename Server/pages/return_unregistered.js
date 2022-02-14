@@ -1,123 +1,27 @@
-import React,{useEffect, useState,useCallback} from 'react';
+import React,{useState} from 'react';
 import RepairHeader from '../components/RepairHeader'
 import styled from 'styled-components';
 import COLOR from '../constants/color';
 import axios from 'axios';
-import _, { set } from "lodash";
-import formatDate from '../functions/formatDate';
 import store from '../store/store';
-import { getBrandList,getRepairShopList,getTargetInfo,insertData,getReturnList,deleteRegist} from '../functions/useInReturnUnregistered';
-import unregisteredListControll from '../functions/unregisteredListControll';
-import headers from '../constants/retrunTableHeader';
-import checkDisable from '../functions/checkDisable';
-import Image from 'next/image'
 
 export default function Return_unregistered() {
     
     const [selectedCompany,setSelectedCompany] = useState(null)
-    const [companyList,setCompanyList] = useState(store.getState().company)
-    const [code,setCode] = useState()
-    const [brandList,setBrandList] = useState([])
-    const [repairShopList,setRepairShopList] = useState([])
-    const [shopId,setShopId] = useState(store.getState().shop)
-    const [returnList,setReturnList] = useState([])
-    const [resultList,setResultList] = useState([])
-    const [shopName,setShopName] = useState('')
-    
-    const [hq_id,setHqId] = useState(null)
-    const [repair,setRepair] = useState(null)
-    const [brand,setBrand] = useState(null)
-    const [startDate,setStartDate] = useState(null)
-    const [endDate,setEndDate] = useState(null)
-    const [disable,setDisable] = useState(true)
-    
-    const searchTarget = (hq_id,repair,brand,startDate,endDate)=>{
-        const result = unregisteredListControll(returnList,hq_id,repair,brand,startDate,endDate)
-        //console.log(result)
-        setResultList(result)
-    }
-    const deleteInList=(item)=>{
-        let result=[]
-        returnList.map((el)=>{
-            if(el.receipt_code!= item.receipt_code){
-                result.push(el)
-            }
-        })
-        if(item.level === 0){
-            deleteRegist(item.return_id)
-        }
-        setResultList(result);
-        setReturnList(result);
-    }
-    const insertReturnList=async(list)=>{
-        const result= await insertData(list)
-        console.log(result)
-        if(result.msg){
-            let data=[]
-            returnList.map((el)=>{
-                let obj =el;    
-                obj.level = 0
-                data.push(obj)
-            })
-            setReturnList(data)
-            setResultList(data)
-        }
-    }
-    const handleKeyPress = useCallback(async(e,code,returnList) => {
-          if (e.key !== "Enter"){return;}
-          else{
-            let input = await getTargetInfo(code,(localStorage.getItem('SHOP')*1),shopName);
-            
-            if(input.length){
-                let toDay = formatDate(new Date())
-            
-                input[0].return_date = toDay
-                
-                returnList.push(input[0])
-                setReturnList(_.uniqBy(returnList,"receipt_code"))
-                setResultList(_.uniqBy(returnList,"receipt_code"))
-                return;
-            }else{
-                alert("잘못된 서비스카드 번호 입니다")
-            }
-          }
-        },[shopName]
-      );
-    
-    useEffect( ()=>{
-        const fetchData = async () => {
-            setShopName(localStorage.getItem('SHOP_NAME'))
-            setCompanyList(JSON.parse(localStorage.getItem('COMPANY'))) 
-            setShopId(localStorage.getItem('SHOP'))
-            let list =await getBrandList();
-            list.unshift({brand_id: "",brand_name: "전체"})
-
-            let list2 =await getRepairShopList();
-            list2.unshift({store_id: "",name: "전체"})
-            let user = JSON.parse(localStorage.getItem('USER'))
-            setDisable(checkDisable(user.level))
-
-            let returnListData = await getReturnList(localStorage.getItem('SHOP')*1,localStorage.getItem('SHOP_NAME'))
-            setReturnList(returnListData)
-            setResultList(returnListData)
-            setBrandList(list);
-            setRepairShopList(list2)
-        }
-        fetchData();
-    },[])
+    const companyList = store.getState().company
+    const handleSelect = (e) => {
+        setSelectedCompany(e.target.value)
+        console.log(selectedCompany)
+    };
     return(
-        
-        <div style={{minWidth:1150, overflowY:"auto"}}>
+        <div style={{minWidth:1150, overflowY:"scroll"}}>
             <RepairHeader/>
             <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
-                <TopView>
-                <h2>미등록 반송</h2>
-                
-            </TopView>
+                <h3>미등록 반송</h3>
                 <Line/>
                 <Container>
                     <div style={{display:'flex',alignItems:"center",justifyContent:"center",width:"100%",fontSize:15,fontWeight:"bold",msOverflowStyle:"none"}}>회사 설정 :
-                    <select disabled ={disable} onChange={(e)=>{setHqId(e.target.value)}}  style={{marginLeft:10,marginRight: 10,minWidth:200,minHeight:30}} >
+                    <select onChange={(e)=>handleSelect(e)}  style={{marginLeft:10,marginRight: 10,minWidth:200,minHeight:30}} >
                         {companyList.map((item) => (
                             <option value={item.key} key={item.key}>
                             {item.name}
@@ -126,7 +30,7 @@ export default function Return_unregistered() {
                     </select>
                     <button 
                         style={{marginLeft:10,width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
-                        onClick={()=>{searchTarget(hq_id,repair,brand,startDate,endDate)}}>
+                        onClick={()=>{getOptions()}}>
                             확인
                     </button>  
                     </div>
@@ -142,38 +46,26 @@ export default function Return_unregistered() {
                 <Container>
                     <CenterView>
                     수선처 : 
-                    <select disabled ={disable} name="soosun"  style={{marginLeft:10,marginRight: 10,height:22}} onChange={(e)=>{setRepair(e.target.value)}}>
-                        {   
-                            repairShopList.map((item,index)=>(
-                                <option key={index} value={item.store_id}>{item.name}</option>
-                            ))
-                        }
+                    <select name="soosun"  style={{marginLeft:10,marginRight: 10}} >
+                        <option value="soo">수선처1</option>
+                        <option value="soos">수선처2</option>
+                        <option value="soosu">수선처3</option>
                     </select>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     브랜드 : 
-                    <select disabled ={disable} name="brand"  style={{marginLeft:10,marginRight: 10,height:22}}  
-                        onChange={(e)=>{
-                            console.log(e.target.value)
-                            if(e.target.value){
-                                setBrand(e.target.value)
-                            }else{
-                                setBrand(null)    
-                            }
-                        }}>
-                        {   
-                            brandList.map((item,index)=>(
-                                <option key={index} value={item.brand_id}>{item.brand_name}</option>
-                            ))
-                        }
+                    <select name="brand"  style={{marginLeft:10,marginRight: 10}} >
+                        <option value="br">브랜드1</option>
+                        <option value="bra">브랜드2</option>
+                        <option value="bran">브랜드3</option>
                     </select>
                     
                     
-                    <input disabled ={disable} type="date" style={{marginLeft:20,marginRight:20,height:22}}  onChange={(e)=>{setStartDate(new Date(e.target.value))}} />
+                    <input type="date" style={{marginLeft:20,marginRight:20,height:22}}></input>
                     ~    
-                    <input disabled ={disable} type="date"  style={{marginLeft:20,height:22}} onChange={(e)=>{setEndDate(new Date(e.target.value))}}/>
+                    <input type="date"  style={{marginLeft:20,height:22}}></input>
                     <button 
                         style={{marginLeft:10,width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
-                        onClick={()=>{searchTarget(hq_id,repair,brand,startDate,endDate)}}
+                        onClick={()=>{getOptions()}}
                         >조회</button>  
                     </CenterView>
                 </Container> 
@@ -183,11 +75,11 @@ export default function Return_unregistered() {
                 
                    
                     <CenterView>       
-                        <div style={{fontWeight:"bold"}} >서비스 카드 번호 : </div>
-                        <input disabled ={disable} style={{marginLeft:15,height:22}} onChange={(e)=>{setCode(e.target.value)}} onKeyPress={(e)=>{handleKeyPress(e,code,returnList)}}></input> 
+                        <div style={{fontWeight:"bold"}}>서비스 카드 번호 : </div>
+                        <input style={{marginLeft:15,height:22}}></input> 
                         <button 
                             style={{marginLeft:10,width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
-                            onClick={()=>{}}
+                            onClick={()=>{getOptions()}}
                         >추가</button> 
                         
                     </CenterView>
@@ -200,58 +92,28 @@ export default function Return_unregistered() {
                 
                 <br/>
                 <br/>
-            <div style={{display:"flex",flexDirection:"row-reverse",width:"100%"}}>
-                <CustomButton onClick={()=>{
-                    insertReturnList(returnList)
-                    }}>
-                    저장
-                </CustomButton>
-            </div>
-            
+                
             <Line/>
             <ItemTable >
+                <div style={{marginTop:12,overflowY:"scroll",maxHeight: 400,maxWidth:"100%"}}>
                 <LaView><Container>
                     <ItemView>#</ItemView>
                     <ItemView>수선처</ItemView>
                     <ItemView>미등록 반송 등록일</ItemView>
                     <ItemView>서비스 번호</ItemView>
-                    <ItemView>받는곳</ItemView>
-                    <ItemView>고객이름</ItemView>
                     <ItemView>매장명</ItemView>
                     <ItemView>브랜드</ItemView>
                 </Container></LaView>
                 <Line2/>
-                <div style={{marginTop:12,overflowY:"scroll",maxHeight: 400,maxWidth:"100%",minHeight:200}}>
-                    {
-                        resultList.map((item,index)=>(
-                            <LaView key={index}>
-                                <ItemView>{index+1}</ItemView>
-                                <ItemView>{shopName}</ItemView>
-                                <ItemView>{item.return_date}</ItemView>
-                                <ItemView>{item.receipt_code}</ItemView>
-                                <ItemView>{item.receiver_name}</ItemView>
-                                <ItemView>{item.customer_name}</ItemView>
-                                <ItemView>{item.store_name}</ItemView>
-                                <ItemView>{item.brand_name}</ItemView>
-                                <ItemView><TrashImgStyle src='/icons/trash.png' onClick={()=>{deleteInList(item)}}/></ItemView>
-                            </LaView>
-                        ))
-                    }
+
                 </div>
-   
+              
+              
             </ItemTable>
             </div>
         </div>
     )
 }
-const TrashImgStyle  = styled.img`
-    width:20px;
-    height:18px;
-    border-radius:5px;
-    &: hover {
-        background-color: ${COLOR.GRAY};
-      }
-`;
 const Line =styled.div`
   border:1px solid  ${COLOR.BRAUN};
   width :100%
@@ -274,14 +136,6 @@ const ItemTable = styled.div`
   min-height:200px;
 
 `;
-
-const TopView = styled.div`
-    padding:10px;
-    display: flex;  
-    align-items:center;
-    justify-content: space-between;      
-`;
-
 const LaView = styled.div`
   padding:10px;
   display: flex;  
@@ -307,17 +161,4 @@ const Container = styled.div`
     display:flex; 
     min-height: 20px;
     align-items: flex-start;
-`;
-const CustomButton = styled.button`
-  width:45px;
-  height:30px;
-  font-size:12px;
-  color: #ffffff;
-  margin:10px;
-  background-color: ${COLOR.BRAUN};
-  border-radius : 7px;
-  justify-content : center;
-  &: hover {
-    background-color: ${COLOR.GRAY};
-  }
 `;

@@ -27,7 +27,6 @@ const Wrapper = styled.div`
 
   &: hover {
     background-color: ${COLOR.BRAUN};
-    color: ${COLOR.WHITE};
   }
 `;
 export default RepairHeaderButton
