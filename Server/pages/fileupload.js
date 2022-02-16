@@ -1,4 +1,5 @@
 import { useState } from "react";
+import image from "next/image"
 
 /**
  * # MY ACCOUNT GOOGLE PLAY:
@@ -30,7 +31,7 @@ export default function PrivatePage(props) {
   return (
     <div>
       <div>
-        <img src={createObjectURL} />
+        <image alt="createObjectURL" src={createObjectURL} />
         <h4>Select Image</h4>
         <input type="file" name="myImage" onChange={uploadToClient} />
         <button
