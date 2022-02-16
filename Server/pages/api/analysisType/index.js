@@ -18,9 +18,7 @@ const controller = async (req, res) => {
         console.log("req.query");
         console.log(req.query);
         
-        const {
-            hq_id
-        } = req.query;
+        const { hq_id } = req.query;
         
     try {
       const result = await getAnalysisType(hq_id);

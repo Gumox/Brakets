@@ -282,6 +282,7 @@ function RepairReceiptModal (props) {
 };
 
 export default RepairReceiptModal;
+
 const styles = {
   contentStyle:{
   maxWidth: "95%",
@@ -310,14 +311,14 @@ const Line =styled.div`
   margin-top:10px;
   margin-right:30px;
   margin-left:30px;
-  background-color: ${COLOR.BRAUN}
+  background-color: ${COLOR.BRAUN};
 `;
 const Line2 =styled.div`
   margin:10px;
   height:1.5px;
   margin-bottom:10px;
   margin-top:10px;
-  background-color: #C4C4C4
+  background-color: #C4C4C4;
 `;
 const Half = styled.div`
   flex:1;
@@ -365,7 +366,7 @@ const ItemBoxSmall =styled.div`
   margin-left:10px;
   margin-right:10px;
   flex:0.7;
-  height : 50px
+  height : 50px;
 `;
 const ItemText = styled.div`
   font-size:15px;
@@ -403,8 +404,7 @@ const ItemTable = styled.div`
   border: 2px solid  ${COLOR.BRAUN};
   margin-right:10px;
   margin-left:10px;
-  min-height : 60px
-
+  min-height : 60px;
 `;
 
 const ItemView = styled.div`

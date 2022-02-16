@@ -6,6 +6,7 @@ import Content from "../Content";
 import Modal from "../Modal";
 import SearchField from "./SearchField";
 import List from "./list"
+import Invoice from './invoice'
 
 const Return = () => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
@@ -50,7 +51,16 @@ const Return = () => {
   );
   const handleSearchButtonClick = useCallback(() => {
     axios
-      .get("/api/receipt", { params: {...inputData, dateType: inputData["isMonthly"]? "month": "all", dateOption: 'complete_date', hasCharged: true} })
+      .get("/api/receipt", { 
+        params: {
+          ...inputData,
+          dateType: inputData["isMonthly"]? "month": "all",
+          dateOption: 'complete_date',
+          
+          // TODO
+          // hasCharged: true
+        }
+      })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
   const searchTargetData = useCallback((receiptCode) => {
@@ -61,6 +71,7 @@ const Return = () => {
 
   useEffect(() => console.log(targetData), [targetData]);
   return (
+
     <Content>
       <SearchField
         data={inputData}
@@ -69,7 +80,9 @@ const Return = () => {
         handleSearchButtonClick={handleSearchButtonClick}
       />
       <List data={searchList}/>
+      <Invoice />
     </Content>
+    
   );
 };
 

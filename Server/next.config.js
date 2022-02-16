@@ -20,7 +20,10 @@ module.exports = {
   },
 
   images: {
-    domains: ["image.adidas.co.kr"], // TODO: Image 저장하거나, 특정 도메인 미리 설정 필요
+    domains: [
+        "image.adidas.co.kr",
+        "34.64.182.76"
+    ], // TODO: Image 저장하거나, 특정 도메인 미리 설정 필요
   },
   /*
 	  init: function () {
