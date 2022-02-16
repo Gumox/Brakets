@@ -1,16 +1,9 @@
-import React, {useMemo} from "react";
+import React from "react";
 import styled from "styled-components";
 import moment from "moment";
 import { useTable, useBlockLayout, useResizeColumns } from 'react-table';
+
 import COLOR from "../../../constants/color";
-import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
-import {
-  STORE_TYPE,
-  RECEIPT_CATEGORY_TYPE,
-  RECEIPT_TYPE,
-  STORE_CATEGORY
-} from "../../../constants/type";
-import Checkbox from "../../Checkbox";
 
 function Table({ columns, data, searchList, getTargetData }) {
 
@@ -87,71 +80,35 @@ function Table({ columns, data, searchList, getTargetData }) {
   )
 }
 
-const ReturnList = ({ data, handleDataClick = () => {} }) => {
+const List = ({ data, handleDataClick = () => {} }) => {
 
   const columns = React.useMemo(() => [
-
-    // 단순 조회 기능 -> Check Box 필요 없을 듯?
-    // {Header: '선택', accessor: '선택'},
-
-    {Header: '서비스카드 번호', accessor: '서비스카드 번호'},
-    {Header: '매장코드', accessor: '매장코드'},
+    {Header: 'No', accessor: 'No'},
+    {Header: '매장코드',   accessor: '매장코드'},
     {Header: '매장명', accessor: '매장명'},
-    {Header: '매장구분', accessor: '매장구분'},
-    {Header: '매장연락처', accessor: '매장연락처'},
-    {Header: '등록일', accessor: '등록일'},
-    {Header: '고객', accessor: '고객'},
-    {Header: '고객연락처', accessor: '고객연락처'},
+    {Header: '출고일', accessor: '출고일'},
+    {Header: '상태', accessor: '상태'},
     {Header: '시즌', accessor: '시즌'},
-    {Header: '스타일', accessor: '스타일'},
+    {Header: 'PartCode', accessor: 'PartCode'},
     {Header: '컬러', accessor: '컬러'},
     {Header: '사이즈', accessor: '사이즈'},
-    {Header: '판매가', accessor: '판매가'},
-    {Header: '매장처리여부', accessor: '매장처리여부'},
-    {Header: '클레임가구분', accessor: '클레임가구분'},
-    {Header: '클레임가', accessor: '클레임가'},  
-    {Header: '업체처리여부', accessor: '업체처리여부'},
-    {Header: '클레임업체', accessor: '클레임업체'},
-    {Header: '업체코드', accessor: '업체코드'},
-    {Header: '업체코드(유통)', accessor: '업체코드(유통)'},
-    {Header: '고객ID', accessor: '고객ID'},
-    {Header: '고객요구', accessor: '고객요구'},
-    {Header: '매장접수내용', accessor: '매장접수내용'},
-    {Header: '내용분석', accessor: '내용분석'},
-    {Header: '판정결과', accessor: '판정결과'},
-
+    {Header: '수량', accessor: '수량'},
+    {Header: '금액', accessor: '금액'},
+    {Header: '출고율', accessor: '출고율'},
+    {Header: '출고금액', accessor: '출고금액'},  
+    {Header: '부과세', accessor: '부과세'},
+    {Header: '출고금액적용일', accessor: '출고금액적용일'},
+    {Header: 'SORDER NO.', accessor: 'SORDER NO.'},
+    {Header: 'INVOICE NO.', accessor: 'INVOICE NO.'},
+    {Header: '최초생성자', accessor: '최초생성자'},
+    {Header: '최초생성일', accessor: '최초생성일'},
+    {Header: '최초수정자', accessor: '최초수정자'},
+    {Header: '최초수정일', accessor: '최초수정일'},
   ],[])
 
-  const value = data.map((claim) => ({
-    "서비스카드 번호":claim[RECEIPT.CODE],
-    "매장코드":claim[STORE.CODE],
-    "매장명":claim[STORE.NAME],
-    "매장구분":STORE_CATEGORY[claim[STORE.CATEGORY]],
-    "매장연락처":claim[STORE.CONTACT],
-    "등록일":"?",
-    "고객":claim[CUSTOMER.NAME],
-    "고객연락처":claim[CUSTOMER.CONTACT],
-    "시즌":claim[PRODUCT.SEASON],
-    "스타일":claim[PRODUCT.STYLE],
-    "컬러":claim[PRODUCT.COLOR],
-    "사이즈":claim[PRODUCT.SIZE], 
-    "판매가":claim[PRODUCT.PRICE],
-    "매장처리여부":"",
-    "클레임가구분":"",
-    "클레임가":"",
-    "업체처리여부":"",
-    "클레임업체":"",
-    "업체코드":"",
-    "업체코드":"",
-    "고객ID":claim[CUSTOMER.ID],
-    "고객요구":RECEIPT_TYPE[claim[RECEIPT.TYPE]],
-    "매장접수내용":claim[RECEIPT.STORE_MESSAGE],
-    "내용분석":claim[RECEIPT.ANALYSIS_NAME],
-    "판정결과":claim[RECEIPT.RESULT_NAME],
-  }));
+    const value = [];
 
-
-  return (    
+  return (
     <Wrapper>
       <Styles>
         <Table columns={columns} data={value}/>
@@ -159,6 +116,13 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  height: calc(100% - 120px);
+  width: 100%;
+  overflow: scroll;
+  border-bottom: 2px solid;
+`;
 
 const Styles = styled.div`
   padding: 1rem;
@@ -208,13 +172,6 @@ const Styles = styled.div`
   }
 `
 
-const Wrapper = styled.div`
-  height: 50%;
-  width: 100%;
-  overflow: scroll;
-  border-bottom: 2px solid;
-`;
-
 const TableHeader = styled.thead`
   border: 2px solid ${COLOR.BLACK};
 `;
@@ -240,4 +197,4 @@ const TableData = styled.td`
   white-space: nowrap;
 `;
 
-export default ReturnList;
+export default List;
