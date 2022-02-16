@@ -3,8 +3,8 @@ import excuteQuery from "../../db";
 
 async function updatesStateAtOne(List) {
     let results=[]
-      for (let data of List) {
-        
+    for (let data of List) {
+      if(data.state == 0){
         const result = await excuteQuery({
             query: `UPDATE repair_detail SET repair_detail_state = '1' WHERE repair_detail.repair_detail_id = ?;`,
             values: [data.repair_detail_id],
@@ -14,6 +14,7 @@ async function updatesStateAtOne(List) {
         }else{
             results.push(result)
         }
+      }
     }
     return results
 }

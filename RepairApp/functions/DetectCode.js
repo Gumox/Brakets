@@ -78,10 +78,15 @@ class DetectCode extends Component {
                 </View>
                 <ButtonView>
                     <Button
-                        onPress = {() => 
-                            this.props.navigation.navigate('InputAlternativeNumber', this.props.route.params['toGo'])
-                        }
-                        >
+                        onPress = {() =>{
+                            if(this.props.route.params['datas'] === undefined){
+                                console.log(this.props.route.params)
+                                this.props.navigation.navigate('InputAlternativeNumber', this.props.route.params['toGo'])
+                            }else{
+                                console.log(this.props.route.params)
+                                this.props.navigation.navigate('InputAlternativeNumber', {toGo:this.props.route.params['toGo'],datas:this.props.route.params['toGo']})
+                            }
+                        }}>
                         <Text>
                             코드 번호 수동 입력
                         </Text>

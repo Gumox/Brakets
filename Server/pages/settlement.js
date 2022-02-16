@@ -9,6 +9,8 @@ import { getSettlementData ,setStateAtOne,setStateAtTwo} from "../functions/useI
 
 export default function Settlement()  {
     const [companyList,setCompanyList] = useState(store.getState().company)
+    console.log("------------------------")
+    console.log(companyList)
     const [shopName,setShopName] = useState('')
     const [userInfo,setUserInfo] = useState()
     const [disable,setDisable] = useState(true)
@@ -28,6 +30,8 @@ export default function Settlement()  {
         const fetchData = async () => {
         
             setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
+            console.log("------------****************************------------")
+            console.log(JSON.parse(localStorage.getItem('COMPANY')))
             setShopName(localStorage.getItem('SHOP_NAME'))
             let user = JSON.parse(localStorage.getItem('USER'))
             setUserInfo(user)
@@ -137,6 +141,7 @@ export default function Settlement()  {
     
                     </ItemTable>
             </div>
+                    <div style={{height:50}}/>
             
             
         

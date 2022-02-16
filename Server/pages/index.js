@@ -32,27 +32,27 @@ const Home = () => {
       <CuetomLink onClick={() => router.push("/sms-result")}>
         SMS 결과
       </CuetomLink>
+      <CuetomLink onClick={() => router.push("/RepairReception")}>
+        수선업체
+      </CuetomLink>
     </Wrapper>
   );
 };
 
 export const getServerSideProps = async (ctx) => {
   const {
-    data: { isAuthorized,user },
+    data: { isAuthorized, user },
   } = await axios.get(
     `${process.env.API_URL}/auth`,
-    console.log(`${process.env.API_URL}/auth`),
     ctx.req
       ? {
           withCredentials: true,
           headers: {
             cookie: ctx.req.headers.cookie || {},
           },
-          
         }
-        
       : {}
-  );
+  )
   if (!isAuthorized) {
     
     return {

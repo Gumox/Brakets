@@ -4,7 +4,7 @@ import excuteQuery from "../../db";
 async function updatesStateAtTwo(List) {
     let results=[]
       for (let data of List) {
-        
+        if(data.state == 1){
         const result = await excuteQuery({
             query: `UPDATE repair_detail SET repair_detail_state = '2' WHERE repair_detail.repair_detail_id = ?;`,
             values: [data.repair_detail_id],
@@ -14,6 +14,7 @@ async function updatesStateAtTwo(List) {
         }else{
             results.push(result)
         }
+      }
     }
     return results
 }

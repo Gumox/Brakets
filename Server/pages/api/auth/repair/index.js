@@ -47,9 +47,7 @@ const repairShopInfo= async (id) => {
 
 const repair = async (req, res) => {
     if (req.method === "GET") {
-      console.log("req.headers.referer");
-      console.log(req.headers.referer);
-      console.log("req.query");
+      console.log("req.query--------------------------------------------------------------");
       console.log(req.query);
       try {
         const {
@@ -71,7 +69,7 @@ const repair = async (req, res) => {
         console.log(info)
         //console.log(user)
         
-        if (login[0].level===3 || login[0].level===4 ) {
+        if (login[0].level!==2) {
             console.log("staff");
             res.status(200).json({ body:login , data: info });
           } else {

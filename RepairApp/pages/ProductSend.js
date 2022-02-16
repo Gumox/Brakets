@@ -88,7 +88,12 @@ export default function ProductSend( { route,navigation } ) {
     const code = route.params.data;
     const datas = route.params.datas;
     const images = route.params.images;
-    const place =store.getState().shippingPlace;
+    const [serviceBarcode,setServiceBarcode] =useState('')
+    const [brand,setBrand] =useState('')
+    const [storeName,setStoreName] =useState('')
+    const [date,setDate] =useState('')
+    const [receiverName,setReceiverName] =useState('')
+    const [receiver,setReceiver] =useState(0)
 
     const formatDate = (inputDate) => {
         var month = '' + (inputDate.getMonth() + 1),
@@ -127,34 +132,56 @@ export default function ProductSend( { route,navigation } ) {
             console.error(error);
         }
     }
-
-    const date = formatDate(new Date(datas[5].shippingDate))
+    useEffect(()=>{
+        datas.forEach(el => {
+            let key=Object.keys(el)[0]
+            if(key ==="code"){
+                setServiceBarcode(el.code)
+            }
+            if(key === "brand"){
+                setBrand(el.brand)
+            }
+            if(key === "storeName"){
+                setStoreName(el.storeName)
+            }
+            if(key === "shippingDate"){
+                setDate(el.shippingDate)
+            }
+            if(key === "receiver_name"){
+                setReceiverName(el.receiver_name)
+            }
+            if(key === "receiver"){
+                setReceiver(el.receiver)
+            }
+            
+        });
+    },[])
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
 
                 <InfoView>
                     <TopText>서비스 카드 번호</TopText>
-                    <InputText>{datas[1].code}</InputText>
+                    <InputText>{serviceBarcode}</InputText>
                     <TopText>브랜드</TopText>
-                    <InputText>{datas[2].brand}</InputText>
+                    <InputText>{brand}</InputText>
                     <TopText>매장명</TopText>
-                    <InputText>{datas[3].storeName}</InputText>     
+                    <InputText>{storeName}</InputText>     
                 </InfoView>
                 
                 <TopText>수선처 발송일</TopText>
-                <InputText>{date}</InputText>
+                <InputText>{ formatDate(new Date(date))}</InputText>
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
-                <InputText>{place.name}</InputText>
+                <InputText>{receiverName}</InputText>
                 <TopText>행낭 바코드 번호</TopText>
                 <InputText>{code}</InputText>
                 <TopText/>
                 
         
             </Contents> 
-            <Button onPress={ ()=> {postupdateMailBag(store.getState().shopId,place.id,code,datas[0].receipt_id)} }>
+            <Button onPress={ ()=> {postupdateMailBag(store.getState().shopId,receiver,code,datas[0].receipt_id)} }>
                 완료
             </Button>
 

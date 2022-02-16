@@ -13,7 +13,6 @@ import Image from 'next/image'
 
 function RepairReception({options,user}) {
   const option =options.companys
-  console.log(options.info[0])
   const shop_id =options.info[0].store_id
   const email = user.email
   const [selectedCompany,setSelectedCompany] = useState(null)
@@ -23,7 +22,8 @@ function RepairReception({options,user}) {
   
  
   let selectList = [{name:"전체",key:null}];
-  option.map((item)=>(selectList.push({name:item.headquarter_name,key:item.hq_id})))
+  if(option != null){option.map((item)=>(selectList.push({name:item.headquarter_name,key:item.hq_id})))}
+  
   const  selectItems = _.uniqBy(selectList,"key")
   store.dispatch({type:"COMPANY",company:selectItems})
   store.dispatch({type:"SHOP",shop:shop_id})
@@ -48,14 +48,16 @@ function RepairReception({options,user}) {
     setListData(data.body)
   }
   let lists =[];
-  listData.forEach((el,index) => {
-      let items=(
-        <div key={index}>
-          <RepairReceiptModal item={el} info ={options.info[0]} images ={options.images}></RepairReceiptModal>
-        </div>
-    )
-    lists[index] = items;
-  })
+  if(user.level>2&&user.level<5){
+    listData.forEach((el,index) => {
+        let items=(
+          <div key={index}>
+            <RepairReceiptModal item={el} info ={options.info[0]} images ={options.images}></RepairReceiptModal>
+          </div>
+      )
+      lists[index] = items;
+    })
+  }
   useEffect(()=>{
     console.log(selectItems)
     localStorage.setItem('COMPANY',JSON.stringify(selectItems));
@@ -112,7 +114,6 @@ function RepairReception({options,user}) {
 
 
 export const getServerSideProps = async (ctx) => {
-  console.log(ctx.req.headers.cookie)
   const {
     data: { isAuthorized, user },
   } = await axios.get(
@@ -129,35 +130,51 @@ export const getServerSideProps = async (ctx) => {
   .catch(error=>{
 
   });
-  console.log(user)
   const {email :email} =user
-  const [companys] = await Promise.all([
-    axios.get(`${process.env.API_URL}/auth/repair?email=${email}`)
-    .then(({ data }) => data)
-    .catch(error=>{
+  
+    const [companys] = await Promise.all([
+      axios.get(`${process.env.API_URL}/auth/repair?email=${email}`)
+      .then(({ data }) => data)
+      .catch(error=>{
 
-    })
-  ]);
-  const[list,images] =await Promise.all([
-    axios.get(`${process.env.API_URL}/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
-    .then(({ data }) => data),
-    axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
-    .then(({ data }) => data)
-    .catch(error=>{
+      })
+    ]);
+    console.log(companys)
+  if(user.level>2&&user.level<5){
+    const[list,images] =await Promise.all([
+      axios.get(`${process.env.API_URL}/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
+      .then(({ data }) => data),
+      axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
+      .then(({ data }) => data)
+      .catch(error=>{
 
-    })
-  ])
-  return {
-    props: {
-      user,
-      options:{
-        companys : companys.data,
-        info : companys.body,
-        list : list.body,
-        images: images.body
+      })
+    ])
+    return {
+      props: {
+        user,
+        options:{
+          companys : companys.data,
+          info : companys.body,
+          list : list.body,
+          images: images.body
+        }
       }
-    }
-  };
+    };
+  }
+  else if(user.level<2){
+    return {
+      props: {
+        user,
+        options:{
+          companys : companys.data,
+          info : companys.body,
+          list : [],
+          images: []
+        }
+      }
+    };
+  }
 };
 
 

@@ -38,7 +38,7 @@ async function getReceiptList(query,values) {
                 LEFT JOIN brand ON brand.brand_id = product.brand_id
                 LEFT JOIN store AS mfr ON mfr.store_id = product.mfr_id
                 LEFT JOIN customer ON customer.customer_id  =  receipt.customer_id
-                WHERE receipt.receiver = ? ${query} `,
+                WHERE receipt.step = 1 AND receipt.receiver = ? ${query} `,
         values,
       });
     

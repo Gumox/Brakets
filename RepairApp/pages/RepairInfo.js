@@ -69,6 +69,8 @@ export default function RepairInfo({ route, navigation }) {
     const [shippingDate, setShippingDate] = useState('');
     const [send, setSend] = useState('')
     const [storeId, setStoreId] = useState(0);
+    const [receiverName, setReceiverName] = useState('');
+    
 
     const images = route.params.images;
     const formatDate = (inputDate) => {
@@ -90,15 +92,19 @@ export default function RepairInfo({ route, navigation }) {
             navigation.goBack();
         }
         else {
+            console.log(data.data)
             setBrand(data.data['brand_name'])
             setStoreName(data.data["store_name"])
             setStoreId(data.data['store_id'])
+            setReceiverName(data.data["receiver_name"])
 
             datas.push({ receipt_id: data.data["receipt_id"] })
             datas.push({ code: code })
             datas.push({ brand: data.data['brand_name'] })
             datas.push({ storeName: data.data["store_name"] })
             datas.push({ storeId: data.data['store_id'] })
+            datas.push({ receiver: data.data['receiver'] })
+            datas.push({ receiver_name: data.data['receiver_name'] })
             if (data.data["repair1_store_id"] === store.getState().shopId) {
                 setShippingDate(formatDate(new Date(data.data["repair1_complete_date"])))
                 datas.push({ shippingDate: data.data["repair1_complete_date"] })
@@ -157,20 +163,7 @@ export default function RepairInfo({ route, navigation }) {
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
-                <PickerView>
-                    <RNPickerSelect
-                        placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
-                        style={{ border: 'solid', marginBottom: '50', borderWidth: '3', borderColor: 'black', placeholder: { color: '#AD8E5F' } }}
-                        onValueChange={(value) => {
-                            setShipping(value)
-
-                        }}
-                        items={[
-                            { label: storeName, value: storeId },
-                            { label: '본사', value: 1 }
-                        ]}
-                    />
-                </PickerView>
+                <InputText>{receiverName}</InputText>
                 <TopText />
 
 

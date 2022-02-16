@@ -38,7 +38,7 @@ const SettlementResult =(props)=>{
     }
     const onCheck =(check)=>{
         if(check){
-            store.dispatch({type:"SET_SELECTED",selected:{repair_detail_id: item.repair_detail_id}})
+            store.dispatch({type:"SET_SELECTED",selected:{repair_detail_id: item.repair_detail_id, state:item.repair_detail_state}})
             setCheck(true)
         }else{
             let selected = store.getState().selected;
