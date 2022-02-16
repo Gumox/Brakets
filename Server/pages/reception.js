@@ -16,7 +16,7 @@ const ReceptionPage = ({ options, user }) => {
   const router = useRouter();
   console.log(options)
   const [selectOptions, setSelectOptions] = useState(options); // 전체 페이지에서 사용하는 select options
-  const [targetBrandId, setTargetBrandId] = useState(options.brandList[0].value); // brandlist 중 첫번째 항목
+  const [targetBrandId, setTargetBrandId] = useState(options.brandList[0]); // brandlist 중 첫번째 항목
 
   // Filter 입력 데이터
   const [inputData, setInputData] = useState({
@@ -25,6 +25,7 @@ const ReceptionPage = ({ options, user }) => {
   });
   const [searchList, setSearchList] = useState([]); // 검색 결과 리스트
   const [targetData, setTargetData] = useState({}); // 리스트에서 선택한 데이터
+  const [imageData, setImageData] = useState({});
 
   useEffect(() => {
     const getOptions = async () => {
@@ -100,6 +101,7 @@ const ReceptionPage = ({ options, user }) => {
   }, [inputData, targetBrandId]);
   const getTargetData = useCallback(async (receiptCode) => {
     const { data } = await axios.get(`/api/receipt/${receiptCode}`);
+    setImageData(data.imageList);
     setTargetData(data.data);
   }, []);
 
@@ -116,6 +118,7 @@ const ReceptionPage = ({ options, user }) => {
             handleChangeTargetData,
             searchReceipts,
             getTargetData,
+            imageData
           }}
         />
       </OptionContext.Provider>
@@ -160,24 +163,30 @@ export const getServerSideProps = async (ctx) => {
         .then(({ data }) => data), // 수선처
       axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
       axios
-        .get(`${process.env.API_URL}/type/fault`, { params: { headquarterId } })
+        .get('http://localhost:3000/api/faultDivision', {
+          params: {hq_id: "2"}
+        })
         .then(({ data }) => data), // 과실구분
       axios
-        .get(`${process.env.API_URL}/type/analysis`, {
-          params: { headquarterId },
+        .get('http://localhost:3000/api/analysisType', {
+          params: {hq_id: "2"}
         })
-        .then(({ data }) => data), // 내용분석
+        .then(
+          ({ body }) => body), // 내용분석
       axios
-        .get(`${process.env.API_URL}/type/result`, {
-          params: { headquarterId },
+        .get('http://localhost:3000/api/judgmentResult', {
+          params: {hq_id: "2"}
         })
         .then(({ data }) => data), // 판정결과
+
+        // TODO: 수선내용 api
       axios
         .get(`${process.env.API_URL}/type/repair`, {
           params: { headquarterId },
         })
         .then(({ data }) => data), // 수선내용
     ]);
+
   return {
     props: {
       user,
