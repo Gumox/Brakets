@@ -7,6 +7,18 @@ import excuteQuery from "../../db";
       values: [complete_date, shipment_type, shipment_price, Id],
     });
   };
+  const updateReceipt = async (Id,store) => {
+    return excuteQuery({
+      query: "UPDATE receipt SET receiver=? WHERE receipt_id =?",
+      values: [store, Id],
+    });
+  };
+  const getInfo = async (Id ) => {
+    return excuteQuery({
+      query: "SELECT receipt_id FROM repair_detail WHERE repair_detail_id=?",
+      values: [ Id],
+    });
+  };
 const sendRepairInfo = async (req, res) => {
   if (req.method === "PUT") {
     console.log(`[${new Date().toISOString()}] /api/RepairShop/sendRepairInfo`);
@@ -24,14 +36,16 @@ const sendRepairInfo = async (req, res) => {
     try {
         
         const result = await updateRepairDetail(repair_detail_id,complete_date,shipment_type,shipment_price)
+        const info = await getInfo(repair_detail_id)
         if (result.error) throw new Error(result.error);
 
             console.log(result)
             
         if (result) {
             console.log("update RepairInfo");
+            const updateReceiver = await updateReceipt(store,info.receipt_id)
             //res.json({body});
-            res.status(200).json({ changed: result.changedRows});
+            res.status(200).json({ changed: result.changedRows,changed2:updateReceiver.changedRows});
         } else {
             console.log("update RepairInfo Fail");
             res.status(400).json({ message: "update RepairInfo Fail" });
