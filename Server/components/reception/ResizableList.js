@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import moment from "moment";
+
 import { useTable, useBlockLayout, useResizeColumns } from 'react-table';
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../constants/field";
 import {
@@ -83,14 +84,11 @@ function Table({ columns, data, searchList, getTargetData }) {
                     </div>
                 </div>
             </div>
-            {/* <pre>
-                <code>{JSON.stringify(state, null, 2)}</code>
-            </pre> */}
         </>
     )
 }
 
-const ResizableList = ({ searchList, getTargetData = () => { } }) => {
+const ResizableList = ({ searchList, getTargetData = () => {} }) => {
 
     console.log(`search list is ${searchList}`)
 
@@ -119,18 +117,20 @@ const ResizableList = ({ searchList, getTargetData = () => { } }) => {
         {Header: '과실구분', accessor: '과실구분',},
         {Header: '내용분석', accessor: '내용분석',},
         {Header: '판정결과', accessor: '판정결과',},
+        
         {Header: '수선처1', accessor: '수선처1',},
-        {Header: '총수선처1', accessor: '총수선처1',},
+        {Header: '총수선비1', accessor: '총수선비1',},
         {Header: '수선처접수일1', accessor: '수선처접수일1',},
         {Header: '재수선1', accessor: '재수선1',},
         {Header: '수선처2', accessor: '수선처2',},
-        {Header: '총수선처2', accessor: '총수선처2',},
+        {Header: '총수선비2', accessor: '총수선비2',},
         {Header: '수선처접수일2', accessor: '수선처접수일2',},
         {Header: '재수선2', accessor: '재수선2',},
         {Header: '수선처3', accessor: '수선처3',},
-        {Header: '총수선처3', accessor: '총수선처3',},
+        {Header: '총수선비3', accessor: '총수선비3',},
         {Header: '수선처접수일3', accessor: '수선처접수일3',},
         {Header: '재수선3', accessor: '재수선3',},
+
         {Header: '생산업체', accessor: '생산업체',},
         {Header: '발송일toM', accessor: '발송일toM',},
         {Header: '본사설명', accessor: '본사설명',},
@@ -150,6 +150,7 @@ const ResizableList = ({ searchList, getTargetData = () => { } }) => {
         ],[])
 
     const data = searchList.map((receipt) =>(
+
         {
         '서비스카드 번호':receipt[RECEIPT.CODE],
         '매장코드':receipt[STORE.CODE],
@@ -180,31 +181,42 @@ const ResizableList = ({ searchList, getTargetData = () => { } }) => {
         : "",
         '과실구분':receipt[RECEIPT.FAULT_NAME],
         '내용분석':receipt[RECEIPT.ANALYSIS_NAME],
-        '판정결과':receipt[RECEIPT.RESULT_NAME],
-        // '수선처1'
-        // '총수선처1'
-        // '수선처접수일1'
-        // '재수선1'
-        // '수선처2'
-        // '총수선처2'
-        // '수선처접수일2'
-        // '재수선2'
-        // '수선처3'
-        // '총수선처3'
-        // '수선처접수일3'
-        // '재수선3'
-        // '수선처1'
-        // '총수선처1'
-        // '수선처접수일1'
-        // '재수선1'
-        // '수선처2'
-        // '총수선처2'
-        // '수선처접수일2'
-        // '재수선2'
-        // '수선처3'
-        // '총수선처3'
-        // '수선처접수일3'
-        // '재수선3'
+        '판정결과':receipt[RECEIPT.RESULT_NAME],     
+        '수선처1':receipt.repair1_store_name,
+        '총수선비1':receipt.repair1_total,    
+        '수선처접수일1': 
+        (
+            receipt.repair1_register_date
+        ) ? (
+            moment(receipt.repair1_register_date).format("YYYY-MM-DD")
+        ) : (
+            ""
+        ),       
+        '재수선1':receipt.repair1_repair1_redo === 1 ? "Y" : "N",
+
+        '수선처2':receipt.repair2_store_name,    
+        '총수선비2':receipt.repair2_total,                
+        '수선처접수일2':
+        (
+            receipt.repair2_register_date
+        ) ? (
+            moment(receipt.repair2_register_date).format("YYYY-MM-DD")
+        ) : (
+            ""
+        ),          
+        '재수선2':receipt.repair2_repair1_redo === 1 ? "Y" : "N",
+
+        '수선처3':receipt.repair3_store_name,        
+        '총수선비3':receipt.repair3_total,              
+        '수선처접수일3':
+        (
+            receipt.repair3_register_date
+        ) ? (
+            moment(receipt.repair3_register_date).format("YYYY-MM-DD")
+        ) : (
+            ""
+        ),                    
+        '재수선3':receipt.repair3_repair1_redo === 1 ? "Y" : "N",
 
         '생산업체':receipt[RECEIPT.MANUFACTURER_NAME],
         '발송일toM':receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]
@@ -213,22 +225,24 @@ const ResizableList = ({ searchList, getTargetData = () => { } }) => {
           ).format("YYYY-MM-DD")
         : "",
         '본사설명':receipt[RECEIPT.MESSAGE],
-        '현금연수증번호':receipt[RECEIPT.CASHRECEIPT_NUM]
-        // '수선처설명1'
-        // '운송형태1'
-        // '발송방법1'
-        // '발송비용1'
-        // '수선처설명2'
-        // '운송형태2'
-        // '발송방법2'
-        // '발송비용2'
-        // '수선처설명3'
-        // '운송형태3'
-        // '발송방법3'
-        // '발송비용3'
+        '현금연수증번호':receipt[RECEIPT.CASHRECEIPT_NUM],
+
+        '수선처설명1':receipt.repair1_message,
+        '운송형태1':TRANSPORT_TYPE[receipt.repair1_delivery_type],
+        '발송방법1':SHIPPING_TYPE[receipt.repair1_shipment_type],
+        '발송비용1':receipt.repair1_shipment_price,
+
+        '수선처설명2':receipt.repair2_message,
+        '운송형태2':TRANSPORT_TYPE[receipt.repair2_delivery_type],
+        '발송방법2':SHIPPING_TYPE[receipt.repair2_shipment_type],
+        '발송비용2':receipt.repair2_shipment_price,
+        
+        '수선처설명3':receipt.repair3_message,
+        '운송형태3':TRANSPORT_TYPE[receipt.repair3_delivery_type],
+        '발송방법3':SHIPPING_TYPE[receipt.repair3_shipment_type],
+        '발송비용3':receipt.repair3_shipment_price,
         }
     ))
-    console.log(data)
 
     return (
         <Wrapper>
@@ -285,7 +299,7 @@ const Styles = styled.div`
 
       .resizer {
         display: inline-block;
-        background: black;
+        /* background: black; */
         width: 2px;
         height: 100%;
         position: absolute;
