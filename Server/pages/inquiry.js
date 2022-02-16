@@ -31,14 +31,20 @@ export default function Inquiry() {
             axios.get(`${process.env.API_URL}/RepairShop/getInquiryInfo`, {
                 params: params,
               })
-            .then(({ data }) => data),
+            .then(({ data }) => data)
+            .catch(error=>{
+
+            })
           ])
           return datas;
     }
     const getBrandList = async()=>{
         const[datas] =await Promise.all([
             axios.get(`${process.env.API_URL}/brand/AllBrandList`)
-            .then(({ data }) => data.data),
+            .then(({ data }) => data.data)
+            .catch(error=>{
+
+            })
           ])
           return datas;
     }

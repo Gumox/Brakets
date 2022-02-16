@@ -7,7 +7,10 @@ export const getSettlementData = async(list)=>{
         axios.get(`${process.env.API_URL}/RepairShop/settlement`,{
           params: list,
         })
-        .then(({ data }) => data),
+        .then(({ data }) => data)
+        .catch(error=>{
+
+        })
       ])
       console.log(datas)
       return datas;
@@ -17,7 +20,10 @@ export const setStateAtOne = async(list) =>{
       axios.put(`${process.env.API_URL}/RepairShop/settlement/setStateAtOne`,{
         body: list,
       })
-      .then(({ data }) => data),
+      .then(({ data }) => data)
+      .catch(error=>{
+
+      })
     ])
     return ;
   }
@@ -27,7 +33,10 @@ export const setStateAtTwo = async(list) =>{
       axios.put(`${process.env.API_URL}/RepairShop/settlement/setStateAtTwo`,{
         body: list,
       })
-      .then(({ data }) => data),
+      .then(({ data }) => data)
+      .catch(error=>{
+
+      })
     ])
     return ;
   }

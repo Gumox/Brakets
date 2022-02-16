@@ -51,7 +51,10 @@ function RepairReceiptModal (props) {
       axios
         .get(`${process.env.API_URL}/`+api,{
           params: { hq_id:hq_id},})
-        .then(({ data }) => data),
+        .then(({ data }) => data)
+        .catch(error=>{
+
+        })
     ]);
     return(data.body);
   }
@@ -92,7 +95,10 @@ function RepairReceiptModal (props) {
         axios
         .get(`${process.env.API_URL}/type/repair`,{
         params: { headquarterId: 2},})
-        .then(({ data }) => data),
+        .then(({ data }) => data)
+        .catch(error=>{
+
+        })
     ]);
     return(data.data);
 }

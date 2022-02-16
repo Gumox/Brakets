@@ -40,7 +40,10 @@ function RepairReception({options,user}) {
       axios
         .get(`${process.env.API_URL}/RepairShop/getReceiptList`,{
           params: { shop_id: shop_id,hq_id:selectedCompany, code:code},})
-        .then(({ data }) => data),
+        .then(({ data }) => data)
+        .catch(error=>{
+
+        })
     ]);
     setListData(data.body)
   }
@@ -122,18 +125,27 @@ export const getServerSideProps = async (ctx) => {
           },
         }
       : {}
-  );
+  )
+  .catch(error=>{
+
+  });
   console.log(user)
   const {email :email} =user
   const [companys] = await Promise.all([
     axios.get(`${process.env.API_URL}/auth/repair?email=${email}`)
-    .then(({ data }) => data),
+    .then(({ data }) => data)
+    .catch(error=>{
+
+    })
   ]);
   const[list,images] =await Promise.all([
     axios.get(`${process.env.API_URL}/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
     .then(({ data }) => data),
     axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
-    .then(({ data }) => data),
+    .then(({ data }) => data)
+    .catch(error=>{
+
+    })
   ])
   return {
     props: {
