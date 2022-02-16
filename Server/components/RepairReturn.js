@@ -1,0 +1,165 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+import COLOR from "../constants/color";
+import formatDate from "../functions/formatDate";
+const RepairReturn = (props) => {
+    const reciver = props.reciver;
+    const info = props.infos;
+    const shop = props.shop;
+    const receipt_id = props.receipt;
+    const [selectedDate,setSelectedDate] = useState(null);
+    const [message,setMessage] = useState("");
+    const [selectedSendType,setSelectedSendType] = useState(1);
+    const [shipmentPay,setShipmentPay] = useState(0); 
+
+    const onCancel = ()=>{
+      setSelectedDate(null)
+      setMessage("")
+      setSelectedSendType(1);
+      setShipmentPay(0);
+    }
+
+    const onSave = async()=>{
+      let res;
+      const today = formatDate(new Date)
+      const body ={
+        receipt_id : receipt_id,
+
+        store_id : shop,
+        fault_id: info.fault,
+        result_id: info.result,
+
+        analysis_id: info.analysis,
+        delivery_type: info.delivery,
+        register_date: today,
+
+        complete_date : selectedDate,
+        message: message,
+        shipment_type: selectedSendType,
+        shipment_price: shipmentPay,
+      }
+      fetch(`${process.env.API_URL}/RepairShop/sendRepairReturn`, {
+        method: "POST",
+        headers: {
+          'Content-type': 'application/json'
+      },
+        body: JSON.stringify(body)
+      })
+      .then(response => res=response.json())
+    }
+    return(
+        <div>
+            <ItemText>수선 내역</ItemText>
+            <Line2/>
+            <ItemText>수선처 설명</ItemText>
+            <ItemTable>
+              <input style={{margin:5,minHeight:60,width:"98%",border:0}}
+                onChange={(e)=>{setMessage(e.target.value)}}
+              ></input>
+            </ItemTable>
+            <LaView>
+              <ItemText>수선처 발송일</ItemText>
+                <input type="date" style={{marginLeft:10,marginTop:20,marginBottom:10}} onChange={(e)=>{setSelectedDate(e.target.value)}}></input>
+                <div style={{color :"#ff0000",marginTop:10,marginLeft:10}}>
+                  <h6>⚠️발송일 입력없이 저장이 불가능합니다</h6>
+                </div>
+            </LaView>
+            <LaView>
+                <ItemText>발송방법</ItemText>
+                <select onChange={(e)=>{ setSelectedSendType(e.target.value) }}  style={styles.selectStyle} >
+                  <option value={1} key={'행낭'}>행낭</option>
+                  <option value={3} key={'택배'}>택배</option>
+                  <option value={4} key={'퀵배송'}>퀵배송</option>
+                  <option value={5} key={'행낭 (행낭 바코드 X)'}>행낭 (행낭 바코드 X)</option>
+                </select>
+            </LaView>
+            <LaView>
+                <ItemText>발송비용</ItemText>
+                <input type="number" min="0" style={{ marginLeft:20,marginTop:10,width:145,borderWidth:0,borderBottomWidth:2}}  
+                  onChange={(e)=>{setShipmentPay(e.target.value)}}
+                />
+            </LaView>
+            <LaView><ItemText>받는곳</ItemText><ItemText2>{reciver}</ItemText2></LaView>
+            <div style={{marginTop:50,display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <CustomButton onClick={()=>{
+              if(selectedDate !== null) {
+                onSave()
+              }
+              else{
+                alert("발송일을 입력해 주세요")
+              }
+            }}>저장</CustomButton>
+            </div>
+        </div>
+    )
+}
+export default RepairReturn
+const styles = {
+    selectStyle:{
+      marginLeft:10,
+      marginRight:10,
+      borderTop:0,
+      borderLeft:0,
+      borderRight:0,
+      paddingBottom:5,
+      borderBottomWidth:2,
+      borderColor:COLOR.BRAUN,
+      marginTop:20,
+      marginBottom:10,
+      marginLeft:20,
+    }
+  };
+const LaView = styled.div`
+  display: flex;  
+  margin:5px;
+  align-items:center;
+  flex-direction: row;
+`;
+const CustomButton = styled.div`
+  width:45px;
+  height:30px;
+  font-size:15px;
+  color: #ffffff;
+  display:flex;
+  align-items: center;
+  background-color: ${COLOR.BRAUN};
+  border-radius : 7px;
+  justify-content : center;
+  &: hover {
+    background-color: ${COLOR.GRAY};
+  }
+`;
+const ItemText = styled.div`
+  font-size:15px;
+  display: flex;  
+  color:${COLOR.BLACK};
+  font-weight: bold;
+  align-items: center;
+  margin-left:20px;
+  margin-top:20px;
+  margin-bottom:10px;
+`;
+const ItemText2 = styled.div`
+  font-size:15px;
+  display: flex;  
+  color:${COLOR.BRAUN};
+  font-weight: bold;
+  align-items: center;
+  margin-left:35px;
+  margin-top:20px;
+  margin-bottom:10px;
+`;
+const Line2 = styled.div`
+  margin:10px;
+  height:1.5px;
+  margin-bottom:10px;
+  margin-top:10px;
+  background-color: #C4C4C4
+`;
+const ItemTable = styled.div`
+  border: 2px solid  ${COLOR.BRAUN};
+  margin-right:10px;
+  margin-left:10px;
+  min-height : 60px
+
+`;
