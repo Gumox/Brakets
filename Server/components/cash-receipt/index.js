@@ -56,6 +56,8 @@ const Return = () => {
           ...inputData,
           dateType: inputData["isMonthly"] ? "month" : "all",
           dateOption: "complete_date",
+          
+          // TODO
           hasCharged: true,
           hasCashReceipt: true,
         },
