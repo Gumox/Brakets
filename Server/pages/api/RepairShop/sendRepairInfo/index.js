@@ -8,6 +8,7 @@ import excuteQuery from "../../db";
     });
   };
   const updateReceipt = async (Id,store) => {
+    console.log(Id,store)
     return excuteQuery({
       query: "UPDATE receipt SET receiver=? WHERE receipt_id =?",
       values: [store, Id],
@@ -43,7 +44,7 @@ const sendRepairInfo = async (req, res) => {
             
         if (result) {
             console.log("update RepairInfo");
-            const updateReceiver = await updateReceipt(store,info.receipt_id)
+            const updateReceiver = await updateReceipt(info[0].receipt_id,store)
             //res.json({body});
             res.status(200).json({ changed: result.changedRows,changed2:updateReceiver.changedRows});
         } else {
