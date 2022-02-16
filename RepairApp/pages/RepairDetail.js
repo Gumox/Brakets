@@ -30,7 +30,7 @@ function RepairDetail({ navigation, route }) {
     const [image,setImage] = useState('')
 
     const [shippingDate, setShippingDate] = useState(null);
-    const [shippingMethod, setShippingMethod] = useState('');
+    const [shippingMethod, setShippingMethod] = useState(1);
     const [shippingCost, setShippingCost] = useState("0");
     const [datas,setDatas] =useState([])
     const [shippingPlace, setShippingPlace] = useState('');
@@ -139,14 +139,13 @@ function RepairDetail({ navigation, route }) {
         } catch (error) {
             console.error(error);
         } finally {
-
         }
         
     }
     
-    const postSendRepairInfo = async (date,sendType,sendPay,repair_detail_id) => {
+    const postSendRepairInfo = async (place,date,sendType,sendPay,repair_detail_id) => {
         const bodyData={
-                    
+            store:place,
             complete_date: date,
             shipment_type: sendType,
             shipment_price: sendPay,
@@ -375,7 +374,8 @@ function RepairDetail({ navigation, route }) {
                         <RNPickerSelect
                             placeholder={{ label: '행낭', value: 1 }}
                             style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
-                            onValueChange={(value) => setShippingMethod(value)}
+                            onValueChange={(value) => { setShippingMethod(value);
+                                                        console.log(value)}}
                             items={[
                                 { label: '행낭', value: 1 },
                                 { label: '택배', value: 2},
@@ -430,7 +430,7 @@ function RepairDetail({ navigation, route }) {
                                 Alert.alert('수선처 발송일을 입력해주세요')
                             } 
                             else {
-                                postSendRepairInfo(shippingDate,shippingMethod,shippingCost,repairDetailId)
+                                postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId)
                                 postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
                             }
                         }

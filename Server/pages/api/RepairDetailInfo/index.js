@@ -24,6 +24,8 @@ async function getReceipt(code) {
   const result = await excuteQuery({
     query: `SELECT 
               receipt.receipt_id,
+              receipt.receiver,
+              receiver.name AS receiver_name,
               brand.brand_name,
               brand.brand_code,
               store.name AS store_name,
@@ -52,6 +54,7 @@ async function getReceipt(code) {
               LEFT JOIN store ON store.store_id = receipt.store_id
               LEFT JOIN customer ON customer.customer_id = receipt.customer_id
               LEFT JOIN product ON product.product_id = receipt.product_id
+              LEFT JOIN store AS receiver ON receiver.store_id = receipt.receiver
               LEFT JOIN style_type ON style_type.style_id = product.style_id
               LEFT JOIN repair_detail AS repair1 ON repair1.repair_detail_id = receipt.repair1_detail_id
               LEFT JOIN repair_detail AS repair2 ON repair2.repair_detail_id = receipt.repair2_detail_id

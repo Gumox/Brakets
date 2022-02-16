@@ -21,8 +21,10 @@ export default function Return_unregistered() {
     const [brandList,setBrandList] = useState([])
     const [repairShopList,setRepairShopList] = useState([])
     const [shopId,setShopId] = useState(store.getState().shop)
+
     const [returnList,setReturnList] = useState([])
     const [resultList,setResultList] = useState([])
+    
     const [shopName,setShopName] = useState('')
     
     const [hq_id,setHqId] = useState(null)
