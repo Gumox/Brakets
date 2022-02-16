@@ -8,6 +8,7 @@ const REQUEST_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
 const REQUEST_TOKEN_INFO_URL = "https://kapi.kakao.com/v2/user/me";
 const THIRTY_MINUTES = 60 * 30 * 1000;
 const kakao = async (req, res) => {
+  console.log("is here")
   if (req.method === "GET") {
     const { code } = req.query;
 
