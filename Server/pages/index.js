@@ -36,6 +36,7 @@ export const getServerSideProps = async (ctx) => {
     data: { isAuthorized,user },
   } = await axios.get(
     `${process.env.API_URL}/auth`,
+    console.log(`${process.env.API_URL}/auth`),
     console.log("is hear2?"),
     ctx.req
       ? {
