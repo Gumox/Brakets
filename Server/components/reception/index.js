@@ -25,6 +25,7 @@ const Reception = ({
   handleChangeTargetData, // Receipt 내용 수정
   searchReceipts, // List 조회
   getTargetData, // Receipt 조회
+  imageData
 }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
@@ -44,6 +45,7 @@ const Reception = ({
     () => setIsReceiptImageModalOpen(false),
     []
   );
+
   return (
     <Content>
       <InfoWrapper>
@@ -55,7 +57,7 @@ const Reception = ({
           <Section>
             <ProducInfo {...{ targetData, handleChangeTargetData, openProductImage }} />
             <StoreInfo
-              {...{ targetData, handleChangeTargetData, openReceiptImage }}
+              {...{ targetData, handleChangeTargetData, openReceiptImage, imageData }}
             />
           </Section>
           <Section>
@@ -79,30 +81,43 @@ const Reception = ({
           }
         </Modal>
       )}
+
+      {/* --------------------------------------------- */}
       {isReceiptImageModalOpen && (
         <Modal handleCloseButtonClick={closeReceiptImage}>
           <div>
-          <Image
-            src={targetData[RECEIPT.IMAGE]}
-            alt={"전체이미지"}
-            layout="fixed"
-            objectFit="contain"
-            width="200px"
-            height="200px"
-          />
+            <text> 수선 전 이미지 </text>
+            <Image
+              src={`http://34.64.182.76:8080${imageData[0].before_image}`}
+              alt={""}
+              layout="fixed"
+              objectFit="contain"
+              width="300px"
+              height="300px"
+            />
           </div>
-          <div>
-          <Image
-            src={targetData[RECEIPT.IMAGE]}
-            alt={"전체이미지"}
-            layout="fixed"
-            objectFit="contain"
-            width="200px"
-            height="200px"
-          />
-          </div>
+          {(
+            imageData[0].after_image !== null
+            ) ? (
+            <div>
+              <text> 수선 후 이미지 </text>
+              <Image 
+                src={`http://34.64.182.76:8080${imageData[0].after_image}`}
+                alt={""}
+                layout="fixed"
+                objectFit="contain"
+                width="300px"
+                height="300px"
+              />
+            </div>
+              ) : (
+              <>
+              </>
+            )}
+          
         </Modal>
       )}
+      {/* --------------------------------------------- */}
     </Content>
   );
 };
