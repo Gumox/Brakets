@@ -41,6 +41,7 @@ export const getServerSideProps = async (ctx) => {
     data: { isAuthorized,user },
   } = await axios.get(
     `${process.env.API_URL}/auth`,
+    console.log(`${process.env.API_URL}/auth`),
     ctx.req
       ? {
           withCredentials: true,
@@ -53,6 +54,7 @@ export const getServerSideProps = async (ctx) => {
       : {}
   );
   if (!isAuthorized) {
+    
     return {
       redirect: {
         permanent: false,
