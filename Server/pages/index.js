@@ -31,6 +31,7 @@ const Home = () => {
 };
 
 export const getServerSideProps = async (ctx) => {
+  console.log("is hear?")
   const {
     data: { isAuthorized,user },
   } = await axios.get(
