@@ -13,7 +13,7 @@ import {
 import Checkbox from "../../Checkbox";
 
 
-const IndeterminateCheckbox = React.forwardRef(
+const IndeterminateCheckbox = React.forwardRef<HTMLInputElement>(
   ({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()
     const resolvedRef = ref || defaultRef
@@ -29,6 +29,7 @@ const IndeterminateCheckbox = React.forwardRef(
     )
   }
 )
+IndeterminateCheckbox.displayName = "claim/list";
 
 function Table({ columns, data, searchList, getTargetData }) {
 

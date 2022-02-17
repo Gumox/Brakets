@@ -29,6 +29,7 @@ const IndeterminateCheckbox = React.forwardRef(
     )
   }
 )
+IndeterminateCheckbox.displayName = "paid-repair/list";
 
 function Table({ columns, data, searchList, getTargetData }) {
 

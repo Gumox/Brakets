@@ -28,6 +28,7 @@ const IndeterminateCheckbox = React.forwardRef(
     )
   }
 )
+IndeterminateCheckbox.displayName = "return/list";
 
 function Table({ columns, data, handleDataClick }) {
 
