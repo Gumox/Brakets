@@ -238,6 +238,8 @@ export default function Inquiry() {
               
               
             </ItemTable>
+            <br/>
+            <br/>
             </div>
         </div>
     )
