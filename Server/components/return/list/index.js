@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import moment from "moment";
 import { useTable, useBlockLayout, useResizeColumns, useRowSelect } from 'react-table';
@@ -10,7 +10,11 @@ import {
   RECEIPT_TYPE,
   STORE_CATEGORY,
 } from "../../../constants/type";
-import Checkbox from "../../Checkbox";
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -33,117 +37,132 @@ IndeterminateCheckbox.displayName = "return/list";
 function Table({ columns, data, handleDataClick }) {
 
   const defaultColumn = React.useMemo(
-      () => ({
-          minWidth: 100,
-          width: 100,
-          maxWidth: 150,
-      }),
-      []
+    () => ({
+      minWidth: 100,
+      width: 100,
+      maxWidth: 150,
+    }),
+    []
   )
-  
+
   const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      rows,
-      prepareRow,
-      state: {selectedRowIds},
-      selectedFlatRows,
-      resetResizing,
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state: { selectedRowIds },
+    selectedFlatRows,
+    resetResizing,
   } = useTable(
-      {
-          columns,
-          data,
-          defaultColumn,
-      },
-      useBlockLayout,
-      useResizeColumns,
-      useRowSelect,
-      hooks => {
-        hooks.visibleColumns.push(columns => [
-          // Let's make a column for selection
-          {
-            id: 'selection',
-            // The header can use the table's getToggleAllRowsSelectedProps method
-            // to render a checkbox
-            Header: ({ getToggleAllRowsSelectedProps }) => (
-              <div>
-                <IndeterminateCheckbox 
-                  {...getToggleAllRowsSelectedProps()} 
-                />
-              </div>
-            ),
-            // The cell can use the individual row's getToggleRowSelectedProps method
-            // to the render a checkbox
-            Cell: ({ row }) => (
-              <div>
-                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-              </div>
-            ),
-          },
-          ...columns,
-        ])
-      }
+    {
+      columns,
+      data,
+      defaultColumn,
+    },
+    useBlockLayout,
+    useResizeColumns,
+    useRowSelect,
+    hooks => {
+      hooks.visibleColumns.push(columns => [
+        // Let's make a column for selection
+        {
+          id: 'selection',
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox
+                {...getToggleAllRowsSelectedProps()}
+              />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ])
+    }
   )
+
+  const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
 
   return (
-      <>
-          <div>
-              <div {...getTableProps()} className="table">
-                  <div>
-                      {headerGroups.map((headerGroup,i) => (
-                          <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
-                              {headerGroup.headers.map((column,j) => (
-                                  <div key={j} {...column.getHeaderProps()} className="th">
-                                      {column.render('Header')}
-                                      {/* Use column.getResizerProps to hook up the events correctly */}
-                                      <div
-                                          {...column.getResizerProps()}
-                                          className={`resizer ${column.isResizing ? 'isResizing' : ''
-                                              }`}
-                                      />
-                                  </div>
-                              ))}
-                          </div>
-                      ))}
-                  </div>
 
-                  <div {...getTableBodyProps()}>
-                      {rows.map((row, i) => {
-                          prepareRow(row)
-                          return (
-                              <div key={i} {...row.getRowProps(
-                                  {
-                                    onClick: () => (
-                                                    // handleDataClick(row.original["서비스카드 번호"])
-                                                    rows[row.id].toggleRowSelected()
-                                                    )
-                                  }
-                              )} className="tr">
-                                  {row.cells.map((cell,j) => {
-                                      return (
-                                          <div key={j} {...cell.getCellProps(
-                                            {
-                                              style: {color: 'red', background: '#ebe8e8'}
-                                              // red
-                                              // orange: #ffa203
-                                            }
-                                          )} className="td">
-                                              {cell.render('Cell')}
-                                          </div>
-                                      )
-                                  })}
-                              </div>
-                          )
-                      })}
+    <>
+      <div>
+        <div {...getTableProps()} className="table">
+          <div>
+            {headerGroups.map((headerGroup, i) => (
+              <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
+                {headerGroup.headers.map((column, j) => (
+                  <div key={j} {...column.getHeaderProps()} className="th">
+                    {column.render('Header')}
+                    {/* Use column.getResizerProps to hook up the events correctly */}
+                    <div
+                      {...column.getResizerProps()}
+                      className={`resizer ${column.isResizing ? 'isResizing' : ''
+                        }`}
+                    />
                   </div>
+                ))}
               </div>
+            ))}
           </div>
-      </>
+
+          <div {...getTableBodyProps()}>
+            {rows.map((row, i) => {
+              prepareRow(row)
+              return (
+                <div key={i} {...row.getRowProps(
+                  {
+                    onClick: () => (
+                      // handleDataClick(row.original["서비스카드 번호"])
+                      rows[row.id].toggleRowSelected()
+                    )
+                  }
+                )} className="tr">
+                  {row.cells.map((cell, j) => {
+                    return (
+                      <div key={j} {...cell.getCellProps(
+                        {
+                          style: { color: 'red', background: '#ebe8e8' }
+                          // red
+                          // orange: #ffa203
+                        }
+                      )} className="td">
+                        {cell.render('Cell')}
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+      <pre>
+        <code>
+          {JSON.stringify(
+            {
+              // selectedRowIds: selectedRowIds,
+              'selectedFlatRows[].original': selectedFlatRows.map(value => value.values["서비스카드 번호"])
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre>
+    </>
   )
 }
 
-const ReturnList = ({ data, handleDataClick = () => {} }) => {
+const ReturnList = ({ data, handleDataClick = () => { } }) => {
 
   console.log("asdad");
   console.log(data);
@@ -151,64 +170,64 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
   const columns = React.useMemo(() => [
     // {Header: 'No',   accessor: 'No'},
     // {Header: 'Shop', accessor: 'Shop'},
-    
-    {Header: '서비스카드 번호', accessor: '서비스카드 번호'},
-    {Header: '매장코드', accessor: '매장코드'},
 
-    {Header: '매장명', accessor: '매장명'},
-    {Header: '매장구분', accessor: '매장구분'},
-    {Header: '매장연락처', accessor: '매장연락처'},
-    {Header: '등록일', accessor: '등록일'},
-    {Header: '고객ID', accessor: '고객ID'},
-    {Header: '고객', accessor: '고객'},
-    {Header: '고객연락처', accessor: '고객연락처'},
-    {Header: '시즌', accessor: '시즌'},
-    {Header: '스타일', accessor: '스타일'},
-    {Header: '컬러', accessor: '컬러'},
-    {Header: '사이즈', accessor: '사이즈'},
-    {Header: '판매가', accessor: '판매가'},
-    {Header: '고객요구', accessor: '고객요구'},
-    {Header: '매장접수내용', accessor: '매장접수내용'},
-    {Header: '과실구분', accessor: '과실구분'},  
-    {Header: '고객약속일', accessor: '고객약속일'},
-    {Header: '본사접수일', accessor: '본사접수일'},
-    {Header: '내용분석', accessor: '내용분석'},
-    {Header: '판정결과', accessor: '판정결과'},
-  ],[])
+    { Header: '서비스카드 번호', accessor: '서비스카드 번호' },
+    { Header: '매장코드', accessor: '매장코드' },
 
-    const value = data.map((productReturn) => ({
-      "서비스카드 번호":productReturn[RECEIPT.CODE],
-      "매장코드":productReturn[STORE.CODE],
-      "매장명":productReturn[STORE.NAME],
-      "매장구분":STORE_CATEGORY[productReturn[STORE.CATEGORY]],
-      "매장연락처":productReturn[STORE.CONTACT],
-      "등록일":"?",
-      "고객ID":productReturn[CUSTOMER.ID],
-      "고객":productReturn[CUSTOMER.NAME],
-      "고객연락처":productReturn[CUSTOMER.CONTACT],
-      "시즌":productReturn[PRODUCT.SEASON],
-      "스타일":productReturn[PRODUCT.STYLE],
-      "컬러":productReturn[PRODUCT.COLOR],
-      "사이즈":productReturn[PRODUCT.SIZE], 
-      "판매가":productReturn[PRODUCT.PRICE],
-      "고객요구":RECEIPT_TYPE[productReturn[RECEIPT.TYPE]],
-      "매장접수내용":productReturn[RECEIPT.STORE_MESSAGE],
-      "과실구분":productReturn[RECEIPT.FAULT_NAME],
-      "고객약속일":productReturn[RECEIPT.DUE_DATE]
+    { Header: '매장명', accessor: '매장명' },
+    { Header: '매장구분', accessor: '매장구분' },
+    { Header: '매장연락처', accessor: '매장연락처' },
+    { Header: '등록일', accessor: '등록일' },
+    { Header: '고객ID', accessor: '고객ID' },
+    { Header: '고객', accessor: '고객' },
+    { Header: '고객연락처', accessor: '고객연락처' },
+    { Header: '시즌', accessor: '시즌' },
+    { Header: '스타일', accessor: '스타일' },
+    { Header: '컬러', accessor: '컬러' },
+    { Header: '사이즈', accessor: '사이즈' },
+    { Header: '판매가', accessor: '판매가' },
+    { Header: '고객요구', accessor: '고객요구' },
+    { Header: '매장접수내용', accessor: '매장접수내용' },
+    { Header: '과실구분', accessor: '과실구분' },
+    { Header: '고객약속일', accessor: '고객약속일' },
+    { Header: '본사접수일', accessor: '본사접수일' },
+    { Header: '내용분석', accessor: '내용분석' },
+    { Header: '판정결과', accessor: '판정결과' },
+  ], [])
+
+  const value = data.map((productReturn) => ({
+    "서비스카드 번호": productReturn[RECEIPT.CODE],
+    "매장코드": productReturn[STORE.CODE],
+    "매장명": productReturn[STORE.NAME],
+    "매장구분": STORE_CATEGORY[productReturn[STORE.CATEGORY]],
+    "매장연락처": productReturn[STORE.CONTACT],
+    "등록일": "?",
+    "고객ID": productReturn[CUSTOMER.ID],
+    "고객": productReturn[CUSTOMER.NAME],
+    "고객연락처": productReturn[CUSTOMER.CONTACT],
+    "시즌": productReturn[PRODUCT.SEASON],
+    "스타일": productReturn[PRODUCT.STYLE],
+    "컬러": productReturn[PRODUCT.COLOR],
+    "사이즈": productReturn[PRODUCT.SIZE],
+    "판매가": productReturn[PRODUCT.PRICE],
+    "고객요구": RECEIPT_TYPE[productReturn[RECEIPT.TYPE]],
+    "매장접수내용": productReturn[RECEIPT.STORE_MESSAGE],
+    "과실구분": productReturn[RECEIPT.FAULT_NAME],
+    "고객약속일": productReturn[RECEIPT.DUE_DATE]
       ? moment(productReturn[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
       : "",
-      "본사접수일":productReturn[RECEIPT.REGISTER_DATE]
+    "본사접수일": productReturn[RECEIPT.REGISTER_DATE]
       ? moment(productReturn[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
       : "",
-      "내용분석":productReturn[RECEIPT.ANALYSIS_NAME],
-      "판정결과":productReturn[RECEIPT.RESULT_NAME],
-    }))
+    "내용분석": productReturn[RECEIPT.ANALYSIS_NAME],
+    "판정결과": productReturn[RECEIPT.RESULT_NAME],
+  }))
 
 
   return (
     <Wrapper>
       <Styles>
-        <Table columns={columns} data={value} handleDataClick={handleDataClick}/>
+        <Table columns={columns} data={value} handleDataClick={handleDataClick} />
       </Styles>
     </Wrapper>
   );
