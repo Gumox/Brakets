@@ -65,6 +65,8 @@ export default function Settlement()  {
             setSelectShopOption(selectShop)
         }
         fetchData();
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
         window.addEventListener('resize',handleResize);
         return ()=>{
             window.removeEventListener('resize',handleResize);
