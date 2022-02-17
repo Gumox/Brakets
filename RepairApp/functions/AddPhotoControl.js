@@ -12,7 +12,7 @@ import axios from "axios";
 const BottomItemBox = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  minHeight:50px;
+  min-Height:50px;
  
 `;
 
