@@ -8,7 +8,8 @@ import SearchField from "./SearchField";
 import List from "./list";
 import Invoice from "./invoice";
 
-const Return = ({ options, user }) => {
+const Return = ({ options, user}) => {
+  
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -51,7 +52,17 @@ const Return = ({ options, user }) => {
   );
   const handleSearchButtonClick = useCallback(() => {
     axios
-      .get("/api/receipt", { params: {...inputData, dateType: inputData["isMonthly"]? "month": "all", dateOption: 'return_date', resultId: 0} })
+      .get("/api/receipt", { 
+        params: {
+          ...inputData,
+          dateType: inputData["isMonthly"]? "month": "all",
+          dateOption: 'return_date',
+          
+          // 하자반품의 경우
+          // resultId: 4
+          resultId: 4
+        } 
+      })
       .then((response) => setSearchList(response.data.data));
   }, [inputData]);
   const searchTargetData = useCallback((receiptCode) => {
@@ -71,7 +82,7 @@ const Return = ({ options, user }) => {
         handleSearchButtonClick={handleSearchButtonClick}
       />
       <List data={searchList}/>
-      <Invoice />
+      <Invoice data={searchList}/>
     </Content>
   );
 };
