@@ -73,7 +73,11 @@ function Table({ columns, data, searchList, getTargetData }) {
                                 )} className="tr">
                                     {row.cells.map((cell,j) => {
                                         return (
-                                            <div key={j} {...cell.getCellProps()} className="td">
+                                            <div key={j} {...cell.getCellProps(
+                                                // {
+                                                //     style: {color: 'red'}
+                                                // }
+                                            )} className="td">
                                                 {cell.render('Cell')}
                                             </div>
                                         )
