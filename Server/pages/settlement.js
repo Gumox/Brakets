@@ -4,7 +4,8 @@ import store from '../store/store'
 import COLOR from '../constants/color'
 import styled from 'styled-components'
 import checkDisable from '../functions/checkDisable';
-import SettlementResult from "../components/SettlementResult";
+import SettlementResult from "../components/repair/SettlementResult";
+import { debounce } from "lodash";
 import { getSettlementData ,setStateAtOne,setStateAtTwo} from "../functions/useInSettlement";
 
 export default function Settlement()  {
@@ -15,6 +16,12 @@ export default function Settlement()  {
     const [userInfo,setUserInfo] = useState()
     const [disable,setDisable] = useState(true)
     const [settlementList,setSettlementList] = useState([])
+    const [windowWidth,setWindowWidth] = useState()
+    const [windowHeight,setWindowHeight] = useState()
+    const handleResize = debounce(()=>{
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
+    },1000)
     
     let [selectShopOption,setSelectShopOption] = useState()
 
@@ -58,11 +65,15 @@ export default function Settlement()  {
             setSelectShopOption(selectShop)
         }
         fetchData();
+        window.addEventListener('resize',handleResize);
+        return ()=>{
+            window.removeEventListener('resize',handleResize);
+        }
     },[])   
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
         <RepairHeader/>
-        <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
+        <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
         <h2 style={{fontWeight:"bold"}}>수선비 정산</h2><Line/>
             <br/>
             <br/>
@@ -115,22 +126,23 @@ export default function Settlement()  {
                         
                     <div style={{marginTop:12,overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:200}}>
                             <LaView ><Container>
-                                <ItemView>#</ItemView>
-                                <ItemView>브랜드</ItemView>
-                                <ItemView>서비스 번호</ItemView>
+                                <CheckBoxView>#</CheckBoxView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>브랜드</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>서비스 번호</ItemView>
                                 
-                                <ItemView>매장정보</ItemView>
-                                <ItemView>고객정보</ItemView>
-                                <ItemView>수선내용(수량)</ItemView>
-                                <ItemView>상태</ItemView>
-                                <ItemView>본사 당담자</ItemView>
-                                <ItemView>수선비</ItemView>
-                                <ItemView>수정 수선비</ItemView>
-                                <ItemView>최종수선비</ItemView>
-                                <ItemView>수정사유</ItemView>
-                                <ItemView>수선처 당담자</ItemView>
-                                <ItemView>비고</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>매장정보</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>고객정보</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수선내용(수량)</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>상태</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>본사 당담자</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수선비</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수정 수선비</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>최종수선비</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수정사유</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수선처 당담자</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>비고</ItemView>
                             </Container></LaView>
+                            <Line2/>
                         {   
                             settlementList.map((item,index)=>(
                                 <SettlementResult key = {index} data ={item}></SettlementResult>
@@ -165,10 +177,7 @@ const ItemTable = styled.div`
 
 `;
 const Line2 =styled.div`
-  margin:10px;
-  height:2px;
-  margin-bottom:10px;
-  margin-top:10px;
+  height:1px;
   background-color: ${COLOR.GRAY}
 `;
 const Container = styled.div`
@@ -176,27 +185,30 @@ const Container = styled.div`
     min-height: 20px;
     align-items: flex-start;
 `;
-
-const ItemView = styled.div`
+const CheckBoxView = styled.div`
   font-size :12px;
   min-height: 20px;
-  width :120px;
+  width :50px;
   display: flex;  
   justify-content:center;
   padding-bottom : 20px;
-  border-bottom:2px solid ${COLOR.GRAY};
+  `;
+const ItemView = styled.div`
+  font-size :12px;
+  min-height: 20px;
+  display: flex;  
+  justify-content:center;
+  padding-bottom : 20px;
   `;
 const LaView = styled.div`
-    padding:10px;
     display: flex;  
     align-items:center;
     flex-direction: coloum ;
-
 `;
 const ButtonRepairCheck = styled.button`
   width:100px;
   height:30px;
-  font-size:15px;
+  font-size:12px;
   color: #000000;
   margin:10px;
   background-color: ${COLOR.MADARIN};
@@ -208,7 +220,7 @@ const ButtonRepairCheck = styled.button`
 const ButtonCheck = styled.button`
   width:90px;
   height:30px;
-  font-size:15px;
+  font-size:12px;
   color: #000000;
   margin:10px;
   background-color: ${COLOR.MENU_MAIN};

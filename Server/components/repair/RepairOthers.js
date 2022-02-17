@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import COLOR from "../constants/color";
+import COLOR from "../../constants/color";
 const RepairOthers = (props) => {
     return(
         <div>

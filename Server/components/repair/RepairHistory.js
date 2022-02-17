@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import COLOR from "../constants/color";
-import formatDate from "../functions/formatDate";
+import COLOR from "../../constants/color";
+import formatDate from "../../functions/formatDate";
+import { debounce } from "lodash";
 import image from "next/image";
 const RepairHistory = (props) => {
     const info = props.infos;
@@ -26,6 +27,13 @@ const RepairHistory = (props) => {
     const [repairRedo1,setRepairRedo1] = useState(false)
     const [repairRedo2,setRepairRedo2] = useState(false)
     const [repairRedo3,setRepairRedo3] = useState(false)
+    
+    const [windowWidth,setWindowWidth] = useState()
+    const [windowHeight,setWindowHeight] = useState()
+    const handleResize = debounce(()=>{
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
+    },1000)
 
     const [boxSize,setBoxSize] = useState(290);
 
@@ -36,7 +44,6 @@ const RepairHistory = (props) => {
         let newLine = {data: index};
         if(index<3){
             arr.push(newLine)
-            setBoxSize( boxSize - 55);
             setStoreRecept(arr)
         }
     }
@@ -47,7 +54,6 @@ const RepairHistory = (props) => {
                 arr.push(obj)
             }
         })
-        setBoxSize( boxSize + 55);
         setStoreRecept(arr)
     }
     
@@ -87,6 +93,18 @@ const RepairHistory = (props) => {
         })
         .then(response => res =response.json())
     }
+    useEffect(()=>{
+        
+        setBoxSize((window.innerHeight)*0.28)
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
+        console.log("windowWidth: ",window.innerWidth, "windowHeight: ",window.innerHeight)
+        
+        window.addEventListener('resize',handleResize);
+        return ()=>{
+            window.removeEventListener('resize',handleResize);
+        }
+    },[])
     return(
         <div>
             <LaView><ItemText>수선 내역</ItemText><MoneyTable>고객 유상 단가표</MoneyTable><AddTable onClick={()=>{inputRepair()}}>+ 수선 내용 추가</AddTable> </LaView>
@@ -96,12 +114,12 @@ const RepairHistory = (props) => {
                 storeRecept.map((el,index)=>{
                     const key = index;
                     return(
-                        <div key={key}>
+                        <div key={key} style={{height:windowWidth*0.034}}>
                             <LaView>
                                 <ItemText2><div style={{marginLeft:10}}>수선내용{index+1}</div></ItemText2>
                                 <ItemText2>수량</ItemText2>
                                 <ItemText2><div style={{marginLeft:20}}>수선비</div></ItemText2>
-                                <div style={{marginTop:20,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                                <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
                                     <input  type="checkbox" name="xxx" value="yyy" onClick={()=>{
                                         if(key+1 === 1){
                                             setRepairRedo1(!repairType1)
@@ -113,13 +131,13 @@ const RepairHistory = (props) => {
                                     }}/>
                                 </div>
                                 <ItemText2>재수선</ItemText2>
-                                <image  src="/icons/trash.png" width={25} height={25} 
+                                <img  src="/icons/trash.png" width={25} height={20} 
                                     onClick={()=>{deleteRepair(key)}}
                                 />
                             </LaView>
                             <LaView>
                                 <ItemsView >
-                                <select style={{borderWidth:0,borderBottomWidth:2 ,marginLeft:15}}
+                                <select style={{borderWidth:0,borderBottomWidth:2 ,marginLeft:10}}
                                     onChange={(e)=>{
                                         if(key+1 === 1){
                                             setRepairType1(e.target.value)
@@ -171,16 +189,13 @@ const RepairHistory = (props) => {
                 })
             }
             <ItemText>수선처 설명</ItemText>
-            <ItemTable>
-              <input style={{margin:5,minHeight:60,width:"98%",border:0}}
+              <textarea style={{height:(windowHeight*0.08),width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
                 onChange ={(e)=>{
                     setMessage(e.target.value)
                 }}
-              ></input>
-            </ItemTable>
-            <div style={{height:boxSize, display:"flex",flexDirection:"column-reverse",alignItems:"center"}}>
+              ></textarea>
+            <div style={{position: 'absolute',bottom:0,marginLeft:10,display:"flex",width:"46%",flexDirection:"column",alignItems:"center"}}>
                 
-            <CustomButton onClick={()=>{onSave()}}>저장</CustomButton>
             <LaView >
                 <div style={{marginTop:20,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"center"}}>
                     <CheckBox type="checkbox"/>
@@ -190,6 +205,7 @@ const RepairHistory = (props) => {
                 <div style={{fontSize:15,color:`${COLOR.BLACK}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>현금영수증 번호</div>
                 <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}}/>
             </LaView>
+            <CustomButton onClick={()=>{onSave()}}>저장</CustomButton>
           </div>
         </div>
     )
@@ -212,7 +228,7 @@ const CheckBox = styled.input `
 `
 const LaView = styled.div`
   display: flex;  
-  margin:5px;
+  margin:3px;
   align-items:center;
 `;
 const CustomButton = styled.div`
@@ -249,8 +265,6 @@ const ItemText2 = styled.div`
   align-items: center;
   flex:1;
   margin-left:20px;
-  margin-top:20px;
-  margin-bottom:10px;
 `;
 const ItemsView = styled.div`
   display: flex;  
@@ -265,7 +279,7 @@ const Line2 = styled.div`
   margin-top:10px;
   background-color: #C4C4C4
 `;
-const AddTable =styled.div`
+const AddTable =styled.button`
     font-size: 15px;
     border-radius: 5px;
     margin-left: 10px;
@@ -283,11 +297,12 @@ const ItemTable = styled.div`
   border: 2px solid  ${COLOR.BRAUN};
   margin-right:10px;
   margin-left:10px;
-  min-height : 60px
+  border-radius:5px;
+  height : 65px
 
 `;
 
-const MoneyTable =styled.div`
+const MoneyTable =styled.button`
     font-size: 15px;
     border-radius: 5px;
     margin-left: 10px;

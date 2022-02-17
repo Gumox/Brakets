@@ -110,9 +110,9 @@ export default function Return_unregistered() {
     },[])
     return(
         
-        <div style={{minWidth:1150, overflowY:"auto"}}>
+        <div style={{minWidth:1150,height:"100%", overflowY:"scroll"}}>
             <RepairHeader/>
-            <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
+            <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
                 <TopView>
                 <h2>미등록 반송</h2>
                 <CSVLink data={resultList} headers={headers} filename='조회목록'>
@@ -246,6 +246,7 @@ export default function Return_unregistered() {
    
             </ItemTable>
             </div>
+            <div style={{margin:50}}/>
         </div>
     )
 }

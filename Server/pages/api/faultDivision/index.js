@@ -2,7 +2,12 @@ import excuteQuery from "../db"
 
 async function getFaultDivision(id) {
     const result = await excuteQuery({
-        query: `SELECT  *
+        query: `SELECT  
+                  fault_id,
+                  fault_name AS text,
+                  fault_code AS value,	
+                  level,
+                  headquarter_id
                 FROM fault_type 
                 WHERE headquarter_id = ?`,
         values:[id],

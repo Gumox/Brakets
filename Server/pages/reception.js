@@ -14,6 +14,7 @@ import Reception from "../components/reception";
 
 const ReceptionPage = ({ options, user }) => {
   const router = useRouter();
+  console.log("2222222")
   console.log(options)
   const [selectOptions, setSelectOptions] = useState(options); // 전체 페이지에서 사용하는 select options
   const [targetBrandId, setTargetBrandId] = useState(options.brandList[0]); // brandlist 중 첫번째 항목
@@ -172,7 +173,7 @@ export const getServerSideProps = async (ctx) => {
           params: {hq_id: "2"}
         })
         .then(
-          ({ body }) => body), // 내용분석
+          ({ data }) => data), // 내용분석
       axios
         .get('http://localhost:3000/api/judgmentResult', {
           params: {hq_id: "2"}
@@ -186,7 +187,11 @@ export const getServerSideProps = async (ctx) => {
         })
         .then(({ data }) => data), // 수선내용
     ]);
-
+    console.log("-----------------------------------------")
+    console.log(faults.body.length)
+    console.log(analysis.body.length)
+    console.log(results.body.length)
+    console.log(repairs.data.length)
   return {
     props: {
       user,
@@ -196,10 +201,10 @@ export const getServerSideProps = async (ctx) => {
         productCategoryList: [], // 브랜드에 따라서 달라짐
         repairList: repairShops ? repairShops.data : [],
         producerList: producers ? producers.data : [],
-        faultType: faults ? faults.data : [],
-        analysisType: analysis ? analysis.data : [],
-        resultType: results ? results.data : [],
-        repairType: repairs ? repairs.data : [],
+        faultType: faults ,
+        analysisType: analysis ,
+        resultType: results ,
+        repairType: repairs ,
         seasonList: [],
       },
     },

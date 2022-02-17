@@ -22,7 +22,7 @@ const Styles = styled.div`
       padding: 0.5rem;
       border-bottom: 0px solid #000000;
       border-right: 0px solid #000000;
-      min-width:100px;
+      width:70px;
       :last-child {
         border-right: 0;
       }
@@ -74,12 +74,12 @@ function InquiryTable( props ) {
     const columnData = [
         {
             accessor: 'receipt_code',
-            Header: '서비스번호',
+            Header: '　서비스　번호',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>
         },
         {
             accessor: 'receipt_date',
-            Header: '매장접수일',
+            Header: '　 매장　\n접수일',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>
         },
         {
@@ -135,12 +135,12 @@ function InquiryTable( props ) {
         {
             accessor: 'register_date',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>,
-            Header: '수선처 접수일',
+            Header: `　수선처　\n접수일`,
         },
         {
             accessor: 'send_date',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>,
-            Header: '수선처발송일',
+            Header: '　수선처　\n발송일',
         },
         {
             accessor: 'repair1_name',

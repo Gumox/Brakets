@@ -1,12 +1,20 @@
+import { debounce } from "lodash";
 import React,{useState} from "react";
 import styled from "styled-components";
-import COLOR from "../constants/color";
-import store from "../store/store";
+import COLOR from "../../constants/color";
+import store from "../../store/store";
+import { sortSettlementData } from "../../functions/useInSettlement";
 const SettlementResult =(props)=>{
     let results =[];
     const item =props.data
     const [plusMinus,setPlusMinus] = useState(0)
     const [check,setCheck] = useState()
+    const [windowWidth,setWindowWidth] = useState()
+    const [windowHeight,setWindowHeight] = useState()
+    const handleResize = debounce(()=>{
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
+    },1000)
     const setPrice=(plusMinus)=>{
         let before = (item.repair1_price+item.repair2_price+item.repair3_price+item.shipment_price)
         let after = new Number(before)+new Number(plusMinus)
@@ -36,6 +44,10 @@ const SettlementResult =(props)=>{
         return returnState;
 
     }
+    const setContents =(item)=>{
+        console.log( sortSettlementData(item))
+        
+    }
     const onCheck =(check)=>{
         if(check){
             store.dispatch({type:"SET_SELECTED",selected:{repair_detail_id: item.repair_detail_id, state:item.repair_detail_state}})
@@ -54,38 +66,48 @@ const SettlementResult =(props)=>{
         console.log(store.getState().selected)
         return
     }
+    React.useEffect(()=>{
+        console.log("windowWidth: ",windowWidth, "windowHeight: ",windowHeight)
+        console.log("window.innerWidth: ",window.innerWidth,"window.innerHeight: ",window.innerHeight)
+        window.addEventListener('resize',handleResize);
+        console.log((windowWidth)*0.0692)
+        sortSettlementData(item)
+        return ()=>{
+            window.removeEventListener('resize',handleResize);
+        }
+    },[])
     return(
-        <div>
+        
            <LaView><Container>
-            <ItemView><input type= "checkbox" onClick={()=>{onCheck(!check)}}/></ItemView>
-            <ItemView>{item.brand_code}</ItemView>
-            <ItemView>{item.receipt_code}</ItemView>
-            <div style={ItemStyle}> 
+            <CheckBoxView><input type= "checkbox" onClick={()=>{onCheck(!check)}}/></CheckBoxView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{item.brand_code}</ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{item.receipt_code}</ItemView>
+            <div style={{width:(windowWidth)*0.0692,minWidth:82}}> 
                 <ItemInsideView>{item.name}</ItemInsideView>
                 <ItemInsideView>{item.store_contact}</ItemInsideView>
             </div>
-            <div style={ItemStyle}> 
+            <div style={{width:(windowWidth)*0.0692,minWidth:82}}> 
                 <ItemInsideView>{item.customer_name}</ItemInsideView>
                 <ItemInsideView>{item.customer_phone}</ItemInsideView>
             </div>
-            <ItemView>{}</ItemView>
-            <ItemView>{setPaymentState(item.repair_detail_state)}</ItemView>
-            <ItemView>{}</ItemView>
-            <ItemView>{setPrice(0)}</ItemView>
-            <ItemView><input type="number" style={{width:80}} value={plusMinus} onChange={(e)=>{setPlusMinus(e.target.value)}}/></ItemView>
-            <ItemView>{setPrice(plusMinus)}</ItemView>
-            <ItemView><input style={{width:80}}/></ItemView>
-            <ItemView>{}</ItemView>
-            <ItemView><input style={{width:80}}/></ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}><pre>{sortSettlementData(item)}</pre></ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{setPaymentState(item.repair_detail_state)}</ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{}</ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{setPrice(0)}</ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}><input type="number" style={{width:80}} value={plusMinus} onChange={(e)=>{setPlusMinus(e.target.value)}}/></ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{setPrice(plusMinus)}</ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}><input style={{width:80}}/></ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{}</ItemView>
+            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}><input style={{width:80}}/></ItemView>
         </Container></LaView>
-        </div>
+        
     )
 }
 export default SettlementResult
 const ItemStyle ={
     height:40,
     fontSize:12,
-    width:120
+    width:105
 }
 const Container = styled.div`
     display:flex; 
@@ -95,8 +117,6 @@ const Container = styled.div`
 const StateBox = styled.div`
     background-color : #ece6cc;
     border-radius:7px;
-    font-size:10;
-    font-weight:bold;
     width:100px;
     padding:5px;
     display:flex;
@@ -107,7 +127,7 @@ const StateBox = styled.div`
 const ItemView = styled.div`
   font-size :12px;
   min-height: 40px;
-  width :120px;
+  width :105px;
   display: flex;  
   flex-direction: row ;
   align-items: center;
@@ -116,14 +136,24 @@ const ItemView = styled.div`
 const ItemInsideView = styled.div`
   font-size :12px;
   min-height: 20px;
-  width :120px;
+  width :105px;
   display: flex;  
   justify-content:center;
 `;
 const LaView = styled.div`
-    padding:10px;
+    padding-top:10px;
+    padding-bottom:10px;
     display: flex;  
     align-items:center;
     flex-direction: coloum ;
 
+`;
+const CheckBoxView = styled.div`
+    font-size :12px;
+    min-height: 40px;
+    width :50px;
+    display: flex;  
+    flex-direction: row ;
+    align-items: center;
+    justify-content:center;
 `;

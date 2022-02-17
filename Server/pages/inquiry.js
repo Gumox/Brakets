@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import COLOR from '../constants/color';
 import axios from 'axios';
 import store from '../store/store';
-import InquiryTable from '../components/InquiryTable';
 import sortInquiryData from '../functions/sortInquiryData';
 import dateOptionListcontroll from '../functions/dateOptionListcontroll';
 import { CSVLink } from "react-csv";
 import headers from '../constants/inquiryTableHeader';
 import checkDisable from '../functions/checkDisable';
+import InquiryResult from '../components/repair/InquiryResult';
 import Image from 'next/image'
 export default function Inquiry() {
    
@@ -97,7 +97,7 @@ export default function Inquiry() {
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
             <RepairHeader/>
-            <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
+            <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
             <TopView>
                 <h2>조회</h2>
 
@@ -201,8 +201,39 @@ export default function Inquiry() {
                 </Container>
             <Line/>
             <ItemTable >
-                <ContainerScroll >
-                    <InquiryTable data = {data}></InquiryTable>
+                <LaView ><Container>
+                    <ItemView>서비스 번호</ItemView>
+                    <ItemView>매장접수일</ItemView>
+                    
+                    <ItemView>매장명</ItemView>
+                    <ItemView>브랜드</ItemView>
+                    <ItemView>시즌</ItemView>
+                    <ItemView>스타일</ItemView>
+                    <ItemView>컬러</ItemView>
+                    <ItemView>사이즈</ItemView>
+                    <ItemView>과실구분</ItemView>
+                    <ItemView>내용분석</ItemView>
+                    <ItemView>판정결과</ItemView>
+                    <ItemView><pre>{"수선처\n접수일"}</pre></ItemView>
+                    <ItemView><pre>{"수선처\n발송일"}</pre></ItemView>
+                    <ItemView>수선내용1</ItemView>
+                    <ItemView>수선비용1</ItemView>
+                    <ItemView>수선내용2</ItemView>
+                    <ItemView>수선비용2</ItemView>
+                    <ItemView>수선내용3</ItemView>
+                    <ItemView>수선비용3</ItemView>
+                    <ItemView><pre>{"매장\n접수내용"}</pre></ItemView>
+                </Container></LaView>
+                <Line/>
+                            
+                <ContainerScroll style={{overflowY:"scroll"}}>
+                    {
+                        data.map((item,i)=>(
+                            
+                            <InquiryResult key={i} data = {item}></InquiryResult>
+
+                        ))   
+                    }
                 </ContainerScroll>
               
               
@@ -212,7 +243,16 @@ export default function Inquiry() {
     )
 }
 
-
+const ItemStyle = { 
+    
+  fontSize :12,
+  minHeight: 40,
+  width : "150%",
+  display: "flex",  
+  flexDirection: "row" ,
+  alignitems: "center",
+  justifyContent:"center"
+}
 
 const Line =styled.div`
   border:1px solid  ${COLOR.BRAUN};
@@ -227,6 +267,7 @@ const ItemTable = styled.div`
   border: 2px solid  ${COLOR.BRAUN};
   min-width:100%;
   min-height:200px;
+  overflow: hidden;
 
 `;
 
@@ -236,16 +277,13 @@ const Container = styled.div`
     align-items: flex-start;
 `;
 
+
 const ContainerScroll = styled.div`
     margin-top:12px;
-    overflow: scroll;
     max-height: 400px;
     min-height:200px;
-    max-width: 100%
+    width: 100%
 
-    &::-webkit-scrollbar{
-        display: none;
-    }
 
 `;
 const TopView = styled.div`
@@ -253,4 +291,22 @@ const TopView = styled.div`
     display: flex;  
     align-items:center;
     justify-content: space-between;      
+`;
+
+const ItemView = styled.div`
+  font-size :12px;
+  min-height: 55px;
+  width : 70px;
+  display: flex;  
+  flex-direction: row ;
+  align-items: center;
+  justify-content:center;
+  `;
+const LaView = styled.div`
+    padding-top:10px;
+    padding-bottom:10px;
+    display: flex;  
+    align-items:center;
+    flex-direction: coloum ;
+
 `;

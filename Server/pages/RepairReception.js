@@ -4,12 +4,13 @@ import styled from "styled-components";
 import COLOR from "../constants/color";
 import axios from "axios";
 import _ from "lodash";
-import RepairReceiptModal from "../components/RepairReceiptModal";
+import RepairReceiptModal from "../components/repair/RepairReceiptModal";
 import store from "../store/store";
 import headers from "../constants/repairReceptionTableHeader";
 import checkDisable from "../functions/checkDisable";
 import { CSVLink } from "react-csv";
 import Image from 'next/image'
+import { debounce } from "lodash";
 
 function RepairReception({options,user}) {
   const option =options.companys
@@ -19,6 +20,14 @@ function RepairReception({options,user}) {
   const [listData,setListData] = useState(options.list)
   const [code,setCode] = useState(null)
   const [disable,setDisable] = useState(checkDisable(user.level))
+
+  
+  const [windowWidth,setWindowWidth] = useState()
+  const [windowHeight,setWindowHeight] = useState()
+  const handleResize = debounce(()=>{
+      setWindowWidth(window.innerWidth)
+      setWindowHeight(window.innerHeight)
+  },1000)
   
  
   let selectList = [{name:"전체",key:null}];
@@ -63,8 +72,16 @@ function RepairReception({options,user}) {
     localStorage.setItem('COMPANY',JSON.stringify(selectItems));
     localStorage.setItem('SHOP',shop_id)
     localStorage.setItem('SHOP_NAME',options.info[0].name)
-    console.log(user)
     localStorage.setItem('USER',JSON.stringify(user))
+
+    setWindowWidth(window.innerWidth)
+    setWindowHeight(window.innerHeight)
+    console.log("windowWidth: ",window.innerWidth, "windowHeight: ",window.innerHeight)
+    
+    window.addEventListener('resize',handleResize);
+    return ()=>{
+        window.removeEventListener('resize',handleResize);
+    }
   },[])
   return(
       <div style={{height:"100%",overflowY: "scroll"}}>

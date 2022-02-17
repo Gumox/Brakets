@@ -2,7 +2,12 @@ import excuteQuery from "../db"
 
 async function getJudgmentResult(id) {
     const result = await excuteQuery({
-        query: `SELECT  *
+        query: `SELECT                      
+                  judgment_result_id,
+                  judgment_name	AS text,
+                  hq_id,	
+                  level,	
+                  judgment_code	AS value
                 FROM judgment_result 
                 WHERE hq_id = ?`,
         values:[id],

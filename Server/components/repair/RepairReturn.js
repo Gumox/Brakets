@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import COLOR from "../constants/color";
-import formatDate from "../functions/formatDate";
+import COLOR from "../../constants/color";
+import formatDate from "../../functions/formatDate";
 const RepairReturn = (props) => {
     const reciver = props.reciver;
     const info = props.infos;

@@ -1,17 +1,19 @@
 
 import React,{useEffect,useState} from "react";
 import styled from "styled-components";
-import COLOR from "../constants/color";
+import COLOR from "../../constants/color";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import formatDate from "../functions/formatDate";
+import formatDate from "../../functions/formatDate";
 import RepairHistory from "./RepairHistory";
 import RepairReturn from "./RepairReturn";
 import RepairOthers from "./RepairOthers";
 import axios from "axios";
-import ip from "../constants/ip";
-import store from "../store/store";
-import Image from 'next/image';
+import ip from "../../constants/ip";
+import store from "../../store/store";
+import { getSelectList,setSelectList,getRepairType } from "../../functions/useInRepairReceiptModal";
+import image from 'next/image';
+import { debounce } from "lodash";
 
 function RepairReceiptModal (props) {
   const el =props.item;
@@ -27,6 +29,12 @@ function RepairReceiptModal (props) {
   const [selectFault,setSelectFault] =useState(0)
   const [selectAnalysis,setSelectAnalysis] = useState(0)
   const [deliveryType,setDeliveryType] = useState(1)
+  const [windowWidth,setWindowWidth] = useState()
+  const [windowHeight,setWindowHeight] = useState()
+  const handleResize = debounce(()=>{
+      setWindowWidth(window.innerWidth)
+      setWindowHeight(window.innerHeight)
+  },1000)
 
   let images= [];
   imageList.forEach((obj) => {
@@ -46,62 +54,6 @@ function RepairReceiptModal (props) {
     imageView[index] = (img);
   })
 
-  const getSelectList =async (api) => {
-    const [data] = await Promise.all([
-      axios
-        .get(`${process.env.API_URL}/`+api,{
-          params: { hq_id:hq_id},})
-        .then(({ data }) => data)
-        .catch(error=>{
-
-        })
-    ]);
-    return(data.body);
-  }
-  
-
-  const setSelectList = (selectItems,text) => {
-    let type = text +"_name";
-    if(text === "repair_type"){
-      type = "text";
-    }
-    const code = text +"_code";
-
-    let resultItems =[];
-    if(selectItems !== undefined){
-      selectItems.map((item,index) => {
-        let resultItem;
-        const key = index;                    
-        if(item.level == 1){
-            resultItem =(
-              <option value={item[code]} key={key}>
-              {item[type]}
-              </option>
-            )
-        }else if(item.level == 0){
-            resultItem =(
-              <option disabled value={item[code]} key={key} style={{backgroundColor:`${COLOR.LIGHT_GRAY}`}}>
-              {item[type]}
-              </option>
-            )
-        }
-        resultItems[index] = (resultItem)
-      })
-    }
-    return(resultItems)
-  }
-  const getRepairType= async()=>{
-    const [data] = await Promise.all([
-        axios
-        .get(`${process.env.API_URL}/type/repair`,{
-        params: { headquarterId: 2},})
-        .then(({ data }) => data)
-        .catch(error=>{
-
-        })
-    ]);
-    return(data.data);
-}
   let date = formatDate(new Date(el.receipt_date))
   let faultLists = setSelectList(faultItems,"fault")
   let judgmentLists = setSelectList(judgmentItems,"judgment")
@@ -132,9 +84,9 @@ function RepairReceiptModal (props) {
   }
   useEffect( () => {
     const fetchData = async () => {
-      const fI = await getSelectList('faultDivision')
-      const jI = await getSelectList('judgmentResult')
-      const aI = await getSelectList('analysisType')
+      const fI = await getSelectList('faultDivision',hq_id)
+      const jI = await getSelectList('judgmentResult',hq_id)
+      const aI = await getSelectList('analysisType',hq_id)
       const typeInfo = await getRepairType();
       
       store.dispatch({type:"ANALYSIS",analysis:aI});
@@ -158,6 +110,12 @@ function RepairReceiptModal (props) {
       setRepiarType(typeInfo)
     }
     fetchData();
+    setWindowWidth(window.innerWidth)
+    setWindowHeight(window.innerHeight)
+    window.addEventListener('resize',handleResize);
+    return ()=>{
+        window.removeEventListener('resize',handleResize);
+    }
   },[]);
   return (
     <div suppressHydrationWarning={true}>
@@ -172,13 +130,15 @@ function RepairReceiptModal (props) {
       </ContainText></PrView>
       }  
       modal
-      contentStyle={styles.contentStyle}>
+      contentStyle={{ 
+        width: windowWidth*0.92,
+        height:windowHeight*0.95}}>
       
         
       
       <Container>
-        <Half>
-          <h2 style={{marginLeft:40,marginRight:20}}>매장 접수 정보</h2>
+        <div style={{flex :1, height:windowHeight*0.9}}>
+          <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>매장 접수 정보</div>
           <Line/>
           <div style={{marginLeft:20,marginRight:20,flex:1}}>
             <LaView>
@@ -206,7 +166,7 @@ function RepairReceiptModal (props) {
             <ItemText>본사 설명</ItemText>
             <ItemTable><div style={{margin:10}}>{el.message}</div></ItemTable>
           </div>
-          <div style={{flex:0.3,borderWidth:2,borderColor:"#FFffff",
+          {/*<div style={{flex:0.3,borderWidth:2,borderColor:"#FFffff",
                       borderStyle:"solid",minHeight:380,margin:30,alignItems:"center",
                       justifyContent:"center",display:"flex",flexDirection:"column"}}>
             <div style={{fontSize:15,fontWeight:"bold",margin:10}}>전체 이미지</div>
@@ -214,11 +174,11 @@ function RepairReceiptModal (props) {
               alt="전체이미지"></DetailImg>
           
             {imageView}
-          </div>
-        </Half>
+          </div>*/}
+        </div>
         
-        <Half>
-        <h2 style={{marginLeft:40,marginRight:20}}>수선처 접수 입력</h2>
+        <div style={{flex :1}}>
+        <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>수선처 접수 입력</div>
           <Line/>
           <div style={{marginLeft:20,marginRight:20,flex:1}}>
             <LaView>
@@ -271,7 +231,7 @@ function RepairReceiptModal (props) {
             
           </div>
           
-        </Half>
+        </div>
     </Container> 
     </Popup>
     }
@@ -353,13 +313,14 @@ const ItemBox =styled.div`
   margin-left:10px;
   margin-right:10px;
   flex:1;
-  height : 50px;
+  height : 42px;
   
 `;
 const RightItemBox =styled.div`
   margin-left:10px;
   margin-right:10px;
   height : 50px;
+  flex:1;
   
 `;
 const ItemBoxSmall =styled.div`

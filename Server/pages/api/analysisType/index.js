@@ -2,8 +2,13 @@ import excuteQuery from "../db"
 
 async function getAnalysisType(id) {
     const result = await excuteQuery({
-        query: `SELECT  *
-                FROM analysis_type 
+        query: `SELECT  
+                analysis_id,
+                analysis_name  AS text,
+                analysis_code AS value,
+                headquarter_id,
+                level
+                FROM analysis_type
                 WHERE headquarter_id = ?`,
         values:[id],
       });
