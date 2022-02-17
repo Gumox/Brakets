@@ -4,6 +4,9 @@ import moment from "moment";
 import { useTable, useBlockLayout, useResizeColumns } from 'react-table';
 
 import COLOR from "../../../constants/color";
+import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
+import { STORE_TYPE, RECEIPT_CATEGORY_TYPE, STORE_CATEGORY, RECEIPT_TYPE } from "../../../constants/type";
+
 
 function Table({ columns, data, searchList, getTargetData }) {
 
@@ -106,7 +109,10 @@ const List = ({ data, handleDataClick = () => {} }) => {
     {Header: '최초수정일', accessor: '최초수정일'},
   ],[])
 
-    const value = [];
+    const value = data.map((selected, index) => ({
+      "No": index + 1,
+      "매장코드":selected[RECEIPT.CODE],
+    }));
 
   return (
     <Wrapper>
