@@ -189,7 +189,7 @@ const RepairHistory = (props) => {
                 })
             }
             <ItemText>수선처 설명</ItemText>
-              <textarea style={{height:(windowHeight*0.08),width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
+              <textarea style={{height:(windowHeight*0.08),fontSize:18,padding:10,width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
                 onChange ={(e)=>{
                     setMessage(e.target.value)
                 }}

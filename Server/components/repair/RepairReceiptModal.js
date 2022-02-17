@@ -12,8 +12,9 @@ import axios from "axios";
 import ip from "../../constants/ip";
 import store from "../../store/store";
 import { getSelectList,setSelectList,getRepairType } from "../../functions/useInRepairReceiptModal";
-import image from 'next/image';
+import Image from 'next/image';
 import { debounce } from "lodash";
+import RecepitionImage from "./RecepitionImage";
 
 function RepairReceiptModal (props) {
   const el =props.item;
@@ -138,43 +139,46 @@ function RepairReceiptModal (props) {
       
       <Container>
         <div style={{flex :1, height:windowHeight*0.9}}>
-          <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>매장 접수 정보</div>
-          <Line/>
-          <div style={{marginLeft:20,marginRight:20,flex:1}}>
-            <LaView>
-              <ItemBox><ItemTextTop>브랜드</ItemTextTop><ItemTextBottom>{el.brand_name}</ItemTextBottom></ItemBox>
-              <ItemBox><ItemTextTop>서비스 번호</ItemTextTop><ItemTextBottom>{el.receipt_code}</ItemTextBottom></ItemBox>
-              <ItemBox><ItemTextTop>수선처</ItemTextTop><ItemTextBottom>{info.name}</ItemTextBottom></ItemBox>
-              <ItemBox><ItemTextTop>생산업체</ItemTextTop><ItemTextBottom>{el.mfr_name}</ItemTextBottom></ItemBox>
-            </LaView>
-            <LaView>
-              <ItemBox><ItemTextTop>매장명</ItemTextTop><ItemTextBottom>{el.name}</ItemTextBottom></ItemBox>
-              <ItemBox><ItemTextTop>매장 연락처</ItemTextTop><ItemTextBottom>{el.store_contact}</ItemTextBottom></ItemBox>
-              <ItemBox><ItemTextTop>고객명</ItemTextTop><ItemTextBottom>{el.customer_name}</ItemTextBottom></ItemBox>
-              <ItemBox><ItemTextTop>고객 연락처</ItemTextTop><ItemTextBottom>{el.customer_phone}</ItemTextBottom></ItemBox>
-            </LaView>
-            <LaView>
-              <ItemBoxSmall><ItemTextTop>시즌</ItemTextTop><ItemTextBottom>{el.season_name}</ItemTextBottom></ItemBoxSmall>
-              <ItemBox><ItemTextTop>스타일 No.</ItemTextTop><ItemTextBottom>{el.style_code}</ItemTextBottom></ItemBox>
-              <ItemBoxSmall><ItemTextTop>Color</ItemTextTop><ItemTextBottom>{el.color}</ItemTextBottom></ItemBoxSmall>
-              <ItemBoxSmall><ItemTextTop>Size</ItemTextTop><ItemTextBottom>{el.size}</ItemTextBottom></ItemBoxSmall>
-              <ItemBoxSmall><ItemTextTop>차수</ItemTextTop><ItemTextBottom>{el.degree}</ItemTextBottom></ItemBoxSmall>
-            </LaView>
-            <Line2/>
-            <ItemText>매장 접수 내용</ItemText>
-            <ItemTable><div style={{margin:10}}>{el.store_message}</div></ItemTable>
-            <ItemText>본사 설명</ItemText>
-            <ItemTable><div style={{margin:10}}>{el.message}</div></ItemTable>
+          <div style={{height:520,border:2,borderStyle:"solid"}}>
+            <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>매장 접수 정보</div>
+            <Line/>
+            <div style={{marginLeft:20,marginRight:20,flex:1}}>
+              <LaView>
+                <ItemBox><ItemTextTop>브랜드</ItemTextTop><ItemTextBottom>{el.brand_name}</ItemTextBottom></ItemBox>
+                <ItemBox><ItemTextTop>서비스 번호</ItemTextTop><ItemTextBottom>{el.receipt_code}</ItemTextBottom></ItemBox>
+                <ItemBox><ItemTextTop>수선처</ItemTextTop><ItemTextBottom>{info.name}</ItemTextBottom></ItemBox>
+                <ItemBox><ItemTextTop>생산업체</ItemTextTop><ItemTextBottom>{el.mfr_name}</ItemTextBottom></ItemBox>
+              </LaView>
+              <LaView>
+                <ItemBox><ItemTextTop>매장명</ItemTextTop><ItemTextBottom>{el.name}</ItemTextBottom></ItemBox>
+                <ItemBox><ItemTextTop>매장 연락처</ItemTextTop><ItemTextBottom>{el.store_contact}</ItemTextBottom></ItemBox>
+                <ItemBox><ItemTextTop>고객명</ItemTextTop><ItemTextBottom>{el.customer_name}</ItemTextBottom></ItemBox>
+                <ItemBox><ItemTextTop>고객 연락처</ItemTextTop><ItemTextBottom>{el.customer_phone}</ItemTextBottom></ItemBox>
+              </LaView>
+              <LaView>
+                <ItemBoxSmall><ItemTextTop>시즌</ItemTextTop><ItemTextBottom>{el.season_name}</ItemTextBottom></ItemBoxSmall>
+                <ItemBox><ItemTextTop>스타일 No.</ItemTextTop><ItemTextBottom>{el.style_code}</ItemTextBottom></ItemBox>
+                <ItemBoxSmall><ItemTextTop>Color</ItemTextTop><ItemTextBottom>{el.color}</ItemTextBottom></ItemBoxSmall>
+                <ItemBoxSmall><ItemTextTop>Size</ItemTextTop><ItemTextBottom>{el.size}</ItemTextBottom></ItemBoxSmall>
+                <ItemBoxSmall><ItemTextTop>차수</ItemTextTop><ItemTextBottom>{el.degree}</ItemTextBottom></ItemBoxSmall>
+              </LaView>
+              <Line2/>
+              <ItemText>매장 접수 내용</ItemText>
+              <ItemTable><div style={{margin:10}}>{el.store_message}</div></ItemTable>
+              <ItemText>본사 설명</ItemText>
+              <ItemTable><div style={{margin:10}}>{el.message}</div></ItemTable>
+            </div>
           </div>
-          {/*<div style={{flex:0.3,borderWidth:2,borderColor:"#FFffff",
-                      borderStyle:"solid",minHeight:380,margin:30,alignItems:"center",
-                      justifyContent:"center",display:"flex",flexDirection:"column"}}>
-            <div style={{fontSize:15,fontWeight:"bold",margin:10}}>전체 이미지</div>
+            <LaView>
+              <ItemBox>
+                <div>전체 이미지</div>
+                <Image src={fullImage} width={((windowHeight)*0.9-620)/2} height={((windowHeight)*0.9-600)/2} alt="전체이미지"/>
+              </ItemBox>
+            </LaView>
+            {
+              /*
             <DetailImg src={fullImage} style={{margin:10}}
-              alt="전체이미지"></DetailImg>
-          
-            {imageView}
-          </div>*/}
+              alt="전체이미지"></DetailImg> */}
         </div>
         
         <div style={{flex :1}}>
