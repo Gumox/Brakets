@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { useTable, useBlockLayout, useResizeColumns } from 'react-table';
+import { useTable, useBlockLayout, useResizeColumns, useRowSelect } from 'react-table';
 
 import COLOR from "../../../constants/color";
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
@@ -12,6 +12,23 @@ import {
   STORE_CATEGORY
 } from "../../../constants/type";
 import Checkbox from "../../Checkbox";
+
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef()
+    const resolvedRef = ref || defaultRef
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate
+    }, [resolvedRef, indeterminate])
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    )
+  }
+)
 
 function Table({ columns, data, searchList, getTargetData }) {
 
@@ -30,7 +47,8 @@ function Table({ columns, data, searchList, getTargetData }) {
       headerGroups,
       rows,
       prepareRow,
-      state,
+      state: {selectedRowIds},
+      selectedFlatRows,
       resetResizing,
   } = useTable(
       {
@@ -39,18 +57,47 @@ function Table({ columns, data, searchList, getTargetData }) {
           defaultColumn,
       },
       useBlockLayout,
-      useResizeColumns
+      useResizeColumns,
+      useRowSelect,
+      hooks => {
+        hooks.visibleColumns.push(columns => [
+          // Let's make a column for selection
+          {
+            id: 'selection',
+            // The header can use the table's getToggleAllRowsSelectedProps method
+            // to render a checkbox
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <div>
+                <IndeterminateCheckbox 
+                  {...getToggleAllRowsSelectedProps()} 
+                />
+              </div>
+            ),
+            // The cell can use the individual row's getToggleRowSelectedProps method
+            // to the render a checkbox
+            Cell: ({ row }) => (
+              <div>
+                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+              </div>
+            ),
+          },
+          ...columns,
+        ])
+      }
   )
 
   return (
       <>
           <div>
-              <div {...getTableProps()} className="table">
+              <div {...getTableProps(
+              )} className="table">
                   <div>
                       {headerGroups.map((headerGroup,i) => (
                           <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
                               {headerGroup.headers.map((column,j) => (
-                                  <div key={j} {...column.getHeaderProps()} className="th">
+                                  <div key={j} {...column.getHeaderProps({
+                                    style: {height: 50, fontSize: 13}
+                                  })} className="th">
                                       {column.render('Header')}
                                       {/* Use column.getResizerProps to hook up the events correctly */}
                                       <div
@@ -69,11 +116,21 @@ function Table({ columns, data, searchList, getTargetData }) {
                           prepareRow(row)
                           return (
                               <div key={i} {...row.getRowProps(
-                                  // {onClick: () => (getTargetData(row.original["서비스카드 번호"]))}
+                                  {
+                                    onClick: () => (
+                                                    rows[row.id].toggleRowSelected()
+                                                    )
+                                  }
                               )} className="tr">
                                   {row.cells.map((cell,j) => {
                                       return (
-                                          <div key={j} {...cell.getCellProps()} className="td">
+                                          <div key={j} {...cell.getCellProps(
+                                            {
+                                              style:{color:'green', background: '#ebe8e8'}
+                                              // green
+                                              // #1b590e
+                                            }
+                                          )} className="td">
                                               {cell.render('Cell')}
                                           </div>
                                       )
@@ -160,11 +217,13 @@ const Styles = styled.div`
   padding: 1rem;
 
   .table {
+
     display: inline-block;
     border-spacing: 0;
     border: 1px solid black;
 
     .tr {
+      
       :last-child {
         .td {
           border-bottom: 0;
@@ -174,6 +233,7 @@ const Styles = styled.div`
 
     .th,
     .td {
+      
       margin: 0;
       padding: 0.5rem;
       border-bottom: 1px solid black;

@@ -67,7 +67,9 @@ function Table({ columns, data, handleDataClick }) {
             // to render a checkbox
             Header: ({ getToggleAllRowsSelectedProps }) => (
               <div>
-                <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+                <IndeterminateCheckbox 
+                  {...getToggleAllRowsSelectedProps()} 
+                />
               </div>
             ),
             // The cell can use the individual row's getToggleRowSelectedProps method
@@ -110,11 +112,22 @@ function Table({ columns, data, handleDataClick }) {
                           prepareRow(row)
                           return (
                               <div key={i} {...row.getRowProps(
-                                  {onClick: () => (handleDataClick(row.original["서비스카드 번호"]))}
+                                  {
+                                    onClick: () => (
+                                                    // handleDataClick(row.original["서비스카드 번호"])
+                                                    rows[row.id].toggleRowSelected()
+                                                    )
+                                  }
                               )} className="tr">
                                   {row.cells.map((cell,j) => {
                                       return (
-                                          <div key={j} {...cell.getCellProps()} className="td">
+                                          <div key={j} {...cell.getCellProps(
+                                            {
+                                              style: {color: 'red', background: '#ebe8e8'}
+                                              // red
+                                              // orange: #ffa203
+                                            }
+                                          )} className="td">
                                               {cell.render('Cell')}
                                           </div>
                                       )
