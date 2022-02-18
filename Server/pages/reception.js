@@ -164,18 +164,18 @@ export const getServerSideProps = async (ctx) => {
         .then(({ data }) => data), // 수선처
       axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
       axios
-        .get('http://localhost:3000/api/faultDivision', {
+        .get(`${process.env.API_URL}/faultDivision`, {
           params: {hq_id: "2"}
         })
         .then(({ data }) => data), // 과실구분
       axios
-        .get('http://localhost:3000/api/analysisType', {
+        .get(`${process.env.API_URL}/analysisType`, {
           params: {hq_id: "2"}
         })
         .then(
           ({ data }) => data), // 내용분석
       axios
-        .get('http://localhost:3000/api/judgmentResult', {
+        .get(`${process.env.API_URL}/judgmentResult`, {
           params: {hq_id: "2"}
         })
         .then(({ data }) => data), // 판정결과
@@ -187,11 +187,6 @@ export const getServerSideProps = async (ctx) => {
         })
         .then(({ data }) => data), // 수선내용
     ]);
-    console.log("-----------------------------------------")
-    console.log(faults.body.length)
-    console.log(analysis.body.length)
-    console.log(results.body.length)
-    console.log(repairs.data.length)
   return {
     props: {
       user,
@@ -201,10 +196,10 @@ export const getServerSideProps = async (ctx) => {
         productCategoryList: [], // 브랜드에 따라서 달라짐
         repairList: repairShops ? repairShops.data : [],
         producerList: producers ? producers.data : [],
-        faultType: faults ,
-        analysisType: analysis ,
-        resultType: results ,
-        repairType: repairs ,
+        faultType: faults ? faults.body: [],
+        analysisType: analysis ? analysis.body: [],
+        resultType: results ? results.body: [],
+        repairType: repairs ? repairs.data: [],
         seasonList: [],
       },
     },

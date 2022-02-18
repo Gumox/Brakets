@@ -155,10 +155,8 @@ export default function Settlement()  {
     
                     </ItemTable>
             </div>
-                    <div style={{height:50}}/>
-            
-            
-        
+            <br/>
+            <br/>
         </div>
     </div>
     )

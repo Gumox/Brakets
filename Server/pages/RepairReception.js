@@ -84,48 +84,50 @@ function RepairReception({options,user}) {
     }
   },[])
   return(
-      <div style={{height:"100%",overflowY: "scroll"}}>
-          <RepairHeader/>
-          <div style={{paddingLeft: "10%",paddingRight: "10%"}}>
-          <TopView>
-                <h2>접수</h2>
+    <div style={{height:"100%",overflowY: "scroll"}}>
+      <RepairHeader/>
+      <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
+        <TopView>
+              <h2>접수</h2>
 
-                <CSVLink data={listData} headers={headers} filename='접수목록.csv'>
-                <Image alt="excel" src='/icons/excel.png' width={45} height={40} />
-                </CSVLink>
-          </TopView>
-            <hr/>
-              <Container>회사 설정 :
-              <select disabled={disable} onChange={(e)=>handleSelect(e)}  style={{marginLeft:10,marginRight: 10}} >
-              {selectItems.map((item) => (
-                  <option value={item.key} key={item.key}>
-                  {item.name}
-                  </option>
-              ))}
-              </select>
-              
-              
-          
-          서비스 카드 번호 : 
-              <input disabled={disable} style={{marginLeft:15}} onChange={(e)=>{setCode(e.target.value)}}></input> <button 
-                  style={{width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
-                  onClick={()=>{getOptions()}}
-                  >확인</button>  
-                </Container> 
-              <div style={{color :"#ff0000"}}><h6>⚠️직접 입력 후 엔터를 누르거나 바코드 리더기를 이용해주세요</h6></div>
-
-          
-          오늘의 접수 예정
-          <Line/>
-          <ItemTable >
-            <div style={{marginTop:12}}></div>
-            <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
-            <hr/>
+              <CSVLink data={listData} headers={headers} filename='접수목록.csv'>
+              <Image alt="excel" src='/icons/excel.png' width={45} height={40} />
+              </CSVLink>
+        </TopView>
+          <hr/>
+            <Container>회사 설정 :
+            <select disabled={disable} onChange={(e)=>handleSelect(e)}  style={{marginLeft:10,marginRight: 10}} >
+            {selectItems.map((item) => (
+                <option value={item.key} key={item.key}>
+                {item.name}
+                </option>
+            ))}
+            </select>
             
-            {lists}
-          </ItemTable>
-          </div>
+            
+        
+        서비스 카드 번호 : 
+            <input disabled={disable} style={{marginLeft:15}} onChange={(e)=>{setCode(e.target.value)}}></input> <button 
+                style={{width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
+                onClick={()=>{getOptions()}}
+                >확인</button>  
+              </Container> 
+            <div style={{color :"#ff0000"}}><h6>⚠️직접 입력 후 엔터를 누르거나 바코드 리더기를 이용해주세요</h6></div>
+
+        
+        오늘의 접수 예정
+        <Line/>
+        <ItemTable >
+          <div style={{marginTop:12}}></div>
+          <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
+          <hr/>
+          
+          {lists}
+        </ItemTable>
+        <br/>
+        <br/>
       </div>
+    </div>
   )
 }
 
