@@ -13,7 +13,7 @@ import {
 import Checkbox from "../../Checkbox";
 
 
-const IndeterminateCheckbox = React.forwardRef<HTMLInputElement>(
+const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()
     const resolvedRef = ref || defaultRef
