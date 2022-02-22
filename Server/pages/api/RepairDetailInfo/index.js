@@ -69,10 +69,10 @@ async function getReceipt(code) {
 const RepairDetailInfo = async (req, res) => {
   if (req.method === "GET") {
     console.log("req.headers.referer");
-    console.log(req.headers.referer);
     console.log("req.query");
     console.log(req.query);
     const { code } = req.query;
+    console.log("-------",code)
     try {
       const receipt = await getReceipt(code);
       const imageResult = await getImageList(code);

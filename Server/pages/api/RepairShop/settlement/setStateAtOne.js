@@ -6,8 +6,13 @@ async function updatesStateAtOne(List) {
     for (let data of List) {
       if(data.state == 0){
         const result = await excuteQuery({
-            query: `UPDATE repair_detail SET repair_detail_state = '1' WHERE repair_detail.repair_detail_id = ?;`,
-            values: [data.repair_detail_id],
+            query: `UPDATE repair_detail 
+                    SET repair_detail_state = '1',
+                        adjustment = ?,
+                        adjustment_reason = ?,
+                        remarks = ?
+                    WHERE repair_detail.repair_detail_id = ?;`,
+            values: [data.adjustment,data.adjustment_reason,data.remarks,data.repair_detail_id],
         })
         if(result.error){
             return result.error

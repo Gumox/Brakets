@@ -5,17 +5,26 @@ import COLOR from '../constants/color'
 import styled from 'styled-components'
 import checkDisable from '../functions/checkDisable';
 import SettlementResult from "../components/repair/SettlementResult";
-import { debounce } from "lodash";
+import { debounce, set } from "lodash";
 import { getSettlementData ,setStateAtOne,setStateAtTwo} from "../functions/useInSettlement";
+import { getRepairType } from "../functions/useInRepairReceiptModal";
 
 export default function Settlement()  {
     const [companyList,setCompanyList] = useState(store.getState().company)
-    console.log("------------------------")
-    console.log(companyList)
+    const [shop,setShop] = useState(0)
     const [shopName,setShopName] = useState('')
     const [userInfo,setUserInfo] = useState()
+    
+    const [hqId,setHqId] = useState()
+    const [selectOption,setSelectOption] = useState(null)
+    const [startDate,setStartDate] = useState(null)
+    const [endDate,setEndDate] = useState(null)
+
+
+
     const [disable,setDisable] = useState(true)
     const [settlementList,setSettlementList] = useState([])
+    const [types,setTypes] =useState([])
     const [windowWidth,setWindowWidth] = useState()
     const [windowHeight,setWindowHeight] = useState()
     const handleResize = debounce(()=>{
@@ -33,21 +42,25 @@ export default function Settlement()  {
         setStateAtTwo(list)
         location.reload()
     }
+    const setTable = async(parmas)=>{
+        let list = await getSettlementData(parmas)
+        console.log(list)
+        setSettlementList(list.data)
+    }
     useEffect(()=>{
         const fetchData = async () => {
         
             setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
-            console.log("------------****************************------------")
-            console.log(JSON.parse(localStorage.getItem('COMPANY')))
             setShopName(localStorage.getItem('SHOP_NAME'))
+            setShop(localStorage.getItem('SHOP'))
             let user = JSON.parse(localStorage.getItem('USER'))
             setUserInfo(user)
             setDisable(checkDisable(user.level))
             let selectShop
+            let typeList = await getRepairType(null)
         
             if(!checkDisable(user.level)){
                 let list = await getSettlementData({repairShop: localStorage.getItem('SHOP')})
-                
                 setSettlementList(list.data)
                 selectShop=(
                     <div>{localStorage.getItem('SHOP_NAME')}</div>
@@ -62,6 +75,7 @@ export default function Settlement()  {
                     </select>
                 )
             }
+            setTypes(typeList)
             setSelectShopOption(selectShop)
         }
         fetchData();
@@ -82,15 +96,8 @@ export default function Settlement()  {
             <Container>회사 설정 :
             <select style={{marginLeft:10,marginRight: 10}} 
                 onChange={(e)=>{
-                    setSelectedCompany(e.target.value)
-                    setTable({
-                        shop_id: shop_id,
-                        brand : brand,
-                        code : code,
-                        startDate : startDate,
-                        endDate : endDate,
-                        dateOption : dateOption 
-                    });
+                    console.log(e.target.value)
+                    setHqId(e.target.value)
                 }}>
                 {companyList.map((item) => (
                     <option value={item.key} key={item.key}>
@@ -109,15 +116,35 @@ export default function Settlement()  {
                             <h3 style={{minWidth:50, minHeight:22}}>수선처</h3>
                             {selectShopOption}
                             <h3 style={{marginLeft:10,minWidth:50, minHeight:22}}>기준</h3>
-                            <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} >
-                                <option value="">수선업체 접수일</option>
-                                <option value="">수선업체 발송일</option>
+                            <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} 
+                                onChange={(e)=>{
+                                    console.log(e.target.value)
+                                    setSelectOption(e.target.value)
+                                }}
+                            >
+                                <option value="">선택</option>
+                                <option value="register_date">수선업체 접수일</option>
+                                <option value="complete_date">수선업체 발송일</option>
                             </select>
                         
-                            <input type="date" style={{marginLeft:30}}/>
+                            <input type="date" style={{marginLeft:30}} onChange={((e)=>{
+                                setStartDate(e.target.value);
+                            })}/>
                             <h5 style={{marginLeft:20,marginRight:20, display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center"}}>-</h5>
-                            <input type="date"/>
-                            <CustomButtonBlack style={{marginLeft:20}}>조회</CustomButtonBlack>
+                            <input type="date" onChange={((e)=>{
+                                setEndDate(e.target.value);
+                            })}/>
+                            <CustomButtonBlack style={{marginLeft:20}}
+                                onClick={()=>{
+                                    setTable({
+                                        hq_id : hqId,
+                                        repairShop : shop,
+                                        selectOption : selectOption,
+                                        startDate : startDate,
+                                        endDate : endDate
+                                    })
+                                }}
+                            >조회</CustomButtonBlack>
                         </LaView>
                     </div>
                     <div style={{width : "100%",display:"flex",flexDirection:"row-reverse"}}>
@@ -129,25 +156,25 @@ export default function Settlement()  {
                     <div style={{marginTop:12,overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:200}}>
                             <LaView ><Container>
                                 <CheckBoxView>#</CheckBoxView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>브랜드</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>서비스 번호</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>브랜드</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>서비스 번호</ItemView>
                                 
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>매장정보</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>고객정보</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수선내용(수량)</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>상태</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>본사 당담자</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수선비</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수정 수선비</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>최종수선비</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수정사유</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>수선처 당담자</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:80}}>비고</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>매장정보</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>고객정보</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선내용(수량)</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>상태</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>본사 당담자</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선비</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수정 수선비</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>최종수선비</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수정사유</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선처 당담자</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>비고</ItemView>
                             </Container></LaView>
                             <Line2/>
                         {   
                             settlementList.map((item,index)=>(
-                                <SettlementResult key = {index} data ={item}></SettlementResult>
+                                <SettlementResult key = {index} data ={item} type ={types}></SettlementResult>
                             ))
                             
                         }
@@ -215,6 +242,9 @@ const ButtonRepairCheck = styled.button`
   boerder:0px;
   border-radius : 7px;
   justify-content : center;
+  &&:focus {     
+    background-color:${COLOR.DARK_ORANGE};    
+}
   
 `;
 const ButtonCheck = styled.button`
@@ -226,6 +256,8 @@ const ButtonCheck = styled.button`
   background-color: ${COLOR.MENU_MAIN};
   border-radius : 7px;
   justify-content : center;
+  &&:focus {     
+    background-color:${COLOR.INDIGO};    
   
 `;
 const CustomButtonBlack = styled.button`

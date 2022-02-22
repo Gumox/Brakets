@@ -10,6 +10,7 @@ import { CSVLink } from "react-csv";
 import headers from '../constants/inquiryTableHeader';
 import checkDisable from '../functions/checkDisable';
 import InquiryResult from '../components/repair/InquiryResult';
+import { getRepairType } from '../functions/useInRepairReceiptModal'; 
 import Image from 'next/image'
 export default function Inquiry() {
    
@@ -50,13 +51,14 @@ export default function Inquiry() {
     }
     const setTable =useCallback( async(params) =>{
         let datas = [];
+        let types = await getRepairType(null)
         if(params.dateOption === "receipt_date"){
             datas = await getData(params)
-            let sort =await sortInquiryData(datas.body,params)
+            let sort =await sortInquiryData(datas.body,params,types)
             setData(sort)
         }else{
             datas = await getData(params)
-            let sort =await sortInquiryData(datas.body,params)
+            let sort =await sortInquiryData(datas.body,params,types)
             let result  =dateOptionListcontroll(sort,params)
             setData(result)
         }

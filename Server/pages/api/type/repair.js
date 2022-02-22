@@ -1,9 +1,9 @@
 import excuteQuery from "../db";
 
-async function getRepairType(headquarterId) {
+async function getRepairType(addQuery,headquarterId) {
   return excuteQuery({
     query: `SELECT repair_id AS value, repair_name AS text,repair_type_code,repair_price,level
-              FROM repair_type WHERE headquarter_id=?`,
+              FROM repair_type ${addQuery}`,
     values: [headquarterId],
   });
 }
@@ -13,7 +13,15 @@ const controller = async (req, res) => {
     console.log("/api/type/repair");
     try {
       const { headquarterId } = req.query;
-      const types = await getRepairType(headquarterId);
+      let addQuery ='';
+      console.log(headquarterId)
+      if(headquarterId){
+        addQuery =`WHERE headquarter_id=?`
+      }
+      console.log(addQuery)
+      const types = await getRepairType(addQuery,headquarterId);
+      console.log("------------------------------")
+      console.log(types)
       if (types.error) throw new Error(receipt.error);
 
       res.status(200).json({ data: types });

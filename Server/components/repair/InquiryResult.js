@@ -6,10 +6,12 @@ const InquiryResult =(props)=>{
     let results =[];
     const item =props.data;
     console.log()
-    const setPrice=(plusMinus)=>{
-        let before = (item.repair1_price+item.repair2_price+item.repair3_price+item.shipment_price)
-        let after = new Number(before)+new Number(plusMinus)
+    const setPrice=(cost)=>{
+        
+        if(cost !== undefined ){
+        let after = new Number(cost)
         return after.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
     }
     return(
         
@@ -28,11 +30,11 @@ const InquiryResult =(props)=>{
             <ItemView>{item.register_date}</ItemView>
             <ItemView>{item.send_date}</ItemView>
             <ItemView>{item.repair1_name}</ItemView>
-            <ItemView>{item.repair_detail_repair1_price}</ItemView>
+            <ItemView>{setPrice(item.repair_detail_repair1_price)}</ItemView>
             <ItemView>{item.repair2_name}</ItemView>
-            <ItemView>{item.repair_detail_repair2_price}</ItemView>
+            <ItemView>{setPrice(item.repair_detail_repair2_price)}</ItemView>
             <ItemView>{item.repair3_name}</ItemView>
-            <ItemView>{item.repair_detail_repair_detail_id}</ItemView>
+            <ItemView>{setPrice(item.repair_detail_repair_detail_id)}</ItemView>
             <ItemView>{item.store_message}</ItemView>
         </Container></LaView>
         

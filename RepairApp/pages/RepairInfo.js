@@ -7,6 +7,7 @@ import axios from "axios";
 import { Image, Text, View, ScrollView, Dimensions, StyleSheet, Alert } from "react-native";
 import styled from 'styled-components/native';
 import ip from '../serverIp/Ip';
+import { getData } from '../functions/useInReapirInfo';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RNPickerSelect from 'react-native-picker-select';
 import store from '../store/store';
@@ -85,8 +86,11 @@ export default function RepairInfo({ route, navigation }) {
         const value = [year, month, day].join('-');
         return value
     }
-    const getTargetData = useCallback(async (receiptId) => {
-        const { data } = await axios.get(ip + `/api/RepairDetailInfo?code=${receiptId}`);
+    const getTargetData = async (code) => {
+        console.log(code)
+        getData(code)
+        /*const { data } = await axios.get(ip + `/api/RepairDetailInfo?code=${code}`);
+        console.log(data)
         if (data === null || data === '') {
             alertFunction();
             navigation.goBack();
@@ -117,10 +121,11 @@ export default function RepairInfo({ route, navigation }) {
             }
 
 
-        }
+        }*/
 
-    });
+    };
     useEffect(() => {
+        console.log(code)
         getTargetData(code);
     }, []);
     const setShipping = (value) => {

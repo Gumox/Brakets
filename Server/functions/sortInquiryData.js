@@ -1,11 +1,11 @@
 import formatDate from "./formatDate";
 import store from "../store/store";
-const sortInquiryData = async(data , params) =>{
+const sortInquiryData = async(data , params,types) =>{
     const shop = params.shop_id
     const analysis_type = JSON.parse(localStorage.getItem('ANALYSIS'))
     const judgment_result= JSON.parse(localStorage.getItem('JUDIMENT'))
     const fault_type= JSON.parse(localStorage.getItem('FAULT'))
-    const repair_type = JSON.parse(localStorage.getItem('REPAIR_TYPE'))
+    const repair_type = types
     let sorteddata=[];
 
     if(Array.isArray(data)){
@@ -116,13 +116,13 @@ const sortInquiryData = async(data , params) =>{
                 }
             })
             repair_type.map((el)=>{
-                if(repair1_type_id === el.repair_type_code){
+                if(repair1_type_id === el.value){
                     repair1_name = el.text;
                 }
-                if(repair2_type_id === el.repair_type_code){
+                if(repair2_type_id === el.value){
                     repair2_name = el.text;
                 }
-                if(repair3_type_id === el.repair_type_code){
+                if(repair3_type_id === el.value){
                     repair3_name = el.text;
                 }
             })

@@ -23,12 +23,15 @@ const addRepairDetail = async (
   repair3_type_id,
   repair3_count,
   repair3_price,
-  repair3_redo
+  repair3_redo,
+  paid,
+  cashreceipt_num
+  
 ) => {
   return excuteQuery({
     query:
-      "INSERT INTO `repair_detail`(`receipt_id`,`store_id`, `register_date`,`fault_id`,`result_id`,`analysis_id`, `delivery_type`, `message`,`repair1_type_id`,`repair1_count`,`repair1_price`,`repair1_redo`,`repair2_type_id`,`repair2_count`,`repair2_price`,`repair2_redo`,`repair3_type_id`,`repair3_count`,`repair3_price`,`repair3_redo` ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-    values: [receipt_id,store,  register_date, fault_id,result_id,analysis_id,delivery_type, message, repair1_type_id,repair1_count,repair1_price,repair1_redo,repair2_type_id,repair2_count,repair2_price,repair2_redo,repair3_type_id,repair3_count,repair3_price,repair3_redo],
+      "INSERT INTO `repair_detail`(`receipt_id`,`store_id`, `register_date`,`fault_id`,`result_id`,`analysis_id`, `delivery_type`, `message`,`repair1_type_id`,`repair1_count`,`repair1_price`,`repair1_redo`,`repair2_type_id`,`repair2_count`,`repair2_price`,`repair2_redo`,`repair3_type_id`,`repair3_count`,`repair3_price`,`repair3_redo`,`paid`,`cashreceipt_num` ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+    values: [receipt_id,store,  register_date, fault_id,result_id,analysis_id,delivery_type, message, repair1_type_id,repair1_count,repair1_price,repair1_redo,repair2_type_id,repair2_count,repair2_price,repair2_redo,repair3_type_id,repair3_count,repair3_price,repair3_redo,paid,cashreceipt_num],
   });
 };
 
@@ -38,11 +41,11 @@ const getReceiptInfo = async(receiptId) =>{
     values: [receiptId],
   });
 };
-const updateReceiptRepair = async (repair_detail_id,receiptId,num) => {
+const updateReceiptRepair = async (repair_detail_id,receiptId,num,paid,fee) => {
   const insert = "repair"+num+"_detail_id"
   return excuteQuery({
-    query: `UPDATE receipt SET ${insert}=? WHERE receipt_id=?`,
-    values: [repair_detail_id,receiptId],
+    query: `UPDATE receipt SET ${insert}=?, paid=?, fee=? WHERE receipt_id=?`,
+    values: [repair_detail_id,paid,fee,receiptId],
   });
 };
 const sendRepairInfo = async (req, res) => {
@@ -74,6 +77,9 @@ const sendRepairInfo = async (req, res) => {
     const repair3_count = req.body.repair3_count;
     const repair3_price = req.body.repair3_price;
     const repair3_redo	= req.body.repair3_redo;
+    const paid = req.body.paid;
+    const fee = req.body.fee;
+    const cashreceipt_num = req.body.cashreceiptNum;
 
     console.log("store")
     console.log(req.body)
@@ -85,18 +91,19 @@ const sendRepairInfo = async (req, res) => {
               repair1_type_id,repair1_count,repair1_price,repair1_redo,
               repair2_type_id,repair2_count,repair2_price,repair2_redo,
               repair3_type_id,repair3_count,repair3_price,repair3_redo,
+              paid,cashreceipt_num,
               );
             
             console.log(result)
             const id = result.insertId
           if(info[0].repair1_detail_id === null){
-            const update =updateReceiptRepair(id,receipt_id,1)
+            const update =updateReceiptRepair(id,receipt_id,1,paid,fee)
             res.status(200).json({ msg: "suc" });
           }else if(info[0].repair2_detail_id === null){
-            const update =updateReceiptRepair(id,receipt_id,2)
+            const update =updateReceiptRepair(id,receipt_id,2,paid,fee)
             res.status(200).json({ msg: "suc" });
           }else if(info[0].repair3_detail_id === null){
-            const update =updateReceiptRepair(id,receipt_id,3)
+            const update =updateReceiptRepair(id,receipt_id,3,paid,fee)
             res.status(200).json({ msg: "suc" });
           }else{
             res.status(205).json({msg : "Full"})

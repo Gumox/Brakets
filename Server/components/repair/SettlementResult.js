@@ -5,19 +5,23 @@ import COLOR from "../../constants/color";
 import store from "../../store/store";
 import { sortSettlementData } from "../../functions/useInSettlement";
 const SettlementResult =(props)=>{
-    let results =[];
     const item =props.data
-    const [plusMinus,setPlusMinus] = useState(0)
+    const types = props.type
+    const [adjustment,setAdjustment] = useState(item.adjustment)
     const [check,setCheck] = useState()
+    const [adjustmentReason,setAdjustmentReason] = useState(item.adjustment_reason)
+    const [remarks,setRemarks] = useState(item.remarks)
+    const repairStaff = "";
+    const hqStaff = "";
     const [windowWidth,setWindowWidth] = useState()
     const [windowHeight,setWindowHeight] = useState()
     const handleResize = debounce(()=>{
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
     },1000)
-    const setPrice=(plusMinus)=>{
+    const setPrice=(adjustment)=>{
         let before = (item.repair1_price+item.repair2_price+item.repair3_price+item.shipment_price)
-        let after = new Number(before)+new Number(plusMinus)
+        let after = new Number(before)+new Number(adjustment)
         return after.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
     const setPaymentState=(pms)=>{
@@ -50,7 +54,13 @@ const SettlementResult =(props)=>{
     }
     const onCheck =(check)=>{
         if(check){
-            store.dispatch({type:"SET_SELECTED",selected:{repair_detail_id: item.repair_detail_id, state:item.repair_detail_state}})
+            store.dispatch({type:"SET_SELECTED",
+                            selected:{
+                                repair_detail_id: item.repair_detail_id, 
+                                state:item.repair_detail_state,
+                                adjustment:adjustment,
+                                adjustment_reason:adjustmentReason,
+                                remarks:remarks}})
             setCheck(true)
         }else{
             let selected = store.getState().selected;
@@ -67,11 +77,10 @@ const SettlementResult =(props)=>{
         return
     }
     React.useEffect(()=>{
-        console.log("windowWidth: ",windowWidth, "windowHeight: ",windowHeight)
-        console.log("window.innerWidth: ",window.innerWidth,"window.innerHeight: ",window.innerHeight)
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
         window.addEventListener('resize',handleResize);
-        console.log((windowWidth)*0.0692)
-        sortSettlementData(item)
+        sortSettlementData(item,types)
         return ()=>{
             window.removeEventListener('resize',handleResize);
         }
@@ -80,25 +89,31 @@ const SettlementResult =(props)=>{
         
            <LaView><Container>
             <CheckBoxView><input type= "checkbox" onClick={()=>{onCheck(!check)}}/></CheckBoxView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{item.brand_code}</ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{item.receipt_code}</ItemView>
-            <div style={{width:(windowWidth)*0.0692,minWidth:82}}> 
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{item.brand_code}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{item.receipt_code}</ItemView>
+            <div style={{width:(windowWidth||0)*0.0692,minWidth:82}}> 
                 <ItemInsideView>{item.name}</ItemInsideView>
                 <ItemInsideView>{item.store_contact}</ItemInsideView>
             </div>
-            <div style={{width:(windowWidth)*0.0692,minWidth:82}}> 
+            <div style={{width:(windowWidth||0)*0.0692,minWidth:82}}> 
                 <ItemInsideView>{item.customer_name}</ItemInsideView>
                 <ItemInsideView>{item.customer_phone}</ItemInsideView>
             </div>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}><pre>{sortSettlementData(item)}</pre></ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{setPaymentState(item.repair_detail_state)}</ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{}</ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{setPrice(0)}</ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}><input type="number" style={{width:80}} value={plusMinus} onChange={(e)=>{setPlusMinus(e.target.value)}}/></ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{setPrice(plusMinus)}</ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}><input style={{width:80}}/></ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}>{}</ItemView>
-            <ItemView style={{width:(windowWidth)*0.0692,minWidth:82}}><input style={{width:80}}/></ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}><pre>{sortSettlementData(item,types)}</pre></ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPaymentState(item.repair_detail_state)}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{hqStaff}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPrice(0)}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
+                <input type="number" style={{width:80}} value={adjustment||''} onChange={(e)=>{setAdjustment(e.target.value)}}/>
+            </ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPrice(adjustment)}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
+                <input style={{width:80}} value={adjustmentReason||''} onChange={(e)=>{setAdjustmentReason(e.target.value)}}/>
+            </ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{repairStaff}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
+                <input style={{width:80}} value={remarks||''} onChange={(e)=>{setRemarks(e.target.value)}}/>
+            </ItemView>
         </Container></LaView>
         
     )

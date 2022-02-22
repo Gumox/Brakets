@@ -13,6 +13,7 @@ function FindRoute({navigation}, _route, _prdCode){
                 navigation.replace('RepairMore', {data: _prdCode});
                 break;
             case "RepairInfo":
+                console.log(_prdCode)
                 navigation.replace('RepairInfo', {data: _prdCode})
                 break;
             case "ProductSend":

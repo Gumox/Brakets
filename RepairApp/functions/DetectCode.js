@@ -80,9 +80,11 @@ class DetectCode extends Component {
                     <Button
                         onPress = {() =>{
                             if(this.props.route.params['datas'] === undefined){
+                                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                                 console.log(this.props.route.params)
                                 this.props.navigation.navigate('InputAlternativeNumber', this.props.route.params['toGo'])
                             }else{
+                                console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
                                 console.log(this.props.route.params)
                                 this.props.navigation.navigate('InputAlternativeNumber', {toGo:this.props.route.params['toGo'],datas:this.props.route.params['toGo']})
                             }

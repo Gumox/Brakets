@@ -18,7 +18,9 @@ const COLOR = {
   MINT: "#3EB489",
   ORANGE: "#FF8000",
   BRAUN:"#7A6443",
-  MADARIN: "#FFBA75"
+  MADARIN: "#FFBA75",
+  DARK_ORANGE:"#EC8000",
+  INDIGO:"#0A599A"
 };
 
 export default COLOR;
