@@ -1,5 +1,14 @@
 import excuteQuery from "../db";
-
+async function getReturnUnregistered(shop_id,receipt_id) {
+  const result = await excuteQuery({
+      query: `SELECT *
+              FROM return_unregistered 
+              WHERE return_store_id = ? AND receipt_id = ?;`,
+      values:[shop_id,receipt_id],
+    });
+  
+    return result;
+}
 async function getImageList(code) {
   const result = await excuteQuery({
     query: `SELECT num, type, before_image, before_store_id, after_image, after_store_id FROM receipt_image
@@ -77,7 +86,8 @@ const RepairDetailInfo = async (req, res) => {
     console.log("req.headers.referer");
     console.log("req.query");
     console.log(req.query);
-    const { code } = req.query;
+    const { code,shop_id } = req.query;
+    
     try {
       const receipt = await getReceipt(code);
       const imageResult = await getImageList(code);
@@ -87,7 +97,15 @@ const RepairDetailInfo = async (req, res) => {
       if (receipt.length == 0) return res.status(204).send();
       console.log(receipt);
       console.log(imageResult);
-      res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult , needRepairImage: needRepairImageResult });
+      if(shop_id){
+        console.log('shop_id: ',shop_id)
+        console.log('receipt.receipt_id: ',receipt[0].receipt_id)
+        const reactReturn = await getReturnUnregistered(shop_id,receipt[0].receipt_id)
+        console.log(reactReturn)
+        res.status(200).json({ data: { ...receipt[0] },returnd : {...reactReturn[0]} });
+      }else{
+        res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult , needRepairImage: needRepairImageResult });
+      }
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

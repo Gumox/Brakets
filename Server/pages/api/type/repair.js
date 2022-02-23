@@ -14,14 +14,10 @@ const controller = async (req, res) => {
     try {
       const { headquarterId } = req.query;
       let addQuery ='';
-      console.log(headquarterId)
       if(headquarterId){
         addQuery =`WHERE headquarter_id=?`
       }
-      console.log(addQuery)
       const types = await getRepairType(addQuery,headquarterId);
-      console.log("------------------------------")
-      console.log(types)
       if (types.error) throw new Error(receipt.error);
 
       res.status(200).json({ data: types });

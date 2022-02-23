@@ -34,7 +34,81 @@ const addRepairDetail = async (
     values: [receipt_id,store,  register_date, fault_id,result_id,analysis_id,delivery_type, message, repair1_type_id,repair1_count,repair1_price,repair1_redo,repair2_type_id,repair2_count,repair2_price,repair2_redo,repair3_type_id,repair3_count,repair3_price,repair3_redo,paid,cashreceipt_num],
   });
 };
-
+const updateRepairDetail = async (
+  store,
+  register_date,
+  fault_id,
+  result_id,
+  analysis_id,
+  delivery_type,
+  message,
+  repair1_type_id,
+  repair1_count,
+  repair1_price,
+  repair1_redo,
+  repair2_type_id,
+  repair2_count,
+  repair2_price,
+  repair2_redo,
+  repair3_type_id,
+  repair3_count,
+  repair3_price,
+  repair3_redo,
+  paid,
+  cashreceipt_num,
+  repair_detail_id
+  
+) => {
+  return excuteQuery({
+    query:
+      `UPDATE repair_detail SET
+              store_id = ?, 
+              register_date = ?,
+              fault_id = ?,
+              result_id = ?,
+              analysis_id = ?, 
+              delivery_type = ?, 
+              message = ?,
+              repair1_type_id = ?,
+              repair1_count = ?,
+              repair1_price = ?,
+              repair1_redo = ?,
+              repair2_type_id = ?,
+              repair2_count = ?,
+              repair2_price = ?,
+              repair2_redo = ?,
+              repair3_type_id = ?,
+              repair3_count = ?,
+              repair3_price = ?,
+              repair3_redo = ?,
+              paid = ?,
+              cashreceipt_num = ? 
+              WHERE repair_detail_id =?`,
+    values:[  store,
+              register_date,
+              fault_id,
+              result_id,
+              analysis_id,
+              delivery_type, 
+              message, 
+              repair1_type_id,
+              repair1_count,
+              repair1_price,
+              repair1_redo,
+              repair2_type_id,
+              repair2_count,
+              repair2_price,
+              repair2_redo,
+              repair3_type_id,
+              repair3_count,
+              repair3_price,
+              repair3_redo,
+              paid,
+              cashreceipt_num,
+              repair_detail_id
+          ],
+  });
+};
 const getReceiptInfo = async(receiptId) =>{
   return excuteQuery({
     query: "SELECT repair1_detail_id,repair2_detail_id,repair3_detail_id  FROM receipt WHERE receipt_id=?",
@@ -79,36 +153,53 @@ const sendRepairInfo = async (req, res) => {
     const repair3_redo	= req.body.repair3_redo;
     const paid = req.body.paid;
     const fee = req.body.fee;
-    const cashreceipt_num = req.body.cashreceiptNum;
+    const cashreceipt_num = req.body.cashreceipt_num;
+    const repair_detail_id = req.body.repair_detail_id;
 
     console.log("store")
     console.log(req.body)
+    console.log(1,"repair_detail_id:",repair_detail_id)
     
     try {
         const info = await getReceiptInfo(receipt_id)
+        console.log(2,"repair_detail_id:",repair_detail_id)
         if(info[0] !== undefined){
-          const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
+          console.log(3,"repair_detail_id:",repair_detail_id)
+          if(repair_detail_id == null){
+            console.log("ADD----------------")
+            const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
               repair1_type_id,repair1_count,repair1_price,repair1_redo,
               repair2_type_id,repair2_count,repair2_price,repair2_redo,
               repair3_type_id,repair3_count,repair3_price,repair3_redo,
               paid,cashreceipt_num,
-              );
-            
+            ); 
             console.log(result)
             const id = result.insertId
-          if(info[0].repair1_detail_id === null){
-            const update =updateReceiptRepair(id,receipt_id,1,paid,fee)
-            res.status(200).json({ msg: "suc" });
-          }else if(info[0].repair2_detail_id === null){
-            const update =updateReceiptRepair(id,receipt_id,2,paid,fee)
-            res.status(200).json({ msg: "suc" });
-          }else if(info[0].repair3_detail_id === null){
-            const update =updateReceiptRepair(id,receipt_id,3,paid,fee)
-            res.status(200).json({ msg: "suc" });
-          }else{
-            res.status(205).json({msg : "Full"})
+            if(info[0].repair1_detail_id === null){
+              const update =updateReceiptRepair(id,receipt_id,1,paid,fee)
+              res.status(200).json({ msg: "suc" });
+            }else if(info[0].repair2_detail_id === null){
+              const update =updateReceiptRepair(id,receipt_id,2,paid,fee)
+              res.status(200).json({ msg: "suc" });
+            }else if(info[0].repair3_detail_id === null){
+              const update =updateReceiptRepair(id,receipt_id,3,paid,fee)
+              res.status(200).json({ msg: "suc" });
+            }else{
+              res.status(205).json({msg : "Full"})
+            }
           }
-          console.log(info)
+          else{
+            console.log("UPDATE-------------------")
+            const result = await updateRepairDetail(store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
+              repair1_type_id,repair1_count,repair1_price,repair1_redo,
+              repair2_type_id,repair2_count,repair2_price,repair2_redo,
+              repair3_type_id,repair3_count,repair3_price,repair3_redo,
+              paid,cashreceipt_num,repair_detail_id
+            );
+              
+            console.log(result)
+            res.status(200).json({ msg: "suc" });
+          }
         }
         else{
           res.status(210).json({ msg: "non proper receipt_id" });
