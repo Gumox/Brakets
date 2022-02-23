@@ -19,6 +19,7 @@ const RepairHistory = (props) => {
 
     const shop = props.shop;
     const receipt_id = props.receipt;
+    const [repairDetailId, setRepairDetailId] = useState(null)
     const [message, setMessage] = useState("")
     const [storeRecept,setStoreRecept] = useState([])
 
@@ -162,6 +163,7 @@ const RepairHistory = (props) => {
             setCashreceiptNum(info.repair1_cashreceipt_num)
             setPaid(Boolean(info.repair1_paid));
             inputInfoRepair(info,1);
+            setRepairDetailId(info.repair1_detail_id)
 
         }else if(shop == info.repair2_store_id){
             setMessage(info.repair2_message);
@@ -182,6 +184,7 @@ const RepairHistory = (props) => {
             setCashreceiptNum(info.repair2_cashreceipt_num)
             setPaid(Boolean(info.repair2_paid));
             inputInfoRepair(info,2);
+            setRepairDetailId(info.repair2_detail_id)
         }else if(shop == info.repair3_store_id){
             setMessage(info.repair3_message);
             inputTypeCost(info,3);
@@ -201,6 +204,7 @@ const RepairHistory = (props) => {
             setCashreceiptNum(info.repair3_cashreceipt_num)
             setPaid(Boolean(info.repair3_paid));
             inputInfoRepair(info,3);
+            setRepairDetailId(info.repair3_detail_id)
 
         }
     }
@@ -240,7 +244,8 @@ const RepairHistory = (props) => {
             repair3_redo: repairRedo3,
             paid: paid,
             fee:fee,
-            cashreceipt_num: cashreceiptNum
+            cashreceipt_num: cashreceiptNum,
+            repair_detail_id:repairDetailId
         }
 
           fetch(`${process.env.API_URL}/RepairShop/setRepairInfo`, {
@@ -413,8 +418,8 @@ const LaView = styled.div`
   margin:3px;
   align-items:center;
 `;
-const CustomButton = styled.div`
-  width:45px;
+const CustomButton = styled.button`
+  width:50px;
   height:30px;
   font-size:15px;
   color: #ffffff;
@@ -424,9 +429,9 @@ const CustomButton = styled.div`
   background-color: ${COLOR.BRAUN};
   border-radius : 7px;
   justify-content : center;
-  &: hover {
-    background-color: ${COLOR.GRAY};
-  }
+  
+  &&:focus {     
+    background-color:${COLOR.GRAY};    
 `;
 const ItemText = styled.div`
   font-size:15px;

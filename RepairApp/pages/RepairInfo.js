@@ -92,7 +92,8 @@ export default function RepairInfo({ route, navigation }) {
     }
 
     const getTargetData = async (code) => {
-        const { data } = await axios.get(ip + `/api/RepairDetailInfo?code=${code}`);
+        const { data } = await axios.get(ip + `/api/RepairDetailInfo?code=${code}&shop_id=${store.getState().shopId}`);
+        console.log(data)
         if (data === null || data === '') {
             alertFunction();
             navigation.goBack();
@@ -107,7 +108,7 @@ export default function RepairInfo({ route, navigation }) {
             if (data.data["repair1_store_id"] === store.getState().shopId) {
                 setShippingDate(formatDate(new Date(data.data["repair1_complete_date"])))
                 setRepairDetailId(data.data["repair1_detail_id"])
-                date = data.data["repair1_complete_date"] 
+                date = data.data["repair1_complete_date"]
             } else if (data.data["repair2_store_id"] === store.getState().shopId) {
                 setShippingDate(formatDate(new Date(data.data["repair2_complete_date"])))
                 setRepairDetailId(data.data["repair2_detail_id"])
@@ -118,24 +119,9 @@ export default function RepairInfo({ route, navigation }) {
                 date = data.data["repair3_complete_date"] 
             }
 
-            if(data.data["receiver"] !== store.getState().shopId){
-                setDatas(
-                    
-                        { receipt_id: data.data["receipt_id"] ,
-                         code: code ,
-                         brand: data.data['brand_name'] ,
-                         storeName: data.data["store_name"] ,
-                         storeId: data.data['store_id'] ,
-                         shippingDate: date ,
-                         receiver: data.data['receiver'] ,
-                         receiver_name: data.data['receiver_name'] }
-                    
-                )
-                setReceiverSet(data.data["store_id"])
-                setReceiver((
-                    <InputText>{data.data["receiver_name"]}</InputText>
-                ))
-            }else{
+            
+            console.log(data)
+            if(data.returnd.length){
                 setIsReceiverNull(true)
                 let items=[
                     { label: data.data["store_name"], value: data.data['store_id'] },
@@ -169,6 +155,23 @@ export default function RepairInfo({ route, navigation }) {
                     }}
                     items={items}
                 />
+                ))
+            }else{
+                setDatas(
+                    
+                        { receipt_id: data.data["receipt_id"] ,
+                         code: code ,
+                         brand: data.data['brand_name'] ,
+                         storeName: data.data["store_name"] ,
+                         storeId: data.data['store_id'] ,
+                         shippingDate: date ,
+                         receiver: data.data['receiver'] ,
+                         receiver_name: data.data['receiver_name'] }
+                    
+                )
+                setReceiverSet(data.data["store_id"])
+                setReceiver((
+                    <InputText>{data.data["receiver_name"]}</InputText>
                 ))
             }
 
