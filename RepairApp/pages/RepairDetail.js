@@ -10,6 +10,7 @@ import styled from 'styled-components/native';
 import ContainView from '../components/ContainView';
 import SmallButton from '../components/SmallButton';
 import Bottom from '../components/Bottom';
+import { postSendRepairInfo,postUpdateAfterImage } from '../functions/useInRepairDetail';
 import { PathToFlie } from '../functions/PathToFlie';
 import Ip from '../serverIp/Ip';
 import store from '../store/store';
@@ -102,73 +103,7 @@ function RepairDetail({ navigation, route }) {
             setAfterImages(afterImgList)
         }    
     });
-    const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,image2,image3,image4) => {
-        var formdata = new FormData();
-
-        formdata.append("receipt", receipt_id )//받는곳
-        formdata.append("store", store_id) //수선처
-
-        formdata.append("image1", PathToFlie(image1));//수선사진들
-        formdata.append("image2", PathToFlie(image2));
-        formdata.append("image3", PathToFlie(image3));
-        formdata.append("image4", PathToFlie(image4));
-        console.log(formdata)
-
-        try {
-            const response = await fetch(Ip+'/api/RepairShop/sendRepairInfo/updateAfterImage',{method: 'PUT',
-            headers: {
-                'Accept': '',
-                'Content-Type': 'multipart/form-data'
-                },
-            body: formdata
-            });
-            const json = await response.json();
-            console.log(json.msg)
-            if(json.msg == 'images saved'){
-                navigation.popToTop();
-                if(sendType === 1){
-                    store.dispatch({type:"IMAGE_RESET", reset:null})
-                    navigation.navigate("MailbagScan")
-                }
-                else{
-                    store.dispatch({type:"IMAGE_RESET", reset:null})
-                    navigation.navigate("PhotoStep")
-                }
-            }
-           
-        } catch (error) {
-            console.error(error);
-        } finally {
-        }
-        
-    }
     
-    const postSendRepairInfo = async (place,date,sendType,sendPay,repair_detail_id) => {
-        const bodyData={
-            store:place,
-            complete_date: date,
-            shipment_type: sendType,
-            shipment_price: sendPay,
-            repair_detail_id:repair_detail_id
-        }
-        console.log(bodyData)
-        try {
-            const response = await fetch(Ip+'/api/RepairShop/sendRepairInfo',{method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-            body: JSON.stringify(bodyData)
-            });
-            const json = await response.json();
-            console.log(json);
-            
-           
-        } catch (error) {
-            console.error(error);
-        } finally {
-        }
-    }
     let beforeImageViews =[];
     let after ="";
     for (let i = 0; i < beforeImages.length; i++) {
@@ -432,6 +367,7 @@ function RepairDetail({ navigation, route }) {
                             else {
                                 postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId)
                                 postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
+                                navigation.navigate("PhotoStep")
                             }
                         }
 

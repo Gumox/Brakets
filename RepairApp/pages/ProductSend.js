@@ -93,19 +93,21 @@ export default function ProductSend( { route,navigation } ) {
     const [storeName,setStoreName] =useState('')
     const [date,setDate] =useState('')
     const [receiverName,setReceiverName] =useState('')
-    const [receiver,setReceiver] =useState(0)
+    const [receiver,setReceiver] = useState(0)
+    const [shippingDate,setShippingDate] = useState()
 
     const formatDate = (inputDate) => {
         var month = '' + (inputDate.getMonth() + 1),
-          day = '' + inputDate.getDate(),
-          year = inputDate.getFullYear();
-    
+        day = '' + inputDate.getDate(),
+        year = inputDate.getFullYear();
+
         if (month.length < 2)
-          month = '0' + month;
+            month = '0' + month;
         if (day.length < 2)
-          day = '0' + day;
+            day = '0' + day;
         const value = [year, month, day].join('-');
-        return value
+        if(value !== 'NaN-NaN-NaN'){return value}
+        else{return null}
     }
     const postupdateMailBag = async (to,from,code,receipt_id) => {
         const bodyData ={
@@ -126,35 +128,19 @@ export default function ProductSend( { route,navigation } ) {
             body: JSON.stringify(bodyData)
             });
             const json = await response.json();
-            console.log(json.body);
             navigation.popToTop();
         } catch (error) {
             console.error(error);
         }
     }
     useEffect(()=>{
-        datas.forEach(el => {
-            let key=Object.keys(el)[0]
-            if(key ==="code"){
-                setServiceBarcode(el.code)
-            }
-            if(key === "brand"){
-                setBrand(el.brand)
-            }
-            if(key === "storeName"){
-                setStoreName(el.storeName)
-            }
-            if(key === "shippingDate"){
-                setDate(el.shippingDate)
-            }
-            if(key === "receiver_name"){
-                setReceiverName(el.receiver_name)
-            }
-            if(key === "receiver"){
-                setReceiver(el.receiver)
-            }
-            
-        });
+        setServiceBarcode(datas.code)
+        setBrand(datas.brand)
+        setStoreName(datas.storeName)
+        setDate(datas.shippingDate)
+        setReceiverName(datas.receiver_name)
+        setReceiver(datas.receiver)
+        setShippingDate(formatDate(new Date(date)))
     },[])
     return(
         <Container>
@@ -170,7 +156,7 @@ export default function ProductSend( { route,navigation } ) {
                 </InfoView>
                 
                 <TopText>수선처 발송일</TopText>
-                <InputText>{ formatDate(new Date(date))}</InputText>
+                <InputText>{shippingDate}</InputText>
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
@@ -181,7 +167,7 @@ export default function ProductSend( { route,navigation } ) {
                 
         
             </Contents> 
-            <Button onPress={ ()=> {postupdateMailBag(store.getState().shopId,receiver,code,datas[0].receipt_id)} }>
+            <Button onPress={ ()=> {postupdateMailBag(store.getState().shopId,receiver,code,datas.receipt_id)} }>
                 완료
             </Button>
 
