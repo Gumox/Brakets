@@ -1,23 +1,26 @@
-import React, { useState } from "react";
+import React, { useState,useEffect  } from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 import formatDate from "../../functions/formatDate";
+import { getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
+import { debounce } from "lodash";
 const RepairReturn = (props) => {
     const reciver = props.reciver;
     const info = props.infos;
     const shop = props.shop;
     const receipt_id = props.receipt;
+    const [repairDetailId, setRepairDetailId] = useState(null)
     const [selectedDate,setSelectedDate] = useState(null);
     const [message,setMessage] = useState("");
     const [selectedSendType,setSelectedSendType] = useState(1);
     const [shipmentPay,setShipmentPay] = useState(0); 
-
-    const onCancel = ()=>{
-      setSelectedDate(null)
-      setMessage("")
-      setSelectedSendType(1);
-      setShipmentPay(0);
-    }
+    
+    const [windowWidth,setWindowWidth] = useState()
+    const [windowHeight,setWindowHeight] = useState()
+    const handleResize = debounce(()=>{
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
+    },1000)
 
     const onSave = async()=>{
       let res;
@@ -37,6 +40,7 @@ const RepairReturn = (props) => {
         message: message,
         shipment_type: selectedSendType,
         shipment_price: shipmentPay,
+        repair_detail_id : repairDetailId
       }
       fetch(`${process.env.API_URL}/RepairShop/sendRepairReturn`, {
         method: "POST",
@@ -47,16 +51,44 @@ const RepairReturn = (props) => {
       })
       .then(response => res=response.json())
     }
+    
+  const sortInfo=(info)=>{
+    if(shop == info.repair1_store_id){
+        setMessage(info.repair1_message);
+        setRepairDetailId(info.repair1_detail_id)
+    }else if(shop == info.repair2_store_id){
+        setMessage(info.repair2_message);
+        setRepairDetailId(info.repair2_detail_id)
+    }else if(shop == info.repair3_store_id){
+        setMessage(info.repair3_message);
+        setRepairDetailId(info.repair3_detail_id)
+    }
+  }
+  useEffect(()=>{
+    const fetchData = async () => {
+
+      const info =await getReceiptRepairInfo(receipt_id);
+      sortInfo(info.body[0])
+    }
+    fetchData();
+    setWindowWidth(window.innerWidth)
+    setWindowHeight(window.innerHeight)
+    
+    window.addEventListener('resize',handleResize);
+    return ()=>{
+        window.removeEventListener('resize',handleResize);
+    }
+  },[])
     return(
         <div>
             <ItemText>수선 내역</ItemText>
             <Line2/>
             <ItemText>수선처 설명</ItemText>
-            <ItemTable>
-              <input style={{margin:5,minHeight:60,width:"98%",border:0}}
-                onChange={(e)=>{setMessage(e.target.value)}}
-              ></input>
-            </ItemTable>
+            <textarea value={message} style={{height:(windowHeight*0.08),fontSize:18,padding:10,width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
+                  onChange ={(e)=>{
+                      setMessage(e.target.value)
+                  }}
+            ></textarea>
             <LaView>
               <ItemText>수선처 발송일</ItemText>
                 <input type="date" style={{marginLeft:10,marginTop:20,marginBottom:10}} onChange={(e)=>{setSelectedDate(e.target.value)}}></input>
@@ -115,19 +147,20 @@ const LaView = styled.div`
   align-items:center;
   flex-direction: row;
 `;
-const CustomButton = styled.div`
-  width:45px;
+const CustomButton = styled.button`
+  width:50px;
   height:30px;
   font-size:15px;
   color: #ffffff;
   display:flex;
+  margin:10px;
   align-items: center;
   background-color: ${COLOR.BRAUN};
   border-radius : 7px;
   justify-content : center;
-  &: hover {
-    background-color: ${COLOR.GRAY};
-  }
+  
+  &&:focus {     
+    background-color:${COLOR.GRAY};    
 `;
 const ItemText = styled.div`
   font-size:15px;

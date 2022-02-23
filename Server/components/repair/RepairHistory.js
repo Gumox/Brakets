@@ -167,7 +167,7 @@ const RepairHistory = (props) => {
 
         }else if(shop == info.repair2_store_id){
             setMessage(info.repair2_message);
-            inputTypeCost(info,2);
+            inputTypeCost(info,typeInfo,2);
             setRepairType1(info.repair2_repair1_type_id);
             setRepairType2(info.repair2_repair2_type_id);
             setRepairType3(info.repair2_repair3_type_id);
@@ -187,7 +187,7 @@ const RepairHistory = (props) => {
             setRepairDetailId(info.repair2_detail_id)
         }else if(shop == info.repair3_store_id){
             setMessage(info.repair3_message);
-            inputTypeCost(info,3);
+            inputTypeCost(info,typeInfo,3);
             setRepairType1(info.repair3_repair1_type_id);
             setRepairType2(info.repair3_repair2_type_id);
             setRepairType3(info.repair3_repair3_type_id);

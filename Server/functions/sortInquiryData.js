@@ -1,10 +1,10 @@
 import formatDate from "./formatDate";
 import store from "../store/store";
-const sortInquiryData = async(data , params,types) =>{
+const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_faultType,types) =>{
     const shop = params.shop_id
-    const analysis_type = JSON.parse(localStorage.getItem('ANALYSIS'))
-    const judgment_result= JSON.parse(localStorage.getItem('JUDIMENT'))
-    const fault_type= JSON.parse(localStorage.getItem('FAULT'))
+    const analysis_type = _analysisType
+    const judgment_result= _judgmentResult
+    const fault_type= _faultType
     const repair_type = types
     let sorteddata=[];
 
@@ -98,21 +98,21 @@ const sortInquiryData = async(data , params,types) =>{
                 }else{
                     send_date = formatDate(new Date(obj.repair3_send_date))
                 }
-            } 
+            }
             analysis_type.map((el)=>{
-                if(analysis_id === el.analysis_code){
-                    analysis_name = el.analysis_name
+                if(analysis_id === el.value){
+                    analysis_name = el.text
                 }
             })
             judgment_result.map((el)=>{
-                if(result_id === el.judgment_code){
-                    result_name = el.judgment_name
+                if(result_id === el.value){
+                    result_name = el.text
                 }
             })
             fault_type.map((el)=>{
-                if(fault_id === el.fault_code){
+                if(fault_id === el.value){
 
-                    fault_name = el.fault_name
+                    fault_name = el.text
                 }
             })
             repair_type.map((el)=>{

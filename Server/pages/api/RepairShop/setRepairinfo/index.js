@@ -1,8 +1,5 @@
 import excuteQuery from "../../db";
 
-/**
- * 0단계 고객 수정
- */
 const addRepairDetail = async (
   receipt_id,
   store,
@@ -166,7 +163,6 @@ const sendRepairInfo = async (req, res) => {
         if(info[0] !== undefined){
           console.log(3,"repair_detail_id:",repair_detail_id)
           if(repair_detail_id == null){
-            console.log("ADD----------------")
             const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
               repair1_type_id,repair1_count,repair1_price,repair1_redo,
               repair2_type_id,repair2_count,repair2_price,repair2_redo,
@@ -189,7 +185,6 @@ const sendRepairInfo = async (req, res) => {
             }
           }
           else{
-            console.log("UPDATE-------------------")
             const result = await updateRepairDetail(store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
               repair1_type_id,repair1_count,repair1_price,repair1_redo,
               repair2_type_id,repair2_count,repair2_price,repair2_redo,

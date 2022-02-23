@@ -10,7 +10,7 @@ import { CSVLink } from "react-csv";
 import headers from '../constants/inquiryTableHeader';
 import checkDisable from '../functions/checkDisable';
 import InquiryResult from '../components/repair/InquiryResult';
-import { getRepairType } from '../functions/useInRepairReceiptModal'; 
+import {getSelectList, getRepairType } from '../functions/useInRepairReceiptModal'; 
 import Image from 'next/image'
 export default function Inquiry() {
    
@@ -49,16 +49,16 @@ export default function Inquiry() {
           ])
           return datas;
     }
-    const setTable =useCallback( async(params) =>{
+    const setTable =useCallback( async(params ,fI,jI,aI) =>{
         let datas = [];
         let types = await getRepairType(null)
         if(params.dateOption === "receipt_date"){
             datas = await getData(params)
-            let sort =await sortInquiryData(datas.body,params,types)
+            let sort =await sortInquiryData(datas.body,params,fI,jI,aI,types)
             setData(sort)
         }else{
             datas = await getData(params)
-            let sort =await sortInquiryData(datas.body,params,types)
+            let sort =await sortInquiryData(datas.body,params,fI,jI,aI,types)
             let result  =dateOptionListcontroll(sort,params)
             setData(result)
         }
@@ -79,6 +79,11 @@ export default function Inquiry() {
     useEffect(() => {
         const fetchData = async () => {
             let list =await getBrandList();
+                
+            const fI = await getSelectList('faultDivision',null)
+            const jI = await getSelectList('judgmentResult',null)
+            const aI = await getSelectList('analysisType',null)
+
             list.unshift({brand_id: "",brand_name: "전체"})
             setBrandList(list);
             setShopId(localStorage.getItem('SHOP'))
@@ -92,7 +97,7 @@ export default function Inquiry() {
                 startDate : startDate,
                 endDate : endDate,
                 dateOption : dateOption 
-            });
+            },aI,jI,fI);
         }
         fetchData();
       },[]);

@@ -118,10 +118,7 @@ export default function RepairInfo({ route, navigation }) {
                 setRepairDetailId(data.data["repair3_detail_id"])
                 date = data.data["repair3_complete_date"] 
             }
-
-            
-            console.log(data)
-            if(data.returnd.length){
+            if(Object.keys(data.returnd).length){
                 setIsReceiverNull(true)
                 let items=[
                     { label: data.data["store_name"], value: data.data['store_id'] },
