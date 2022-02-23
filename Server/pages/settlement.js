@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import checkDisable from '../functions/checkDisable';
 import SettlementResult from "../components/repair/SettlementResult";
 import { debounce, set } from "lodash";
-import { getSettlementData ,setStateAtOne,setStateAtTwo} from "../functions/useInSettlement";
+import { getSettlementData,getBrandList,setStateAtOne,setStateAtTwo} from "../functions/useInSettlement";
 import { getRepairType } from "../functions/useInRepairReceiptModal";
 
 export default function Settlement()  {
@@ -19,6 +19,7 @@ export default function Settlement()  {
     const [selectOption,setSelectOption] = useState(null)
     const [startDate,setStartDate] = useState(null)
     const [endDate,setEndDate] = useState(null)
+    const [brand,setBrand] = useState(null)
 
 
 
@@ -68,10 +69,20 @@ export default function Settlement()  {
             }else{
                 let list = await getSettlementData({repairShop:null})
                 
+                let brandList =await getBrandList();
+                brandList.unshift({brand_id: "",brand_name: "전체"})
+                
+
                 setSettlementList(list.data)
                 selectShop=(
-                    <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} >
-                                        
+                    <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} onChange={(e)=>{
+                        setBrand(e.target.value)
+                    }}>
+                        {
+                            brandList.map((item,index)=>(
+                                <option key={index} value={item.brand_id}>{item.brand_name}</option>
+                            ))
+                        }        
                     </select>
                 )
             }
@@ -138,6 +149,7 @@ export default function Settlement()  {
                                 onClick={()=>{
                                     setTable({
                                         hq_id : hqId,
+                                        brand: brand,
                                         repairShop : shop,
                                         selectOption : selectOption,
                                         startDate : startDate,

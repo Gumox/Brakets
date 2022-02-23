@@ -38,7 +38,16 @@ export const setStateAtTwo = async(list) =>{
     ])
     return ;
 }
-  
+export const getBrandList = async()=>{
+  const[datas] =await Promise.all([
+      axios.get(`${process.env.API_URL}/brand/AllBrandList`)
+      .then(({ data }) => data.data)
+      .catch(error=>{
+
+      })
+    ])
+    return datas;
+}
 
 export const sortSettlementData = (data ,types) =>{
     const repair_type = types

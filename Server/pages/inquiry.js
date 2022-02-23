@@ -11,6 +11,7 @@ import headers from '../constants/inquiryTableHeader';
 import checkDisable from '../functions/checkDisable';
 import InquiryResult from '../components/repair/InquiryResult';
 import {getSelectList, getRepairType } from '../functions/useInRepairReceiptModal'; 
+import { getBrandList } from '../functions/useInSettlement';
 import Image from 'next/image'
 export default function Inquiry() {
    
@@ -39,16 +40,7 @@ export default function Inquiry() {
           ])
           return datas;
     }
-    const getBrandList = async()=>{
-        const[datas] =await Promise.all([
-            axios.get(`${process.env.API_URL}/brand/AllBrandList`)
-            .then(({ data }) => data.data)
-            .catch(error=>{
-
-            })
-          ])
-          return datas;
-    }
+    
     const setTable =useCallback( async(params ,fI,jI,aI) =>{
         let datas = [];
         let types = await getRepairType(null)

@@ -60,6 +60,7 @@ const settlement = async (req, res) => {
 
     const {
         hq_id,
+        brand,
         repairShop,
         selectOption,
         startDate,
@@ -76,6 +77,15 @@ const settlement = async (req, res) => {
         }else{
             query += "AND brand.headquarter_id = ? ";
             values = [...values, hq_id];
+        }
+    }
+    if(brand&&brand!='전체'){
+        if(query == ""){
+            query += "WHERE brand.brand_id = ? ";
+            values = [...values, brand];
+        }else{
+            query += "AND brand.brand_id = ? ";
+            values = [...values, brand];
         }
     }
     if(repairShop){
