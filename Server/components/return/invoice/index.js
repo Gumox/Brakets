@@ -6,11 +6,12 @@ import COLOR from "../../../constants/color";
 import Options from "./Options";
 import List from "./List";
 import Sum from "./Sum";
+import store from "../../../pages/store"
 
 const ReturnInvoice = ({data}) => {
   return (
     <Wrapper>
-        <Options />
+        {/* <Options /> */}
         <List data={data}/>
         <Sum />
     </Wrapper>

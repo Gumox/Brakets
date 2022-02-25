@@ -7,6 +7,7 @@ import Modal from "../Modal";
 import SearchField from "./SearchField";
 import List from "./list";
 import Invoice from "./invoice";
+import Options from "./Options";
 
 const Return = ({ options, user}) => {
   
@@ -82,6 +83,7 @@ const Return = ({ options, user}) => {
         handleSearchButtonClick={handleSearchButtonClick}
       />
       <List data={searchList}/>
+      <Options/>
       <Invoice data={searchList}/>
     </Content>
   );
