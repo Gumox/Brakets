@@ -47,7 +47,6 @@ const repairShopInfo= async (id) => {
 
 const repair = async (req, res) => {
     if (req.method === "GET") {
-      console.log("req.query--------------------------------------------------------------");
       console.log(req.query);
       try {
         const {

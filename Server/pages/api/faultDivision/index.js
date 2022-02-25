@@ -1,6 +1,6 @@
 import excuteQuery from "../db"
 
-async function getFaultDivision(id) {
+async function getFaultDivision(addQuery,id) {
     const result = await excuteQuery({
         query: `SELECT  
                   fault_id	AS value,
@@ -9,7 +9,7 @@ async function getFaultDivision(id) {
                   level,
                   headquarter_id
                 FROM fault_type 
-                WHERE headquarter_id = ?`,
+                ${addQuery}`,
         values:[id],
       });
     
@@ -26,10 +26,13 @@ const controller = async (req, res) => {
         const {
             hq_id
         } = req.query;
-        
+        let addQuery ='';
+      if(hq_id){
+        addQuery =`WHERE headquarter_id=?`
+      }
 
     try {
-      const result = await getFaultDivision(hq_id);
+      const result = await getFaultDivision(addQuery,hq_id);
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("result");

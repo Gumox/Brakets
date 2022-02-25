@@ -4,22 +4,23 @@ import Bottom from '../components/Bottom';
 import Button from '../components/Button';
 import { Text } from 'react-native';
 
-function FindRoute({navigation}, _route, _prdCode){
+function FindRoute({navigation}, _route, _prdCode,_datas){
+    console.log("--------------------------------")
+    console.log(_route)
 
     if(_route != undefined){
-
         switch(_route) {
             case "RepairMore":
                 navigation.replace('RepairMore', {data: _prdCode});
                 break;
             case "RepairInfo":
+                console.log(_prdCode)
                 navigation.replace('RepairInfo', {data: _prdCode})
                 break;
             case "ProductSend":
-                navigation.replace('ProductSend', {data: _prdCode})
+                navigation.navigate('ProductSend', {data: _prdCode ,datas: _datas})
                 break;
             default:
-                navigation.replace('RepairDetail', {data: _prdCode})
           }
         
     }
@@ -29,7 +30,13 @@ function FindRoute({navigation}, _route, _prdCode){
 function InputAlternativeNumber({ navigation, route }) {
 
     const [prdCode, setPrdCode] = useState('');
-    const test = route.params['toGo'];
+    const toGo = route.params['toGo'];
+    console.log(toGo)
+    let datas;
+    if(route.params['datas']){
+        datas = route.params['datas']
+        console.log(datas)
+    }
 
     return (
         <>
@@ -48,7 +55,7 @@ function InputAlternativeNumber({ navigation, route }) {
                     />
                     </InputView>
                 <Button
-                    onPress = {() => FindRoute({navigation}, route.params, prdCode)}
+                    onPress = {() => FindRoute({navigation}, route.params.toGo, prdCode,datas)}
                 >
                     <Text>
                         조회

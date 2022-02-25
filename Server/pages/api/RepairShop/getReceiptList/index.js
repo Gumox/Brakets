@@ -1,8 +1,22 @@
 import excuteQuery from "../../db";
-/**
- * 0단계 고객 조회
- */
 
+ async function getNeedImageList(List) {
+  let results=[]
+  for (let data of List) {
+    const result = await excuteQuery({
+      query: `SELECT * 
+              FROM repair_need_point
+              WHERE receipt_id = ?`,
+      values: [data.receipt_id],
+    });
+    if(result.error){
+      return result.error
+    }else{
+        results.push(result)
+    }
+  }
+  return results;
+}
 async function getReceiptList(query,values) {
     const result = await excuteQuery({
         query: `SELECT  receipt.receipt_code,
@@ -41,7 +55,7 @@ async function getReceiptList(query,values) {
                 WHERE receipt.step = 1 AND receipt.receiver = ? ${query} `,
         values,
       });
-    
+      
       return result;
 }
 
@@ -74,7 +88,9 @@ const controller = async (req, res) => {
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("List");
-        res.status(200).json({ body: result });
+        let  needImages = await getNeedImageList(result)
+        
+        res.status(200).json({ body: result ,needImages : needImages});
       } else {
         console.log("No List");
         res.status(204).json({ message: "No List" });

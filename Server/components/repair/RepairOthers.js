@@ -1,20 +1,115 @@
-import React, { useState } from "react";
+import React, { useState,useEffect  } from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
+import { debounce } from "lodash";
+import { getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
+import formatDate from "../../functions/formatDate";
 const RepairOthers = (props) => {
+  
+  const shop = props.shop;
+  const receipt_id = props.receipt;
+  const [message,setMessage] = useState("");
+  const [repairDetailId, setRepairDetailId] = useState(null)
+  const [windowWidth,setWindowWidth] = useState()
+  const [windowHeight,setWindowHeight] = useState()
+  const handleResize = debounce(()=>{
+      setWindowWidth(window.innerWidth)
+      setWindowHeight(window.innerHeight)
+  },1000)
+
+  const onSave = async()=>{
+    
+    let res;
+    const today = formatDate(new Date)
+    const body ={
+      receipt_id : receipt_id,
+
+      store_id : shop,
+      fault_id: null,
+      result_id: null,
+
+      analysis_id: null,
+      delivery_type: null,
+      register_date: today,
+
+      complete_date : null,
+      message: message,
+      shipment_type: null,
+      shipment_price: 0,
+      repair_detail_id : repairDetailId
+    }
+    fetch(`${process.env.API_URL}/RepairShop/sendRepairReturn`, {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+    },
+      body: JSON.stringify(body)
+    })
+    .then(response => res=response.json())
+  }
+  const sortInfo=(info)=>{
+    if(shop == info.repair1_store_id){
+        setMessage(info.repair1_message);
+        setRepairDetailId(info.repair1_detail_id)
+    }else if(shop == info.repair2_store_id){
+        setMessage(info.repair2_message);
+        setRepairDetailId(info.repair2_detail_id)
+    }else if(shop == info.repair3_store_id){
+        setMessage(info.repair3_message);
+        setRepairDetailId(info.repair3_detail_id)
+    }
+  }
+  useEffect(()=>{
+    const fetchData = async () => {
+
+      const info =await getReceiptRepairInfo(receipt_id);
+      sortInfo(info.body[0])
+    }
+    fetchData();
+    setWindowWidth(window.innerWidth)
+    setWindowHeight(window.innerHeight)
+    
+    window.addEventListener('resize',handleResize);
+    return ()=>{
+        window.removeEventListener('resize',handleResize);
+    }
+  },[])
     return(
         <div>
             <ItemText>수선 내역</ItemText>
             <Line2/>
             <ItemText>수선처 설명</ItemText>
-            <ItemTable>
-              <input style={{margin:5,minHeight:60,width:"98%",border:0}}></input>
-            </ItemTable>
+            <textarea value={message} style={{height:(windowHeight*0.28),fontSize:18,padding:10,width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
+                onChange ={(e)=>{
+                    setMessage(e.target.value)
+                }}
+            ></textarea>
+            <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+              <CustomButton onClick={()=>{
+                onSave()
+              }}>저장</CustomButton>
+            </div>
+            
         </div>
     )
 }
 export default RepairOthers
 
+const CustomButton = styled.button`
+  width:50px;
+  height:30px;
+  font-size:15px;
+  color: #ffffff;
+  display:flex;
+  margin:10px;
+  align-items: center;
+  background-color: ${COLOR.BRAUN};
+  border-radius : 7px;
+  justify-content : center;
+  
+  &&:focus {     
+    background-color:${COLOR.GRAY};    
+`;
 const ItemText = styled.div`
   font-size:15px;
   display: flex;  

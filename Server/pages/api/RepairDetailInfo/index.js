@@ -1,5 +1,14 @@
 import excuteQuery from "../db";
-
+async function getReturnUnregistered(shop_id,receipt_id) {
+  const result = await excuteQuery({
+      query: `SELECT *
+              FROM return_unregistered 
+              WHERE return_store_id = ? AND receipt_id = ?;`,
+      values:[shop_id,receipt_id],
+    });
+  
+    return result;
+}
 async function getImageList(code) {
   const result = await excuteQuery({
     query: `SELECT num, type, before_image, before_store_id, after_image, after_store_id FROM receipt_image
@@ -47,7 +56,10 @@ async function getReceipt(code) {
               repair3.complete_date AS repair3_complete_date,
               repair1.shipment_type AS repair1_shipment_type,
               repair2.shipment_type AS repair2_shipment_type,
-              repair3.shipment_type AS repair3_shipment_type,  
+              repair3.shipment_type AS repair3_shipment_type,
+              repair1_store.store_type AS repair1_store_type,
+              repair2_store.store_type AS repair2_store_type,
+              repair3_store.store_type AS repair3_store_type, 
               receipt.image
               FROM receipt 
               LEFT JOIN brand ON brand.brand_id = receipt.brand_id
@@ -59,6 +71,9 @@ async function getReceipt(code) {
               LEFT JOIN repair_detail AS repair1 ON repair1.repair_detail_id = receipt.repair1_detail_id
               LEFT JOIN repair_detail AS repair2 ON repair2.repair_detail_id = receipt.repair2_detail_id
               LEFT JOIN repair_detail AS repair3 ON repair3.repair_detail_id = receipt.repair3_detail_id
+              LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id
+              LEFT JOIN store AS repair2_store ON repair2.store_id = repair2_store.store_id
+              LEFT JOIN store AS repair3_store ON repair3.store_id = repair3_store.store_id
               WHERE receipt.receipt_code = ?`,
     values: [code],
   });
@@ -69,10 +84,10 @@ async function getReceipt(code) {
 const RepairDetailInfo = async (req, res) => {
   if (req.method === "GET") {
     console.log("req.headers.referer");
-    console.log(req.headers.referer);
     console.log("req.query");
     console.log(req.query);
-    const { code } = req.query;
+    const { code,shop_id } = req.query;
+    
     try {
       const receipt = await getReceipt(code);
       const imageResult = await getImageList(code);
@@ -82,7 +97,15 @@ const RepairDetailInfo = async (req, res) => {
       if (receipt.length == 0) return res.status(204).send();
       console.log(receipt);
       console.log(imageResult);
-      res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult , needRepairImage: needRepairImageResult });
+      if(shop_id){
+        console.log('shop_id: ',shop_id)
+        console.log('receipt.receipt_id: ',receipt[0].receipt_id)
+        const reactReturn = await getReturnUnregistered(shop_id,receipt[0].receipt_id)
+        console.log(reactReturn)
+        res.status(200).json({ data: { ...receipt[0] },returnd : {...reactReturn[0]} });
+      }else{
+        res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult , needRepairImage: needRepairImageResult });
+      }
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

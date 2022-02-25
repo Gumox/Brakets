@@ -1,6 +1,6 @@
 import excuteQuery from "../db"
 
-async function getJudgmentResult(id) {
+async function getJudgmentResult(addQuery,id) {
     const result = await excuteQuery({
         query: `SELECT                      
                   judgment_result_id AS value,
@@ -9,7 +9,7 @@ async function getJudgmentResult(id) {
                   level,	
                   judgment_code	
                 FROM judgment_result 
-                WHERE hq_id = ?`,
+                ${addQuery}`,
         values:[id],
       });
     
@@ -26,10 +26,13 @@ const controller = async (req, res) => {
         const {
             hq_id
         } = req.query;
-        
+        let addQuery ='';
+        if(hq_id){
+          addQuery =`WHERE hq_id = ?`
+        }
 
     try {
-      const result = await getJudgmentResult(hq_id);
+      const result = await getJudgmentResult(addQuery,hq_id);
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("result");

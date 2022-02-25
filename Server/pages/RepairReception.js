@@ -20,16 +20,8 @@ function RepairReception({options,user}) {
   const [listData,setListData] = useState(options.list)
   const [code,setCode] = useState(null)
   const [disable,setDisable] = useState(checkDisable(user.level))
+  const [needImages,setNeedImages] = useState(options.needImages)
 
-  
-  const [windowWidth,setWindowWidth] = useState()
-  const [windowHeight,setWindowHeight] = useState()
-  const handleResize = debounce(()=>{
-      setWindowWidth(window.innerWidth)
-      setWindowHeight(window.innerHeight)
-  },1000)
-  
- 
   let selectList = [{name:"전체",key:null}];
   if(option != null){option.map((item)=>(selectList.push({name:item.headquarter_name,key:item.hq_id})))}
   
@@ -55,33 +47,25 @@ function RepairReception({options,user}) {
         })
     ]);
     setListData(data.body)
+    setNeedImages(data.needImages)
   }
   let lists =[];
   if(user.level>2&&user.level<5){
     listData.forEach((el,index) => {
         let items=(
           <div key={index}>
-            <RepairReceiptModal item={el} info ={options.info[0]} images ={options.images}></RepairReceiptModal>
+            <RepairReceiptModal need={needImages} item={el} info ={options.info[0]} images ={options.images}/>
           </div>
       )
       lists[index] = items;
     })
   }
   useEffect(()=>{
-    console.log(selectItems)
     localStorage.setItem('COMPANY',JSON.stringify(selectItems));
     localStorage.setItem('SHOP',shop_id)
     localStorage.setItem('SHOP_NAME',options.info[0].name)
     localStorage.setItem('USER',JSON.stringify(user))
 
-    setWindowWidth(window.innerWidth)
-    setWindowHeight(window.innerHeight)
-    console.log("windowWidth: ",window.innerWidth, "windowHeight: ",window.innerHeight)
-    
-    window.addEventListener('resize',handleResize);
-    return ()=>{
-        window.removeEventListener('resize',handleResize);
-    }
   },[])
   return(
     <div style={{height:"100%",overflowY: "scroll"}}>
@@ -158,16 +142,13 @@ export const getServerSideProps = async (ctx) => {
 
       })
     ]);
-    console.log(companys)
   if(user.level>2&&user.level<5){
     const[list,images] =await Promise.all([
       axios.get(`${process.env.API_URL}/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
       .then(({ data }) => data),
       axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
       .then(({ data }) => data)
-      .catch(error=>{
-
-      })
+    
     ])
     return {
       props: {
@@ -176,7 +157,8 @@ export const getServerSideProps = async (ctx) => {
           companys : companys.data,
           info : companys.body,
           list : list.body,
-          images: images.body
+          images: images.body,
+          needImages : list.needImages
         }
       }
     };

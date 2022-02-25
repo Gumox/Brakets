@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '../components/Container';
 import Contents from '../components/Contents';
 import Button from '../components/Button';
 import Bottom from '../components/Bottom';
 import axios from "axios";
-import { Image, Text, View, ScrollView, Dimensions, StyleSheet, Alert } from "react-native";
+import { Dimensions, StyleSheet, Alert } from "react-native";
 import styled from 'styled-components/native';
 import ip from '../serverIp/Ip';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { formatDate } from '../functions/formatDate';
+import { postSendRepairInfo  } from '../functions/useInRepairDetail';
 import RNPickerSelect from 'react-native-picker-select';
 import store from '../store/store';
 
@@ -68,72 +69,18 @@ export default function RepairInfo({ route, navigation }) {
     const [storeName, setStoreName] = useState('');
     const [shippingDate, setShippingDate] = useState('');
     const [send, setSend] = useState('')
+    const [repairDetailId,setRepairDetailId] = useState('')
     const [storeId, setStoreId] = useState(0);
     const [receiverName, setReceiverName] = useState('');
+
+    const [isReceiverNull,setIsReceiverNull] =useState(false)
     
+    const [receiverSet,setReceiverSet] = useState(null);
+    
+    const [receiver,setReceiver] = useState();
 
     const images = route.params.images;
-    const formatDate = (inputDate) => {
-        var month = '' + (inputDate.getMonth() + 1),
-            day = '' + inputDate.getDate(),
-            year = inputDate.getFullYear();
-
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-        const value = [year, month, day].join('-');
-        return value
-    }
-    const getTargetData = useCallback(async (receiptId) => {
-        const { data } = await axios.get(ip + `/api/RepairDetailInfo?code=${receiptId}`);
-        if (data === null || data === '') {
-            alertFunction();
-            navigation.goBack();
-        }
-        else {
-            console.log(data.data)
-            setBrand(data.data['brand_name'])
-            setStoreName(data.data["store_name"])
-            setStoreId(data.data['store_id'])
-            setReceiverName(data.data["receiver_name"])
-
-            datas.push({ receipt_id: data.data["receipt_id"] })
-            datas.push({ code: code })
-            datas.push({ brand: data.data['brand_name'] })
-            datas.push({ storeName: data.data["store_name"] })
-            datas.push({ storeId: data.data['store_id'] })
-            datas.push({ receiver: data.data['receiver'] })
-            datas.push({ receiver_name: data.data['receiver_name'] })
-            if (data.data["repair1_store_id"] === store.getState().shopId) {
-                setShippingDate(formatDate(new Date(data.data["repair1_complete_date"])))
-                datas.push({ shippingDate: data.data["repair1_complete_date"] })
-            } else if (data.data["repair2_store_id"] === store.getState().shopId) {
-                setShippingDate(formatDate(new Date(data.data["repair2_complete_date"])))
-                datas.push({ shippingDate: data.data["repair2_complete_date"] })
-            } else if (data.data["repair3_store_id"] === store.getState().shopId) {
-                setShippingDate(formatDate(new Date(data.data["repair3_complete_date"])))
-                datas.push({ shippingDate: data.data["repair3_complete_date"] })
-            }
-
-
-        }
-
-    });
-    useEffect(() => {
-        getTargetData(code);
-    }, []);
-    const setShipping = (value) => {
-        let items = [
-            { label: storeName, value: storeId },
-            { label: '본사', value: 1 }
-        ]
-        items.forEach(obj => {
-            if (obj.value === value) {
-                store.dispatch({ type: "SHIPPING_PLACE", shippingPlace: { name: obj.label, id: obj.value } })
-            }
-        });
-    }
+    
     const alertFunction = () => {
         Alert.alert(
             "서비스카드 오류",
@@ -144,6 +91,96 @@ export default function RepairInfo({ route, navigation }) {
         );
     }
 
+    const getTargetData = async (code) => {
+        const { data } = await axios.get(ip + `/api/RepairDetailInfo?code=${code}&shop_id=${store.getState().shopId}`);
+        console.log(data)
+        if (data === null || data === '') {
+            alertFunction();
+            navigation.goBack();
+        }
+        else {
+            let date;
+            setBrand(data.data['brand_name'])
+            setStoreName(data.data["store_name"])
+            setStoreId(data.data['store_id'])
+            setReceiverName(data.data["receiver_name"])
+            
+            if (data.data["repair1_store_id"] === store.getState().shopId) {
+                setShippingDate(formatDate(new Date(data.data["repair1_complete_date"])))
+                setRepairDetailId(data.data["repair1_detail_id"])
+                date = data.data["repair1_complete_date"]
+            } else if (data.data["repair2_store_id"] === store.getState().shopId) {
+                setShippingDate(formatDate(new Date(data.data["repair2_complete_date"])))
+                setRepairDetailId(data.data["repair2_detail_id"])
+                date = data.data["repair2_complete_date"] 
+            } else if (data.data["repair3_store_id"] === store.getState().shopId) {
+                setShippingDate(formatDate(new Date(data.data["repair3_complete_date"])))
+                setRepairDetailId(data.data["repair3_detail_id"])
+                date = data.data["repair3_complete_date"] 
+            }
+            if(Object.keys(data.returnd).length){
+                setIsReceiverNull(true)
+                let items=[
+                    { label: data.data["store_name"], value: data.data['store_id'] },
+                    { label: '본사', value: 1 }
+                    ]
+                setReceiver((
+                    <RNPickerSelect
+                    placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
+                    style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
+                    onValueChange={(value) => {
+                        setReceiverSet(value)
+                        items.map((el)=>{
+                            if(el.value === value){
+                                console.log(el.label,date)
+                                setDatas(
+                                    
+                                        { receipt_id: data.data["receipt_id"] ,
+                                         code: code ,
+                                         brand: data.data['brand_name'] ,
+                                         storeName: data.data["store_name"] ,
+                                         storeId: data.data['store_id'] ,
+                                         shippingDate: date ,
+                                         receiver: el.value ,
+                                         receiver_name: el.label }
+                                    
+                                )
+                            }
+                        })
+                        
+
+                    }}
+                    items={items}
+                />
+                ))
+            }else{
+                setDatas(
+                    
+                        { receipt_id: data.data["receipt_id"] ,
+                         code: code ,
+                         brand: data.data['brand_name'] ,
+                         storeName: data.data["store_name"] ,
+                         storeId: data.data['store_id'] ,
+                         shippingDate: date ,
+                         receiver: data.data['receiver'] ,
+                         receiver_name: data.data['receiver_name'] }
+                    
+                )
+                setReceiverSet(data.data["store_id"])
+                setReceiver((
+                    <InputText>{data.data["receiver_name"]}</InputText>
+                ))
+            }
+
+        }
+
+    };
+    useEffect(() => {
+        console.log(code)
+        getTargetData(code);
+    }, []);
+    
+    
     return (
         <Container>
             <Contents style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height, paddingTop: 24 }}>
@@ -163,12 +200,28 @@ export default function RepairInfo({ route, navigation }) {
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
-                <InputText>{receiverName}</InputText>
+                {receiver}
                 <TopText />
 
 
             </Contents>
-            <Button onPress={() => navigation.navigate('DetectCode', { toGo: "ProductSend", datas: datas })}>
+            <Button onPress={() =>{ 
+                if(receiverSet !== null){
+                    if(isReceiverNull){
+                        postSendRepairInfo(datas.receiver,formatDate(new Date()),1,0,repairDetailId)
+                    }
+                    navigation.navigate('DetectCode',{ toGo: "ProductSend", datas: datas })
+                }else{
+                    Alert.alert(
+                        "발송지 미설정",
+                        "받는곳을 선택해 주세요",
+                        [
+                            { text: "OK", onPress: () => console.log("OK Pressed") }
+                        ]
+                    );
+                }
+
+            }}>
                 행낭 코드 스캔
             </Button>
 

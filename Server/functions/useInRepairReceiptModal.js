@@ -14,7 +14,7 @@ export const getSelectList =async (api,hq_id) => {
   }
   
 
-export const setSelectList = (selectItems,text) => {
+export const setSelectList = (selectItems) => {
     let type = "text";
     const code = "value";
 
@@ -41,15 +41,47 @@ export const setSelectList = (selectItems,text) => {
     }
     return(resultItems)
   }
-export const getRepairType= async()=>{
+export const getRepairType= async(hq_id)=>{
     const [data] = await Promise.all([
         axios
         .get(`${process.env.API_URL}/type/repair`,{
-        params: { headquarterId: 2},})
+        params: { headquarterId: hq_id},})
         .then(({ data }) => data)
         .catch(error=>{
 
         })
     ]);
     return(data.data);
+}
+export const getReceiptRepairInfo = async(receipt_id)=>{
+  const[datas] =await Promise.all([
+      axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getReceiptRepairInfo?receipt_id=${receipt_id}`
+      )
+      .then(({ data }) => data)
+      .catch(error=>{
+
+      })
+    ])
+    console.log(datas)
+    return datas;
+}
+
+export const setSelectType = (selectItems) => {
+  let type = "text";
+  const code = "value";
+
+  let resultItems =[];
+  if(selectItems !== undefined){
+    selectItems.map((item,index) => {
+      let resultItem;
+      const key = index;
+      resultItem =(
+        <option value={item[code]} key={key}>
+          {item[type]}
+        </option>
+      )   
+      resultItems[index] = (resultItem)
+    })
+  }
+  return(resultItems)
 }

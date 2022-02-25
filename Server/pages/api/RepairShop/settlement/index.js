@@ -8,6 +8,8 @@ async function getList(query,values) {
                         brand.brand_code,
                         store.store_id,
                         store.name,
+                        repair_detail.hq_staff,
+                        repair_detail.repair_staff,
                         store.contact AS store_contact,
                         repair_detail.repair_detail_id,
                         repair_detail.store_id,
@@ -34,6 +36,9 @@ async function getList(query,values) {
                         repair_detail.shipment_type,
                         repair_detail.shipment_price,
                         repair_detail.repair_detail_state,
+                        repair_detail.adjustment,
+                        repair_detail.adjustment_reason,
+                        repair_detail.remarks,
                         customer.customer_id AS customer_id,
                         customer.name AS customer_name,
                         customer.phone AS customer_phone	
@@ -44,7 +49,7 @@ async function getList(query,values) {
                 LEFT JOIN customer ON receipt.customer_id = customer.customer_id
 
                 ${query}`,
-      values:[values],
+      values,
     });
     return result;
   }
@@ -55,6 +60,7 @@ const settlement = async (req, res) => {
 
     const {
         hq_id,
+        brand,
         repairShop,
         selectOption,
         startDate,
@@ -62,14 +68,24 @@ const settlement = async (req, res) => {
     } = req.query;
     let query = "";
     let values = [];
+    console.log(req.query)
     
-    if(hq_id){
+    if(hq_id&&hq_id!='전체'){
         if(query == ""){
             query += "WHERE brand.headquarter_id = ? ";
             values = [...values, hq_id];
         }else{
             query += "AND brand.headquarter_id = ? ";
             values = [...values, hq_id];
+        }
+    }
+    if(brand&&brand!='전체'){
+        if(query == ""){
+            query += "WHERE brand.brand_id = ? ";
+            values = [...values, brand];
+        }else{
+            query += "AND brand.brand_id = ? ";
+            values = [...values, brand];
         }
     }
     if(repairShop){
@@ -81,7 +97,7 @@ const settlement = async (req, res) => {
             values = [...values, repairShop];
         }
     }
-    if(selectOption){
+    if(selectOption){//complete_date 발송일,register_date 접수일
         if (startDate !== null || endDate !== null) {
             if(query == ""){
                 if (startDate) {
@@ -106,9 +122,11 @@ const settlement = async (req, res) => {
     }
 
     try {
+        console.log(":::::::::::::::::")
+        console.log(query)
+        console.log(values)
         const result = await getList(query,values);
         if (result.error) throw new Error(result.error);
-        if (result.length == 0) return res.status(204).send();
         res.status(200).json({data: result});
     } catch (err) {
         console.log(err.message);

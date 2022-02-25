@@ -1,16 +1,23 @@
 
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useCallback} from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 import Popup from 'reactjs-popup';
+import Modal from "../Modal";
 import 'reactjs-popup/dist/index.css';
 import formatDate from "../../functions/formatDate";
-import image from 'next/image';
+import Image from 'next/image';
 import { debounce } from "lodash";
 
 function RecepitionImage (props) {
   const el =props.item;
-  const imageList = props.images;
+
+  const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
+  const closeProductImage = useCallback(
+    () => setIsProductImageModalOpen(false),
+    []
+  );
+  
   const [windowWidth,setWindowWidth] = useState()
   const [windowHeight,setWindowHeight] = useState()
   const handleResize = debounce(()=>{
@@ -18,14 +25,6 @@ function RecepitionImage (props) {
       setWindowHeight(window.innerHeight)
   },1000)
 
-  let images= [];
-  imageList.forEach((obj) => {
-    if(obj.receipt_id === el.receipt_id){
-      images.push(obj)
-    }
-  });
-
-  let date = formatDate(new Date(el.receipt_date))
  
   useEffect( () => {
     setWindowWidth(window.innerWidth)
@@ -36,25 +35,30 @@ function RecepitionImage (props) {
     }
   },[]);
   return (
-    <div suppressHydrationWarning={true}>
-       {process.browser &&
-    <Popup  
-      trigger={
-        <div>
-            <ItemView>{el}</ItemView>
-            <ItemView>{date}</ItemView>
-        </div>
-      }  
-      modal
-      contentStyle={{ 
-        width: windowWidth*0.9,
-        height:windowHeight*0.5,
-        backgroundColor:"#32FF32"}}>
-      
-        
-    </Popup>
-    }
+    <div>
+      <ItemBox onClick={()=>{setIsProductImageModalOpen(true)}}>
+          <ItemView style={{backgroundColor:props.color}}>{el.name}</ItemView>
+          <DetailImg 
+            src={el.image}
+            width={((windowHeight)*0.9-20)/8}
+            height={((windowHeight)*0.9-550)/2}
+            alt={el.name}
+          />
+      </ItemBox>
+      {isProductImageModalOpen && (
+        <Modal handleCloseButtonClick={closeProductImage}>
+          {
+            <Image
+              src={el.image}
+              alt={el.name}
+              layout="fill"
+              objectFit="contain"
+            />
+          }
+        </Modal>
+      )}
     </div>
+    
     
   );
   
@@ -63,14 +67,17 @@ function RecepitionImage (props) {
 export default RecepitionImage;
 
 const DetailImg = styled.img`
-  width:270px;
-  height:480px;
 `;
 
 const ItemView = styled.div`
   font-size :12px;
-  min-height: 20px;
-  width :100px;
   display: flex;  
-  justify-content:center
+  justify-content:center;
   `;
+const ItemBox =styled.div`
+  margin-left:10px;
+  margin-right:10px;
+  flex:1;
+  height : 42px;
+  
+`;

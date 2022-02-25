@@ -1,6 +1,6 @@
 import excuteQuery from "../db"
 
-async function getAnalysisType(id) {
+async function getAnalysisType(addQuery,id) {
     const result = await excuteQuery({
         query: `SELECT  
                 analysis_id  AS value,
@@ -9,7 +9,7 @@ async function getAnalysisType(id) {
                 headquarter_id,
                 level
                 FROM analysis_type
-                WHERE headquarter_id = ?`,
+                ${addQuery}`,
         values:[id],
       });
     
@@ -24,9 +24,12 @@ const controller = async (req, res) => {
         console.log(req.query);
         
         const { hq_id } = req.query;
-        
+        let addQuery ='';
+      if(hq_id){
+        addQuery =`WHERE headquarter_id=?`
+      }
     try {
-      const result = await getAnalysisType(hq_id);
+      const result = await getAnalysisType(addQuery,hq_id);
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("result");

@@ -4,17 +4,32 @@ import styled from "styled-components";
 import COLOR from "../../constants/color";
 import formatDate from "../../functions/formatDate";
 import { debounce } from "lodash";
+import { getRepairType,getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
+import ItemCount from "./receiptionHistory/itemCount";
+import ItemType from "./receiptionHistory/itemType";
+import ItemCost from "./receiptionHistory/itemCost";
+import ItemRedo from "./receiptionHistory/itemRedo";
 import image from "next/image";
+
 const RepairHistory = (props) => {
     const info = props.infos;
-    const selectTypeList = props.selectList;
+    const hq_id = props.hqId;
+
+    const [repiarType,setRepiarType] = useState([])
+
     const shop = props.shop;
     const receipt_id = props.receipt;
+    const [repairDetailId, setRepairDetailId] = useState(null)
     const [message, setMessage] = useState("")
-    const [storeRecept,setStoreRecept] = useState([{data: 0}])
+    const [storeRecept,setStoreRecept] = useState([])
+
     const [repairType1,setRepairType1] = useState(null)
     const [repairType2,setRepairType2] = useState(null)
     const [repairType3,setRepairType3] = useState(null)
+
+    const [typeCost1,setTypeCost1] = useState(0)
+    const [typeCost2,setTypeCost2] = useState(0)
+    const [typeCost3,setTypeCost3] = useState(0)
     
     const [repairCount1,setRepairCount1] = useState(0)
     const [repairCount2,setRepairCount2] = useState(0)
@@ -27,6 +42,11 @@ const RepairHistory = (props) => {
     const [repairRedo1,setRepairRedo1] = useState(false)
     const [repairRedo2,setRepairRedo2] = useState(false)
     const [repairRedo3,setRepairRedo3] = useState(false)
+
+    const [paid,setPaid] = useState(false)
+    const [fee,setFee] = useState(0)
+    
+    const [cashreceiptNum,setCashreceiptNum] = useState(0)
     
     const [windowWidth,setWindowWidth] = useState()
     const [windowHeight,setWindowHeight] = useState()
@@ -34,8 +54,6 @@ const RepairHistory = (props) => {
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
     },1000)
-
-    const [boxSize,setBoxSize] = useState(290);
 
     const inputRepair = () =>{
         let arr = [];
@@ -54,9 +72,151 @@ const RepairHistory = (props) => {
                 arr.push(obj)
             }
         })
+        if(value+1 == 1){
+            setRepairType1(repairType2);
+            setRepairCount1(repairCount2);
+            setRepairCost1(repairCost2);
+            setRepairRedo1(repairRedo2);
+
+            setRepairType2(repairType3);
+            setRepairCount2(repairCount3);
+            setRepairCost2(repairCost3);
+            setRepairRedo2(repairRedo3);
+            
+            setRepairType3(0);
+            setRepairCount3(0);
+            setRepairCost3(0);
+            setRepairRedo3(false);
+        }else if(value+1 == 2){
+
+            setRepairType2(repairType3);
+            setRepairCount2(repairCount3);
+            setRepairCost2(repairCost3);
+            setRepairRedo2(repairRedo3);
+            
+            setRepairType3(0);
+            setRepairCount3(0);
+            setRepairCost3(0);
+            setRepairRedo3(false);
+        }else if(value+1 == 3){
+
+            setRepairType3(0);
+            setRepairCount3(0);
+            setRepairCost3(0);
+            setRepairRedo3(false);
+        }
         setStoreRecept(arr)
     }
-    
+    const inputInfoRepair = (info,num) =>{
+        let arr = [];
+        for(let index =1;index<4;index++){
+            let type = "repair"+num+"_repair"+index+"_type_id";
+            if(info[type]){
+                let newLine = {data: index};
+                arr.push(newLine)
+            }
+            
+        }
+        setStoreRecept(arr)
+    }
+    const inputTypeCost = (info,typeInfo,num) =>{
+        let arr = [];
+        for(let index =1;index<4;index++){
+            let type = "repair"+num+"_repair"+index+"_type_id";
+            typeInfo.map((el)=>{
+                if(el.value == info[type] && index === 1){
+                    console.log("????",el.repair_price)
+                    setTypeCost1(el.repair_price)
+                }
+                
+                if(el.value == info[type] && index === 2){
+                    console.log("????",el.repair_price)
+                    setTypeCost2(el.repair_price)
+                }
+                
+                if(el.value == info[type] && index === 3){
+                    console.log("????",el.repair_price)
+                    setTypeCost3(el.repair_price)
+                }
+            })
+            
+        }
+        setStoreRecept(arr)
+    }
+    const sortInfo=(info,typeInfo)=>{
+        if(shop == info.repair1_store_id){
+            setMessage(info.repair1_message);
+            inputTypeCost(info,typeInfo,1);
+            setRepairType1(info.repair1_repair1_type_id);
+            setRepairType2(info.repair1_repair2_type_id);
+            setRepairType3(info.repair1_repair3_type_id);
+            setRepairCount1(info.repair1_repair1_count);
+            setRepairCount2(info.repair1_repair2_count);
+            setRepairCount3(info.repair1_repair3_count);
+            setRepairCost1(info.repair1_repair1_price);
+            setRepairCost2(info.repair1_repair2_price);
+            setRepairCost3(info.repair1_repair3_price);
+            setRepairRedo1(Boolean(info.repair1_repair1_redo));
+            setRepairRedo2(Boolean(info.repair1_repair2_redo));
+            setRepairRedo3(Boolean(info.repair1_repair3_redo));
+            setFee(info.fee);
+            setCashreceiptNum(info.repair1_cashreceipt_num)
+            setPaid(Boolean(info.repair1_paid));
+            inputInfoRepair(info,1);
+            setRepairDetailId(info.repair1_detail_id)
+
+        }else if(shop == info.repair2_store_id){
+            setMessage(info.repair2_message);
+            inputTypeCost(info,typeInfo,2);
+            setRepairType1(info.repair2_repair1_type_id);
+            setRepairType2(info.repair2_repair2_type_id);
+            setRepairType3(info.repair2_repair3_type_id);
+            setRepairCount1(info.repair2_repair1_count);
+            setRepairCount2(info.repair2_repair2_count);
+            setRepairCount3(info.repair2_repair3_count);
+            setRepairCost1(info.repair2_repair1_price);
+            setRepairCost2(info.repair2_repair2_price);
+            setRepairCost3(info.repair2_repair3_price);
+            setRepairRedo1(Boolean(info.repair2_repair1_redo));
+            setRepairRedo2(Boolean(info.repair2_repair2_redo));
+            setRepairRedo3(Boolean(info.repair2_repair3_redo));
+            setFee(info.fee);
+            setCashreceiptNum(info.repair2_cashreceipt_num)
+            setPaid(Boolean(info.repair2_paid));
+            inputInfoRepair(info,2);
+            setRepairDetailId(info.repair2_detail_id)
+        }else if(shop == info.repair3_store_id){
+            setMessage(info.repair3_message);
+            inputTypeCost(info,typeInfo,3);
+            setRepairType1(info.repair3_repair1_type_id);
+            setRepairType2(info.repair3_repair2_type_id);
+            setRepairType3(info.repair3_repair3_type_id);
+            setRepairCount1(info.repair3_repair1_count);
+            setRepairCount2(info.repair3_repair2_count);
+            setRepairCount3(info.repair3_repair3_count);
+            setRepairCost1(info.repair3_repair1_price);
+            setRepairCost2(info.repair3_repair2_price);
+            setRepairCost3(info.repair3_repair3_price);
+            setRepairRedo1(Boolean(info.repair3_repair1_redo));
+            setRepairRedo2(Boolean(info.repair3_repair2_redo));
+            setRepairRedo3(Boolean(info.repair3_repair3_redo));
+            setFee(info.fee);
+            setCashreceiptNum(info.repair3_cashreceipt_num)
+            setPaid(Boolean(info.repair3_paid));
+            inputInfoRepair(info,3);
+            setRepairDetailId(info.repair3_detail_id)
+
+        }
+    }
+    const checkBoxTag = (tof) => {
+        let result ;
+        if(tof){
+            result = (<CheckBox checked type="checkbox" onClick={()=>{setPaid(!paid)}}/>)
+        }else{
+            result = (<CheckBox type="checkbox" onClick={()=>{setPaid(!paid)}}/>)
+        }
+        return(result)
+    }
     const onSave = async() =>{
         let res;
         const today = formatDate(new Date())
@@ -81,10 +241,14 @@ const RepairHistory = (props) => {
             repair3_type_id: repairType3,
             repair3_count: repairCount3,
             repair3_price: repairCost3,
-            repair3_redo: repairRedo3 
+            repair3_redo: repairRedo3,
+            paid: paid,
+            fee:fee,
+            cashreceipt_num: cashreceiptNum,
+            repair_detail_id:repairDetailId
         }
 
-          fetch(`${process.env.API_URL}/RepairShop/setRepairinfo`, {
+          fetch(`${process.env.API_URL}/RepairShop/setRepairInfo`, {
           method: "POST",
           headers: {
             'Content-type': 'application/json'
@@ -94,11 +258,18 @@ const RepairHistory = (props) => {
         .then(response => res =response.json())
     }
     useEffect(()=>{
-        
-        setBoxSize((window.innerHeight)*0.28)
+        const fetchData = async () => {
+            const typeInfo = await getRepairType(hq_id);
+
+            const info =await getReceiptRepairInfo(receipt_id);
+            
+            typeInfo.unshift({text:"선택",level:1})
+            setRepiarType(typeInfo)
+            sortInfo(info.body[0],typeInfo)
+        }
+        fetchData();
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
-        console.log("windowWidth: ",window.innerWidth, "windowHeight: ",window.innerHeight)
         
         window.addEventListener('resize',handleResize);
         return ()=>{
@@ -115,12 +286,13 @@ const RepairHistory = (props) => {
                     const key = index;
                     return(
                         <div key={key} style={{height:windowWidth*0.034}}>
-                            <LaView>
+                            <LaView style={{marginTop:10}}>
                                 <ItemText2><div style={{marginLeft:10}}>수선내용{index+1}</div></ItemText2>
                                 <ItemText2>수량</ItemText2>
                                 <ItemText2><div style={{marginLeft:20}}>수선비</div></ItemText2>
                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                                    <input  type="checkbox" name="xxx" value="yyy" onClick={()=>{
+                                    <ItemRedo redo1={repairRedo1} redo2={repairRedo2} redo3={repairRedo3} index={key} onChange={()=>{
+                                        console.log(repairType1)
                                         if(key+1 === 1){
                                             setRepairRedo1(!repairType1)
                                         }else if(key+1 === 2){
@@ -137,36 +309,40 @@ const RepairHistory = (props) => {
                             </LaView>
                             <LaView>
                                 <ItemsView >
-                                <select style={{borderWidth:0,borderBottomWidth:2 ,marginLeft:10}}
-                                    onChange={(e)=>{
+                                <ItemType type1={repairType1} type2={repairType2} type3={repairType3} index={key} repiarType={repiarType}
+                                    onChange={(e,cost)=>{
+                                        
                                         if(key+1 === 1){
                                             setRepairType1(e.target.value)
+                                            setTypeCost1(cost)
                                         }else if(key+1 === 2){
                                             setRepairType2(e.target.value)
+                                            setTypeCost2(cost)
                                         }else if(key+1 === 3){
                                             setRepairType3(e.target.value)
+                                            setTypeCost3(cost)
                                         }
-                                    }}>
-                                    {
-                                        selectTypeList
-                                    }
-                                </select>
+                                    }}/>
                                 </ItemsView>
                                 <ItemsView >
-                                    <input type="number" min="0" style={{width:30,borderWidth:0,borderBottomWidth:2}} 
+                                    <ItemCount count1={repairCount1} count2={repairCount2} count3={repairCount3} index={key}
                                         onChange={(e)=>{
                                             if(key+1 === 1){
                                                 setRepairCount1(e.target.value)
+                                                console.log(typeCost1)
+                                                setRepairCost1((e.target.value)*typeCost1)
                                             }else if(key+1 === 2){
                                                 setRepairCount2(e.target.value)
+                                                setRepairCost2((e.target.value)*typeCost2)
                                             }else if(key+1 === 3){
                                                 setRepairCount3(e.target.value)
+                                                setRepairCost3((e.target.value)*typeCost3)
                                             }
                                         }}
                                     />
                                 </ItemsView>
                                 <ItemsView>
-                                    <input type="number" min="0" style={{width:100,borderWidth:0,borderBottomWidth:2}}
+                                    <ItemCost cost1={repairCost1} cost2={repairCost2} cost3={repairCost3} index={key}
                                         onChange={(e)=>{
                                             if(key+1 === 1){
                                                 setRepairCost1(e.target.value)
@@ -189,7 +365,7 @@ const RepairHistory = (props) => {
                 })
             }
             <ItemText>수선처 설명</ItemText>
-              <textarea style={{height:(windowHeight*0.08),fontSize:18,padding:10,width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
+              <textarea value={message} style={{height:(windowHeight*0.08),fontSize:18,padding:10,width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
                 onChange ={(e)=>{
                     setMessage(e.target.value)
                 }}
@@ -198,14 +374,25 @@ const RepairHistory = (props) => {
                 
             <LaView >
                 <div style={{marginTop:20,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"center"}}>
-                    <CheckBox type="checkbox"/>
+                    {
+                        checkBoxTag(paid)
+                    }
                 </div>
                 <div style={{fontSize:15,color:`${COLOR.RED}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>유상수선비</div>
-                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, borderBottomColor:`${COLOR.RED}`}}></input>
+                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, borderBottomColor:`${COLOR.RED}`}} value = {fee}
+                        onChange={(e)=>{setFee(e.target.value)}}
+                />
                 <div style={{fontSize:15,color:`${COLOR.BLACK}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>현금영수증 번호</div>
-                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}}/>
+                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}} value = {cashreceiptNum}
+                        onChange={(e)=>{setCashreceiptNum(e.target.value)}}
+                />
             </LaView>
-            <CustomButton onClick={()=>{onSave()}}>저장</CustomButton>
+            <CustomButton onClick={()=>{
+                if(info.fault == 0){alert("과실 구분 선택 필요")}
+                if(info.analysis == 0){alert("내용 분석 선택 필요")}
+
+                else {onSave()}
+            }}>저장</CustomButton>
           </div>
         </div>
     )
@@ -231,8 +418,8 @@ const LaView = styled.div`
   margin:3px;
   align-items:center;
 `;
-const CustomButton = styled.div`
-  width:45px;
+const CustomButton = styled.button`
+  width:50px;
   height:30px;
   font-size:15px;
   color: #ffffff;
@@ -242,9 +429,9 @@ const CustomButton = styled.div`
   background-color: ${COLOR.BRAUN};
   border-radius : 7px;
   justify-content : center;
-  &: hover {
-    background-color: ${COLOR.GRAY};
-  }
+  
+  &&:focus {     
+    background-color:${COLOR.GRAY};    
 `;
 const ItemText = styled.div`
   font-size:15px;

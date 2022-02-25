@@ -1,5 +1,5 @@
 
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,use} from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 import Popup from 'reactjs-popup';
@@ -8,7 +8,7 @@ import formatDate from "../../functions/formatDate";
 import RepairHistory from "./RepairHistory";
 import RepairReturn from "./RepairReturn";
 import RepairOthers from "./RepairOthers";
-import axios from "axios";
+import Modal from "../Modal";
 import ip from "../../constants/ip";
 import store from "../../store/store";
 import { getSelectList,setSelectList,getRepairType } from "../../functions/useInRepairReceiptModal";
@@ -22,14 +22,21 @@ function RepairReceiptModal (props) {
   const imageList = props.images;
   const fullImage = ip+el.image;
   const hq_id = el.headquarter_id;
+  const needImages = props.need;
+  
+  const [needResult,setNeedResult] = useState([]);
+
+
   const [faultItems,setFaultItems] = useState([])
   const [judgmentItems,setJudgmentItems] = useState([])
   const [analysisItems,setAnalysisItems] = useState([])
   const [repiarType,setRepiarType] = useState([])
-  const [selectJudgment,setSelectJudgment] = useState(0)
+  const [selectJudgmentName,setSelectJudgmentName] = useState()
+  const [selectJudgmentValue,setSelectJudgmentValue] = useState(0)
   const [selectFault,setSelectFault] =useState(0)
   const [selectAnalysis,setSelectAnalysis] = useState(0)
   const [deliveryType,setDeliveryType] = useState(1)
+
   const [windowWidth,setWindowWidth] = useState()
   const [windowHeight,setWindowHeight] = useState()
   const handleResize = debounce(()=>{
@@ -47,36 +54,33 @@ function RepairReceiptModal (props) {
   images.forEach((obj,index)=>{
     const uri = ip + obj.before_image
     let img = (
-      <div key={index} style={{display:"flex",flexDirection:"column",alignItems:"center",margin:10}}>
-        <div style={{fontSize:15,fontWeight:"bold",margin:10}}>세부 이미지 {index+1}</div>
-        <DetailImg src={uri} alt="세부이미지" />
-      </div>
+        <RecepitionImage key={index} color={COLOR.MENU_MAIN} item={{name:"근접"+(index+1),image:uri}}/>
     )
     imageView[index] = (img);
   })
 
   let date = formatDate(new Date(el.receipt_date))
-  let faultLists = setSelectList(faultItems,"fault")
-  let judgmentLists = setSelectList(judgmentItems,"judgment")
-  let analysisLists = setSelectList(analysisItems,"analysis")
-  let repiarTypeList = setSelectList(repiarType,"repair_type")
+  let faultLists = setSelectList(faultItems)
+  let judgmentLists = setSelectList(judgmentItems)
+  let analysisLists = setSelectList(analysisItems)
+  let repiarTypeList = setSelectList(repiarType)
   
   let selectJudgmentBox;
-  if(selectJudgment == 3){
+  if(selectJudgmentName == "외주수선"){
     selectJudgmentBox =(
-      <RepairHistory infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType, result: selectJudgment}} selectList={repiarTypeList} shop={info.store_id} receipt={el.receipt_id}></RepairHistory>
+      <RepairHistory hqId={hq_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType, result: selectJudgmentValue}} selectList={repiarTypeList} shop={info.store_id} receipt={el.receipt_id}></RepairHistory>
     )
-  }else if(selectJudgment == 7){
+  }else if(selectJudgmentName == "매장반송"){
     selectJudgmentBox =(
-      <RepairReturn reciver={"매장"} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgment}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn reciver={"매장"} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
-  }else if(selectJudgment == 8){
+  }else if(selectJudgmentName == "본사반송"){
     selectJudgmentBox =(
-      <RepairReturn reciver={"본사"} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgment}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn reciver={"본사"} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
-  }else if(selectJudgment == 11){
+  }else if(selectJudgmentName == "기타"){
     selectJudgmentBox =(
-      <RepairOthers infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgment}} shop={info.store_id} receipt={el.receipt_id}></RepairOthers>
+      <RepairOthers infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairOthers>
     )
   }else{
     selectJudgmentBox =(
@@ -88,7 +92,7 @@ function RepairReceiptModal (props) {
       const fI = await getSelectList('faultDivision',hq_id)
       const jI = await getSelectList('judgmentResult',hq_id)
       const aI = await getSelectList('analysisType',hq_id)
-      const typeInfo = await getRepairType();
+      const typeInfo = await getRepairType(hq_id);
       
       store.dispatch({type:"ANALYSIS",analysis:aI});
       store.dispatch({type:"JUDIMENT",judiment:jI});
@@ -113,6 +117,16 @@ function RepairReceiptModal (props) {
     fetchData();
     setWindowWidth(window.innerWidth)
     setWindowHeight(window.innerHeight)
+    needImages.map((arr) => {
+      arr.map((item,i)=>{
+        if(item.receipt_id === el.receipt_id){
+          let result =(
+            <RecepitionImage key={i} color={COLOR.MADARIN} item={{name:"추가"+(i+1),image:ip+item.need_point_image}}/>
+          )
+          needResult[i]=(result);
+        }
+      })
+    })
     window.addEventListener('resize',handleResize);
     return ()=>{
         window.removeEventListener('resize',handleResize);
@@ -133,13 +147,16 @@ function RepairReceiptModal (props) {
       modal
       contentStyle={{ 
         width: windowWidth*0.92,
-        height:windowHeight*0.95}}>
+        minWidth: 1280*0.92,
+        height:windowHeight*0.95,
+        minHeight: 754*0.95
+        }}>
       
         
       
       <Container>
-        <div style={{flex :1, height:windowHeight*0.9}}>
-          <div style={{height:520,border:2,borderStyle:"solid"}}>
+        <Half style={{flex :1, height:windowHeight*0.9}}>
+          <div style={{height:520}}>
             <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>매장 접수 정보</div>
             <Line/>
             <div style={{marginLeft:20,marginRight:20,flex:1}}>
@@ -169,19 +186,26 @@ function RepairReceiptModal (props) {
               <ItemTable><div style={{margin:10}}>{el.message}</div></ItemTable>
             </div>
           </div>
-            <LaView>
-              <ItemBox>
-                <div>전체 이미지</div>
-                <Image src={fullImage} width={((windowHeight)*0.9-620)/2} height={((windowHeight)*0.9-600)/2} alt="전체이미지"/>
-              </ItemBox>
-            </LaView>
-            {
-              /*
-            <DetailImg src={fullImage} style={{margin:10}}
-              alt="전체이미지"></DetailImg> */}
-        </div>
+            <div style={{marginLeft :12}}>
+              <LaView>
+                
+                
+                <RecepitionImage color={COLOR.MADARIN} item={{name:"전체사진",image:fullImage}}/>
+                {
+                  imageView
+                }
+                
+              </LaView>
+              <LaView style={{marginTop:((windowHeight)*0.9-550)/2-34,marginLeft:((windowHeight)*0.9+140)/8}}>
+                {
+                  needResult
+                }
+              </LaView>
+            </div>
+            
+        </Half>
         
-        <div style={{flex :1}}>
+        <Half>
         <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>수선처 접수 입력</div>
           <Line/>
           <div style={{marginLeft:20,marginRight:20,flex:1}}>
@@ -221,7 +245,11 @@ function RepairReceiptModal (props) {
               <RightItemBox>
                 <ItemTextTop>판정결과</ItemTextTop>
                 <ItemTextBottom>
-                  <select onChange={(e)=>{setSelectJudgment(e.target.value)}}  style={styles.selectStyle} >
+                  <select id="selectBox" style={styles.selectStyle}  onChange={(e)=>{
+                      var target = document.getElementById("selectBox");
+                      setSelectJudgmentName(target.options[target.selectedIndex].text)
+                      setSelectJudgmentValue(e.target.value)
+                    }}>
                     {
                       judgmentLists
                     }
@@ -235,7 +263,7 @@ function RepairReceiptModal (props) {
             
           </div>
           
-        </div>
+        </Half>
     </Container> 
     </Popup>
     }
@@ -286,8 +314,6 @@ const Line2 =styled.div`
 `;
 const Half = styled.div`
   flex:1;
-  height: 700px;
-  overflow-y: scroll;
 `
 const ContainText =styled.div`
   display: flex;
