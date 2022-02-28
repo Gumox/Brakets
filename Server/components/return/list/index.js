@@ -127,14 +127,20 @@ function Table({ columns, data, handleDataClick }) {
                     )
                   }
                 )} className="tr">
+                  {console.log('row is')}
+                  {console.log(row)}
                   {row.cells.map((cell, j) => {
                     return (
                       <div key={j} {...cell.getCellProps(
                         {
-                          style: { color: 'red', background: '#ebe8e8' }
+                          style: { 
+                            color: row.original["전표 발행 여부"] !== "전표미발행" ? 'red' : '#ffa203',
+                            background: '#ebe8e8' 
+                          }
                           // red
                           // orange: #ffa203
                         }
+                        
                       )} className="td">
                         {cell.render('Cell')}
                       </div>
@@ -193,6 +199,7 @@ const ReturnList = ({ data, handleDataClick = () => { } }) => {
     { Header: '본사접수일', accessor: '본사접수일' },
     { Header: '내용분석', accessor: '내용분석' },
     { Header: '판정결과', accessor: '판정결과' },
+    // { Header: '전표 발행 여부', accessor: '전표 발행 여부' },
   ], [])
 
   const value = data.map((productReturn) => ({
@@ -221,6 +228,7 @@ const ReturnList = ({ data, handleDataClick = () => { } }) => {
       : "",
     "내용분석": productReturn[RECEIPT.ANALYSIS_NAME],
     "판정결과": productReturn[RECEIPT.RESULT_NAME],
+    "전표 발행 여부":productReturn[RECEIPT.ISSUED_INVOICE] == 0 ? "전표미발행" : "전표발행"
   }))
 
 
@@ -260,7 +268,7 @@ const Styles = styled.div`
     .td {
       margin: 0;
       padding: 0.5rem;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid black;/
       border-right: 1px solid black;
 
       ${'' /* In this example we use an absolutely position resizer,
@@ -287,30 +295,5 @@ const Styles = styled.div`
     }
   }
 `
-
-const TableHeader = styled.thead`
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableHeaderCell = styled.th`
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableRow = styled.tr`
-  cursor: pointer;
-`;
-
-const TableData = styled.td`
-  max-width: ${({ width = "100px" }) => width};
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  text-align: ${({ textAlign = "center" }) => textAlign};
-  border: 1px solid ${COLOR.GRAY};
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-`;
 
 export default ReturnList;
