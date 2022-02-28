@@ -124,7 +124,7 @@ function ShopStepTwo({navigation}) {
             <TopInfoLess></TopInfoLess>
             <CenterText>
             
-                <TopIntro>제품 정보</TopIntro>
+                <TopIntro>접수 유형 선택</TopIntro>
                 <BlueText>요구 사항</BlueText>
                 <GrayText>을 선택하세요</GrayText>
                   
@@ -133,29 +133,29 @@ function ShopStepTwo({navigation}) {
                 <CenterView><SelectButton iconImg = {<ImgIcon source={require('../../Icons/repair_blue.png')}/>} onPress={ ()=> {
                     updateReceipt(store.getState().receipt_id,1)
                     store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:1}});
-                    //getProductCategory();
+                    getProductCategory();
 
                 }}>수선</SelectButton>
-                <SelectButton  iconImg = {<ImgIcon source={require('../../Icons/exchange_blue.png')}/>} onPress={ ()=> {
-                    updateReceipt(store.getState().receipt_id,2)
-                    store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
-                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                    //getProductCategory();
-                }}>교환</SelectButton></CenterView>
-                <CenterView><SelectButton iconImg = {<ImgIcon source={require('../../Icons/refund_blue.png')}/>} onPress={ ()=> {
+                <SelectButton iconImg = {<ImgIcon source={require('../../Icons/refund_blue.png')}/>} onPress={ ()=> {
                     updateReceipt(store.getState().receipt_id,3)
                     store.dispatch({type:'REQUIREMENT',requirement:{name:"환불",id:3}});
                     store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                    //getProductCategory();
+                    getProductCategory();
                 }}>환불</SelectButton>
+                </CenterView>
+                <CenterView><SelectButton  iconImg = {<ImgIcon source={require('../../Icons/exchange_blue.png')}/>} onPress={ ()=> {
+                    updateReceipt(store.getState().receipt_id,2)
+                    store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
+                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
+                    getProductCategory();
+                }}>교환</SelectButton>
                 <SelectButton iconImg = {<ImgIcon source={require('../../Icons/deliberating_blue.png')}/>} onPress={ ()=> {
                     updateReceipt(store.getState().receipt_id,4)
                     store.dispatch({type:'REQUIREMENT',requirement:{name:"심의",id:4}});
                     store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                    //getProductCategory();
+                    getProductCategory();
                 }}>심의</SelectButton></CenterView>
             </PView>  
-            <Label>접수 유형 알아보기</Label>
             <Bottom navigation={navigation}/>
         </Container>
     )
