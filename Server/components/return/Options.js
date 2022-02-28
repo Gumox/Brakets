@@ -3,7 +3,6 @@ import styled from "styled-components";
 import moment from "moment";
 
 import COLOR from "../../constants/color";
-import store from "../../pages/store";
 
 const Options = ({}) => {
   return (
