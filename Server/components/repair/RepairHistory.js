@@ -14,7 +14,7 @@ import image from "next/image";
 const RepairHistory = (props) => {
     const info = props.infos;
     const hq_id = props.hqId;
-
+    const brand =props.brand;
     const [repiarType,setRepiarType] = useState([])
 
     const shop = props.shop;
@@ -256,10 +256,12 @@ const RepairHistory = (props) => {
           body: JSON.stringify(body)
         })
         .then(response => res =response.json())
+        window.location.reload();
     }
     useEffect(()=>{
+        console.log(shop)
         const fetchData = async () => {
-            const typeInfo = await getRepairType(hq_id);
+            const typeInfo = await getRepairType(null,brand,shop);
 
             const info =await getReceiptRepairInfo(receipt_id);
             
@@ -279,69 +281,55 @@ const RepairHistory = (props) => {
     return(
         <div>
             <LaView><ItemText>수선 내역</ItemText><MoneyTable>고객 유상 단가표</MoneyTable><AddTable onClick={()=>{inputRepair()}}>+ 수선 내용 추가</AddTable> </LaView>
-            <Line2/>
-            <ItemText>매장 접수 내용</ItemText>
+            <Line2 style={{marginBottom:20}}/>
             {
                 storeRecept.map((el,index)=>{
                     const key = index;
                     return(
                         <div key={key} style={{height:windowWidth*0.034}}>
                             <LaView style={{marginTop:10}}>
-                                <ItemText2><div style={{marginLeft:10}}>수선내용{index+1}</div></ItemText2>
-                                <ItemText2>수량</ItemText2>
-                                <ItemText2><div style={{marginLeft:20}}>수선비</div></ItemText2>
-                                <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                                    <ItemRedo redo1={repairRedo1} redo2={repairRedo2} redo3={repairRedo3} index={key} onChange={()=>{
-                                        console.log(repairType1)
-                                        if(key+1 === 1){
-                                            setRepairRedo1(!repairType1)
-                                        }else if(key+1 === 2){
-                                            setRepairRedo2(!repairType2)
-                                        }else if(key+1 === 3){
-                                            setRepairRedo3(!repairType3)
-                                        }
-                                    }}/>
-                                </div>
-                                <ItemText2>재수선</ItemText2>
-                                <img  src="/icons/trash.png" width={25} height={20} 
-                                    onClick={()=>{deleteRepair(key)}}
-                                />
-                            </LaView>
-                            <LaView>
-                                <ItemsView >
-                                <ItemType type1={repairType1} type2={repairType2} type3={repairType3} index={key} repiarType={repiarType}
-                                    onChange={(e,cost)=>{
-                                        
-                                        if(key+1 === 1){
-                                            setRepairType1(e.target.value)
-                                            setTypeCost1(cost)
-                                        }else if(key+1 === 2){
-                                            setRepairType2(e.target.value)
-                                            setTypeCost2(cost)
-                                        }else if(key+1 === 3){
-                                            setRepairType3(e.target.value)
-                                            setTypeCost3(cost)
-                                        }
-                                    }}/>
-                                </ItemsView>
-                                <ItemsView >
-                                    <ItemCount count1={repairCount1} count2={repairCount2} count3={repairCount3} index={key}
-                                        onChange={(e)=>{
+                                <RightItemBox>
+                                    <ItemText2><div style={{marginLeft:10}}>수선내용{index+1}</div></ItemText2>
+                                    <ItemsView style={{marginTop:5}} >
+                                    <ItemType type1={repairType1} type2={repairType2} type3={repairType3} index={key} repiarType={repiarType}
+                                        onChange={(e,cost)=>{
+                                            
                                             if(key+1 === 1){
-                                                setRepairCount1(e.target.value)
-                                                console.log(typeCost1)
-                                                setRepairCost1((e.target.value)*typeCost1)
+                                                setRepairType1(e.target.value)
+                                                setTypeCost1(cost)
                                             }else if(key+1 === 2){
-                                                setRepairCount2(e.target.value)
-                                                setRepairCost2((e.target.value)*typeCost2)
+                                                setRepairType2(e.target.value)
+                                                setTypeCost2(cost)
                                             }else if(key+1 === 3){
-                                                setRepairCount3(e.target.value)
-                                                setRepairCost3((e.target.value)*typeCost3)
+                                                setRepairType3(e.target.value)
+                                                setTypeCost3(cost)
                                             }
-                                        }}
-                                    />
-                                </ItemsView>
-                                <ItemsView>
+                                        }}/>
+                                    </ItemsView>
+                                </RightItemBox>
+                                <RightItemBox>
+                                    <ItemText2>수량</ItemText2>
+                                    <ItemsView style={{marginTop:5}} >
+                                        <ItemCount count1={repairCount1} count2={repairCount2} count3={repairCount3} index={key}
+                                            onChange={(e)=>{
+                                                if(key+1 === 1){
+                                                    setRepairCount1(e.target.value)
+                                                    console.log(typeCost1)
+                                                    setRepairCost1((e.target.value)*typeCost1)
+                                                }else if(key+1 === 2){
+                                                    setRepairCount2(e.target.value)
+                                                    setRepairCost2((e.target.value)*typeCost2)
+                                                }else if(key+1 === 3){
+                                                    setRepairCount3(e.target.value)
+                                                    setRepairCost3((e.target.value)*typeCost3)
+                                                }
+                                            }}
+                                        />
+                                    </ItemsView>
+                                </RightItemBox>
+                                <RightItemBox>
+                                    <ItemText2><div style={{marginLeft:20}}>수선비</div></ItemText2>
+                                    <ItemsView style={{marginTop:5}}>
                                     <ItemCost cost1={repairCost1} cost2={repairCost2} cost3={repairCost3} index={key}
                                         onChange={(e)=>{
                                             if(key+1 === 1){
@@ -353,13 +341,34 @@ const RepairHistory = (props) => {
                                             }
                                         }}
                                     />
-                                </ItemsView>
-                                <div style={{width:20}}/>
-                                <ItemsView>
-
-                                </ItemsView>
-                                <div style={{width:20}}/>
+                                    </ItemsView>
+                                </RightItemBox>
+                                <RightItemBox >
+                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+                                        <ItemRedo redo1={repairRedo1} redo2={repairRedo2} redo3={repairRedo3} index={key} onChange={()=>{
+                                            console.log(repairType1)
+                                            if(key+1 === 1){
+                                                setRepairRedo1(!repairType1)
+                                            }else if(key+1 === 2){
+                                                setRepairRedo2(!repairType2)
+                                            }else if(key+1 === 3){
+                                                setRepairRedo3(!repairType3)
+                                            }
+                                        }}/>
+                                    </div>
+                                </RightItemBox>
+                                <RightItemBox >
+                                    <ItemText2>재수선</ItemText2>
+                                </RightItemBox>
+                                <RightItemBox >
+                                    <img  src="/icons/trash.png" width={25} height={20} 
+                                        onClick={()=>{deleteRepair(key)}}
+                                    />
+                                </RightItemBox>
+                                
+                                
                             </LaView>
+                            
                         </div>
                     )
                 })
@@ -383,16 +392,22 @@ const RepairHistory = (props) => {
                         onChange={(e)=>{setFee(e.target.value)}}
                 />
                 <div style={{fontSize:15,color:`${COLOR.BLACK}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>현금영수증 번호</div>
-                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}} value = {cashreceiptNum}
-                        onChange={(e)=>{setCashreceiptNum(e.target.value)}}
+                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}} value = {cashreceiptNum.toString()}
+                        onChange={(e)=>{
+                            setCashreceiptNum((e.target.value).toString())
+                            console.log((e.target.value).toString())
+                        }}
                 />
             </LaView>
+            <LaView style={{justifyContent : "space-around" ,width:"100%"}}>
+            <AddTable onClick={()=>props.close}>취소</AddTable>
             <CustomButton onClick={()=>{
                 if(info.fault == 0){alert("과실 구분 선택 필요")}
                 if(info.analysis == 0){alert("내용 분석 선택 필요")}
 
                 else {onSave()}
             }}>저장</CustomButton>
+            </LaView>
           </div>
         </div>
     )
@@ -413,9 +428,12 @@ const CheckBox = styled.input `
     }
 
 `
+const RightItemBox =styled.div`
+  flex:1;
+`;
 const LaView = styled.div`
   display: flex;  
-  margin:3px;
+  margin:2px;
   align-items:center;
 `;
 const CustomButton = styled.button`
@@ -467,6 +485,8 @@ const Line2 = styled.div`
   background-color: #C4C4C4
 `;
 const AddTable =styled.button`
+    min-width:50px;
+    min-height:30px;
     font-size: 15px;
     border-radius: 5px;
     margin-left: 10px;

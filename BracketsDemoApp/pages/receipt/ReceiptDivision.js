@@ -164,7 +164,7 @@ function ReceiptDivision({navigation}) {
                 else{
                     store.dispatch({type:'RECEPITION_DIVISION',receptionDivision:{name:"매장용",id:3} });
                     console.log(store.getState().receptionDivision);
-                    navigation.navigate( 'SearchCustomer' ) 
+                    navigation.navigate( 'ShopStepOne' ) 
                 }
             }}>매장용 제품</ReceiptButton>
             </Container>

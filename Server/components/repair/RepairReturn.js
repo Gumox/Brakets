@@ -5,7 +5,8 @@ import formatDate from "../../functions/formatDate";
 import { getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
 import { debounce } from "lodash";
 const RepairReturn = (props) => {
-    const reciver = props.reciver;
+    const receiver = props.receiver;
+    const receiverId = props.receiverId;
     const info = props.infos;
     const shop = props.shop;
     const receipt_id = props.receipt;
@@ -35,7 +36,8 @@ const RepairReturn = (props) => {
         analysis_id: info.analysis,
         delivery_type: info.delivery,
         register_date: today,
-
+        
+        receiver: receiverId,
         complete_date : selectedDate,
         message: message,
         shipment_type: selectedSendType,
@@ -50,6 +52,7 @@ const RepairReturn = (props) => {
         body: JSON.stringify(body)
       })
       .then(response => res=response.json())
+      window.location.reload();
     }
     
   const sortInfo=(info)=>{
@@ -111,7 +114,7 @@ const RepairReturn = (props) => {
                   onChange={(e)=>{setShipmentPay(e.target.value)}}
                 />
             </LaView>
-            <LaView><ItemText>받는곳</ItemText><ItemText2>{reciver}</ItemText2></LaView>
+            <LaView><ItemText>받는곳</ItemText><ItemText2>{receiver}</ItemText2></LaView>
             <div style={{marginTop:50,display:"flex",justifyContent:"center",alignItems:"center"}}>
             <CustomButton onClick={()=>{
               if(selectedDate !== null) {

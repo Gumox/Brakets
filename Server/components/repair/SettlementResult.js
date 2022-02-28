@@ -99,7 +99,7 @@ const SettlementResult =(props)=>{
                 <ItemInsideView>{item.customer_name}</ItemInsideView>
                 <ItemInsideView>{item.customer_phone}</ItemInsideView>
             </div>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}><pre>{sortSettlementData(item,types)}</pre></ItemView>
+            <ItemV style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{sortSettlementData(item,types)}</ItemV>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPaymentState(item.repair_detail_state)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{hqStaff}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPrice(0)}</ItemView>
@@ -145,6 +145,14 @@ const ItemView = styled.div`
   width :105px;
   display: flex;  
   flex-direction: row ;
+  align-items: center;
+  justify-content:center;
+  `;
+  const ItemV = styled.div`
+  font-size :12px;
+  min-height: 40px;
+  width :105px;
+  border:2px solid
   align-items: center;
   justify-content:center;
   `;

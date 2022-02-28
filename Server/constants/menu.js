@@ -27,6 +27,10 @@ const MENUS = [
       title: "SMS 결과",
       link: "/sms-result",
     },
+    {
+      title: "수선처",
+      link: "/RepairReception",
+    },
   ];
 
   export default MENUS;

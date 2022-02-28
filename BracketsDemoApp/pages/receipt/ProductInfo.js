@@ -137,13 +137,23 @@ function ProductInfo({navigation, route}) {
    
     
     const addReceipt = async () => {
+        
         var formdata = new FormData();
 
         formdata.append("store", store.getState().store_id);
         formdata.append("brand", store.getState().brand_id);
         formdata.append("staff", store.getState().userInfo[0].staff_id);
         formdata.append("category", store.getState().receptionDivision.id);
-        formdata.append("customer", store.getState().customer.cId);
+        console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
+        if(store.getState().receptionDivision.id == 3){
+        
+            formdata.append("customer", 0);
+            
+        }else{
+            formdata.append("customer", store.getState().customer.cId);
+            
+        }
+        
         
         formdata.append("pid", serialInput);
         formdata.append("pcode", codeInput);

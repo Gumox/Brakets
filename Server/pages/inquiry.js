@@ -43,7 +43,7 @@ export default function Inquiry() {
     
     const setTable =useCallback( async(params ,fI,jI,aI) =>{
         let datas = [];
-        let types = await getRepairType(null)
+        let types = await getRepairType(null,null,shopId)
         if(params.dateOption === "receipt_date"){
             datas = await getData(params)
             let sort =await sortInquiryData(datas.body,params,fI,jI,aI,types)
@@ -221,7 +221,7 @@ export default function Inquiry() {
                     <ItemView>수선비용2</ItemView>
                     <ItemView>수선내용3</ItemView>
                     <ItemView>수선비용3</ItemView>
-                    <ItemView><pre>{"매장\n접수내용"}</pre></ItemView>
+                    <ItemView><pre>{"  매장\n접수내용"}</pre></ItemView>
                 </Container></LaView>
                 <Line/>
                             

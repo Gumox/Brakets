@@ -58,8 +58,8 @@ export default function Settlement()  {
             setUserInfo(user)
             setDisable(checkDisable(user.level))
             let selectShop
-            let typeList = await getRepairType(null)
-        
+            let typeList = await getRepairType(null,null,localStorage.getItem('SHOP'))
+            console.log(typeList)
             if(!checkDisable(user.level)){
                 let list = await getSettlementData({repairShop: localStorage.getItem('SHOP')})
                 setSettlementList(list.data)

@@ -23,9 +23,6 @@ const Home = () => {
       <CuetomLink onClick={() => router.push("/claim")}>
         업체클레임
       </CuetomLink>
-      <CuetomLink onClick={() => router.push("/RepairReception")}>
-        수선처
-      </CuetomLink>
       <CuetomLink onClick={() => router.push("/sms")}>
         SMS 전송
       </CuetomLink>

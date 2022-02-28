@@ -7,6 +7,7 @@ import formatDate from "../../functions/formatDate";
 const RepairOthers = (props) => {
   
   const shop = props.shop;
+  const receiver = props.receiver
   const receipt_id = props.receipt;
   const [message,setMessage] = useState("");
   const [repairDetailId, setRepairDetailId] = useState(null)
@@ -27,7 +28,7 @@ const RepairOthers = (props) => {
       store_id : shop,
       fault_id: null,
       result_id: null,
-
+      receiver: receiver,
       analysis_id: null,
       delivery_type: null,
       register_date: today,
@@ -46,6 +47,7 @@ const RepairOthers = (props) => {
       body: JSON.stringify(body)
     })
     .then(response => res=response.json())
+    window.location.reload();
   }
   const sortInfo=(info)=>{
     if(shop == info.repair1_store_id){

@@ -53,20 +53,24 @@ export const sortSettlementData = (data ,types) =>{
     const repair_type = types
     let sorteddata=``;
     let repair1_name,repair2_name,repair3_name;
-    repair_type.map((el)=>{
+    let result =[];
+    repair_type.map((el,i)=>{
         if(data.repair1_type_id === el.value){
             repair1_name = el.text;
             sorteddata +=repair1_name+`(${data.repair1_count})` 
+            result[i]= (<div style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair1_name+`(${data.repair1_count})`}</div>) 
         }
         if(data.repair2_type_id === el.value){
             repair2_name = el.text;
-            sorteddata += `\n`+repair2_name+`(${data.repair2_count})` 
+            sorteddata +=`\n`+repair2_name+`(${data.repair2_count})` 
+            result[i]= (<div style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair2_name+`(${data.repair2_count})`}</div>) 
         }
         if(data.repair3_type_id === el.value){
             repair3_name = el.text;
             sorteddata +=`\n`+repair3_name+`(${data.repair3_count})` 
+            result[i]= (<div style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair3_name+`(${data.repair3_count})`}</div>) 
         }
-    })
-    return(sorteddata)
+      })
+    return(result)
   
 }

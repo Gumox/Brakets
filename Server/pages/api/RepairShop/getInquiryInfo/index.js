@@ -1,5 +1,5 @@
 import excuteQuery from "../../db";
-
+import _ from 'lodash'
 async function getReceiptList(query,values) {
     const result = await excuteQuery({
         query: `SELECT  receipt.receipt_code,
@@ -64,7 +64,8 @@ async function getReceiptList(query,values) {
                         repair3_detail.repair3_price AS repair3_detail_repair3_price,
                         repair3_detail.register_date AS repair3_register_date,
                         repair3_detail.send_date AS repair3_send_date 
-                FROM receipt 
+                FROM repair_detail 
+                LEFT JOIN receipt ON repair_detail.receipt_id = receipt.receipt_id
                 LEFT JOIN receipt_detail ON receipt.receipt_id = receipt_detail.receipt_id
                 LEFT JOIN product ON product.product_id = receipt.product_id
                 LEFT JOIN store ON store.store_id = receipt.store_id
@@ -76,7 +77,7 @@ async function getReceiptList(query,values) {
                 LEFT JOIN repair_detail AS repair1_detail ON repair1_detail.repair_detail_id = receipt.repair1_detail_id
                 LEFT JOIN repair_detail AS repair2_detail ON repair2_detail.repair_detail_id = receipt.repair2_detail_id
                 LEFT JOIN repair_detail AS repair3_detail ON repair3_detail.repair_detail_id = receipt.repair3_detail_id
-                WHERE receipt.receiver = ? ${query} `,
+                WHERE repair_detail.store_id = ? ${query} `,
         values,
       });
     
@@ -127,7 +128,8 @@ const controller = async (req, res) => {
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("List");
-        res.status(200).json({ body: result });
+        const _result = _.uniqBy(result,"receipt_code") 
+        res.status(200).json({ body: _.sortBy(_result,"receipt_code")});
       } else {
         console.log("No List");
         res.status(204).json({ message: "No List" });

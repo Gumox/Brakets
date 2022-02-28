@@ -63,10 +63,10 @@ function Login({ navigation }): React.ReactElement {
       LoadInfo();
       return;
     }
-
+    console.log(userEmail)
     const option = {
 
-      url: ip + `/api/auth/store?email=${userEmail}&userId=${userId}`,
+      url: ip + `/api/auth/store?email=${userEmail}`,
       // url: `http://34.64.182.76/api/auth/store?email=$&userId=`,
 
       method: 'GET',
@@ -75,7 +75,7 @@ function Login({ navigation }): React.ReactElement {
       },
 
     }
-
+    console.log(option.url)
     axios(option)
       .then(
         response => (response.status == '200') && (response.data.data[0].name) ? (
@@ -87,12 +87,13 @@ function Login({ navigation }): React.ReactElement {
       .catch(function (error) {
         console.log(error)
         console.log(option.url)
-        Alert.alert(
+        alert("등록된 정보가 존재하지 않습니다.")
+        /*Alert.alert(
           "등록된 정보가 존재하지 않습니다.",
           [
             { text: "확인" },
           ]
-        )
+        )*/
       })
   }, [isOn]);
 
@@ -104,8 +105,8 @@ function Login({ navigation }): React.ReactElement {
 
     await getProfile();
 
-    console.log("(sign in)user id: " + userId);
-    console.log("(sign in)user email: " + userEmail);
+    //console.log("(sign in)user id: " + userId);
+    //console.log("(sign in)user email: " + userEmail);
   };
 
   const signOutWithKakao = async (): Promise<void> => {
