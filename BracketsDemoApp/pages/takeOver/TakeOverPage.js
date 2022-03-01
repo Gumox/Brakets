@@ -16,6 +16,7 @@ import { Provider } from 'react-redux'
 import { CheckBox } from 'react-native-elements';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
+import { CheckCode } from '../../Functions/codeCheck';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -404,7 +405,10 @@ function TakeOverPage( { route,navigation } ) {
     }
     useEffect(()=>{
         console.log(route.params.code)
+        const checkResult = CheckCode(route.params.code)
+        console.log(checkResult)
         getTargetData(route.params.code);
+        
         
 
     },[]);

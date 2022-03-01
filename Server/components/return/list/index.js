@@ -10,7 +10,7 @@ import {
   RECEIPT_TYPE,
   STORE_CATEGORY,
 } from "../../../constants/type";
-import store from "../../../pages/store";
+import store from "../../../store/store";
 
 import Options from "../Options";
 
