@@ -26,7 +26,7 @@ const TopStateView = styled.View`
     justify-content: center;
 `;
 const AlternativeCodeText = styled.Text`
-    
+    color:#000000;
 `;
 const AlternativeCodeBtn = styled.TouchableOpacity`
     justify-content: center;
@@ -44,10 +44,10 @@ export default function CheckBarcode( { navigation } ) {
                 <RegistText>인수 확인</RegistText>
             </CenterText>
             
-            <Contents>  
+            <CenterText>  
                 <BlueText>서비스 카드 바코드</BlueText>
                 <GrayText>를 스캔하세요</GrayText>
-            </Contents>
+            </CenterText>
             
             <AlternativeCodeBtn
                 onPress = {() => navigation.navigate('InputAlternativeNumber', {key:'TakeOverPage'})}

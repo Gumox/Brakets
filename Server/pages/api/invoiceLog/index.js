@@ -1,8 +1,5 @@
 import { result } from "lodash";
 import excuteQuery from "../db"
-
-"2011-12-18 13:17:17"
-
 async function returnInvoiceLog(
     receipt_id,
     receipt_code,
@@ -64,12 +61,7 @@ async function invoice(List,user) {
     console.log(inputDate);
     let setIssued = [];
     let inputInvoiceLog = [];
-    console.log("-------------------------")
-    console.log(data)
     const checkInvoice = await getInvoice(data.receipt_id)
-    console.log("-----88888--")
-    console.log(checkInvoice.length)
-    console.log("-------------------------")
     if(checkInvoice.length > 0){
       if((checkInvoice.length) % 2 === 1){
         qty = -1;
@@ -140,11 +132,8 @@ const controller = async (req, res) => {
         console.log(list)
 
     try {
-      //const result = await returnInvoiceLog(receipt_id, receipt_code, release_date, status, season, partcode, color, size, qty, amount, created, created_date, edited, edited_date);
       const result = await invoice(list,user)
-      //console.log(result);
       if (result.error) throw new Error(result.error); 
-      //console.log(result)
       if (result ) {
         const invoiceList = await getInvoiceList(list)
         console.log(invoiceList)

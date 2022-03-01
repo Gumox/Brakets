@@ -1,4 +1,4 @@
-import excuteQuery from "../db";
+import excuteQuery from "./db";
 
 async function codeCheck(code) {
   const result = await excuteQuery({
@@ -16,6 +16,9 @@ const check = async (req, res) => {
         const { code } = req.query;
         const check = await codeCheck(code);
         if (check.error) throw new Error(check.error);
+        console.log("***************************")
+        console.log(check.length)
+        console.log("***************************")
         if(check.length){
             res.status(200).json({ message : true });
         }
