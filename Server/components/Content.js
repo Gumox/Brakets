@@ -8,7 +8,8 @@ const Content = ({ children }) => {
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 50px);
+  overflow: scroll;
 `;
 
 export default Content;
