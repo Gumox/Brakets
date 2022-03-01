@@ -10,7 +10,7 @@ import {
   RECEIPT_TYPE,
   STORE_CATEGORY,
 } from "../../../constants/type";
-import store from "../../../pages/store";
+import store from '../../../store/store'
 
 import Options from "../Options";
 
@@ -91,10 +91,7 @@ function Table({ columns, data, handleDataClick }) {
   )
   store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
   const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
-  // store.dispatch(receipt_code)
-  // console.log("구미ㅏ뉴ㅜㅏㅣㅓㅠㅁ러누ㅏㅣㅍ어나ㅜㅏㅣ퍼ㅏㅐㅣ")
-  // console.log(store.getState().selected_data)
-
+  
   return (
 
     <>

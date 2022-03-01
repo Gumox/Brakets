@@ -1,48 +1,67 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect,useCallback} from "react";
 import styled from "styled-components";
 import moment from "moment";
 
 import COLOR from "../../constants/color";
-import store from "../../pages/store";
+import store from "../../store/store";
 import axios from "axios";
 
 
-const insertRow = async() => {
-  axios
-  .post("api/issueInvoice",  {params: {
-    // receipt_id: store.getState().selected_data.selectedFlatRows[0].original.receipt_id,
-    receipt_code: store.getState().selected_data.selectedFlatRows[0].original["서비스카드 번호"],
 
-    // release_date: "2020-12-12 12:00:00",
-    // status: "normal",
-    // season: store.getState().selected_data.selectedFlatRows[0].original["시즌"],
-    // partcode: store.getState().selected_data.selectedFlatRows[0].original["스타일"],
-    // color: store.getState().selected_data.selectedFlatRows[0].original["컬러"],
-    // size: store.getState().selected_data.selectedFlatRows[0].original["사이즈"],
-    // amount: "1",
-    // created: "2020-12-12 12:00:19",
-    // created_date: "2020-12-12 12:00:00",
-    // edited:"2020-12-12 12:00:19",
-    // edited_date: "2020-12-12 12:00:00",
-  }})
-  .then((response) => (console.log(response.status)));
-}
 
 
 const Options = ({value, user}) => {
 
-  console.log(user)
+  const [data, setData] = useState("");
+  const [itemList, setItemList] = useState([]);
 
-  console.log("Option data :");
-  store.subscribe(() => console.log(store.getState()));
+  console.log(user)
+  const insertLog = useCallback(async(list, user) =>{
+    console.log(list)
+    console.log(user)
+    const[datas] =await
+      axios.put(`${process.env.API_URL}/invoiceLog`,{
+        body: {list:list, user:user.name},
+      })
+      .then(({ data }) => data)
+      .catch(error=>{
+  
+      })
+    return datas;
+  },[])
+  
+
+  useEffect(() => {
+    // console.log("item list");
+    // console.log(itemList);
+    // console.log(data)
+  }, [itemList, data])
+
+  // console.log("Option data :");
+  let items =[];
+  store.subscribe(() => {
+    store.getState().selected_data.selectedFlatRows.map((item) => {
+      console.log(item.original)
+      items.push(item.original)
+    })
+    setItemList(items)
+    items=[];
+  });
+
+  // console.log(data)
+
 
   return (
     <Wrapper>
-      {/* <CustomerButton>일괄선택</CustomerButton> */}
       <CustomerButton width="250px"
-        onClick={
-          () => insertRow()
-        }
+        onClick={async() => {
+          let tempData = await insertLog(itemList, user);
+          setData(tempData),
+          console.log("1124354y5utye54q2erwfsdgerrd"),
+          console.log(data)
+        }        
+      }
+        
       >
         선택된 항목 전표 발생/취소 (+,-)
       </CustomerButton>
@@ -63,10 +82,10 @@ const Wrapper = styled.div`
 
 const Notice = styled.div`
 padding: 5px 0;
-  width: 100%;
-  height: 20px;
-  color: ${COLOR.RED};
-  font-size: 12px;
+width: 100%;
+height: 20px;
+font-size: 12px;
+color: ${COLOR.RED};
 `;
 
 const CustomerButton = styled.button`
@@ -75,5 +94,6 @@ const CustomerButton = styled.button`
   margin-right: 20px;
   border: 3px solid ${COLOR.BLACK};
 `;
+
 
 export default Options;
