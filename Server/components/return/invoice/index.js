@@ -10,7 +10,6 @@ import Sum from "./Sum";
 const ReturnInvoice = ({data}) => {
   return (
     <Wrapper>
-        {/* <Options /> */}
         <List data={data}/>
         <Sum />
     </Wrapper>

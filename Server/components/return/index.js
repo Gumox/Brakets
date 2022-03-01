@@ -58,9 +58,6 @@ const Return = ({ options, user}) => {
           ...inputData,
           dateType: inputData["isMonthly"]? "month": "all",
           dateOption: 'return_date',
-          
-          // 하자반품의 경우
-          // resultId: 4
           resultId: 4
         } 
       })
@@ -82,8 +79,8 @@ const Return = ({ options, user}) => {
         handleValueChange={handleInputValueChange}
         handleSearchButtonClick={handleSearchButtonClick}
       />
-      <List data={searchList}/>
-      <Options/>
+      <List data={searchList} user={user}/>
+      {/* <Options/> */}
       <Invoice data={searchList}/>
     </Content>
   );

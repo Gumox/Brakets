@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
 import { useTable, useBlockLayout, useResizeColumns, useRowSelect } from 'react-table';
@@ -10,11 +10,10 @@ import {
   RECEIPT_TYPE,
   STORE_CATEGORY,
 } from "../../../constants/type";
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
+import store from "../../../pages/store";
+
+import Options from "../Options";
+
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -44,6 +43,7 @@ function Table({ columns, data, handleDataClick }) {
     }),
     []
   )
+
 
   const {
     getTableProps,
@@ -89,8 +89,11 @@ function Table({ columns, data, handleDataClick }) {
       ])
     }
   )
-
+  store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
   const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
+  // store.dispatch(receipt_code)
+  // console.log("구미ㅏ뉴ㅜㅏㅣㅓㅠㅁ러누ㅏㅣㅍ어나ㅜㅏㅣ퍼ㅏㅐㅣ")
+  // console.log(store.getState().selected_data)
 
   return (
 
@@ -134,7 +137,7 @@ function Table({ columns, data, handleDataClick }) {
                       <div key={j} {...cell.getCellProps(
                         {
                           style: { 
-                            color: row.original["전표 발행 여부"] !== "전표미발행" ? 'red' : '#ffa203',
+                            color: row.original["전표 발행 여부"] == "전표미발행" ? 'red' : '#ffa203',
                             background: '#ebe8e8' 
                           }
                           // red
@@ -157,7 +160,9 @@ function Table({ columns, data, handleDataClick }) {
           {JSON.stringify(
             {
               // selectedRowIds: selectedRowIds,
-              'selectedFlatRows[].original': selectedFlatRows.map(value => value.values["서비스카드 번호"])
+              'selectedFlatRows[].original': selectedFlatRows.map(value => value.values["서비스카드 번호"]),
+              // 'storedData': store.getState("SELECTED_DATA")
+              
             },
             null,
             2
@@ -168,10 +173,10 @@ function Table({ columns, data, handleDataClick }) {
   )
 }
 
-const ReturnList = ({ data, handleDataClick = () => { } }) => {
+const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
 
   console.log("asdad");
-  console.log(data);
+  console.log(user);
 
   const columns = React.useMemo(() => [
     // {Header: 'No',   accessor: 'No'},
@@ -199,10 +204,10 @@ const ReturnList = ({ data, handleDataClick = () => { } }) => {
     { Header: '본사접수일', accessor: '본사접수일' },
     { Header: '내용분석', accessor: '내용분석' },
     { Header: '판정결과', accessor: '판정결과' },
-    // { Header: '전표 발행 여부', accessor: '전표 발행 여부' },
   ], [])
 
   const value = data.map((productReturn) => ({
+    "receipt_id":productReturn[RECEIPT.ID],
     "서비스카드 번호": productReturn[RECEIPT.CODE],
     "매장코드": productReturn[STORE.CODE],
     "매장명": productReturn[STORE.NAME],
@@ -228,21 +233,28 @@ const ReturnList = ({ data, handleDataClick = () => { } }) => {
       : "",
     "내용분석": productReturn[RECEIPT.ANALYSIS_NAME],
     "판정결과": productReturn[RECEIPT.RESULT_NAME],
-    "전표 발행 여부":productReturn[RECEIPT.ISSUED_INVOICE] == 0 ? "전표미발행" : "전표발행"
+    "전표 발행 여부":productReturn[RECEIPT.ISSUED_INVOICE] == 0 ? "전표미발행" : "전표발행",
   }))
 
+
+  // console.log(rows)
 
   return (
     <Wrapper>
       <Styles>
         <Table columns={columns} data={value} handleDataClick={handleDataClick} />
       </Styles>
+      <Options
+      data = {value}
+      user = {user}
+      />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  height: 60%;
+  
+  height: 70%;
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;
@@ -250,6 +262,7 @@ const Wrapper = styled.div`
 
 const Styles = styled.div`
   padding: 1rem;
+  height: 80%;
 
   .table {
     display: inline-block;
