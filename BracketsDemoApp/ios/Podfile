@@ -17,6 +17,8 @@ target 'DempApp' do
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
 
 
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
   target 'DempAppTests' do
     inherit! :complete
     # Pods for testing

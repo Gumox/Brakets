@@ -16,7 +16,7 @@ import { Provider } from 'react-redux'
 import { CheckBox } from 'react-native-elements';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
-import { CheckCode } from '../../Functions/codeCheck';
+import { CheckCode,CheckFaultDivision,CheckAnalysisType,CheckJudgmentResult } from '../../Functions/codeCheck';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -196,7 +196,6 @@ function TakeOverPage( { route,navigation } ) {
             body: bodyData
             });
             const json = await response.json();
-            console.log(json)
            
         } catch (error) {
             console.error(error);
@@ -209,12 +208,8 @@ function TakeOverPage( { route,navigation } ) {
         const { data } = await axios.get(ip+`/api/receipt/${receiptId}`);
         
         const readData = data.data;
-        //console.log(readData)
         const keys= Object.keys(readData)
         
-        /*keys.forEach(element => {
-            console.log( element + " : "+readData[element])
-        });*/
         
         setCardCode(readData["receipt_code"])                    //서비스카드번호
         if( readData["receipt_category"] == 1){                  //접수구분
@@ -252,12 +247,14 @@ function TakeOverPage( { route,navigation } ) {
         }
         
         setImage(ip + readData["image"])                         //제품 전체 사진 
+        console.log(ip + readData["image"])
 
 
         const beforeImgList =[]                                  //제품 수선 전 사진
         const afterImgList =[]                                   //제품 수선 후 사진
         for (let i = 0; i < data.imageList.length; i++) {
             const element = data.imageList[i];
+            console.log(element)
             
             beforeImgList.push(ip+element["before_image"])
             if(element["after_image"] === null){
@@ -270,13 +267,16 @@ function TakeOverPage( { route,navigation } ) {
         
         setBeforeImages(beforeImgList)
         setAfterImages(afterImgList)
-        console.log(beforeImages);
-        console.log(afterImages);
         
         setStoreMessage(readData["store_message"])               //매장 접수 내용
-        setCheckMistake(readData["fault_id"])                    //과실 구분
-        setContentAnalysis(readData["analysis_id"])              //내용분석
-        setResult(readData["result_id"])                         //판정결과
+        let cf = await CheckFaultDivision(readData["fault_id"])
+        setCheckMistake(cf)                    //과실 구분
+
+        let ca = await CheckAnalysisType(readData["analysis_id"])
+        setContentAnalysis(ca)              //내용분석
+
+        let cj = await CheckJudgmentResult(readData["result_id"])
+        setResult(cj)                         //판정결과
 
         setRepairShop(readData["repair1_store_name"])            //수선처 
         setRepairShopDate(readData["repair1_register_date"])     //수선처 접수일
@@ -360,7 +360,6 @@ function TakeOverPage( { route,navigation } ) {
             const currentDate = selectedDate || date
             setShow(Platform.OS === 'ios');
             setDate(currentDate);
-            console.log(currentDate)
             setSelectDay(formatDate())
         }
         return {
@@ -381,10 +380,41 @@ function TakeOverPage( { route,navigation } ) {
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
         const key = i
+        let visable =false;
         const before =(
-            <Pressable key ={key}>
-                <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
-            </Pressable>
+            <View key ={key}>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={visable}
+                        onRequestClose={() => {
+                            visable =false;
+                        }}
+                    >
+                        <View style={styles.outView} >
+                        <View style={styles.centerView} >    
+                        <View style={styles.inView}>
+                            
+                            <ImageZoom cropWidth={winW}
+                                    cropHeight={winH}
+                                    imageWidth={300}
+                                    imageHeight={400}>
+                                    <Image style={{width:300, height:400}}
+                                    source={{uri:element}}/>
+                            </ImageZoom>
+                            
+                        </View>
+                        </View>
+                        </View>
+                    </Modal>
+                        <View style ={{justifyContent:"center", width:"100%"}}>
+                            <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
+                                visable =true;
+                            }}>
+                            <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: element}}/>
+                            </Pressable>
+                        </View>
+            </View>
         )
         beforeImageViews[key] =(before)
     }
@@ -392,11 +422,42 @@ function TakeOverPage( { route,navigation } ) {
     for (let i = 0; i < afterImages.length; i++) {
         const element = afterImages[i];
         const key = i
+        let visable =false;
         if(element !== null){
             const before =(
-                <Pressable key ={key}>
-                    <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
-                </Pressable>
+                <View key ={key}>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={visable}
+                        onRequestClose={() => {
+                            visable =false;
+                        }}
+                    >
+                        <View style={styles.outView} >
+                        <View style={styles.centerView} >    
+                        <View style={styles.inView}>
+                            
+                            <ImageZoom cropWidth={winW}
+                                    cropHeight={winH}
+                                    imageWidth={300}
+                                    imageHeight={400}>
+                                    <Image style={{width:300, height:400}}
+                                    source={{uri:element}}/>
+                            </ImageZoom>
+                            
+                        </View>
+                        </View>
+                        </View>
+                    </Modal>
+                        <View style ={{justifyContent:"center", width:"100%"}}>
+                            <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
+                                visable =true;
+                            }}>
+                            <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: element}}/>
+                            </Pressable>
+                        </View>
+                </View>
             )
             beforeImageViews[key] =(before)
         }else{
@@ -404,13 +465,18 @@ function TakeOverPage( { route,navigation } ) {
         }
     }
     useEffect(()=>{
-        console.log(route.params.code)
-        const checkResult = CheckCode(route.params.code)
-        console.log(checkResult)
-        getTargetData(route.params.code);
+        const fetch = async()=>{
+                
+            const checkResult = await CheckCode(route.params.code)
+            if(!checkResult){
+                alert("잘못된 바코드 입니다");
+                navigation.goBack();
+            }else{
+                getTargetData(route.params.code);
+            }
+        }
+        fetch();
         
-        
-
     },[]);
     var repairShops =[]
     
@@ -609,6 +675,7 @@ function TakeOverPage( { route,navigation } ) {
                     )
                 }else{
                     putReceiptComplete(cardCode,selectDay);
+                    navigation.goBack();
                 }
               }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
             </Half> 
