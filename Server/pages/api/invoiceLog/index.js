@@ -110,10 +110,20 @@ async function invoice(List,user) {
                                                       inputDate,
                                                       user,
                                                       inputDate)
-                                                      
-      results.push(inputInvoiceLog)
+                                         
     }
   }
+  return results;
+}
+async function getInvoiceList(List) {
+  let results=[]
+  for (let data of List) {
+    const result = await getInvoice(data.receipt_id)
+    if(result !== {}){
+      results.push(result)
+    }
+  }
+  console.log(results)
   return results;
 }
 const controller = async (req, res) => {
@@ -131,12 +141,14 @@ const controller = async (req, res) => {
 
     try {
       //const result = await returnInvoiceLog(receipt_id, receipt_code, release_date, status, season, partcode, color, size, qty, amount, created, created_date, edited, edited_date);
-      const result = invoice(list,user)
+      const result = await invoice(list,user)
       //console.log(result);
       if (result.error) throw new Error(result.error); 
       //console.log(result)
       if (result ) {
-        res.status(200).json({ send: true });
+        const invoiceList = await getInvoiceList(list)
+        console.log(invoiceList)
+        res.status(200).json({ data: invoiceList });
       } else {
         console.log("No result");
         res.status(204).json({ message: "No result" });
