@@ -31,6 +31,7 @@ async function getReceipt(query, values) {
                     receipt.cashreceipt_num AS cashreceipt_num,
                     analysis_type.analysis_name AS analysis_name,
                     result_type.result_name AS result_name,
+                    receipt.issued AS issued,
                     fault_type.fault_name AS fault_name,
                     receipt.repair1_detail_id,
                     repair1_store.name AS repair1_store_name,
