@@ -16,10 +16,10 @@ const Options = ({value, user}) => {
   const [itemList, setItemList] = useState([]);
 
   console.log(user)
-  const insertLog = useCallback(async(list, user) =>{
+  const insertLog = async(list, user) =>{
     console.log(list)
     console.log(user)
-    const[datas] =await
+    const[datas] =await await Promise.all([
       axios.put(`${process.env.API_URL}/invoiceLog`,{
         body: {list:list, user:user.name},
       })
@@ -27,8 +27,9 @@ const Options = ({value, user}) => {
       .catch(error=>{
   
       })
+    ])
     return datas;
-  },[])
+  }
   
 
   useEffect(() => {
@@ -56,9 +57,10 @@ const Options = ({value, user}) => {
       <CustomerButton width="250px"
         onClick={async() => {
           let tempData = await insertLog(itemList, user);
-          setData(tempData),
-          console.log("1124354y5utye54q2erwfsdgerrd"),
+          setData(tempData);
+          console.log("1124354y5utye54q2erwfsdgerrd");
           console.log(data)
+          console.log(tempData);
         }        
       }
         
