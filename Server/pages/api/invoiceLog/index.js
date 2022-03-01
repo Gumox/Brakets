@@ -131,13 +131,13 @@ const controller = async (req, res) => {
         console.log("req.headers.referer");
         console.log(req.headers.referer);
         console.log("req.query");
-        console.log(req.body);
+        console.log(req.body.body);
         
         const {
             list,
             user
-        } = req.body;
-        
+        } = req.body.body;
+        console.log(list)
 
     try {
       //const result = await returnInvoiceLog(receipt_id, receipt_code, release_date, status, season, partcode, color, size, qty, amount, created, created_date, edited, edited_date);
