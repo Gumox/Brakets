@@ -207,7 +207,7 @@ function LookupPage({ navigation }) {
     const { data } = await axios.get(ip + "/api/lookup", {
       params: {
         customerName: name,
-        lastphone: phone,
+        customerContact: phone,
         dateOption: "receipt_date",
         dateType: "all",
         startDate: std,

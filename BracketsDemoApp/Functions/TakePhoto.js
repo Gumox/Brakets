@@ -49,7 +49,7 @@ const Touch  = styled.TouchableOpacity`
 const Label = styled.Text`
   text-align : center;
   color : white;
-  font-size : 12px;
+  font-size : 18px;
 `;
 const PressButton = styled.View`
   flex : 1;
@@ -91,14 +91,12 @@ export default class TakePhoto extends Component {
   console.log("to go: "+route.params.key);
 
 
-    //console.log("go");
     if (this.camera) {
       const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
       const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
       const imgUri = data.uri;
       RNCamera.Constants.AutoFocus.on
       
-      console.log (imgUri);
 
       if (route.params.key === 'ShopStepThree2'){
         store.dispatch({type:'PHOTO',photo:imgUri});
@@ -109,14 +107,11 @@ export default class TakePhoto extends Component {
           
         store.dispatch({type:'DETAIL_PHOTO',detailPhoto:imgUri});
 
-        console.log(store.getState().detailPhoto)
         this.props.navigation.replace(route.params.key);
       } 
       else if(route.params.key === "AddPhoto"){
         
         store.dispatch({type:'ADD',add: imgUri});
-        console.log("   ");
-        console.log(store.getState().photoArr);
         this.props.navigation.pop();
         this.props.navigation.replace("ShopStepThree4",{value:route.params.value});
       }
@@ -124,11 +119,6 @@ export default class TakePhoto extends Component {
       else if(route.params.key === "RetakePhoto"){
         
         if(route.params.index === 0){
-          console.log("");
-          console.log("");
-          console.log(imgUri);
-          console.log("");
-          console.log("");
           console.log(store.getState().photoArr);
           store.dispatch({type:'PHOTO',photo:imgUri})
           this.props.navigation.replace('ShopStepThree2',{value:imgUri,index: route.params.index,toGo : "PhotoControl"});
@@ -139,7 +129,6 @@ export default class TakePhoto extends Component {
           this.props.navigation.replace("PhotoControl",{value:imgUri ,index :route.params.index });
         }
         else {
-          //console.log(addPhoto);
           store.dispatch({type:'ADD',add: imgUri});
           this.props.navigation.pop();
           this.props.navigation.replace("PhotoControl",{value:imgUri,index :route.params.index});
@@ -150,10 +139,7 @@ export default class TakePhoto extends Component {
   
   render() {
     const {route}=this.props;
-    console.log("to go: "+route.params.key);
-    //console.log(route.params.key);
-    console.log(route.params.value);
-    //console.log(store.getState().photoArr);
+    //console.log("to go: "+route.params.key);
     var readText1 = " ";
     var readText2 = " ";
     var readText3 = " ";
@@ -201,9 +187,6 @@ export default class TakePhoto extends Component {
           </Touch>
 
           <ChangeView>
-            <Touch onPress = { this.onSuccess.bind(this)}>
-              <ImgIcon source={require('../Icons/changeType.png')}/>
-            </Touch>
           </ChangeView>
 
 

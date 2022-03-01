@@ -116,7 +116,7 @@ function Login({ navigation }) {
 
   const getProfile = async (): Promise<void> => {
     const profile: KakaoProfile = await getKakaoProfile();
-
+    console.log(profile)
     setResult(profile.email);
   };
 

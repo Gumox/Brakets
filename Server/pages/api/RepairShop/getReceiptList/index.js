@@ -25,6 +25,7 @@ async function getReceiptList(query,values) {
                         receipt.receipt_date,
                         receipt.store_message,
                         receipt.message,
+                        receipt.store_id,
                         store.name AS store_name,
                         store.contact AS store_contact,
                         brand.headquarter_id,
@@ -37,11 +38,18 @@ async function getReceiptList(query,values) {
                         product.color,
                         product.size,
                         product.degree,
+                        product.brand_id,
                         mfr.name AS mfr_name,
                         mfr.store_id AS mfr_id,
                         customer.name AS customer_name,
                         customer.phone  AS customer_phone,
                         product.name AS product_name,
+                        repair1.store_id AS repair1_store_id,
+                        repair2.store_id AS repair2_store_id,
+                        repair3.store_id AS repair3_store_id,
+                        receipt.repair1_detail_id,
+                        receipt.repair2_detail_id,
+                        receipt.repair3_detail_id,
                         receipt.image
                 FROM receipt 
                 LEFT JOIN receipt_detail ON receipt.receipt_id = receipt_detail.receipt_id
@@ -52,6 +60,12 @@ async function getReceiptList(query,values) {
                 LEFT JOIN brand ON brand.brand_id = product.brand_id
                 LEFT JOIN store AS mfr ON mfr.store_id = product.mfr_id
                 LEFT JOIN customer ON customer.customer_id  =  receipt.customer_id
+                LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
+                LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id
+                LEFT JOIN repair_detail AS repair2 ON receipt.repair2_detail_id = repair2.repair_detail_id
+                LEFT JOIN store AS repair2_store ON repair2.store_id = repair2_store.store_id
+                LEFT JOIN repair_detail AS repair3 ON receipt.repair3_detail_id = repair3.repair_detail_id
+                LEFT JOIN store AS repair3_store ON repair3.store_id = repair3_store.store_id
                 WHERE receipt.step = 1 AND receipt.receiver = ? ${query} `,
         values,
       });

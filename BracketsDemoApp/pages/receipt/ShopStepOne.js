@@ -70,7 +70,7 @@ function ShopStepOne( { navigation } ) {
                 <BlueText>RFID의 QR코드</BlueText>
                 <GrayText>를 스캔하세요</GrayText>
             </CenterText>
-            <Alternative onPress={ ()=> navigation.navigate( 'InputAlternativeNumber' )}>
+            <Alternative onPress={ ()=> navigation.navigate( 'InputAlternativeNumber' ,{key:"ProductInfo"})}>
                 대체 코드 작성</Alternative>
             <Button onPress={ ()=> navigation.navigate( 'BarcodeScreen') }>
                 코드 스캔

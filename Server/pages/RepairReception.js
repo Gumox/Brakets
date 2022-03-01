@@ -53,7 +53,7 @@ function RepairReception({options,user}) {
   if(user.level>2&&user.level<5){
     listData.forEach((el,index) => {
         let items=(
-          <div key={index}>
+          <div key={index} style={{paddingTop:1}}>
             <RepairReceiptModal need={needImages} item={el} info ={options.info[0]} images ={options.images}/>
           </div>
       )

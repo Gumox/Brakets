@@ -64,7 +64,7 @@ class BarcodeScreen extends Component {
 
                 <ButtonView>
                     <Button
-                        onPress={ ()=> this.props.navigation.navigate('InputAlternativeNumber')}
+                        onPress={ ()=> this.props.navigation.navigate('InputAlternativeNumber',{key:"ProductInfo"})}
                         >
                         <Text>
                             코드 직접 입력하기

@@ -67,7 +67,7 @@ const kakao = async (req, res) => {
       // 해당 데이터로 token 만들어서 cookie 에 넣고
       // 메인 페이지로 redirect
       
-      if(user.level > 2){
+      if(user.level > 2 && user.level < 5){
         const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
         setCookie(res, "token", token, {
         httpOnly: true,
@@ -76,13 +76,16 @@ const kakao = async (req, res) => {
         res.redirect("/RepairReception")
         
         
-      }else if(user.level <= 2){
+      }else if(user.level < 2 || user.level > 4){
         const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
         setCookie(res, "token", token, {
         httpOnly: true,
         path: "/",
         });
         res.redirect("/");
+      }
+      else{
+        res.redirect("/login?r=fail");
       }
     }
   }

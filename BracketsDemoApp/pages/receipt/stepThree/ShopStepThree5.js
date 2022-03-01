@@ -213,7 +213,7 @@ function ShopStepThree4({route,navigation}) {
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <TopInfo></TopInfo>
             <Contents>
-            <CenterView><TopIntro>수선 정보 확인</TopIntro></CenterView>
+            <CenterView><TopIntro>수선 정보</TopIntro></CenterView>
             
 
             
@@ -227,7 +227,7 @@ function ShopStepThree4({route,navigation}) {
                                {photoImages}
                        </ScrollView>
 
-                       <Label>추가 요청 사항</Label>
+                       <Label> 매장 접수 내용</Label>
                        <Input  
                            multiline={ true }
                            >{request}</Input> 

@@ -361,7 +361,7 @@ export default class AddCustomer extends Component {
                             )
                         }else {
                             this.addCustomer(this.state.name,this.state.phone)
-                            //this.props.navigation.navigate('ShopStepOne')
+                            this.props.navigation.navigate('ShopStepOne')
                         }
                     }}>
                         등록

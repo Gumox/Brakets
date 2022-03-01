@@ -41,11 +41,12 @@ export const setSelectList = (selectItems) => {
     }
     return(resultItems)
   }
-export const getRepairType= async(hq_id)=>{
+export const getRepairType= async(hq_id,brand,shop)=>{
+    console.log(hq_id,brand,shop)
     const [data] = await Promise.all([
         axios
         .get(`${process.env.API_URL}/type/repair`,{
-        params: { headquarterId: hq_id},})
+        params: { headquarterId: hq_id ,brandId:brand,storeId:shop},})
         .then(({ data }) => data)
         .catch(error=>{
 
@@ -84,4 +85,16 @@ export const setSelectType = (selectItems) => {
     })
   }
   return(resultItems)
+}
+
+export const checkHaveRepairDetail =(el,shop)=>{
+  if(el.repair1_store_id === shop){
+    return COLOR.MOCCA
+  }
+  else if(el.repair2_store_id === shop){
+    return COLOR.MOCCA
+  }
+  else if(el.repair3_store_id === shop){
+    return COLOR.MOCCA
+  }
 }

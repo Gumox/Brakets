@@ -1,5 +1,5 @@
 
-import React,{useEffect,useState,use} from "react";
+import React,{useEffect,useState} from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 import Popup from 'reactjs-popup';
@@ -8,11 +8,9 @@ import formatDate from "../../functions/formatDate";
 import RepairHistory from "./RepairHistory";
 import RepairReturn from "./RepairReturn";
 import RepairOthers from "./RepairOthers";
-import Modal from "../Modal";
 import ip from "../../constants/ip";
 import store from "../../store/store";
-import { getSelectList,setSelectList,getRepairType } from "../../functions/useInRepairReceiptModal";
-import Image from 'next/image';
+import { getSelectList,setSelectList,getRepairType,checkHaveRepairDetail } from "../../functions/useInRepairReceiptModal";
 import { debounce } from "lodash";
 import RecepitionImage from "./RecepitionImage";
 
@@ -25,6 +23,7 @@ function RepairReceiptModal (props) {
   const needImages = props.need;
   
   const [needResult,setNeedResult] = useState([]);
+  const [lineColor,setLineColor] = useState()
 
 
   const [faultItems,setFaultItems] = useState([])
@@ -68,15 +67,15 @@ function RepairReceiptModal (props) {
   let selectJudgmentBox;
   if(selectJudgmentName == "외주수선"){
     selectJudgmentBox =(
-      <RepairHistory hqId={hq_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType, result: selectJudgmentValue}} selectList={repiarTypeList} shop={info.store_id} receipt={el.receipt_id}></RepairHistory>
+      <RepairHistory hqId={hq_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType, result: selectJudgmentValue}} brand={el.brand_id} selectList={repiarTypeList} shop={info.store_id} receipt={el.receipt_id}></RepairHistory>
     )
   }else if(selectJudgmentName == "매장반송"){
     selectJudgmentBox =(
-      <RepairReturn reciver={"매장"} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn receiver={"매장"} receiverId={el.store_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgmentName == "본사반송"){
     selectJudgmentBox =(
-      <RepairReturn reciver={"본사"} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn receiver={"본사"} receiverId={0} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgmentName == "기타"){
     selectJudgmentBox =(
@@ -89,6 +88,7 @@ function RepairReceiptModal (props) {
   }
   useEffect( () => {
     const fetchData = async () => {
+      console.log(el)
       const fI = await getSelectList('faultDivision',hq_id)
       const jI = await getSelectList('judgmentResult',hq_id)
       const aI = await getSelectList('analysisType',hq_id)
@@ -97,7 +97,7 @@ function RepairReceiptModal (props) {
       store.dispatch({type:"ANALYSIS",analysis:aI});
       store.dispatch({type:"JUDIMENT",judiment:jI});
       store.dispatch({type:"FAULT",fault:fI});
-      store.dispatch({type:"REPAIR_TYPE",repair_type:typeInfo});
+      store.dispatch({type:"REPAIR_TYPE",repair_type:typeInfo});//변경필요
 
       localStorage.setItem('ANALYSIS',JSON.stringify(aI));
       localStorage.setItem('JUDIMENT',JSON.stringify(jI));
@@ -115,6 +115,7 @@ function RepairReceiptModal (props) {
       setRepiarType(typeInfo)
     }
     fetchData();
+    setLineColor(checkHaveRepairDetail(el,info.store_id))
     setWindowWidth(window.innerWidth)
     setWindowHeight(window.innerHeight)
     needImages.map((arr) => {
@@ -137,7 +138,7 @@ function RepairReceiptModal (props) {
        {process.browser &&
     <Popup  
       trigger={
-      <PrView ><ContainText>
+      <PrView style={{backgroundColor:lineColor}}><ContainText>
                 <ItemView>{el.receipt_code}</ItemView>
                 <ItemView>{date}</ItemView>
                 <ItemView>{el.store_name}</ItemView>
@@ -154,117 +155,120 @@ function RepairReceiptModal (props) {
       
         
       
-      <Container>
-        <Half style={{flex :1, height:windowHeight*0.9}}>
-          <div style={{height:520}}>
-            <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>매장 접수 정보</div>
+      {(close) => (<Container>
+          <Half style={{flex :1, height:windowHeight*0.9}}>
+            <div style={{height:520}}>
+              <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>매장 접수 정보</div>
+              <Line/>
+              <div style={{marginLeft:20,marginRight:20,flex:1}}>
+                <LeView>
+                  <ItemBox><ItemTextTop>브랜드</ItemTextTop><ItemTextBottom>{el.brand_name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop>서비스 번호</ItemTextTop><ItemTextBottom>{el.receipt_code}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop>수선처</ItemTextTop><ItemTextBottom>{info.name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop>생산업체</ItemTextTop><ItemTextBottom>{el.mfr_name}</ItemTextBottom></ItemBox>
+                </LeView>
+                <LeView>
+                  <ItemBox><ItemTextTop>매장명</ItemTextTop><ItemTextBottom>{el.name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop>매장 연락처</ItemTextTop><ItemTextBottom>{el.store_contact}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop>고객명</ItemTextTop><ItemTextBottom>{el.customer_name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop>고객 연락처</ItemTextTop><ItemTextBottom>{el.customer_phone}</ItemTextBottom></ItemBox>
+                </LeView>
+                <LeView>
+                  <ItemBoxSmall><ItemTextTop>시즌</ItemTextTop><ItemTextBottom>{el.season_name}</ItemTextBottom></ItemBoxSmall>
+                  <ItemBox><ItemTextTop>스타일 No.</ItemTextTop><ItemTextBottom>{el.style_code}</ItemTextBottom></ItemBox>
+                  <ItemBoxSmall><ItemTextTop>Color</ItemTextTop><ItemTextBottom>{el.color}</ItemTextBottom></ItemBoxSmall>
+                  <ItemBoxSmall><ItemTextTop>Size</ItemTextTop><ItemTextBottom>{el.size}</ItemTextBottom></ItemBoxSmall>
+                  <ItemBoxSmall><ItemTextTop>차수</ItemTextTop><ItemTextBottom>{el.degree}</ItemTextBottom></ItemBoxSmall>
+                </LeView>
+                <Line2/>
+                <ItemText>매장 접수 내용</ItemText>
+                <ItemTable><div style={{margin:10}}>{el.store_message}</div></ItemTable>
+                <ItemText>본사 설명</ItemText>
+                <ItemTable><div style={{margin:10}}>{el.message}</div></ItemTable>
+              </div>
+            </div>
+              <div style={{marginLeft :12}}>
+                <LeView>
+                  
+                  
+                  <RecepitionImage color={COLOR.MADARIN} item={{name:"전체사진",image:fullImage}}/>
+                  {
+                    imageView
+                  }
+                  
+                </LeView>
+                <LeView style={{marginTop:((windowHeight)*0.9-550)/2-34,marginLeft:((windowHeight)*0.9+140)/8}}>
+                  {
+                    needResult
+                  }
+                </LeView>
+              </div>
+              
+          </Half>
+          
+          <Half>
+          <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>수선처 접수 입력</div>
             <Line/>
             <div style={{marginLeft:20,marginRight:20,flex:1}}>
-              <LaView>
-                <ItemBox><ItemTextTop>브랜드</ItemTextTop><ItemTextBottom>{el.brand_name}</ItemTextBottom></ItemBox>
-                <ItemBox><ItemTextTop>서비스 번호</ItemTextTop><ItemTextBottom>{el.receipt_code}</ItemTextBottom></ItemBox>
-                <ItemBox><ItemTextTop>수선처</ItemTextTop><ItemTextBottom>{info.name}</ItemTextBottom></ItemBox>
-                <ItemBox><ItemTextTop>생산업체</ItemTextTop><ItemTextBottom>{el.mfr_name}</ItemTextBottom></ItemBox>
-              </LaView>
-              <LaView>
-                <ItemBox><ItemTextTop>매장명</ItemTextTop><ItemTextBottom>{el.name}</ItemTextBottom></ItemBox>
-                <ItemBox><ItemTextTop>매장 연락처</ItemTextTop><ItemTextBottom>{el.store_contact}</ItemTextBottom></ItemBox>
-                <ItemBox><ItemTextTop>고객명</ItemTextTop><ItemTextBottom>{el.customer_name}</ItemTextBottom></ItemBox>
-                <ItemBox><ItemTextTop>고객 연락처</ItemTextTop><ItemTextBottom>{el.customer_phone}</ItemTextBottom></ItemBox>
-              </LaView>
-              <LaView>
-                <ItemBoxSmall><ItemTextTop>시즌</ItemTextTop><ItemTextBottom>{el.season_name}</ItemTextBottom></ItemBoxSmall>
-                <ItemBox><ItemTextTop>스타일 No.</ItemTextTop><ItemTextBottom>{el.style_code}</ItemTextBottom></ItemBox>
-                <ItemBoxSmall><ItemTextTop>Color</ItemTextTop><ItemTextBottom>{el.color}</ItemTextBottom></ItemBoxSmall>
-                <ItemBoxSmall><ItemTextTop>Size</ItemTextTop><ItemTextBottom>{el.size}</ItemTextBottom></ItemBoxSmall>
-                <ItemBoxSmall><ItemTextTop>차수</ItemTextTop><ItemTextBottom>{el.degree}</ItemTextBottom></ItemBoxSmall>
-              </LaView>
-              <Line2/>
-              <ItemText>매장 접수 내용</ItemText>
-              <ItemTable><div style={{margin:10}}>{el.store_message}</div></ItemTable>
-              <ItemText>본사 설명</ItemText>
-              <ItemTable><div style={{margin:10}}>{el.message}</div></ItemTable>
-            </div>
-          </div>
-            <div style={{marginLeft :12}}>
-              <LaView>
-                
-                
-                <RecepitionImage color={COLOR.MADARIN} item={{name:"전체사진",image:fullImage}}/>
-                {
-                  imageView
-                }
-                
-              </LaView>
-              <LaView style={{marginTop:((windowHeight)*0.9-550)/2-34,marginLeft:((windowHeight)*0.9+140)/8}}>
-                {
-                  needResult
-                }
-              </LaView>
-            </div>
-            
-        </Half>
-        
-        <Half>
-        <div style={{fontSize:windowHeight*0.025,fontWeight:"bold",marginLeft:30,padding:10}}>수선처 접수 입력</div>
-          <Line/>
-          <div style={{marginLeft:20,marginRight:20,flex:1}}>
-            <LaView>
-              <RightItemBox><ItemTextTop>수선처 접수일</ItemTextTop><ItemTextBottom>{formatDate(new Date(el.receipt_date))}</ItemTextBottom></RightItemBox>
-              <RightItemBox><ItemTextTop>운송 형태</ItemTextTop><ItemTextBottom>
-                  <select onChange={(e)=>{setDeliveryType(e.target.value)}}  style={styles.selectStyle} >
-                  <option value={1} key={'매장행낭'}>매장행낭</option>
-                  <option value={2} key={'본사행낭'}>본사행낭</option>
-                  <option value={3} key={'택배'}>택배</option>
-                  <option value={4} key={'퀵배송'}>퀵배송</option>
-                  <option value={5} key={'행낭 (행낭 바코드 X)'}>행낭 (행낭 바코드 X)</option>
-                  </select>
-              </ItemTextBottom></RightItemBox>
-            </LaView>
-            <LaView>
-              <RightItemBox>
-                <ItemTextTop>과실구분</ItemTextTop>
-                <ItemTextBottom>
-                  <select onChange={(e)=>{setSelectFault(e.target.value)}}  style={styles.selectStyle} >
-                    { 
-                      faultLists
-                    }
-                  </select>
-                </ItemTextBottom>
-              </RightItemBox>
-              <RightItemBox>
-                <ItemTextTop>냬용분석</ItemTextTop>
-                <ItemTextBottom>
-                  <select onChange={(e)=>{setSelectAnalysis(e.target.value)}}  style={styles.selectStyle} >
-                    {
-                      analysisLists
-                    }
-                  </select>
-                </ItemTextBottom>
-              </RightItemBox>
-              <RightItemBox>
-                <ItemTextTop>판정결과</ItemTextTop>
-                <ItemTextBottom>
-                  <select id="selectBox" style={styles.selectStyle}  onChange={(e)=>{
-                      var target = document.getElementById("selectBox");
-                      setSelectJudgmentName(target.options[target.selectedIndex].text)
-                      setSelectJudgmentValue(e.target.value)
-                    }}>
-                    {
-                      judgmentLists
-                    }
-                  </select>
-                </ItemTextBottom>
-              </RightItemBox>
-            </LaView>
-            
-              {selectJudgmentBox}
+              <RaView>
+                <ItemTextTop>수선처 접수일<ItemTextBottom style={{marginLeft:20}}>{formatDate(new Date(el.receipt_date))}</ItemTextBottom></ItemTextTop>
+                <ItemTextTop>운송 형태<ItemTextBottom style={{marginLeft:20}}>
+                    <select onChange={(e)=>{setDeliveryType(e.target.value)}}  style={styles.selectStyle} >
+                    <option value={1} key={'매장행낭'}>매장행낭</option>
+                    <option value={2} key={'본사행낭'}>본사행낭</option>
+                    <option value={3} key={'택배'}>택배</option>
+                    <option value={4} key={'퀵배송'}>퀵배송</option>
+                    <option value={5} key={'행낭 (행낭 바코드 X)'}>행낭 (행낭 바코드 X)</option>
+                    </select>
+                </ItemTextBottom></ItemTextTop>
+              </RaView>
+              <RaView>
+                <RightItemBox>
+                  <ItemTextTop>과실구분</ItemTextTop>
+                  <ItemTextBottom>
+                    <select onChange={(e)=>{setSelectFault(e.target.value)}}  style={styles.selectStyle} >
+                      { 
+                        faultLists
+                      }
+                    </select>
+                  </ItemTextBottom>
+                </RightItemBox>
+                <RightItemBox>
+                  <ItemTextTop>냬용분석</ItemTextTop>
+                  <ItemTextBottom>
+                    <select onChange={(e)=>{setSelectAnalysis(e.target.value)}}  style={styles.selectStyle} >
+                      {
+                        analysisLists
+                      }
+                    </select>
+                  </ItemTextBottom>
+                </RightItemBox>
+                <RightItemBox>
+                  <ItemTextTop>판정결과</ItemTextTop>
+                  <ItemTextBottom>
+                    <select id="selectBox" style={styles.selectStyle}  onChange={(e)=>{
+                        var target = document.getElementById("selectBox");
+                        setSelectJudgmentName(target.options[target.selectedIndex].text)
+                        setSelectJudgmentValue(e.target.value)
+                      }}>
+                      {
+                        judgmentLists
+                      }
+                    </select>
+                  </ItemTextBottom>
+                </RightItemBox>
+              </RaView>
+              
+                {selectJudgmentBox}
 
+              
+            </div>
             
+          </Half>
+          <div className="close" onClick={close} style={{fontSize:30,marginTop:-15}}>
+            &times;
           </div>
-          
-        </Half>
-    </Container> 
+      </Container> )}
     </Popup>
     }
     </div>
@@ -325,10 +329,16 @@ const Container =styled.div`
   justify-content: center;
   max-height: 95%;
 `;
-const LaView = styled.div`
+const LeView = styled.div`
   padding:10px;
   display: flex;  
   align-items:center;
+`;
+const RaView = styled.div`
+  padding:5px;
+  display: flex;  
+  align-items:center;
+  justify-content: space-around;
 `;
 const PrView = styled.div`
   padding:10px;
@@ -347,10 +357,7 @@ const ItemBox =styled.div`
   
 `;
 const RightItemBox =styled.div`
-  margin-left:10px;
-  margin-right:10px;
-  height : 50px;
-  flex:1;
+  
   
 `;
 const ItemBoxSmall =styled.div`
@@ -376,7 +383,6 @@ const ItemTextTop = styled.div`
   color:${COLOR.BLACK};
   font-weight: bold;
   align-items: center;
-  flex:1;
   margin:5px;
   justify-content: center;
 `;
@@ -389,7 +395,7 @@ const ItemTextBottom = styled.div`
   justify-content: center;
   color:${COLOR.BRAUN};
   font-weight: bold;
-  margin:5px;
+  
 `;
 const ItemTable = styled.div`
   border: 2px solid  ${COLOR.BRAUN};

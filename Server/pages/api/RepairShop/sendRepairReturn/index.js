@@ -69,18 +69,19 @@ const getReceiptInfo = async(receiptId) =>{
     values: [receiptId],
   });
 };
-const updateReceiptRepair = async (repair_detail_id,receiptId,receiver,num) => {//reciever 추가
+const updateReceiptRepair = async (addQuery,values,num) => {
+  console.log(addQuery)
+  console.log(values)
   const insert = "repair"+num+"_detail_id"
   return excuteQuery({
-    query: `UPDATE receipt SET ${insert}=? WHERE receipt_id=?`,
-    values: [repair_detail_id,receiptId],
+    query: `UPDATE receipt SET ${insert}=? ${addQuery} WHERE receipt_id=?`,
+    values,
   });
 };
 const sendRepairInfo = async (req, res) => {
   if (req.method === "POST") {
     console.log(`[${new Date().toISOString()}] /api/RepairShop/sendRepairInfo`);
     
-    console.log(req.body)
     const receipt_id = req.body.receipt_id; 
 
     const store = req.body.store_id;
@@ -98,9 +99,7 @@ const sendRepairInfo = async (req, res) => {
     const receiver = req.body.receiver
     const repair_detail_id = req.body.repair_detail_id
 
-    console.log("store")
     console.log(req.body)
-    
     try {
         const info = await getReceiptInfo(receipt_id)
         if(repair_detail_id == null){
@@ -109,20 +108,29 @@ const sendRepairInfo = async (req, res) => {
                   complete_date,shipment_type,shipment_price);
               
               console.log(result)
-              const id = result.insertId
+              const id = result.insertId;
+              
+            let addQuery =``;
+            let value= [id,receipt_id];
+            if(receiver){
+              addQuery += `, receiver=? ,repair_detail_state = 3`
+              value= [id,receiver,receipt_id];
+            }
             if(info[0].repair1_detail_id === null){
-              const update =updateReceiptRepair(id,receipt_id,receiver,1)
+              const update =await updateReceiptRepair(addQuery,value,1)
               res.status(200).json({ msg: "suc" });
+              console.log(update)
             }else if(info[0].repair2_detail_id === null){
-              const update =updateReceiptRepair(id,receipt_id,receiver,2)
+              const update =await updateReceiptRepair(addQuery,value,2)
               res.status(200).json({ msg: "suc" });
+              console.log(update)
             }else if(info[0].repair3_detail_id === null){
-              const update =updateReceiptRepair(id,receipt_id,receiver,3)
+              const update =await updateReceiptRepair(addQuery,value,3)
+              console.log(update)
               res.status(200).json({ msg: "suc" });
             }else{
               res.status(205).json({msg : "Full"})
             }
-            console.log(info)
           }
           else{
             res.status(210).json({ msg: "non proper receipt_id" });

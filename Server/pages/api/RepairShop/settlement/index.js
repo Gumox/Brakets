@@ -47,8 +47,7 @@ async function getList(query,values) {
                 LEFT JOIN brand ON brand.brand_id = receipt.brand_id
                 LEFT JOIN store ON repair_detail.store_id = store.store_id
                 LEFT JOIN customer ON receipt.customer_id = customer.customer_id
-
-                ${query}`,
+                WHERE repair_detail_state !=3 ${query}`,
       values,
     });
     return result;
@@ -71,53 +70,35 @@ const settlement = async (req, res) => {
     console.log(req.query)
     
     if(hq_id&&hq_id!='전체'){
-        if(query == ""){
-            query += "WHERE brand.headquarter_id = ? ";
-            values = [...values, hq_id];
-        }else{
-            query += "AND brand.headquarter_id = ? ";
-            values = [...values, hq_id];
-        }
+    
+        query += "AND brand.headquarter_id = ? ";
+        values = [...values, hq_id];
+    
     }
     if(brand&&brand!='전체'){
-        if(query == ""){
-            query += "WHERE brand.brand_id = ? ";
-            values = [...values, brand];
-        }else{
-            query += "AND brand.brand_id = ? ";
-            values = [...values, brand];
-        }
+    
+        query += "AND brand.brand_id = ? ";
+        values = [...values, brand];
+        
     }
     if(repairShop){
-        if(query == ""){
-            query += "WHERE repair_detail.store_id = ? ";
-            values = [...values, repairShop];
-        }else{
-            query += " AND repair_detail.store_id = ? ";
-            values = [...values, repairShop];
-        }
+    
+        query += " AND repair_detail.store_id = ? ";
+        values = [...values, repairShop];
+        
     }
     if(selectOption){//complete_date 발송일,register_date 접수일
         if (startDate !== null || endDate !== null) {
-            if(query == ""){
-                if (startDate) {
-                query += ` WHRER DATE(repair_detail.${selectOption}) > ? `;
-                values = [...values, startDate];
-                }
-                if (endDate) {
-                query += ` WHRER DATE(repair_detail.${selectOption}) <= ? `;
-                values = [...values, endDate];
-                }
-            }else{
-                if (startDate) {
-                query += ` AND DATE(repair_detail.${selectOption}) > ? `;
-                values = [...values, startDate];
-                }
-                if (endDate) {
-                query += ` AND DATE(repair_detail.${selectOption}) <= ? `;
-                values = [...values, endDate];
-                }
+            
+            if (startDate) {
+            query += ` AND DATE(repair_detail.${selectOption}) > ? `;
+            values = [...values, startDate];
             }
+            if (endDate) {
+            query += ` AND DATE(repair_detail.${selectOption}) <= ? `;
+            values = [...values, endDate];
+            }
+            
         }
     }
 

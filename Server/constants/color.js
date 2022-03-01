@@ -20,7 +20,8 @@ const COLOR = {
   BRAUN:"#7A6443",
   MADARIN: "#FFBA75",
   DARK_ORANGE:"#EC8000",
-  INDIGO:"#0A599A"
+  INDIGO:"#0A599A",
+  MOCCA:"#CBBAA0"
 };
 
 export default COLOR;

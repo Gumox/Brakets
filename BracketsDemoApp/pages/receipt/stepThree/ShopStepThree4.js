@@ -230,7 +230,7 @@ function ShopStepThree4({route,navigation}) {
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <TopInfo></TopInfo>
             <Contents>
-            <CenterView><TopIntro>수선 정보 확인</TopIntro></CenterView>
+            <CenterView><TopIntro>수선 정보</TopIntro></CenterView>
             <Label>제품 구분</Label>
             <InfoView>
 
@@ -241,17 +241,12 @@ function ShopStepThree4({route,navigation}) {
                 onValueChange={(value) =>
                 {
                     selectedTypeLists[0] = ( {key : 0 ,value : value});
-                    console.log("-*-*-*-*-*-*-*-*-*-*-*-*-")
-                    
-                    console.log("-*-*-*-*-*-*-*-*-*-*-*-*-")
                     productCategories.forEach(obj => {
                         if(value === obj.category_name){
                             console.log("???????????"+obj.pcategory_id);
                             
                             getRepairList(obj.pcategory_id);
                             
-                            
-                            console.log("+++");
                             console.log(store.getState().basicRepairStore);
                             
                           }
