@@ -4,17 +4,29 @@ import moment from "moment";
 
 import COLOR from "../../../constants/color";
 
-const Options = ({}) => {
+const Options = ({state}) => {
   return (
     <Wrapper>
       <CustomerButton>일괄선택</CustomerButton>
       <CustomerButton width="250px">
         선택된 항목 전표 발생/취소 (+,-)
       </CustomerButton>
-      <Notice>
-        하자반품 처리된 건에 대해 전표를 발행하는 부분입니다. 기 발행된 건의
-        경우 취소하면 -전표가 발행되며, 내용수정이 가능합니다.
-      </Notice>
+
+      {(state === "출고확정") ? (
+        <>
+          <Notice>
+            [출고확정]
+            업체 클래임으로 처리된 건에 대해 [매장]에 전표를 발행하는 부분입니다.
+            기 발행된 건의 경우 취소하면 -전표가 발행되며, 내용수정이 가능합니다.
+          </Notice>
+        </>
+      ) : (
+        <Notice>
+          [출고대기]
+          업체 클래임으로 처리된 건에 대해 [업체]에 전표를 발행하는 부분입니다.
+          기 발행된 건의 경우 취소하면 -전표가 발행되며, 내용수정이 가능합니다.
+        </Notice>
+      )}
     </Wrapper>
   );
 };
@@ -26,7 +38,7 @@ const Wrapper = styled.div`
 `;
 
 const Notice = styled.div`
-padding: 5px 0;
+  padding: 5px 0;
   width: 100%;
   height: 20px;
   color: ${COLOR.RED};

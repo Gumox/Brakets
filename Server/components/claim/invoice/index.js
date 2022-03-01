@@ -7,10 +7,11 @@ import Options from "./Option";
 import List from "./List";
 import Sum from "./Sum";
 
-const ReturnInvoice = ({}) => {
+const ReturnInvoice = ({state}) => {
+
   return (
     <Wrapper>
-        <Options />
+        <Options state = {state}/>
         <List />
         <Sum />
     </Wrapper>
