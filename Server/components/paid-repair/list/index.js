@@ -11,7 +11,8 @@ import {
   RECEIPT_TYPE,
   STORE_CATEGORY
 } from "../../../constants/type";
-import Checkbox from "../../Checkbox";
+
+import Options from '../Options'
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -210,13 +211,14 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
       <Styles>
         <Table columns={columns} data={value}/>
       </Styles>
+      <Options/>
     </Wrapper>
   );
 };
 
 const Styles = styled.div`
   padding: 1rem;
-
+  height: 80%;
   .table {
 
     display: inline-block;
@@ -267,35 +269,10 @@ const Styles = styled.div`
 
 const Wrapper = styled.div`
   /* position: absolute; */
-  height: 50%;
+  height: 70%;
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;
-`;
-
-const TableHeader = styled.thead`
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableHeaderCell = styled.th`
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableRow = styled.tr`
-  cursor: pointer;
-`;
-
-const TableData = styled.td`
-  max-width: ${({ width = "100px" }) => width};
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  text-align: ${({ textAlign = "center" }) => textAlign};
-  border: 1px solid ${COLOR.GRAY};
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 `;
 
 

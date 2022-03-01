@@ -58,7 +58,7 @@ const Return = () => {
           dateOption: 'complete_date',
           
           // TODO
-          // hasCharged: true
+          hasCharged: true
         }
       })
       .then((response) => setSearchList(response.data.data));
