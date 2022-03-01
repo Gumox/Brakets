@@ -1,18 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
+import ReactDOM from "react-dom";
+
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
 import Header from "../components/Header";
 import Return from "../components/return";
 
+
 const ReturnPage = (props) => {
+
   const router = useRouter();
+
   return (
     <>
       <Header path={router.pathname} />
       <Return {...props} />
     </>
   );
+
 };
 
 export const getServerSideProps = async (ctx) => {
