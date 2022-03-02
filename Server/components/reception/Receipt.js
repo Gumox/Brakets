@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import moment from "moment";
-
 import {
   OptionContext,
   ReceiptContext,
@@ -22,17 +21,20 @@ import Input from "../Input";
 import SelectOption from "../SelectOption";
 import TextArea from "../TextArea";
 import Checkbox from "../Checkbox";
-
+import axios from "axios";
+import { getRepairShop } from "../../functions/getInfos";
 const ReceiptInfo = ({
   targetData = {},
   handleChangeTargetData = () => {},
+  handleChangeTargetDataResultDetail =() =>{},
 }) => {
   const { resultType, faultType, analysisType, repairList } =
     useContext(OptionContext);
 
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
-
+  const [repairShop, setRepairShop] = useState([]);
+  
   const resultTypeMap = useMemo(
     () =>
       resultType.reduce(
@@ -41,7 +43,20 @@ const ReceiptInfo = ({
       ),
     [resultType]
   );
+  const inputSave = async(targetData)=>{
+    const [data] = await Promise.all([
+      axios
+        .put(`${process.env.API_URL}/receipt/inputSave`, { body: targetData  })
+        .then(({ data }) => data),
+      ])
+  }
   useEffect(() => {
+    const fetch = async()=>{
+      let list = await getRepairShop({repairShop:null})
+      console.log(list)
+      setRepairShop(list)
+    }
+    fetch();
     if (!resultTypeMap[targetData[RECEIPT.RESULT_ID]]) return;
     if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("수선"))
       setIsRepiar(true);
@@ -104,7 +119,9 @@ const ReceiptInfo = ({
                 name={RECEIPT.RESULT_ID}
                 options={[DEFAULT_OPTION, ...resultType]}
                 value={targetData[RECEIPT.RESULT_ID]}
-                onChange={handleChangeTargetData}
+                onChange={(e)=>{
+                  handleChangeTargetData(e);
+                }}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
               />
             </Field>
@@ -116,14 +133,20 @@ const ReceiptInfo = ({
                   <Field>
                     <Checkbox
                       title="폐기"
-                      onChange={handleChangeTargetData}
+                      onChange={handleChangeTargetDataResultDetail}
+                      value={1}
+                      name={RECEIPT.RESULT_DETAIL_ID}
+                      checked={targetData[RECEIPT.RESULT_DETAIL_ID] == 1? targetData[RECEIPT.RESULT_DETAIL_ID] : (targetData[RECEIPT.RESULT_DETAIL_ID]) === 1 }
                       styleOptions={{ color: COLOR.PURPLE }}
                     />
                   </Field>
                   <Field>
                     <Checkbox
                       title="심의"
-                      onChange={handleChangeTargetData}
+                      onChange={handleChangeTargetDataResultDetail}
+                      value={2}
+                      name={RECEIPT.RESULT_DETAIL_ID}
+                      checked={targetData[RECEIPT.RESULT_DETAIL_ID] == 2? targetData[RECEIPT.RESULT_DETAIL_ID] : (targetData[RECEIPT.RESULT_DETAIL_ID]) === 2 }
                       styleOptions={{ color: COLOR.PURPLE }}
                     />
                   </Field>
@@ -132,7 +155,10 @@ const ReceiptInfo = ({
               <Field>
                 <Checkbox
                   title="수선미입고"
-                  onChange={handleChangeTargetData}
+                  onChange={handleChangeTargetDataResultDetail}
+                  value={3}
+                  name={RECEIPT.RESULT_DETAIL_ID}
+                  checked={targetData[RECEIPT.RESULT_DETAIL_ID] == 3? targetData[RECEIPT.RESULT_DETAIL_ID] : (targetData[RECEIPT.RESULT_DETAIL_ID]) === 3 }
                   styleOptions={{ color: COLOR.PURPLE }}
                 />
               </Field>
@@ -156,7 +182,7 @@ const ReceiptInfo = ({
                     <SelectOption
                       title={`수선처지정${index + 1}`}
                       name={REPAIR.PLACE_ID}
-                      options={[DEFAULT_OPTION, ...repairList]}
+                      options={[DEFAULT_OPTION, ...repairShop]}
                       value={targetData[REPAIR.PLACE_ID]}
                       styleOptions={{ maxWidth: "160px", width: "160px" }}
                       onChange={handleChangeTargetData}
@@ -379,7 +405,18 @@ const ReceiptInfo = ({
                 styleOptions={{ labelFontSize: "18px", color: COLOR.RED }}
               />
             </Field>
-            <SaveButton>저장</SaveButton>
+            <SaveButton
+              onClick={()=>{
+                if(!targetData[RECEIPT.ID]){
+                  alert("잘못된 입력입니다. \n서비스카드 번호를 확인해주세요")
+                }else if(!targetData[RECEIPT.COMPLETE_DATE]){
+                  alert("발송일 to S 를 입력해주세요")
+                }else{
+                  console.log(targetData)
+                  inputSave(targetData)
+                }
+              }}
+            >저장</SaveButton>
           </CustomRow>
         </Section>
       </SectionRow>

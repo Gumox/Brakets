@@ -2,7 +2,13 @@ import excuteQuery from "../db";
 
 async function getRepairShop() {
   const result = await excuteQuery({
-    query: `SELECT * FROM store WHERE store_type = 2 AND store_type = 3 `
+    query: `SELECT
+                    store_id AS value,
+                    name AS text,
+                    store_type,
+                    address,
+                    contact
+            FROM store WHERE store_type = 2 `
   });
 
   return result;
@@ -10,7 +16,7 @@ async function getRepairShop() {
 
 const getAllRepairShop = async (req, res) => {
   if (req.method === "GET") {
-    console.log("/api/store/getAllRepairShop");
+    console.log("/api/store/getRepairShop");
     try {
       const brand = await getRepairShop();
       if (brand.error) throw new Error(brand.error);
