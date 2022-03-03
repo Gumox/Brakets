@@ -12,7 +12,8 @@ export default createStore(function(state,action){
             fault:[],
             repair_type:[],
             selected:[],
-            selected_data: []
+            selected_data: [],
+            invoice_data: []
         }
     }
     if(action.type === "COMPANY"){
@@ -41,6 +42,9 @@ export default createStore(function(state,action){
     }
     if(action.type === "SELECTED_DATA"){
         return{...state, selected_data: action.selected_data}
+    }
+    if(action.type === "INVOICE_DATA"){
+        return{...state, invoice_data: action.invoice_data}
     }
     
     return state;
