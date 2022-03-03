@@ -112,7 +112,7 @@ const IndeterminateCheckbox = React.forwardRef(
     )
   }
 )
-
+IndeterminateCheckbox.displayName = "IndeterminateCheckbox";
 function Table({ columns, data }) {
   const defaultColumn = React.useMemo(
     () => ({
@@ -170,15 +170,16 @@ function Table({ columns, data }) {
   return (
     <div {...getTableProps()} className="table">
       <div>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup,index) => (
           <div
+            key={index}
             {...headerGroup.getHeaderGroupProps({
               // style: { paddingRight: '15px' },
             })}
             className="tr"
           >
-            {headerGroup.headers.map(column => (
-              <div {...column.getHeaderProps(headerProps)} className="th">
+            {headerGroup.headers.map((column,i) => (
+              <div key={i} {...column.getHeaderProps(headerProps)} className="th">
                 {column.render('Header')}
                 {/* Use column.getResizerProps to hook up the events correctly */}
                 {column.canResize && (
@@ -195,13 +196,13 @@ function Table({ columns, data }) {
         ))}
       </div>
       <div className="tbody">
-        {rows.map(row => {
+        {rows.map((row,index) => {
           prepareRow(row)
           return (
-            <div {...row.getRowProps()} className="tr">
-              {row.cells.map(cell => {
+            <div key={index} {...row.getRowProps()} className="tr">
+              {row.cells.map((cell,i) => {
                 return (
-                  <div {...cell.getCellProps(cellProps)} className="td">
+                  <div key={i} {...cell.getCellProps(cellProps)} className="td">
                     {cell.render('Cell')}
                   </div>
                 )
