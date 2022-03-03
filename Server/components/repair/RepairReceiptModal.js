@@ -75,7 +75,7 @@ function RepairReceiptModal (props) {
     )
   }else if(selectJudgmentName == "본사반송"){
     selectJudgmentBox =(
-      <RepairReturn receiver={"본사"} receiverId={0} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn receiver={"본사"} receiverId={1} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgmentName == "기타"){
     selectJudgmentBox =(

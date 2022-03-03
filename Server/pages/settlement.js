@@ -8,6 +8,10 @@ import SettlementResult from "../components/repair/SettlementResult";
 import { debounce, set } from "lodash";
 import { getSettlementData,getBrandList,setStateAtOne,setStateAtTwo} from "../functions/useInSettlement";
 import { getRepairType } from "../functions/useInRepairReceiptModal";
+import { CSVLink } from "react-csv";
+import Image from 'next/image';
+import _ from "lodash";
+import {headers} from "../constants/settlementTableHeader"
 
 export default function Settlement()  {
     const [companyList,setCompanyList] = useState(store.getState().company)
@@ -59,10 +63,10 @@ export default function Settlement()  {
             setDisable(checkDisable(user.level))
             let selectShop
             let typeList = await getRepairType(null,null,localStorage.getItem('SHOP'))
-            console.log(typeList)
             if(!checkDisable(user.level)){
                 let list = await getSettlementData({repairShop: localStorage.getItem('SHOP')})
-                setSettlementList(list.data)
+                console.log(_.sortBy(list.data,'receipt_code'))
+                setSettlementList(_.sortBy(list.data,'receipt_code'))
                 selectShop=(
                     <div>{localStorage.getItem('SHOP_NAME')}</div>
                 )
@@ -73,7 +77,7 @@ export default function Settlement()  {
                 brandList.unshift({brand_id: "",brand_name: "전체"})
                 
 
-                setSettlementList(list.data)
+                setSettlementList(_.sortBy(list.data,'receipt_code'))
                 selectShop=(
                     <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} onChange={(e)=>{
                         setBrand(e.target.value)
@@ -101,7 +105,14 @@ export default function Settlement()  {
         <div style={{height:"100%",overflowY: "scroll"}}>
         <RepairHeader/>
         <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
-        <h2 style={{fontWeight:"bold"}}>수선비 정산</h2><Line/>
+        <TopView>
+              <h2>수선비 정산</h2>
+
+              <CSVLink data={settlementList} headers={headers} filename='수선비 정산 목록'>
+              <Image alt="excel" src='/icons/excel.png' width={45} height={40} />
+              </CSVLink>
+        </TopView>
+        <Line/>
             <br/>
             <br/>
             <Container>회사 설정 :
@@ -200,6 +211,12 @@ export default function Settlement()  {
     </div>
     )
 }
+const TopView = styled.div`
+    padding:10px;
+    display: flex;  
+    align-items:center;
+    justify-content: space-between;      
+`;
 const Line =styled.div`
   border:1px solid  ${COLOR.BRAUN};
   width :100%

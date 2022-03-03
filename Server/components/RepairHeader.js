@@ -6,6 +6,7 @@ import styled from "styled-components";
 import MENUS from "../constants/repairMenu";
 import COLOR from "../constants/color";
 import RepairHeaderButton from "./RepairHeaderButton";
+import store from "../store/store";
 
 const Header = ({ path }) => {
   const router = useRouter();
@@ -24,7 +25,11 @@ const Header = ({ path }) => {
        
         <Wrapper>
             
-        <MenuWrapper> 
+        <MenuWrapper onClick={()=>{
+            if(store.getState().shopId <3 && store.getState().shopId >4){
+              router.push("/");
+            }
+        }}> 
             <h1 style={{marginLeft:"5%"}}>수선</h1>
             <OkImage src="/icons/OK_image.png" width={81} height={52} />
             <div style={{margin:"15%"}}/>

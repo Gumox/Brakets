@@ -58,17 +58,17 @@ export const sortSettlementData = (data ,types) =>{
         if(data.repair1_type_id === el.value){
             repair1_name = el.text;
             sorteddata +=repair1_name+`(${data.repair1_count})` 
-            result[i]= (<div style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair1_name+`(${data.repair1_count})`}</div>) 
+            result[i]= (<div key={i} style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair1_name+`(${data.repair1_count})`}</div>) 
         }
         if(data.repair2_type_id === el.value){
             repair2_name = el.text;
             sorteddata +=`\n`+repair2_name+`(${data.repair2_count})` 
-            result[i]= (<div style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair2_name+`(${data.repair2_count})`}</div>) 
+            result[i]= (<div key={i} style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair2_name+`(${data.repair2_count})`}</div>) 
         }
         if(data.repair3_type_id === el.value){
             repair3_name = el.text;
             sorteddata +=`\n`+repair3_name+`(${data.repair3_count})` 
-            result[i]= (<div style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair3_name+`(${data.repair3_count})`}</div>) 
+            result[i]= (<div key={i} style={{width:"100%",display :"flex",justifyContent:"center",alignItems:"center"}}>{repair3_name+`(${data.repair3_count})`}</div>) 
         }
       })
     return(result)

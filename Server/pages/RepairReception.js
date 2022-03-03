@@ -74,7 +74,7 @@ function RepairReception({options,user}) {
         <TopView>
               <h2>접수</h2>
 
-              <CSVLink data={listData} headers={headers} filename='접수목록.csv'>
+              <CSVLink data={listData} headers={headers} filename='접수목록'>
               <Image alt="excel" src='/icons/excel.png' width={45} height={40} />
               </CSVLink>
         </TopView>

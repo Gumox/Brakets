@@ -70,12 +70,17 @@ const getReceiptInfo = async(receiptId) =>{
   });
 };
 const updateReceiptRepair = async (addQuery,values,num) => {
-  console.log(addQuery)
-  console.log(values)
   const insert = "repair"+num+"_detail_id"
   return excuteQuery({
     query: `UPDATE receipt SET ${insert}=? ${addQuery} WHERE receipt_id=?`,
     values,
+  });
+};
+
+const updateRepair = async (id) => {
+  return excuteQuery({
+    query: `UPDATE repair_detail SET  repair_detail_state =3 WHERE repair_detail.repair_detail_id =?`,
+    values:[id],
   });
 };
 const sendRepairInfo = async (req, res) => {
@@ -104,27 +109,57 @@ const sendRepairInfo = async (req, res) => {
         const info = await getReceiptInfo(receipt_id)
         if(repair_detail_id == null){
           if(info[0] !== undefined){
-            const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
-                  complete_date,shipment_type,shipment_price);
-              
-              console.log(result)
-              const id = result.insertId;
-              
-            let addQuery =``;
-            let value= [id,receipt_id];
-            if(receiver){
-              addQuery += `, receiver=? ,repair_detail_state = 3`
-              value= [id,receiver,receipt_id];
-            }
+            
+            
             if(info[0].repair1_detail_id === null){
+              const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
+                complete_date,shipment_type,shipment_price);
+            
+                console.log(result)
+                const id = result.insertId;
+              let addQuery =``;
+              let value= [id,receipt_id];
+              if(receiver){
+                addQuery += `, receiver=?`
+                value= [id,receiver,receipt_id];
+                let updateRepairResult= updateRepair(id)
+              }
+              console.log(addQuery)
+              console.log(value)
               const update =await updateReceiptRepair(addQuery,value,1)
               res.status(200).json({ msg: "suc" });
               console.log(update)
             }else if(info[0].repair2_detail_id === null){
+              const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
+                complete_date,shipment_type,shipment_price);
+            
+                console.log(result)
+                const id = result.insertId;
+                
+              let addQuery =``;
+              let value= [id,receipt_id];
+              if(receiver){
+                addQuery += `, receiver=?`
+                value= [id,receiver,receipt_id];
+                let updateRepairResult= updateRepair(id)
+              }
               const update =await updateReceiptRepair(addQuery,value,2)
               res.status(200).json({ msg: "suc" });
               console.log(update)
             }else if(info[0].repair3_detail_id === null){
+              const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
+                complete_date,shipment_type,shipment_price);
+            
+                console.log(result)
+                const id = result.insertId;
+                
+              let addQuery =``;
+              let value= [id,receipt_id];
+              if(receiver){
+                addQuery += `, receiver=?`
+                value= [id,receiver,receipt_id];
+                let updateRepairResult= updateRepair(id)
+              }
               const update =await updateReceiptRepair(addQuery,value,3)
               console.log(update)
               res.status(200).json({ msg: "suc" });
