@@ -114,7 +114,6 @@ const ReceptionPage = ({ options, user }) => {
     setTargetData(data.data);
   }, []);
 
-  useEffect(() => console.log(targetData), [targetData]);
   return (
     <UserContext.Provider value={user}>
       <Header path={router.pathname} />

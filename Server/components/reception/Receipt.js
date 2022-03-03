@@ -50,6 +50,18 @@ const ReceiptInfo = ({
         .then(({ data }) => data),
       ])
   }
+  const discouuntList = [
+    {value:1,text:"정상"},
+    {value:0.1,text:"90%"},
+    {value:0.2,text:"80%"},
+    {value:0.3,text:"70%"},
+    {value:0.4,text:"60%"},
+    {value:0.5,text:"50%"},
+    {value:0.6,text:"40%"},
+    {value:0.7,text:"30%"},
+    {value:0.8,text:"20%"},
+    {value:0.9,text:"10%"},
+  ]
   useEffect(() => {
     const fetch = async()=>{
       let list = await getRepairShop({repairShop:null})
@@ -301,7 +313,7 @@ const ReceiptInfo = ({
                   <Field marginRight="10px">
                     <SelectOption
                       title="할인율"
-                      options={[DEFAULT_OPTION, ...OPTIONS]}
+                      options={[DEFAULT_OPTION, ...discouuntList]}
                       onChange={handleChangeTargetData}
                       styleOptions={{ maxWidth: "80px", color: COLOR.PURPLE }}
                     />
