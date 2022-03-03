@@ -112,7 +112,7 @@ const IndeterminateCheckbox = React.forwardRef(
     )
   }
 )
-
+Search.displayName = "IndeterminateCheckbox";
 function Table({ columns, data }) {
   const defaultColumn = React.useMemo(
     () => ({
