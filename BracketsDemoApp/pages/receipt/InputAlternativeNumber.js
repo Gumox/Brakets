@@ -42,6 +42,7 @@ function InputAlternativeNumber({ navigation, route }) {
                     <Label>대체 코드를 입력하세요.</Label>
                     <Input
                         value={input}
+                        keyboardType='numeric'
                         onChangeText={text => setInput(text)}
                         style = {{width: 300}}
                     />

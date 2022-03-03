@@ -20,6 +20,8 @@ const FIELD = {
   ANALYSIS_NAME: `analysis_name`, // 내용분석
   RESULT_ID: `result_id`, // 판정결과
   RESULT_NAME: `result_name`, // 판정결과
+  RESULT_DETAIL_ID: `result_detail`, // 판정결과
+  RESULT_DETAIL_NAME: `result_detail_name`, // 판정결과
 
   REPAIR_DETAILS: [
     createRepairIds("repair1_"),
@@ -92,3 +94,6 @@ function createRepairIds(prefix) {
 }
 
 export default FIELD;
+/*RESULT_DISPOSE: `dispose`, // 판정결과
+  RESULT_REVIEW: `review`, // 판정결과
+  RESULT_NOSTOCK: `stock`, */

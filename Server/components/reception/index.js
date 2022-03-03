@@ -23,6 +23,7 @@ const Reception = ({
   targetData, // 선택한 Receipt 내용
   handleChangeInputData, // 조회 조건 수정
   handleChangeTargetData, // Receipt 내용 수정
+  handleChangeTargetDataResultDetail,
   searchReceipts, // List 조회
   getTargetData, // Receipt 조회
   imageData
@@ -62,7 +63,7 @@ const Reception = ({
           </Section>
           <Section>
             <DetailInfo {...{ targetData, handleChangeTargetData }} />
-            <ReceiptInfo {...{ targetData, handleChangeTargetData }} />
+            <ReceiptInfo {...{ targetData, handleChangeTargetData ,handleChangeTargetDataResultDetail}} />
           </Section>
         </InfoSubWrapper>
       </InfoWrapper>

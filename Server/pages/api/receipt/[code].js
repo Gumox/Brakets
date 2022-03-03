@@ -33,6 +33,7 @@ async function getReceipt(code) {
                     receipt.received_date AS received_date,
                     receipt.fault_id AS fault_id,
                     receipt.result_id AS result_id,
+                    receipt.result_detail AS result_detail,
                     receipt.analysis_id AS analysis_id,
                     receipt.message AS receipt_message,
                     receipt.paid AS paid,

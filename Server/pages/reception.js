@@ -91,6 +91,16 @@ const ReceptionPage = ({ options, user }) => {
     },
     [targetData]
   );
+  const handleChangeTargetDataResultDetail = useCallback(
+    (e) => {
+      if(e.target.value ==targetData[e.target.name]){
+        setTargetData({ ...targetData, [e.target.name]: 0 });
+      }else{
+        setTargetData({ ...targetData, [e.target.name]: e.target.value });
+      }
+    },
+    [targetData]
+  );
 
   const searchReceipts = useCallback(async () => {
     const { data } = await axios.get("/api/receipt", {
@@ -115,6 +125,7 @@ const ReceptionPage = ({ options, user }) => {
             setTargetBrandId,
             handleChangeInputData,
             handleChangeTargetData,
+            handleChangeTargetDataResultDetail,
             searchReceipts,
             getTargetData,
             imageData
