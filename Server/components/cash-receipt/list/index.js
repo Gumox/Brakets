@@ -203,30 +203,4 @@ const Styles = styled.div`
   }
 `
 
-
-const TableHeader = styled.thead`
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableHeaderCell = styled.th`
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableRow = styled.tr`
-  cursor: pointer;
-`;
-
-const TableData = styled.td`
-  max-width: ${({ width = "100px" }) => width};
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  text-align: ${({ textAlign = "center" }) => textAlign};
-  border: 1px solid ${COLOR.GRAY};
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-`;
-
 export default ReturnList;
