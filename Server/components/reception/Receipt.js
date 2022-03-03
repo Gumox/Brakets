@@ -21,6 +21,8 @@ import Input from "../Input";
 import SelectOption from "../SelectOption";
 import TextArea from "../TextArea";
 import Checkbox from "../Checkbox";
+import Link from 'next/link';
+import { useRouter } from "next/router";
 import axios from "axios";
 import { getRepairShop } from "../../functions/getInfos";
 const ReceiptInfo = ({
@@ -34,7 +36,7 @@ const ReceiptInfo = ({
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
   const [repairShop, setRepairShop] = useState([]);
-  
+  const router = useRouter();
   const resultTypeMap = useMemo(
     () =>
       resultType.reduce(
@@ -322,6 +324,7 @@ const ReceiptInfo = ({
                     <Input
                       title="실판매가"
                       onChange={handleChangeTargetData}
+                      value={targetData[PRODUCT.TAG_PRICE]}
                       styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                     />
                   </Field>
@@ -367,7 +370,7 @@ const ReceiptInfo = ({
               <Row>
                 <Field>
                   <div>분쟁조정의뢰서</div>
-                  <ReportButton width="68px">출력</ReportButton>
+                  <Link href="/requestForm"><a target="_blank"><ReportButton width="68px">출력</ReportButton></a></Link>
                 </Field>
                 <Field>
                   <Input
