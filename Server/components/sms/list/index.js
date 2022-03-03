@@ -1,18 +1,100 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import moment from "moment";
-import { useTable, useBlockLayout, useResizeColumns, useRowSelect } from 'react-table';
-import COLOR from "../../../constants/color";
-import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
+import React from 'react'
+import styled from 'styled-components'
 import {
-  STORE_TYPE,
-  RECEIPT_CATEGORY_TYPE,
-  RECEIPT_TYPE,
-  STORE_CATEGORY,
-} from "../../../constants/type";
-import store from "../../../store/store";
+  useTable,
+  useResizeColumns,
+  useFlexLayout,
+  useRowSelect,
+} from 'react-table'
 
+const Wrapper = styled.div`
+  height: 80%;
+  width: 50%;
+  overflow: scroll;
+  border-bottom: 2px solid;
+  border-right: 1px solid;
+`;
 
+const Styles = styled.div`
+  padding: 1rem;
+  ${'' /* These styles are suggested for the table fill all available space in its containing element */}
+  display: block;
+  ${'' /* These styles are required for a horizontaly scrollable table overflow */}
+  overflow: auto;
+
+  .table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    .thead {
+      ${'' /* These styles are required for a scrollable body to align with the header properly */}
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .tbody {
+      ${'' /* These styles are required for a scrollable table body */}
+      overflow-y: scroll;
+      overflow-x: hidden;
+      height: 250px;
+    }
+
+    .tr {
+      :last-child {
+        .td {
+          border-bottom: 0;
+        }
+      }
+      border-bottom: 1px solid black;
+    }
+
+    .th,
+    .td {
+      margin: 0;
+      padding: 0.5rem;
+      border-right: 1px solid black;
+
+      ${'' /* In this example we use an absolutely position resizer,
+       so this is required. */}
+      position: relative;
+
+      :last-child {
+        border-right: 0;
+      }
+
+      .resizer {
+        right: 0;
+        background: black;
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        ${'' /* prevents from scrolling while dragging on touch devices */}
+        touch-action :none;
+
+        &.isResizing {
+          background: black;
+        }
+      }
+    }
+  }
+`
+
+const headerProps = (props, { column }) => getStyles(props, column.align)
+
+const cellProps = (props, { cell }) => getStyles(props, cell.column.align)
+
+const getStyles = (props, align = 'left') => [
+  props,
+  {
+    style: {
+      justifyContent: align === 'right' ? 'flex-end' : 'flex-start',
+      alignItems: 'flex-start',
+      display: 'flex',
+    },
+  },
+]
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -30,50 +112,41 @@ const IndeterminateCheckbox = React.forwardRef(
     )
   }
 )
-IndeterminateCheckbox.displayName = "return/list";
 
-function Table({ columns, data, handleDataClick }) {
-
+function Table({ columns, data }) {
   const defaultColumn = React.useMemo(
     () => ({
-      minWidth: 100,
-      width: 100,
-      maxWidth: 150,
+      // When using the useFlexLayout:
+      minWidth: 100, // minWidth is only used as a limit for resizing
+      width: 150, // width is used for both the flex-basis and flex-grow
+      maxWidth: 200, // maxWidth is only used as a limit for resizing
     }),
     []
   )
 
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state: { selectedRowIds },
-    selectedFlatRows,
-    resetResizing,
-  } = useTable(
+  const { getTableProps, headerGroups, rows, prepareRow } = useTable(
     {
       columns,
       data,
       defaultColumn,
     },
-    useBlockLayout,
     useResizeColumns,
+    useFlexLayout,
     useRowSelect,
     hooks => {
-      hooks.visibleColumns.push(columns => [
+      hooks.allColumns.push(columns => [
         // Let's make a column for selection
         {
           id: 'selection',
+          disableResizing: true,
+          minWidth: 100,
+          width: 100,
+          // maxWidth: 35,
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
-              <IndeterminateCheckbox
-                {...getToggleAllRowsSelectedProps()}
-              />
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
           // The cell can use the individual row's getToggleRowSelectedProps method
@@ -86,160 +159,78 @@ function Table({ columns, data, handleDataClick }) {
         },
         ...columns,
       ])
+      hooks.useInstanceBeforeDimensions.push(({ headerGroups }) => {
+        // fix the parent group of the selection button to not be resizable
+        const selectionGroupHeader = headerGroups[0].headers[0]
+        selectionGroupHeader.canResize = false
+      })
     }
   )
-  store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
-  const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
 
   return (
-
-    <>
+    <div {...getTableProps()} className="table">
       <div>
-        <div {...getTableProps()} className="table">
-          <div>
-            {headerGroups.map((headerGroup, i) => (
-              <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
-                {headerGroup.headers.map((column, j) => (
-                  <div key={j} {...column.getHeaderProps()} className="th">
-                    {column.render('Header')}
-                    {/* Use column.getResizerProps to hook up the events correctly */}
-                    <div
-                      {...column.getResizerProps()}
-                      className={`resizer ${column.isResizing ? 'isResizing' : ''
-                        }`}
-                    />
-                  </div>
-                ))}
+        {headerGroups.map(headerGroup => (
+          <div
+            {...headerGroup.getHeaderGroupProps({
+              // style: { paddingRight: '15px' },
+            })}
+            className="tr"
+          >
+            {headerGroup.headers.map(column => (
+              <div {...column.getHeaderProps(headerProps)} className="th">
+                {column.render('Header')}
+                {/* Use column.getResizerProps to hook up the events correctly */}
+                {column.canResize && (
+                  <div
+                    {...column.getResizerProps()}
+                    className={`resizer ${
+                      column.isResizing ? 'isResizing' : ''
+                    }`}
+                  />
+                )}
               </div>
             ))}
           </div>
-
-          <div {...getTableBodyProps()}>
-            {rows.map((row, i) => {
-              prepareRow(row)
-              return (
-                <div key={i} {...row.getRowProps(
-                  {
-                    onClick: () => (
-                      // handleDataClick(row.original["서비스카드 번호"])
-                      rows[row.id].toggleRowSelected()
-                    )
-                  }
-                )} className="tr">
-                  {console.log('row is')}
-                  {console.log(row)}
-                  {row.cells.map((cell, j) => {
-                    return (
-                      <div key={j} {...cell.getCellProps(
-                        {
-                          style: { 
-                            color: row.original["전표 발행 여부"] == "전표미발행" ? 'red' : '#ffa203',
-                            background: '#ebe8e8' 
-                          }
-                          // red
-                          // orange: #ffa203
-                        }
-                        
-                      )} className="td">
-                        {cell.render('Cell')}
-                      </div>
-                    )
-                  })}
-                </div>
-              )
-            })}
-          </div>
-        </div>
+        ))}
       </div>
-    </>
+      <div className="tbody">
+        {rows.map(row => {
+          prepareRow(row)
+          return (
+            <div {...row.getRowProps()} className="tr">
+              {row.cells.map(cell => {
+                return (
+                  <div {...cell.getCellProps(cellProps)} className="td">
+                    {cell.render('Cell')}
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 
-const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
-
-  console.log("asdad");
-  console.log(user);
-
+function ReturnList() {
   const columns = React.useMemo(() => [
-    {Header: 'No',   accessor: 'No'},
-
-    { Header: '이름', accessor: '이름' },
+    {Header: 'No',   accessor: 'No', width: 100,},
+    { Header: '이름', accessor: '이름', width: 100 },
     { Header: '전화번호', accessor: '전화번호' },
-
     { Header: '매장코드', accessor: '매장코드' },
     { Header: '매장명', accessor: '매장명' },
   ], [])
 
-
-  // console.log(rows)
-
   return (
     <Wrapper>
       <Styles>
-        <Table columns={columns} data={[]} handleDataClick={handleDataClick} />
+        <Table columns={columns} data={[]} />
       </Styles>
     </Wrapper>
-  );
-};
+    
+  )
+}
 
-const Wrapper = styled.div`
-  
-  height: 80%;
-  width: 50%;
-  overflow: scroll;
-  border-bottom: 2px solid;
-  border-right: 1px solid;
-`;
-
-const Styles = styled.div`
-  /* padding: 1rem; */
-  height: 100%;
-  width: 50%;
-  border: 1px black;
-
-  .table {
-    display: inline-block;
-    border-spacing: 0;
-    border: 1px solid black;
-
-    .tr {
-      :last-child {
-        .td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    .th,
-    .td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;/
-      border-right: 1px solid black;
-
-      ${'' /* In this example we use an absolutely position resizer,
-       so this is required. */}
-      position: relative;
-
-      :last-child {
-        border-right: 0;
-      }
-
-      .resizer {
-        display: inline-block;
-        /* background: black; */
-        width: 2px;
-        height: 100%;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transform: translateX(50%);
-        z-index: 1;
-        ${'' /* prevents from scrolling while dragging on touch devices */}
-        touch-action:none;
-      }
-    }
-  }
-`
-
-export default ReturnList;
+export default ReturnList

@@ -1,45 +1,96 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
+// const sendSms = ({ receivers, message }) => {
+const sendSms = ({ receivers, message }) => {
+    return axios.post('https://apis.aligo.in/send/', null, {
+        params: {
+            key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
+            user_id: 'brackets',
+            sender: '01027687973',
+            receiver: '01087716197',
+            msg: message,
+            // 테스트모드
+            testmode_yn: 'Y'
+        },
+    }).then((res) => res.data).catch(err => {
+        console.log('err', err);
+    });
+}
 
+// 메시지 보내기
+// sendSms({ receivers: ['01012341234', '010-4321-4321'], message: '메시지 테스트' }).then((result) => {
+//   console.log('전송결과', result);
 
+//   /*
+//   전송결과 {
+//       result_code: '1',
+//       message: 'success',
+//       msg_id: '83819703',
+//       success_cnt: 2,
+//       error_cnt: 0,
+//       msg_type: 'SMS'
+//   }
+//   */
+// });
 
-const SendMsg = ({ data, user, handleDataClick = () => { } }) => {
+const SendMsg = ({ }) => {
 
   // console.log(rows)
 
   return (
     <Wrapper>
-        <MsgView>
-          <TextBox/>
-          <SendBtn>
-            전송
-          </SendBtn>
-        </MsgView>
+      <MsgView>
 
-        <SelectingView>
-            <SelectedRow>
-              <TextBox/>
-              <TextBox/>
-              <TextBox/>
-              <TextBox/>
-            </SelectedRow>
+        <SelectBox>
+          <option value="010-8771-6197">010-8771-6197</option>
+          <option value="010-2008-6197">010-8771-6197</option>
+        </SelectBox>
 
-            <SelectedRow>
-              <TextBox/>
-              <TextBox/>
-              <TextBox/>
-              <TextBox/>
-            </SelectedRow>
+        <TextBox/>
 
-            <SelectedRow>
-              <TextBox/>
-              <TextBox/>
-              <TextBox/>
-              <TextBox/>
-            </SelectedRow>
+        <SendBtn
+          onClick={() => 
+            sendSms({ receivers: "", message: '메시지 테스트' }).then((result) => {
+            console.log('전송결과', result);
+          })}
+        >
+          전송
+        </SendBtn>
+      </MsgView>
 
-        </SelectingView>
+      <SelectingView>
+        <SelectedRow>
+          <TextBox style={{ height: 200 }} readOnly
+            onClick={(e) => console.log("Clicekd")}
+          />
+          <TextBox style={{ height: 200 }} readOnly
+            onClick={(e) => console.log("Clicekd")}
+          />
+          <TextBox style={{ height: 200 }} readOnly
+            onClick={(e) => console.log("Clicekd")}
+          />
+          <TextBox style={{ height: 200 }} readOnly
+            onClick={(e) => console.log("Clicekd")}
+          />
+        </SelectedRow>
+
+        <SelectedRow>
+          <TextBox style={{ height: 200 }} readOnly
+            onClick={(e) => console.log("Clicekd")}
+          />
+          <TextBox style={{ height: 200 }} readOnly
+            onClick={(e) => console.log("Clicekd")}
+          />
+          <TextBox style={{ height: 200 }} readOnly
+            onClick={(e) => console.log("Clicekd")}
+          />
+          <TextBox style={{ height: 200 }} readOnly
+            onClick={(e) => console.log("Clicekd")}
+          />
+        </SelectedRow>
+      </SelectingView>
     </Wrapper>
   );
 };
@@ -54,10 +105,11 @@ const Wrapper = styled.div`
 `;
 
 const MsgView = styled.div`
-    height: 30%;
+    display: flex;
+    height: 40%;
     border-bottom: 1px solid;
     padding: 1rem 1rem;
-
+    flex-direction: column;
 `
 
 const SelectingView = styled.div`
@@ -68,27 +120,26 @@ const SelectingView = styled.div`
 const SelectedRow = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 30px;
-`;
-
-const MsgBox = styled.div`
-    width: 35%;
-    height: 90%;
-    border: 1px solid;
-    padding: 5px;
 `;
 
 const TextBox = styled.textarea`
   /* padding: 5px; */
-  width: 40%;
-  height: 90%;
+  width: 30%;
+  height: 70%;
   border: 1px solid;
   resize: none;
 `;
 
 const SendBtn = styled.button`
-
+  margin-left: 30px;
+  margin-top: 15px;
+  width: 25%;
 `;
 
+const SelectBox = styled.select`
+  width: 30%;
+  height: 10%;
+  margin-bottom: 20px;
+`;
 
 export default SendMsg;
