@@ -1,4 +1,4 @@
-import { result } from "lodash";
+
 import excuteQuery from "../db"
 async function returnInvoiceLog(
     receipt_id,
@@ -107,40 +107,28 @@ async function invoice(List,user) {
   }
   return results;
 }
-async function getInvoiceList(List) {
-  let results=[]
-  for (let data of List) {
-    const result = await getInvoice(data.receipt_id)
-    if(result !== {}){
-      results.push(result)
-    }
-  }
-  console.log(results)
-  return results;
-}
+
 const controller = async (req, res) => {
     if (req.method === "PUT") {
         console.log("req.headers.referer");
         console.log(req.headers.referer);
         console.log("req.query");
-        console.log(req.body.body);
+        console.log(req.body);
         
         const {
             list,
             user
-        } = req.body.body;
+        } = req.body;
         console.log(list)
 
     try {
       const result = await invoice(list,user)
       if (result.error) throw new Error(result.error); 
       if (result ) {
-        const invoiceList = await getInvoiceList(list)
-        console.log(invoiceList)
-        res.status(200).json({ data: invoiceList });
+        res.status(200).json({ message: true });
       } else {
         console.log("No result");
-        res.status(204).json({ message: "No result" });
+        res.status(204).json({ message: false });
       }
     } catch (err) {
       console.log(err.message);
