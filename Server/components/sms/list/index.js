@@ -6,6 +6,7 @@ import {
   useFlexLayout,
   useRowSelect,
 } from 'react-table'
+import store from '../../../store/store';
 
 const Wrapper = styled.div`
   height: 90%;
@@ -124,12 +125,17 @@ function Table({ columns, data }) {
     []
   )
 
-  const { getTableProps, headerGroups, rows, prepareRow } = useTable(
-    {
-      columns,
-      data,
-      defaultColumn,
-      
+  const { 
+      getTableProps,
+      headerGroups, 
+      rows, 
+      prepareRow,
+      selectedFlatRows,
+    } = useTable(
+      {
+        columns,
+        data,
+        defaultColumn,
     },
     useResizeColumns,
     useFlexLayout,
@@ -156,9 +162,6 @@ function Table({ columns, data }) {
           Cell: ({ row }) => (
             <div>
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-              {
-                console.log(row)
-              }
             </div>
           ),
         },
@@ -171,6 +174,9 @@ function Table({ columns, data }) {
       })
     }
   )
+
+  const phoneNum = selectedFlatRows.map(value => value.values["전화번호"]);
+  store.dispatch({type:"PHONE_NUM", phone_num: phoneNum});
 
   return (
     <>
@@ -203,10 +209,24 @@ function Table({ columns, data }) {
           {rows.map(row => {
             prepareRow(row)
             return (
-              <div {...row.getRowProps()} className="tr">
+              <div {...row.getRowProps(
+                {
+                  onClick: () => (
+                    rows[row.id].toggleRowSelected()
+                  )
+                }
+              )} className="tr">
                 {row.cells.map(cell => {
                   return (
-                    <div {...cell.getCellProps(cellProps)} className="td">
+                    <div {...cell.getCellProps(
+                      {
+                        style: {
+                          color: row.isSelected ? 'red' : '',
+                          background: '#ebe8e8' 
+                        }
+                      }
+                      
+                      )} className="td">
                       {cell.render('Cell')}
                     </div>
                   )
@@ -246,13 +266,10 @@ function ReturnList({ data }) {
   const rows = [1, 2, 3].map((v, i) => ({
     "No": i + 1,
     "이름": "가나다",
-    "전화번호": "01012341234",
+    "전화번호": "01087716197",
     "매장코드": "01009870987",
     "매장명": "NC강남",
   }));
-
-  console.log("rows is")
-  console.log(rows)
 
   return (
     <Wrapper>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import e from "cors";
+import store from "../../../store/store";
 
 
 const sendSms = async ({ receivers, message }) => {
@@ -12,10 +12,10 @@ const sendSms = async ({ receivers, message }) => {
           key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
           user_id: 'brackets',
           sender: '01027687973',
-          receiver: '01087716197',
+          receiver: "01087716197",
           msg: message,
           // 테스트모드
-          testmode_yn: 'Y'
+          testmode_yn: 'N'
         },
       });
     // res.headers("Access-Control-Allow-Origin")
@@ -63,16 +63,17 @@ const sendSms = async ({ receivers, message }) => {
 //   */
 // });
 
-const SendMsg = ({ }) => {
+const SendMsg = ({}) => {
 
   const [msgText, setMsgtext] = useState("");
 
+  store.subscribe(() => {console.log(store.getState().phone_num)})
+  
   return (
     <Wrapper>
       <MsgView>
-        // TODO: 등록된 전화번호를 주어주는 api
         <SelectBox>
-          <option value="010-8771-6197">010-8771-6197</option>
+          <option value="010-2768-7973">010-2768-7973</option>
         </SelectBox>
 
         <TextBox
@@ -82,7 +83,7 @@ const SendMsg = ({ }) => {
 
         <SendBtn
           onClick={() => 
-            sendSms({ receivers: "", message: '메시지 테스트' }).then((result) => {
+            sendSms({ receivers: store.getState().phone_num, message: msgText }).then((result) => {
             console.log('전송결과', result);
           })}
         >
