@@ -90,6 +90,7 @@ function Table({ columns, data, handleDataClick }) {
     }
   )
   store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
+  console.log("-------------------------------------------------------------------")
   const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
   
   return (

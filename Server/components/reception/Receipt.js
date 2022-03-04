@@ -12,6 +12,7 @@ import {
   ReceiptContext,
   RepairContext,
   ManufacturerContext,
+  UserContext,
 } from "../../store/Context";
 import COLOR from "../../constants/color";
 import { OPTIONS, DEFAULT_OPTION } from "../../constants/select-option";
@@ -22,21 +23,24 @@ import SelectOption from "../SelectOption";
 import TextArea from "../TextArea";
 import Checkbox from "../Checkbox";
 import Link from 'next/link';
-import { useRouter } from "next/router";
 import axios from "axios";
 import { getRepairShop } from "../../functions/getInfos";
+import { getClaim ,getDiscount} from "../../functions/getClaim";
+import ClaimModal from "./claimModal";
 const ReceiptInfo = ({
   targetData = {},
   handleChangeTargetData = () => {},
   handleChangeTargetDataResultDetail =() =>{},
+  handleChangeTargetDataPrice=()=>{},
 }) => {
   const { resultType, faultType, analysisType, repairList } =
     useContext(OptionContext);
+  
+  const {name,headquarter_id} = useContext(UserContext)
 
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
   const [repairShop, setRepairShop] = useState([]);
-  const router = useRouter();
   const resultTypeMap = useMemo(
     () =>
       resultType.reduce(
@@ -52,23 +56,55 @@ const ReceiptInfo = ({
         .then(({ data }) => data),
       ])
   }
-  const discouuntList = [
-    {value:1,text:"정상"},
-    {value:0.1,text:"90%"},
-    {value:0.2,text:"80%"},
-    {value:0.3,text:"70%"},
-    {value:0.4,text:"60%"},
-    {value:0.5,text:"50%"},
-    {value:0.6,text:"40%"},
-    {value:0.7,text:"30%"},
-    {value:0.8,text:"20%"},
-    {value:0.9,text:"10%"},
-  ]
+  const [discount, setDiscount] = useState();
+  const [discountPrice, setDiscountPrice] = useState(targetData[RECEIPT.DISCOUNT_PRICE]);
+  const [discountPriceDisable, setDiscountPriceDisable] = useState(true);
+  
+  const [claimPrice, setClaimPrice] = useState(targetData[RECEIPT.CLAIM_PRICE]);
+  const [claimPriceDisable, setClaimPriceDisable] = useState(true);
+
+  const getDiscountPrice =(value,e)=>{
+    discouuntList.map((el)=>{
+      if(value == el.value){
+        if(el.text =='감가반품'){
+          setDiscountPriceDisable(false)
+        }else{
+          setDiscountPriceDisable(true)
+          setDiscountPrice(el.discount_value*(targetData[PRODUCT.TAG_PRICE]))
+          handleChangeTargetDataPrice(e,el.discount_value*(targetData[PRODUCT.TAG_PRICE]))
+        }
+      }
+    })
+  }
+  const getClaimPrice =(value,e)=>{
+    claimList.map((el)=>{
+      if(value == el.value){
+        setClaimPriceDisable(true)
+        if(el.claim_type=='택가'){
+          setClaimPrice(el.claim_value*(targetData[PRODUCT.TAG_PRICE]))
+          handleChangeTargetDataPrice(e,el.claim_value*(targetData[PRODUCT.TAG_PRICE]))
+        }else if(el.claim_type=='원가'){
+          setClaimPrice(el.claim_value*(targetData[PRODUCT.ORG_PRICE]))
+          handleChangeTargetDataPrice(e,el.claim_value*(targetData[PRODUCT.ORG_PRICE]))
+        }else{
+          setClaimPriceDisable(false)
+        }
+      }
+    })
+    
+  }
+  
+  const [discouuntList,setDiscouuntList] = useState([]) 
+  const [claimList,setClaimList] = useState([])
   useEffect(() => {
     const fetch = async()=>{
       let list = await getRepairShop({repairShop:null})
-      console.log(list)
+      let claimList = await getClaim(headquarter_id)
+      let discouuntList = await getDiscount(headquarter_id)
+
       setRepairShop(list)
+      setClaimList(claimList)
+      setDiscouuntList(discouuntList)
     }
     fetch();
     if (!resultTypeMap[targetData[RECEIPT.RESULT_ID]]) return;
@@ -135,6 +171,7 @@ const ReceiptInfo = ({
                 value={targetData[RECEIPT.RESULT_ID]}
                 onChange={(e)=>{
                   handleChangeTargetData(e);
+                  console.log(targetData)
                 }}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
               />
@@ -315,16 +352,26 @@ const ReceiptInfo = ({
                   <Field marginRight="10px">
                     <SelectOption
                       title="할인율"
+                      name={RECEIPT.DISCOUNT}
                       options={[DEFAULT_OPTION, ...discouuntList]}
-                      onChange={handleChangeTargetData}
+                      value={targetData[RECEIPT.DISCOUNT]}
+                      onChange={(e)=>{
+                        getDiscountPrice(e.target.value,e);
+                        handleChangeTargetData(e);
+                      }}
                       styleOptions={{ maxWidth: "80px", color: COLOR.PURPLE }}
                     />
                   </Field>
                   <Field marginRight="0px">
                     <Input
                       title="실판매가"
-                      onChange={handleChangeTargetData}
-                      value={targetData[PRODUCT.TAG_PRICE]}
+                      disabled={discountPriceDisable}
+                      name={RECEIPT.DISCOUNT_PRICE}
+                      value={discountPrice}
+                      onChange={(e)=>{
+                        setDiscountPrice(e.target.value);
+                        handleChangeTargetData(e);
+                      }}
                       styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                     />
                   </Field>
@@ -334,14 +381,27 @@ const ReceiptInfo = ({
               <Row>
                 {!isRepair && (
                   <Field>
-                    <SelectOption
+                    <ClaimModal
                       title="클레임가"
-                      options={[DEFAULT_OPTION, ...OPTIONS]}
-                      onChange={handleChangeTargetData}
+                      name={RECEIPT.CLAIM}
+                      options={[DEFAULT_OPTION, ...claimList]}
+                      onChange={(e)=>{
+                        getClaimPrice(e.target.value,e);
+                        handleChangeTargetData(e);
+                      }}
+                      value={targetData[RECEIPT.CLAIM]}
                       styleOptions={{ maxWidth: "100px", color: COLOR.PURPLE }}
                     />
                     <Input
+                      name={RECEIPT.CLAIM_PRICE}
                       onChange={handleChangeTargetData}
+                      disabled={claimPriceDisable}
+                      value={claimPrice}
+                      onChange={(e)=>{
+                        getClaimPrice(e.target.value);
+                        setClaimPrice(e.target.value);
+                        handleChangeTargetData(e);
+                      }}
                       styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                     />
                   </Field>
@@ -370,7 +430,11 @@ const ReceiptInfo = ({
               <Row>
                 <Field>
                   <div>분쟁조정의뢰서</div>
-                  <Link href="/requestForm"><a target="_blank"><ReportButton width="68px">출력</ReportButton></a></Link>
+                  <Link href={{
+                          pathname: "/requestForm",
+                          query: {  data: JSON.stringify(targetData) ,userName:name,headquarterId:headquarter_id},
+                  }}
+                  ><a target="_blank"><ReportButton width="68px">출력</ReportButton></a></Link>
                 </Field>
                 <Field>
                   <Input

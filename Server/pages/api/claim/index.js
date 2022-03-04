@@ -1,0 +1,29 @@
+import excuteQuery from "../db";
+
+async function getClaim(headquarterId) {
+  const result = await excuteQuery({
+    query: `SELECT claim_id AS value, claim_text AS text, claim_type,claim_value,headquarter_id
+              FROM claim WHERE headquarter_id=?`,
+    values: [headquarterId],
+  });
+
+  return result;
+}
+
+const claim = async (req, res) => {
+  if (req.method === "GET") {
+    console.log("/api/claim");
+    try {
+      const { headquarterId } = req.query;
+      const claim = await getClaim(headquarterId);
+      if (claim.error) throw new Error(claim.error);
+
+      res.status(200).json({ data: claim });
+    } catch (err) {
+      console.log(err.message);
+      res.status(400).json({ err: err.message });
+    }
+  }
+};
+
+export default claim;

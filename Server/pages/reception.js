@@ -9,8 +9,10 @@ import {
   DATE_SEARCH_TYPE_OPTIONS,
 } from "../constants/select-option";
 
+import { RECEIPT } from "../constants/field";
 import Header from "../components/Header";
 import Reception from "../components/reception";
+import formatDate from "../functions/formatDate";
 
 const ReceptionPage = ({ options, user }) => {
   const router = useRouter();
@@ -27,6 +29,7 @@ const ReceptionPage = ({ options, user }) => {
   const [imageData, setImageData] = useState({});
 
   useEffect(() => {
+    console.log(user)
     const getOptions = async () => {
       const [stores, productCategories, seasons] = await Promise.all([
         axios
@@ -82,6 +85,9 @@ const ReceptionPage = ({ options, user }) => {
     (e) => {
       switch (e.target.type) {
         case "checkbox":
+        case "date":
+          setTargetData({ ...targetData, [e.target.name]: formatDate(new Date(e.target.value)) });
+          break;
         case "radio":
           setTargetData({ ...targetData, [e.target.name]: e.target.checked });
           break;
@@ -101,6 +107,17 @@ const ReceptionPage = ({ options, user }) => {
     },
     [targetData]
   );
+  const handleChangeTargetDataPrice = useCallback(
+    (e,data) => {
+      if(RECEIPT.CLAIM == e.target.name){
+        setTargetData({ ...targetData, [RECEIPT.CLAIM_PRICE]: data });
+      }
+      else if(RECEIPT.DISCOUNT == e.target.name){
+        setTargetData({ ...targetData, [RECEIPT.DISCOUNT_PRICE]: data });
+      }
+    },
+    [targetData]
+  );
 
   const searchReceipts = useCallback(async () => {
     const { data } = await axios.get("/api/receipt", {
@@ -113,7 +130,8 @@ const ReceptionPage = ({ options, user }) => {
     setImageData(data.imageList);
     setTargetData(data.data);
   }, []);
-
+  
+  console.log(targetData)
   return (
     <UserContext.Provider value={user}>
       <Header path={router.pathname} />
@@ -125,6 +143,7 @@ const ReceptionPage = ({ options, user }) => {
             handleChangeInputData,
             handleChangeTargetData,
             handleChangeTargetDataResultDetail,
+            handleChangeTargetDataPrice,
             searchReceipts,
             getTargetData,
             imageData

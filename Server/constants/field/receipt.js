@@ -22,7 +22,10 @@ const FIELD = {
   RESULT_NAME: `result_name`, // 판정결과
   RESULT_DETAIL_ID: `result_detail`, // 판정결과
   RESULT_DETAIL_NAME: `result_detail_name`, // 판정결과
-
+  DISCOUNT: `discount`, // 할인율
+  DISCOUNT_PRICE: `discount_price`, // 할인율 적용가 = 실판매가 = 소비자 구매가
+  CLAIM: `claim`, // 클레임가
+  CLAIM_PRICE: `claim_price`, // 클레임가
   REPAIR_DETAILS: [
     createRepairIds("repair1_"),
     createRepairIds("repair2_"),

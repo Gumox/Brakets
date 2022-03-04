@@ -100,6 +100,10 @@ const receipt = async (req, res) => {
             mfr_detail_id,
             mfr_send_date,
             cashreceipt_num, // 현금영수증번호
+            discount,
+            discount_price,
+            claim,
+            claim_price,
         } = req.body.body;
         let query = "";
         let values = [complete_date];
@@ -141,6 +145,24 @@ const receipt = async (req, res) => {
         if(cashreceipt_num){    //현금영수증
             query += `, cashreceipt_num = ?`
             values = [...values,cashreceipt_num]
+        }
+        if(discount){          //할인율
+          query += `, discount = ?`
+          values = [...values,discount]
+          
+          if(discount_price){          
+            query += `, discount_price = ?`
+            values = [...values,discount_price]
+          }
+        }
+      
+        if(claim){              //클레임가
+          query += `, claim = ?`
+          values = [...values,claim]
+          if(claim_price){    
+            query += `, claim_price = ?`
+            values = [...values,claim_price]
+          }
         }
      
         
@@ -198,3 +220,8 @@ const receipt = async (req, res) => {
 };
 
 export default receipt;
+/*
+                    receipt.discount AS discount,
+                    receipt.discount_price AS discount_price,
+                    receipt.claim AS claim,
+                    receipt.claim_price AS claim_price, */

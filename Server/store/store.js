@@ -13,7 +13,8 @@ export default createStore(function(state,action){
             repair_type:[],
             selected:[],
             selected_data: [],
-            invoice_data: []
+            invoice_data: [],
+            targetData:[],
         }
     }
     if(action.type === "COMPANY"){
@@ -45,6 +46,9 @@ export default createStore(function(state,action){
     }
     if(action.type === "INVOICE_DATA"){
         return{...state, invoice_data: action.invoice_data}
+    }
+    if(action.type === "TARGET_DATA"){
+        return{...state, targetData: action.targetData}
     }
     
     return state;

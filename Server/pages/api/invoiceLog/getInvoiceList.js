@@ -25,11 +25,11 @@ async function getInvoiceList(List) {
         console.log("req.headers.referer");
         console.log(req.headers.referer);
         console.log("req.query");
-        console.log(req.body.body);
+        console.log(req.body);
         
         const {
             list
-        } = req.body.body;
+        } = req.body;
         console.log(list)
     try {
       const invoiceList = await getInvoiceList(list)

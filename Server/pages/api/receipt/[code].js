@@ -21,6 +21,10 @@ async function getReceipt(code) {
                     receipt.pcategory_id AS pcategory_id,
                     receipt.product_id AS product_id,
                     receipt.product_code AS product_code,
+                    receipt.discount AS discount,
+                    receipt.discount_price AS discount_price,
+                    receipt.claim AS claim,
+                    receipt.claim_price AS claim_price,
                     IF(receipt.substitute=0, "N", "Y") AS substitute,
                     receipt.mfr_id AS manufacturer_id,
                     mfr_store.store_code AS manufacturer_code,
@@ -49,6 +53,8 @@ async function getReceipt(code) {
                     product.image AS product_image,
                     product.release_date AS product_release_date,
                     product.tag_price AS product_tag_price,
+                    product.org_price AS product_org_price,
+                    brand.brand_name AS brand_name,
                     customer.name AS customer_name,
                     customer.phone AS customer_phone,
                     receipt.repair1_detail_id,
@@ -139,7 +145,8 @@ async function getReceipt(code) {
                     DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date,
                     receipt.image  
               FROM receipt 
-              LEFT JOIN product ON receipt.product_id = product.product_id 
+              LEFT JOIN product ON receipt.product_id = product.product_id
+              LEFT JOIN brand ON brand.brand_id = product.brand_id
               LEFT JOIN style_type ON product.style_id = style_type.style_id
               LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
               LEFT JOIN store AS mfr_store ON receipt.mfr_id = mfr_store.store_id
