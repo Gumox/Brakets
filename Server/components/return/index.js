@@ -69,7 +69,9 @@ const Return = ({ options, user}) => {
       .then((response) => setTargetData(response.data.data));
   }, []);
 
-  useEffect(() => console.log(targetData), [targetData]);
+  useEffect(() => 
+            // console.log(targetData), 
+            [targetData]);
   return (
     <Content>
       <SearchField
