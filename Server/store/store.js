@@ -14,7 +14,8 @@ export default createStore(function(state,action){
             selected:[],
             selected_data: [],
             invoice_data: [],
-            targetData:[],
+            phone_num: [],
+            toggled: false,
         }
     }
     if(action.type === "COMPANY"){
@@ -47,9 +48,11 @@ export default createStore(function(state,action){
     if(action.type === "INVOICE_DATA"){
         return{...state, invoice_data: action.invoice_data}
     }
-    if(action.type === "TARGET_DATA"){
-        return{...state, targetData: action.targetData}
+    if(action.type === "PHONE_NUM"){
+        return{...state, phone_num: action.phone_num}
     }
-    
+    if(action.type === "TOGGLED"){
+        return{...state, toggled: action.toggled}
+    }
     return state;
 })

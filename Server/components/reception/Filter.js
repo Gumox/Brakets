@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useReducer, useState } from "react";
 import styled from "styled-components";
-
+import Router, { useRouter } from "next/router";
 import { OptionContext } from "../../store/Context";
 import COLOR from "../../constants/color";
 import {
@@ -23,6 +23,7 @@ const FilterInfo = ({
 }) => {
   const { storeList, analysisType, resultType, seasonList } =
     useContext(OptionContext);
+  const router = useRouter();
   return (
     <Wrapper>
       <Title>조회</Title>
@@ -186,7 +187,7 @@ const FilterInfo = ({
             onChange={handleChangeInputData}
           />
         </Field>
-        <SmsButton>조회 대상 SMS 전송</SmsButton>
+        <SmsButton onClick={() => router.push("/sms")}>조회 대상 SMS 전송</SmsButton>
       </Row>
       <SearchButton onClick={searchReceipts}>조회</SearchButton>
     </Wrapper>

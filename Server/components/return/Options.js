@@ -7,19 +7,13 @@ import store from "../../store/store";
 import axios from "axios";
 
 
-
-
-
 const Options = ({value, user}) => {
 
   const [data, setData] = useState("");
   const [itemList, setItemList] = useState([]);
 
-  console.log(user)
   const insertLog = async(list, user) =>{
-    console.log(list)
-    console.log(user)
-    const[datas] =await await Promise.all([
+    const[datas] =await Promise.all([
       axios.put(`${process.env.API_URL}/invoiceLog`,{
         body: {list:list, user:user.name},
       })
@@ -33,24 +27,13 @@ const Options = ({value, user}) => {
   
 
   useEffect(() => {
-    // console.log("item list");
-    // console.log(itemList);
-    // console.log(data)
-  }, [itemList, data])
-
-  // console.log("Option data :");
-  let items =[];
-  store.subscribe(() => {
+    let items =[];
     store.getState().selected_data.selectedFlatRows.map((item) => {
-      console.log(item.original)
       items.push(item.original)
     })
     setItemList(items)
     items=[];
-  });
-
-  // console.log(data)
-
+  }, [data])
 
   return (
     <Wrapper>
@@ -58,12 +41,12 @@ const Options = ({value, user}) => {
         onClick={async() => {
           let tempData = await insertLog(itemList, user);
           setData(tempData);
-          console.log("1124354y5utye54q2erwfsdgerrd");
-          console.log(data)
-          console.log(tempData);
+          console.log(tempData); // read
+          console.log("7845612384651")
+          store.dispatch({type:"INVOICE_DATA", invoice_data: tempData})
+          store.dispatch({type:"TOGGLED", toggled: !store.getState().toggled})
         }        
       }
-        
       >
         선택된 항목 전표 발생/취소 (+,-)
       </CustomerButton>

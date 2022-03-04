@@ -1,23 +1,51 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import store from "../../../store/store";
+
+
+const sendSms = async ({ receivers, message }) => {
+    try {
+    const res = await axios
+      .post('https://apis.aligo.in/send/', null, {
+        params: {
+          key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
+          user_id: 'brackets',
+          sender: '01027687973',
+          receiver: "01087716197",
+          msg: message,
+          // 테스트모드
+          testmode_yn: 'N'
+        },
+      });
+    // res.headers("Access-Control-Allow-Origin")
+    res.data;
+  } catch (err) {
+    console.log('err', err);
+  }
+};
 
 // const sendSms = ({ receivers, message }) => {
-const sendSms = ({ receivers, message }) => {
-    return axios.post('https://apis.aligo.in/send/', null, {
-        params: {
-            key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
-            user_id: 'brackets',
-            sender: '01027687973',
-            receiver: '01087716197',
-            msg: message,
-            // 테스트모드
-            testmode_yn: 'Y'
-        },
-    }).then((res) => res.data).catch(err => {
-        console.log('err', err);
-    });
-}
+//   return axios
+//         .post('https://apis.aligo.in/send/', null, {
+//             params: {
+//                 key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
+//                 user_id: 'brackets',
+//                 sender: '01027687973',
+//                 receiver: '01087716197',
+//                 msg: message,
+//                 // 테스트모드
+//                 testmode_yn: 'Y'
+//             },
+//         })
+//         .then((res) => {
+//           // res.headers("Access-Control-Allow-Origin")
+//           res.data
+//         })
+//         .catch(err => {
+//             console.log('err', err);
+//         });
+// }
 
 // 메시지 보내기
 // sendSms({ receivers: ['01012341234', '010-4321-4321'], message: '메시지 테스트' }).then((result) => {
@@ -35,24 +63,27 @@ const sendSms = ({ receivers, message }) => {
 //   */
 // });
 
-const SendMsg = ({ }) => {
+const SendMsg = ({}) => {
 
-  // console.log(rows)
+  const [msgText, setMsgtext] = useState("");
 
+  store.subscribe(() => {console.log(store.getState().phone_num)})
+  
   return (
     <Wrapper>
       <MsgView>
-
         <SelectBox>
-          <option value="010-8771-6197">010-8771-6197</option>
-          <option value="010-2008-6197">010-8771-6197</option>
+          <option value="010-2768-7973">010-2768-7973</option>
         </SelectBox>
 
-        <TextBox/>
+        <TextBox
+          value={msgText}
+          onChange={(e) => setMsgtext(e.target.value)}
+        />
 
         <SendBtn
           onClick={() => 
-            sendSms({ receivers: "", message: '메시지 테스트' }).then((result) => {
+            sendSms({ receivers: store.getState().phone_num, message: msgText }).then((result) => {
             console.log('전송결과', result);
           })}
         >
@@ -63,20 +94,24 @@ const SendMsg = ({ }) => {
       <SelectingView>
         <SelectedRow>
           <TextBox style={{ height: 200 }} readOnly
-            onClick={(e) => console.log("Clicekd")}
+            value={"테스트 문자 입니다. 1"}
+            onClick={(e) => setMsgtext("테스트 문자입니다. 1")}
           />
           <TextBox style={{ height: 200 }} readOnly
-            onClick={(e) => console.log("Clicekd")}
+            value={"테스트 문자 입니다. 2"}
+            onClick={(e) => setMsgtext("테스트 문자입니다. 2")}
           />
           <TextBox style={{ height: 200 }} readOnly
-            onClick={(e) => console.log("Clicekd")}
+            value={"테스트 문자 입니다. 3"}
+            onClick={(e) => setMsgtext("테스트 문자입니다. 3")}
           />
           <TextBox style={{ height: 200 }} readOnly
-            onClick={(e) => console.log("Clicekd")}
+            value={"테스트 문자 입니다. 4"}
+            onClick={(e) => setMsgtext("테스트 문자입니다. 4")}
           />
         </SelectedRow>
 
-        <SelectedRow>
+        {/* <SelectedRow>
           <TextBox style={{ height: 200 }} readOnly
             onClick={(e) => console.log("Clicekd")}
           />
@@ -89,7 +124,7 @@ const SendMsg = ({ }) => {
           <TextBox style={{ height: 200 }} readOnly
             onClick={(e) => console.log("Clicekd")}
           />
-        </SelectedRow>
+        </SelectedRow> */}
       </SelectingView>
     </Wrapper>
   );

@@ -21,7 +21,7 @@ async function getInvoiceList(List) {
   }
 
   const controller = async (req, res) => {
-    if (req.method === "GET") {
+    if (req.method === "POST") {
         console.log("req.headers.referer");
         console.log(req.headers.referer);
         console.log("req.query");
@@ -29,8 +29,8 @@ async function getInvoiceList(List) {
         
         const {
             list
-        } = req.body;
-        console.log(list)
+        } = req.body.body;
+        // console.log(list)
     try {
       const invoiceList = await getInvoiceList(list)
       if (invoiceList.error) throw new Error(invoiceList.error); 

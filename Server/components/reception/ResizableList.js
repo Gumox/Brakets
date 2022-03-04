@@ -94,8 +94,6 @@ function Table({ columns, data, searchList, getTargetData }) {
 
 const ResizableList = ({ searchList, getTargetData = () => {} }) => {
 
-    console.log(`search list is ${searchList}`)
-
     const columns = React.useMemo(() => [
         {Header: '서비스카드 번호',  accessor: '서비스카드 번호',},
         {Header: '매장코드', accessor: '매장코드',},

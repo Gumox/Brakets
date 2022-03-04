@@ -10,9 +10,8 @@ import {
   RECEIPT_TYPE,
   STORE_CATEGORY,
 } from "../../../constants/type";
-import store from '../../../store/store'
+import store from "../../../store/store";
 
-import Options from "../Options";
 
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -38,8 +37,8 @@ function Table({ columns, data, handleDataClick }) {
   const defaultColumn = React.useMemo(
     () => ({
       minWidth: 100,
-      width: 100,
-      maxWidth: 150,
+      width: 175,
+      // maxWidth: 150,
     }),
     []
   )
@@ -90,9 +89,8 @@ function Table({ columns, data, handleDataClick }) {
     }
   )
   store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
-  console.log("-------------------------------------------------------------------")
   const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
-  
+
   return (
 
     <>
@@ -128,8 +126,8 @@ function Table({ columns, data, handleDataClick }) {
                     )
                   }
                 )} className="tr">
-                  {/* {console.log('row is')}
-                  {console.log(row)} */}
+                  {console.log('row is')}
+                  {console.log(row)}
                   {row.cells.map((cell, j) => {
                     return (
                       <div key={j} {...cell.getCellProps(
@@ -153,86 +151,30 @@ function Table({ columns, data, handleDataClick }) {
           </div>
         </div>
       </div>
-      <pre>
-        <code>
-          {JSON.stringify(
-            {
-              // selectedRowIds: selectedRowIds,
-              'selectedFlatRows[].original': selectedFlatRows.map(value => value.values["서비스카드 번호"]),
-              // 'storedData': store.getState("SELECTED_DATA")
-              
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
     </>
   )
 }
 
 const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
 
-  // console.log("asdad");
-  // console.log(user);
+  console.log("asdad");
+  console.log(user);
 
   const columns = React.useMemo(() => [
-    // {Header: 'No',   accessor: 'No'},
-    // {Header: 'Shop', accessor: 'Shop'},
+    {Header: 'No',   accessor: 'No'},
 
-    { Header: '서비스카드 번호', accessor: '서비스카드 번호' },
-    { Header: '매장코드', accessor: '매장코드' },
+    { Header: 'MSGKEY', accessor: 'MSGKEY' },
+    { Header: '전송시각', accessor: '전송시각' },
+    { Header: '제목', accessor: '제목' },
+    { Header: '수신자', accessor: '수신자' },
+    { Header: '수신번호', accessor: '수신번호' },
+    { Header: '내용', accessor: '내용' },
+    { Header: '발신번호', accessor: '발신번호' },
+    { Header: '발신자', accessor: '발신자' },
+    { Header: 'TCS코드', accessor: 'TCS코드' },
+    { Header: 'TCS내용', accessor: 'TCS내용' },
 
-    { Header: '매장명', accessor: '매장명' },
-    { Header: '매장구분', accessor: '매장구분' },
-    { Header: '매장연락처', accessor: '매장연락처' },
-    { Header: '등록일', accessor: '등록일' },
-    { Header: '고객ID', accessor: '고객ID' },
-    { Header: '고객', accessor: '고객' },
-    { Header: '고객연락처', accessor: '고객연락처' },
-    { Header: '시즌', accessor: '시즌' },
-    { Header: '스타일', accessor: '스타일' },
-    { Header: '컬러', accessor: '컬러' },
-    { Header: '사이즈', accessor: '사이즈' },
-    { Header: '판매가', accessor: '판매가' },
-    { Header: '고객요구', accessor: '고객요구' },
-    { Header: '매장접수내용', accessor: '매장접수내용' },
-    { Header: '과실구분', accessor: '과실구분' },
-    { Header: '고객약속일', accessor: '고객약속일' },
-    { Header: '본사접수일', accessor: '본사접수일' },
-    { Header: '내용분석', accessor: '내용분석' },
-    { Header: '판정결과', accessor: '판정결과' },
   ], [])
-
-  const value = data.map((productReturn) => ({
-    "receipt_id":productReturn[RECEIPT.ID],
-    "서비스카드 번호": productReturn[RECEIPT.CODE],
-    "매장코드": productReturn[STORE.CODE],
-    "매장명": productReturn[STORE.NAME],
-    "매장구분": STORE_CATEGORY[productReturn[STORE.CATEGORY]],
-    "매장연락처": productReturn[STORE.CONTACT],
-    "등록일": "?",
-    "고객ID": productReturn[CUSTOMER.ID],
-    "고객": productReturn[CUSTOMER.NAME],
-    "고객연락처": productReturn[CUSTOMER.CONTACT],
-    "시즌": productReturn[PRODUCT.SEASON],
-    "스타일": productReturn[PRODUCT.STYLE],
-    "컬러": productReturn[PRODUCT.COLOR],
-    "사이즈": productReturn[PRODUCT.SIZE],
-    "판매가": productReturn[PRODUCT.PRICE],
-    "고객요구": RECEIPT_TYPE[productReturn[RECEIPT.TYPE]],
-    "매장접수내용": productReturn[RECEIPT.STORE_MESSAGE],
-    "과실구분": productReturn[RECEIPT.FAULT_NAME],
-    "고객약속일": productReturn[RECEIPT.DUE_DATE]
-      ? moment(productReturn[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
-      : "",
-    "본사접수일": productReturn[RECEIPT.REGISTER_DATE]
-      ? moment(productReturn[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
-      : "",
-    "내용분석": productReturn[RECEIPT.ANALYSIS_NAME],
-    "판정결과": productReturn[RECEIPT.RESULT_NAME],
-    "전표 발행 여부":productReturn[RECEIPT.ISSUED_INVOICE] == 0 ? "전표미발행" : "전표발행",
-  }))
 
 
   // console.log(rows)
@@ -240,29 +182,28 @@ const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
   return (
     <Wrapper>
       <Styles>
-        <Table columns={columns} data={value} handleDataClick={handleDataClick} />
+        <Table columns={columns} data={[]} handleDataClick={handleDataClick} />
       </Styles>
-      <Options
-      data = {value}
-      user = {user}
-      />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  
-  height: 70%;
+  height: 50%;
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;
+  border-right: 1px solid;
 `;
 
 const Styles = styled.div`
-  padding: 1rem;
-  height: 80%;
+  /* padding: 1rem; */
+  height: 100%;
+  width: 100%;
+  border: 1px black;
 
   .table {
+    /* width: 100%; */
     display: inline-block;
     border-spacing: 0;
     border: 1px solid black;

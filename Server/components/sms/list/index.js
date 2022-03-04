@@ -6,9 +6,10 @@ import {
   useFlexLayout,
   useRowSelect,
 } from 'react-table'
+import store from '../../../store/store';
 
 const Wrapper = styled.div`
-  height: 80%;
+  height: 90%;
   width: 50%;
   overflow: scroll;
   border-bottom: 2px solid;
@@ -124,15 +125,22 @@ function Table({ columns, data }) {
     []
   )
 
-  const { getTableProps, headerGroups, rows, prepareRow } = useTable(
-    {
-      columns,
-      data,
-      defaultColumn,
+  const { 
+      getTableProps,
+      headerGroups, 
+      rows, 
+      prepareRow,
+      selectedFlatRows,
+    } = useTable(
+      {
+        columns,
+        data,
+        defaultColumn,
     },
     useResizeColumns,
     useFlexLayout,
     useRowSelect,
+    
     hooks => {
       hooks.allColumns.push(columns => [
         // Let's make a column for selection
@@ -167,70 +175,109 @@ function Table({ columns, data }) {
     }
   )
 
+  const phoneNum = selectedFlatRows.map(value => value.values["전화번호"]);
+  store.dispatch({type:"PHONE_NUM", phone_num: phoneNum});
+
   return (
-    <div {...getTableProps()} className="table">
-      <div>
-        {headerGroups.map((headerGroup,index) => (
-          <div
-            key={index}
-            {...headerGroup.getHeaderGroupProps({
-              // style: { paddingRight: '15px' },
-            })}
-            className="tr"
-          >
-            {headerGroup.headers.map((column,i) => (
-              <div key={i} {...column.getHeaderProps(headerProps)} className="th">
-                {column.render('Header')}
-                {/* Use column.getResizerProps to hook up the events correctly */}
-                {column.canResize && (
-                  <div
-                    {...column.getResizerProps()}
-                    className={`resizer ${
-                      column.isResizing ? 'isResizing' : ''
-                    }`}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="tbody">
-        {rows.map((row,index) => {
-          prepareRow(row)
-          return (
-            <div key={index} {...row.getRowProps()} className="tr">
-              {row.cells.map((cell,i) => {
-                return (
-                  <div key={i} {...cell.getCellProps(cellProps)} className="td">
-                    {cell.render('Cell')}
-                  </div>
-                )
+    <>
+      <div {...getTableProps()} className="table">
+        <div>
+          {headerGroups.map(headerGroup => (
+            <div
+              {...headerGroup.getHeaderGroupProps({
+                // style: { paddingRight: '15px' },
               })}
+              className="tr"
+            >
+              {headerGroup.headers.map(column => (
+                <div {...column.getHeaderProps(headerProps)} className="th">
+                  {column.render('Header')}
+                  {/* Use column.getResizerProps to hook up the events correctly */}
+                  {column.canResize && (
+                    <div
+                      {...column.getResizerProps()}
+                      className={`resizer ${column.isResizing ? 'isResizing' : ''
+                        }`}
+                    />
+                  )}
+                </div>
+              ))}
             </div>
-          )
-        })}
+          ))}
+        </div>
+        <div className="tbody">
+          {rows.map(row => {
+            prepareRow(row)
+            return (
+              <div {...row.getRowProps(
+                {
+                  onClick: () => (
+                    rows[row.id].toggleRowSelected()
+                  )
+                }
+              )} className="tr">
+                {row.cells.map(cell => {
+                  return (
+                    <div {...cell.getCellProps(
+                      {
+                        style: {
+                          color: row.isSelected ? 'red' : '',
+                          background: '#ebe8e8' 
+                        }
+                      }
+                      
+                      )} className="td">
+                      {cell.render('Cell')}
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
-function ReturnList() {
+function ReturnList({ data }) {
   const columns = React.useMemo(() => [
-    {Header: 'No',   accessor: 'No', width: 100,},
+    { Header: 'No', accessor: 'No', width: 100, },
     { Header: '이름', accessor: '이름', width: 100 },
     { Header: '전화번호', accessor: '전화번호' },
     { Header: '매장코드', accessor: '매장코드' },
     { Header: '매장명', accessor: '매장명' },
   ], [])
 
+  // const rows = data.map((productReturn, i) => ({
+  //   "No": i + 1,
+  //   "이름": productReturn[CUSTOMER.NAME],
+  //   "전화번호": productReturn[CUSTOMER.CONTACT],
+  //   "매장코드": productReturn[STORE.CODE],
+  //   "매장명": productReturn[STORE.NAME],
+
+  //   "No": i + 1,
+  //   "이름": productReturn[CUSTOMER.NAME],
+  //   "전화번호": productReturn[CUSTOMER.CONTACT],
+  //   "매장코드": productReturn[STORE.CODE],
+  //   "매장명": productReturn[STORE.NAME],
+  // }))
+
+  const rows = [1, 2, 3].map((v, i) => ({
+    "No": i + 1,
+    "이름": "가나다",
+    "전화번호": "01087716197",
+    "매장코드": "01009870987",
+    "매장명": "NC강남",
+  }));
+
   return (
     <Wrapper>
       <Styles>
-        <Table columns={columns} data={[]} />
+        <Table columns={columns} data={rows} />
       </Styles>
     </Wrapper>
-    
+
   )
 }
 
