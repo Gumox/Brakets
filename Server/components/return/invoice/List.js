@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
 import { useTable, useBlockLayout, useResizeColumns } from 'react-table';
@@ -8,7 +8,15 @@ import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../../constants/field";
 import { STORE_TYPE, RECEIPT_CATEGORY_TYPE, STORE_CATEGORY, RECEIPT_TYPE } from "../../../constants/type";
 
 
-function Table({ columns, data, searchList, getTargetData }) {
+    // {Header: '출고율', accessor: '출고율'},
+    // {Header: '출고금액', accessor: '출고금액'},  
+    // {Header: '부과세', accessor: '부과세'},
+    // {Header: '출고금액적용일', accessor: '출고금액적용일'},
+    // {Header: 'SORDER NO.', accessor: 'SORDER NO.'},
+    // {Header: 'INVOICE NO.', accessor: 'INVOICE NO.'},
+
+
+function Table({ columns, data }) {
 
   const defaultColumn = React.useMemo(
       () => ({
@@ -64,7 +72,7 @@ function Table({ columns, data, searchList, getTargetData }) {
                           prepareRow(row)
                           return (
                               <div key={i} {...row.getRowProps(
-                                  {onClick: () => (getTargetData(row.original["서비스카드 번호"]))}
+                                  // {onClick: () => (getTargetData(row.original["서비스카드 번호"]))}
                               )} className="tr">
                                   {row.cells.map((cell,j) => {
                                       return (
@@ -87,7 +95,7 @@ const List = ({ data, handleDataClick = () => {} }) => {
 
   const columns = React.useMemo(() => [
     {Header: 'No', accessor: 'No'},
-    {Header: '매장코드',   accessor: '매장코드'},
+    {Header: '서비스카드 코드',   accessor: '서비스카드 코드'},
     {Header: '매장명', accessor: '매장명'},
     {Header: '출고일', accessor: '출고일'},
     {Header: '상태', accessor: '상태'},
@@ -97,34 +105,54 @@ const List = ({ data, handleDataClick = () => {} }) => {
     {Header: '사이즈', accessor: '사이즈'},
     {Header: '수량', accessor: '수량'},
     {Header: '금액', accessor: '금액'},
-    // {Header: '출고율', accessor: '출고율'},
-    // {Header: '출고금액', accessor: '출고금액'},  
-    // {Header: '부과세', accessor: '부과세'},
-    // {Header: '출고금액적용일', accessor: '출고금액적용일'},
-    // {Header: 'SORDER NO.', accessor: 'SORDER NO.'},
-    // {Header: 'INVOICE NO.', accessor: 'INVOICE NO.'},
     {Header: '최초생성자', accessor: '최초생성자'},
     {Header: '최초생성일', accessor: '최초생성일'},
     {Header: '최초수정자', accessor: '최초수정자'},
     {Header: '최초수정일', accessor: '최초수정일'},
   ],[])
 
-    const value = data.map((selected, index) => ({
-      "No": index + 1,
-      "매장코드":selected[RECEIPT.CODE],
-    }));
+    let invoiceData = (
+                    data == ""
+                  ) ? (
+                    "empty"
+                  ) : (
+                    data.data.flat().map((v, index) => ({
+                    "No": index + 1,
+                    "서비스카드 코드":"",
+                    '매장명':"",
+                    '출고일':v.release_date == "" ? "" : moment(v.release_date).format("YYYY-MM-DD"),
+                    '상태':v.status,
+                    '시즌':v.season,
+                    'PartCode':v.partcode,
+                    '컬러':v.color,
+                    '사이즈':v.size,
+                    '수량':v.qty,
+                    '금액':v.amount,
+                    '최초생성자':v.created,
+                    '최초생성일':v.created_date == "" ? "" : moment(v.created_date).format("YYYY-MM-DD HH:mm:SS"),
+                    '최초수정자':v.edited,
+                    '최초수정일':v.edited_date == "" ? "" : moment(v.edited_date).format("YYYY-MM-DD HH:mm:SS"),
+                   }))
+                  )
+
+    console.log("data is")
+    console.log(data)
+    console.log(data == "" ? "true" : invoiceData)
+    // console.log(value)
 
   return (
     <Wrapper>
       <Styles>
-        <Table columns={columns} data={value}/>
+        <Table columns={columns} data={invoiceData == "empty" ? [] : invoiceData}/>
       </Styles>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  height: calc(100% - 120px);
+  /* height: calc(100% - 120px); */
+  height: 70%;
+  height: 100%;
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;
@@ -132,6 +160,7 @@ const Wrapper = styled.div`
 
 const Styles = styled.div`
   padding: 1rem;
+  height: 80%;
 
   .table {
     display: inline-block;
@@ -177,30 +206,5 @@ const Styles = styled.div`
     }
   }
 `
-
-const TableHeader = styled.thead`
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableHeaderCell = styled.th`
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableRow = styled.tr`
-  cursor: pointer;
-`;
-
-const TableData = styled.td`
-  max-width: ${({ width = "100px" }) => width};
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  text-align: ${({ textAlign = "center" }) => textAlign};
-  border: 1px solid ${COLOR.GRAY};
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-`;
 
 export default List;
