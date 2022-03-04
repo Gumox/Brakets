@@ -127,8 +127,8 @@ function Table({ columns, data, handleDataClick }) {
                     )
                   }
                 )} className="tr">
-                  {console.log('row is')}
-                  {console.log(row)}
+                  {/* {console.log('row is')}
+                  {console.log(row)} */}
                   {row.cells.map((cell, j) => {
                     return (
                       <div key={j} {...cell.getCellProps(
@@ -172,8 +172,8 @@ function Table({ columns, data, handleDataClick }) {
 
 const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
 
-  console.log("asdad");
-  console.log(user);
+  // console.log("asdad");
+  // console.log(user);
 
   const columns = React.useMemo(() => [
     // {Header: 'No',   accessor: 'No'},
