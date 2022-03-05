@@ -33,7 +33,7 @@ const Options = ({value, user}) => {
     })
     setItemList(items)
     items=[];
-  }, [])
+  }, [data])
 
   return (
     <Wrapper>
@@ -42,8 +42,6 @@ const Options = ({value, user}) => {
           let tempData = await insertLog(itemList, user);
           setData(tempData);
           console.log(tempData); // read
-          store.dispatch({type:"INVOICE_DATA", invoice_data: tempData})
-          store.dispatch({type:"TOGGLED", toggled: !store.getState().toggled})
           console.log("7845612384651")
         }        
       }
