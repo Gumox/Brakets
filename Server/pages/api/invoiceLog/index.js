@@ -125,11 +125,12 @@ const controller = async (req, res) => {
       const result = await invoice(list,user)
       if (result.error) throw new Error(result.error); 
       if (result ) {
-        res.status(200).json({ message: true });
+       
       } else {
         console.log("No result");
         res.status(204).json({ message: false });
       }
+      res.status(200).json({ message: true });
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

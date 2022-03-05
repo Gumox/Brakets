@@ -33,7 +33,7 @@ const ReturnInvoice = ({}) => {
   useEffect(async() => {
     let tmp = await insertLog(itemList);
     setData(tmp);
-  }, [store.getState().selected_data.selectedFlatRows])
+  }, [])
 
 
   let items = [];

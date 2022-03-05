@@ -135,10 +135,12 @@ const List = ({ data, handleDataClick = () => {} }) => {
                    }))
                   )
 
+    useEffect(()=>{
+      
     console.log("data is")
     console.log(data)
     console.log(data == "" ? "true" : invoiceData)
-    // console.log(value)
+    },[])
 
   return (
     <Wrapper>
