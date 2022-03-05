@@ -17,7 +17,7 @@ import formatDate from "../functions/formatDate";
 const ReceptionPage = ({ options, user }) => {
   const router = useRouter();
   const [selectOptions, setSelectOptions] = useState(options); // 전체 페이지에서 사용하는 select options
-  const [targetBrandId, setTargetBrandId] = useState(options.brandList[0]); // brandlist 중 첫번째 항목
+  const [targetBrandId, setTargetBrandId] = useState(options.brandList[0].value); // brandlist 중 첫번째 항목
 
   // Filter 입력 데이터
   const [inputData, setInputData] = useState({
