@@ -11,6 +11,7 @@ import {
   STORE_CATEGORY
 } from "../../../constants/type";
 import Checkbox from "../../Checkbox";
+import store from "../../../store/store";
 
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -84,6 +85,11 @@ function Table({ columns, data, searchList, getTargetData }) {
         ])
       }
   )
+  
+  store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
+  console.log("-------------------------------------------------------------------")
+  const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
+  console.log(store.getState().selected_data)
 
   return (
       <>
