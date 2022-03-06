@@ -13,8 +13,8 @@ const PaidRepairPage = ({options, user}) => {
   return (
     <>
       <Header path={router.pathname} />
-      <OptionContext.Provider value={options}>
-        <PaidRepair />
+      <OptionContext.Provider value={options} >
+        <PaidRepair user={user}/>
       </OptionContext.Provider>
     </>
   );
