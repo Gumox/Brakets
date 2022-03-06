@@ -12,8 +12,9 @@ export default createStore(function(state,action){
             fault:[],
             repair_type:[],
             selected:[],
-            selected_data: [],
+            selected_data: [""],
             invoice_data: [],
+            invoice_paid_repair_data: [],
             phone_num: [],
             toggled: false,
             send_sms_data:[]
@@ -48,6 +49,9 @@ export default createStore(function(state,action){
     }
     if(action.type === "INVOICE_DATA"){
         return{...state, invoice_data: action.invoice_data}
+    }
+    if(action.type === "INVOICE_PAID_REPAIR_DATA"){
+        return{...state, invoice_paid_repair_data: action.invoice_paid_repair_data}
     }
     if(action.type === "PHONE_NUM"){
         return{...state, phone_num: action.phone_num}

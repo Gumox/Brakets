@@ -11,7 +11,7 @@ import {
   RECEIPT_TYPE,
   STORE_CATEGORY
 } from "../../../constants/type";
-
+import store from "../../../store/store";
 import Options from '../Options'
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -88,6 +88,11 @@ function Table({ columns, data, searchList, getTargetData }) {
       }
   )
 
+  store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
+  console.log("-------------------------------------------------------------------")
+  const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
+  
+
   return (
       <>
           <div>
@@ -147,7 +152,7 @@ function Table({ columns, data, searchList, getTargetData }) {
   )
 }
 
-const ReturnList = ({ data, handleDataClick = () => {} }) => {
+const ReturnList = ({ data, user }) => {
 
   const columns = React.useMemo(() => [
     
@@ -178,7 +183,8 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     ],[])
 
     const value = data.map((pairRepair) => ({
-      // "선택":"V",
+      
+      "receipt_id":pairRepair[RECEIPT.ID],
       "서비스카드 번호":pairRepair[RECEIPT.CODE],
       "매장코드":pairRepair[STORE.CODE],
       "매장명":pairRepair[STORE.NAME],
@@ -211,7 +217,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
       <Styles>
         <Table columns={columns} data={value}/>
       </Styles>
-      <Options/>
+      <Options user={user} />
     </Wrapper>
   );
 };

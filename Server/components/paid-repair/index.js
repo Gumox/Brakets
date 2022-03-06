@@ -8,7 +8,7 @@ import SearchField from "./SearchField";
 import List from "./list"
 import Invoice from './invoice'
 
-const Return = () => {
+const Return = ({options, user}) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -79,7 +79,7 @@ const Return = () => {
         handleValueChange={handleInputValueChange}
         handleSearchButtonClick={handleSearchButtonClick}
       />
-      <List data={searchList}/>
+      <List data={searchList} user={user}/>
       <Invoice />
     </Content>
     
