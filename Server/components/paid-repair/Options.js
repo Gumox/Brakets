@@ -8,13 +8,53 @@ import axios from "axios";
 
 
 
-const Options = ({}) => {
+const Options = ({value, user}) => {
+
+  const [data, setData] = useState("");
+  const [itemList, setItemList] = useState([]);
+
+  const insertLog = async(list, user) =>{
+    const[datas] =await Promise.all([
+      axios.put(`${process.env.API_URL}/invoiceLogPaidRepair`,{
+        body: {list:list, user:user.name},
+      })
+      .then(({ data }) => data)
+      .catch(error=>{
+  
+      })
+    ])
+    return datas;
+  }
+
+    useEffect(() => {
+    let items =[];
+
+      store.getState().selected_data.selectedFlatRows?.map((item) => {
+        items.push(item.original)
+      })
+      setItemList(items)
+      items=[];
+
+    
+  }, [data])
+
+  useEffect(() => {
+      console.log(store.getState())
+  })
 
 
   return (
     <Wrapper>
-      {/* <CustomerButton>일괄선택</CustomerButton> */}
-      <CustomerButton width="250px">
+      <CustomerButton width="250px"
+        onClick={async() => {
+          console.log(itemList)
+          let tempData = await insertLog(itemList, user);
+          console.log(itemList)
+          setData(tempData);
+          console.log(tempData); // read
+          }
+        }
+      >
         선택된 항목 전표 발생/취소 (+,-)
       </CustomerButton>
       <Notice>
