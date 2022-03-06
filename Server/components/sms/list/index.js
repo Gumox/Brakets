@@ -11,7 +11,6 @@ import store from '../../../store/store';
 const Wrapper = styled.div`
   height: 90%;
   width: 50%;
-  overflow: scroll;
   border-bottom: 2px solid;
   border-right: 1px solid;
 `;
@@ -30,14 +29,13 @@ const Styles = styled.div`
     .thead {
       ${'' /* These styles are required for a scrollable body to align with the header properly */}
       overflow-y: auto;
-      overflow-x: hidden;
     }
 
     .tbody {
       ${'' /* These styles are required for a scrollable table body */}
       overflow-y: scroll;
       overflow-x: hidden;
-      height: 250px;
+      min-height: 598px;
     }
 
     .tr {
@@ -66,7 +64,7 @@ const Styles = styled.div`
       .resizer {
         right: 0;
         background: black;
-        width: 1px;
+        width: 0px;
         height: 100%;
         position: absolute;
         top: 0;
@@ -262,13 +260,14 @@ function ReturnList({ data }) {
   //   "매장코드": productReturn[STORE.CODE],
   //   "매장명": productReturn[STORE.NAME],
   // }))
-
-  const rows = [1, 2, 3].map((v, i) => ({
+  const sendSms =store.getState().send_sms_data;
+  const rows = sendSms.map((v, i) => (
+    {
     "No": i + 1,
-    "이름": "가나다",
-    "전화번호": "01087716197",
-    "매장코드": "01009870987",
-    "매장명": "NC강남",
+    "이름": v.customer_name,
+    "전화번호": v.customer_phone,
+    "매장코드": v.store_code,
+    "매장명": v.store_name,
   }));
 
   return (

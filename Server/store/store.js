@@ -16,6 +16,7 @@ export default createStore(function(state,action){
             invoice_data: [],
             phone_num: [],
             toggled: false,
+            send_sms_data:[]
         }
     }
     if(action.type === "COMPANY"){
@@ -53,6 +54,9 @@ export default createStore(function(state,action){
     }
     if(action.type === "TOGGLED"){
         return{...state, toggled: action.toggled}
+    }
+    if(action.type === "SEND_SMS_DATA"){
+        return{...state, send_sms_data: action.send_sms_data}
     }
     return state;
 })

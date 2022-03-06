@@ -35,8 +35,10 @@ module.exports = {
 			  else console.log('mysql is connected successfully!');
 		  });
 		  },
+DESTINATION_URL = 'apis.aligo.in/send/:path*'
+SOURCE_PATH = '/send/:path*'
 	  */
-
+  //trailingSlash: 'true',
   webpack5: true,
   webpack: (config) => {
     config.resolve.fallback = {

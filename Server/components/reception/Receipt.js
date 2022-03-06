@@ -394,7 +394,6 @@ const ReceiptInfo = ({
                     />
                     <Input
                       name={RECEIPT.CLAIM_PRICE}
-                      onChange={handleChangeTargetData}
                       disabled={claimPriceDisable}
                       value={claimPrice}
                       onChange={(e)=>{
