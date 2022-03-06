@@ -91,6 +91,7 @@ function Table({ columns, data, handleDataClick }) {
   )
   store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
   console.log("-------------------------------------------------------------------")
+  console.log(selectedFlatRows)
   const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
   
   return (
@@ -171,7 +172,7 @@ function Table({ columns, data, handleDataClick }) {
   )
 }
 
-const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
+const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
 
   // console.log("asdad");
   // console.log(user);
@@ -240,11 +241,12 @@ const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
   return (
     <Wrapper>
       <Styles>
-        <Table columns={columns} data={value} handleDataClick={handleDataClick} />
+        <Table columns={columns} data={value} handleDataClick={handleSearchButtonClick} />
       </Styles>
       <Options
       data = {value}
       user = {user}
+      handleSearchButtonClick={handleSearchButtonClick}
       />
     </Wrapper>
   );

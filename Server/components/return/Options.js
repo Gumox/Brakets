@@ -7,10 +7,15 @@ import store from "../../store/store";
 import axios from "axios";
 
 
-const Options = ({value, user}) => {
+const Options = ({
+  value,
+  user, 
+  handleSearchButtonClick = () => {}
+}) => {
 
   const [data, setData] = useState("");
   const [itemList, setItemList] = useState([]);
+
 
   const insertLog = async(list, user) =>{
     const[datas] =await Promise.all([
@@ -40,9 +45,15 @@ const Options = ({value, user}) => {
       <CustomerButton width="250px"
         onClick={async() => {
           let tempData = await insertLog(itemList, user);
+          console.log(itemList)
           setData(tempData);
           console.log(tempData); // read
           console.log("7845612384651")
+          
+          handleSearchButtonClick()
+          
+          console.log("7845612384651")
+          
         }        
       }
       >

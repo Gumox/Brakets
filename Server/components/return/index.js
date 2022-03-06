@@ -81,7 +81,7 @@ const Return = ({ options, user}) => {
         handleValueChange={handleInputValueChange}
         handleSearchButtonClick={handleSearchButtonClick}
       />
-      <List data={searchList} user={user}/>
+      <List data={searchList} user={user} handleSearchButtonClick={handleSearchButtonClick}/>
       {/* <Options/> */}
       <Invoice data={searchList}/>
     </Content>

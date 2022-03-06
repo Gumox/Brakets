@@ -142,6 +142,8 @@ const List = ({ data, handleDataClick = () => {} }) => {
     console.log(data == "" ? "true" : invoiceData)
     },[])
 
+    console.log("data is")
+    console.log(invoiceData)
   return (
     <Wrapper>
       <Styles>
