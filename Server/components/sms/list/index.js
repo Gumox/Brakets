@@ -180,15 +180,15 @@ function Table({ columns, data }) {
     <>
       <div {...getTableProps()} className="table">
         <div>
-          {headerGroups.map(headerGroup => (
-            <div
+          {headerGroups.map((headerGroup,i) => (
+            <div key={i}
               {...headerGroup.getHeaderGroupProps({
                 // style: { paddingRight: '15px' },
               })}
               className="tr"
             >
-              {headerGroup.headers.map(column => (
-                <div {...column.getHeaderProps(headerProps)} className="th">
+              {headerGroup.headers.map((column,j) => (
+                <div key={j} {...column.getHeaderProps(headerProps)} className="th">
                   {column.render('Header')}
                   {/* Use column.getResizerProps to hook up the events correctly */}
                   {column.canResize && (
@@ -204,19 +204,19 @@ function Table({ columns, data }) {
           ))}
         </div>
         <div className="tbody">
-          {rows.map(row => {
+          {rows.map((row,i) => {
             prepareRow(row)
             return (
-              <div {...row.getRowProps(
+              <div  key={i}{...row.getRowProps(
                 {
                   onClick: () => (
                     rows[row.id].toggleRowSelected()
                   )
                 }
               )} className="tr">
-                {row.cells.map(cell => {
+                {row.cells.map((cell,j) => {
                   return (
-                    <div {...cell.getCellProps(
+                    <div key={j} {...cell.getCellProps(
                       {
                         style: {
                           color: row.isSelected ? 'red' : '',
