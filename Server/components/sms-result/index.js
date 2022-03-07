@@ -93,16 +93,16 @@ const SmsResult = ({}) => {
         <TempView>
           <LaView><div>사용자</div><div>결과</div><div>count</div></LaView>
           {
-            pack.map((el)=>{
+            pack.map((el,i)=>{
               return(
-                <LaView onClick={()=>{setOpenPack(el)}}><div>{el[0].staff_code}</div><div>결과</div><div>{el.length}</div></LaView>
+                <LaView key={i} onClick={()=>{setOpenPack(el)}}><div>{el[0].staff_code}</div><div>결과</div><div>{el.length}</div></LaView>
               )
             })
           }
         </TempView>
       </SmsInqueryView>
         
-        <List data={openPack}></List>
+        {/*<List data={openPack}></List> */}
     </>
  
   );
