@@ -57,7 +57,7 @@ async function invoice(List,user) {
   for (let data of List) {
     let qty =1
     let toDay =  new Date();
-    let inputDate = toDay.getFullYear()+"-"+toDay.getMonth()+"-"+toDay.getDay()+" "+toDay.getHours()+":"+toDay.getMinutes()+":"+toDay.getSeconds();
+    let inputDate = toDay.getFullYear()+"-"+toDay.getMonth()+1+"-"+toDay.getDate()+" "+toDay.getHours()+":"+toDay.getMinutes()+":"+toDay.getSeconds();
     console.log(inputDate);
     let setIssued = [];
     let inputInvoiceLog = [];
@@ -66,7 +66,10 @@ async function invoice(List,user) {
       if((checkInvoice.length) % 2 === 1){
         qty = -1;
       }
+      console.log("ishere--------------------------------")
       setIssued = await getIssuedInvoice(data.receipt_id)
+      console.log(setIssued)
+      console.log("ishere--------------------------------")
       inputInvoiceLog =await returnInvoiceLog(
                                                       data["receipt_id"],
                                                       data["서비스카드 번호"],
@@ -86,6 +89,7 @@ async function invoice(List,user) {
       results.push(inputInvoiceLog)
     }else{
       console.log("OK")
+      console.log("ishere--------------------------------")
       setIssued = await getIssuedInvoice(data.receipt_id)
       inputInvoiceLog =await returnInvoiceLog(
                                                       data["receipt_id"],

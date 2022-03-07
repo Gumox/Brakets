@@ -33,12 +33,12 @@ const sendSms = async (user,{ _receivers, message }) => {
         })
       ])
       const[messageResult] =await Promise.all([
-        axios.post(`${process.env.API_URL}/smsHandler`,{
+        axios.post(`${process.env.API_URL}/sms/list`,{
           body: {
-
-          headquarterId :user.headquarter_id,
-          sender: user.staff_id,
-          mid: datas.msg_id
+              sender: user.staff_id,
+              headquarterId :user.headquarter_id,
+              msg: message,
+              mid: datas.msg_id
           },
         })
         .then(({ data }) => data)
@@ -46,7 +46,7 @@ const sendSms = async (user,{ _receivers, message }) => {
     
         })
       ])
-      
+      console.log(messageResult)
       return datas; 
     } catch (err) {
       console.log('err', err);

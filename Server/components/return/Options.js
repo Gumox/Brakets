@@ -27,6 +27,7 @@ const Options = ({
   
       })
     ])
+    console.log(datas)
     return datas;
   }
   
