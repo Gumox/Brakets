@@ -23,10 +23,10 @@ const MENUS = [
       title: "SMS 전송",
       link: "/sms",
     },
-    {
+    /*{
       title: "SMS 결과",
       link: "/sms-result",
-    },
+    },*/
     {
       title: "수선처",
       link: "/RepairReception",

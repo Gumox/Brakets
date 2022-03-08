@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useState,useEffect } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -17,6 +17,7 @@ import Input from "../Input";
 import SelectOption from "../SelectOption";
 import TextArea from "../TextArea";
 import Checkbox from "../Checkbox";
+import { getRepairShop } from "../../functions/getInfos";
 
 const RepairInfo = ({
   REPAIR,
@@ -25,14 +26,25 @@ const RepairInfo = ({
 }) => {
   const { repairList, faultType, resultType, analysisType, repairType } =
     useContext(OptionContext);
+    
+  const [repairShop, setRepairShop] = useState([]);
+  useEffect(() => {
+    const fetch = async()=>{
+      let list = await getRepairShop({repairShop:null})
+
+      setRepairShop(list)
+    }
+    fetch();
+  },[])
   return (
     <Wrapper>
           <Row>
             <Field marginRight="0px">
               <SelectOption
+                disabled ={true}
                 title="수선처"
                 name={REPAIR.PLACE_ID}
-                options={[DEFAULT_OPTION, ...repairList]}
+                options={[DEFAULT_OPTION, ...repairShop]}
                 value={targetData[REPAIR.PLACE_ID]}
                 styleOptions={{
                   width: "120px",
@@ -45,6 +57,7 @@ const RepairInfo = ({
           <Row>
             <Field marginRight="10px">
               <Input
+                disabled ={true}
                 type="date"
                 title="수선처접수일"
                 name={REPAIR.REGISTER_DATE}
@@ -59,6 +72,7 @@ const RepairInfo = ({
             </Field>
             <Field>
               <SelectOption
+                disabled ={true}
                 title="운송형태"
                 name={REPAIR.DELIVERY_TYPE}
                 options={[DEFAULT_OPTION, ...TRANSPORT_OPTIONS]}
@@ -71,6 +85,7 @@ const RepairInfo = ({
           <Row>
             <Field marginRight="5px">
               <SelectOption
+                disabled ={true}
                 title="과실구분:"
                 name={REPAIR.FAULT_ID}
                 options={[DEFAULT_OPTION, ...faultType]}
@@ -82,6 +97,7 @@ const RepairInfo = ({
             <Row>
             <Field marginRight="5px">
               <SelectOption
+                disabled ={true}
                 title="내용분석:"
                 name={REPAIR.ANALYSIS_ID}
                 options={[DEFAULT_OPTION, ...analysisType]}
@@ -93,6 +109,7 @@ const RepairInfo = ({
             <Row>
             <Field marginRight="0px">
               <SelectOption
+                disabled ={true}
                 title="판정결과:"
                 name={REPAIR.RESULT_ID}
                 options={[DEFAULT_OPTION, ...resultType]}
@@ -104,6 +121,7 @@ const RepairInfo = ({
           </Section>
         <Section width="100%">
           <TextArea
+            disabled ={true}
             title="수선처설명:"
             name={REPAIR.MESSAGE}
             value={targetData[REPAIR.MESSAGE]}
@@ -115,21 +133,23 @@ const RepairInfo = ({
             <Row key={index + 1}>
               <Field marginRight="5px">
                 <SelectOption
+                  disabled ={true}
                   title={`수선내용${index + 1}:`}
                   name={DETAIL.TYPE_ID}
                   options={[DEFAULT_OPTION, ...repairType]}
                   value={targetData[DETAIL.TYPE_ID]}
-                  disabled={!targetData[DETAIL.TYPE_ID]}
+                  //disabled={!targetData[DETAIL.TYPE_ID]}
                   styleOptions={{ width: "100px" , maxWidth: "100px" }}
                 />
               </Field>
               <Field marginRight="5px">
                 <Input
+                  disabled ={true}
                   title="수량"
                   name={DETAIL.COUNT}
                   value={targetData[DETAIL.COUNT]}
                   styleOptions={{ width: "15px" }}
-                  disabled={!targetData[DETAIL.TYPE_ID]}
+                  //disabled={!targetData[DETAIL.TYPE_ID]}
                 />
               </Field>
               <Field marginRight="5px">
@@ -138,7 +158,8 @@ const RepairInfo = ({
                   name={DETAIL.PRICE}
                   value={targetData[DETAIL.PRICE]}
                   styleOptions={{ width: "100px" }}
-                  disabled={!targetData[DETAIL.TYPE_ID]}
+                  disabled ={true}
+                  //disabled={!targetData[DETAIL.TYPE_ID]}
                 />
               </Field>
               <Field marginRight="0px">
@@ -146,7 +167,8 @@ const RepairInfo = ({
                   title={`재수선${index + 1}`}
                   name={DETAIL.REDO}
                   checked={targetData[DETAIL.REDO]}
-                  disabled={!targetData[DETAIL.TYPE_ID]}
+                  disabled ={true}
+                  //disabled={!targetData[DETAIL.TYPE_ID]}
                 />
               </Field>
             </Row>
@@ -155,6 +177,7 @@ const RepairInfo = ({
         <Field marginRight="10px">
           <Input
             type="date"
+            disabled ={true}
             title="수선처발송일"
             name={REPAIR.COMPLETE_DATE}
             value={
@@ -166,6 +189,7 @@ const RepairInfo = ({
         </Field>
         <Field marginRight="10px">
           <SelectOption
+            disabled ={true}
             title="발송방법:"
             name={REPAIR.SHIPMENT_TYPE}
             options={[DEFAULT_OPTION, ...SHIPPING_OPTIONS]}
@@ -174,6 +198,7 @@ const RepairInfo = ({
         </Field>
         <Field marginRight="0px">
           <Input
+            disabled ={true}
             title="발송비용"
             name={REPAIR.SHIPMENT_PRICE}
             value={targetData[REPAIR.SHIPMENT_PRICE]}

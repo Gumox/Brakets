@@ -217,7 +217,7 @@ const ReturnList = ({ data, user }) => {
       <Styles>
         <Table columns={columns} data={value}/>
       </Styles>
-      <Options user={user} />
+      {/**<Options user={user} /> */}
     </Wrapper>
   );
 };
@@ -275,7 +275,7 @@ const Styles = styled.div`
 
 const Wrapper = styled.div`
   /* position: absolute; */
-  height: 70%;
+  height: 95%;/70%
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;

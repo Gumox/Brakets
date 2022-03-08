@@ -80,7 +80,7 @@ const Return = ({options, user}) => {
         handleSearchButtonClick={handleSearchButtonClick}
       />
       <List data={searchList} user={user}/>
-      <Invoice />
+      {/**<Invoice /> */}
     </Content>
     
   );

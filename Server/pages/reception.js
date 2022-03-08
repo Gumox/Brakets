@@ -18,7 +18,7 @@ const ReceptionPage = ({ options, user }) => {
   const router = useRouter();
   const [selectOptions, setSelectOptions] = useState(options); // 전체 페이지에서 사용하는 select options
   const [targetBrandId, setTargetBrandId] = useState(options.brandList[0].value); // brandlist 중 첫번째 항목
-
+  console.log(options.brandList[0])
   // Filter 입력 데이터
   const [inputData, setInputData] = useState({
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
@@ -29,7 +29,6 @@ const ReceptionPage = ({ options, user }) => {
   const [imageData, setImageData] = useState({});
 
   useEffect(() => {
-    console.log(user)
     const getOptions = async () => {
       const [stores, productCategories, seasons] = await Promise.all([
         axios
@@ -130,8 +129,6 @@ const ReceptionPage = ({ options, user }) => {
     setImageData(data.imageList);
     setTargetData(data.data);
   }, []);
-  
-  console.log(targetData)
   return (
     <UserContext.Provider value={user}>
       <Header path={router.pathname} />
@@ -178,11 +175,10 @@ export const getServerSideProps = async (ctx) => {
   }
 
   const { headquarter_id: headquarterId } = user;
-
   const [brands, repairShops, producers, faults, analysis, results, repairs] =
     await Promise.all([
       axios
-        .get(`${process.env.API_URL}/brand`, { params: { headquarterId } })
+        .get(`${process.env.API_URL}/brand`, { params: { headquarterId:headquarterId } })
         .then(({ data }) => data), // 브랜드
       axios
         .get(`${process.env.API_URL}/store/2`, {

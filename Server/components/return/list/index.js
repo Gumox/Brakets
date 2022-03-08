@@ -243,18 +243,18 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
       <Styles>
         <Table columns={columns} data={value} handleDataClick={handleSearchButtonClick} />
       </Styles>
-      <Options
+      {/*<Options
       data = {value}
       user = {user}
       handleSearchButtonClick={handleSearchButtonClick}
-      />
+      />*/}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   
-  height: 70%;
+  height: 95%;//70%
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;

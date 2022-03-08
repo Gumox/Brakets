@@ -269,7 +269,7 @@ const Styles = styled.div`
 `
 
 const Wrapper = styled.div`
-  height: 50%;
+  height: 90%;//50%
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;

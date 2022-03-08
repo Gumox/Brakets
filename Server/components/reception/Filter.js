@@ -25,7 +25,6 @@ const FilterInfo = ({
   const { storeList, analysisType, resultType, seasonList } =
     useContext(OptionContext);
   const router = useRouter();
-  console.log("******************************")
   return (
     <Wrapper>
       <Title>조회</Title>
