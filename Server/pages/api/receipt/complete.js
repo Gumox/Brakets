@@ -2,7 +2,7 @@ import excuteQuery from "../db";
 
 async function setCompleteDate(code, date) {
   return excuteQuery({
-    query: "UPDATE receipt SET complete_date=? WHERE receipt_code=?",
+    query: "UPDATE receipt SET  step =2,complete_date=? WHERE receipt_code=?",
     values: [date, code],
   });
 }

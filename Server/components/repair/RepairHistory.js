@@ -392,7 +392,7 @@ const RepairHistory = (props) => {
                         onChange={(e)=>{setFee(e.target.value)}}
                 />
                 <div style={{fontSize:15,color:`${COLOR.BLACK}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>현금영수증 번호</div>
-                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}} value = {cashreceiptNum.toString()}
+                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}} value = {cashreceiptNum}
                         onChange={(e)=>{
                             setCashreceiptNum((e.target.value).toString())
                             console.log((e.target.value).toString())
