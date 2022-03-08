@@ -26,7 +26,7 @@ const Header = ({ path }) => {
         <Wrapper>
             
         <MenuWrapper onClick={()=>{
-            if(store.getState().shopId <3 && store.getState().shopId >4){
+            if(store.getState().shopId !=3 && store.getState().shopId !=4){
               router.push("/");
             }
         }}> 
