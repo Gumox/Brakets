@@ -14,6 +14,7 @@ const complete = async (req, res) => {
     console.log("req.body");
     console.log(req.body);
     const { step,date, code } = req.body;
+    console.log(req.body)
     try {
       const result = await setCompleteDate(step,code, date);
       if (result.error) throw new Error(result.error);
