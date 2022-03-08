@@ -25,13 +25,13 @@ const Header = ({ path }) => {
        
         <Wrapper>
             
-        <MenuWrapper onClick={()=>{
+        <MenuWrapper > 
+            <h1 style={{marginLeft:"5%"}}>수선</h1>
+            <OkImage src="/icons/OK_image.png" width={81} height={52} onClick={()=>{
             if(store.getState().shopId !=3 && store.getState().shopId !=4){
               router.push("/");
             }
-        }}> 
-            <h1 style={{marginLeft:"5%"}}>수선</h1>
-            <OkImage src="/icons/OK_image.png" width={81} height={52} />
+        }}/>
             <div style={{margin:"15%"}}/>
             {MENUS.map((menu) => (
             <RepairHeaderButton key={menu.link} {...menu} path={path} />
