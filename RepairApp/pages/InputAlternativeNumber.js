@@ -20,6 +20,9 @@ function FindRoute({navigation}, _route, _prdCode,_datas){
             case "ProductSend":
                 navigation.navigate('ProductSend', {data: _prdCode ,datas: _datas})
                 break;
+            case "RepairDetail":
+                navigation.navigate('RepairDetail', {data: _prdCode ,datas: _datas})
+                break;
             default:
           }
         
