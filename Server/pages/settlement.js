@@ -172,7 +172,7 @@ export default function Settlement()  {
                     </div>
                     <div style={{width : "100%",display:"flex",flexDirection:"row-reverse"}}>
                         <ButtonCheck disabled = {!disable} onClick={()=>{onClickOpionTwo(store.getState().selected)}}>본사확인</ButtonCheck>
-                        <ButtonRepairCheck disabled = {disable} onClick={()=>{onClickOpionOne(store.getState().selected)}}>수선처확인</ButtonRepairCheck>
+                        <ButtonRepairCheck onClick={()=>{onClickOpionOne(store.getState().selected)}}>수선처확인</ButtonRepairCheck>
                     </div>
                     <ItemTable>
                         
