@@ -20,6 +20,16 @@ export const getRepairShopList = async()=>{
       ])
       return datas;
 }
+export const getStoreList = async()=>{
+  const[datas] =await Promise.all([
+      axios.get(`${process.env.API_URL}/store/getAll`)
+      .then(({ data }) => data.data)
+      .catch(error=>{
+
+      })
+    ])
+    return datas;
+}
 export const getTargetInfo = async(code,shop,shopName)=>{
     const[datas] =await Promise.all([
         axios.get(`${process.env.API_URL}/RepairShop/unregistered/getTargetInfo?code=${code}`)
@@ -67,13 +77,41 @@ export const getReturnList = async(id,shopName)=>{
     }
     return datas;
 }
-
-export const deleteRegist = async(id)=>{
+export const getAllReturnList = async()=>{
   let[datas] =await Promise.all([
+      axios.get(`${process.env.API_URL}/RepairShop/unregistered`)
+      .then(({ data }) => data.data)
+      .catch(error=>{
+
+      })
+    ])
+    if(datas.length>0){
+      datas.forEach((obj,index) => {
+        let date = obj.return_date
+        console.log(datas.length)
+        datas[index].return_date = formatDate(new Date(date))
+        datas[index].level = 0
+        datas[index].shop_name = obj.return_store_name
+      });
+    }
+    return datas;
+}
+export const deleteRegist = async(id)=>{
+  const [datas] =await Promise.all([
       axios.post(`${process.env.API_URL}/RepairShop/unregistered/registReturn/deleteRegist?id=${id}`)
       .then(({ data }) => data.data).catch(error=>{
 
       })
     ])
+    return datas;
+}
+export const getHeadquarter = async()=>{
+  const [datas] =await Promise.all([
+      axios.get(`${process.env.API_URL}/headquarter`)
+      .then(({ data }) => data.body).catch(error=>{
+
+      })
+    ])
+    console.log(datas)
     return datas;
 }

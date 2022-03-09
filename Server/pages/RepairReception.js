@@ -50,14 +50,17 @@ function RepairReception({options,user}) {
     setNeedImages(data.needImages)
   }
   let lists =[];
-  if(user.level>2&&user.level<5){
+  if(user.level==3 || user.level==4){
     listData.forEach((el,index) => {
-        let items=(
-          <div key={index} style={{paddingTop:1}}>
-            <RepairReceiptModal need={needImages} item={el} info ={options.info[0]} images ={options.images}/>
-          </div>
-      )
+      if(options.images != undefined){
+          let items=(
+            <div key={index} style={{paddingTop:1}}>
+              <RepairReceiptModal need={needImages} item={el} info ={options.info[0]} images ={options.images}/>
+            </div>
+        )
+        
       lists[index] = items;
+      }
     })
   }
   useEffect(()=>{

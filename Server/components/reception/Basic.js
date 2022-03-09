@@ -12,6 +12,7 @@ const BasicInfo = ({
   targetBrandId,
   setTargetBrandId = () => {},
   getTargetData = () => {},
+  searchReceipts= () => {}
 }) => {
   const {headquarter_id: headquarterId} = useContext(UserContext);
   const { brandList } = useContext(OptionContext);
@@ -20,6 +21,7 @@ const BasicInfo = ({
     (e) => {
       if (e.key !== "Enter") return;
       getTargetData(receiptCode);
+      searchReceipts();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [receiptCode]

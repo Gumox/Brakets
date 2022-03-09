@@ -9,6 +9,7 @@ const SettlementResult =(props)=>{
     const types = props.type
     const [adjustment,setAdjustment] = useState(item.adjustment)
     const [check,setCheck] = useState()
+    const [disable,setDisable] = useState(false)
     const [adjustmentReason,setAdjustmentReason] = useState(item.adjustment_reason)
     const [remarks,setRemarks] = useState(item.remarks)
     const repairStaff = "";
@@ -77,6 +78,16 @@ const SettlementResult =(props)=>{
         return
     }
     React.useEffect(()=>{
+        /*if(item.repair_detail_state ==2){
+            let today =new Date();
+            
+            console.log(item)
+            let repairDate = new Date(item.complete_date)
+            if(today.getMonth()>repairDate.getMonth()){
+                setDisable(true)
+            }
+            
+        } */
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
         window.addEventListener('resize',handleResize);
@@ -104,15 +115,15 @@ const SettlementResult =(props)=>{
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{hqStaff}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPrice(0)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
-                <input type="number" style={{width:80}} value={adjustment||''} onChange={(e)=>{setAdjustment(e.target.value)}}/>
+                <input disabled ={disable} type="number" style={{width:80}} value={adjustment||''} onChange={(e)=>{setAdjustment(e.target.value)}}/>
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPrice(adjustment)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
-                <input style={{width:80}} value={adjustmentReason||''} onChange={(e)=>{setAdjustmentReason(e.target.value)}}/>
+                <input disabled ={disable} style={{width:80}} value={adjustmentReason||''} onChange={(e)=>{setAdjustmentReason(e.target.value)}}/>
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{repairStaff}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
-                <input style={{width:80}} value={remarks||''} onChange={(e)=>{setRemarks(e.target.value)}}/>
+                <input disabled ={disable} style={{width:80}} value={remarks||''} onChange={(e)=>{setRemarks(e.target.value)}}/>
             </ItemView>
         </Container></LaView>
         

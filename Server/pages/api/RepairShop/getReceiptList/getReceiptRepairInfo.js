@@ -111,11 +111,7 @@ const controller = async (req, res) => {
     try {
       const result = await getReceiptList(receipt_id);
       if (result.error) throw new Error(result.error);
-      if (result.length) {
-        res.status(200).json({ body: result });
-      } else {
-        res.status(204).json({ message: "No List" });
-      }
+      res.status(200).json({ body: result });
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

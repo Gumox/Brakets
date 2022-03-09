@@ -110,7 +110,7 @@ const controller = async (req, res) => {
         res.status(200).json({ body: result ,needImages : needImages});
       } else {
         console.log("No List");
-        res.status(204).json({ message: "No List" });
+        res.status(200).json({body: result ,needImages : []});
       }
     } catch (err) {
       console.log(err.message);

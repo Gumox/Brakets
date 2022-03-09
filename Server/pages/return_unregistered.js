@@ -7,7 +7,7 @@ import _, { set } from "lodash";
 import formatDate from '../functions/formatDate';
 import store from '../store/store';
 import { CSVLink } from "react-csv";
-import { getBrandList,getRepairShopList,getTargetInfo,insertData,getReturnList,deleteRegist} from '../functions/useInReturnUnregistered';
+import { getBrandList,getRepairShopList,getStoreList,getTargetInfo,insertData,getReturnList,getAllReturnList,deleteRegist, getHeadquarter} from '../functions/useInReturnUnregistered';
 import unregisteredListControll from '../functions/unregisteredListControll';
 import headers from '../constants/retrunTableHeader';
 import checkDisable from '../functions/checkDisable';
@@ -16,7 +16,7 @@ import Image from 'next/image'
 export default function Return_unregistered() {
     
     const [selectedCompany,setSelectedCompany] = useState(null)
-    const [companyList,setCompanyList] = useState(store.getState().company)
+    const [companyList,setCompanyList] = useState([])
     const [code,setCode] = useState()
     const [brandList,setBrandList] = useState([])
     const [repairShopList,setRepairShopList] = useState([])
@@ -50,7 +50,8 @@ export default function Return_unregistered() {
             deleteRegist(item.return_id)
         }
         setResultList(result);
-        setReturnList(result);
+        setResultList(result);
+        
     }
     const insertReturnList=async(list)=>{
         const result= await insertData(list)
@@ -63,7 +64,7 @@ export default function Return_unregistered() {
                 data.push(obj)
             })
             setReturnList(data)
-            setResultList(data)
+            setReturnList(data) //for refresh
         }
     }
     const handleKeyPress = useCallback(async(e,code,returnList) => {
@@ -78,7 +79,7 @@ export default function Return_unregistered() {
                 
                 returnList.push(input[0])
                 setReturnList(_.uniqBy(returnList,"receipt_code"))
-                setResultList(_.uniqBy(returnList,"receipt_code"))
+                setResultList(_.uniqBy(returnList,"receipt_code"))//for refresh
                 return;
             }else{
                 alert("잘못된 서비스카드 번호 입니다")
@@ -90,20 +91,31 @@ export default function Return_unregistered() {
     useEffect( ()=>{
         const fetchData = async () => {
             setShopName(localStorage.getItem('SHOP_NAME'))
-            setCompanyList(JSON.parse(localStorage.getItem('COMPANY'))) 
+             
             setShopId(localStorage.getItem('SHOP'))
             let list =await getBrandList();
             list.unshift({brand_id: "",brand_name: "전체"})
 
-            let list2 =await getRepairShopList();
+            let list2 =await getStoreList();
             list2.unshift({store_id: "",name: "전체"})
             let user = JSON.parse(localStorage.getItem('USER'))
             setDisable(checkDisable(user.level))
-
-            let returnListData = await getReturnList(localStorage.getItem('SHOP')*1,localStorage.getItem('SHOP_NAME'))
+            let cpList = await getHeadquarter()
+            let returnListData;
+            if(checkDisable(user.level)){
+                console.log("****************************")
+                returnListData = await getAllReturnList()
+                console.log(returnListData)
+                console.log("****************************")
+            }else{
+                returnListData = await getReturnList(localStorage.getItem('SHOP')*1,localStorage.getItem('SHOP_NAME'))
+            }
+            console.log(cpList)
+            console.log("****************************")
             setReturnList(returnListData)
-            setResultList(returnListData)
+            setResultList(returnListData) //for refresh
             setBrandList(list);
+            setCompanyList(cpList)
             setRepairShopList(list2)
         }
         fetchData();
@@ -122,10 +134,10 @@ export default function Return_unregistered() {
                 <Line/>
                 <Container>
                     <div style={{display:'flex',alignItems:"center",justifyContent:"center",width:"100%",fontSize:15,fontWeight:"bold",msOverflowStyle:"none"}}>회사 설정 :
-                    <select disabled ={disable} onChange={(e)=>{setHqId(e.target.value)}}  style={{marginLeft:10,marginRight: 10,minWidth:200,minHeight:30}} >
+                    <select onChange={(e)=>{setHqId(e.target.value)}}  style={{marginLeft:10,marginRight: 10,minWidth:200,minHeight:30}} >
                         {companyList.map((item) => (
-                            <option value={item.key} key={item.key}>
-                            {item.name}
+                            <option value={item.value} key={item.value}>
+                            {item.text}
                         </option>
                         ))}
                     </select>
@@ -147,7 +159,7 @@ export default function Return_unregistered() {
                 <Container>
                     <CenterView>
                     수선처 : 
-                    <select disabled ={disable} name="soosun"  style={{marginLeft:10,marginRight: 10,height:22}} onChange={(e)=>{setRepair(e.target.value)}}>
+                    <select name="soosun"  style={{marginLeft:10,marginRight: 10,height:22}} onChange={(e)=>{setRepair(e.target.value)}}>
                         {   
                             repairShopList.map((item,index)=>(
                                 <option key={index} value={item.store_id}>{item.name}</option>
@@ -156,7 +168,7 @@ export default function Return_unregistered() {
                     </select>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     브랜드 : 
-                    <select disabled ={disable} name="brand"  style={{marginLeft:10,marginRight: 10,height:22}}  
+                    <select name="brand"  style={{marginLeft:10,marginRight: 10,height:22}}  
                         onChange={(e)=>{
                             console.log(e.target.value)
                             if(e.target.value){
@@ -173,9 +185,9 @@ export default function Return_unregistered() {
                     </select>
                     
                     
-                    <input disabled ={disable} type="date" style={{marginLeft:20,marginRight:20,height:22}}  onChange={(e)=>{setStartDate(new Date(e.target.value))}} />
+                    <input type="date" style={{marginLeft:20,marginRight:20,height:22}}  onChange={(e)=>{setStartDate(new Date(e.target.value))}} />
                     ~    
-                    <input disabled ={disable} type="date"  style={{marginLeft:20,height:22}} onChange={(e)=>{setEndDate(new Date(e.target.value))}}/>
+                    <input type="date"  style={{marginLeft:20,height:22}} onChange={(e)=>{setEndDate(new Date(e.target.value))}}/>
                     <button 
                         style={{marginLeft:10,width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
                         onClick={()=>{searchTarget(hq_id,repair,brand,startDate,endDate)}}
@@ -189,7 +201,7 @@ export default function Return_unregistered() {
                    
                     <CenterView>       
                         <div style={{fontWeight:"bold"}} >서비스 카드 번호 : </div>
-                        <input disabled ={disable} style={{marginLeft:15,height:22}} onChange={(e)=>{setCode(e.target.value)}} onKeyPress={(e)=>{handleKeyPress(e,code,returnList)}}></input> 
+                        <input style={{marginLeft:15,height:22}} onChange={(e)=>{setCode(e.target.value)}} onKeyPress={(e)=>{handleKeyPress(e,code,returnList)}}></input> 
                         <button 
                             style={{marginLeft:10,width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
                             onClick={()=>{}}
@@ -217,7 +229,7 @@ export default function Return_unregistered() {
             <ItemTable >
                 <LaView><Container>
                     <ItemView>#</ItemView>
-                    <ItemView>수선처</ItemView>
+                    <ItemView>등록처</ItemView>
                     <ItemView>미등록 반송 등록일</ItemView>
                     <ItemView>서비스 번호</ItemView>
                     <ItemView>받는곳</ItemView>
@@ -231,7 +243,7 @@ export default function Return_unregistered() {
                         resultList.map((item,index)=>(
                             <LaView key={index}>
                                 <ItemView>{index+1}</ItemView>
-                                <ItemView>{shopName}</ItemView>
+                                <ItemView>{item.shop_name}</ItemView>
                                 <ItemView>{item.return_date}</ItemView>
                                 <ItemView>{item.receipt_code}</ItemView>
                                 <ItemView>{item.receiver_name}</ItemView>

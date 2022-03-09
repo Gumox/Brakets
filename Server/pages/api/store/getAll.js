@@ -2,7 +2,7 @@ import excuteQuery from "../db";
 
 async function getRepairShop() {
   const result = await excuteQuery({
-    query: `SELECT * FROM store WHERE store_type = 2  `
+    query: `SELECT * FROM store`
   });
 
   return result;

@@ -15,7 +15,7 @@ async function getRepairPlaces(pcategoryId, seasonId) {
     });
 
 }
-
+    
 const controller =  async (req, res) => {
   if (req.method === "POST") {
     console.log(`[${new Date().toISOString()}] /api/getReapirList`);

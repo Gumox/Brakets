@@ -52,7 +52,7 @@ const Reception = ({
     <Content>
       <InfoWrapper>
         <InfoSubWrapper>
-          <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData }} />
+          <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData ,handleChangeInputData, searchReceipts}} />
           <FilterInfo
             {...{ inputData,searchList, handleChangeInputData, searchReceipts }}
           />

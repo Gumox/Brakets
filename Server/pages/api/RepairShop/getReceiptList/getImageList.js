@@ -30,11 +30,12 @@ const controller = async (req, res) => {
       if (result.length) {
 
         console.log("List");
-        res.status(200).json({ body: result });
+        
       } else {
         console.log("No List");
-        res.status(204).json({ message: "No List" });
+       
       }
+      res.status(200).json({ body: result });
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

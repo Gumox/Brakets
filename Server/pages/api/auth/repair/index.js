@@ -39,7 +39,7 @@ const repairShopInfo= async (id) => {
               LEFT JOIN headquarter ON repair_shop_info.hq_id = headquarter.headquarter_id
               LEFT JOIN store ON repair_shop_info.store_id = store.store_id 
               LEFT JOIN brand ON repair_shop_info.brand_id = brand.brand_id 
-              WHERE repair_shop_info.store_id = ?`,
+              WHERE store.store_id = ?`,
       values: [id],
     });
     return result;

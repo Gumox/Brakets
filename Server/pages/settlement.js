@@ -37,7 +37,7 @@ export default function Settlement()  {
         setWindowHeight(window.innerHeight)
     },1000)
     
-    let [selectShopOption,setSelectShopOption] = useState()
+    const [selectShopOption,setSelectShopOption] = useState()
 
     const onClickOpionOne=(list)=>{
         setStateAtOne(list)
@@ -173,6 +173,7 @@ export default function Settlement()  {
                     <div style={{width : "100%",display:"flex",flexDirection:"row-reverse"}}>
                         <ButtonCheck disabled = {!disable} onClick={()=>{onClickOpionTwo(store.getState().selected)}}>본사확인</ButtonCheck>
                         <ButtonRepairCheck onClick={()=>{onClickOpionOne(store.getState().selected)}}>수선처확인</ButtonRepairCheck>
+                        <ButtonCheckC  disabled = {!disable} onClick={()=>{}}>확정 수정</ButtonCheckC>
                     </div>
                     <ItemTable>
                         
@@ -283,6 +284,19 @@ const ButtonCheck = styled.button`
   color: #000000;
   margin:10px;
   background-color: ${COLOR.MENU_MAIN};
+  border-radius : 7px;
+  justify-content : center;
+  &&:focus {     
+    background-color:${COLOR.INDIGO};    
+  
+`;
+const ButtonCheckC = styled.button`
+  width:90px;
+  height:30px;
+  font-size:12px;
+  color: #000000;
+  margin:10px;
+  background-color: ${COLOR.GREEN};
   border-radius : 7px;
   justify-content : center;
   &&:focus {     
