@@ -12,6 +12,7 @@ const BasicInfo = ({
   targetBrandId,
   setTargetBrandId = () => {},
   getTargetData = () => {},
+  handleChangeInputData = () => {},
   searchReceipts= () => {}
 }) => {
   const {headquarter_id: headquarterId} = useContext(UserContext);
