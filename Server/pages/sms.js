@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 
-import { OptionContext } from "../store/Context";
+import { OptionContext ,UserContext } from "../store/Context";
 import Header from "../components/Header";
 
 import SMS from '../components/sms';
+import store from "../store/store";
 
 const Sms = ({options, user}) => {
   const router = useRouter();
+  
+  useEffect(()=>{
+    console.log(store.getState().send_sms_data)
+  },[])
   return (
     <>
       <Header path={router.pathname} />
+      <UserContext.Provider value={user}>
       <OptionContext.Provider value={options}>
         <SMS/>
       </OptionContext.Provider>
+      </UserContext.Provider>
     </>
   );
 };

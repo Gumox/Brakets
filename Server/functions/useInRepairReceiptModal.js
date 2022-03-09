@@ -88,13 +88,14 @@ export const setSelectType = (selectItems) => {
 }
 
 export const checkHaveRepairDetail =(el,shop)=>{
+  console.log(el)
   if(el.repair1_store_id === shop){
-    return COLOR.MOCCA
+    if(el.repair1_result_id != null) {return COLOR.MOCCA}
   }
   else if(el.repair2_store_id === shop){
-    return COLOR.MOCCA
+    if(el.repair2_result_id != null) {return COLOR.MOCCA}
   }
   else if(el.repair3_store_id === shop){
-    return COLOR.MOCCA
+    if(el.repair3_result_id != null) {return COLOR.MOCCA}
   }
 }

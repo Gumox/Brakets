@@ -80,7 +80,7 @@ const Return = () => {
         handleSearchButtonClick={handleSearchButtonClick}
       />
       <List data={searchList} />
-      <Total total={searchList.length}/>
+      {/*<Total total={searchList.length}/> */}
     </Content>
   );
 };

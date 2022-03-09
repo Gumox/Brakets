@@ -54,7 +54,7 @@ const Reception = ({
         <InfoSubWrapper>
           <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData }} />
           <FilterInfo
-            {...{ inputData, handleChangeInputData, searchReceipts }}
+            {...{ inputData,searchList, handleChangeInputData, searchReceipts }}
           />
           <Section>
             <ProducInfo {...{ targetData, handleChangeTargetData, openProductImage }} />

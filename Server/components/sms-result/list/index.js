@@ -163,16 +163,16 @@ const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
   const columns = React.useMemo(() => [
     {Header: 'No',   accessor: 'No'},
 
-    { Header: 'MSGKEY', accessor: 'MSGKEY' },
-    { Header: '전송시각', accessor: '전송시각' },
+    { Header: 'MSGKEY', accessor: 'mid' },
+    { Header: '전송시각', accessor: 'send_date' },
     { Header: '제목', accessor: '제목' },
     { Header: '수신자', accessor: '수신자' },
     { Header: '수신번호', accessor: '수신번호' },
-    { Header: '내용', accessor: '내용' },
+    { Header: '내용', accessor: 'msg' },
     { Header: '발신번호', accessor: '발신번호' },
-    { Header: '발신자', accessor: '발신자' },
+    { Header: '발신자', accessor: 'staff_code' },
     { Header: 'TCS코드', accessor: 'TCS코드' },
-    { Header: 'TCS내용', accessor: 'TCS내용' },
+    { Header: 'TCS내용', accessor: 'sms_result_message' },
 
   ], [])
 
@@ -183,6 +183,7 @@ const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
     <Wrapper>
       <Styles>
         <Table columns={columns} data={[]} handleDataClick={handleDataClick} />
+        <div>3</div>
       </Styles>
     </Wrapper>
   );

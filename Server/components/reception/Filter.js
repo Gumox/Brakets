@@ -15,9 +15,10 @@ import { Row, Field } from "../styled";
 import Input from "../Input";
 import SelectOption from "../SelectOption";
 import Checkbox from "../Checkbox";
-
+import store from "../../store/store";
 const FilterInfo = ({
   inputData = {},
+  searchList =[],
   handleChangeInputData = () => {},
   searchReceipts = () => {},
 }) => {
@@ -187,7 +188,10 @@ const FilterInfo = ({
             onChange={handleChangeInputData}
           />
         </Field>
-        <SmsButton onClick={() => router.push("/sms")}>조회 대상 SMS 전송</SmsButton>
+        <SmsButton onClick={() => {
+          store.dispatch({type:'SEND_SMS_DATA',send_sms_data : searchList})
+          router.push("/sms")
+        }}>조회 대상 SMS 전송</SmsButton>
       </Row>
       <SearchButton onClick={searchReceipts}>조회</SearchButton>
     </Wrapper>

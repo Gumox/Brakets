@@ -1,73 +1,103 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import store from "../../../store/store";
+import { UserContext } from "../../../store/Context";
+import COLOR from "../../../constants/color";
 
 
-const sendSms = async ({ receivers, message }) => {
-    try {
-    const res = await axios
-      .post('https://apis.aligo.in/send/', null, {
-        params: {
-          key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
-          user_id: 'brackets',
+// correct way
+
+const sendSms = async (user,{ _receivers, message }) => {
+  if(_receivers){
+    console.log(_receivers)
+    const receivers = _receivers.join(',').replace(/-/g,'')
+    console.log(receivers)
+    console.log(user.staff_id,user.headquarter_id)
+      try {
+      const[datas] =await Promise.all([
+        axios.post(`${process.env.API_URL}/smsHandler`,{
+          body: {
+          
+          senderId : user.staff_id,
+          headquarterId :user.headquarter_id,
           sender: '01027687973',
-          receiver: "01087716197",
+          receiver: receivers,
           msg: message,
           // 테스트모드
-          testmode_yn: 'N'
-        },
-      });
-    // res.headers("Access-Control-Allow-Origin")
-    res.data;
-  } catch (err) {
-    console.log('err', err);
+          testmode_yn: 'N'},
+        })
+        .then(({ data }) => data)
+        .catch(error=>{
+    
+        })
+      ])
+      const[messageResult] =await Promise.all([
+        axios.post(`${process.env.API_URL}/sms/list`,{
+          body: {
+              sender: user.staff_id,
+              headquarterId :user.headquarter_id,
+              msg: message,
+              mid: datas.msg_id
+          },
+        })
+        .then(({ data }) => data)
+        .catch(error=>{
+    
+        })
+      ])
+      console.log(messageResult)
+      return datas; 
+    } catch (err) {
+      console.log('err', err);
+    }
   }
 };
 
-// const sendSms = ({ receivers, message }) => {
-//   return axios
-//         .post('https://apis.aligo.in/send/', null, {
-//             params: {
-//                 key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
-//                 user_id: 'brackets',
-//                 sender: '01027687973',
-//                 receiver: '01087716197',
-//                 msg: message,
-//                 // 테스트모드
-//                 testmode_yn: 'Y'
-//             },
-//         })
-//         .then((res) => {
-//           // res.headers("Access-Control-Allow-Origin")
-//           res.data
-//         })
-//         .catch(err => {
-//             console.log('err', err);
-//         });
-// }
+const getSmsMessage = async (hq_id) => {
+  try {
+  const[datas] =await Promise.all([
+    axios.get(`${process.env.API_URL}/sms/smsMessage?headquarterId=${hq_id}`)
+    .then(({ data }) => data.data)
+    .catch(error=>{
 
-// 메시지 보내기
-// sendSms({ receivers: ['01012341234', '010-4321-4321'], message: '메시지 테스트' }).then((result) => {
-//   console.log('전송결과', result);
+    })
+  ])
+  return datas;
+} catch (err) {
+  console.log('err', err);
+}
+};
+const setSmsResult = async (sender,mid,hq_id) => {
+  try {
+  const[datas] =await Promise.all([
+    axios.get(`${process.env.API_URL}/sms/list`,{
+      body:{sender:sender,mid:mid,headquarterId:hq_id}
+    })
+    .then(({ data }) => data.data)
+    .catch(error=>{
 
-//   /*
-//   전송결과 {
-//       result_code: '1',
-//       message: 'success',
-//       msg_id: '83819703',
-//       success_cnt: 2,
-//       error_cnt: 0,
-//       msg_type: 'SMS'
-//   }
-//   */
-// });
+    })
+  ])
+  return datas;
+  } catch (err) {
+  console.log('err', err);
+  }
+};
 
 const SendMsg = ({}) => {
 
   const [msgText, setMsgtext] = useState("");
-
-  store.subscribe(() => {console.log(store.getState().phone_num)})
+  const user =useContext(UserContext)
+  const [smsMessage,setSmsMessage] = useState([]);
+  console.log(user.staff_id)
+  useEffect(()=>{
+    const fetch =async()=>{
+      let smsMsg = await getSmsMessage(user.headquarter_id)
+      setSmsMessage(smsMsg)
+    }
+    fetch();
+  },[user])
   
   return (
     <Wrapper>
@@ -76,14 +106,15 @@ const SendMsg = ({}) => {
           <option value="010-2768-7973">010-2768-7973</option>
         </SelectBox>
 
-        <TextBox
+        <TextBoxTop
           value={msgText}
           onChange={(e) => setMsgtext(e.target.value)}
         />
 
         <SendBtn
           onClick={() => 
-            sendSms({ receivers: store.getState().phone_num, message: msgText }).then((result) => {
+            sendSms(user,{ _receivers: store.getState().phone_num, message: msgText }).then((result) => {
+              
             console.log('전송결과', result);
           })}
         >
@@ -93,38 +124,20 @@ const SendMsg = ({}) => {
 
       <SelectingView>
         <SelectedRow>
-          <TextBox style={{ height: 200 }} readOnly
-            value={"테스트 문자 입니다. 1"}
-            onClick={(e) => setMsgtext("테스트 문자입니다. 1")}
-          />
-          <TextBox style={{ height: 200 }} readOnly
-            value={"테스트 문자 입니다. 2"}
-            onClick={(e) => setMsgtext("테스트 문자입니다. 2")}
-          />
-          <TextBox style={{ height: 200 }} readOnly
-            value={"테스트 문자 입니다. 3"}
-            onClick={(e) => setMsgtext("테스트 문자입니다. 3")}
-          />
-          <TextBox style={{ height: 200 }} readOnly
-            value={"테스트 문자 입니다. 4"}
-            onClick={(e) => setMsgtext("테스트 문자입니다. 4")}
-          />
+          {
+            smsMessage.map((el,i)=>{
+              let color = COLOR.TEXT_MAIN;
+              if(el.level === 2){
+                color = COLOR.RED
+              }
+              return(
+              <TextBox key={i} style={{ color:color,height: 200 }} readOnly
+                value={el.text}
+                onClick={(e) => setMsgtext(el.text)}
+              />
+            )})
+          }
         </SelectedRow>
-
-        {/* <SelectedRow>
-          <TextBox style={{ height: 200 }} readOnly
-            onClick={(e) => console.log("Clicekd")}
-          />
-          <TextBox style={{ height: 200 }} readOnly
-            onClick={(e) => console.log("Clicekd")}
-          />
-          <TextBox style={{ height: 200 }} readOnly
-            onClick={(e) => console.log("Clicekd")}
-          />
-          <TextBox style={{ height: 200 }} readOnly
-            onClick={(e) => console.log("Clicekd")}
-          />
-        </SelectedRow> */}
       </SelectingView>
     </Wrapper>
   );
@@ -153,18 +166,23 @@ const SelectingView = styled.div`
 `
 
 const SelectedRow = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr ;
+  grid-gap: 10px;
 `;
 
 const TextBox = styled.textarea`
-  /* padding: 5px; */
-  width: 30%;
+  width: 100%;
   height: 70%;
-  border: 1px solid;
+  border: 1px solid ${COLOR.BLACK};
   resize: none;
 `;
-
+const TextBoxTop = styled.textarea`
+  width: 30%;
+  height: 70%;
+  border: 1px solid ${COLOR.BLACK};
+  resize: none;
+`;
 const SendBtn = styled.button`
   margin-left: 30px;
   margin-top: 15px;
@@ -178,3 +196,4 @@ const SelectBox = styled.select`
 `;
 
 export default SendMsg;
+

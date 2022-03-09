@@ -23,7 +23,7 @@ export default function PhotoStep({ navigation,route }) {
                 <ReceiptButton onPress={() =>
                     {
                     store.dispatch({type:'STATE_RESET',photo: null})
-                    navigation.navigate('DetectCode',{toGo : ""})
+                    navigation.navigate('DetectCode',{toGo : "RepairDetail"})
                     }}>
                     수선 완료 사진 촬영 
                 </ReceiptButton>
