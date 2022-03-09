@@ -11,9 +11,10 @@ import ContainView from '../components/ContainView';
 import SmallButton from '../components/SmallButton';
 import Bottom from '../components/Bottom';
 import { postSendRepairInfo,postUpdateAfterImage } from '../functions/useInRepairDetail';
-import { PathToFlie } from '../functions/PathToFlie';
 import Ip from '../serverIp/Ip';
 import store from '../store/store';
+import imgPhoto from '../Icons/camera.png' 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function RepairDetail({ navigation, route }) {
     const code = route.params.data;
@@ -60,6 +61,8 @@ function RepairDetail({ navigation, route }) {
     }     
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
+        console.log(data.data)
+        console.log()
         if(data.data === undefined){
             console.log("undefined")
             alertFunctionCode();
@@ -77,12 +80,15 @@ function RepairDetail({ navigation, route }) {
             setImage(data.data["image"])
 
             if(data.data["repair1_store_id"]===shop){
+                console.log("repair1_store_id")
                 setRepairShop(data.data["repair1_store_id"])
                 setRepairDetailId(data.data["repair1_detail_id"])
             }else if(data.data["repair2_store_id"]===shop){
+                console.log("repair2_store_id")
                 setRepairShop(data.data["repair2_store_id"])
                 setRepairDetailId(data.data["repair2_detail_id"])
             }else if(data.data["repair3_store_id"]===shop){
+                console.log("repair3_store_id")
                 setRepairShop(data.data["repair3_store_id"])
                 setRepairDetailId(data.data["repair3_detail_id"])
             }
@@ -118,14 +124,14 @@ function RepairDetail({ navigation, route }) {
             afterImage = store.getState()[photo]
         }
         let before;
-        if(obj!==undefined){
+        if(obj!==undefined &&store.getState()[photo] == ""){
             console.log(obj)
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                     <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
                         <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
-                    <Pressable >
+                    <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
                         <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : obj}}></Image>
                     </Pressable>
                 </View>
@@ -148,7 +154,6 @@ function RepairDetail({ navigation, route }) {
     useEffect(() => {
         getTargetData(code);
        
-
     }, [shippingDate]);
 
     
@@ -363,11 +368,19 @@ function RepairDetail({ navigation, route }) {
                         onPress={() => {
                             if(shippingDate == null){
                                 Alert.alert('수선처 발송일을 입력해주세요')
-                            } 
-                            else {
+                            }
+                            else if(store.getState().afterImageUri1 != null || afterImages[0] !=null){
                                 postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId)
+                                console.log(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId)
                                 postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
-                                navigation.navigate("PhotoStep")
+                                //navigation.navigate("PhotoStep")
+                                //navigation.popToTop();
+                            }
+                            else if(shippingPlace == null){
+                                Alert.alert("","받는 곳을 입력해주세요")
+                            }   
+                            else {
+                                Alert.alert("","수선 후 사진을 촬영해 주세요")
                             }
                         }
 

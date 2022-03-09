@@ -1,4 +1,7 @@
 import ip from "../serverIp/Ip";
+
+import { PathToFlie } from '../functions/PathToFlie';
+import store from "../store/store";
 export const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,image2,image3,image4) => {
     var formdata = new FormData();
 
@@ -22,7 +25,6 @@ export const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,i
         const json = await response.json();
         console.log(json.msg)
         if(json.msg == 'images saved'){
-            navigation.popToTop();
             if(sendType === 1){
                 store.dispatch({type:"IMAGE_RESET", reset:null})
             }

@@ -4,6 +4,7 @@ import Container from '../components/Container';
 import ReceiptButton from '../components/ReceiptButton';
 import Bottom from '../components/Bottom';
 import store from '../store/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PhotoStep({ navigation,route }) {
     const staffInfo = store.getState().staffInfo
