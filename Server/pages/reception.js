@@ -126,6 +126,9 @@ const ReceptionPage = ({ options, user }) => {
   }, [inputData, targetBrandId]);
   const getTargetData = useCallback(async (receiptCode) => {
     const { data } = await axios.get(`/api/receipt/${receiptCode}`);
+    if(data == ""){
+      alert("정확한 서비스 카드 번호 및 RFID를 입력하세요.")
+    }     
     setImageData(data.imageList);
     setTargetData(data.data);
   }, []);
