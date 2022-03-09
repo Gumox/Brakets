@@ -34,7 +34,7 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const CenterView =styled.View`
     align-items: center;
@@ -104,9 +104,6 @@ function ShopStepThree4({route,navigation}) {
     const  [receiverList,setReceiverList] = React.useState(store.getState(). receiverList);
 
     
-
-    
-
     const ProductCategoriesClassify =()=>{
         var items  = [];
         var category = [];
