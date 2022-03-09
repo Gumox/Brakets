@@ -175,6 +175,7 @@ const receipt = async (req, res) => {
         hasSent,  // 발송여부
         hasCharged, // 유상수선
         hasCashReceipt, // 현금영수증번호
+        serviceCardId
       } = req.query;
       let query = "";
       let values = [];
@@ -274,8 +275,12 @@ const receipt = async (req, res) => {
       }
 
       if (companyName) {
-        query += " AND store.name LIKE ? ";
+        query += " AND store.receipt_code = ? ";
         values = [...values, `%${companyName}%`];
+      }
+      if (serviceCardId) {
+        query += " AND store.name LIKE ? ";
+        values = [...values, serviceCardId];
       }
 
       const receipt = await getReceipt(query, values);
