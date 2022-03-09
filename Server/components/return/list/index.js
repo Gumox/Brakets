@@ -154,7 +154,8 @@ function Table({ columns, data, handleDataClick }) {
           </div>
         </div>
       </div>
-      <pre>
+      
+      {/* <pre>
         <code>
           {JSON.stringify(
             {
@@ -167,7 +168,8 @@ function Table({ columns, data, handleDataClick }) {
             2
           )}
         </code>
-      </pre>
+      </pre> */}
+      
     </>
   )
 }
