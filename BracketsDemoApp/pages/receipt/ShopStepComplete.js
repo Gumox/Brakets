@@ -137,11 +137,7 @@ function ShopStepOne( { navigation } ) {
     const set =new Set(sendForRepir);
 
     React.useEffect(()=>{
-        if(set.size === 1){
-            setRepairShop(sendForRepir[0].basicSend);
-        }else{
-            setRepairShop("본사")
-        }
+        setRepairShop(sendForRepir)
     },[]);
     
     const submitReceipt = async (receipt_id,bag_code) => {

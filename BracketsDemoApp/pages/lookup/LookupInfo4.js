@@ -235,30 +235,11 @@ function LookupInfo4( { route,navigation } ) {
             </Half>
      
             </Contents>
-            <Half>
+            
               <Btn onPress = {() => {
-                if(selectDay == null){
-                    Alert.alert(            
-                        "인수일 오류",             
-                        "인수일을 입력하세요",                   
-                        [                              
-                            { text: "확인"},
-                        ]
-                    )
-                }
-              }}><Text style ={{color : "#ffffff"}}>재접수</Text></Btn> 
-              <Btn onPress = {() => {
-                if(selectDay == null){
-                    Alert.alert(            
-                        "인수일 오류",             
-                        "인수일을 입력하세요",                   
-                        [                              
-                            { text: "확인"},
-                        ]
-                    )
-                }
-              }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
-            </Half> 
+                navigation.popToTop();
+              }}><Text style ={{color : "#ffffff"}}>닫기</Text></Btn>
+            
 
             <Bottom navigation={navigation} />
          

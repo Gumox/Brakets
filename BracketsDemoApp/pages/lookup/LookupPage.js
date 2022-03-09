@@ -289,7 +289,7 @@ function LookupPage({ navigation }) {
               }>
               <PrView>
                 <View style={{ flex: 1, minHeight: 40, minWidth: 35 }}><Text style={styles.Lavel}>{startDate.reDate}</Text></View>
-                <View style={{ flex: 0.2 }}><ImgIcon source={require(cal)} /></View>
+                <View style={{ flex: 0.2 ,marginRight:5}}><ImgIcon source={require(cal)} /></View>
               </PrView>
             </TouchableView>
 
@@ -309,7 +309,7 @@ function LookupPage({ navigation }) {
               }>
               <PrView>
                 <View style={{ flex: 1, minHeight: 40, minWidth: 35 }}><Text style={styles.Lavel}>{endDate.reDate}</Text></View>
-                <View style={{ flex: 0.2 }}><ImgIcon source={require('../../Icons/calendar.png')} /></View>
+                <View style={{ flex: 0.2 ,marginRight:5}}><ImgIcon source={require('../../Icons/calendar.png')} /></View>
               </PrView>
             </TouchableView>
 

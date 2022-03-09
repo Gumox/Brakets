@@ -181,11 +181,6 @@ function TakeOverPage( { route,navigation } ) {
     const winW = Dimensions.get('window').width;
     const winH = Dimensions.get('window').height;
     const putReceiptComplete = async (pCode,cDate) => {
-        const bodyData={
-            code : pCode,
-            date : cDate
-        }
-       
         
         try {
             const response = await fetch(ip+`/api/receipt/complete`,{method: 'PUT',
@@ -193,10 +188,14 @@ function TakeOverPage( { route,navigation } ) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 },
-            body: bodyData
+            body: JSON.stringify({
+                step : 2,
+                code : pCode,
+                date : cDate
+            })
             });
             const json = await response.json();
-           
+           console.log(json)
         } catch (error) {
             console.error(error);
         } finally {
@@ -662,6 +661,9 @@ function TakeOverPage( { route,navigation } ) {
                             { text: "확인"},
                         ]
                     )
+                }else{
+                    putReceiptComplete(cardCode,selectDay);
+                    //navigation.goBack();
                 }
               }}><Text style ={{color : "#ffffff"}}>재접수</Text></Btn> 
               <Btn onPress = {() => {

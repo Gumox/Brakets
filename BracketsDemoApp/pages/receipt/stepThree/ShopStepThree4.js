@@ -132,10 +132,10 @@ function ShopStepThree4({route,navigation}) {
    
     const getRepairList = async (id) => {
         const bodyData = {
-            "category": store.getState().receptionDivision.id,
-            "receipt": store.getState().requirement.id,
-            "season_id": store.getState().season_id,
-            "pcategory_id": id
+            category: store.getState().receptionDivision.id,
+            receipt: store.getState().requirement.id,
+            season_id: store.getState().season_id,
+            pcategory_id: id
   
           }
         try {
@@ -158,6 +158,8 @@ function ShopStepThree4({route,navigation}) {
             ProductCategoriesClassify();
             console.log("YYYYYYY");
             console.log(store.getState().basicRepairStore)
+            console.log(bodyData)
+            console.log(json.list)
          
             
         } catch (error) {
@@ -166,7 +168,6 @@ function ShopStepThree4({route,navigation}) {
 
         }
     }
-    //전단계 찍은 사진들 쌓은 부분 ---
     var photoOutput= [];
     var photoAdd;
     if(store.getState().photoArr.length>0){

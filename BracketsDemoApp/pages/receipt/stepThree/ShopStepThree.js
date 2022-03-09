@@ -64,7 +64,11 @@ function ShopStepThree( { navigation } ) {
   var i = 1;
   const productCategories = store.getState().getProductCategory;
   productCategories.forEach(obj => {
+    console.log("AAAAAAAAAAAAAAAAa")
+    console.log(obj)
+    console.log(":::::::::::::::")
     if(obj.receiver_name !== '아디다스코리아(본사)' ){
+      console.log("?????????????????????????")
       //key: i+'.'+obj.category_name , value:obj.category_name
       
       itemList.push({ label: i+'.'+obj.category_name, value: obj.category_name })

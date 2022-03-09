@@ -101,13 +101,14 @@ function LookupPage2({ route,navigation }) {
             code: code
           },
         })
+        console.log("/////////////data.data///////////////")
         console.log(data.data)
-        
         navigation.navigate('LookupInfo',{data:obj,images: data.data})
       }, []);
 
     for (let index = 0; index < data.length; index++) {
         const obj = data[index];
+        console.log(obj.step)
         const keys= Object.keys(obj);
         const indexKey = index;
         var prdDiv = ""
@@ -123,6 +124,8 @@ function LookupPage2({ route,navigation }) {
             prdDiv="접수중";
         }else if(obj["step"] == 1){
             prdDiv="접수 완료";
+        }else if(obj["step"] == 2){
+            prdDiv="인수 완료";
         }
         var raw = (
             <TouchableHighlight key = {indexKey} underlayColor={"#CCC"} 

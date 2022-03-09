@@ -146,7 +146,8 @@ function ShopStepThree4({route,navigation}) {
         if(inputTexts == ''){
             setRequet("없음")
         }else{
-            setRequet(inputTexts);
+            console.log(inputTexts[0])
+            setRequet(inputTexts[0]);
         }
         receiverList.forEach(obj => {
             if(obj.receiver_name ==store.getState().basicRepairStore){
@@ -242,7 +243,7 @@ function ShopStepThree4({route,navigation}) {
                 <Button onPress={ ()=>{
                     
                     updateReceipt(store.getState().receipt_id)
-                    /navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} ) 
+                    navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} ) 
                     
                     }}>
                     4단계: 서비스 바코드 스캔 

@@ -188,6 +188,8 @@ function LookupInfo3( { route,navigation } ) {
                 afterImgList.push(ip+element["after_image"])
             }
         }
+        console.log("8520585200258202585200258520258200258200252002520025820025820")
+        console.log(beforeImgList)
         setBeforeImages(beforeImgList)
         setAfterImages(afterImgList)
          
