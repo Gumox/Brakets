@@ -80,7 +80,7 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const CautionText = styled.Text`
     color: #FF0000;

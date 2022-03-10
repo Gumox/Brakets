@@ -13,7 +13,9 @@ const BasicInfo = ({
   setTargetBrandId = () => {},
   getTargetData = () => {},
   handleChangeInputData = () => {},
-  searchReceipts= () => {}
+  searchReceipts= () => {},
+  searchCode = () => {}
+  
 }) => {
   const {headquarter_id: headquarterId} = useContext(UserContext);
   const { brandList } = useContext(OptionContext);
@@ -21,9 +23,12 @@ const BasicInfo = ({
   const handleKeyPress = useCallback(
     (e) => {
       if (e.key !== "Enter") return;
+      console.log(e.target.value)
+      handleChangeInputData(e)
       getTargetData(receiptCode);
-      searchReceipts();
+      searchCode(e.target.value);
     },
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [receiptCode]
   );
@@ -49,7 +54,7 @@ const BasicInfo = ({
         name={"receiptCode"}
         type="text"
         value={receiptCode}
-        onChange={(e) => setReceiptCode(e.target.value)}
+        onChange={(e) => setReceiptCode(e.target.value.replace(/[^0-9]/g, ''))}
         onKeyPress={handleKeyPress}
       />
       {/* <ScanButton>바코드/QR 스캔</ScanButton> */}

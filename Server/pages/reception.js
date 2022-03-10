@@ -124,6 +124,17 @@ const ReceptionPage = ({ options, user }) => {
     });
     setSearchList(data.data);
   }, [inputData, targetBrandId]);
+
+  const searchCode = useCallback(async (serviceCardId) => {
+    const { data } = await axios.get("/api/receipt", {
+      params: { brandId: targetBrandId, serviceCardId: serviceCardId },
+    });
+    setSearchList(data.data);
+    // console.log("result of search code is ")
+    // console.log(data)
+  }, []);
+
+
   const getTargetData = useCallback(async (receiptCode) => {
     const { data } = await axios.get(`/api/receipt/${receiptCode}`);
     if(data == ""){
@@ -131,13 +142,15 @@ const ReceptionPage = ({ options, user }) => {
     }     
     setImageData(data.imageList);
     setTargetData(data.data);
+    // setSearchList(data.data)
+    // console.log(data)
   }, []);
   return (
     <UserContext.Provider value={user}>
       <Header path={router.pathname} />
       <OptionContext.Provider value={selectOptions}>
         <Reception
-          {...{ targetBrandId, inputData, searchList, targetData }}
+          {...{ targetBrandId, inputData, searchList, targetData, searchCode }}
           {...{
             setTargetBrandId,
             handleChangeInputData,

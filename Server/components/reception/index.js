@@ -27,7 +27,8 @@ const Reception = ({
   handleChangeTargetDataPrice,
   searchReceipts, // List 조회
   getTargetData, // Receipt 조회
-  imageData
+  imageData,
+  searchCode
 }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
@@ -52,7 +53,7 @@ const Reception = ({
     <Content>
       <InfoWrapper>
         <InfoSubWrapper>
-          <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData ,handleChangeInputData, searchReceipts}} />
+          <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData ,handleChangeInputData, searchReceipts, searchCode}} />
           <FilterInfo
             {...{ inputData,searchList, handleChangeInputData, searchReceipts }}
           />
