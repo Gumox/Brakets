@@ -130,8 +130,8 @@ const ReceptionPage = ({ options, user }) => {
       params: { brandId: targetBrandId, serviceCardId: serviceCardId },
     });
     setSearchList(data.data);
-    console.log("result of search code is ")
-    console.log(data)
+    // console.log("result of search code is ")
+    // console.log(data)
   }, []);
 
 
@@ -143,7 +143,7 @@ const ReceptionPage = ({ options, user }) => {
     setImageData(data.imageList);
     setTargetData(data.data);
     // setSearchList(data.data)
-    console.log(data)
+    // console.log(data)
   }, []);
   return (
     <UserContext.Provider value={user}>
