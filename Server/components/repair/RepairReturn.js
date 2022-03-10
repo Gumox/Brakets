@@ -7,6 +7,7 @@ import { debounce } from "lodash";
 const RepairReturn = (props) => {
     const receiver = props.receiver;
     const receiverId = props.receiverId;
+    console.log(props.receiverId)
     const info = props.infos;
     const shop = props.shop;
     const receipt_id = props.receipt;

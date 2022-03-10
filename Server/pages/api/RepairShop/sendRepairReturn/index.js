@@ -103,8 +103,9 @@ const sendRepairInfo = async (req, res) => {
     const shipment_price =req.body.shipment_price
     const receiver = req.body.receiver
     const repair_detail_id = req.body.repair_detail_id
-
+    console.log("8520258520258520258520258520258520258202520")
     console.log(req.body)
+    console.log("8520258520258520258520258520258520258202520")
     try {
         const info = await getReceiptInfo(receipt_id)
         if(repair_detail_id == null){
@@ -119,9 +120,11 @@ const sendRepairInfo = async (req, res) => {
                 const id = result.insertId;
               let addQuery =``;
               let value= [id,receipt_id];
-              if(receiver){
+              if(receiver>0){
                 addQuery += `, receiver=?`
                 value= [id,receiver,receipt_id];
+                console.log(value)
+                console.log(addQuery)
                 let updateRepairResult= updateRepair(id)
               }
               console.log(addQuery)

@@ -40,13 +40,14 @@ export const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,i
     
 }
 
-export const postSendRepairInfo = async (place,date,sendType,sendPay,repair_detail_id) => {
+export const postSendRepairInfo = async (place,date,sendType,sendPay,repair_detail_id,receipt_id) => {
     const bodyData={
         store:place,
         complete_date: date,
         shipment_type: sendType,
         shipment_price: sendPay,
-        repair_detail_id:repair_detail_id
+        repair_detail_id:repair_detail_id,
+        receipt: receipt_id //받는곳
     }
     try {
         const response = await fetch(ip+'/api/RepairShop/sendRepairInfo',{method: 'PUT',

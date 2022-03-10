@@ -8,6 +8,8 @@ import excuteQuery from "../../db";
  */
 
 const saveDetailImage = async(receiptId,num,imagePath, storeId) => {
+    console.log("---------------------------------------------")
+    console.log("receiptId",receiptId)
     return excuteQuery({
         query:"UPDATE receipt_image SET after_image=?, after_store_id=? WHERE receipt_id=? AND num=?",
         values: [ imagePath, storeId, receiptId, num],

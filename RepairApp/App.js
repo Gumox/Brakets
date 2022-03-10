@@ -35,7 +35,7 @@ function App() {
 
         <Stack.Screen name="InputAlternativeNumber" component = {InputAlternativeNumber} options={ {  title: '대체 코드 입력' , headerTitleAlign: 'center', headerTintColor: "black"} } />
 
-        <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역?' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
+        <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
         <Stack.Screen name="RepairMore" component = {RepairMore} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 
         
