@@ -124,6 +124,8 @@ const ReceptionPage = ({ options, user }) => {
     });
     setSearchList(data.data);
   }, [inputData, targetBrandId]);
+    console.log("result of search code is ")
+    console.log(data)
   const getTargetData = useCallback(async (receiptCode) => {
     const { data } = await axios.get(`/api/receipt/${receiptCode}`);
     if(data == ""){
@@ -131,6 +133,8 @@ const ReceptionPage = ({ options, user }) => {
     }     
     setImageData(data.imageList);
     setTargetData(data.data);
+    // setSearchList(data.data)
+    console.log(data)
   }, []);
   return (
     <UserContext.Provider value={user}>
