@@ -16,7 +16,7 @@ export default function ItemCount(props){
         inItemCount = count3
     }
     return(
-        <input type="number" style={{width:50,borderWidth:0,borderBottomWidth:2}} value={inItemCount} 
+        <input type="number" min="0" style={{width:50,borderWidth:0,borderBottomWidth:2}} value={inItemCount} 
             onChange={(e)=>{
                 inItemCount = e.target.value;
                 props.onChange(e)
