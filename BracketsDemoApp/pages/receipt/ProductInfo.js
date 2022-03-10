@@ -170,7 +170,7 @@ function ProductInfo({navigation, route}) {
         }
         
         
-        formdata.append("pid", serialInput);
+        formdata.append("pid", pid);
         formdata.append("pcode", codeInput);
         formdata.append("substitute", 0);//임시
         formdata.append("mfrid", mfrid);
