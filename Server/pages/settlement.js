@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import checkDisable from '../functions/checkDisable';
 import SettlementResult from "../components/repair/SettlementResult";
 import { debounce, set } from "lodash";
-import { getSettlementData,getBrandList,setStateAtOne,setStateAtTwo} from "../functions/useInSettlement";
+import { getSettlementData,getBrandList,setStateAtOne,setStateAtTwo,updateContentEdit} from "../functions/useInSettlement";
 import { getRepairType } from "../functions/useInRepairReceiptModal";
 import { CSVLink } from "react-csv";
 import Image from 'next/image';
@@ -39,12 +39,16 @@ export default function Settlement()  {
     
     const [selectShopOption,setSelectShopOption] = useState()
 
-    const onClickOpionOne=(list)=>{
+    const onClickOptionOne=(list)=>{
         setStateAtOne(list)
         location.reload();
     }
-    const onClickOpionTwo=(list)=>{
+    const onClickOptionTwo=(list)=>{
         setStateAtTwo(list)
+        location.reload()
+    }
+    const onClickOptionEdit=(list)=>{
+        updateContentEdit(list)
         location.reload()
     }
     const setTable = async(parmas)=>{
@@ -171,9 +175,9 @@ export default function Settlement()  {
                         </LaView>
                     </div>
                     <div style={{width : "100%",display:"flex",flexDirection:"row-reverse"}}>
-                        <ButtonCheck disabled = {!disable} onClick={()=>{onClickOpionTwo(store.getState().selected)}}>본사확인</ButtonCheck>
-                        <ButtonRepairCheck onClick={()=>{onClickOpionOne(store.getState().selected)}}>수선처확인</ButtonRepairCheck>
-                        <ButtonCheckC  disabled = {!disable} onClick={()=>{}}>확정 수정</ButtonCheckC>
+                        <ButtonCheck disabled = {!disable} onClick={()=>{onClickOptionTwo(store.getState().selected)}}>본사확인</ButtonCheck>
+                        <ButtonRepairCheck onClick={()=>{onClickOptionOne(store.getState().selected)}}>수선처확인</ButtonRepairCheck>
+                        <ButtonCheckC  disabled = {!disable} onClick={()=>{onClickOptionEdit(store.getState().selected)}}>내용 수정</ButtonCheckC>
                     </div>
                     <ItemTable>
                         

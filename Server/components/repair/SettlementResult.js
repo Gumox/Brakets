@@ -54,6 +54,7 @@ const SettlementResult =(props)=>{
         
     }
     const onCheck =(check)=>{
+        console.log(store.getState().selected)
         if(check){
             store.dispatch({type:"SET_SELECTED",
                             selected:{
@@ -78,16 +79,16 @@ const SettlementResult =(props)=>{
         return
     }
     React.useEffect(()=>{
-        /*if(item.repair_detail_state ==2){
+        if(item.repair_detail_state ==2){
             let today =new Date();
-            
-            console.log(item)
-            let repairDate = new Date(item.complete_date)
-            if(today.getMonth()>repairDate.getMonth()){
-                setDisable(true)
+            if(item.confirm_date != null){
+                let confirmDate = new Date(item.confirm_date)
+                if(today.getMonth()>confirmDate.getMonth()){
+                    setDisable(true)
+                }
             }
             
-        } */
+        } 
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
         window.addEventListener('resize',handleResize);
@@ -100,29 +101,29 @@ const SettlementResult =(props)=>{
         
            <LaView><Container>
             <CheckBoxView><input type= "checkbox" onClick={()=>{onCheck(!check)}}/></CheckBoxView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{item.brand_code}</ItemView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{item.receipt_code}</ItemView>
-            <div style={{width:(windowWidth||0)*0.0692,minWidth:82}}> 
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{item.brand_code}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{item.receipt_code}</ItemView>
+            <div style={{width:(windowWidth||0)*0.0692,minWidth:83}}> 
                 <ItemInsideView>{item.name}</ItemInsideView>
                 <ItemInsideView>{item.store_contact}</ItemInsideView>
             </div>
-            <div style={{width:(windowWidth||0)*0.0692,minWidth:82}}> 
+            <div style={{width:(windowWidth||0)*0.0692,minWidth:83}}> 
                 <ItemInsideView>{item.customer_name}</ItemInsideView>
                 <ItemInsideView>{item.customer_phone}</ItemInsideView>
             </div>
-            <ItemV style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{sortSettlementData(item,types)}</ItemV>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPaymentState(item.repair_detail_state)}</ItemView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{hqStaff}</ItemView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPrice(0)}</ItemView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
+            <ItemV style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{sortSettlementData(item,types)}</ItemV>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPaymentState(item.repair_detail_state)}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{hqStaff}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPrice(0)}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
                 <input disabled ={disable} type="number" style={{width:80}} value={adjustment||''} onChange={(e)=>{setAdjustment(e.target.value)}}/>
             </ItemView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{setPrice(adjustment)}</ItemView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPrice(adjustment)}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
                 <input disabled ={disable} style={{width:80}} value={adjustmentReason||''} onChange={(e)=>{setAdjustmentReason(e.target.value)}}/>
             </ItemView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>{repairStaff}</ItemView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:82}}>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{repairStaff}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
                 <input disabled ={disable} style={{width:80}} value={remarks||''} onChange={(e)=>{setRemarks(e.target.value)}}/>
             </ItemView>
         </Container></LaView>

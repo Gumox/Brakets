@@ -36,6 +36,7 @@ async function getList(query,values) {
                         repair_detail.shipment_type,
                         repair_detail.shipment_price,
                         repair_detail.repair_detail_state,
+                        repair_detail.confirm_date,
                         repair_detail.adjustment,
                         repair_detail.adjustment_reason,
                         repair_detail.remarks,

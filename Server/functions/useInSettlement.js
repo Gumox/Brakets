@@ -38,6 +38,18 @@ export const setStateAtTwo = async(list) =>{
     ])
     return ;
 }
+export const updateContentEdit = async(list) =>{
+    const[datas] =await Promise.all([
+      axios.put(`${process.env.API_URL}/RepairShop/settlement/contentEdit`,{
+        body: list,
+      })
+      .then(({ data }) => data)
+      .catch(error=>{
+
+      })
+    ])
+    return ;
+}
 export const getBrandList = async()=>{
   const[datas] =await Promise.all([
       axios.get(`${process.env.API_URL}/brand/AllBrandList`)

@@ -1,21 +1,18 @@
 import excuteQuery from "../../db";
 
 
-async function updatesStateAtTwo(List) {
+async function contentEdit(List) {
     let results=[]
       for (let data of List) {
-        if(data.state == 1){
-          const toDay = new Date();
-          const toDayString = toDay.getFullYear()+"-"+(toDay.getMonth()+1)+"-"+toDay.getDate()+" "+toDay.getHours()+":"+toDay.getMinutes()+":"+toDay.getSeconds();
+        
           const result = await excuteQuery({
             query: `UPDATE repair_detail 
-                    SET repair_detail_state = '2',
-                    confirm_date = ?,
+                    SET
                     adjustment = ?,
                     adjustment_reason = ?,
                     remarks = ?
                     WHERE repair_detail.repair_detail_id = ?`,
-            values: [toDayString,data.adjustment,data.adjustment_reason,data.remarks,data.repair_detail_id],
+            values: [data.adjustment,data.adjustment_reason,data.remarks,data.repair_detail_id],
         })
         console.log(result)
         if(result.error){
@@ -23,16 +20,15 @@ async function updatesStateAtTwo(List) {
         }else{
             results.push(result)
         }
-      }
+      
     }
     return results
 }
-const setStateAtTwo = async (req, res) => {
+const setEdit = async (req, res) => {
    if (req.method == "PUT") { 
        const List  = req.body.body;
-       console.log(List)
     try {
-      const result = updatesStateAtTwo(List);
+      const result = contentEdit(List);
       if (result.error) throw new Error(result.error);
       res.status(200);
     } catch (err) {
@@ -44,4 +40,4 @@ const setStateAtTwo = async (req, res) => {
   }
 };
 
-export default setStateAtTwo;
+export default setEdit;
