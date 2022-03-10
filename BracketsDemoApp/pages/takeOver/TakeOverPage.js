@@ -17,6 +17,7 @@ import { CheckBox } from 'react-native-elements';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
 import { CheckCode,CheckFaultDivision,CheckAnalysisType,CheckJudgmentResult } from '../../Functions/codeCheck';
+import { color } from 'react-native-elements/dist/helpers';
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -97,6 +98,15 @@ const Btn = styled.TouchableOpacity`
 `;
 const InText = styled.Text`
     color:#000000;
+`;
+
+const CloseBtn = styled.TouchableOpacity`
+    width: 5%;
+    height: 5%;
+    /* background: white; */
+    position: absolute;
+    right: 5%;
+    bottom:90%;
 `;
 const styles = StyleSheet.create({
     Lavel:{
@@ -546,6 +556,7 @@ function TakeOverPage( { route,navigation } ) {
                         setRequestImageModalVisible(!requestImageModalVisible);
                         }}
                     >
+                    
                         <View style={styles.outView} >
                         <View style={styles.centerView} >    
                         <View style={styles.inView}>
@@ -561,6 +572,15 @@ function TakeOverPage( { route,navigation } ) {
                         </View>
                         </View>
                         </View>
+                        <CloseBtn
+                            onPress={() => {
+                                setRequestImageModalVisible(!requestImageModalVisible)}}
+                            style={{alignItems: 'center', justifyContent: 'center'}}
+                        >
+                            <Text
+                                style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}
+                            >X</Text>
+                        </CloseBtn>
                     </Modal>
                         <View style ={{justifyContent:"center", width:"100%"}}>
                             <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
