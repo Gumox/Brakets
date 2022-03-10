@@ -275,12 +275,13 @@ const receipt = async (req, res) => {
       }
 
       if (companyName) {
-        query += " AND store.receipt_code = ? ";
+        query += "AND store.name LIKE";
         values = [...values, `%${companyName}%`];
       }
       if (serviceCardId) {
-        query += " AND store.name LIKE ? ";
+        query += " AND receipt.receipt_code = ? ";
         values = [...values, serviceCardId];
+        console.log(serviceCardId)
       }
 
       const receipt = await getReceipt(query, values);
