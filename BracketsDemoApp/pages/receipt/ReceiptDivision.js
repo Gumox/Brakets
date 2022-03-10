@@ -78,7 +78,7 @@ function ReceiptDivision({navigation}) {
         var list =[]
         console.log('receipt division: ' + info)
         info.forEach(obj => {
-            list.push({ label: i+'.'+obj.name, value: obj.store_id, brandId: obj.brand_id })
+            list.push({ label: i+'.'+obj.name, value: obj.store_id, brandId: obj.brand_id ,name:obj.name})
             i = i +1;
         })
         setItemList(list)
@@ -100,12 +100,14 @@ function ReceiptDivision({navigation}) {
                         {   
                             itemList.forEach(obj => {
                                 if(obj.value === value ){
-                                            
+                                    console.log(obj)
                                     store.dispatch({ type: 'STORE_ID', store_id: value  })
                                     store.dispatch({type:"BRAND_ID",brand_id:obj.brandId })
+                                    store.dispatch({ type: 'storeName', storeName: obj.name })
                                     setSeletStore(value)
                                 }
                             });
+                            console.log("value",value)
                             console.log(store.getState().store_id)
                             console.log(store.getState().brand_id)
                         

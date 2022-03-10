@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Contents from '../../components/Contents';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
@@ -73,68 +73,83 @@ function ProductInfo({navigation, route}) {
     const [imageFile, setImageFile] = useState('')
     const [pid, setPid] = useState('')
     const [mfrid, setMfrid] = useState('')
-    
-    const option = {
-        url: ip+'/api/getProductInfo',
-        method: 'POST',
+    const [brandId, setBrandId] = useState('')
 
-        // 
-        header: {
-            'Content-Type': 'application/json'
-        },
-        data: {
-            type: codeType,
-            code: codeInput
+    const checkBrand=(myBrand,productBrand)=>{
+        if(myBrand != productBrand){
+            navigation.goBack();
+            Alert.alert("","자사 브랜드 제품이 아닙니다 제품을 확인 해주세요");
         }
     }
+    
+    
+    useEffect(()=>{
+        const fetch= ()=>{
+            const option = {
+                url: ip+'/api/getProductInfo',
+                method: 'POST',
+        
+                // 
+                header: {
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    type: codeType,
+                    code: codeInput
+                }
+            }
+            console.log(codeType)
+            axios(option)
+            .then(
+                response => (response.status == '200') ? (
+                    // TODO
+                    // () ? (qrcode) : (barcode)
+                    setCodeInput(response.data.body[0].qrcode),
+        
+                    setSerialInput(String(response.data.body[0].style_code)),
+                    setProuctName(response.data.body[0].name),
+                    setSeason(response.data.body[0].season_code),
+                    setColorValue(response.data.body[0].color),
+                    setSize(response.data.body[0].size),
+                    setMeasure(response.data.body[0].degree),
+                    setImageFile(response.data.body[0].image),
+                    setMfrid(response.data.body[0].mfr_id),
+                    setPid(response.data.body[0].product_id),
+                    setBrandId(response.data.body[0].brand_id),
+                    store.dispatch({type:'SEASON_ID',season_id: response.data.body[0].season_id}),
+                    console.log(response.data.body[0]),
+                    
+                    checkBrand(store.getState().brand_id,response.data.body[0].brand_id)
+                    
+                ) : (
+                    navigation.goBack(),
+                    Alert.alert(            
+                        "QR코드/Barcode 오류",             
+                        "알맞은 QR코드/Barcode를 입력하세요",                   
+                        [                              
+                            { text: "확인"},
+                        ]
+                    ),
+                    console.log("204")
+                )
+                )
+            .catch(function(error){
+                console.log(error)
+                Alert.alert(            
+                    "인터넷 연결 실패",                                
+                    [                              
+                        { text: "확인"},
+                    ]
+                )
+                navigation.goBack()
+            })
+        }
+        fetch();
+    },[])
 
-    axios(option)
-    .then(
-        response => (response.status == '200') ? (
-            // TODO
-            // () ? (qrcode) : (barcode)
-            setCodeInput(response.data.body[0].qrcode),
-
-            setSerialInput(String(response.data.body[0].product_id)),
-            setProuctName(response.data.body[0].name),
-            setSeason(response.data.body[0].season_name),
-            setColorValue(response.data.body[0].color),
-            setSize(response.data.body[0].size),
-            setMeasure(response.data.body[0].degree),
-            setImageFile(response.data.body[0].image),
-            setMfrid(response.data.body[0].mfr_id),
-            setPid(response.data.body[0].product_id),
-            
-            store.dispatch({type:'SEASON_ID',season_id: response.data.body[0].season_id}),
-            console.log(store.getState().season_id)
-            
-            
-        ) : (
-            //navigation.goBack(),
-            Alert.alert(            
-                "QR코드/Barcode 오류",             
-                "알맞은 QR코드/Barcode를 입력하세요",                   
-                [                              
-                    { text: "확인"},
-                ]
-            ),
-            console.log("204")
-        )
-        )
-    .catch(function(error){
-        console.log(error)
-        Alert.alert(            
-            "인터넷 연결 실패",                                
-            [                              
-                { text: "확인"},
-            ]
-        )
-        navigation.goBack()
-    })
 
 
-
-   
+    
     
     const addReceipt = async () => {
         
@@ -202,6 +217,7 @@ function ProductInfo({navigation, route}) {
         
 
     }
+
 
     return (
        
