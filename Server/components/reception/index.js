@@ -54,9 +54,9 @@ const Reception = ({
     <Content>
       <InfoWrapper>
         <InfoSubWrapper>
-          <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData ,handleChangeInputData, searchReceipts, searchCode}} />
+          <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData, handleChangeInputData, searchReceipts, searchCode }} />
           <FilterInfo
-            {...{ inputData,searchList, handleChangeInputData, searchReceipts }}
+            {...{ inputData, searchList, handleChangeInputData, searchReceipts }}
           />
           <Section>
             <ProducInfo {...{ targetData, handleChangeTargetData, openProductImage }} />
@@ -72,7 +72,6 @@ const Reception = ({
       </InfoWrapper>
 
       <ResizableList {...{ searchList, getTargetData }} />
-      {/* <List {...{ searchList, getTargetData }} /> */}
       {isProductImageModalOpen && (
         <Modal handleCloseButtonClick={closeProductImage}>
           {
@@ -86,42 +85,72 @@ const Reception = ({
         </Modal>
       )}
 
-      {/* --------------------------------------------- */}
+      {/* TODO */}
       {isReceiptImageModalOpen && (
         <Modal handleCloseButtonClick={closeReceiptImage}>
-          <div>
-            <text> 수선 전 이미지 </text>
-            <Image
-              src={`http://34.64.182.76:8080${imageData[0].before_image}`}
-              alt={""}
-              layout="fixed"
-              objectFit="contain"
-              width="300px"
-              height="300px"
-            />
-          </div>
-          {(
-            imageData[0].after_image !== null
-            ) ? (
+
+          <div
+            style={{
+              display: 'flex', flexDirection: 'row'
+            }}
+          >
+            <div
+              style={{
+                marginTop: 100,
+                display: 'flex-end'
+              }}
+            >
+              <text> 수선 전 이미지 </text>
+              {imageData.map(
+                (v) =>
+                (
+                  <Image
+                    key={v.before_image}
+                    src={`http://34.64.182.76:8080${v.before_image}`}
+                    alt={""}
+                    layout="fixed"
+                    objectFit="contain"
+                    width="200px"
+                    height="200px"
+                    onClick={() => console.log("Clicked")}
+                  />
+                )
+              )}
+            </div>
+
+
             <div>
               <text> 수선 후 이미지 </text>
-              <Image 
-                src={`http://34.64.182.76:8080${imageData[0].after_image}`}
-                alt={""}
-                layout="fixed"
-                objectFit="contain"
-                width="300px"
-                height="300px"
-              />
+              {imageData.map(
+                (v) => (
+                  (
+                    v.after_image != null
+                  ) ? (
+                    <Image
+                      key={v.after_image}
+                      src={`http://34.64.182.76:8080${v.after_image}`}
+                      alt={""}
+                      layout="fixed"
+                      objectFit="contain"
+                      width="200px"
+                      height="200px"
+                      onClick={() => console.log("Clicked")}
+                    />
+                  ) : (
+                    <>
+                    </>
+                  )
+
+                )
+              )}
             </div>
-              ) : (
-              <>
-              </>
-            )}
-          
+          </div>
+
+
         </Modal>
       )}
-      {/* --------------------------------------------- */}
+
+
     </Content>
   );
 };
@@ -138,5 +167,10 @@ const InfoSubWrapper = styled.div`
 const Section = styled.div`
   display: flex;
 `;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 
 export default Reception;
