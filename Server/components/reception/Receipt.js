@@ -497,7 +497,7 @@ const ReceiptInfo = ({
                 }else{
                   
                   console.log(targetData)
-                  //inputSave(targetData)
+                  inputSave(targetData)
                 }
               }}
             >저장</SaveButton>

@@ -40,7 +40,11 @@ export const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,i
     
 }
 
-export const postSendRepairInfo = async (place,date,sendType,sendPay,repair_detail_id,receipt_id) => {
+export const postSendRepairInfo = async (place,date,sendType,sendPay,repair_detail_id,receipt_id,navigation) => {
+
+    console.log("-------------------------------------------------------")
+    
+    console.log(place,date,sendType,sendPay,repair_detail_id,receipt_id)
     const bodyData={
         store:place,
         complete_date: date,
@@ -59,7 +63,7 @@ export const postSendRepairInfo = async (place,date,sendType,sendPay,repair_deta
         });
         const json = await response.json();
         console.log(json);
-        
+        navigation.popToTop();
        
     } catch (error) {
         console.error(error);

@@ -375,9 +375,10 @@ function RepairDetail({ navigation, route }) {
                                 Alert.alert('수선처 발송일을 입력해주세요')
                             }
                             else if(store.getState().afterImageUri1 != null || afterImages[0] !=null){
-                                postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId)
                                 console.log(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId,receiptId)
                                 postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
+                                postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId,receiptId,navigation)
+                                
                                 //navigation.navigate("PhotoStep")
                                 //navigation.popToTop();
                             }
