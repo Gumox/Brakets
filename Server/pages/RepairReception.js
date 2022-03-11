@@ -55,7 +55,7 @@ function RepairReception({options,user}) {
       if(options.images != undefined){
           let items=(
             <div key={index} style={{paddingTop:1}}>
-              <RepairReceiptModal need={needImages} item={el} info ={options.info[0]} images ={options.images}/>
+              <RepairReceiptModal need={needImages} item={el} info ={options.info[0]} images ={options.images} shop={shop_id}/>
             </div>
         )
         

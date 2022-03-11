@@ -17,7 +17,6 @@ export const getSelectList =async (api,hq_id) => {
 export const setSelectList = (selectItems) => {
     let type = "text";
     const code = "value";
-
     let resultItems =[];
     if(selectItems !== undefined){
       selectItems.map((item,index) => {

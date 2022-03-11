@@ -91,6 +91,9 @@ function RepairDetail({ navigation, route }) {
                 console.log("repair3_store_id")
                 setRepairShop(data.data["repair3_store_id"])
                 setRepairDetailId(data.data["repair3_detail_id"])
+            }else{
+                Alert.alert("해당 제품에 맞는 수선정보가 존재 하지 않습니다.","수선 접수를 진행해 주세요")
+                navigation.goBack();
             }
             
                                 
@@ -152,9 +155,13 @@ function RepairDetail({ navigation, route }) {
         beforeImageViews[key] =(before)
     }
     useEffect(() => {
+        if(shop === null ||shop == 0){
+            navigation.goBack();
+            Alert.alert("","사용자 정보 연결 실패")
+        }
         getTargetData(code);
        
-    }, [shippingDate]);
+    }, [code]);
 
     
 
@@ -182,8 +189,6 @@ function RepairDetail({ navigation, route }) {
             }
         });
     }
-
-    const nowTime = dayjs();
 
     return (
         <ContainView>
@@ -371,7 +376,7 @@ function RepairDetail({ navigation, route }) {
                             }
                             else if(store.getState().afterImageUri1 != null || afterImages[0] !=null){
                                 postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId)
-                                console.log(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId)
+                                console.log(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId,receiptId)
                                 postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
                                 //navigation.navigate("PhotoStep")
                                 //navigation.popToTop();

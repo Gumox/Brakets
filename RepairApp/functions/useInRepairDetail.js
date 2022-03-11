@@ -47,7 +47,7 @@ export const postSendRepairInfo = async (place,date,sendType,sendPay,repair_deta
         shipment_type: sendType,
         shipment_price: sendPay,
         repair_detail_id:repair_detail_id,
-        receipt: receipt_id //받는곳
+        receipt_id: receipt_id //받는곳
     }
     try {
         const response = await fetch(ip+'/api/RepairShop/sendRepairInfo',{method: 'PUT',

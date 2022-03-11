@@ -22,7 +22,7 @@ function Login({ navigation }) {
   const [result, setResult] = useState();
 
   function SaveInfo(_info, _userEmail) {
-
+    console.log(_info)
     AsyncStorage.setItem(
       'staffInfo',
       JSON.stringify({
@@ -80,6 +80,7 @@ function Login({ navigation }) {
         response => (response.status == '200') ? (
           console.log("success"),
           console.log(response.data.body),
+          console.log(response.data.data  ),
 
           SaveInfo(response.data.data, result),
           check(response.data.data)

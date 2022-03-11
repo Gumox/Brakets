@@ -21,14 +21,14 @@ function RepairReceiptModal (props) {
   const fullImage = ip+el.image;
   const hq_id = el.headquarter_id;
   const needImages = props.need;
-  
+  const shop = props.shop
   const [needResult,setNeedResult] = useState([]);
   const [lineColor,setLineColor] = useState()
 
 
-  const [faultItems,setFaultItems] = useState([])
-  const [judgmentItems,setJudgmentItems] = useState([])
-  const [analysisItems,setAnalysisItems] = useState([])
+  const [fault,setFault] = useState([])
+  const [judgment,setJudgment] = useState([])
+  const [analysis,setAnalysis] = useState([])
   const [repiarType,setRepiarType] = useState([])
   const [selectJudgmentName,setSelectJudgmentName] = useState()
   const [selectJudgmentValue,setSelectJudgmentValue] = useState(0)
@@ -59,10 +59,11 @@ function RepairReceiptModal (props) {
   })
 
   let date = formatDate(new Date(el.receipt_date))
-  let faultLists = setSelectList(faultItems)
-  let judgmentLists = setSelectList(judgmentItems)
-  let analysisLists = setSelectList(analysisItems)
-  let repiarTypeList = setSelectList(repiarType)
+
+  const [faultLists,setFaultLists] = useState();
+  const [judgmentLists,setJudgmentLists] = useState()
+  const [analysisLists,setAnalysisLists] =useState()
+  const [repiarTypeList,setRepiarTypeList] = useState()
   
   let selectJudgmentBox;
   if(selectJudgmentName == "외주수선"){
@@ -85,6 +86,9 @@ function RepairReceiptModal (props) {
     selectJudgmentBox =(
       <></>
     )
+  }
+  const judgmentResultHandler=(item)=>{
+    setSelectJudgmentName(item)
   }
   useEffect( () => {
     const fetchData = async () => {
@@ -109,10 +113,29 @@ function RepairReceiptModal (props) {
       aI.unshift({analysisType_name:"선택",level:1})
       typeInfo.unshift({text:"선택",level:1})
 
-      setFaultItems(fI)
-      setJudgmentItems(jI)
-      setAnalysisItems(aI)
-      setRepiarType(typeInfo)
+      
+      for(let i=1;i<4;i++){
+        let resultId =`repair${i}_result_id`
+        let repairStoreId=`repair${i}_store_id`
+        let name =`repair${i}_result_name`
+        let analysis = `repair${i}_fault_id`
+        let fault =`repair${i}_analysis_id`
+        if(el[repairStoreId] == shop){
+          setSelectJudgmentValue(el[resultId])
+          setJudgmentLists(setSelectList(jI))
+          setSelectJudgmentName(el[name])
+        }
+        if(el[fault] !== null){
+          setSelectFault(el[fault])
+        }if(el[analysis]!== null){
+          setSelectAnalysis(el[analysis])
+        }
+      }
+      
+      setFaultLists(setSelectList(fI))
+      
+      setAnalysisLists(setSelectList(aI))
+      setRepiarTypeList(setSelectList(typeInfo))
     }
     fetchData();
     setLineColor(checkHaveRepairDetail(el,info.store_id))
@@ -226,7 +249,7 @@ function RepairReceiptModal (props) {
                 <RightItemBox>
                   <ItemTextTop>과실구분</ItemTextTop>
                   <ItemTextBottom>
-                    <select onChange={(e)=>{setSelectFault(e.target.value)}}  style={styles.selectStyle} >
+                    <select onChange={(e)=>{setSelectFault(e.target.value)}} value={selectFault} style={styles.selectStyle} >
                       { 
                         faultLists
                       }
@@ -236,7 +259,7 @@ function RepairReceiptModal (props) {
                 <RightItemBox>
                   <ItemTextTop>냬용분석</ItemTextTop>
                   <ItemTextBottom>
-                    <select onChange={(e)=>{setSelectAnalysis(e.target.value)}}  style={styles.selectStyle} >
+                    <select onChange={(e)=>{setSelectAnalysis(e.target.value)}} value={selectAnalysis}  style={styles.selectStyle} >
                       {
                         analysisLists
                       }
@@ -246,7 +269,7 @@ function RepairReceiptModal (props) {
                 <RightItemBox>
                   <ItemTextTop>판정결과</ItemTextTop>
                   <ItemTextBottom>
-                    <select id="selectBox" style={styles.selectStyle}  onChange={(e)=>{
+                    <select id="selectBox" style={styles.selectStyle} value={selectJudgmentValue} onChange={(e)=>{
                         var target = document.getElementById("selectBox");
                         setSelectJudgmentName(target.options[target.selectedIndex].text)
                         setSelectJudgmentValue(e.target.value)
