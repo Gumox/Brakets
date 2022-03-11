@@ -248,7 +248,7 @@ const RepairHistory = (props) => {
             repair_detail_id:repairDetailId
         }
 
-          fetch(`${process.env.API_URL}/RepairShop/setRepairInfo`, {
+          fetch(`${process.env.API_URL}/RepairShop/setRepair`, {
           method: "POST",
           headers: {
             'Content-type': 'application/json'
