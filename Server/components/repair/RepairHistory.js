@@ -256,7 +256,7 @@ const RepairHistory = (props) => {
           body: JSON.stringify(body)
         })
         .then(response => res =response.json())
-        window.location.reload();
+        //window.location.reload();
     }
     useEffect(()=>{
         console.log(shop)
