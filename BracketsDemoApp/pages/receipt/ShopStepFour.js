@@ -31,8 +31,8 @@ const LabelPlus = styled.Text`
     margin-Top: 12px;
     margin-bottom: 12px;
     margin-left:12px;
-    color:#0000ff
-    margin-right: 10%
+    color:#0000ff;
+    margin-right: 10%;
 `;
 const PrView = styled.View`
     flex-direction: row;
@@ -44,7 +44,7 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const CenterView =styled.View`
     align-items: center;
@@ -59,7 +59,7 @@ const DateView = styled.View`
     width: 100%;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const ImgIcon =styled.Image`
     width: 20px;

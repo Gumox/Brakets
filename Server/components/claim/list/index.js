@@ -150,16 +150,19 @@ function Table({ columns, data, searchList, getTargetData }) {
 const ReturnList = ({ data, handleDataClick = () => {} }) => {
 
   const columns = React.useMemo(() => [
-
-    // 단순 조회 기능 -> Check Box 필요 없을 듯?
-    // {Header: '선택', accessor: '선택'},
-
+    
+    // ASIS
     {Header: '서비스카드 번호', accessor: '서비스카드 번호'},
     {Header: '매장코드', accessor: '매장코드'},
     {Header: '매장명', accessor: '매장명'},
     {Header: '매장구분', accessor: '매장구분'},
     {Header: '매장연락처', accessor: '매장연락처'},
-    {Header: '등록일', accessor: '등록일'},
+
+    // TOBE
+    {Header: '매장접수일', accessor: '매장접수일'},
+
+    // ASIS
+    // {Header: '등록일', accessor: '등록일'},
     {Header: '고객', accessor: '고객'},
     {Header: '고객연락처', accessor: '고객연락처'},
     {Header: '시즌', accessor: '시즌'},
@@ -177,8 +180,41 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     {Header: '고객ID', accessor: '고객ID'},
     {Header: '고객요구', accessor: '고객요구'},
     {Header: '매장접수내용', accessor: '매장접수내용'},
-    {Header: '내용분석', accessor: '내용분석'},
-    {Header: '판정결과', accessor: '판정결과'},
+    // {Header: '내용분석', accessor: '내용분석'},
+    // {Header: '판정결과', accessor: '판정결과'},
+
+    // TOBE
+    {Header: '본사접수일', accessor: ''},
+    {Header: '발송일 to S', accessor: ''},
+    {Header: '과실구분', accessor: ''},
+    {Header: '내용분석', accessor: ''},
+    {Header: '판정결과', accessor: ''},
+    {Header: '수선미입고', accessor: ''},
+    {Header: '유상수선비', accessor: ''},
+    {Header: '유상수선 유/무', accessor: ''},
+    {Header: '수선처1', accessor: ''},
+    {Header: '총수선비1', accessor: ''},
+    {Header: '수선처접수일1', accessor: ''},
+    {Header: '재수선1', accessor: ''},
+    {Header: '수선처2', accessor: ''},
+    {Header: '총수선비2', accessor: ''},
+    {Header: '수선처접수일2', accessor: ''},
+    {Header: '재수선2', accessor: ''},
+    {Header: '수선처3', accessor: ''},
+    {Header: '총수선비3', accessor: ''},
+    {Header: '수선처접수일3', accessor: ''},
+    {Header: '재수선3', accessor: ''},
+    {Header: '발송일 to M', accessor: ''},
+    {Header: '본사설명', accessor: ''},
+    {Header: '하자코드', accessor: ''},
+    {Header: '심의', accessor: ''},
+    {Header: '등록자', accessor: ''},
+    {Header: '등록일시', accessor: ''},
+    {Header: '수정자', accessor: ''},
+    {Header: '수정일시', accessor: ''},
+    {Header: 'SMS', accessor: ''},
+    {Header: '감가반품', accessor: ''},
+
 
   ],[])
 

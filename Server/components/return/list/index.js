@@ -180,16 +180,18 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
   // console.log(user);
 
   const columns = React.useMemo(() => [
-    // {Header: 'No',   accessor: 'No'},
-    // {Header: 'Shop', accessor: 'Shop'},
 
+    // ASIS
     { Header: '서비스카드 번호', accessor: '서비스카드 번호' },
     { Header: '매장코드', accessor: '매장코드' },
-
     { Header: '매장명', accessor: '매장명' },
     { Header: '매장구분', accessor: '매장구분' },
     { Header: '매장연락처', accessor: '매장연락처' },
-    { Header: '등록일', accessor: '등록일' },
+
+    // TOBE
+    { Header: '매장접수일', accessor: '매장접수일' },
+
+    // ASIS
     { Header: '고객ID', accessor: '고객ID' },
     { Header: '고객', accessor: '고객' },
     { Header: '고객연락처', accessor: '고객연락처' },
@@ -200,11 +202,44 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
     { Header: '판매가', accessor: '판매가' },
     { Header: '고객요구', accessor: '고객요구' },
     { Header: '매장접수내용', accessor: '매장접수내용' },
-    { Header: '과실구분', accessor: '과실구분' },
-    { Header: '고객약속일', accessor: '고객약속일' },
+
+    // TOBE
     { Header: '본사접수일', accessor: '본사접수일' },
+    { Header: '발송일 to S', accessor: '발송일 to S' },
+
+    // ASIS
+    { Header: '과실구분', accessor: '과실구분' },
     { Header: '내용분석', accessor: '내용분석' },
     { Header: '판정결과', accessor: '판정결과' },
+    // { Header: '고객약속일', accessor: '고객약속일' },
+    // { Header: '본사접수일', accessor: '본사접수일' },
+
+    // TOBE
+    { Header: '유상수선비', accessor: '유상수선비' },
+    { Header: '유상수선 유/무', accessor: '유상수선 유/무' },
+    { Header: '수선처1', accessor: '수선처1' },
+    { Header: '총수선비1', accessor: '총수선비1' },
+    { Header: '수선처접수일1', accessor: '수선처접수일1' },
+    { Header: '재수선1', accessor: '재수선1' },
+    { Header: '수선처2', accessor: '수선처2' },
+    { Header: '총수선비2', accessor: '총수선비2' },
+    { Header: '수선처접수일2', accessor: '수선처접수일2' },
+    { Header: '재수선2', accessor: '재수선2' },
+    { Header: '수선처3', accessor: '수선처3' },
+    { Header: '총수선비3', accessor: '총수선비3' },
+    { Header: '수선처접수일3', accessor: '수선처접수일3' },
+    { Header: '재수선3', accessor: '재수선3' },
+    { Header: '생산업체', accessor: '생산업체' },
+    { Header: '발송일 to M', accessor: '발송일 to M' },
+    { Header: '본사설명', accessor: '본사설명' },
+    { Header: '하자코드', accessor: '하자코드' },
+    { Header: '심의', accessor: '심의' },
+    { Header: '등록자', accessor: '등록자' },
+    { Header: '수정자', accessor: '수정자' },
+    { Header: '수정일시', accessor: '수정일시' },
+    { Header: 'SMS', accessor: 'SMS' },
+    { Header: '감가반품', accessor: '감가반품' },
+
   ], [])
 
   const value = data.map((productReturn) => ({

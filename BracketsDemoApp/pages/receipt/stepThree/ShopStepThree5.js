@@ -55,7 +55,7 @@ const Input = styled.Text`
     font-size: 20px;
     border : 1.5px;
     color:#000000;
-    border-radius:10px
+    border-radius:10px;
 `;
 const SendText = styled.Text`
     width: 100%;
@@ -63,7 +63,7 @@ const SendText = styled.Text`
     font-size: 20px;
     color:#000000;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 
 function ShopStepThree4({route,navigation}) {
