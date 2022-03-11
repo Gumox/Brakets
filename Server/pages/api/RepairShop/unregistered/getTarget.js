@@ -1,4 +1,4 @@
-import excuteQuery from "../../../db";
+import excuteQuery from "../../db";
 
 async function getReceipt(values) {
     const result = await excuteQuery({

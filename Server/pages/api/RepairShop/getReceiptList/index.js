@@ -46,10 +46,19 @@ async function getReceiptList(query,values) {
                         product.name AS product_name,
                         repair1.store_id AS repair1_store_id,
                         repair1.result_id AS repair1_result_id,
+                        repair1_result.judgment_name AS repair1_result_name,
+                        repair1.fault_id AS repair1_fault_id,
+                        repair1.analysis_id AS repair1_analysis_id,
                         repair2.store_id AS repair2_store_id,
                         repair2.result_id AS repair2_result_id,
+                        repair2_result.judgment_name AS repair2_result_name,
+                        repair2.fault_id AS repair2_fault_id,
+                        repair2.analysis_id AS repair2_analysis_id,
                         repair3.store_id AS repair3_store_id,
                         repair3.result_id AS repair3_result_id,
+                        repair3_result.judgment_name AS repair3_result_name,
+                        repair3.fault_id AS repair3_fault_id,
+                        repair3.analysis_id AS repair3_analysis_id,
                         receipt.repair1_detail_id,
                         receipt.repair2_detail_id,
                         receipt.repair3_detail_id,
@@ -69,6 +78,9 @@ async function getReceiptList(query,values) {
                 LEFT JOIN store AS repair2_store ON repair2.store_id = repair2_store.store_id
                 LEFT JOIN repair_detail AS repair3 ON receipt.repair3_detail_id = repair3.repair_detail_id
                 LEFT JOIN store AS repair3_store ON repair3.store_id = repair3_store.store_id
+                LEFT JOIN judgment_result AS repair1_result ON repair1_result.judgment_result_id  = repair1.result_id
+                LEFT JOIN judgment_result AS repair2_result ON repair2_result.judgment_result_id  = repair2.result_id
+                LEFT JOIN judgment_result AS repair3_result ON repair3_result.judgment_result_id  = repair3.result_id
                 WHERE receipt.step = 1 AND receipt.receiver = ? ${query} `,
         values,
       });

@@ -159,7 +159,7 @@ const RepairHistory = (props) => {
             setRepairRedo1(Boolean(info.repair1_repair1_redo));
             setRepairRedo2(Boolean(info.repair1_repair2_redo));
             setRepairRedo3(Boolean(info.repair1_repair3_redo));
-            setFee(info.fee);
+            setFee(info.repair1_fee);
             setCashreceiptNum(info.repair1_cashreceipt_num)
             setPaid(Boolean(info.repair1_paid));
             inputInfoRepair(info,1);
@@ -180,7 +180,7 @@ const RepairHistory = (props) => {
             setRepairRedo1(Boolean(info.repair2_repair1_redo));
             setRepairRedo2(Boolean(info.repair2_repair2_redo));
             setRepairRedo3(Boolean(info.repair2_repair3_redo));
-            setFee(info.fee);
+            setFee(info.repair2_fee);
             setCashreceiptNum(info.repair2_cashreceipt_num)
             setPaid(Boolean(info.repair2_paid));
             inputInfoRepair(info,2);
@@ -200,7 +200,7 @@ const RepairHistory = (props) => {
             setRepairRedo1(Boolean(info.repair3_repair1_redo));
             setRepairRedo2(Boolean(info.repair3_repair2_redo));
             setRepairRedo3(Boolean(info.repair3_repair3_redo));
-            setFee(info.fee);
+            setFee(info.repair3_fee);
             setCashreceiptNum(info.repair3_cashreceipt_num)
             setPaid(Boolean(info.repair3_paid));
             inputInfoRepair(info,3);
@@ -248,7 +248,7 @@ const RepairHistory = (props) => {
             repair_detail_id:repairDetailId
         }
 
-          fetch(`${process.env.API_URL}/RepairShop/setRepairInfo`, {
+          fetch(`${process.env.API_URL}/RepairShop/setRepair`, {
           method: "POST",
           headers: {
             'Content-type': 'application/json'
@@ -256,7 +256,7 @@ const RepairHistory = (props) => {
           body: JSON.stringify(body)
         })
         .then(response => res =response.json())
-        window.location.reload();
+            window.location.reload();
     }
     useEffect(()=>{
         console.log(shop)
@@ -268,6 +268,7 @@ const RepairHistory = (props) => {
             typeInfo.unshift({text:"선택",level:1})
             setRepiarType(typeInfo)
             sortInfo(info.body[0],typeInfo)
+            console.log(info.body[0])
         }
         fetchData();
         setWindowWidth(window.innerWidth)

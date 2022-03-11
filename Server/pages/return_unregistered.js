@@ -202,10 +202,7 @@ export default function Return_unregistered() {
                     <CenterView>       
                         <div style={{fontWeight:"bold"}} >서비스 카드 번호 : </div>
                         <input style={{marginLeft:15,height:22}} onChange={(e)=>{setCode(e.target.value)}} onKeyPress={(e)=>{handleKeyPress(e,code,returnList)}}></input> 
-                        <button 
-                            style={{marginLeft:10,width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
-                            onClick={()=>{}}
-                        >추가</button> 
+                        
                         
                     </CenterView>
                     <br/>
