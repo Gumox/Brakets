@@ -30,6 +30,7 @@ import ClaimModal from "./claimModal";
 const ReceiptInfo = ({
   targetData = {},
   handleChangeTargetData = () => {},
+  handleChangeRegisterDate = () =>{},
   handleChangeTargetDataResultDetail =() =>{},
   handleChangeTargetDataPrice=()=>{},
 }) => {
@@ -115,6 +116,9 @@ const ReceiptInfo = ({
     if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("심의"))
       setIsReview(true);
     else setIsReview(false);
+    if(!targetData[RECEIPT.REGISTER_DATE]){
+      handleChangeRegisterDate(RECEIPT.REGISTER_DATE, moment().format("YYYY-MM-DD"))
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetData[RECEIPT.RESULT_ID]]);
   return (
@@ -132,8 +136,9 @@ const ReceiptInfo = ({
                     ? moment(targetData[RECEIPT.REGISTER_DATE]).format(
                         "YYYY-MM-DD"
                       )
-                      : undefined
+                    : moment().format("YYYY-MM-DD")
                 }
+                disabled={true}
                 onChange={handleChangeTargetData}
               />
             </Field>
@@ -487,13 +492,12 @@ const ReceiptInfo = ({
               onClick={()=>{
                 if(!targetData[RECEIPT.ID]){
                   alert("잘못된 입력입니다. \n서비스카드 번호를 확인해주세요")
-                }else if(!targetData[RECEIPT.REGISTER_DATE]){
-                  alert("본사접수일을 입력해주세요")
                 }else if(!targetData[RECEIPT.COMPLETE_DATE]){
                   alert("발송일 to S 를 입력해주세요")
                 }else{
+                  
                   console.log(targetData)
-                  inputSave(targetData)
+                  //inputSave(targetData)
                 }
               }}
             >저장</SaveButton>

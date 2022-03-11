@@ -80,6 +80,12 @@ const ReceptionPage = ({ options, user }) => {
     },
     [inputData]
   );
+  const handleChangeRegisterDate = useCallback(
+    (name,value) => {
+      setTargetData({ ...targetData, [name]: value });
+    },
+    [targetData]
+  );
   const handleChangeTargetData = useCallback(
     (e) => {
       switch (e.target.type) {
@@ -156,6 +162,7 @@ const ReceptionPage = ({ options, user }) => {
             handleChangeInputData,
             handleChangeTargetData,
             handleChangeTargetDataResultDetail,
+            handleChangeRegisterDate,
             handleChangeTargetDataPrice,
             searchReceipts,
             getTargetData,
