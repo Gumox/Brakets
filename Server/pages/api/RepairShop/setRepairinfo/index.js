@@ -150,8 +150,8 @@ const updateReceiptFee = async (receiptId,fee1,fee2,fee3) => {
   });
 };
 const sendRepairInfo = async (req, res) => {
+  console.log("-----------------sendRepairInfo-------------------")
   if (req.method === "POST") {
-    console.log(`[${new Date().toISOString()}] /api/RepairShop/sendRepairInfo`);
     
     console.log(req.body)
     const receipt_id = req.body.receipt_id; 
