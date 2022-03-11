@@ -149,7 +149,6 @@ const updateReceiptFee = async (receiptId,fee1,fee2,fee3) => {
   });
 };
 const sendRepairInfo = async (req, res) => {
-  console.log("-----------------sendRepairInfo-------------------")
   if (req.method === "POST") {
     
     console.log(req.body)
@@ -230,13 +229,12 @@ const sendRepairInfo = async (req, res) => {
             const feeUpdate= updateReceiptFee(receipt_id,fees[0].repair1_fee,fees[0].repair2_fee,fees[0].repair3_fee,)
               
             console.log(result)
-            //res.status(200).json({ msg: "suc" });
+            res.status(200).json({ msg: "suc" });
           }
         }
         else{
           res.status(210).json({ msg: "non proper receipt_id" });
-        }
-        
+        } 
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });
