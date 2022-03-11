@@ -32,7 +32,7 @@ export const getStoreList = async()=>{
 }
 export const getTargetInfo = async(code,shop,shopName)=>{
     const[datas] =await Promise.all([
-        axios.get(`${process.env.API_URL}/RepairShop/unregistered/getTargetInfo?code=${code}`)
+        axios.get(`${process.env.API_URL}/RepairShop/unregistered/getTarget?code=${code}`)
         .then(({ data }) => data.data).catch(error=>{
 
         })
