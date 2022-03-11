@@ -186,7 +186,6 @@ function LookupInfo4( { route,navigation } ) {
             setSelection(false)
         )
     },[]);
-    var repairShops =[]
     
     return(
         <Container>
