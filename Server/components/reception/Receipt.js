@@ -261,9 +261,10 @@ const ReceiptInfo = ({
                   </Field>
                   <Field>
                     <Input
+                      type="number"
                       title={`총 비용${index + 1}`}
                       name={REPAIR.TOTAL_PRICE}
-                      value={targetData[REPAIR.TOTAL_PRICE]}
+                      value={Number(targetData[REPAIR.TOTAL_PRICE])?.toLocaleString('ko-KR')}
                       styleOptions={{ width: "100px" }}
                       onChange={handleChangeTargetData}
                     />
@@ -498,6 +499,7 @@ const ReceiptInfo = ({
                   
                   console.log(targetData)
                   inputSave(targetData)
+                  confirm("저장이 완료되었습니다.")
                 }
               }}
             >저장</SaveButton>
