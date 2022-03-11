@@ -1,5 +1,4 @@
 import excuteQuery from "../../db";
-
 const addRepairDetail = async (
   receipt_id,
   store,
