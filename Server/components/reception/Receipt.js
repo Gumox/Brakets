@@ -132,7 +132,7 @@ const ReceiptInfo = ({
                     ? moment(targetData[RECEIPT.REGISTER_DATE]).format(
                         "YYYY-MM-DD"
                       )
-                    : moment().format("YYYY-MM-DD")
+                      : undefined
                 }
                 onChange={handleChangeTargetData}
               />
@@ -487,6 +487,8 @@ const ReceiptInfo = ({
               onClick={()=>{
                 if(!targetData[RECEIPT.ID]){
                   alert("잘못된 입력입니다. \n서비스카드 번호를 확인해주세요")
+                }else if(!targetData[RECEIPT.REGISTER_DATE]){
+                  alert("본사접수일을 입력해주세요")
                 }else if(!targetData[RECEIPT.COMPLETE_DATE]){
                   alert("발송일 to S 를 입력해주세요")
                 }else{
