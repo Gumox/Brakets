@@ -49,6 +49,8 @@ const Reception = ({
     () => setIsReceiptImageModalOpen(false),
     []
   );
+  const [overallImg, setOverallImg] = useState('');
+
 
   return (
     <Content>
@@ -87,66 +89,96 @@ const Reception = ({
 
       {/* TODO */}
       {isReceiptImageModalOpen && (
-        <Modal handleCloseButtonClick={closeReceiptImage}>
+        <Modal handleCloseButtonClick={closeReceiptImage}
+        >
 
-          <div
-            style={{
-              display: 'flex', flexDirection: 'row'
-            }}
-          >
+          <div>
             <div
-              style={{
-                marginTop: 100,
-                display: 'flex-end'
+            style={{
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                marginTop: '50px',
               }}
             >
-              <text> 수선 전 이미지 </text>
-              {imageData.map(
-                (v) =>
-                (
+              {
+                (overallImg == '') ? (
+                  <div
+                    style={{width: '500px', height: '500px'}}
+                  >
+                    Empty
+                  </div>
+                ) : (
                   <Image
-                    key={v.before_image}
-                    src={`http://34.64.182.76:8080${v.before_image}`}
+                    key={overallImg}
+                    src={`${overallImg}`}
                     alt={""}
                     layout="fixed"
                     objectFit="contain"
-                    width="200px"
-                    height="200px"
-                    onClick={() => console.log("Clicked")}
+                    width="500px"
+                    height="500px"
                   />
                 )
-              )}
+              }
             </div>
-
-
-            <div>
-              <text> 수선 후 이미지 </text>
+            
+            <div
+              style={{
+                marginTop: 100,
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}
+            >
+              <text
+                style={{marginLeft: '10px'}}
+              > 
+              수선처 1
+              </text>
               {imageData.map(
-                (v) => (
+                (v) =>
                   (
-                    v.after_image != null
-                  ) ? (
-                    <Image
-                      key={v.after_image}
-                      src={`http://34.64.182.76:8080${v.after_image}`}
-                      alt={""}
-                      layout="fixed"
-                      objectFit="contain"
-                      width="200px"
-                      height="200px"
-                      onClick={() => console.log("Clicked")}
-                    />
-                  ) : (
-                    <>
-                    </>
-                  )
-
+                    <div
+                      style={{display: 'flex', flexDirection: 'row'}}
+                    >
+                      <Image
+                        key={v.before_image}
+                        src={`http://34.64.182.76:8080${v.before_image}`}
+                        alt={""}
+                        layout="fixed"
+                        objectFit="contain"
+                        width="100px"
+                        height="100px"
+                        onClick={() => setOverallImg(`http://34.64.182.76:8080${v.before_image}`)}
+                      />
+                      {
+                        (
+                          v.after_image != null
+                        ) ? (
+                          <Image
+                            key={v.after_image}
+                            src={`http://34.64.182.76:8080${v.after_image}`}
+                            alt={""}
+                            layout="fixed"
+                            objectFit="contain"
+                            width="100px"
+                            height="100px"
+                            onClick={() => setOverallImg(`http://34.64.182.76:8080${v.after_image}`)}
+                          />
+                        ) : (
+                          <div
+                            style={{width: '100px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                          >
+                            Empty
+                          </div>
+                        )
+                      }
+                    </div>
                 )
               )}
+              
             </div>
           </div>
-
-
         </Modal>
       )}
 
