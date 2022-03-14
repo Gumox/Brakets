@@ -50,7 +50,7 @@ import CustomerSearchList from './pages/searchCustomer/CustomerSearchList';
 import Notice from './pages/searchCustomer/Notice'
 import SmsNotice from './pages/searchCustomer/SmsNotice';
 import PrivacyNotice from './pages/searchCustomer/PrivacyNotice';
-
+import EnlargePhoto from './Functions/EnlargePhoto';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -125,6 +125,7 @@ function App() {
         <Stack.Screen name="BarcodeScreen" component={BarcodeScreen}  options={{ title: '스캔' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
         <Stack.Screen name="PhotoControl" component={PhotoControl} options={{ headerShown: false }}  />
         <Stack.Screen name="Capture" component={Capture} options={{ headerShown: false }}  />
+        <Stack.Screen name="EnlargePhoto" component={EnlargePhoto} options={{ headerShown: false }}  />
       </Stack.Navigator>
     </NavigationContainer>
   );

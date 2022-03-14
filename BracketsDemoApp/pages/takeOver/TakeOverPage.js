@@ -17,8 +17,7 @@ import { CheckBox } from 'react-native-elements';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
 import { CheckCode,CheckFaultDivision,CheckAnalysisType,CheckJudgmentResult } from '../../Functions/codeCheck';
-import { color } from 'react-native-elements/dist/helpers';
-
+import { formatDate } from '../../Functions/formatDate';
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
     border-radius:10px;
@@ -133,12 +132,19 @@ const styles = StyleSheet.create({
       
   })
 
-const  formatDate = (inputDate)=> {
+const  formatDateT = (inputDate)=> {
     const sp =  inputDate;
     const date = sp.split("T")
     
     return date[0]
 }
+const  formatDateN = (inputDate)=> {
+    const sp =  inputDate;
+    const date = sp.split(" ")
+    
+    return date[0]
+}
+
 
 
 function TakeOverPage( { route,navigation } ) {
@@ -205,7 +211,7 @@ function TakeOverPage( { route,navigation } ) {
             })
             });
             const json = await response.json();
-           console.log(json)
+           //console.log(json)
         } catch (error) {
             console.error(error);
         } finally {
@@ -213,6 +219,8 @@ function TakeOverPage( { route,navigation } ) {
         }
     }
     
+    let repair2_store
+    let repair3_store
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(ip+`/api/receipt/${receiptId}`);
         
@@ -230,9 +238,9 @@ function TakeOverPage( { route,navigation } ) {
         }           
         setCustomerName(readData["customer_name"])               //고객이름
         setCustomerPhone(readData["customer_phone"])             //고객연락처
-        setReceiptDate(formatDate(readData["receipt_date"]))     //매장접수일
+        setReceiptDate(formatDate(new Date(readData["receipt_date"])))     //매장접수일
         
-        setAppointmentDate(formatDate(readData["due_date"]))     //고객약속일
+        setAppointmentDate(formatDate(new Date(readData["due_date"])))     //고객약속일
         setSeason(readData["product_season_name"])               //시즌
         setProductStyle(readData["product_style_code"])          //제품 스타일
         setProductColor(readData["product_color"])               //제품 색상
@@ -256,14 +264,14 @@ function TakeOverPage( { route,navigation } ) {
         }
         
         setImage(ip + readData["image"])                         //제품 전체 사진 
-        console.log(ip + readData["image"])
+        //console.log(ip + readData["image"])
 
 
         const beforeImgList =[]                                  //제품 수선 전 사진
         const afterImgList =[]                                   //제품 수선 후 사진
         for (let i = 0; i < data.imageList.length; i++) {
             const element = data.imageList[i];
-            console.log(element)
+            //console.log(element)
             
             beforeImgList.push(ip+element["before_image"])
             if(element["after_image"] === null){
@@ -288,12 +296,12 @@ function TakeOverPage( { route,navigation } ) {
         setResult(cj)                         //판정결과
 
         setRepairShop(readData["repair1_store_name"])            //수선처 
-        setRepairShopDate(readData["repair1_register_date"])     //수선처 접수일
-        setRepairShopSendDate(readData["repair1_complete_date"])     //수선처 발송일
+        setRepairShopDate(formatDateN(readData["repair1_register_date"]))     //수선처 접수일
+        setRepairShopSendDate(formatDateN(readData["repair1_complete_date"]))     //수선처 발송일
         setRepairShopSendDescription(readData["repair1_message"])//수선처 설명
 
         setMainCenterDate(readData["register_date"])             //본사 접수일
-        setMainCenterSendDate(readData["complete_date"])         //본사 발송일
+        setMainCenterSendDate(formatDateT(readData["complete_date"]))         //본사 발송일
         setMainCenterSendDescription(readData["receipt_message"])//본사설명
 
 
@@ -305,7 +313,10 @@ function TakeOverPage( { route,navigation } ) {
         )  
         
         if(readData["repair2_store_id"] != null){
-            const repair2_store =(
+            let repairShopDate = formatDateN(readData["repair2_register_date"])
+            let repairShopSendDate = formatDateN(readData["repair2_complete_date"])
+            let repairShopSendDescription = readData["repair2_message"]
+            repair2_store =(
                 <View>
                     <Text style={{marginBottom:10 ,color: '#000000'}}>수선처 2 : {repairShop}</Text>
                     <InfoView>
@@ -321,7 +332,10 @@ function TakeOverPage( { route,navigation } ) {
             );
         }
         if(readData["repair3_store_id"] != null){
-            const repair2_store =(
+            let repairShopDate = formatDateN(readData["repair3_register_date"])
+            let repairShopSendDate = formatDateN(readData["repair3_complete_date"])
+            let repairShopSendDescription = readData["repair3_message"]
+            repair2_store =(
                 <View>
                     <Text style={{marginBottom:10,color: '#000000'}}>수선처 3 : {repairShop}</Text>
                     <InfoView>
@@ -392,37 +406,14 @@ function TakeOverPage( { route,navigation } ) {
         let visable =false;
         const before =(
             <View key ={key}>
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={visable}
-                        onRequestClose={() => {
-                            visable =false;
-                        }}
-                    >
-                        <View style={styles.outView} >
-                        <View style={styles.centerView} >    
-                        <View style={styles.inView}>
-                            
-                            <ImageZoom cropWidth={winW}
-                                    cropHeight={winH}
-                                    imageWidth={300}
-                                    imageHeight={400}>
-                                    <Image style={{width:300, height:400}}
-                                    source={{uri:element}}/>
-                            </ImageZoom>
-                            
-                        </View>
-                        </View>
-                        </View>
-                    </Modal>
-                        <View style ={{justifyContent:"center", width:"100%"}}>
-                            <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
-                                visable =true;
-                            }}>
-                            <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: element}}/>
-                            </Pressable>
-                        </View>
+                    
+                <View style ={{justifyContent:"center", width:"100%"}}>
+                    <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
+                        navigation.navigate("EnlargePhoto",{image: element})
+                    }}>
+                    <Image style={{width:200 ,height:200 }} resizeMode = 'contain' source={{uri: element}}/>
+                    </Pressable>
+                </View>
             </View>
         )
         beforeImageViews[key] =(before)
@@ -435,40 +426,17 @@ function TakeOverPage( { route,navigation } ) {
         if(element !== null){
             const before =(
                 <View key ={key}>
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={visable}
-                        onRequestClose={() => {
-                            visable =false;
-                        }}
-                    >
-                        <View style={styles.outView} >
-                        <View style={styles.centerView} >    
-                        <View style={styles.inView}>
-                            
-                            <ImageZoom cropWidth={winW}
-                                    cropHeight={winH}
-                                    imageWidth={300}
-                                    imageHeight={400}>
-                                    <Image style={{width:300, height:400}}
-                                    source={{uri:element}}/>
-                            </ImageZoom>
-                            
-                        </View>
-                        </View>
-                        </View>
-                    </Modal>
-                        <View style ={{justifyContent:"center", width:"100%"}}>
+                    <View style ={{justifyContent:"center", width:"100%", height:220,margin:10}}>
                             <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
-                                visable =true;
+                                navigation.navigate("EnlargePhoto",{image: element})
                             }}>
                             <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: element}}/>
                             </Pressable>
                         </View>
+                        
                 </View>
             )
-            beforeImageViews[key] =(before)
+            afterImageViews[key] =(before)
         }else{
             console.log(" in null \n")
         }
@@ -487,7 +455,6 @@ function TakeOverPage( { route,navigation } ) {
         fetch();
         
     },[]);
-    var repairShops =[]
     
     return(
         <Container>
@@ -627,6 +594,8 @@ function TakeOverPage( { route,navigation } ) {
                 <InputText>{repairShopSendDescription}</InputText>
 
               </InfoView>
+              {repair2_store}
+              {repair3_store}
               
 
               <InfoView>
@@ -697,7 +666,7 @@ function TakeOverPage( { route,navigation } ) {
                     )
                 }else{
                     putReceiptComplete(cardCode,selectDay);
-                    navigation.goBack();
+                    navigation.popToTop();
                 }
               }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
             </Half> 
