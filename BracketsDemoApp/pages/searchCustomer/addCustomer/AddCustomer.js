@@ -7,7 +7,11 @@ import _, { values } from 'lodash';
 import Bottom from '../../../components/Bottom';
 import Contents from '../../../components/Contents'; 
 import { CheckBox, Icon } from 'react-native-elements';
+import ViewShot from "react-native-view-shot";
 import ip from '../../../serverIp/Ip';
+import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
+
+
 
 
 import {
@@ -286,8 +290,18 @@ export default class AddCustomer extends Component {
                         </CenterText>
                         <CenterText>
                             <BtView><Label>고객 서명란</Label><Label/></BtView>
-                            <Pressable  onPress={() => this.setState({modalVisible: true})}><View style={{backgroundColor:"#a2a2a2",width:250,height:150,justifyContent:"center",alignItems:"center"}}>
-                                <Text style = {{color:"#ffffff" ,fontSize:20}}>고객님 직접 서명하세요</Text>
+                            <Pressable  onPress={() => this.setState({modalVisible: true})}>
+                                <View style={{
+                                                backgroundColor:"#a2a2a2",
+                                                width:250,
+                                                height:150,
+                                                justifyContent:"center",
+                                                alignItems:"center"
+                                            }}>
+                                <Text style = {{color:"#ffffff" ,fontSize:20}}
+                                >
+                                    고객님 직접 서명하세요
+                                </Text>
                                 {cstSign}
                             </View></Pressable>
                             <Label/>
@@ -305,16 +319,30 @@ export default class AddCustomer extends Component {
                         <View style={styles.centeredView}>
                         <View style ={styles.xView} >    
                         <View style={styles.modalView} >
-                            <View style={{flex: 1, flexDirection: 'column',width:"100%",height:"100%"}}>
+
+                                <View style={{flex: 1, flexDirection: 'column',width:"100%",height:"100%"}}>
                                 <PrView>
-                                    <Pressable style={{height:20}} onPress={() => { this.refs.sketchRef.clearSketch() }}><Text style={{color:"#000000"}}>Clear</Text></Pressable>
-                                    <Pressable style={{height:20}} onPress={()=>{this.refs.sketchRef.saveSketch()}}><Text style={{color:"#000000"}}>Save</Text></Pressable>
+                                    <Pressable style={{height:20}} onPress={() => { this.refs.canvasRef.clear() }}><Text style={{color:"#000000"}}>Clear</Text></Pressable>
+                                    <Pressable style={{height:20}} onPress={()=>{
+
+                                        this.refs.viewShot.capture().then(uri => {
+
+                                            console.log("do something with ", uri);
+                                            store.dispatch({type:'CUSTOMER_SIGN',customerSign: uri});
+                                            this.setState({modalVisible: false})
+                                            
+                                        })
+
+                                    }}><Text style={{color:"#000000"}}>Save</Text></Pressable>
                                 </PrView>
-                                <SketchDraw style={{flex: 1 }} ref="sketchRef"
-                                selectedTool={this.state.toolSelected} 
-                                toolColor={"#000000"} 
-                                onSaveSketch={this.onSketchSave.bind(this)}
+                                <ViewShot ref="viewShot" style ={{flex:1}}>
+                                <SketchCanvas
+                                    ref="canvasRef"
+                                    style={{ flex: 1 }}
+                                    strokeColor={'#000000'}
+                                    strokeWidth={5}
                                 />
+                                </ViewShot>
                 
                                 
                             </View>
