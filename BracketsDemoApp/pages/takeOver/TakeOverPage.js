@@ -17,7 +17,6 @@ import { CheckBox } from 'react-native-elements';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
 import { CheckCode,CheckFaultDivision,CheckAnalysisType,CheckJudgmentResult } from '../../Functions/codeCheck';
-import { formatDate } from '../../Functions/formatDate';
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
     border-radius:10px;
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
       
   })
 
-const  formatDateT = (inputDate)=> {
+const  formatDate = (inputDate)=> {
     const sp =  inputDate;
     const date = sp.split("T")
     
@@ -238,7 +237,12 @@ function TakeOverPage( { route,navigation } ) {
         }           
         setCustomerName(readData["customer_name"])               //고객이름
         setCustomerPhone(readData["customer_phone"])             //고객연락처
-        setReceiptDate(formatDate(new Date(readData["receipt_date"])))     //매장접수일
+
+        // TODO
+        setReceiptDate(formatDate(readData["receipt_date"]))     //매장접수일
+        {console.log("read data is")}
+        {console.log(String(readData["receipt_date"]).slice(0, 10))}
+        {console.log(typeof(readData["receipt_date"]))}
         
         setAppointmentDate(formatDate(new Date(readData["due_date"])))     //고객약속일
         setSeason(readData["product_season_name"])               //시즌
@@ -296,12 +300,13 @@ function TakeOverPage( { route,navigation } ) {
         setResult(cj)                         //판정결과
 
         setRepairShop(readData["repair1_store_name"])            //수선처 
-        setRepairShopDate(formatDateN(readData["repair1_register_date"]))     //수선처 접수일
-        setRepairShopSendDate(formatDateN(readData["repair1_complete_date"]))     //수선처 발송일
+        setRepairShopDate(readData["repair1_register_date"])     //수선처 접수일
+        
+            setRepairShopSendDate(readData["repair1_complete_date"])     //수선처 발송일
         setRepairShopSendDescription(readData["repair1_message"])//수선처 설명
 
         setMainCenterDate(readData["register_date"])             //본사 접수일
-        setMainCenterSendDate(formatDateT(readData["complete_date"]))         //본사 발송일
+        setMainCenterSendDate(formatDate(readData["complete_date"]))         //본사 발송일
         setMainCenterSendDescription(readData["receipt_message"])//본사설명
 
 
