@@ -193,7 +193,7 @@ function TakeOverPage( { route,navigation } ) {
     const putReceiptComplete = async (pCode,cDate) => {
         
         try {
-            const response = await fetch(ip+`/api/receipt/complete`,{method: 'PUT',
+            const response = await fetch(ip+`/api/receipt/received`,{method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -682,8 +682,8 @@ function TakeOverPage( { route,navigation } ) {
                         ]
                     )
                 }else{
-                    putReceiptComplete(cardCode,selectDay);
-                    //navigation.goBack();
+                    //putReceiptComplete(cardCode,selectDay);
+                    navigation.navigate("ReceiptDivision");
                 }
               }}><Text style ={{color : "#ffffff"}}>재접수</Text></Btn> 
               <Btn onPress = {() => {

@@ -101,14 +101,13 @@ function LookupPage2({ route,navigation }) {
             code: code
           },
         })
-        console.log("/////////////data.data///////////////")
-        console.log(data.data)
         navigation.navigate('LookupInfo',{data:obj,images: data.data})
-      }, []);
-
+    }, []);
+    console.log(data)
+    
     for (let index = 0; index < data.length; index++) {
         const obj = data[index];
-        console.log(obj.step)
+        //console.log(obj.step)
         const keys= Object.keys(obj);
         const indexKey = index;
         var prdDiv = ""
