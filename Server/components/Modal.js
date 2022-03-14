@@ -36,17 +36,20 @@ const Wrapper = styled.div`
   left: 0;
   z-index: 99;
   background-color: rgba(67, 67, 67, 0.3);
+  width: 100%;
 `;
 
 const Section = styled.div`
   position: relative;
-  width: ${({ width = "90%" }) => width};
+  /* width: ${({ width = "90%" }) => width}; */
+  width: 90%;
+
   height: ${({ height = "80%" }) => height};
-  max-width: ${({ maxWidth = "760px" }) => maxWidth};
+  /* max-width: ${({ maxWidth = "760px" }) => maxWidth}; */
   max-height: 100%;
   margin: 0 auto;
   background-color: ${({ backgroundColor = COLOR.WHITE }) => backgroundColor};
-  border: 5px solid ${COLOR.BLACK}
+  border: 5px solid ${COLOR.BLACK};
 `;
 
 const CloseButton = styled.div`

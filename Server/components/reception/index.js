@@ -104,7 +104,7 @@ const Reception = ({
               {
                 (overallImg == '') ? (
                   <div
-                    style={{width: '500px', height: '500px'}}
+                    style={{width: '500px', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
                   >
                     Empty
                   </div>
