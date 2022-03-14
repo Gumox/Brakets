@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useReducer, useState } from "react";
+import React, { useCallback, useContext, useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import { OptionContext } from "../../store/Context";
@@ -16,15 +16,35 @@ import Input from "../Input";
 import SelectOption from "../SelectOption";
 import Checkbox from "../Checkbox";
 import store from "../../store/store";
+import axios from "axios";
 const FilterInfo = ({
+  targetBrandId,
   inputData = {},
   searchList =[],
+  setInputData=()=>{},
   handleChangeInputData = () => {},
   searchReceipts = () => {},
 }) => {
   const { storeList, analysisType, resultType, seasonList } =
     useContext(OptionContext);
+  const [styleList,setStyleList] = useState([])
+
+  const getStyle = async(season) =>{
+      console.log({ seasonId: season ,brandId:targetBrandId })
+    const [styles] = await Promise.all([
+      axios
+      .get(`${process.env.API_URL}/product/seasonStyle`, {
+        params: { seasonId: season ,brandId:targetBrandId },
+      })
+      .then(({ data }) => data.data),
+    ]);
+    setStyleList(styles)
+    setInputData({ ...inputData, ["season"]: season,["style"]: null });
+  }
   const router = useRouter();
+  useEffect(()=>{
+    
+  },[])
   return (
     <Wrapper>
       <Title>조회</Title>
@@ -151,15 +171,17 @@ const FilterInfo = ({
             name="season"
             disabled={!inputData["isStyleType"]}
             options={[DEFAULT_OPTION, ...seasonList]}
-            checked={inputData["season"]}
-            onChange={handleChangeInputData}
+            value={inputData["season"]}
+            onChange={(e)=>{
+              getStyle(e.target.value)}}
           />
         </Field>
         <Field>
-          <Input
+          <SelectOption
             title="스타일"
             name="style"
             disabled={!inputData["isStyleType"]}
+            options={[DEFAULT_OPTION, ...styleList]}
             value={inputData["style"]}
             onChange={handleChangeInputData}
           />

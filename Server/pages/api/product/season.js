@@ -2,18 +2,21 @@ import excuteQuery from "../db";
 
 async function getSeason(brandId) {
   const result = await excuteQuery({
-    query: `SELECT season_id AS value, season_name AS text
+    query: `SELECT season_id AS value, season_code AS text
               FROM season_type WHERE brand_id=?
               ORDER BY start_date DESC`,
     values: [brandId],
   });
-
   return result;
 }
 
 const controller = async (req, res) => {
   if (req.method === "GET") {
     console.log("/api/product/season");
+    console.log()
+    console.log(req.query)
+    console.log()
+    console.log("*********************")
     try {
       const { brandId } = req.query;
       const season = await getSeason(brandId);

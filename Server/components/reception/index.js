@@ -18,6 +18,7 @@ import { PRODUCT, RECEIPT } from "../../constants/field";
 const Reception = ({
   targetBrandId,
   setTargetBrandId,
+  setInputData,
   inputData, // 조회 조건
   searchList, // 검색 결과 List
   targetData, // 선택한 Receipt 내용
@@ -58,7 +59,7 @@ const Reception = ({
         <InfoSubWrapper>
           <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData, handleChangeInputData, searchReceipts, searchCode }} />
           <FilterInfo
-            {...{ inputData, searchList, handleChangeInputData, searchReceipts }}
+            {...{ targetBrandId,setInputData,inputData, searchList, handleChangeInputData, searchReceipts }}
           />
           <Section>
             <ProducInfo {...{ targetData, handleChangeTargetData, openProductImage }} />

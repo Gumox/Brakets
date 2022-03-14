@@ -125,6 +125,7 @@ const ReceptionPage = ({ options, user }) => {
   );
 
   const searchReceipts = useCallback(async () => {
+    console.log(inputData)
     const { data } = await axios.get("/api/receipt", {
       params: { ...inputData, brandId: targetBrandId },
     });
@@ -159,6 +160,7 @@ const ReceptionPage = ({ options, user }) => {
           {...{ targetBrandId, inputData, searchList, targetData, searchCode }}
           {...{
             setTargetBrandId,
+            setInputData,
             handleChangeInputData,
             handleChangeTargetData,
             handleChangeTargetDataResultDetail,
