@@ -133,7 +133,7 @@ async function getLookup(query, values) {
             LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
             LEFT JOIN analysis_type ON receipt.analysis_id = analysis_type.analysis_id
             LEFT JOIN fault_type ON receipt.fault_id = fault_type.fault_id
-            LEFT JOIN judgment_result ON receipt.judgment_result_id = judgment_result.judgment_result_id 
+            LEFT JOIN judgment_result ON receipt.result_id = judgment_result.judgment_result_id 
             LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
             LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id
             LEFT JOIN repair_detail AS repair2 ON receipt.repair2_detail_id = repair2.repair_detail_id
