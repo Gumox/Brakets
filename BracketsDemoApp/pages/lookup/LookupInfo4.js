@@ -105,7 +105,15 @@ const styles = StyleSheet.create({
     },
       
 })
- 
+
+const  formatDate = (inputDate)=> {
+    if(inputDate !== null&&inputDate!== undefined){
+        return String(inputDate).slice(0, 10)
+    }else{
+        return null
+    }
+}
+
 function LookupInfo4( { route,navigation } ) {
     const data =route.params.data;
     
@@ -126,70 +134,70 @@ function LookupInfo4( { route,navigation } ) {
     const [requstImage,setRequstImage] = useState();
    
 
-    const useInput=(inputDate)=> {
-        const [date, setDate] = useState(inputDate);
-        const [mode, setMode] = useState('date');
-        const [show, setShow] = useState(false);
-        
-        const showMode = (currentMode) => {
-            setShow(true);
-            setMode(currentMode);
-        };
-        const showDatepicker = () => {
-            showMode('date');
-        };
-        const  formatDate = ()=> {
-            var month = '' + (date.getMonth() + 1),
-                day = '' + date.getDate(),
-                year = date.getFullYear();
-        
-            if (month.length < 2) 
-                month = '0' + month;
-            if (day.length < 2) 
-                day = '0' + day;
-        
-            return [year, month, day].join('-');
-        }
-        
-        const onChange = (event, selectedDate) => {
-            const currentDate = selectedDate || date
-            setShow(Platform.OS === 'ios');
-            setDate(currentDate);
-            console.log(currentDate)
-            setSelectDay(formatDate())
-        }
-        return {
-            date,
-            showDatepicker,
-            show,
-            mode,
-            onChange,
-            formatDate
-        }
-    }
-        const [selectDay,setSelectDay] =useState();
-
-        //const tDate = useInput(new Date()); 
+    const [selectDay,setSelectDay] =useState();
+    const [repair2,setRepair2] = useState();
+    const [repair3,setRepair3] = useState();
     useEffect(()=>{
-        console.log("22222222222222222222")
-        console.log(data)
-        console.log("22222222222222222222")
         setRepairShop(data["repair1_store_name"])            //수선처 
-        setRepairShopDate(data["repair1_register_date"])     //수선처 접수일
-        setRepairShopSendDate(data["repair1_complete_date"])     //수선처 발송일
+        setRepairShopDate(formatDate(data["repair1_register_date"]))     //수선처 접수일
+        setRepairShopSendDate(formatDate(data["repair1_complete_date"]))     //수선처 발송일
         setRepairShopSendDescription(data["repair1_message"])//수선처 설명
 
-        setMainCenterDate(data["register_date"])             //본사 접수일
-        setMainCenterSendDate(data["complete_date"])         //본사 발송일
+        setMainCenterDate(formatDate(data["register_date"]))             //본사 접수일
+        setMainCenterSendDate(formatDate(data["complete_date"]))         //본사 발송일
         setMainCenterSendDescription(data["receipt_message"])//본사설명
-        setSelectDay(data["received_date"])
+        setSelectDay(formatDate(data["received_date"]))
 
-        setRepairPrice(data["fee"])                          //수선비
+                                  //수선비
         if(data["paid"] =="1"){                              //유상수선유무
             setSelection(true)
-        }else(
+            setRepairPrice(data["fee"]*1.1)
+        }else{
             setSelection(false)
-        )
+            setRepairPrice(0)
+        }
+        if(data.repair2_detail_id){
+            let repairShopName = data.repair2_store_name;
+            let registerDate = data.repair2_register_date;
+            let completeDate = data.repair2_complete_date;
+            let message = data.repair2_message;
+            setRepair2(
+                <View>
+                    <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShopName}</Text>
+                    <InfoView>
+                        <TopText>수선처 접수일</TopText>
+                        <InputText>{formatDate(registerDate)}</InputText>
+                            
+                        <TopText>수선처 발송일</TopText>
+                        <InputText>{formatDate(completeDate)}</InputText>
+                    <TopText>수선처 설명</TopText>
+                    <InputText>{message}</InputText>
+
+                    </InfoView>
+                </View>
+            )
+        }
+        if(data.repair3_detail_id){
+            let repairShopName = data.repair3_store_name;
+            let registerDate = data.repair3_register_date;
+            let completeDate = data.repair3_complete_date;
+            let message = data.repair3_message;
+            setRepair2(
+                <View>
+                    <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShopName}</Text>
+                    <InfoView>
+                        <TopText>수선처 접수일</TopText>
+                        <InputText>{formatDate(registerDate)}</InputText>
+                            
+                        <TopText>수선처 발송일</TopText>
+                        <InputText>{formatDate(completeDate)}</InputText>
+                    <TopText>수선처 설명</TopText>
+                    <InputText>{message}</InputText>
+
+                    </InfoView>
+                </View>
+            )
+        }
     },[]);
     
     return(
@@ -197,37 +205,38 @@ function LookupInfo4( { route,navigation } ) {
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
                 
 
-            <Text style={{marginBottom:10}}>수선처 : {repairShop}</Text>
-              <InfoView>
-                  <TopText>수선처 접수일</TopText>
-                  <InputText>{repairShopDate}</InputText>
-                      
-                  <TopText>수선처 발송일</TopText>
-                  <InputText>{repairShopSendDate}</InputText>
-                <TopText>수선처 설명</TopText>
-                <InputText>{repairShopSendDescription}</InputText>
+            <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShop}</Text>
+            <InfoView>
+                <TopText>수선처 접수일</TopText>
+                <InputText>{formatDate(repairShopSendDate)}</InputText>
+                    
+                <TopText>수선처 발송일</TopText>
+                <InputText>{repairShopSendDate}</InputText>
+            <TopText>수선처 설명</TopText>
+            <InputText>{repairShopSendDescription}</InputText>
 
-              </InfoView>
+            </InfoView>
+            {repair2}
+            {repair3}
               
 
-              <InfoView>
-                <TopText>본사 접수일</TopText>
-                <InputText>{mainCenterDate}</InputText>
-                <TopText>본사 발송일</TopText>
-                <InputText>{mainCenterSendDate}</InputText>
-                <TopText>본사 설명</TopText>
-                <InputText>{mainCenterSendDescription}</InputText>
-              </InfoView>
+            <InfoView>
+            <TopText>본사 접수일</TopText>
+            <InputText>{mainCenterDate}</InputText>
+            <TopText>본사 발송일</TopText>
+            <InputText>{mainCenterSendDate}</InputText>
+            <TopText>본사 설명</TopText>
+            <InputText>{mainCenterSendDescription}</InputText>
+            </InfoView>
 
-              <TopText style={{marginBottom : 10, marginLeft:10}}>매장 인수일</TopText>
-              <PrView>
-              <InputText style={styles.Lavel}>{selectDay}</InputText>
-              </PrView>
+            <TopText style={{marginBottom : 10, marginLeft:10}}>매장 인수일</TopText>
+            <InputText >{selectDay}</InputText>
             <Half style = {{marginBottom : 50}}>
                 <Check>
-                      <Text>유상수선 </Text>
+                      <Text style={{color:"#000000"}}>유상수선 </Text>
                       <CheckBox
                             center
+                            disabled
                             checked={isSelected}
                             checkedColor="red"
                             onPress={() =>{setSelection(!isSelected)}}

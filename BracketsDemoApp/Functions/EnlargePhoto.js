@@ -78,8 +78,8 @@ export default function EnlargePhoto({ navigation ,route}){
                     style={{alignItems: 'center', justifyContent: 'center'}}
                     >
                     <Text
-                        style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}
-                    >X</Text>
+                        style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}
+                    >✕</Text>
                 </CloseBtn>
                 <View style={styles.centeredView}>
                             

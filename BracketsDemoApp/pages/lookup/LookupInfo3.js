@@ -155,7 +155,7 @@ function LookupInfo3( { route,navigation } ) {
     const [afterImages,setAfterImages] =useState([]);        //제품 수선 후 세부 사진   
 
     useEffect(()=>{
-
+        console.log(data)
         if(data["receipt_type"] == 1){
             setReceiptType("수선")
         }
@@ -170,9 +170,9 @@ function LookupInfo3( { route,navigation } ) {
         }
         
         setStoreMessage(data["store_message"])               //매장 접수 내용
-        setCheckMistake(data["fault_id"])                    //과실 구분
-        setContentAnalysis(data["analysis_id"])              //내용분석
-        setResult(data["result_id"])                         //판정결과
+        setCheckMistake(data["fault_name"])                    //과실 구분
+        setContentAnalysis(data["analysis_name"])              //내용분석
+        setResult(data["result_name"])                         //판정결과
         
         const beforeImgList =[]                                  //제품 수선 전 사진
         const afterImgList =[]                                   //제품 수선 후 사진
@@ -188,8 +188,6 @@ function LookupInfo3( { route,navigation } ) {
                 afterImgList.push(ip+element["after_image"])
             }
         }
-        console.log("8520585200258202585200258520258200258200252002520025820025820")
-        console.log(beforeImgList)
         setBeforeImages(beforeImgList)
         setAfterImages(afterImgList)
          
@@ -244,33 +242,11 @@ function LookupInfo3( { route,navigation } ) {
 
                     <InputText>{receiptType}</InputText>
                     <TopText>제품 전체 사진</TopText>
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={requestImageModalVisible}
-                        onRequestClose={() => {
-                        setRequestImageModalVisible(!requestImageModalVisible);
-                        }}
-                    >
-                        <View style={styles.outView} >
-                        <View style={styles.centerView} >    
-                        <View style={styles.inView}>
-                            
-                            <ImageZoom cropWidth={winW}
-                                    cropHeight={winH}
-                                    imageWidth={300}
-                                    imageHeight={400}>
-                                    <Image style={{width:300, height:400}}
-                                    source={{uri:requestImage}}/>
-                            </ImageZoom>
-                            
-                        </View>
-                        </View>
-                        </View>
-                    </Modal>
+                    
                         <View style ={{justifyContent:"center", width:"100%"}}>
                             <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
-                            setRequestImageModalVisible(!requestImageModalVisible);}}>
+                                navigation.navigate("EnlargePhoto",{image: requestImage})
+                            }}>
                             <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: requestImage}}/>
                             </Pressable>
                         </View>

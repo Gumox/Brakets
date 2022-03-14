@@ -218,8 +218,8 @@ function TakeOverPage( { route,navigation } ) {
         }
     }
     
-    let repair2_store
-    let repair3_store
+    const [repair2,setRepair2] =useState();
+    const [repair3,setRepair3] =useState();
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(ip+`/api/receipt/${receiptId}`);
         
@@ -317,11 +317,11 @@ function TakeOverPage( { route,navigation } ) {
             setSelection(false)
         )  
         
-        if(readData["repair2_store_id"] != null){
+        if(readData["repair2_store_id"]){
             let repairShopDate = formatDateN(readData["repair2_register_date"])
             let repairShopSendDate = formatDateN(readData["repair2_complete_date"])
             let repairShopSendDescription = readData["repair2_message"]
-            repair2_store =(
+            setRepair2(
                 <View>
                     <Text style={{marginBottom:10 ,color: '#000000'}}>수선처 2 : {repairShop}</Text>
                     <InfoView>
@@ -338,11 +338,11 @@ function TakeOverPage( { route,navigation } ) {
                 </View>
             );
         }
-        if(readData["repair3_store_id"] != null){
+        if(readData["repair3_store_id"]){
             let repairShopDate = formatDateN(readData["repair3_register_date"])
             let repairShopSendDate = formatDateN(readData["repair3_complete_date"])
             let repairShopSendDescription = readData["repair3_message"]
-            repair2_store =(
+            setRepair3(
                 <View>
                     <Text style={{marginBottom:10,color: '#000000'}}>수선처 3 : {repairShop}</Text>
                     <InfoView>
@@ -558,7 +558,7 @@ function TakeOverPage( { route,navigation } ) {
                         >
                             <Text
                                 style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}
-                            >X</Text>
+                            >✕</Text>
                         </CloseBtn>
                     </Modal>
                         <View style ={{justifyContent:"center", width:"100%"}}>
@@ -608,8 +608,8 @@ function TakeOverPage( { route,navigation } ) {
                 <InputText>{repairShopSendDescription}</InputText>
 
               </InfoView>
-              {repair2_store}
-              {repair3_store}
+              {repair2}
+              {repair3}
               
 
               <InfoView>
