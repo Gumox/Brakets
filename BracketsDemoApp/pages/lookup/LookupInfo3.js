@@ -204,7 +204,7 @@ function LookupInfo3( { route,navigation } ) {
             <View key ={key}>
                 <Pressable 
                     onPress={()=>{
-                        console.log("hihihi")
+                        navigation.navigate("EnlargePhoto",{image: element})
                     
                     }}>
                     <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
@@ -224,7 +224,7 @@ function LookupInfo3( { route,navigation } ) {
                 <View key ={key}>
                     <Pressable onPress={()=>{
                         
-                        console.log("hihihi")
+                        navigation.navigate("EnlargePhoto",{image: element})
                     }}>
                         <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
                     </Pressable>

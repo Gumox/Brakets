@@ -53,6 +53,7 @@ const InputText = styled.Text`
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px;
+    color:#000000;
 `;
 const Half = styled.View`
     width : 100%;
@@ -94,6 +95,7 @@ const TopText = styled.Text`
     width: 100%;
     padding: 8px;
     font-size: 20px;
+    color:#000000;
 `;
 const styles = StyleSheet.create({
     Lavel:{
@@ -166,9 +168,12 @@ function LookupInfo4( { route,navigation } ) {
         }
     }
         const [selectDay,setSelectDay] =useState();
-        const tDate = useInput(new Date()); 
-    useEffect(()=>{
 
+        //const tDate = useInput(new Date()); 
+    useEffect(()=>{
+        console.log("22222222222222222222")
+        console.log(data)
+        console.log("22222222222222222222")
         setRepairShop(data["repair1_store_name"])            //수선처 
         setRepairShopDate(data["repair1_register_date"])     //수선처 접수일
         setRepairShopSendDate(data["repair1_complete_date"])     //수선처 발송일
@@ -177,7 +182,7 @@ function LookupInfo4( { route,navigation } ) {
         setMainCenterDate(data["register_date"])             //본사 접수일
         setMainCenterSendDate(data["complete_date"])         //본사 발송일
         setMainCenterSendDescription(data["receipt_message"])//본사설명
-
+        setSelectDay(data["received_date"])
 
         setRepairPrice(data["fee"])                          //수선비
         if(data["paid"] =="1"){                              //유상수선유무

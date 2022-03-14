@@ -14,6 +14,7 @@ async function getLookup(query, values) {
                     receipt.receipt_date AS receipt_date,
                     receipt.register_date AS register_date,
                     receipt.due_date AS due_date,
+                    receipt.received_date AS received_date,
                     receipt.complete_date AS complete_date,
                     store.store_code AS store_code,
                     store.name AS store_name,
