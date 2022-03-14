@@ -230,7 +230,12 @@ function TakeOverPage( { route,navigation } ) {
         }           
         setCustomerName(readData["customer_name"])               //고객이름
         setCustomerPhone(readData["customer_phone"])             //고객연락처
+
+        // TODO
         setReceiptDate(formatDate(readData["receipt_date"]))     //매장접수일
+        {console.log("read data is")}
+        {console.log(String(readData["receipt_date"]).slice(0, 10))}
+        {console.log(typeof(readData["receipt_date"]))}
         
         setAppointmentDate(formatDate(readData["due_date"]))     //고객약속일
         setSeason(readData["product_season_name"])               //시즌
@@ -289,7 +294,8 @@ function TakeOverPage( { route,navigation } ) {
 
         setRepairShop(readData["repair1_store_name"])            //수선처 
         setRepairShopDate(readData["repair1_register_date"])     //수선처 접수일
-        setRepairShopSendDate(readData["repair1_complete_date"])     //수선처 발송일
+        
+            setRepairShopSendDate(readData["repair1_complete_date"])     //수선처 발송일
         setRepairShopSendDescription(readData["repair1_message"])//수선처 설명
 
         setMainCenterDate(readData["register_date"])             //본사 접수일
@@ -310,10 +316,12 @@ function TakeOverPage( { route,navigation } ) {
                     <Text style={{marginBottom:10 ,color: '#000000'}}>수선처 2 : {repairShop}</Text>
                     <InfoView>
                         <InText>수선처 2 접수일</InText>
-                        <InputText>{repairShopDate}</InputText>
+                        <InputText>{String(repairShopDate).slice(0, 10)}</InputText>
                             
                         <InText>수선처 2 발송일</InText>
-                        <InputText>{repairShopSendDate}</InputText>
+                        {/* <InputText>{repairShopSendDate}</InputText> */}
+                        <InputText>{String(repairShopSendDate).slice(0, 10)}</InputText>
+
                         <InText>수선처 2 설명</InText>
                         <InputText>{repairShopSendDescription}</InputText>
                     </InfoView>
@@ -326,10 +334,13 @@ function TakeOverPage( { route,navigation } ) {
                     <Text style={{marginBottom:10,color: '#000000'}}>수선처 3 : {repairShop}</Text>
                     <InfoView>
                         <InText>수선처 3 접수일</InText>
-                        <InputText>{repairShopDate}</InputText>
+                        <InputText>{String(repairShopDate).slice(0, 10)}</InputText>
                             
                         <InText>수선처 3 발송일</InText>
-                        <InputText>{repairShopSendDate}</InputText>
+                        {/* <InputText>{repairShopSendDate}</InputText> */}
+                        <InputText>{String(repairShopSendDate).slice(0, 10)}</InputText>
+
+                        
                         <InText>수선처 3 설명</InText>
                         <InputText>{repairShopSendDescription}</InputText>
                     </InfoView>
@@ -504,6 +515,8 @@ function TakeOverPage( { route,navigation } ) {
                         <InputText>{customerPhone}</InputText>
                 </InfoView>
 
+
+                {/* TODO */}
                 <InfoView>
                   <InText>매장 접수일</InText>
                         <InputText>{receiptDate}</InputText>
@@ -619,10 +632,12 @@ function TakeOverPage( { route,navigation } ) {
             <Text style={{marginBottom:10, color: '#000000'}}>수선처 : {repairShop}</Text>
               <InfoView>
                   <InText>수선처 접수일</InText>
-                  <InputText>{repairShopDate}</InputText>
+                  <InputText>{String(repairShopDate).slice(0, 10)}</InputText>
                       
                   <InText>수선처 발송일</InText>
-                  <InputText>{repairShopSendDate}</InputText>
+                  {/* <InputText>{repairShopSendDate}</InputText> */}
+                  <InputText>{String(repairShopSendDate).slice(0, 10)}</InputText>
+
                 <InText>수선처 설명</InText>
                 <InputText>{repairShopSendDescription}</InputText>
 
@@ -631,15 +646,24 @@ function TakeOverPage( { route,navigation } ) {
 
               <InfoView>
                 <InText>본사 접수일</InText>
-                <InputText>{mainCenterDate}</InputText>
+                {/* <InputText>{mainCenterDate}</InputText> */}
+                <InputText>{String(mainCenterDate).slice(0, 10)}</InputText>
+
                 <InText>본사 발송일</InText>
-                <InputText>{mainCenterSendDate}</InputText>
+                {/* <InputText>{mainCenterSendDate}</InputText> */}
+                <InputText>{String(mainCenterSendDate).slice(0, 10)}</InputText>
+
                 <InText>본사 설명</InText>
                 <InputText>{mainCenterSendDescription}</InputText>
               </InfoView>
 
               <Text style={{marginBottom : 10, marginLeft:10 ,color: '#000000'}}>매장 인수일</Text>
+              
+              
+              {/* TODO */}
               <TouchableView onPress={tDate.showDatepicker}>
+              {/* TODO */}
+                  
               <PrView>
               <Text style={styles.Lavel}>{selectDay}</Text>
               <ImgIcon source={require('../../Icons/calendar.png')}/>
