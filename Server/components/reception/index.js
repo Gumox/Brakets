@@ -136,9 +136,9 @@ const Reception = ({
               수선처 1
               </text>
               {imageData.map(
-                (v) =>
+                (v,i) =>
                   (
-                    <div
+                    <div key={i}
                       style={{display: 'flex', flexDirection: 'row'}}
                     >
                       <Image

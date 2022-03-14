@@ -30,9 +30,13 @@ const ReturnInvoice = ({}) => {
     return datas;
   }
 
-  useEffect(async() => {
+  useEffect(() => {
+    const fetch =async()=>{
+      
     let tmp = await insertLog(itemList);
     setData(tmp);
+    }
+    fetch();
   }, [itemList])
 
 
