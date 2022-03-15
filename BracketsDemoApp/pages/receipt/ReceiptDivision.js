@@ -26,6 +26,8 @@ const TopIntro = styled.Text`
 const PickerView = styled.View`
     height:5%;
     width:90%;
+    height:45px
+    width:80%;
     border:3px solid #797979;
     border-radius:12px;
     justify-content: center;
@@ -38,6 +40,7 @@ function ReceiptDivision({navigation}) {
     const [itemList, setItemList]= useState([]);
     const info = store.getState().userInfo;
     const [seletStore, setSeletStore] = useState(null); 
+    const [seletStore, setSeletStore] = useState(null);
     
     const [shopInShop,setShopInShop] = useState();
     
