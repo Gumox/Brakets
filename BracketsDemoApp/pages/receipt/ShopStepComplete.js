@@ -8,8 +8,10 @@ import StateBarSolid from '../../components/StateBarSolid';
 import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom'
 import store from '../../store/store';
+import { Modal, StyleSheet, View, Pressable, Image, Text, ScrollView } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
+import { useNetInfo } from "@react-native-community/netinfo";
 
 const Label = styled.Text`
     font-size: 15px;
