@@ -125,17 +125,14 @@ const RepairHistory = (props) => {
             let type = "repair"+num+"_repair"+index+"_type_id";
             typeInfo.map((el)=>{
                 if(el.value == info[type] && index === 1){
-                    console.log("????",el.repair_price)
                     setTypeCost1(el.repair_price)
                 }
                 
                 if(el.value == info[type] && index === 2){
-                    console.log("????",el.repair_price)
                     setTypeCost2(el.repair_price)
                 }
                 
                 if(el.value == info[type] && index === 3){
-                    console.log("????",el.repair_price)
                     setTypeCost3(el.repair_price)
                 }
             })
@@ -259,7 +256,6 @@ const RepairHistory = (props) => {
             window.location.reload();
     }
     useEffect(()=>{
-        console.log(shop)
         const fetchData = async () => {
             const typeInfo = await getRepairType(null,brand,shop);
 
@@ -268,11 +264,9 @@ const RepairHistory = (props) => {
             typeInfo.unshift({text:"선택",level:1})
             setRepiarType(typeInfo)
             sortInfo(info.body[0],typeInfo)
-            console.log(info.body[0])
         }
         fetchData();
         setWindowWidth(window.innerWidth)
-        console.log("window.innerWidth: ", window.innerWidth*0.01)
         setWindowHeight(window.innerHeight)
         
         window.addEventListener('resize',handleResize);
@@ -316,7 +310,6 @@ const RepairHistory = (props) => {
                                             onChange={(e)=>{
                                                 if(key+1 === 1){
                                                     setRepairCount1(e.target.value)
-                                                    console.log(typeCost1)
                                                     setRepairCost1((e.target.value)*typeCost1)
                                                 }else if(key+1 === 2){
                                                     setRepairCount2(e.target.value)
@@ -348,7 +341,6 @@ const RepairHistory = (props) => {
                                 <RightItemBox >
                                     <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
                                         <ItemRedo redo1={repairRedo1} redo2={repairRedo2} redo3={repairRedo3} index={key} onChange={()=>{
-                                            console.log(repairType1)
                                             if(key+1 === 1){
                                                 setRepairRedo1(!repairType1)
                                             }else if(key+1 === 2){
@@ -397,7 +389,6 @@ const RepairHistory = (props) => {
                 <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, width:windowWidth*0.1}} value = {cashreceiptNum}
                         onChange={(e)=>{
                             setCashreceiptNum((e.target.value).toString())
-                            console.log((e.target.value).toString())
                         }}
                 />
             </LaView>
