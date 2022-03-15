@@ -1,19 +1,13 @@
-import React,{useState ,useEffect,useCallback} from 'react';
+import React,{useState ,useEffect} from 'react';
 import Container from '../../components/Container';
 import Contents from '../../components/Contents';
-import SelectButton from '../../components/SelectButton';
 import Button from '../../components/Button';
 import Bottom from '../../components/Bottom';
-import _, { reduce, sortedLastIndex } from 'lodash';
-import axios from "axios";
-import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert} from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DateObject from "react-date-object";
-import { size } from 'lodash';
+import _ from 'lodash';
+import {Dimensions ,StyleSheet, Alert} from "react-native";
 import styled from 'styled-components/native';
 import store from '../../store/store';
-import { Provider } from 'react-redux'
-import { CheckBox } from 'react-native-elements';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -102,6 +96,12 @@ function LookupInfo( { route,navigation } ) {
     const [receiptDate,setReceiptDate] = useState();        //매장접수일
     const [appointmentDate,setAppointmentDate] = useState();//고객약속일
     
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
     
     
     console.log(images)
@@ -149,7 +149,14 @@ function LookupInfo( { route,navigation } ) {
                
      
             </Contents>
-            <Button onPress={ ()=> navigation.navigate( 'LookupInfo2',{data:data , images:images}) }>
+            <Button onPress={ ()=>{
+                if(netInfo.isConnected){
+                    navigation.navigate( 'LookupInfo2',{data:data , images:images})
+                }else{
+                    alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                }
+                 
+                }}>
                 다음
             </Button>
 

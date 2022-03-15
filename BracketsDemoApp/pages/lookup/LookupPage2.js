@@ -1,15 +1,13 @@
-import React, { useState ,useCallback} from 'react';
-import Button from '../../components/Button';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
-import _, { values } from 'lodash';
+import _ from 'lodash';
 import { ScrollView ,TouchableHighlight,View,Dimensions} from 'react-native';
 import ip from '../../serverIp/Ip';
 import Bottom from '../../components/Bottom';
-import Contents from '../../components/Contents';
-import ContainView from '../../components/ContainView';
 import Container from '../../components/Container';
 import axios from 'axios';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 
 const Alternative = styled.Text`
@@ -104,6 +102,13 @@ function LookupPage2({ route,navigation }) {
         navigation.navigate('LookupInfo',{data:obj,images: data.data})
     }, []);
     console.log(data)
+
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
     
     for (let index = 0; index < data.length; index++) {
         const obj = data[index];
@@ -129,7 +134,11 @@ function LookupPage2({ route,navigation }) {
         var raw = (
             <TouchableHighlight key = {indexKey} underlayColor={"#CCC"} 
                 onPress={() => {
-                    getImages(obj["receipt_code"],obj)
+                    if(netInfo.isConnected){
+                        getImages(obj["receipt_code"],obj)
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
                 }}>
                 <PrView>
                     <Label>{indexKey+1}</Label>

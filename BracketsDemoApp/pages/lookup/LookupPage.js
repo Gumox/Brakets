@@ -13,12 +13,12 @@ import {
   TouchableWithoutFeedback,
   Platform
 } from 'react-native';
-import ContainView from '../../components/ContainView';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../../store/store';
 import axios from 'axios';
 import ip from '../../serverIp/Ip';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import {useNetInfo}from "@react-native-community/netinfo";
 
 const Title = styled.Text`
   font-size : 24px;
@@ -221,6 +221,13 @@ function LookupPage({ navigation }) {
     //console.log(data.data)
     navigation.navigate('LookupPage2', { data: data.data })
   }, []);
+
+  const netInfo = useNetInfo();
+  if(netInfo.isConnected){
+      console.log("netInfo.isConnected: ",netInfo.isConnected)
+  }else{
+      alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+  }
   
   let startDatePicker;
                           
@@ -352,7 +359,11 @@ function LookupPage({ navigation }) {
         <Label />
         <Button onPress={() => {
           console.log(startDate.reDate)
-          getData(startDate.reDate, endDate.reDate, name, pNumber,shopId);
+          if(netInfo.isConnected){
+            getData(startDate.reDate, endDate.reDate, name, pNumber,shopId);
+          }else{
+            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+          }
           //navigation.navigate('LookupPage2')
 
 
