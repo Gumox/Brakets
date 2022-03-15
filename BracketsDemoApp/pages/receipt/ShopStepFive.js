@@ -10,6 +10,49 @@ import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom';
 import StateBarSolid from '../../components/StateBarSolid';
 import store from '../../store/store';
+import {useNetInfo}from "@react-native-community/netinfo";
+
+function ShopStepFive( { navigation } ) {
+    //console.log(store.getState().recDate);
+    
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
+    return (
+        <Container>
+            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
+                <TopInfo></TopInfo>
+            <CenterText>
+                
+                
+                <RegistText>행낭 접수</RegistText>
+            
+                
+            </CenterText>
+            <Contents>
+                
+                <BlueText>행낭 바코드</BlueText>
+                <GrayText>를 스캔하세요</GrayText>
+            </Contents>
+            <Button onPress={ ()=> {
+                if(netInfo.isConnected){
+                    navigation.navigate( 'ScanScreen',{key:'ShopStepComplete'} ) 
+                }else{
+                    alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                }
+                
+                }}>
+                코드 스캔
+            </Button>
+            
+            <Bottom navigation={navigation}/>
+        </Container>
+    )
+}
+export default ShopStepFive;
 
 
 const RegistText= styled.Text`
@@ -33,32 +76,3 @@ const TopStateView = styled.View`
     color:#000000;
     justify-content: center;
 `;
-// 구조 분해 할당, Destructuring Assignment
-function ShopStepFive( { navigation } ) {
-    //console.log(store.getState().recDate);
-    
-    return (
-        <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
-                <TopInfo></TopInfo>
-            <CenterText>
-                
-                
-                <RegistText>행낭 접수</RegistText>
-            
-                
-            </CenterText>
-            <Contents>
-                
-                <BlueText>행낭 바코드</BlueText>
-                <GrayText>를 스캔하세요</GrayText>
-            </Contents>
-            <Button onPress={ ()=> navigation.navigate( 'ScanScreen',{key:'ShopStepComplete'} ) }>
-                코드 스캔
-            </Button>
-            
-            <Bottom navigation={navigation}/>
-        </Container>
-    )
-}
-export default ShopStepFive;

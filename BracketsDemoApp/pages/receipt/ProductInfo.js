@@ -14,51 +14,7 @@ import Bottom from '../../components/Bottom';
 import store from '../../store/store';
 import { PathToFlie } from '../../Functions/PathToFlie';
 import ip from '../../serverIp/Ip';
-
-const Label = styled.Text`
-    color:#000000;
-    font-size: 15px;
-    margin-Top: 12px;
-    margin-bottom: 12px;
-    margin-left:12px;
-`;
-const PrView = styled.View`
-    flex-direction: row;
-    justify-content:space-between;
-    margin-bottom:30px;
-    padding-bottom:30px;
-`;
-const Input = styled.TextInput`
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-    color:#000000
-`;
-const CenterView =styled.View`
-    align-items: center;
-`;
-const TopIntro =styled.Text`
-    color:#000000;
-    font-size: 25px;
-    font-weight: bold;
-    margin: 15px;
-`;
-const ContainImg =styled.View`
-    margin-top: 40px;
-    background-color:#d6d6d6;
-    border-radius:12px;
-    justify-content: center;
-    align-items: center;
-`;
-const TopStateView = styled.View`
- 
-    flex-direction: row;
-    padding:24px;
-    justify-content: center;
-`;
-
+import {useNetInfo}from "@react-native-community/netinfo";
 
 function ProductInfo({navigation, route}) {
    
@@ -82,6 +38,12 @@ function ProductInfo({navigation, route}) {
         }
     }
     
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
     
     useEffect(()=>{
         const fetch= ()=>{
@@ -317,8 +279,12 @@ function ProductInfo({navigation, route}) {
                 <CenterView>
 
                     <Button  onPress={ ()=> {
-                        console.log(codeInput)
-                        addReceipt();
+                        if(netInfo.isConnected){
+                            console.log(codeInput)
+                            addReceipt();
+                        }else{
+                            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                        }
                         
 
                     }}>
@@ -334,3 +300,47 @@ function ProductInfo({navigation, route}) {
 }
 
 export default ProductInfo;
+
+const Label = styled.Text`
+    color:#000000;
+    font-size: 15px;
+    margin-Top: 12px;
+    margin-bottom: 12px;
+    margin-left:12px;
+`;
+const PrView = styled.View`
+    flex-direction: row;
+    justify-content:space-between;
+    margin-bottom:30px;
+    padding-bottom:30px;
+`;
+const Input = styled.TextInput`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+    color:#000000
+`;
+const CenterView =styled.View`
+    align-items: center;
+`;
+const TopIntro =styled.Text`
+    color:#000000;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 15px;
+`;
+const ContainImg =styled.View`
+    margin-top: 40px;
+    background-color:#d6d6d6;
+    border-radius:12px;
+    justify-content: center;
+    align-items: center;
+`;
+const TopStateView = styled.View`
+ 
+    flex-direction: row;
+    padding:24px;
+    justify-content: center;
+`;

@@ -11,54 +11,18 @@ import TopInfoLess from '../../components/TopInfoLess';
 import Bottom from '../../components/Bottom';
 import store from '../../store/store';
 import ip from '../../serverIp/Ip';
+import {useNetInfo}from "@react-native-community/netinfo";
 
-const Label = styled.Text`
-    font-size: 15px;
-    margin: 20px;
-    color:#000000;
-`;
-const PView = styled.View`
-    
-    flex-direction: row;
-    padding-bottom:24px;
-    justify-content: center;
-`;
-
-const CenterView =styled.View`
-    align-items: center;
-    
-`;
-const TopIntro =styled.Text`
-    color:#000000;
-    font-size: 25px;
-    font-weight: bold;
-    margin: 15px;
-`;
-const BlueText = styled.Text`
-    font-weight: bold;
-    font-size: 20px;
-    color:#78909c;
-    margin-Top:40px;
-`;
-const GrayText = styled.Text`
-    font-size: 20px;
-    color:#858585;
-`;
-const TopStateView = styled.View`
-    
-    flex-direction: row;
-    padding:24px;
-    justify-content: center;
-`;
-
-const ImgIcon =styled.Image`
-    width: 45px;
-    height: 48px;
-    padding : 5px;
-`;
 function ShopStepTwo({navigation}) {
     const [data, setData] = React.useState([]);
     const [isLoading, setLoading] = React.useState(true);
+    
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
     const bodyData = {
         "brand": store.getState().brand_id,
        
@@ -131,29 +95,45 @@ function ShopStepTwo({navigation}) {
             </CenterText>  
             <PView>
                 <CenterView><SelectButton iconImg = {<ImgIcon source={require('../../Icons/repair_blue.png')}/>} onPress={ ()=> {
-                    updateReceipt(store.getState().receipt_id,1)
-                    store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:1}});
-                    getProductCategory();
+                    if(netInfo.isConnected){
+                        updateReceipt(store.getState().receipt_id,1)
+                        store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:1}});
+                        getProductCategory();
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
 
                 }}>수선</SelectButton>
                 <SelectButton iconImg = {<ImgIcon source={require('../../Icons/refund_blue.png')}/>} onPress={ ()=> {
-                    updateReceipt(store.getState().receipt_id,3)
-                    store.dispatch({type:'REQUIREMENT',requirement:{name:"환불",id:3}});
-                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                    getProductCategory();
+                    if(netInfo.isConnected){
+                        updateReceipt(store.getState().receipt_id,3)
+                        store.dispatch({type:'REQUIREMENT',requirement:{name:"환불",id:3}});
+                        store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
+                        getProductCategory();
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
                 }}>환불</SelectButton>
                 </CenterView>
                 <CenterView><SelectButton  iconImg = {<ImgIcon source={require('../../Icons/exchange_blue.png')}/>} onPress={ ()=> {
-                    updateReceipt(store.getState().receipt_id,2)
-                    store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
-                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                    getProductCategory();
+                    if(netInfo.isConnected){
+                        updateReceipt(store.getState().receipt_id,2)
+                        store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
+                        store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
+                        getProductCategory();
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
                 }}>교환</SelectButton>
                 <SelectButton iconImg = {<ImgIcon source={require('../../Icons/deliberating_blue.png')}/>} onPress={ ()=> {
-                    updateReceipt(store.getState().receipt_id,4)
-                    store.dispatch({type:'REQUIREMENT',requirement:{name:"심의",id:4}});
-                    store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                    getProductCategory();
+                    if(netInfo.isConnected){
+                        updateReceipt(store.getState().receipt_id,4)
+                        store.dispatch({type:'REQUIREMENT',requirement:{name:"심의",id:4}});
+                        store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
+                        getProductCategory();
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
                 }}>심의</SelectButton></CenterView>
             </PView>  
             <Bottom navigation={navigation}/>
@@ -162,3 +142,48 @@ function ShopStepTwo({navigation}) {
 }
 
 export default ShopStepTwo;
+
+const Label = styled.Text`
+    font-size: 15px;
+    margin: 20px;
+    color:#000000;
+`;
+const PView = styled.View`
+    
+    flex-direction: row;
+    padding-bottom:24px;
+    justify-content: center;
+`;
+
+const CenterView =styled.View`
+    align-items: center;
+    
+`;
+const TopIntro =styled.Text`
+    color:#000000;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 15px;
+`;
+const BlueText = styled.Text`
+    font-weight: bold;
+    font-size: 20px;
+    color:#78909c;
+    margin-Top:40px;
+`;
+const GrayText = styled.Text`
+    font-size: 20px;
+    color:#858585;
+`;
+const TopStateView = styled.View`
+    
+    flex-direction: row;
+    padding:24px;
+    justify-content: center;
+`;
+
+const ImgIcon =styled.Image`
+    width: 45px;
+    height: 48px;
+    padding : 5px;
+`;

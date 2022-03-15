@@ -24,7 +24,7 @@ function Login({ navigation }): React.ReactElement {
   const isFirstRun = useRef(true);
 
   function SaveInfo(_userName, _userEmail, _data){
-
+      
       AsyncStorage.setItem(
         'userInfo',
         JSON.stringify({
@@ -35,6 +35,7 @@ function Login({ navigation }): React.ReactElement {
           console.log('user id and user email\'s saved: ' + _userName, _userEmail);
           store.dispatch({ type: 'storeStaffId', storeStaffId: _userEmail });
           store.dispatch({ type: 'storeName', storeName: _userName })
+          store.dispatch({ type: 'STORE_ID', store_id: _data[0].store_id });
           store.dispatch({ type: 'USER_INFO', userInfo: _data })
           navigation.replace('ReceiptDivision');
         });

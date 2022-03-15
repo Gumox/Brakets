@@ -9,34 +9,24 @@ import store from '../../../store/store';
 import Button from '../../../components/Button';
   
 import DrawBoard from './DrawBoard';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 
 export default function ShopStepThree3 ({navigation ,route}) {
  
-    console.log(store.getState().photo);
-    console.log("");
-    console.log("");
-    console.log("");
     const  params = route.params;
-    console.log(params)
-    console.log("");
-    console.log("");
-    console.log("");
+    let imageUri = store.getState().photo;
 
-    var imageUri = store.getState().photo;
-
-    /*const imageArray =store.getState().photoArr;
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
     
-    imageArray.forEach(obj => {
-    if(obj.index === 0){
-        imageUri = obj.value; 
-    } 
-    });*/
-    
-    var imagePath  =imageUri.replace("file://", "");
+    let imagePath  =imageUri.replace("file://", "");
     const [color,setColor] = React.useState("#ff0000");
     const [modalVisible, setModalVisible] = React.useState(false);
-    console.log(imagePath);
     return (
         <View style={styles.container}>
             <ImageBackground source={{ uri: imageUri}} resizeMode="cover" style ={styles.image} > 

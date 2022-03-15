@@ -5,6 +5,8 @@ import styled from 'styled-components/native';
 import { Alert } from 'react-native';
 import Bottom from '../../components/Bottom';
 import { set } from 'lodash';
+import {useNetInfo}from "@react-native-community/netinfo";
+
 
 const Label = styled.Text`
     font-size: 20px;
@@ -34,7 +36,13 @@ function InputAlternativeNumber({ navigation, route }) {
 
     const [input, setInput] = useState('');
     const key = route.params.key;
-
+    
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
     return (
         <>
             <Container>

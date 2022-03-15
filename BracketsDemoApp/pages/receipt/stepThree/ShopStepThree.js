@@ -14,6 +14,7 @@ import { Alert ,BackHandler,View,Text} from 'react-native';
 import store from '../../../store/store';
 import ip from '../../../serverIp/Ip';
 import { GetRepairList } from '../../../Functions/GetRepairList';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 const TopStateView = styled.View`
     flex-direction: row;
@@ -56,31 +57,29 @@ function ShopStepThree( { navigation } ) {
   const [select,setSelect] =  React.useState(null);
 
   const ix = store.getState().indexNumber;
-  //console.log(ix);
-  //console.log("                       :"+store.getState().getProductCategory);
-  
   const Categories = [];
   const itemList = [];
   var i = 1;
   const productCategories = store.getState().getProductCategory;
+
   productCategories.forEach(obj => {
-    console.log("AAAAAAAAAAAAAAAAa")
-    console.log(obj)
-    console.log(":::::::::::::::")
     if(obj.receiver_name !== '아디다스코리아(본사)' ){
-      console.log("?????????????????????????")
-      //key: i+'.'+obj.category_name , value:obj.category_name
       
       itemList.push({ label: i+'.'+obj.category_name, value: obj.category_name })
       var key = obj.category_name;
       Categories.push({'category_name' :obj.category_name, 'pcategory_id': obj.pcategory_id, 'service_date':  obj.service_date});
       var title = obj.receiver_name;
       i = i+1;
-       //Categories.push(title : obj.receiver_name);
     }
     console.log(obj.category_name+ " : " + obj.pcategory_id+"    "+obj.service_date);
     
   });
+  const netInfo = useNetInfo();
+  if(netInfo.isConnected){
+      console.log("netInfo.isConnected: ",netInfo.isConnected)
+  }else{
+      alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+  }
 
 
 
@@ -220,15 +219,14 @@ function ShopStepThree( { navigation } ) {
               
               store.dispatch({type:'PHOTORESET',setPhoto:[]});
               store.dispatch({type:'PLUSINDEXNUMBER',plus:-ix});
-              
-              
-              
               store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
-              
               store.dispatch({type:'DRAW',drawingImage: ""});
+              if(netInfo.isConnected){
+                navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
+              }else{
+                alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+              }
               
-              
-              navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
             }}}>
             다음 단계
           </Button>

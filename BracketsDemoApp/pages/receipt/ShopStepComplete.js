@@ -11,6 +11,8 @@ import store from '../../store/store';
 import { Modal ,StyleSheet,View,Pressable,Image,Text} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
+import {useNetInfo}from "@react-native-community/netinfo";
+
 
 const Label = styled.Text`
     font-size: 15px;
@@ -134,8 +136,14 @@ function ShopStepOne( { navigation } ) {
     const sendForRepir =store.getState().basicRepairStore;
     const [repairShop,setRepairShop] =React.useState(null);
     
-    const set =new Set(sendForRepir);
 
+    
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
     React.useEffect(()=>{
         setRepairShop(sendForRepir)
     },[]);
@@ -247,9 +255,14 @@ function ShopStepOne( { navigation } ) {
                 
             </InfoView>  
             <Button onPress={ ()=>{
-                    submitReceipt(store.getState().receipt_id,bag)
-                    store.dispatch({type:"STORE_CLEAR"})
-                    navigation.popToTop()
+                    if(netInfo.isConnected){
+                        submitReceipt(store.getState().receipt_id,bag)
+                        store.dispatch({type:"STORE_CLEAR"})
+                        navigation.popToTop()
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
+                    
                 }}>
                 완료
             </Button>

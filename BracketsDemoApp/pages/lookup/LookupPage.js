@@ -140,6 +140,7 @@ function LookupPage({ navigation }) {
 
   const [name, setName] = useState(null)
   const [pNumber, setPnumber] = useState(null);
+  const shopId = store.getState().store_id;
   const cal = '../../Icons/calendar.png';
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
@@ -198,7 +199,7 @@ function LookupPage({ navigation }) {
     }
   }
 
-  const getData = useCallback(async (std, edd, name, phone) => {
+  const getData = useCallback(async (std, edd, name, phone,shopId) => {
 
     console.log("press")
     console.log(name)
@@ -206,6 +207,7 @@ function LookupPage({ navigation }) {
 
     const { data } = await axios.get(ip + "/api/lookup", {
       params: {
+        shop: shopId,
         customerName: name,
         customerContact: phone,
         dateOption: "receipt_date",
@@ -350,7 +352,7 @@ function LookupPage({ navigation }) {
         <Label />
         <Button onPress={() => {
           console.log(startDate.reDate)
-          getData(startDate.reDate, endDate.reDate, name, pNumber);
+          getData(startDate.reDate, endDate.reDate, name, pNumber,shopId);
           //navigation.navigate('LookupPage2')
 
 

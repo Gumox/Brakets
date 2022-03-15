@@ -10,7 +10,8 @@ import ContainView from '../../components/ContainView';
 import Bottom from '../../components/Bottom';
 import RNPickerSelect from 'react-native-picker-select';
 import store from '../../store/store';
-import { Alert, View } from 'react-native';
+import { Alert, View,Text } from 'react-native';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 const Label = styled.Text`
     font-size: 15px;
@@ -21,41 +22,6 @@ const TopIntro = styled.Text`
     font-weight: bold;
     margin: 15px;
     color:#000000;
-`;
-const BlueText = styled.Text`
-    font-weight: bold;
-    font-size: 20px;
-    color:#78909c;
-    margin-Top:50px;
-`;
-const GrayText = styled.Text`
-    font-size: 20px;
-    color:#858585;
-`;
-const TopStateView = styled.View`
-    flex:1;
-    flex-direction: row;
-    padding-bottom:24px;
-    justify-content: center;
-`;
-const BottomView = styled.View`
-    flex: 0.4;
-    flex-direction: row;
-    align-items: flex-end;
-    /* background: red; */
-`;
-const BottomEmptySpace = styled.View`
-    background: #78909c;
-    width: 100%;
-    height: 3%;
-    border :0.6px solid #78909c;
-`;
-const TouchableView = styled.TouchableOpacity`
-    flex-direction:row;
-    justify-content:space-around;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
 `;
 const PickerView = styled.View`
     height:5%;
@@ -73,7 +39,16 @@ function ReceiptDivision({navigation}) {
     const info = store.getState().userInfo;
     const [seletStore, setSeletStore] = useState(null); 
     
+    const [shopInShop,setShopInShop] = useState();
+    
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
     useEffect(()=>{
+
         var i =1;
         var list =[]
         console.log('receipt division: ' + info)
@@ -82,20 +57,20 @@ function ReceiptDivision({navigation}) {
             i = i +1;
         })
         setItemList(list)
-        console.log(itemList)
-    },[]);
-    
-    return (
-
-        <>
-            <Container>
-            <Label/>
-            <Label/>
-            <TopIntro>접수 구분</TopIntro>
-            <PickerView>
+        if(list.length<2){
+            let text =(list[0].label).split('.');
+            store.dispatch({type:"BRAND_ID",brand_id:list[0].brandId })
+            setSeletStore(list[0].value)
+            setShopInShop(
+                    <Text style={{marginLeft:"5%",color:"#000000"}}>
+                        {text[1]}
+                    </Text>
+            )
+        }else{
+            setShopInShop(
                 <RNPickerSelect
                     placeholder = {{label : '매장을 선택하세요', value: null }}
-                    style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : '#000000', color:"#000000"} }
+                    style = { {border :'solid', marginBottom : 50, borderWidth : 3, borderColor : '#000000', color:"#000000"} }
                     onValueChange={(value) => 
                         {   
                             itemList.forEach(obj => {
@@ -115,13 +90,28 @@ function ReceiptDivision({navigation}) {
                     }
                     items={itemList}
                 />
+            )
+        }
+    },[]);
+    
+    return (
+
+        <>
+            <Container>
+            <Label/>
+            <Label/>
+            <TopIntro>접수 구분</TopIntro>
+            <PickerView>
+                {
+                    shopInShop
+                }
             </PickerView>
             <Label/>
             <ReceiptButton onPress={ ()=> {
                 if(seletStore === null){
                     Alert.alert(            
                         "",             
-                        "메장을 선택하세요",                   
+                        "매장을 선택하세요",                   
                         [                              
                             { text: "확인"},
                         ]
@@ -131,7 +121,11 @@ function ReceiptDivision({navigation}) {
                     console.log("204")
                     store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"고객용",id:1}});
                     console.log(store.getState().receptionDivision);
-                    navigation.navigate( 'SearchCustomer' ) 
+                    if(netInfo.isConnected){
+                        navigation.navigate( 'SearchCustomer' ) 
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
                 }
                 
             }}>고객용 제품</ReceiptButton>
@@ -149,7 +143,11 @@ function ReceiptDivision({navigation}) {
                 else{
                     store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"선처리",id:2}});
                     console.log(store.getState().receptionDivision);
-                    navigation.navigate( 'SearchCustomer' )
+                    if(netInfo.isConnected){
+                        navigation.navigate( 'SearchCustomer' )
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
                 }
             }}>매장용-선처리 제품</ReceiptButton>
 
@@ -166,7 +164,11 @@ function ReceiptDivision({navigation}) {
                 else{
                     store.dispatch({type:'RECEPITION_DIVISION',receptionDivision:{name:"매장용",id:3} });
                     console.log(store.getState().receptionDivision);
-                    navigation.navigate( 'ShopStepOne' ) 
+                    if(netInfo.isConnected){
+                        navigation.navigate( 'ShopStepOne' )
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
                 }
             }}>매장용 제품</ReceiptButton>
             </Container>

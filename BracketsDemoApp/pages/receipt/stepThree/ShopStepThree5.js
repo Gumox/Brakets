@@ -14,59 +14,10 @@ import TopInfo from '../../../components/TopInfo';
 import Bottom from '../../../components/Bottom';
 import ip from '../../../serverIp/Ip';
 import { PathToFlie } from '../../../Functions/PathToFlie';
+import {useNetInfo}from "@react-native-community/netinfo";
 
-const Label = styled.Text`
-    color:#000000;
-    font-size: 15px;
-    margin-Top: 12px;
-    margin-bottom: 12px;
-    margin-left:12px;
-`;
-const PrView = styled.View`
-    flex-direction: row;
-    justify-content:space-between;
-`;
 
-const CenterView =styled.View`
-    align-items: center;
-`;
-const TopIntro =styled.Text`
-    font-size: 25px;
-    font-weight: bold;
-    color:#000000;
-    margin: 15px;
-`;
-const TopStateView = styled.View`
-    flex-direction: row;
-    padding:24px;
-    justify-content: center;
-`;
-const InfoView =styled.View`
-    width: 100%;
-    border:2px solid  #78909c;
-    border-radius:12px;
-    
-    padding:15px;
-`;
-
-const Input = styled.Text`
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    border : 1.5px;
-    color:#000000;
-    border-radius:10px;
-`;
-const SendText = styled.Text`
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    color:#000000;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-
-function ShopStepThree4({route,navigation}) {
+function ShopStepThree5({route,navigation}) {
     const uriList=[];
     const [text,setText] = React.useState('');
 
@@ -91,20 +42,12 @@ function ShopStepThree4({route,navigation}) {
     const [pcategory_id,setPcategory_id] =React.useState();
     const [receiver_id,setReceiver_id] =React.useState();
     
-
-
-    console.log("*-*-*-*-*-*-*-*-*-*-*-*-*")
-    console.log()
-    console.log()
-    console.log(receiverList)
-    console.log()
-    console.log()
-    console.log(productCategories)
-    console.log()
-    console.log()
-    console.log("*-*-*-*-*-*-*-*-*-*-*-*-*")
-    
-    
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
 
     const updateReceipt = async (receipt_id) => {
         var formdata = new FormData();
@@ -241,9 +184,12 @@ function ShopStepThree4({route,navigation}) {
             </Contents>
             <CenterView>
                 <Button onPress={ ()=>{
-                    
-                    updateReceipt(store.getState().receipt_id)
-                    navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} ) 
+                    if(netInfo.isConnected){ 
+                        updateReceipt(store.getState().receipt_id)
+                        navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} )
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    } 
                     
                     }}>
                     4단계: 서비스 바코드 스캔 
@@ -255,4 +201,54 @@ function ShopStepThree4({route,navigation}) {
     
 }
 
-export default ShopStepThree4;
+export default ShopStepThree5;
+const Label = styled.Text`
+    color:#000000;
+    font-size: 15px;
+    margin-Top: 12px;
+    margin-bottom: 12px;
+    margin-left:12px;
+`;
+const PrView = styled.View`
+    flex-direction: row;
+    justify-content:space-between;
+`;
+
+const CenterView =styled.View`
+    align-items: center;
+`;
+const TopIntro =styled.Text`
+    font-size: 25px;
+    font-weight: bold;
+    color:#000000;
+    margin: 15px;
+`;
+const TopStateView = styled.View`
+    flex-direction: row;
+    padding:24px;
+    justify-content: center;
+`;
+const InfoView =styled.View`
+    width: 100%;
+    border:2px solid  #78909c;
+    border-radius:12px;
+    
+    padding:15px;
+`;
+
+const Input = styled.Text`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    border : 1.5px;
+    color:#000000;
+    border-radius:10px;
+`;
+const SendText = styled.Text`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    color:#000000;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;

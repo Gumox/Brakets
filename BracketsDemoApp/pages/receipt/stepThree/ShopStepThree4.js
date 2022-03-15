@@ -15,6 +15,7 @@ import _ from 'lodash';
 import ip from '../../../serverIp/Ip';
 import { getList } from '../../../Functions/GetSendList';
 import { changeSelectSend ,changeBasicSend,changeSelectType} from '../../../Functions/SendDataFuctions';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 
 const Label = styled.Text`
@@ -66,9 +67,7 @@ const ContainImg =styled.TouchableOpacity`
     margin-Left:3px;
 `;
 
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
+
 
 function ShopStepThree4({route,navigation}) {
 
@@ -76,34 +75,20 @@ function ShopStepThree4({route,navigation}) {
     uriList.push(store.getState().photo);
     uriList.push(store.getState().detailPhoto);
     
-    
-    
     const selectedType = store.getState().selectType[0].value; 
-    
     const index = store.getState().indexNumber;
-
-    const [arrayValueIndex,setArrayValueIndex] =React.useState(0);
-    
-    const [select,setSelect] = React.useState();
-    
-    const [dataList,setDataList] = React.useState([]);
-    
-    
-    //const data =store.getState().getAplType;
-
-    const useList = store.getState().typeStore ;
-    
-    var useListSort = useList.sort(function(a,b){
-        return a.key -b.key;
-    });
-
     const [sendList,setSendList] = React.useState([]);
-
     const [itemList , setItemList] = React.useState([]);
     const productCategories = store.getState().getProductCategory;
     const  [receiverList,setReceiverList] = React.useState(store.getState(). receiverList);
 
-    
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+    }
+
     const ProductCategoriesClassify =()=>{
         var items  = [];
         var category = [];
@@ -289,9 +274,13 @@ function ShopStepThree4({route,navigation}) {
             <CenterView>
                 <ButtonBlack onPress={ ()=>
                     {
-                     store.dispatch({type:'SELECTTYPESET',set:selectedTypeLists})
-                     store.dispatch({type:'ADD_REQUESR',addRequest:inputTexts});
-                     navigation.navigate( 'ShopStepThree5' );
+                        store.dispatch({type:'SELECTTYPESET',set:selectedTypeLists})
+                        store.dispatch({type:'ADD_REQUESR',addRequest:inputTexts});
+                        if(netInfo.isConnected){
+                            navigation.navigate( 'ShopStepThree5' );
+                        }else{
+                            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                        }
                     }
                 }>
                     다음
