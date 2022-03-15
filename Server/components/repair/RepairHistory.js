@@ -272,6 +272,7 @@ const RepairHistory = (props) => {
         }
         fetchData();
         setWindowWidth(window.innerWidth)
+        console.log("window.innerWidth: ", window.innerWidth*0.01)
         setWindowHeight(window.innerHeight)
         
         window.addEventListener('resize',handleResize);
@@ -389,11 +390,11 @@ const RepairHistory = (props) => {
                     }
                 </div>
                 <div style={{fontSize:15,color:`${COLOR.RED}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>유상수선비</div>
-                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, borderBottomColor:`${COLOR.RED}`}} value = {fee}
+                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, width:windowWidth*0.08,borderBottomColor:`${COLOR.RED}`}} value = {fee}
                         onChange={(e)=>{setFee(e.target.value)}}
                 />
                 <div style={{fontSize:15,color:`${COLOR.BLACK}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>현금영수증 번호</div>
-                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0}} value = {cashreceiptNum}
+                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, width:windowWidth*0.1}} value = {cashreceiptNum}
                         onChange={(e)=>{
                             setCashreceiptNum((e.target.value).toString())
                             console.log((e.target.value).toString())
