@@ -290,7 +290,7 @@ const RepairHistory = (props) => {
                         <div key={key} style={{height:windowWidth*0.034}}>
                             <LaView style={{marginTop:10}}>
                                 <RightItemBox>
-                                    <ItemText2><div style={{marginLeft:10}}>수선내용{index+1}</div></ItemText2>
+                                    <ItemText2><div style={{marginLeft:10 ,minWidth:55}}>수선내용{index+1}</div></ItemText2>
                                     <ItemsView style={{marginTop:5}} >
                                     <ItemType type1={repairType1} type2={repairType2} type3={repairType3} index={key} repiarType={repiarType}
                                         onChange={(e,cost)=>{
@@ -375,7 +375,7 @@ const RepairHistory = (props) => {
                 })
             }
             <ItemText>수선처 설명</ItemText>
-              <textarea value={message} style={{height:(windowHeight*0.08),fontSize:18,padding:10,width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
+              <textarea value={message} style={{height:(windowHeight*0.11),fontSize:18,padding:10,width:"100%",border:2,borderStyle:"solid",borderColor:COLOR.BRAUN,borderRadius:5,resize:"none"}}
                 onChange ={(e)=>{
                     setMessage(e.target.value)
                 }}

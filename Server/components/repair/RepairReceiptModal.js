@@ -95,6 +95,10 @@ function RepairReceiptModal (props) {
       console.log(el)
       const fI = await getSelectList('faultDivision',hq_id)
       const jI = await getSelectList('judgmentResult',hq_id)
+      console.log("****************************")
+      console.log(jI)
+      console.log(hq_id)
+      console.log("****************************")
       const aI = await getSelectList('analysisType',hq_id)
       const typeInfo = await getRepairType(hq_id);
       
@@ -112,7 +116,8 @@ function RepairReceiptModal (props) {
       jI.unshift({judgmentResult_name:"선택",level:1})
       aI.unshift({analysisType_name:"선택",level:1})
       typeInfo.unshift({text:"선택",level:1})
-
+      
+      setJudgmentLists(setSelectList(jI))
       
       for(let i=1;i<4;i++){
         let resultId =`repair${i}_result_id`
@@ -122,7 +127,6 @@ function RepairReceiptModal (props) {
         let fault =`repair${i}_analysis_id`
         if(el[repairStoreId] == shop){
           setSelectJudgmentValue(el[resultId])
-          setJudgmentLists(setSelectList(jI))
           setSelectJudgmentName(el[name])
         }
         if(el[fault] !== null){
