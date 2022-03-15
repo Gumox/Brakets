@@ -92,13 +92,8 @@ function RepairReceiptModal (props) {
   }
   useEffect( () => {
     const fetchData = async () => {
-      console.log(el)
       const fI = await getSelectList('faultDivision',hq_id)
       const jI = await getSelectList('judgmentResult',hq_id)
-      console.log("****************************")
-      console.log(jI)
-      console.log(hq_id)
-      console.log("****************************")
       const aI = await getSelectList('analysisType',hq_id)
       const typeInfo = await getRepairType(hq_id);
       
