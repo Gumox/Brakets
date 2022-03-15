@@ -152,9 +152,7 @@ function ShopStepOne({ navigation }) {
             <ScrollView>
                 <TopStateView><StateBarSolid /><StateBarSolid /><StateBarSolid /><StateBarSolid /><StateBarSolid /></TopStateView>
                 <TopInfo></TopInfo>
-                <CenterText
-                    style={{ marginBottom: '10%' }}
-                >
+                <CenterText>
                     <Image source={require('../../Icons/complete_blue.png')} style={{ width: 60, height: 60, marginBottom: 10 }}></Image>
                     <RegistText>접수 완료</RegistText>
                     <PrView><BlueText>완료</BlueText><GrayText> 버튼을 누르시면</GrayText></PrView>
