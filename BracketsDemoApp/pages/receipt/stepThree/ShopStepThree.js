@@ -142,11 +142,15 @@ function ShopStepThree( { navigation } ) {
       <Container>
           <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
           <TopInfo></TopInfo>
+
           <CenterText>
               <Title>수선정보</Title>
           </CenterText>
 
           <CenterText>
+          <CenterText
+            style={{marginBottom: '20%'}}
+          >
               <Oneline>
                   <BlueText>제품 구분 </BlueText>
                   <GrayText>선택 후</GrayText>
