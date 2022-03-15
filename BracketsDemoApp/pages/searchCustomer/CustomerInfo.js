@@ -118,9 +118,6 @@ const styles = StyleSheet.create({
     height: 20px;
     margin-Right:5px;
 `;
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
 export default class CustomerInfo extends Component {
     constructor(props) {
         super(props);

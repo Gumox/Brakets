@@ -274,7 +274,7 @@ function ShopStepThree4({route,navigation}) {
                         if(netInfo.isConnected){
                             navigation.navigate( 'ShopStepThree5' );
                         }else{
-                            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                         }
                     }
                 }>

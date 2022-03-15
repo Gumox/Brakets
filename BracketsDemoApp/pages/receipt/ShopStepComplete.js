@@ -256,7 +256,7 @@ function ShopStepOne( { navigation } ) {
                         store.dispatch({type:"STORE_CLEAR"})
                         navigation.popToTop()
                     }else{
-                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                     }
                     
                 }}>

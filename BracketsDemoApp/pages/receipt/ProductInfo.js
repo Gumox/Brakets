@@ -278,7 +278,7 @@ function ProductInfo({navigation, route}) {
                             console.log(codeInput)
                             addReceipt();
                         }else{
-                            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                         }
                         
 

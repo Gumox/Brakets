@@ -52,11 +52,18 @@ function ShopStepOne( { navigation } ) {
                 if(netInfo.isConnected){
                     navigation.navigate( 'InputAlternativeNumber' ,{key:"ProductInfo"})
                 }else{
-                    alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                 }
                 }}>
                 대체 코드 작성</Alternative>
-            <Button onPress={ ()=> navigation.navigate( 'BarcodeScreen') }>
+            <Button onPress={ ()=> {
+                if(netInfo.isConnected){
+                    navigation.navigate( 'BarcodeScreen')
+                }else{
+                    alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                }
+
+                }}>
                 코드 스캔
             </Button><Bottom navigation={navigation}/>
         </Container>

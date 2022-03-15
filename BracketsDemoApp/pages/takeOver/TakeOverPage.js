@@ -17,6 +17,7 @@ import { CheckBox } from 'react-native-elements';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
 import { CheckCode,CheckFaultDivision,CheckAnalysisType,CheckJudgmentResult } from '../../Functions/codeCheck';
+import {useNetInfo}from "@react-native-community/netinfo";
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
     border-radius:10px;
@@ -195,6 +196,9 @@ function TakeOverPage( { route,navigation } ) {
     
     const winW = Dimensions.get('window').width;
     const winH = Dimensions.get('window').height;
+    
+    const netInfo = useNetInfo();
+    
     const putReceiptComplete = async (pCode,cDate) => {
         
         try {
@@ -688,8 +692,12 @@ function TakeOverPage( { route,navigation } ) {
                         ]
                     )
                 }else{
-                    putReceiptComplete(cardCode,selectDay);
-                    navigation.popToTop();
+                    if(netInfo.isConnected){
+                        putReceiptComplete(cardCode,selectDay);
+                        navigation.popToTop();
+                    }else{
+                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                    }
                 }
               }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
             </Half> 

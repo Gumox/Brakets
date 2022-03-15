@@ -358,7 +358,7 @@ function LookupPage({ navigation }) {
           if(netInfo.isConnected){
             getData(startDate.reDate, endDate.reDate, name, pNumber,shopId);
           }else{
-            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
           }
           //navigation.navigate('LookupPage2')
 
