@@ -162,10 +162,12 @@ function ShopStepThree( { navigation } ) {
           </CenterText>
 
           <BlackText>제품 구분 선택</BlackText>
-          <DropBackground>
+          <DropBackground
+            style = {{width: '75%', height: '5%'}}
+          >
           <RNPickerSelect
-          placeholder = {{label : '[필수] 옵션을 선택하세요',value: null}}
-          style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black'} }
+            placeholder = {{label : '[필수] 옵션을 선택하세요', value: null}}
+            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black', padding: '5px'} }
           onValueChange={(value) => 
             {setSelect(value)
               store.dispatch({type:"SELECTTYPESET" ,set : []});
