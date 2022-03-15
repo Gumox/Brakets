@@ -9,6 +9,7 @@ import Contents from '../../components/Contents';
 import { CheckBox, Icon } from 'react-native-elements';
 import ViewShot from "react-native-view-shot";
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 import {
     View,
@@ -136,6 +137,12 @@ export default class CustomerInfo extends Component {
     
     render(){
         var cstSign;
+        const netInfo = useNetInfo();
+        if(netInfo.isConnected){
+            console.log("netInfo.isConnected: ",netInfo.isConnected)
+        }else{
+            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+        }
         if(store.getState().customerSign == ""){console.log("''")}
         if(store.getState().customerSign != ""){
             console.log("this Sav :    "+store.getState().customerSign);

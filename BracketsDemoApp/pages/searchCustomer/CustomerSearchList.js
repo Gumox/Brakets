@@ -15,6 +15,7 @@ import store from '../../store/store';
 import { Provider } from 'react-redux'
 import { getList } from '../../Functions/GetSendList';
 import Bottom from '../../components/Bottom';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 
 const Label = styled.Text`
@@ -64,25 +65,33 @@ export default function CustomerSearchList({route, navigation}){
     
     const [cName,setCName] = useState();
     const [cPhone,setCPhone] = useState();
-    var cInfoList =[];
+    let cInfoList =[];
     for (let i = 0; i < customers.length; i++) {
         const key =i;
       
         
-        var customer =(
+        let customer =(
             <View key = {key} style ={{justifyContent:'center',alignItems:"center" }} >
                 <TouchableHighlight underlayColor={"#CCC"} style={{ width:"80%",backgroundColor:"#ffffff",  borderBottomColor: '#d6d6d6' ,borderBottomWidth:3,margin:2}} onPress={()=>{ 
                     setCName(customers[key].cName);
                     setCPhone(customers[key].cPhone);
-                    console.log(customers[key])
-                    store.dispatch({type:'CUSTOMER',customer: customers[key]});
-                    console.log(store.getState().customer)
+                    if(netInfo.isConnected){
+                        store.dispatch({type:'CUSTOMER',customer: customers[key]});
+                    }else{
+                        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    }
                     }}>
                     <PrView><Label>{customers[key].cName}   </Label><Label>{customers[key].cPhone}</Label></PrView>
                 </TouchableHighlight>
             </View>
         );
         cInfoList[key] = (customer)
+    }
+    const netInfo = useNetInfo();
+    if(netInfo.isConnected){
+        console.log("netInfo.isConnected: ",netInfo.isConnected)
+    }else{
+        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
     }
     return(
         <Container>
@@ -97,7 +106,11 @@ export default function CustomerSearchList({route, navigation}){
                {cInfoList}
             </ContentsScroll>
             <Button onPress={ ()=> {
-                navigation.navigate("CustomerInfo")
+                if(netInfo.isConnected){
+                    navigation.navigate("CustomerInfo")
+                }else{
+                    alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                }
             }}>
                 다음
             </Button>

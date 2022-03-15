@@ -29,6 +29,7 @@ import {
 import SketchDraw from 'react-native-sketch-draw';
 import store from '../../../store/store';
 import { PathToFlie } from '../../../Functions/PathToFlie';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 const SketchDrawConstants = SketchDraw.constants;
  
@@ -191,6 +192,7 @@ export default class AddCustomer extends Component {
             console.log(newCustomer)
 
             store.dispatch({type:'CUSTOMER',customer: newCustomer });
+            
             this.props.navigation.navigate('ShopStepOne')
         } catch (error) {
             console.error(error);
@@ -210,6 +212,12 @@ export default class AddCustomer extends Component {
         this.setState({modalVisible: false})
     }
     render(){
+        const netInfo = useNetInfo();
+        if(netInfo.isConnected){
+            console.log("netInfo.isConnected: ",netInfo.isConnected)
+        }else{
+            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+        }
         let cstSign;
         if(store.getState().customerSign == ""){console.log("''")}
         if(store.getState().customerSign != ""){
@@ -388,8 +396,12 @@ export default class AddCustomer extends Component {
                                 ]
                             )
                         }else {
-                            this.addCustomer(this.state.name,this.state.phone)
-                            this.props.navigation.navigate('ShopStepOne')
+                            if(netInfo.isConnected){
+                                this.addCustomer(this.state.name,this.state.phone)
+                                this.props.navigation.navigate('ShopStepOne')
+                            }else{
+                                alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                            }
                         }
                     }}>
                         등록

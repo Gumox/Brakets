@@ -9,6 +9,7 @@ import { Alert, Pressable, View } from 'react-native';
 import store from '../../store/store';
 import ip from '../../serverIp/Ip';
 import { Keyboard, TouchableWithoutFeedback,TouchableHighlight } from 'react-native';
+import {useNetInfo}from "@react-native-community/netinfo";
 
 const Title = styled.Text`
   color :#000000
@@ -54,6 +55,12 @@ function SearchCustomer({ navigation }) {
       customers.push({ cName: body[i].name, cPhone: body[i].phone, cId: body[i].customer_id });
       console.log(customers);
     }
+  }
+  const netInfo = useNetInfo();
+  if(netInfo.isConnected){
+      console.log("netInfo.isConnected: ",netInfo.isConnected)
+  }else{
+      alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
   }
 
   const getCustomer = async (bodyData) => {
