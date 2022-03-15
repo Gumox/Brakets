@@ -49,12 +49,8 @@ const SettlementResult =(props)=>{
         return returnState;
 
     }
-    const setContents =(item)=>{
-        console.log( sortSettlementData(item))
-        
-    }
     const onCheck =(check)=>{
-        console.log(store.getState().selected)
+        //console.log(store.getState().selected)
         if(check){
             store.dispatch({type:"SET_SELECTED",
                             selected:{
@@ -75,7 +71,7 @@ const SettlementResult =(props)=>{
             store.dispatch({type:"RESET_SELECTED",selected: list})
             setCheck(false)
         }
-        console.log(store.getState().selected)
+        //console.log(store.getState().selected)
         return
     }
     React.useEffect(()=>{

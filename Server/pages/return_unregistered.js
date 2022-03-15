@@ -36,7 +36,6 @@ export default function Return_unregistered() {
     
     const searchTarget = (hq_id,repair,brand,startDate,endDate)=>{
         const result = unregisteredListControll(returnList,hq_id,repair,brand,startDate,endDate)
-        //console.log(result)
         setResultList(result)
     }
     const deleteInList=(item)=>{
@@ -55,7 +54,7 @@ export default function Return_unregistered() {
     }
     const insertReturnList=async(list)=>{
         const result= await insertData(list)
-        console.log(result)
+        //console.log(result)
         if(result.msg){
             let data=[]
             returnList.map((el)=>{
@@ -103,15 +102,15 @@ export default function Return_unregistered() {
             let cpList = await getHeadquarter()
             let returnListData;
             if(checkDisable(user.level)){
-                console.log("****************************")
+                //console.log("****************************")
                 returnListData = await getAllReturnList()
-                console.log(returnListData)
-                console.log("****************************")
+                //console.log(returnListData)
+                //console.log("****************************")
             }else{
                 returnListData = await getReturnList(localStorage.getItem('SHOP')*1,localStorage.getItem('SHOP_NAME'))
             }
-            console.log(cpList)
-            console.log("****************************")
+            //console.log(cpList)
+            //console.log("****************************")
             setReturnList(returnListData)
             setResultList(returnListData) //for refresh
             setBrandList(list);
@@ -170,7 +169,7 @@ export default function Return_unregistered() {
                     브랜드 : 
                     <select name="brand"  style={{marginLeft:10,marginRight: 10,height:22}}  
                         onChange={(e)=>{
-                            console.log(e.target.value)
+                            //console.log(e.target.value)
                             if(e.target.value){
                                 setBrand(e.target.value)
                             }else{

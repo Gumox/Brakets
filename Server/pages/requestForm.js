@@ -12,7 +12,7 @@ const Request = (props) => {
     const myWidth = 210*3.8;
     const per =3.8
     const { printRef,windowWidth,windowHeight,queryData,userName,headquarterId } = props;
-    console.log(userName)
+    //console.log(userName)
     const targetData= JSON.parse(queryData)
     const [companyName,setCompanyName] =useState('')
     const [companyStaffName,setCompanyStaffName] =useState(userName)
