@@ -158,6 +158,7 @@ const lookup = async (req, res) => {
     console.log(req.query);
     try {
       const {
+        shop ,      // 등록 매장
         dateOption, // 날짜기준
         dateType, // 기간전체, 하루만
         startDate, 
@@ -165,8 +166,8 @@ const lookup = async (req, res) => {
         customerName, // 고객이름
         customerContact,  // 연락처(뒷4자리)
       } = req.query;
-      let query = "";
-      let values = [];
+      let query = "WHERE receipt.store_id = ?";
+      let values = [shop];
 
       
 
