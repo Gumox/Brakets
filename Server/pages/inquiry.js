@@ -26,6 +26,9 @@ export default function Inquiry() {
     const [brandList,setBrandList] = useState([])
     const [companyList,setCompanyList] = useState(store.getState().company);
     const [disable,setDisable] = useState(true)
+    const [faultInfo,setFaultInfo] = useState([])
+    const [resultInfo,setResultInfo] = useState([])
+    const [analysisInfo,setAnalysisInfo] = useState([])
     
     
     const getData = async(params)=>{
@@ -40,7 +43,6 @@ export default function Inquiry() {
           ])
           return datas;
     }
-    
     const setTable =useCallback( async(params ,fI,jI,aI) =>{
         let datas = [];
         let types = await getRepairType(null,null,shopId)
@@ -65,7 +67,7 @@ export default function Inquiry() {
             startDate : startDate,
             endDate : endDate,
             dateOption : dateOption 
-        });
+        },analysisInfo,resultInfo,faultInfo);
         },[brand, dateOption, endDate, setTable,startDate]
       );
     useEffect(() => {
@@ -75,6 +77,10 @@ export default function Inquiry() {
             const fI = await getSelectList('faultDivision',null)
             const jI = await getSelectList('judgmentResult',null)
             const aI = await getSelectList('analysisType',null)
+            
+            setFaultInfo(fI)   
+            setResultInfo(jI)  
+            setAnalysisInfo(aI)
 
             list.unshift({brand_id: "",brand_name: "전체"})
             setBrandList(list);
@@ -90,6 +96,7 @@ export default function Inquiry() {
                 endDate : endDate,
                 dateOption : dateOption 
             },aI,jI,fI);
+            
         }
         fetchData();
       },[]);
@@ -116,7 +123,7 @@ export default function Inquiry() {
                             startDate : startDate,
                             endDate : endDate,
                             dateOption : dateOption 
-                        });
+                        },analysisInfo,resultInfo,faultInfo);
                     }}>
                     {companyList.map((item) => (
                         <option value={item.key} key={item.key}>
@@ -147,7 +154,7 @@ export default function Inquiry() {
                                 startDate : startDate,
                                 endDate : endDate,
                                 dateOption : dateOption 
-                            });
+                            },analysisInfo,resultInfo,faultInfo);
                         }}>
                         {   
                             brandList.map((item,index)=>(
@@ -167,7 +174,7 @@ export default function Inquiry() {
                                 startDate : startDate,
                                 endDate : endDate,
                                 dateOption : e.target.value 
-                            });
+                            },analysisInfo,resultInfo,faultInfo);
                         }}>
                         <option value="complete_date">매장접수일</option>
                         <option value="register_date">수선처접수일</option>
@@ -183,7 +190,7 @@ export default function Inquiry() {
                             startDate : e.target.value,
                             endDate : endDate,
                             dateOption : dateOption 
-                        });
+                        },analysisInfo,resultInfo,faultInfo);
                         }}/>
                     
                     <input disabled={disable} type="date" onChange={(e)=>{
@@ -195,7 +202,7 @@ export default function Inquiry() {
                             startDate : startDate,
                             endDate : e.target.value,
                             dateOption : dateOption 
-                        });
+                        },analysisInfo,resultInfo,faultInfo);
                         }}/>
                 </Container>
             <Line/>

@@ -120,11 +120,11 @@ const SettlementResult =(props)=>{
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPrice(adjustment)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
-                <input disabled ={disable} style={{width:80}} value={adjustmentReason||''} onChange={(e)=>{setAdjustmentReason(e.target.value)}}/>
+                <textarea disabled ={disable} style={{width:80}} value={adjustmentReason||''} onChange={(e)=>{setAdjustmentReason(e.target.value)}}/>
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{repairStaff}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
-                <input disabled ={disable} style={{width:80}} value={remarks||''} onChange={(e)=>{setRemarks(e.target.value)}}/>
+                <textarea disabled ={disable} style={{width:80}} value={remarks||''} onChange={(e)=>{setRemarks(e.target.value)}}/>
             </ItemView>
         </Container></LaView>
         
