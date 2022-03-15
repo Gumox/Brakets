@@ -16,7 +16,7 @@ const Title = styled.Text`
   font-size : 24px;
   font-weight : bold;
   color:#000000;
-  marginBottom:15px
+  marginBottom:15px;
 `;
 const BlackText = styled.Text`
   color :#000000
@@ -31,7 +31,7 @@ const DropBackground = styled.View`
     margin-top:10px;
 `;
 const Input = styled.TextInput`
-    color:#000000
+    color:#000000;
     width: 100%;
     padding: 8px;
     font-size: 20px;
