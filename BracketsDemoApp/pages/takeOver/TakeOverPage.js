@@ -138,12 +138,6 @@ const  formatDate = (inputDate)=> {
     
     return date[0]
 }
-const  formatDateN = (inputDate)=> {
-    const sp =  inputDate;
-    const date = sp.split(" ")
-    
-    return date[0]
-}
 
 
 
@@ -229,6 +223,9 @@ function TakeOverPage( { route,navigation } ) {
         
         const readData = data.data;
         const keys= Object.keys(readData)
+        console.log("*********")
+        console.log(readData)
+        console.log("*********")
         
         
         setCardCode(readData["receipt_code"])                    //서비스카드번호
@@ -243,12 +240,12 @@ function TakeOverPage( { route,navigation } ) {
         setCustomerPhone(readData["customer_phone"])             //고객연락처
 
         // TODO
-        setReceiptDate(formatDate(readData["receipt_date"]))     //매장접수일
+        setReceiptDate(String(readData["receipt_date"]).slice(0, 10))     //매장접수일
         {console.log("read data is")}
         {console.log(String(readData["receipt_date"]).slice(0, 10))}
         {console.log(typeof(readData["receipt_date"]))}
         
-        setAppointmentDate(formatDate(new Date(readData["due_date"])))     //고객약속일
+        setAppointmentDate(String(readData["due_date"]).slice(0, 10))     //고객약속일
         setSeason(readData["product_season_name"])               //시즌
         setProductStyle(readData["product_style_code"])          //제품 스타일
         setProductColor(readData["product_color"])               //제품 색상
@@ -310,7 +307,7 @@ function TakeOverPage( { route,navigation } ) {
         setRepairShopSendDescription(readData["repair1_message"])//수선처 설명
 
         setMainCenterDate(readData["register_date"])             //본사 접수일
-        setMainCenterSendDate(formatDate(readData["complete_date"]))         //본사 발송일
+        setMainCenterSendDate(String(readData["complete_date"]).slice(0, 10))         //본사 발송일
         setMainCenterSendDescription(readData["receipt_message"])//본사설명
 
 
@@ -322,8 +319,8 @@ function TakeOverPage( { route,navigation } ) {
         )  
         
         if(readData["repair2_store_id"]){
-            let repairShopDate = formatDateN(readData["repair2_register_date"])
-            let repairShopSendDate = formatDateN(readData["repair2_complete_date"])
+            let repairShopDate = String(readData["repair2_register_date"]).slice(0, 10)
+            let repairShopSendDate = String(readData["repair2_complete_date"]).slice(0, 10)
             let repairShopSendDescription = readData["repair2_message"]
             setRepair2(
                 <View>
@@ -343,8 +340,8 @@ function TakeOverPage( { route,navigation } ) {
             );
         }
         if(readData["repair3_store_id"]){
-            let repairShopDate = formatDateN(readData["repair3_register_date"])
-            let repairShopSendDate = formatDateN(readData["repair3_complete_date"])
+            let repairShopDate = String(readData["repair3_register_date"]).slice(0, 10)
+            let repairShopSendDate = String(readData["repair3_complete_date"]).slice(0, 10)
             let repairShopSendDescription = readData["repair3_message"]
             setRepair3(
                 <View>
