@@ -57,11 +57,7 @@ function SearchCustomer({ navigation }) {
     }
   }
   const netInfo = useNetInfo();
-  if(netInfo.isConnected){
-      console.log("netInfo.isConnected: ",netInfo.isConnected)
-  }else{
-      alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
-  }
+  
 
   const getCustomer = async (bodyData) => {
     try {
@@ -125,10 +121,14 @@ function SearchCustomer({ navigation }) {
           <Button onPress = {() =>{ 
             if(pNumber != null&&pNumber.length>3){
 
-            setData([]);
-            console.log(data);
-            store.dispatch({ type: 'CUSTOMER_SIGN', customerSign: "" });
-            getCustomer({ "lastphone": pNumber });
+              if(netInfo.isConnected){
+                setData([]);
+                console.log(data);
+                store.dispatch({ type: 'CUSTOMER_SIGN', customerSign: "" });
+                getCustomer({ "lastphone": pNumber });
+              }else{
+                  alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+              }
           }
           else {
             Alert.alert(

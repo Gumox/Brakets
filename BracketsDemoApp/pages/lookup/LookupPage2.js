@@ -104,11 +104,7 @@ function LookupPage2({ route,navigation }) {
     console.log(data)
 
     const netInfo = useNetInfo();
-    if(netInfo.isConnected){
-        console.log("netInfo.isConnected: ",netInfo.isConnected)
-    }else{
-        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
-    }
+    
     
     for (let index = 0; index < data.length; index++) {
         const obj = data[index];

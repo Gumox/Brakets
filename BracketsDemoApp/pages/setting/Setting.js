@@ -4,12 +4,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 
 import Container from '../../components/Container';
+import Contents from '../../components/Contents';
 import styled from 'styled-components/native';
 import store from '../../store/store';
 import Bottom from '../../components/Bottom';
+import Button from '../../components/Button';
 import ReceiptButton from '../../components/ReceiptButton';
 import CenterText from '../../components/CenterText';
-import {useNetInfo}from "@react-native-community/netinfo";
 
 const Label = styled.Text`
     font-size: 20px;
@@ -73,12 +74,6 @@ function Setting({ navigation }) {
 
     const storeName = store.getState().storeName;
     const storeEmail = store.getState().storeStaffId;
-    const netInfo = useNetInfo();
-    if(netInfo.isConnected){
-        console.log("netInfo.isConnected: ",netInfo.isConnected)
-    }else{
-        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
-    }
 
     return (
         <Container>

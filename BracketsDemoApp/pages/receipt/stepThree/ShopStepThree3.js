@@ -16,13 +16,6 @@ export default function ShopStepThree3 ({navigation ,route}) {
  
     const  params = route.params;
     let imageUri = store.getState().photo;
-
-    const netInfo = useNetInfo();
-    if(netInfo.isConnected){
-        console.log("netInfo.isConnected: ",netInfo.isConnected)
-    }else{
-        alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
-    }
     
     let imagePath  =imageUri.replace("file://", "");
     const [color,setColor] = React.useState("#ff0000");
