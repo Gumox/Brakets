@@ -147,7 +147,6 @@ function ShopStepThree( { navigation } ) {
               <Title>수선정보</Title>
           </CenterText>
 
-          <CenterText>
           <CenterText
             style={{marginBottom: '20%'}}
           >
