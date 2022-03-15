@@ -166,7 +166,7 @@ function ShopStepThree( { navigation } ) {
 
           <BlackText>제품 구분 선택</BlackText>
           <DropBackground
-            style = {{width: '75%', height: '5%'}}
+            style = {{width: '75%', height: '5%', marginBottom: '3%'}}
           >
           <RNPickerSelect
             placeholder = {{label : '[필수] 옵션을 선택하세요', value: null}}
