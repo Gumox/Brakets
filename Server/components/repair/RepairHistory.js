@@ -141,6 +141,10 @@ const RepairHistory = (props) => {
         setStoreRecept(arr)
     }
     const sortInfo=(info,typeInfo)=>{
+        
+    console.log("************")
+    console.log(info)
+    console.log("************")
         if(shop == info.repair1_store_id){
             setMessage(info.repair1_message);
             inputTypeCost(info,typeInfo,1);
@@ -204,6 +208,13 @@ const RepairHistory = (props) => {
             setRepairDetailId(info.repair3_detail_id)
 
         }
+        if(info.repair1_detail_id !== null){
+            setRepairDetailId(info.repair1_detail_id)
+        }else if(info.repair2_detail_id !== null){
+            setRepairDetailId(info.repair2_detail_id)
+        }else if(info.repair3_detail_id !== null){
+            setRepairDetailId(info.repair3_detail_id)
+        }
     }
     const checkBoxTag = (tof) => {
         let result ;
@@ -263,6 +274,7 @@ const RepairHistory = (props) => {
             
             typeInfo.unshift({text:"선택",level:1})
             setRepiarType(typeInfo)
+            console.log(typeInfo)
             sortInfo(info.body[0],typeInfo)
         }
         fetchData();

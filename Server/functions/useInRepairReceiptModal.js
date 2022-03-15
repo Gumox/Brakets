@@ -41,7 +41,6 @@ export const setSelectList = (selectItems) => {
     return(resultItems)
   }
 export const getRepairType= async(hq_id,brand,shop)=>{
-    console.log(hq_id,brand,shop)
     const [data] = await Promise.all([
         axios
         .get(`${process.env.API_URL}/type/repair`,{
