@@ -55,7 +55,9 @@ function ReceiptDivision({navigation}) {
         setItemList(list)
         if(list.length<2){
             let text =(list[0].label).split('.');
+            store.dispatch({ type: 'STORE_ID', store_id: list[0].value  })
             store.dispatch({type:"BRAND_ID",brand_id:list[0].brandId })
+            store.dispatch({ type: 'storeName', storeName: list[0].name })
             setSeletStore(list[0].value)
             setShopInShop(
                     <Text style={{marginLeft:"5%",color:"#000000"}}>

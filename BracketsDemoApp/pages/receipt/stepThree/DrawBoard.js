@@ -10,7 +10,6 @@ import {
 import store from '../../../store/store';
 import ViewShot from 'react-native-view-shot';
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
-import {useNetInfo}from "@react-native-community/netinfo";
 
 
 
@@ -24,7 +23,7 @@ export default class DrawBoard extends Component {
         super(props);
     }
  
-    
+ 
    
  
     onSketchSave() {
@@ -52,12 +51,10 @@ export default class DrawBoard extends Component {
     }
     
     render() {
-        const netInfo = useNetInfo();
-        if(netInfo.isConnected){
-            console.log("netInfo.isConnected: ",netInfo.isConnected)
-        }else{
-            alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
-        }
+        console.log(this.props.children[0]);
+        const params = this.props.children[1];
+        console.log("????")
+        console.log(params)
         return (
             <View style={{flex: 1, flexDirection: 'column' ,width : Dimensions.get('window').width, height : Dimensions.get('window').height}}>
                 

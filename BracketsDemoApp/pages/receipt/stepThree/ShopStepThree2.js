@@ -14,7 +14,6 @@ import StateBarSolid from '../../../components/StateBarSolid';
 import StateBarVoid from '../../../components/StateBarVoid';
 import ButtonBlack from '../../../components/ButtonBlack';
 import ViewShot from "react-native-view-shot";
-import {useNetInfo}from "@react-native-community/netinfo";
 
 const CenterView =styled.View`
   flex:1;
@@ -59,8 +58,9 @@ function ShopStepThree2 ({ navigation ,route}) {
 
   const imgUri2 =store.getState().drawingImage;
 
+  console.log(" imgUri2 : "+ imgUri2 )
   const imageP = { uri: imgUri };
-  let drawingImage
+  var drawingImage
   const imageD = { uri: imgUri2 };
   if (imgUri2 != ""){
     console.log("has")
@@ -78,7 +78,7 @@ function ShopStepThree2 ({ navigation ,route}) {
       <Image source={imageP} resizeMode="cover" style={styles.image}/>
     );
   }
-  
+
   const capture = () =>{
     viewShot.current.capture().then(uri => {
       console.log('do something with ', uri);
