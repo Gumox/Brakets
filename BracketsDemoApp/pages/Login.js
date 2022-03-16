@@ -50,6 +50,7 @@ function Login({ navigation }): React.ReactElement {
         store.dispatch({ type: 'USER_INFO', userInfo: UserInfo.data })
         store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
         store.dispatch({ type: 'storeName', storeName: UserInfo.userName })
+        store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
         // console.log(store.getState().userInfo[0].staff_id)
         navigation.replace('ReceiptDivision');
 

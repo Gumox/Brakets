@@ -73,7 +73,7 @@ function ReceiptDivision({navigation}) {
                     style = { {border :'solid', marginBottom : 50, borderWidth : 3, borderColor : '#000000', color:"#000000"} }
                     onValueChange={(value) => 
                         {   
-                            itemList.forEach(obj => {
+                            list.forEach(obj => {
                                 if(obj.value === value ){
                                     console.log(obj)
                                     store.dispatch({ type: 'STORE_ID', store_id: value  })
@@ -88,7 +88,7 @@ function ReceiptDivision({navigation}) {
                         
                         }
                     }
-                    items={itemList}
+                    items={list}
                 />
             )
         }
