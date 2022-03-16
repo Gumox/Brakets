@@ -151,7 +151,7 @@ function ShopStepThree( { navigation } ) {
             style={{marginBottom: '20%'}}
           >
               <Oneline>
-                  <BlueText>제품 구분 </BlueText>
+                  <BlueText>고객 요구</BlueText>
                   <GrayText>선택 후</GrayText>
               </Oneline>
               <Oneline>
@@ -164,13 +164,13 @@ function ShopStepThree( { navigation } ) {
               </Oneline>
           </CenterText>
 
-          <BlackText>제품 구분 선택</BlackText>
+          <BlackText>고객 요구 선택</BlackText>
           <DropBackground
-            style = {{width: '75%', height: '5%', marginBottom: '5%'}}
+            style = {{width: '75%', height: '7%', marginBottom: '5%'}}
           >
           <RNPickerSelect
             placeholder = {{label : '[필수] 옵션을 선택하세요', value: null}}
-            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black', padding: '5px'} }
+            style = { {border :'solid', borderWidth : 3, borderColor : 'black', padding: 2} }
           onValueChange={(value) => 
             {setSelect(value)
               store.dispatch({type:"SELECTTYPESET" ,set : []});

@@ -209,7 +209,7 @@ function ShopStepThree4({route,navigation}) {
             <TopInfo></TopInfo>
             <Contents>
             <CenterView><TopIntro>수선 정보</TopIntro></CenterView>
-            <Label>제품 구분</Label>
+            <Label>고객 요구</Label>
             <InfoView>
 
             <View style = {{width :180}}>

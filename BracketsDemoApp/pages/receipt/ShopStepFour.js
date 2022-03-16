@@ -24,7 +24,7 @@ Date.prototype.addDays = function(days) {
 
 function ShopStepFour({navigation}) {
     const service_date =store.getState().serviceDate;
-    const dateInput1 = useInput(new Date())
+    
     const [dateInput2,setDateInput2] = useState(new Date().addDays(service_date))
       
 
@@ -66,7 +66,7 @@ function ShopStepFour({navigation}) {
             onChange
         }
     }
-    
+    const dateInput1 = useInput(new Date())
 
     
 

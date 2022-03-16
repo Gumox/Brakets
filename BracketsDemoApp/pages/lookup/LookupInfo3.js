@@ -233,12 +233,26 @@ function LookupInfo3( { route,navigation } ) {
             console.log(" in null \n")
         }
     }
+    let inFormField;
+    if(checkMistake||contentAnalysis||result){
+        inFormField =(
+            <InfoView>
+                <TopText>과실 구분</TopText>
+                <InputText>{checkMistake}</InputText>
+
+                <TopText>내용 분석</TopText>
+                <InputText>{contentAnalysis}</InputText>
+                <TopText>판정 결과</TopText>
+                <InputText>{result}</InputText>
+
+            </InfoView>
+        )
+    }
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
-                
               <InfoView>
-                    <TopText>제품 구분</TopText>
+                    <TopText>고객 요구</TopText>
 
                     <InputText>{receiptType}</InputText>
                     <TopText>제품 전체 사진</TopText>
@@ -268,16 +282,9 @@ function LookupInfo3( { route,navigation } ) {
 
                         <InputText>{storeMessage}</InputText>
               </InfoView>
-              <InfoView>
-                <TopText>과실 구분</TopText>
-                <InputText>{checkMistake}</InputText>
-
-                <TopText>내용 분석</TopText>
-                <InputText>{contentAnalysis}</InputText>
-              <TopText>판정 결과</TopText>
-              <InputText>{result}</InputText>
-
-            </InfoView>
+              {
+                  inFormField
+              }
      
         </Contents>
             <Button onPress={ ()=> navigation.navigate( 'LookupInfo4',{data:data}) }>
