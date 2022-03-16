@@ -103,7 +103,7 @@ const SettlementResult =(props)=>{
         return ()=>{
             window.removeEventListener('resize',handleResize);
         }
-    })
+    },[item, handleResize, types])
     return(
         
            <LaView><Container>
