@@ -24,7 +24,7 @@ const Label = styled.Text`
     font-weight :bold;
     minWidth:25px;
     maxHeight:30px;
-    color :#000000
+    color :#000000;
 `;
 
 const PhoneLabel = styled.Text`
@@ -34,7 +34,7 @@ const PhoneLabel = styled.Text`
     margin-left:12px;
     font-weight :bold;
     width:150px
-    color :#000000
+    color :#000000;
 `;
 const DivLabel = styled.Text`
     font-size: 20px;
@@ -42,11 +42,11 @@ const DivLabel = styled.Text`
     margin-bottom: 12px;
     margin-left:12px;
     font-weight :bold;
-    color :#000000
+    color :#000000;
 `;
 
 const InputView = styled.View`
-align-items: center;
+    align-items: center;
 `;
 
 const Input = styled.TextInput`
@@ -55,7 +55,7 @@ const Input = styled.TextInput`
     font-size: 20px;
     background-color:#d6d6d6;
     border-radius:10px
-    color :#000000
+    color :#000000;
 `;
 
 const Title = styled.Text`
@@ -66,12 +66,12 @@ const Title = styled.Text`
 const PrView = styled.View`
     flex-direction: row;
     align-items: center;
-    width: 95%
+    width: 95%;
 `;
 const ScrollItme = styled.View`
     margin-left:20px;
     margin-right:20px;
-    width:150px
+    width:150px;
 `;
 function LookupPage2({ route,navigation }) {
 
