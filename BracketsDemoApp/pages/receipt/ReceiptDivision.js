@@ -26,6 +26,8 @@ const TopIntro = styled.Text`
 const PickerView = styled.View`
     height:5%;
     width:90%;
+    height:45px
+    width:80%;
     border:3px solid #797979;
     border-radius:12px;
     justify-content: center;
