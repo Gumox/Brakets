@@ -231,7 +231,10 @@ function TakeOverPage( { route,navigation } ) {
         
         const readData = data.data;
         const keys= Object.keys(readData)
-        
+        if(readData.step == 2){
+            Alert.alert("인수완료된 물품입니다","서비스 카드를 다시 확인해 주세요")
+            navigation.goBack();
+        }
         
         setCardCode(readData["receipt_code"])                    //서비스카드번호
         if( readData["receipt_category"] == 1){                  //접수구분
