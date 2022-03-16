@@ -182,6 +182,7 @@ export default function Settlement()  {
                     <ItemTable>
                         
                     <div style={{marginTop:12,overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:200}}>
+                        <Line2>
                             <LaView ><Container>
                                 <CheckBoxView>#</CheckBoxView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>브랜드</ItemView>
@@ -199,7 +200,7 @@ export default function Settlement()  {
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선처 당담자</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>비고</ItemView>
                             </Container></LaView>
-                            <Line2/>
+                        </Line2>
                         {   
                             settlementList.map((item,index)=>(
                                 <SettlementResult key = {index} data ={item} type ={types}></SettlementResult>
@@ -238,8 +239,7 @@ const ItemTable = styled.div`
 
 `;
 const Line2 =styled.div`
-  height:1px;
-  background-color: ${COLOR.GRAY}
+  border-bottom:2px solid  ${COLOR.GRAY};
 `;
 const Container = styled.div`
     display:flex; 

@@ -1,5 +1,5 @@
 import { debounce } from "lodash";
-import React,{useState} from "react";
+import React,{useState,useEffect,useCallback} from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 import store from "../../store/store";
@@ -20,6 +20,17 @@ const SettlementResult =(props)=>{
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
     },1000)
+
+    const increaseHeight =useCallback((e) =>{
+        console.log(e.target.style.height)
+        console.log(e.target.scrollHeight)
+        e.target.style.height = 'inherit';
+        e.target.style.height = e.target.scrollHeight + 'px';
+        if(e.target.scrollHeight){
+            
+        }
+    })
+
     const setPrice=(adjustment)=>{
         let before = (item.repair1_price+item.repair2_price+item.repair3_price+item.shipment_price)
         let after = new Number(before)+new Number(adjustment)
@@ -74,7 +85,7 @@ const SettlementResult =(props)=>{
         //console.log(store.getState().selected)
         return
     }
-    React.useEffect(()=>{
+    useEffect(()=>{
         if(item.repair_detail_state ==2){
             let today =new Date();
             if(item.confirm_date != null){
@@ -116,11 +127,18 @@ const SettlementResult =(props)=>{
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPrice(adjustment)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
-                <textarea disabled ={disable} style={{width:80}} value={adjustmentReason||''} onChange={(e)=>{setAdjustmentReason(e.target.value)}}/>
+                <textarea disabled ={disable} style={{width:80,height:35,fontSize:15,resize: "none",overflow:"hidden"}} value={adjustmentReason||''} onChange={(e)=>{
+                    setAdjustmentReason(e.target.value)
+                    increaseHeight(e)
+                }}/>
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{repairStaff}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
-                <textarea disabled ={disable} style={{width:80}} value={remarks||''} onChange={(e)=>{setRemarks(e.target.value)}}/>
+                <textarea disabled ={disable} style={{width:80,height:35,fontSize:15,resize: "none",overflow:"hidden"}} value={remarks||''} 
+                onChange={(e)=>{
+                    setRemarks(e.target.value)
+                    increaseHeight(e)
+                }}/>
             </ItemView>
         </Container></LaView>
         
