@@ -13,6 +13,7 @@ async function getImageList(code) {
 async function getReceipt(code) {
   const result = await excuteQuery({
     query: `SELECT receipt.receipt_id AS receipt_id,
+                    receipt.step AS step,
                     receipt.receipt_code AS receipt_code,
                     receipt.category AS receipt_category,
                     receipt.receipt_type AS receipt_type,
