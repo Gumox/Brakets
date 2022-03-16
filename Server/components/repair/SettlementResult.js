@@ -29,7 +29,7 @@ const SettlementResult =(props)=>{
         if(e.target.scrollHeight){
             
         }
-    })
+    },[])
 
     const setPrice=(adjustment)=>{
         let before = (item.repair1_price+item.repair2_price+item.repair3_price+item.shipment_price)
