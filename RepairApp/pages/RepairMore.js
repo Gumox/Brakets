@@ -55,7 +55,7 @@ function RepairMore({ navigation, route }) {
         const needImages =[]
         data.needRepairImage.forEach((obj,index) => {
             needImages.push({photo:Ip+obj["need_point_image"] , repair_need_id:obj["repair_need_id"]})
-            console.log(needImages)
+            //console.log(needImages)
             
         });
         setBeforeImages(beforeImgList)
@@ -63,7 +63,7 @@ function RepairMore({ navigation, route }) {
         store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:needImages})
         
         setTakeNeedPhotos(store.getState().needPhotos)
-        console.log("error : "+Ip+data.data["image"])
+        ////console.log("error : "+Ip+data.data["image"])
         
     });
 
@@ -77,13 +77,13 @@ function RepairMore({ navigation, route }) {
 
             takeNeedPhotos.forEach((obj,index) => {
                 const img = 'image'+(index+1)
-                console.log(img)
+                //console.log(img)
                 formdata.append(img, PathToFlie(takeNeedPhotos[index].photo))
             });
             
         }
         console.log(formdata)
-
+        
         try {
             const response = await fetch(Ip+'/api/needRepair',{method: 'POST',
             headers: {
@@ -100,7 +100,7 @@ function RepairMore({ navigation, route }) {
             console.error(error);
         } finally {
 
-        }
+        } 
     }
 
 
@@ -181,59 +181,66 @@ function RepairMore({ navigation, route }) {
             </View>
         )
     }
+    
+    const repairNeedImage = store.getState().addRepairImageUri;
+    const [needRepair,setNeedRepair] =useState([])
     useEffect(() => {
         getTargetData(code);
-    }, []);
-    const repairNeedImage = store.getState().addRepairImageUri;
-    let repairNeeds =[];
-    if(repairNeedImage !== null || store.getState().needPhotos !== []){
-        let set =(<View key={0} style ={{flexDirection:"row",justifyContent : "space-between"}}><Label>추가 사진</Label></View>)
-        repairNeeds[0]= (set)
-        takeNeedPhotos.forEach((obj,index) => {
-            let photo=(
-                <View key={index+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
-
-                <Pressable onPress={() => {navigation.navigate("AddPhotoControl",{img:obj.photo,code:code})}}>
-                    <Image
-                        style={{ width: 100, height: 120 , padding:10, marginLeft:30}}
-                        resizeMode='contain'
-                        source={
-                            { uri: obj.photo }
-                        }
-                    />
-                </Pressable>
-                
-                <Pressable >
-                <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
-
-                </View>
-                </Pressable>
-            </View>
-            )
-            repairNeeds[index+1]=(photo)
-
-        });
-        if(store.getState().needPhotos.length<4){
-            let need = (
-                <View key={takeNeedPhotos.length+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
-
-                    <Pressable onPress={() => {navigation.navigate('TakePhoto',{key:"need",code:code})}}>
-                        <View style={{width:100,height:120,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
-                            <Text style={{color:"#ffffff", fontSize:20}}>필요 수선 부위 추가</Text>
-                        </View>
+        console.log("takeNeedPhotos")
+        console.log(takeNeedPhotos)
+        console.log("takeNeedPhotos")
+        let repairNeeds =[];
+        if(repairNeedImage !== null || store.getState().needPhotos !== []){
+            let set =(<View key={0} style ={{flexDirection:"row",justifyContent : "space-between"}}><Label>추가 사진</Label></View>)
+            repairNeeds[0]= (set)
+            takeNeedPhotos.forEach((obj,index) => {
+                //console.log(obj)
+                let photo=(
+                    <View key={index+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
+    
+                    <Pressable onPress={() => {navigation.navigate("AddPhotoControl",{img:obj.photo,code:code})}}>
+                        <Image
+                            style={{ width: 100, height: 120 , padding:10, marginLeft:30}}
+                            resizeMode='contain'
+                            source={
+                                { uri: obj.photo }
+                            }
+                        />
                     </Pressable>
                     
                     <Pressable >
                     <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
-
+    
                     </View>
                     </Pressable>
                 </View>
-            );
-            repairNeeds[((takeNeedPhotos).length)+1]=(need)
+                )
+                repairNeeds[index+1]=(photo)
+    
+            });
+            if(store.getState().needPhotos.length<4){
+                let need = (
+                    <View key={takeNeedPhotos.length+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
+    
+                        <Pressable onPress={() => {navigation.navigate('TakePhoto',{key:"need",code:code})}}>
+                            <View style={{width:100,height:120,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
+                                <Text style={{color:"#ffffff", fontSize:20}}>필요 수선 부위 추가</Text>
+                            </View>
+                        </Pressable>
+                        
+                        <Pressable >
+                        <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
+    
+                        </View>
+                        </Pressable>
+                    </View>
+                );
+                repairNeeds[((takeNeedPhotos).length)+1]=(need)
+            }
+            console.log(repairNeeds)
         }
-    }
-
+        setNeedRepair(repairNeeds)
+    }, []);
     return (
         <ContainView>
 
@@ -324,7 +331,7 @@ function RepairMore({ navigation, route }) {
 
                     </EnlargedPictureView>
                     {beforeImageViews}
-                    {repairNeeds}
+                    {needRepair}
                 </OverallView>
 
 
