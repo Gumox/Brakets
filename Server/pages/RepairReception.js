@@ -77,7 +77,7 @@ function RepairReception({options,user}) {
 
   },[])
   return(
-    <div style={{height:"100%",overflowY: "scroll"}}>
+    <Nav style={{overflowY:"scroll"}}>
       <RepairHeader/>
       <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
         <TopView>
@@ -120,7 +120,7 @@ function RepairReception({options,user}) {
         <br/>
         <br/>
       </div>
-    </div>
+    </Nav>
   )
 }
 
@@ -186,8 +186,19 @@ export const getServerSideProps = async (ctx) => {
     };
   }
 };
-
-
+const Nav = styled.nav`
+  overflow-y: auto;
+  height: 100%;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
+`;
 const Line =styled.div`
   border:1px solid  ${COLOR.BRAUN};
   width :100%

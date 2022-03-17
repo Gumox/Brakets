@@ -30,8 +30,8 @@ export default function Settlement()  {
     const [disable,setDisable] = useState(true)
     const [settlementList,setSettlementList] = useState([])
     const [types,setTypes] =useState([])
-    const [windowWidth,setWindowWidth] = useState()
-    const [windowHeight,setWindowHeight] = useState()
+    const [windowWidth,setWindowWidth] = useState(0)
+    const [windowHeight,setWindowHeight] = useState(0)
     const handleResize = debounce(()=>{
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
@@ -133,10 +133,9 @@ export default function Settlement()  {
         return ()=>{
             window.removeEventListener('resize',handleResize);
         }
-    },[])
-    console.log(excelList)   
+    },[]) 
     return(
-        <div style={{height:"100%",overflowY: "scroll"}}>
+        <Nav >
         <RepairHeader/>
         <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
         <TopView>
@@ -208,7 +207,7 @@ export default function Settlement()  {
                         <ButtonCheck disabled = {!disable} onClick={()=>{onClickOptionTwo( sortCheckedList(checkList))}}>본사확인</ButtonCheck>
                         <ButtonRepairCheck onClick={()=>{
                             onClickOptionOne( sortCheckedList(checkList))
-                            console.log(sortCheckedList(checkList))
+                            //console.log(sortCheckedList(checkList))
                            
                             }}>수선처확인</ButtonRepairCheck>
                         <ButtonCheckC  disabled = {!disable} onClick={()=>{onClickOptionEdit(sortCheckedList(checkList))}}>내용 수정</ButtonCheckC>
@@ -233,7 +232,7 @@ export default function Settlement()  {
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>비고</ItemView>
                             </Container></LaView>
                         </Line2>
-                    <div style={{overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:(windowHeight)*0.5}}>
+                    <Nav style={{overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:(windowHeight)*0.5}}>
                         
                         {   
                             settlementList.map((item,index)=>(
@@ -241,16 +240,30 @@ export default function Settlement()  {
                             ))
                             
                         }
-                    </div>
+                    </Nav>
     
                     </ItemTable>
             </div>
             <br/>
             <br/>
         </div>
-    </div>
+    </Nav>
     )
 }
+
+const Nav = styled.nav`
+  overflow-y: auto;
+  height: 100%;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.3);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
+`;
 const TopView = styled.div`
     padding:10px;
     display: flex;  
