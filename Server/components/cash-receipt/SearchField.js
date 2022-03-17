@@ -111,8 +111,8 @@ const SearchField = ({
             <ExcelSheet data={searchList} name="현금영수증">
             <ExcelColumn label="서비스카드 번호" value={(col) => col[RECEIPT.CODE]}/>
               <ExcelColumn label="현금영수증번호" value={(col) => col[RECEIPT.CASHRECEIPT_NUM] == null ? "미 발행 건" : col[RECEIPT.CASHRECEIPT_NUM]}/>
-              <ExcelColumn label="매장코드" value={(col) => col[RECEIPT.CODE]}/>
-              <ExcelColumn label="매장명" value={(col) => col[STORE.CODE]}/>
+              <ExcelColumn label="매장코드" value={(col) => col[STORE.CODE]}/>
+              <ExcelColumn label="매장명" value={(col) => col[STORE.NAME]}/>
               <ExcelColumn label="매장구분" value={(col) => STORE_CATEGORY[col[STORE.CATEGORY]]}/>
               <ExcelColumn label="매장연락처" value={(col) => col[STORE.CONTACT]}/>
               <ExcelColumn label="등록일" value={(col) => col.receipt_date ? moment(col.receipt_date).format("YYYY-MM-DD") : ""}/>              
