@@ -155,31 +155,6 @@ function Table({ columns, data, searchList, getTargetData }) {
 const ReturnList = ({ data, user }) => {
 
   const columns = React.useMemo(() => [
-    
-    // 단순 조회 기능 -> Check Box 필요 없을 듯?
-    // {Header: '선택',  accessor: '선택',},
-
-    // {Header: '서비스카드 번호', accessor: '서비스카드 번호',},
-    // {Header: '매장코드',   accessor: '매장코드',},
-    // {Header: '매장명', accessor: '매장명',},
-    // {Header: '매장구분', accessor: '매장구분',},
-    // {Header: '매장연락처', accessor: '매장연락처',},
-    // {Header: '등록일', accessor: '등록일',},
-    // {Header: '고객ID', accessor: '고객ID',},
-    // {Header: '고객', accessor: '고객',},
-    // {Header: '고객연락처', accessor: '고객연락처',},
-    // {Header: '시즌', accessor: '시즌',},
-    // {Header: '스타일', accessor: '스타일',},
-    // {Header: '컬러', accessor: '컬러',},
-    // {Header: '사이즈', accessor: '사이즈',},
-    // {Header: '판매가', accessor: '판매가',},
-    // {Header: '고객요구', accessor: '고객요구',},
-    // {Header: '매장접수내용', accessor: '매장접수내용',},
-    // {Header: '과실구분', accessor: '과실구분',},
-    // {Header: '고객약속일', accessor: '고객약속일',},  
-    // {Header: '본사접수일', accessor: '본사접수일',},
-    // {Header: '내용분석', accessor: '내용분석',},
-    // {Header: '판정결과', accessor: '판정결과',},
 
     {Header: '서비스카드 번호', accessor: '서비스카드 번호',},
     {Header: '매장코드', accessor: '매장코드',},
