@@ -77,7 +77,7 @@ function RepairReception({options,user}) {
 
   },[])
   return(
-    <Nav style={{overflow:"scroll"}}>
+    <Nav style={{overflowY:"scroll"}}>
       <RepairHeader/>
       <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
         <TopView>
