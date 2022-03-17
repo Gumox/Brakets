@@ -240,8 +240,7 @@ const ReturnList = ({ data, user }) => {
       "매장명":pairRepair[STORE.NAME],
       "매장구분":STORE_CATEGORY[pairRepair[STORE.CATEGORY]],
       "매장연락처":pairRepair[STORE.CONTACT],
-      "등록일":pairRepair.receipt_date ? moment(pairRepair.receipt_date).format("YYYY-MM-DD")
-      : "",
+      "등록일":pairRepair.receipt_date ? moment(pairRepair.receipt_date).format("YYYY-MM-DD") : "",
       "고객ID":pairRepair[CUSTOMER.ID],
       "고객":pairRepair[CUSTOMER.NAME],
       "고객연락처":pairRepair[CUSTOMER.CONTACT],
@@ -282,7 +281,7 @@ const ReturnList = ({ data, user }) => {
       "발송일 to M":"",
       "본사 설명":pairRepair.message,
       "하자코드":"",
-      "심의":pairRepair[RECEIPT.TYPE],
+      "심의":(pairRepair[RECEIPT.TYPE] == 2) ? ("심의") : (""),
 
       "등록자":"",
       "등록일시":"",
