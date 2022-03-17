@@ -78,6 +78,7 @@ const Return = ({options, user}) => {
         handleCheckboxChange={handleInputCheckboxChange}
         handleValueChange={handleInputValueChange}
         handleSearchButtonClick={handleSearchButtonClick}
+        searchList = {searchList}
       />
       <List data={searchList} user={user}/>
       {/**<Invoice /> */}
