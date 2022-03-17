@@ -208,7 +208,7 @@ export default function Settlement()  {
                         <ButtonCheck disabled = {!disable} onClick={()=>{onClickOptionTwo( sortCheckedList(checkList))}}>본사확인</ButtonCheck>
                         <ButtonRepairCheck onClick={()=>{
                             onClickOptionOne( sortCheckedList(checkList))
-                            console.log(checkList)
+                            console.log(sortCheckedList(checkList))
                            
                             }}>수선처확인</ButtonRepairCheck>
                         <ButtonCheckC  disabled = {!disable} onClick={()=>{onClickOptionEdit(sortCheckedList(checkList))}}>내용 수정</ButtonCheckC>
