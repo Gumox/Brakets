@@ -4,9 +4,18 @@ import styled from "styled-components";
 import COLOR from "../../constants/color";
 import store from "../../store/store";
 import { sortSettlementData } from "../../functions/useInSettlement";
-const SettlementResult =(props)=>{
-    const item =props.data
-    const types = props.type
+const SettlementResult =({
+    data,
+    type,
+    index,
+    excelList,
+    checkList,
+    setExcelList=()=>{},
+    excelListSet =()=>{},
+    setCheckList =()=>{},
+    })=>{
+    const item =data
+    const types = type
     const [adjustment,setAdjustment] = useState(item.adjustment)
     const [check,setCheck] = useState()
     const [disable,setDisable] = useState(false)
@@ -30,7 +39,57 @@ const SettlementResult =(props)=>{
             
         }
     },[])
-
+    const rearrangementList =(excel,item,type,hqStaff,repairStaff,adjustment,adjustmentReason,remarks) =>{
+        let obj={}
+        //console.log(item)
+        obj["브랜드"] = item.brand_code;
+        obj["서비스 번호"] = item.receipt_code;
+        obj["매장정보"] = item.name+"\n"+item.store_contact;
+        obj["고객정보"] = item.customer_name+"\n"+item.customer_phone;
+        
+        obj["수선내용(수량)"] = sortSettlementData(item,type,false);
+        if(item.repair_detail_state == 0){
+          obj["상태"] = "수선처확인필요";
+        }else if(item.repair_detail_state == 1){
+          obj["상태"] = "본사확인필요";
+        }else if(item.repair_detail_state == 2){
+          obj["상태"] = "확정";
+        }
+        obj["본사 당담자"] = hqStaff;
+        let before = (item.repair1_price+item.repair2_price+item.repair3_price+item.shipment_price);
+        let after = new Number(before)+new Number(adjustment);
+        obj["수선비"] = before;
+        obj["수정수선비"] = adjustment;
+        obj["최종수선비"] = after.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        obj["수정사유"] = adjustmentReason;
+        obj["수선처 당담wk"] = repairStaff;
+        obj["비고"] = remarks;
+        
+       // console.log("111111111111111111111111111111111")
+        //console.log(excel)
+        let list = excel
+        list[index] =obj
+        //console.log(list)
+       //console.log("111111111111111111111111111111111")
+        setExcelList(list)
+        return(list)
+      
+    }
+    const pushCheckedList =(list,repair_detail_id,state,adjustment,adjustment_reason,remarks,check)=>{
+        let checkedList =list
+        let obj={}
+        if(check){
+            obj["repair_detail_id"]=repair_detail_id
+            obj["state"]=state
+            obj["adjustment"]=adjustment
+            obj["adjustment_reason"]=adjustment_reason
+            obj["remarks"] = remarks
+            
+            checkedList[index] = obj
+            console.log(checkedList)
+            setCheckList(checkedList)
+        }
+    }
     const setPrice=(adjustment)=>{
         let before = (item.repair1_price+item.repair2_price+item.repair3_price+item.shipment_price)
         let after = new Number(before)+new Number(adjustment)
@@ -58,33 +117,25 @@ const SettlementResult =(props)=>{
             )
         }
         return returnState;
-
+        
     }
     const onCheck =(check)=>{
         //console.log(store.getState().selected)
         if(check){
-            store.dispatch({type:"SET_SELECTED",
-                            selected:{
-                                repair_detail_id: item.repair_detail_id, 
-                                state:item.repair_detail_state,
-                                adjustment:adjustment,
-                                adjustment_reason:adjustmentReason,
-                                remarks:remarks}})
+            pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,adjustment,adjustmentReason,remarks,check)
             setCheck(true)
         }else{
-            let selected = store.getState().selected;
-            let list=[];
-            selected.map((obj,index)=>{
-                if(obj.repair_detail_id !== item.repair_detail_id){
-                    list.push(obj)
-                }  
-            })
-            store.dispatch({type:"RESET_SELECTED",selected: list})
+            let checkedList =checkList
+            let obj={}
+            
+            checkedList[index] = obj
+            setCheckList(checkedList)
             setCheck(false)
         }
         //console.log(store.getState().selected)
         return
     }
+    
     useEffect(()=>{
         if(item.repair_detail_state ==2){
             let today =new Date();
@@ -99,15 +150,21 @@ const SettlementResult =(props)=>{
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
         window.addEventListener('resize',handleResize);
-        sortSettlementData(item,types)
+        
+        
+        const obj = rearrangementList(excelList,item,types,repairStaff,repairStaff,adjustment,adjustmentReason,remarks)
+          
+        //excelListSet(obj,index)
+
         return ()=>{
             window.removeEventListener('resize',handleResize);
         }
-    },[item, handleResize, types])
+        
+    },[1])
     return(
         
            <LaView><Container>
-            <CheckBoxView><input type= "checkbox" onClick={()=>{onCheck(!check)}}/></CheckBoxView>
+            <CheckBoxView><input disabled ={disable} type= "checkbox" onClick={()=>{onCheck(!check)}}/></CheckBoxView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{item.brand_code}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{item.receipt_code}</ItemView>
             <div style={{width:(windowWidth||0)*0.0692,minWidth:83}}> 
@@ -118,18 +175,29 @@ const SettlementResult =(props)=>{
                 <ItemInsideView>{item.customer_name}</ItemInsideView>
                 <ItemInsideView>{item.customer_phone}</ItemInsideView>
             </div>
-            <ItemV style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{sortSettlementData(item,types)}</ItemV>
+            <ItemV style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{sortSettlementData(item,types,true)}</ItemV>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPaymentState(item.repair_detail_state)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{hqStaff}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPrice(0)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
-                <input disabled ={disable} type="number" style={{width:80}} value={adjustment||''} onChange={(e)=>{setAdjustment(e.target.value)}}/>
+                <input disabled ={disable} type="number" style={{width:80}} value={adjustment||''} onChange={(e)=>{
+                    setAdjustment(e.target.value)
+                    pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,e.target.value,adjustmentReason,remarks,check)
+                    //console.log("0000000000000000000000000000")
+                    //console.log(excelList)
+                    //console.log("0000000000000000000000000000")
+                    const obj = rearrangementList(excelList,item,types,repairStaff,repairStaff,e.target.value,adjustmentReason,remarks)
+                    //excelListSet(obj,index)
+                }}/>
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPrice(adjustment)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>
                 <textarea disabled ={disable} style={{width:80,height:35,fontSize:15,resize: "none",overflow:"hidden"}} value={adjustmentReason||''} onChange={(e)=>{
                     setAdjustmentReason(e.target.value)
+                    pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,adjustment,e.target.value,remarks,check)
                     increaseHeight(e)
+                    const obj = rearrangementList(excelList,item,types,repairStaff,repairStaff,adjustment,e.target.value,remarks)
+                    //excelListSet(obj,index)
                 }}/>
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{repairStaff}</ItemView>
@@ -137,7 +205,10 @@ const SettlementResult =(props)=>{
                 <textarea disabled ={disable} style={{width:80,height:35,fontSize:15,resize: "none",overflow:"hidden"}} value={remarks||''} 
                 onChange={(e)=>{
                     setRemarks(e.target.value)
+                    pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,adjustment,adjustmentReason,e.target.value,check)
                     increaseHeight(e)
+                    const obj = rearrangementList(excelList,item,types,repairStaff,repairStaff,adjustment,adjustmentReason,e.target.value)
+                    //excelListSet(obj,index)
                 }}/>
             </ItemView>
         </Container></LaView>

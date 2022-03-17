@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useCallback} from "react";
 import RepairHeader from '../components/RepairHeader'
 import store from '../store/store'
 import COLOR from '../constants/color'
@@ -36,8 +36,12 @@ export default function Settlement()  {
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
     },1000)
-    
+    const [excelList,setExcelList]= useState([])
+    let chlidlist=[];
+
     const [selectShopOption,setSelectShopOption] = useState()
+
+    const [checkList,setCheckList] = useState([]);
 
     const onClickOptionOne=(list)=>{
         setStateAtOne(list)
@@ -54,7 +58,26 @@ export default function Settlement()  {
     const setTable = async(parmas)=>{
         let list = await getSettlementData(parmas)
         //console.log(list)
+
         setSettlementList(list.data)
+    }
+    const excelListSet =useCallback((obj,index)=>{
+        
+        console.log(obj)
+        chlidlist[index]=obj
+        setExcelList(chlidlist)
+        console.log(chlidlist)
+        //setExcelList([...excelList,obj])
+    },[excelList])
+    const sortCheckedList=(list)=>{
+        let newList =[];
+        list.map((item)=>{
+            if(item.repair_detail_id){
+                newList.push(item)
+            }
+        })
+        //console.log(newList)
+        return newList
     }
     useEffect(()=>{
         const fetchData = async () => {
@@ -112,7 +135,7 @@ export default function Settlement()  {
         <TopView>
               <h2>수선비 정산</h2>
 
-              <CSVLink data={settlementList} headers={headers} filename='수선비 정산 목록'>
+              <CSVLink data={excelList} headers={headers} filename='수선비 정산 목록'>
               <Image alt="excel" src='/icons/excel.png' width={45} height={40} />
               </CSVLink>
         </TopView>
@@ -175,9 +198,13 @@ export default function Settlement()  {
                         </LaView>
                     </div>
                     <div style={{width : "100%",display:"flex",flexDirection:"row-reverse"}}>
-                        <ButtonCheck disabled = {!disable} onClick={()=>{onClickOptionTwo(store.getState().selected)}}>본사확인</ButtonCheck>
-                        <ButtonRepairCheck onClick={()=>{onClickOptionOne(store.getState().selected)}}>수선처확인</ButtonRepairCheck>
-                        <ButtonCheckC  disabled = {!disable} onClick={()=>{onClickOptionEdit(store.getState().selected)}}>내용 수정</ButtonCheckC>
+                        <ButtonCheck disabled = {!disable} onClick={()=>{onClickOptionTwo( sortCheckedList(checkList))}}>본사확인</ButtonCheck>
+                        <ButtonRepairCheck onClick={()=>{
+                            onClickOptionOne( sortCheckedList(checkList))
+                            console.log(checkList)
+                           
+                            }}>수선처확인</ButtonRepairCheck>
+                        <ButtonCheckC  disabled = {!disable} onClick={()=>{onClickOptionEdit(sortCheckedList(checkList))}}>내용 수정</ButtonCheckC>
                     </div>
                     <ItemTable>
                         
@@ -188,7 +215,7 @@ export default function Settlement()  {
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>브랜드</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>서비스 번호</ItemView>
                                 
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>매장정보</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선처</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>고객정보</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선내용(수량)</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>상태</ItemView>
@@ -203,7 +230,7 @@ export default function Settlement()  {
                         </Line2>
                         {   
                             settlementList.map((item,index)=>(
-                                <SettlementResult key = {index} data ={item} type ={types}></SettlementResult>
+                                <SettlementResult key = {index} data ={item} type ={types} index={index} excelList={excelList} checkList={checkList} {...{excelListSet,setExcelList,setCheckList}}></SettlementResult>
                             ))
                             
                         }
