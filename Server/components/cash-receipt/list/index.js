@@ -120,7 +120,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
       "매장명":cashReceipt[STORE.NAME],
       "매장구분":STORE_CATEGORY[cashReceipt[STORE.CATEGORY]],
       "매장연락처":cashReceipt[STORE.CONTACT],
-      "등록일": cashReceipt[RECEIPT.RECEIPT_DATE] ? moment(cashReceipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD") : "",
+      "등록일": cashReceipt.receipt_date ? moment(cashReceipt.receipt_date).format("YYYY-MM-DD") : "",
       "고객ID":cashReceipt[CUSTOMER.ID],
       "고객":cashReceipt[CUSTOMER.NAME],
       "고객연락처":cashReceipt[CUSTOMER.CONTACT],
