@@ -150,7 +150,7 @@ const SearchField = ({
             <ExcelColumn label="발송일 to M" value={[]}/>
             <ExcelColumn label="본사 설명" value={(col) => col.message}/>
             <ExcelColumn label="하자코드" value={[]}/>
-            <ExcelColumn label="심의" value={[]}/>
+            <ExcelColumn label="심의" value={value=(col) => (col[RECEIPT.TYPE] == 2) ? ("심의") : ("")}/>
             <ExcelColumn label="등록자" value={[]}/>
             <ExcelColumn label="등록일시" value={[]}/>
             <ExcelColumn label="수정자" value={[]}/>
