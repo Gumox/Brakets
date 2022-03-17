@@ -170,9 +170,9 @@ function RepairReceiptModal (props) {
       modal
       contentStyle={{ 
         width: windowWidth*0.92,
-        minWidth: 1280*0.92,
+        minWidth: 1080*0.92,
         height:windowHeight*0.90,
-        minHeight: 754*0.9
+        minHeight: 720*0.9
         }}>
       
         
@@ -304,7 +304,7 @@ export default RepairReceiptModal;
 const styles = {
   contentStyle:{
   maxWidth: "95%",
-  minWidth: 1450,
+  minWidth: 1080,
   maxHeight:"90%"
   },
   selectStyle:{
