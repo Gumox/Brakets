@@ -135,8 +135,8 @@ const SearchField = ({
             <ExcelColumn label="과실구분" value={[]}/>
             <ExcelColumn label="내용분석" value={(col) => col[RECEIPT.ANALYSIS_NAME]}/>
             <ExcelColumn label="판정결과" value={(col) => col[RECEIPT.RESULT_NAME]}/>
-            <ExcelColumn label="유상수선비" value={[]}/>
-            <ExcelColumn label="유선수선 유/무" value={[]}/>
+            <ExcelColumn label="유상수선비" value={(col) => col.fee}/>
+            <ExcelColumn label="유선수선 유/무" value={(col) => (col.fee > 0) ? ("유") : ("무")}/>
             <ExcelColumn label="수선처1" value={[]}/>
             <ExcelColumn label="수선처 접수일1" value={[]}/>
             <ExcelColumn label="재수선1" value={[]}/>
