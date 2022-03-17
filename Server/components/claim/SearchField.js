@@ -116,7 +116,7 @@ const SearchField = ({
             <ExcelColumn label="매장명" value={(col) => col[STORE.CODE]}/>
             <ExcelColumn label="매장구분" value={(col) => STORE_CATEGORY[col[STORE.CATEGORY]]}/>
             <ExcelColumn label="매장연락처" value={(col) => col[STORE.CONTACT]}/>
-            <ExcelColumn label="매장접수일" value={[]}/>
+            <ExcelColumn label="매장접수일" value={(col) => col.receipt_date ? moment(col.receipt_date).format("YYYY-MM-DD") : ""}/>
             <ExcelColumn label="고객" value={(col) => col[CUSTOMER.NAME]}/>
             <ExcelColumn label="고객연락처" value={(col) => col[CUSTOMER.CONTACT]}/>
             <ExcelColumn label="시즌" value={(col) => col[PRODUCT.SEASON]}/>
@@ -131,18 +131,18 @@ const SearchField = ({
             <ExcelColumn label="클레임업체" value={[]}/>
             <ExcelColumn label="업체코드" value={[]}/>
             <ExcelColumn label="업체코드(유통)" value={[]}/>
-            <ExcelColumn label="고객ID" value={[]}/>
-            <ExcelColumn label="고객요구" value={[]}/>
-            <ExcelColumn label="매장접수내용" value={[]}/>
+            <ExcelColumn label="고객ID" value={(col) => col[CUSTOMER.ID]}/>
+            <ExcelColumn label="고객요구" value={(col) => RECEIPT_TYPE[col[RECEIPT.TYPE]]}/>
+            <ExcelColumn label="매장접수내용" value={(col) => col[RECEIPT.STORE_MESSAGE]}/>
             
-            <ExcelColumn label="본사접수일" value={[]}/>
-            <ExcelColumn label="발송일 to S" value={[]}/>
-            <ExcelColumn label="과실구분" value={[]}/>
-            <ExcelColumn label="내용분석" value={[]}/>
+            <ExcelColumn label="본사접수일" value={(col) => col[RECEIPT.REGISTER_DATE] ? moment(col[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD") : ""}/>
+            <ExcelColumn label="발송일 to S" value={(col) => col.complete_date ? moment(col.complete_date).format("YYYY-MM-DD") : ""}/>
+            <ExcelColumn label="과실구분" value={(col)=> col[RECEIPT.FAULT_NAME]}/>
+            <ExcelColumn label="내용분석" value={(col) => col[RECEIPT.ANALYSIS_NAME]}/>
             <ExcelColumn label="판정결과" value={(col) => col[RECEIPT.RESULT_NAME]}/>
-            <ExcelColumn label="수선미입고" value={[]}/>
-            <ExcelColumn label="유상수선비" value={[]}/>
-            <ExcelColumn label="유상수선 유/무" value={[]}/>
+            <ExcelColumn label="수선미입고" value={(col) => col[RECEIPT.RESULT_DETAIL_NAME]}/>
+            <ExcelColumn label="유상수선비" value={(col) => col.fee}/>
+            <ExcelColumn label="유상수선 유/무" value={(col) => (col.fee > 0) ? "유" : "무" }/>
             <ExcelColumn label="수선처1" value={[]}/>
             <ExcelColumn label="총수선비1" value={[]}/>
             <ExcelColumn label="수선처접수일1" value={[]}/>
@@ -156,9 +156,9 @@ const SearchField = ({
             <ExcelColumn label="수선처접수일3" value={[]}/>
             <ExcelColumn label="재수선3" value={[]}/>
             <ExcelColumn label="발송일 to M" value={[]}/>
-            <ExcelColumn label="본사설명" value={[]}/>
+            <ExcelColumn label="본사설명" value={(col) => col.message}/>
             <ExcelColumn label="하자코드" value={[]}/>
-            <ExcelColumn label="심의" value={[]}/>
+            <ExcelColumn label="심의" value={(col) => (col[RECEIPT.TYPE] == 2) ? ("심의") : ("")}/>
             <ExcelColumn label="등록자" value={[]}/>
             <ExcelColumn label="등록일시" value={[]}/>
             <ExcelColumn label="수정자" value={[]}/>
