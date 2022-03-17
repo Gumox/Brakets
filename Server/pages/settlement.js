@@ -215,7 +215,7 @@ export default function Settlement()  {
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>브랜드</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>서비스 번호</ItemView>
                                 
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>매장정보</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선처</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>고객정보</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선내용(수량)</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>상태</ItemView>
