@@ -25,6 +25,8 @@ async function updatesStateAtOne(List) {
 }
 const setStateAtOne = async (req, res) => {
    if (req.method == "PUT") { 
+     console.log("api/RepairShop/settlement/setStateAtOne")
+     console.log(req.body.body)
        const List  = req.body.body;
     try {
       const result = updatesStateAtOne(List);
