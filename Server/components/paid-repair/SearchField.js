@@ -106,7 +106,6 @@ const SearchField = ({
             borderRadius: "10px",
             border: "none"
           }}
-
         >Excel</button>}>        
           <ExcelSheet data={searchList} name="유상수선">
             <ExcelColumn label="서비스카드 번호" value={(col) => col[RECEIPT.CODE]}/>
@@ -114,7 +113,7 @@ const SearchField = ({
             <ExcelColumn label="매장명" value={(col) => col[STORE.CODE]}/>
             <ExcelColumn label="매장구분" value={(col) => STORE_CATEGORY[col[STORE.CATEGORY]]}/>
             <ExcelColumn label="매장연락처" value={(col) => col[STORE.CONTACT]}/>
-            <ExcelColumn label="등록일" value={[]}/>
+            <ExcelColumn label="등록일" value={(col) => col.receipt_date ? moment(col.receipt_date).format("YYYY-MM-DD") : ""}/>
             <ExcelColumn label="고객ID" value={(col) => col[CUSTOMER.ID]}/>
             <ExcelColumn label="고객" value={(col) => col[CUSTOMER.NAME]}/>
             <ExcelColumn label="고객연락처" value={(col) => col[CUSTOMER.CONTACT]}/>
@@ -125,14 +124,40 @@ const SearchField = ({
             <ExcelColumn label="판매가" value={(col) => col[PRODUCT.PRICE]}/>
             <ExcelColumn label="고객 요구" value={(col) => RECEIPT_TYPE[col[RECEIPT.TYPE]]}/>
             <ExcelColumn label="매장접수내용" value={(col) => col[RECEIPT.STORE_MESSAGE]}/>
-            <ExcelColumn label="과실구분" value={[]}/>
-            <ExcelColumn label="고객약속일" value={[]}/>
-            <ExcelColumn 
-                label="본사접수일" 
-                value={(col) => col[RECEIPT.REGISTER_DATE] ? moment(col[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD"): ""}/>
-            <ExcelColumn label="발송일 to S" value={[]}/>
+            <ExcelColumn label="고객약속일" value={(col) => col[RECEIPT.DUE_DATE] ? moment(col[RECEIPT.DUE_DATE]).format("YYYY-MM-DD") : ""}/>
+            <ExcelColumn label="본사접수일" value={(col) => col[RECEIPT.REGISTER_DATE] ? moment(col[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD") : ""}/>
+            <ExcelColumn label="발송일 to S" value={(col) => col.complete_date ? moment(col.complete_date).format("YYYY-MM-DD") : ""}/>
+            <ExcelColumn label="과실구분" value={(col)=> col[RECEIPT.FAULT_NAME]}/>
             <ExcelColumn label="내용분석" value={(col) => col[RECEIPT.ANALYSIS_NAME]}/>
             <ExcelColumn label="판정결과" value={(col) => col[RECEIPT.RESULT_NAME]}/>
+            <ExcelColumn label="수선미입고" value={(col) => col[RECEIPT.RESULT_DETAIL_NAME]}/>
+            
+            <ExcelColumn label="유상수선비" value={(col) => col.fee}/>
+            <ExcelColumn label="유상수선 유/무" value={(col) => (col.fee > 0) ? "유" : "무" }/>
+            <ExcelColumn label="수선처1" value={[]}/>
+            <ExcelColumn label="총수선비1" value={[]}/>
+            <ExcelColumn label="수선처접수일1" value={[]}/>
+            <ExcelColumn label="재수선1" value={[]}/>
+            <ExcelColumn label="수선처2" value={[]}/>
+            <ExcelColumn label="총수선비2" value={[]}/>
+            <ExcelColumn label="수선처접수일2" value={[]}/>
+            <ExcelColumn label="재수선2" value={[]}/>
+            <ExcelColumn label="수선처3" value={[]}/>
+            <ExcelColumn label="총수선비3" value={[]}/>
+            <ExcelColumn label="수선처접수일3" value={[]}/>
+            <ExcelColumn label="재수선3" value={[]}/>
+            <ExcelColumn label="생산업체" value={(col) => col.manufacturer_name}/>
+            <ExcelColumn label="발송일 to M" value={[]}/>
+            <ExcelColumn label="본사 설명" value={(col) => col.message}/>
+            <ExcelColumn label="하자코드" value={[]}/>
+            <ExcelColumn label="심의" value={[]}/>
+            <ExcelColumn label="등록자" value={[]}/>
+            <ExcelColumn label="등록일시" value={[]}/>
+            <ExcelColumn label="수정자" value={[]}/>
+            <ExcelColumn label="수정일시" value={[]}/>
+            <ExcelColumn label="SMS" value={[]}/>
+            
+            
         </ExcelSheet>
       </ExcelFile>
       </Row>

@@ -59,7 +59,7 @@ const Claim = () => {
           dateOption: 'complete_date',
 
           // TODO
-          // resultId: 6
+          resultId: 6
         } 
       })
       .then((response) => setSearchList(response.data.data));
