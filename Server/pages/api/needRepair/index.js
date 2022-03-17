@@ -40,6 +40,8 @@ const fs = require("fs");
         
         const form = new formidable.IncomingForm();
         form.parse(req, async function (err, fields, files) {
+          console.log(fields);
+          console.log(files);
             try {
                 if (err) throw new Error(err);
                 const receiptId = parseInt(fields["receipt"]);
