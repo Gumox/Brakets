@@ -108,7 +108,7 @@ export default function Inquiry() {
         fetchData();
       },[]);
     return(
-        <div style={{height:"100%",overflowY: "scroll"}}>
+        <Nav style={{height:"100%"}}>
             <RepairHeader/>
             <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
             <TopView>
@@ -237,9 +237,9 @@ export default function Inquiry() {
                     <ItemView>수선비용3</ItemView>
                     <ItemView><pre>{"  매장\n접수내용"}</pre></ItemView>
                 </Container></LaView>
-                <Line/>
+                <Line2/>
                             
-                <ContainerScroll style={{overflowY:"scroll"}}>
+                <Nav style={{paddingTop:12,maxHeight: 400,minHeight:200, width: "100%"}}>
                     {
                         data.map((item,i)=>(
                             
@@ -247,14 +247,14 @@ export default function Inquiry() {
 
                         ))   
                     }
-                </ContainerScroll>
+                </Nav>
               
               
             </ItemTable>
             <br/>
             <br/>
             </div>
-        </div>
+        </Nav>
     )
 }
 
@@ -268,13 +268,33 @@ const ItemStyle = {
   alignitems: "center",
   justifyContent:"center"
 }
-
+const Nav = styled.nav`
+  overflow-y: auto;
+  height: 100%;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
+`;
 const Line =styled.div`
   border:1px solid  ${COLOR.BRAUN};
   width :100%
   margin:2px;
   height:2px;
   margin-bottom:10px;
+  margin-top:10px;
+  background-color: ${COLOR.BRAUN}
+`;
+const Line2 =styled.div`
+  border:1px solid  ${COLOR.BRAUN};
+  width :100%
+  margin:2px;
+  height:2px;
   margin-top:10px;
   background-color: ${COLOR.BRAUN}
 `;
@@ -293,12 +313,12 @@ const Container = styled.div`
 `;
 
 
-const ContainerScroll = styled.div`
+const ContainerScroll = styled.nav`
     margin-top:12px;
     max-height: 400px;
     min-height:200px;
     width: 100%
-
+    overflow-y: scroll;
 
 `;
 const TopView = styled.div`

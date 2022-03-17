@@ -128,7 +128,7 @@ export default function ReturnUnregistered() {
     },[])
     return(
         
-        <div style={{minWidth:1150,height:"100%", overflowY:"scroll"}}>
+        <Nav style={{minWidth:1150}}>
             <RepairHeader/>
             <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
                 <TopView>
@@ -239,7 +239,7 @@ export default function ReturnUnregistered() {
                     <ItemView>브랜드</ItemView>
                 </Container></LaView>
                 <Line2/>
-                <div style={{marginTop:12,overflowY:"scroll",maxHeight: 400,maxWidth:"100%",minHeight:200}}>
+                <Nav style={{marginTop:12,maxHeight: 400,maxWidth:"100%",minHeight:200}}>
                     {
                         resultList.map((item,index)=>(
                             <LaView key={index}>
@@ -255,15 +255,28 @@ export default function ReturnUnregistered() {
                             </LaView>
                         ))
                     }
-                </div>
+                </Nav>
    
             </ItemTable>
             </div>
             <br/>
             <br/>
-        </div>
+        </Nav>
     )
 }
+const Nav = styled.nav`
+  overflow-y: auto;
+  height: 100%;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.3);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
+`;
 const TrashImgStyle  = styled.img`
     width:20px;
     height:18px;
