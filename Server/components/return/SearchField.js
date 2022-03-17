@@ -117,7 +117,7 @@ const SearchField = ({
             <ExcelColumn label="매장명" value={(col) => col[STORE.CODE]}/>
             <ExcelColumn label="매장구분" value={(col) => STORE_CATEGORY[col[STORE.CATEGORY]]}/>
             <ExcelColumn label="매장연락처" value={(col) => col[STORE.CONTACT]}/>
-            <ExcelColumn label="매장접수일" value={[]}/>
+            <ExcelColumn label="매장접수일" value={(col) => col.receipt_date ? moment(col.receipt_date).format("YYYY-MM-DD") : ""}/>
             <ExcelColumn label="고객ID" value={(col) => col[CUSTOMER.ID]}/>
             <ExcelColumn label="고객" value={(col) => col[CUSTOMER.NAME]}/>
             <ExcelColumn label="고객연락처" value={(col) => col[CUSTOMER.CONTACT]}/>
