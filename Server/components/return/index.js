@@ -8,6 +8,9 @@ import SearchField from "./SearchField";
 import List from "./list";
 import Invoice from "./invoice";
 import Options from "./Options";
+import ReactExport from "react-export-excel";
+
+
 
 const Return = ({ options, user}) => {
   
@@ -75,11 +78,13 @@ const Return = ({ options, user}) => {
   return (
     <Content>
       <SearchField
-        options={options}
-        data={inputData}
-        handleCheckboxChange={handleInputCheckboxChange}
-        handleValueChange={handleInputValueChange}
-        handleSearchButtonClick={handleSearchButtonClick}
+        options = {options}
+        data = {inputData}
+        handleCheckboxChange = {handleInputCheckboxChange}
+        handleValueChange = {handleInputValueChange}
+        handleSearchButtonClick = {handleSearchButtonClick}
+        // extractToExcel = {extractToExcel}
+        searchList = {searchList}
       />
       <List data={searchList} user={user} handleSearchButtonClick={handleSearchButtonClick}/>
       {/* <Options/> */}
