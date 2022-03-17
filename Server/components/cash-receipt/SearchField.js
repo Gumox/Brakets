@@ -97,7 +97,7 @@ const SearchField = ({
           />
         </Field>
         <SearchButton onClick={handleSearchButtonClick}>조회</SearchButton>
-        <ExcelFile element={<button
+        <ExcelFile filename="현금영수증" element={<button
           style={{
             // minHeight:maxContent,
             backgroundColor: "black",
@@ -107,7 +107,6 @@ const SearchField = ({
             borderRadius: "10px",
             border: "none"
           }}
-
         >Excel</button>}>        
             <ExcelSheet data={searchList} name="현금영수증">
             <ExcelColumn label="서비스카드 번호" value={(col) => col[RECEIPT.CODE]}/>

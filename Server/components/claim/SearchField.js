@@ -97,7 +97,7 @@ const SearchField = ({
         </Field>
         <SearchButton onClick={handleSearchButtonClick}>조회</SearchButton>
       
-        <ExcelFile element={<button
+        <ExcelFile filename="업체 클레임" element={<button
           style={{
             // minHeight:maxContent,
             backgroundColor: "black",
