@@ -55,7 +55,7 @@ const fs = require("fs");
                        
                     }else{
                         console.log("extension : "+extension)
-                        const filePath = `/storage/repair/need_${new Date().getMilliseconds()}_${receiptId}_${key}.${extension}`;
+                        const filePath = `/storage/repair/need_${new Date().getTime()}_${receiptId}_${key}.${extension}`;
                         console.log(filePath)
                         const oldPath = files[image].path;
                         const newPath = `./public${filePath}`;
