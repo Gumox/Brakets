@@ -31,8 +31,8 @@ const SettlementResult =({
     },1000)
 
     const increaseHeight =useCallback((e) =>{
-        console.log(e.target.style.height)
-        console.log(e.target.scrollHeight)
+        //console.log(e.target.style.height)
+        //console.log(e.target.scrollHeight)
         e.target.style.height = 'inherit';
         e.target.style.height = e.target.scrollHeight + 'px';
         if(e.target.scrollHeight){
@@ -41,7 +41,7 @@ const SettlementResult =({
     },[])
     const rearrangementList =(excel,item,type,hqStaff,repairStaff,adjustment,adjustmentReason,remarks) =>{
         let obj={}
-        //console.log(item)
+        ////console.log(item)
         obj["브랜드"] = item.brand_code;
         obj["서비스 번호"] = item.receipt_code;
         obj["매장정보"] = item.name+"\n"+item.store_contact;
@@ -65,12 +65,8 @@ const SettlementResult =({
         obj["수선처 당담wk"] = repairStaff;
         obj["비고"] = remarks;
         
-       // console.log("111111111111111111111111111111111")
-        //console.log(excel)
         let list = excel
         list[index] =obj
-        //console.log(list)
-       //console.log("111111111111111111111111111111111")
         setExcelList(list)
         return(list)
       
@@ -86,7 +82,7 @@ const SettlementResult =({
             obj["remarks"] = remarks
             
             checkedList[index] = obj
-            console.log(checkedList)
+            //console.log(checkedList)
             setCheckList(checkedList)
         }
     }
@@ -120,7 +116,7 @@ const SettlementResult =({
         
     }
     const onCheck =(check)=>{
-        //console.log(store.getState().selected)
+        ////console.log(store.getState().selected)
         if(check){
             pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,adjustment,adjustmentReason,remarks,check)
             setCheck(true)
@@ -132,7 +128,7 @@ const SettlementResult =({
             setCheckList(checkedList)
             setCheck(false)
         }
-        //console.log(store.getState().selected)
+        ////console.log(store.getState().selected)
         return
     }
     
@@ -183,9 +179,9 @@ const SettlementResult =({
                 <input disabled ={disable} type="number" style={{width:80}} value={adjustment||''} onChange={(e)=>{
                     setAdjustment(e.target.value)
                     pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,e.target.value,adjustmentReason,remarks,check)
-                    //console.log("0000000000000000000000000000")
-                    //console.log(excelList)
-                    //console.log("0000000000000000000000000000")
+                    ////console.log("0000000000000000000000000000")
+                    ////console.log(excelList)
+                    ////console.log("0000000000000000000000000000")
                     const obj = rearrangementList(excelList,item,types,repairStaff,repairStaff,e.target.value,adjustmentReason,remarks)
                     //excelListSet(obj,index)
                 }}/>

@@ -112,6 +112,5 @@ export const getHeadquarter = async()=>{
 
       })
     ])
-    console.log(datas)
     return datas;
 }

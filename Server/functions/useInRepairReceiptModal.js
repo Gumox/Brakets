@@ -61,7 +61,7 @@ export const getReceiptRepairInfo = async(receipt_id)=>{
 
       })
     ])
-    console.log(datas)
+    //console.log(datas)
     return datas;
 }
 
@@ -86,7 +86,7 @@ export const setSelectType = (selectItems) => {
 }
 
 export const checkHaveRepairDetail =(el,shop)=>{
-  console.log(el)
+  //console.log(el)
   if(el.repair1_store_id === shop){
     if(el.repair1_result_id != null) {return COLOR.MOCCA}
   }

@@ -11,7 +11,7 @@ const MENUS = [
     },
     {
       title: "미등록 반송",
-      link: "/return_unregistered",
+      link: "/returnUnregistered",
     },
     {
       title: "수선비 정산",

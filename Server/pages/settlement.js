@@ -8,10 +8,10 @@ import SettlementResult from "../components/repair/SettlementResult";
 import { debounce, set } from "lodash";
 import { getSettlementData,getBrandList,setStateAtOne,setStateAtTwo,updateContentEdit} from "../functions/useInSettlement";
 import { getRepairType } from "../functions/useInRepairReceiptModal";
-import { CSVLink } from "react-csv";
 import Image from 'next/image';
 import _ from "lodash";
-import {headers} from "../constants/settlementTableHeader"
+
+const XLSX = require('xlsx');
 
 export default function Settlement()  {
     const [companyList,setCompanyList] = useState(store.getState().company)
@@ -79,6 +79,12 @@ export default function Settlement()  {
         //console.log(newList)
         return newList
     }
+    const getExcel =(data)=>{
+        const dataWS = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, dataWS, "sheet1");
+        XLSX.writeFile(wb, "수선비 정산 목록.xlsx");
+    }
     useEffect(()=>{
         const fetchData = async () => {
         
@@ -127,7 +133,8 @@ export default function Settlement()  {
         return ()=>{
             window.removeEventListener('resize',handleResize);
         }
-    },[])   
+    },[])
+    console.log(excelList)   
     return(
         <div style={{height:"100%",overflowY: "scroll"}}>
         <RepairHeader/>
@@ -135,9 +142,9 @@ export default function Settlement()  {
         <TopView>
               <h2>수선비 정산</h2>
 
-              <CSVLink data={excelList} headers={headers} filename='수선비 정산 목록'>
-              <Image alt="excel" src='/icons/excel.png' width={45} height={40} />
-              </CSVLink>
+              
+              <Image alt="excel" src='/icons/excel.png' width={45} height={40} onClick={()=>{getExcel(excelList)}} />
+              
         </TopView>
         <Line/>
             <br/>
@@ -201,15 +208,13 @@ export default function Settlement()  {
                         <ButtonCheck disabled = {!disable} onClick={()=>{onClickOptionTwo( sortCheckedList(checkList))}}>본사확인</ButtonCheck>
                         <ButtonRepairCheck onClick={()=>{
                             onClickOptionOne( sortCheckedList(checkList))
-                            console.log(checkList)
+                            console.log(sortCheckedList(checkList))
                            
                             }}>수선처확인</ButtonRepairCheck>
                         <ButtonCheckC  disabled = {!disable} onClick={()=>{onClickOptionEdit(sortCheckedList(checkList))}}>내용 수정</ButtonCheckC>
                     </div>
                     <ItemTable>
-                        
-                    <div style={{marginTop:12,overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:200}}>
-                        <Line2>
+                    <Line2 style={{paddingTop:12}}>
                             <LaView ><Container>
                                 <CheckBoxView>#</CheckBoxView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>브랜드</ItemView>
@@ -228,6 +233,8 @@ export default function Settlement()  {
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>비고</ItemView>
                             </Container></LaView>
                         </Line2>
+                    <div style={{overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:(windowHeight)*0.5}}>
+                        
                         {   
                             settlementList.map((item,index)=>(
                                 <SettlementResult key = {index} data ={item} type ={types} index={index} excelList={excelList} checkList={checkList} {...{excelListSet,setExcelList,setCheckList}}></SettlementResult>
