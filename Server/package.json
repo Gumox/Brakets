@@ -49,7 +49,8 @@
     "stream": "0.0.2",
     "styled-components": "^5.3.3",
     "swr": "^1.0.1",
-    "tls": "0.0.1"
+    "tls": "0.0.1",
+    "xlsx": "^0.18.4"
   },
   "devDependencies": {
     "eslint": "7.32.0",

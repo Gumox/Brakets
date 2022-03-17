@@ -6,13 +6,15 @@ import axios from 'axios';
 import store from '../store/store';
 import sortInquiryData from '../functions/sortInquiryData';
 import dateOptionListcontroll from '../functions/dateOptionListcontroll';
-import { CSVLink } from "react-csv";
-import headers from '../constants/inquiryTableHeader';
 import checkDisable from '../functions/checkDisable';
 import InquiryResult from '../components/repair/InquiryResult';
 import {getSelectList, getRepairType } from '../functions/useInRepairReceiptModal'; 
 import { getBrandList } from '../functions/useInSettlement';
 import Image from 'next/image'
+import { parseInquiryData } from '../functions/parseExcelData';
+
+const XLSX = require('xlsx');
+
 export default function Inquiry() {
    
     const [shopId,setShopId] = useState(store.getState().shop);
@@ -30,7 +32,12 @@ export default function Inquiry() {
     const [resultInfo,setResultInfo] = useState([])
     const [analysisInfo,setAnalysisInfo] = useState([])
     
-    
+    const getExcel =(data)=>{
+        const dataWS = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, dataWS, "sheet1");
+        XLSX.writeFile(wb, "조회 목록.xlsx");
+      }
     const getData = async(params)=>{
         const[datas] =await Promise.all([
             axios.get(`${process.env.API_URL}/RepairShop/getInquiryInfo`, {
@@ -107,9 +114,9 @@ export default function Inquiry() {
             <TopView>
                 <h2>조회</h2>
 
-                <CSVLink data={data} headers={headers} filename='조회목록'>
-                <Image alt='excel' src='/icons/excel.png' width={45} height={40}/>
-                </CSVLink>
+               
+                <Image alt='excel' src='/icons/excel.png' width={45} height={40} onClick={()=>{getExcel(parseInquiryData(data))}}/>
+               
             </TopView>
             <hr/>
                 <Container>회사 설정 :

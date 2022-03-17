@@ -6,14 +6,15 @@ import axios from 'axios';
 import _, { set } from "lodash";
 import formatDate from '../functions/formatDate';
 import store from '../store/store';
-import { CSVLink } from "react-csv";
-import { getBrandList,getRepairShopList,getStoreList,getTargetInfo,insertData,getReturnList,getAllReturnList,deleteRegist, getHeadquarter} from '../functions/useInReturnUnregistered';
+import { getBrandList,getStoreList,getTargetInfo,insertData,getReturnList,getAllReturnList,deleteRegist, getHeadquarter} from '../functions/useInReturnUnregistered';
 import unregisteredListControll from '../functions/unregisteredListControll';
-import headers from '../constants/retrunTableHeader';
 import checkDisable from '../functions/checkDisable';
+import { parseReturnunRegisteredData } from '../functions/parseExcelData';
 import Image from 'next/image'
 
-export default function Return_unregistered() {
+const XLSX = require('xlsx');
+
+export default function ReturnUnregistered() {
     
     const [selectedCompany,setSelectedCompany] = useState(null)
     const [companyList,setCompanyList] = useState([])
@@ -66,6 +67,12 @@ export default function Return_unregistered() {
             setReturnList(data) //for refresh
         }
     }
+    const getExcel =(data)=>{
+        const dataWS = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, dataWS, "sheet1");
+        XLSX.writeFile(wb, "미등록 반송 목록.xlsx");
+      }
     const handleKeyPress = useCallback(async(e,code,returnList) => {
           if (e.key !== "Enter"){return;}
           else{
@@ -126,9 +133,7 @@ export default function Return_unregistered() {
             <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
                 <TopView>
                 <h2>미등록 반송</h2>
-                <CSVLink data={resultList} headers={headers} filename='조회목록'>
-                    <Image alt='excel' src='/icons/excel.png' width={45} height={40}/>
-                </CSVLink>
+                    <Image alt='excel' src='/icons/excel.png' width={45} height={40} onClick={()=>{getExcel(parseReturnunRegisteredData(resultList))}}/>
             </TopView>
                 <Line/>
                 <Container>
