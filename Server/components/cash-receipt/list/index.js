@@ -110,6 +110,9 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     {Header: '판정결과', accessor: '판정결과'},
   ],[])
 
+    console.log("data is")
+    console.log(data)
+
     const value = data.map((cashReceipt) => ({
       "서비스카드 번호":cashReceipt[RECEIPT.CODE],
       "현금영수증번호":cashReceipt[RECEIPT.CASHRECEIPT_NUM] == null ? "미 발행 건" : cashReceipt[RECEIPT.CASHRECEIPT_NUM],
@@ -117,7 +120,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
       "매장명":cashReceipt[STORE.NAME],
       "매장구분":STORE_CATEGORY[cashReceipt[STORE.CATEGORY]],
       "매장연락처":cashReceipt[STORE.CONTACT],
-      "등록일":"?",
+      "등록일": cashReceipt.receipt_date ? moment(cashReceipt.receipt_date).format("YYYY-MM-DD") : "",
       "고객ID":cashReceipt[CUSTOMER.ID],
       "고객":cashReceipt[CUSTOMER.NAME],
       "고객연락처":cashReceipt[CUSTOMER.CONTACT],

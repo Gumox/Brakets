@@ -98,7 +98,7 @@ const SearchField = ({
         </Field>
         <SearchButton onClick={handleSearchButtonClick}>조회</SearchButton>
         {/* <ExtractBtn onClick={() => console.log(searchList)}>Excel</ExtractBtn> */}
-        <ExcelFile element={<button
+        <ExcelFile filename="하자반품" element={<button
           style={{
             // minHeight:maxContent,
             backgroundColor: "black",

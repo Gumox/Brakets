@@ -75,9 +75,10 @@ const Return = () => {
     <Content>
       <SearchField
         data={inputData}
-        handleCheckboxChange={handleInputCheckboxChange}
-        handleValueChange={handleInputValueChange}
-        handleSearchButtonClick={handleSearchButtonClick}
+        handleCheckboxChange = {handleInputCheckboxChange}
+        handleValueChange = {handleInputValueChange}
+        handleSearchButtonClick = {handleSearchButtonClick}
+        searchList = {searchList}
       />
       <List data={searchList} />
       {/*<Total total={searchList.length}/> */}
