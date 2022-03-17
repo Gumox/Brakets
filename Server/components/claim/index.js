@@ -78,6 +78,7 @@ const Claim = () => {
         handleCheckboxChange={handleInputCheckboxChange}
         handleValueChange={handleInputValueChange}
         handleSearchButtonClick={handleSearchButtonClick}
+        searchList = {searchList}
       />
       <List data={searchList}/>
       {/*<Invoice state = {"출고확정"}/>
