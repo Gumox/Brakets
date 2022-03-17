@@ -55,21 +55,14 @@ const fs = require("fs");
                        
                     }else{
                         console.log("extension : "+extension)
-                        const filePath = `/storage/repair/need_${new Date().toISOString()}_${receiptId}_${key}.${extension}`;
+                        const filePath = `/storage/repair/need_${new Date().getMilliseconds()}_${receiptId}_${key}.${extension}`;
                         console.log(filePath)
                         const oldPath = files[image].path;
                         const newPath = `./public${filePath}`;
                         // 파일 저장 (formidable 은 임시로 파일 저장해둠, 원하는 위치로 rename)
                         
                         fs.rename(oldPath, newPath, (err) => {
-                            if (err) {
-                              console.log("is hear")
-                              throw new Error(err)
-                            };
-                            fs.stat(newPath, function (err, stats) {
-                              if (err) throw err;
-                              console.log('stats: ' + JSON.stringify(stats));
-                            });
+                          if (err) throw new Error(err);
                         });
                         
                         if(index == 0) {
