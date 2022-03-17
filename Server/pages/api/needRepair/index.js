@@ -1,19 +1,17 @@
 import excuteQuery from "../db";
 import formidable from "formidable";
-import fs from "fs";
-/**
- * 0단계 고객 수정
- */
+
+const fs = require("fs"); 
  const updateReceiptImage = async (image, receipt_id) => {
     return excuteQuery({
       query: "UPDATE receipt SET image=? WHERE receipt_id=?",
       values: [image,receipt_id],
     });
   }
-  const needPointCheck = async (image, receipt_id) => {
+  const needPointCheck = async (receipt_id,number) => {
     return excuteQuery({
-      query: "SELECT * FROM repair_need_point WHERE need_point_image = ?",
-      values: [image],
+      query: "SELECT * FROM repair_need_point WHERE receipt_id = ? AND number =?",
+      values: [receipt_id,number],
     });
   }
   const updateNeedPoint = async (image, repair_need_id ) => {
@@ -23,12 +21,12 @@ import fs from "fs";
       values: [image,repair_need_id ],
     });
   }
-  const insertNeedPoint = async (receipt_id,store_id, need_point_image) => {
+  const insertNeedPoint = async (receipt_id,num,store_id, need_point_image) => {
       console.log(receipt_id,store_id, need_point_image)
       return excuteQuery({
         query:
-          "INSERT INTO `repair_need_point`(`receipt_id`, `store_id`,`need_point_image`) VALUES (?,?,?)",
-        values: [receipt_id,store_id,need_point_image],
+          "INSERT INTO `repair_need_point`(`receipt_id`,`number`,`store_id`,`need_point_image`) VALUES (?,?,?)",
+        values: [receipt_id,num,store_id,need_point_image],
       });
     }
     export const config = {
@@ -62,8 +60,16 @@ import fs from "fs";
                         const oldPath = files[image].path;
                         const newPath = `./public${filePath}`;
                         // 파일 저장 (formidable 은 임시로 파일 저장해둠, 원하는 위치로 rename)
+                        
                         fs.rename(oldPath, newPath, (err) => {
-                            if (err) throw new Error(err);
+                            if (err) {
+                              console.log("is hear")
+                              throw new Error(err)
+                            };
+                            fs.stat(newPath, function (err, stats) {
+                              if (err) throw err;
+                              console.log('stats: ' + JSON.stringify(stats));
+                            });
                         });
                         
                         if(index == 0) {
@@ -74,8 +80,18 @@ import fs from "fs";
                                 throw new Error(ImageResult.error);
                             }
                         }else{
-                            const check = await needPointCheck(filePath)
-                            console.log(check[0])
+                            const check = await needPointCheck(receiptId,key)
+                            console.log("-----------")
+                            console.log()
+                            console.log()
+                            console.log()
+                            console.log()
+                            console.log(check)
+                            console.log()
+                            console.log()
+                            console.log()
+                            console.log()
+                            console.log("-----------")
                             if(check[0] !== undefined){
                                 console.log(check[0].repair_need_id)
                                 const saveResult = await updateNeedPoint(filePath,check[0].repair_need_id);
@@ -84,8 +100,11 @@ import fs from "fs";
                                 }
                                 
                             }else{
-                                const saveResult = await insertNeedPoint(receiptId,storeId,filePath);
-                                //console.log(saveResult)
+                                console.log("filePath")
+                                
+                                console.log(filePath)
+                                const saveResult = await insertNeedPoint(receiptId,key,storeId,filePath);
+                                console.log(saveResult)
                                 if(saveResult.error){ 
                                     throw new Error(saveResult.error);
                                 }
