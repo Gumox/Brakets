@@ -188,7 +188,7 @@ const ReturnList = ({ data, user }) => {
     {Header: '매장 연락처', accessor: '매장 연락처',},
     {Header: '등록일', accessor: '등록일',},
     {Header: '고객 ID', accessor: '고객 ID',},
-    {Header: '고객 ', accessor: '고객 ',},
+    {Header: '고객', accessor: '고객',},
     {Header: '고객연락처', accessor: '고객연락처',},
     {Header: '시즌', accessor: '시즌',},
     {Header: '스타일', accessor: '스타일',},
@@ -239,9 +239,9 @@ const ReturnList = ({ data, user }) => {
       "매장코드":pairRepair[STORE.CODE],
       "매장명":pairRepair[STORE.NAME],
       "매장구분":STORE_CATEGORY[pairRepair[STORE.CATEGORY]],
-      "매장연락처":pairRepair[STORE.CONTACT],
+      "매장 연락처":pairRepair[STORE.CONTACT],
       "등록일":pairRepair.receipt_date ? moment(pairRepair.receipt_date).format("YYYY-MM-DD") : "",
-      "고객ID":pairRepair[CUSTOMER.ID],
+      "고객 ID":pairRepair[CUSTOMER.ID],
       "고객":pairRepair[CUSTOMER.NAME],
       "고객연락처":pairRepair[CUSTOMER.CONTACT],
       "시즌":pairRepair[PRODUCT.SEASON],
@@ -254,11 +254,8 @@ const ReturnList = ({ data, user }) => {
       "고객약속일":pairRepair[RECEIPT.DUE_DATE]
       ? moment(pairRepair[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
       : "",
-      "본사접수일":pairRepair[RECEIPT.REGISTER_DATE]
-      ? moment(pairRepair[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
-      : "",
-      "발송일 to S":pairRepair.complete_date ? moment(pairRepair.complete_date).format("YYYY-MM-DD")
-      : "",
+      "본사접수일":pairRepair[RECEIPT.REGISTER_DATE] ? moment(pairRepair[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD") : "",
+      "발송일 to S":pairRepair.complete_date ? moment(pairRepair.complete_date).format("YYYY-MM-DD") : "",
       "과실구분":pairRepair[RECEIPT.FAULT_NAME],
       "내용분석":pairRepair[RECEIPT.ANALYSIS_NAME],
       "판정결과":pairRepair[RECEIPT.RESULT_NAME],      
