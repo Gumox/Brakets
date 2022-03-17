@@ -189,7 +189,7 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
     { Header: '매장연락처', accessor: '매장연락처' },
 
     // TOBE
-    { Header: '매장접수일', accessor: '매장접수일' },
+    { Header: '등록일', accessor: '등록일' },
 
     // ASIS
     { Header: '고객ID', accessor: '고객ID' },
@@ -249,7 +249,7 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
     "매장명": productReturn[STORE.NAME],
     "매장구분": STORE_CATEGORY[productReturn[STORE.CATEGORY]],
     "매장연락처": productReturn[STORE.CONTACT],
-    "등록일": "?",
+    "등록일": productReturn[RECEIPT.RECEIPT_DATE] ? moment(productReturn[RECEIPT.DUE_DATE]).format("YYYY-MM-DD") : "",
     "고객ID": productReturn[CUSTOMER.ID],
     "고객": productReturn[CUSTOMER.NAME],
     "고객연락처": productReturn[CUSTOMER.CONTACT],
