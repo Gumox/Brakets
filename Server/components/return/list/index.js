@@ -243,7 +243,7 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
   ], [])
 
   const value = data.map((productReturn) => ({
-    "receipt_id":productReturn[RECEIPT.ID],
+
     "서비스카드 번호": productReturn[RECEIPT.CODE],
     "매장코드": productReturn[STORE.CODE],
     "매장명": productReturn[STORE.NAME],
@@ -260,16 +260,36 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
     "판매가": productReturn[PRODUCT.PRICE],
     "고객요구": RECEIPT_TYPE[productReturn[RECEIPT.TYPE]],
     "매장접수내용": productReturn[RECEIPT.STORE_MESSAGE],
+    "본사접수일": productReturn[RECEIPT.REGISTER_DATE] ? moment(productReturn[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD") : "",
+    "발송일 to S": productReturn.complete_date ? moment(productReturn.complete_date).format("YYYY-MM-DD") : "",
     "과실구분": productReturn[RECEIPT.FAULT_NAME],
-    "고객약속일": productReturn[RECEIPT.DUE_DATE]
-      ? moment(productReturn[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
-      : "",
-    "본사접수일": productReturn[RECEIPT.REGISTER_DATE]
-      ? moment(productReturn[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
-      : "",
     "내용분석": productReturn[RECEIPT.ANALYSIS_NAME],
     "판정결과": productReturn[RECEIPT.RESULT_NAME],
-    "전표 발행 여부":productReturn[RECEIPT.ISSUED_INVOICE] == 0 ? "전표미발행" : "전표발행",
+    "유상수선비": productReturn.fee,
+    "유상수선 유/무": (productReturn.fee > 0) ? ("유") : ("무"),
+    "수선처1": "",
+    "총수선비1": "",
+    "수선처접수일1": "",
+    "재수선1": "",
+    "수선처2": "",
+    "총수선비2": "",
+    "수선처접수일2": "",
+    "재수선2": "",
+    "수선처3": "",
+    "총수선비3": "",
+    "수선처접수일3": "",
+    "재수선3": "",
+    "생산업체": productReturn.manufacturer_name,
+    "발송일 to M": "",
+    "본사설명": productReturn.message,
+    "하자코드": "",
+    "심의": (productReturn[RECEIPT.TYPE] == 2) ? ("심의") : (""),
+    "등록자": "",
+    "수정자": "",
+    "수정일시": "",
+    "SMS": "",
+    "감가반품": "",
+    "전표 발행 여부":[RECEIPT.ISSUED_INVOICE] == 0 ? "전표미발행" : "전표발행",
   }))
 
 
