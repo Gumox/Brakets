@@ -6,7 +6,6 @@ const COLOR = {
   TEXT_MAIN: "#4F4F4F",
 
   WHITE: "#FFFFFF",
-  DARK_WHITE :"E1E1E1",
   BLACK: "#000000",
   RED: "#FF0000",
   YELLOW: "#FFFF00",
