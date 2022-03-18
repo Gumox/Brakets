@@ -27,13 +27,14 @@ const loginRepair= async (query, values) => {
 const repairShopInfo= async (id) => {
   
     const result = await excuteQuery({
-      query: `SELECT  
+      query: `SELECT DISTINCT
               repair_shop_info.hq_id,
               headquarter_name,
               headquarter_name_kr,
               repair_shop_info.brand_id,
               brand_name,
               brand_code,
+              store.name,
               repair_shop_info.store_id
               FROM repair_shop_info
               LEFT JOIN headquarter ON repair_shop_info.hq_id = headquarter.headquarter_id
