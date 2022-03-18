@@ -224,7 +224,6 @@ function LookupPage({ navigation }) {
 
   const netInfo = useNetInfo();
   
-  
   let startDatePicker;
                           
   let endDatePicker;

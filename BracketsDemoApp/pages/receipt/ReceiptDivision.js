@@ -33,8 +33,6 @@ const PickerView = styled.View`
     justify-content: center;
     padding-left: 5px;
 `;
-
-
 function ReceiptDivision({navigation}) {
    
     const [itemList, setItemList]= useState([]);
@@ -93,9 +91,8 @@ function ReceiptDivision({navigation}) {
             )
         }
     },[]);
-    
-    return (
 
+    return (
         <>
             <Container>
             <Label/>
@@ -127,7 +124,6 @@ function ReceiptDivision({navigation}) {
                         alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                     }
                 }
-                
             }}>고객용 제품</ReceiptButton>
             
             <ReceiptButton onPress={ () => {
