@@ -79,19 +79,17 @@ function Login({ navigation }) {
       .then(
         response => (response.status == '200') ? (
           console.log("success"),
-          console.log(response.data.body),
-          console.log(response.data.data  ),
 
           SaveInfo(response.data.data, result),
           check(response.data.data)
         ) : (
-          console.log("response" + response.data),
-          console.log(option.url)
+          Alert.alert(
+            "등록된 정보가 존재하지 않습니다.",""
+          )
         )
       )
       .catch(function (error) {
         console.log(error)
-        console.log(option.url)
         Alert.alert(
           "등록된 정보가 존재하지 않습니다.",""
         )
