@@ -25,7 +25,7 @@ const fs = require("fs");
       console.log(receipt_id,store_id, need_point_image)
       return excuteQuery({
         query:
-          "INSERT INTO `repair_need_point`(`receipt_id`,`number`,`store_id`,`need_point_image`) VALUES (?,?,?)",
+          "INSERT INTO `repair_need_point`(`receipt_id`,`number`,`store_id`,`need_point_image`) VALUES (?,?,?,?)",
         values: [receipt_id,num,store_id,need_point_image],
       });
     }
@@ -87,7 +87,7 @@ const fs = require("fs");
                             console.log()
                             console.log()
                             console.log("-----------")
-                            if(check[0] !== undefined){
+                            if(check.length>0){
                                 console.log(check[0].repair_need_id)
                                 const saveResult = await updateNeedPoint(filePath,check[0].repair_need_id);
                                 if(saveResult.error){ 
@@ -95,9 +95,6 @@ const fs = require("fs");
                                 }
                                 
                             }else{
-                                console.log("filePath")
-                                
-                                console.log(filePath)
                                 const saveResult = await insertNeedPoint(receiptId,key,storeId,filePath);
                                 console.log(saveResult)
                                 if(saveResult.error){ 
