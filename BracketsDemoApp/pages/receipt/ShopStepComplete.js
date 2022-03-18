@@ -50,6 +50,10 @@ const TopStateView = styled.View`
     padding:24px;
     justify-content: center;
 `;
+const InnerView = styled.View`
+    align-items: center;
+    justify-content: center;
+`;
 const InfoView =styled.View`
     width: 70%;
     border:2px solid  #78909c;
@@ -173,98 +177,101 @@ function ShopStepOne( { navigation } ) {
 
 
     return (
-        <Container>
-            <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/></TopStateView>
-            <TopInfo></TopInfo>
-            <CenterText>
-                
-                
-                <Image source={require('../../Icons/complete_blue.png')} style={{width:60,height:60,marginBottom:10}}></Image>
-                <RegistText>접수 완료</RegistText>
-                <PrView><BlueText>완료</BlueText><GrayText> 버튼을 누르시면</GrayText></PrView>
-                <PrView><BlueText>수선 접수</BlueText><GrayText> 가</GrayText><BlueText> 완료</BlueText><GrayText> 됩니다</GrayText></PrView>
+        <>
+            <ScrollView>
+                <TopStateView><StateBarSolid /><StateBarSolid /><StateBarSolid /><StateBarSolid /><StateBarSolid /></TopStateView>
+                <TopInfo></TopInfo>
+                <CenterText>
+                    <Image source={require('../../Icons/complete_blue.png')} style={{ width: 60, height: 60, marginBottom: 10 }}></Image>
+                    <RegistText>접수 완료</RegistText>
+                    <PrView><BlueText>완료</BlueText><GrayText> 버튼을 누르시면</GrayText></PrView>
+                    <PrView><BlueText>수선 접수</BlueText><GrayText> 가</GrayText><BlueText> 완료</BlueText><GrayText> 됩니다</GrayText></PrView>
+                </CenterText>
+                <InnerView>
+                    <InfoView>
+                        <GrayText>서비스 카드 번호</GrayText>
 
-            </CenterText>
-            
-            <InfoView>
-                <GrayText>서비스 카드 번호</GrayText>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(!modalVisible);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.xView} >
+                                    <View style={styles.modalView} >
+                                        <CodeView><CodeViewText>{barcode}</CodeViewText></CodeView>
+                                        <ImageZoom cropWidth={320}
+                                            cropHeight={400}
+                                            imageWidth={300}
+                                            imageHeight={400}>
+                                            {/* <Image style={{width:300, height:400}}
+                                    source={{uri:cardImgUri}}/> */}
+                                        </ImageZoom>
 
-                
-                    
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                        }}
-                    >
-                        <View style={styles.centeredView}>
-                        <View style ={styles.xView} >    
-                        <View style={styles.modalView} >
-                            <CodeView><CodeViewText>{barcode}</CodeViewText></CodeView>
-                            <ImageZoom cropWidth={320}
-                                    cropHeight={400}
-                                    imageWidth={300}
-                                    imageHeight={400}>
-                                    <Image style={{width:300, height:400}}
-                                    source={{uri:cardImgUri}}/>
-                            </ImageZoom>
-                            
-                        </View>
-                        </View>
-                        </View>
-                    </Modal>
-                    
-                    
-                    
-                    
-                    <TouchableView onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label><ImgIcon source={require('../../Icons/image.png')}/></TouchableView>
-                   
-                <GrayText>받는 곳</GrayText>
-                <DataView><Label>{repairShop}</Label></DataView>
-                <GrayText>행낭 바코드</GrayText>
-                <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible2}
-                        onRequestClose={() => {
-                        setModalVisible2(!modalVisible2);
-                        }}
-                    >
-                        <View style={styles.centeredView}>
-                        <View style ={styles.xView} >    
-                        <View style={styles.modalView} >
-                        <CodeView><CodeViewText>{bag}</CodeViewText></CodeView>
-                            <ImageZoom cropWidth={320}
-                                    cropHeight={400}
-                                    imageWidth={300}
-                                    imageHeight={400}>
-                                    <Image style={{width:300, height:400}}
-                                    source={{uri:bagImgUri}}/>
-                            </ImageZoom>
-                            
-                        </View>
-                        </View>
-                        </View>
-                    </Modal>
-                <TouchableView onPress={() => setModalVisible2(!modalVisible)}><Label>{bag}</Label><ImgIcon source={require('../../Icons/image.png')}/></TouchableView>
-                
-            </InfoView>  
-            <Button onPress={ ()=>{
-                    if(netInfo.isConnected){
-                        submitReceipt(store.getState().receipt_id,bag)
-                        store.dispatch({type:"STORE_CLEAR"})
-                        navigation.popToTop()
-                    }else{
-                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
-                    }
-                    
-                }}>
-                완료
-            </Button>
-            <Bottom navigation={navigation}/>
-        </Container>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+
+
+                        <TouchableView onPress={() => setModalVisible(!modalVisible)}>
+                            <Label>{barcode}</Label>
+                            {/* <ImgIcon source={require('../../Icons/image.png')}/> */}
+                        </TouchableView>
+
+                        <GrayText>받는 곳</GrayText>
+                        <DataView><Label>{repairShop}</Label></DataView>
+                        <GrayText>행낭 바코드</GrayText>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalVisible2}
+                            onRequestClose={() => {
+                                setModalVisible2(!modalVisible2);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.xView} >
+                                    <View style={styles.modalView} >
+                                        <CodeView><CodeViewText>{bag}</CodeViewText></CodeView>
+                                        <ImageZoom cropWidth={320}
+                                            cropHeight={400}
+                                            imageWidth={300}
+                                            imageHeight={400}>
+                                            {/* <Image style={{width:300, height:400}}
+                                    source={{uri:bagImgUri}}/> */}
+                                        </ImageZoom>
+
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+                        <TouchableView onPress={() => setModalVisible2(!modalVisible)}>
+                            <Label>{bag}</Label>
+                            {/* <ImgIcon source={require('../../Icons/image.png')}/> */}
+                        </TouchableView>
+
+                    </InfoView>
+
+                    <Button onPress={() => {
+                        if (netInfo.isConnected) {
+                            submitReceipt(store.getState().receipt_id, bag)
+                            store.dispatch({ type: "STORE_CLEAR" })
+                            navigation.popToTop()
+                        } else {
+                            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                        }
+
+                    }}>
+                        완료
+                    </Button>
+                </InnerView>
+            </ScrollView>
+            <Bottom navigation={navigation} />
+        </>
     )
 }
 
