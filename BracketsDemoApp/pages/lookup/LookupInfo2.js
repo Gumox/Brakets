@@ -117,9 +117,6 @@ function LookupInfo2( { route,navigation } ) {
         setNumbering(data["product_degree"])                 //차수
         setProductExchange(+data["image"])                   //제품 교환
         setProductPrice(price)           //제품가격
-
-
-        
     },[]);
     
    
@@ -127,8 +124,6 @@ function LookupInfo2( { route,navigation } ) {
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
-                
-
                 <InfoView>
                     <Half>
                       <HalfLine>

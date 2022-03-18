@@ -17,6 +17,7 @@ import { CheckBox } from 'react-native-elements';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
 import { CheckCode,CheckFaultDivision,CheckAnalysisType,CheckJudgmentResult } from '../../Functions/codeCheck';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {useNetInfo}from "@react-native-community/netinfo";
 const TouchableView = styled.TouchableOpacity`
     width: 100%;;
@@ -183,7 +184,7 @@ function TakeOverPage( { route,navigation } ) {
     
     const [repairPrice,setRepairPrice] = useState();        //수선비
     const [isSelected , setSelection] = useState(false);    //유상수선유무
-
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
    
     
     const [requestImageModalVisible,setRequestImageModalVisible] = useState(false)
@@ -386,6 +387,18 @@ function TakeOverPage( { route,navigation } ) {
         const showDatepicker = () => {
             showMode('date');
         };
+
+        const showDatePickerIos = () => { setDatePickerVisibility(true); };
+
+        const hideDatePicker = () => { setDatePickerVisibility(false); };
+        
+        const handleConfirm = (selectedDate) => {
+            const currentDate = selectedDate || date
+            setShow(Platform.OS === 'ios');
+            setDate(currentDate);
+            setSelectDay(formatDate())
+            hideDatePicker();
+        };
         const  formatDate = ()=> {
             var month = '' + (date.getMonth() + 1),
                 day = '' + date.getDate(),
@@ -411,10 +424,12 @@ function TakeOverPage( { route,navigation } ) {
             show,
             mode,
             onChange,
-            formatDate
+            handleConfirm,
+            hideDatePicker,
+            showDatePickerIos
         }
     }
-    const [selectDay,setSelectDay] =useState();
+    const [selectDay, setSelectDay] =useState();
     const tDate = useInput(new Date()); 
     
     var beforeImageViews =[];
@@ -490,6 +505,34 @@ function TakeOverPage( { route,navigation } ) {
         fetch();
         
     },[]);
+
+    let dataPicker;
+
+    if(Platform.OS === 'ios'){
+        console.log("ios")
+        dataPicker = (
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={tDate.handleConfirm}
+            onCancel={tDate.hideDatePicker}
+            locale='ko-kr'
+          />
+        )
+      }
+      else{
+        console.log("and")
+        startDatePicker = ((tDate.show) && (
+            <DateTimePicker
+                testID="dateTimePicker"
+                value={tDate.date}
+                mode={tDate.mode}
+                is24Hour={true}
+                display="default"
+                onChange={tDate.onChange}
+            />
+        ))
+      }
     
     return(
         <Container>
@@ -648,7 +691,10 @@ function TakeOverPage( { route,navigation } ) {
               
               
               {/* TODO */}
-              <TouchableView onPress={tDate.showDatepicker}>
+              {/* <TouchableView onPress={tDate.showDatepicker}> */}
+              <TouchableView onPress={
+                    (Platform.OS === 'ios') ? (tDate.showDatePickerIos) : (tDate.showDatepicker)
+                    }>
               {/* TODO */}
                   
               <PrView>
@@ -656,7 +702,7 @@ function TakeOverPage( { route,navigation } ) {
               <ImgIcon source={require('../../Icons/calendar.png')}/>
               </PrView>
               </TouchableView>
-              {tDate.show && (
+              {/* {tDate.show && (
                   <DateTimePicker
                   testID="dateTimePickerT"
                   value={tDate.date}
@@ -665,7 +711,9 @@ function TakeOverPage( { route,navigation } ) {
                   display="default"
                   onChange={tDate.onChange}
                   />
-              )}
+              )} */}
+            {dataPicker}
+
             <Half style = {{marginBottom : 50}}>
                 <Check>
                       <InText>유상수선 </InText>
