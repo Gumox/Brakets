@@ -95,6 +95,10 @@ const CodeView = styled.View`
     background-color:#78909c;
     border-radius:8px;
 `;
+const CloseBtn = styled.TouchableOpacity`
+    /* width: 50px; */
+    /* height: 50px; */
+`;
 
 const styles = StyleSheet.create({
     centeredView: {
@@ -205,7 +209,11 @@ function ShopStepOne({ navigation }) {
                             <View style={styles.centeredView}>
                                 <View style={styles.xView} >
                                     <View style={styles.modalView} >
-                                        <CodeView><CodeViewText>{barcode}</CodeViewText></CodeView>
+                                        <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                            <CodeViewText>
+                                                {barcode}
+                                            </CodeViewText>
+                                        </CodeView>
                                         <ImageZoom cropWidth={320}
                                             cropHeight={400}
                                             imageWidth={300}
@@ -213,7 +221,11 @@ function ShopStepOne({ navigation }) {
                                             <Image style={{ width: 300, height: 400 }}
                                                 source={{ uri: cardImgUri }} />
                                         </ImageZoom>
-
+                                        <CloseBtn style={{marginTop: 5}}>
+                                            <CodeViewText style={{color: "#78909c", fontSize: 20}} onPress={() => setModalVisible(!modalVisible)}>
+                                                닫기
+                                            </CodeViewText>
+                                        </CloseBtn>
                                     </View>
                                 </View>
                             </View>
@@ -234,7 +246,11 @@ function ShopStepOne({ navigation }) {
                             <View style={styles.centeredView}>
                                 <View style={styles.xView} >
                                     <View style={styles.modalView} >
-                                        <CodeView><CodeViewText>{bag}</CodeViewText></CodeView>
+                                        <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                            <CodeViewText>
+                                                {bag}
+                                            </CodeViewText>
+                                        </CodeView>
                                         <ImageZoom cropWidth={320}
                                             cropHeight={400}
                                             imageWidth={300}
@@ -242,7 +258,11 @@ function ShopStepOne({ navigation }) {
                                             <Image style={{ width: 300, height: 400 }}
                                                 source={{ uri: bagImgUri }} />
                                         </ImageZoom>
-
+                                        <CloseBtn style={{marginTop: 5}}>
+                                            <CodeViewText style={{color: "#78909c", fontSize: 20}} onPress={() => setModalVisible2(!modalVisible2)}>
+                                                닫기
+                                            </CodeViewText>
+                                        </CloseBtn>
                                     </View>
                                 </View>
                             </View>
