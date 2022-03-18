@@ -3,7 +3,10 @@ import Contents from '../../../components/Contents';
 import ButtonBlack from '../../../components/ButtonBlack';
 import styled from 'styled-components/native';
 import ContainView from '../../../components/ContainView';
-import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler, Touchable} from 'react-native';
+import {Alert, Image, View, Text,
+        useState, StyleSheet, Modal ,
+        Pressable, Dimensions, ScrollView, BackHandler,
+        Touchable, KeyboardAvoidingView} from 'react-native';
 import StateBarSolid from '../../../components/StateBarSolid';
 import StateBarVoid from '../../../components/StateBarVoid';
 import TopInfo from '../../../components/TopInfo';
@@ -198,12 +201,18 @@ function ShopStepThree4({route,navigation}) {
     var selectedTypeLists = [];
 
     selectedTypeLists[0] = ( store.getState().selectType[0]);
-    
-   
+
+    const styles = StyleSheet.create({
+        container: {
+          flex: 1
+    }})
     const [basicSend,setBasicSend] = React.useState(store.getState().basicRepairStore)
 
     return (
-        
+        <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
         <ContainView>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <TopInfo></TopInfo>
@@ -283,6 +292,7 @@ function ShopStepThree4({route,navigation}) {
             </CenterView>
             <Bottom navigation={navigation}/>
         </ContainView>
+        </KeyboardAvoidingView>
     )
     
 }
