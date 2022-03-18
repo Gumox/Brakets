@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useCallback } from 'react';
-import { Text, Image, Alert, View, Pressable, BackHandler,TextInput} from 'react-native';
+import { Text, Image, Alert, View, Pressable, BackHandler,TextInput,ImageBackground} from 'react-native';
 import dayjs from 'dayjs';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RNPickerSelect from 'react-native-picker-select';
@@ -107,7 +107,6 @@ function RepairDetail({ navigation, route }) {
                
                 
             }
-            
             setBeforeImages(beforeImgList)
             setAfterImages(afterImgList)
         }    
@@ -118,6 +117,7 @@ function RepairDetail({ navigation, route }) {
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
         const obj = afterImages[i];
+        
         const key = i
         let afterImage = "../Icons/camera.png"
         
@@ -127,15 +127,17 @@ function RepairDetail({ navigation, route }) {
             afterImage = store.getState()[photo]
         }
         let before;
-        if(obj!==undefined &&store.getState()[photo] == ""){
-            console.log(obj)
+        console.log(store.getState().afterImageUri1)
+        if(obj!==undefined &&store.getState()[photo] == null){
+            
+        console.log("in")
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                     <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
                         <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
                     <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
-                        <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : obj}}></Image>
+                        <ImageBackground style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : obj}}></ImageBackground>
                     </Pressable>
                 </View>
             )
@@ -147,7 +149,11 @@ function RepairDetail({ navigation, route }) {
                         <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
                     <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
-                        <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : afterImage}}></Image>
+                        <ImageBackground style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282",justifyContent:"center",alignItems:"center"}} source={{uri : afterImage}}>
+                            <Text style={{color:"#FFFFFF"}}>사진을</Text>
+                            <Text style={{color:"#FFFFFF"}}>추가하려면</Text>
+                            <Text style={{color:"#FFFFFF"}}>클릭하세요</Text>
+                        </ImageBackground>
                     </Pressable>
                 </View>
             )

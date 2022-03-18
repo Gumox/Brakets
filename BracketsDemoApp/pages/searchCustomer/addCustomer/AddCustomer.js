@@ -26,25 +26,7 @@ import {
     Modal,
     Alert
 } from 'react-native';
-import SketchDraw from 'react-native-sketch-draw';
 import store from '../../../store/store';
-import { PathToFlie } from '../../../Functions/PathToFlie';
-import {useNetInfo}from "@react-native-community/netinfo";
-
-const SketchDrawConstants = SketchDraw.constants;
- 
-const tools = {};
- 
-tools[SketchDrawConstants.toolType.pen.id] = {
-    id: SketchDrawConstants.toolType.pen.id,
-    name: SketchDrawConstants.toolType.pen.name,
-    nextId: SketchDrawConstants.toolType.eraser.id
-};
-tools[SketchDrawConstants.toolType.eraser.id] = {
-    id: SketchDrawConstants.toolType.eraser.id,
-    name: SketchDrawConstants.toolType.eraser.name,
-    nextId: SketchDrawConstants.toolType.pen.id
-};
 
 const Title = styled.Text`
     color:#000000;
@@ -144,7 +126,6 @@ export default class AddCustomer extends Component {
             color: '#FFFFFF',
             name:"",
             phone:0,
-            toolSelected: SketchDrawConstants.toolType.pen.id,
             modalVisible: false,
             check1: false,
             check2: false,
@@ -212,7 +193,6 @@ export default class AddCustomer extends Component {
         this.setState({modalVisible: false})
     }
     render(){
-        const netInfo = useNetInfo();
         
         let cstSign;
         if(store.getState().customerSign == ""){console.log("''")}
@@ -392,12 +372,8 @@ export default class AddCustomer extends Component {
                                 ]
                             )
                         }else {
-                            if(netInfo.isConnected){
-                                this.addCustomer(this.state.name,this.state.phone)
-                                this.props.navigation.navigate('ShopStepOne')
-                            }else{
-                                alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
-                            }
+                            this.addCustomer(this.state.name,this.state.phone)
+                            this.props.navigation.navigate('ShopStepOne')
                         }
                     }}>
                         등록

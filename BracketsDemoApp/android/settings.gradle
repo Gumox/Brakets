@@ -3,21 +3,13 @@ include ':@react-native-community_netinfo'
 project(':@react-native-community_netinfo').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/netinfo/android')
 include ':@terrylinla_react-native-sketch-canvas'
 project(':@terrylinla_react-native-sketch-canvas').projectDir = new File(rootProject.projectDir, '../node_modules/@terrylinla/react-native-sketch-canvas/android')
-include ':react-native-sketch-draw'
-project(':react-native-sketch-draw').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sketch-draw/android')
-include ':react-native-sketch-draw'
-project(':react-native-sketch-draw').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sketch-draw/android')
 include ':react-native-vector-icons'
 project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
 include ':react-native-view-shot'
 project(':react-native-view-shot').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-view-shot/android')
 include ':react-native-view-shot'
 project(':react-native-view-shot').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-view-shot/android')
-include ':react-native-sketch-draw'
-project(':react-native-sketch-draw').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sketch-draw/android')
 include ':react-native-image-tools-wm'
 project(':react-native-image-tools-wm').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-tools-wm/android')
-include ':react-native-sketch-draw'
-project(':react-native-sketch-draw').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sketch-draw/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

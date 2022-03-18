@@ -89,7 +89,7 @@ function Login({ navigation }): React.ReactElement {
       .catch(function (error) {
         console.log(error)
         console.log(option.url)
-        alert("등록된 정보가 존재하지 않습니다.")
+        Alert.alert("등록된 정보가 존재하지 않습니다.")
         /*Alert.alert(
           "등록된 정보가 존재하지 않습니다.",
           [
