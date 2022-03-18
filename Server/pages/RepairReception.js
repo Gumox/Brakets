@@ -69,6 +69,31 @@ function RepairReception({options,user}) {
       }
     })
   }
+  const postRepairNeedPoint = async () => {
+    let formdata = new FormData();
+
+    formdata.append("receipt", 117);
+    formdata.append("store", 12);
+    
+    console.log(formdata)
+    
+    try {
+        const response = await fetch(`${process.env.API_URL}/needRepair`,{method: 'POST',
+        headers: {
+            'Accept': '',
+            },
+        body: formdata
+        });
+        const json = await response.json();
+        console.log(json)
+        navigation.popToTop();
+        navigation.navigate("PhotoStep")
+    } catch (error) {
+        console.error(error);
+    } finally {
+
+    } 
+}
   useEffect(()=>{
     localStorage.setItem('COMPANY',JSON.stringify(selectItems));
     localStorage.setItem('SHOP',shop_id)
@@ -83,7 +108,7 @@ function RepairReception({options,user}) {
         <TopView>
               <h2>접수</h2>
 
-              
+              <button onClick={()=>{postRepairNeedPoint()}}>0000000</button>
               <Image alt="excel" src='/icons/excel.png' width={45} height={40} onClick={()=>{getExcel(parseRepairReceptionData(listData))}}/>
               
         </TopView>

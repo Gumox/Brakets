@@ -140,7 +140,7 @@ export default function ProductSend( { route,navigation } ) {
         setDate(datas.shippingDate)
         setReceiverName(datas.receiver_name)
         setReceiver(datas.receiver)
-        setShippingDate(formatDate(new Date(date)))
+        setShippingDate(formatDate(new Date(datas.shippingDate)))
     },[])
     return(
         <Container>

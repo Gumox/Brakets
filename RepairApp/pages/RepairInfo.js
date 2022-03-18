@@ -106,7 +106,12 @@ export default function RepairInfo({ route, navigation }) {
             setReceiverName(data.data["receiver_name"])
             
             if (data.data["repair1_store_id"] === store.getState().shopId) {
-                setShippingDate(formatDate(new Date(data.data["repair1_complete_date"])))
+                console.log(data.data["repair1_complete_date"])
+                if(data.data["repair1_complete_date"]){
+                    setShippingDate(formatDate(new Date(data.data["repair1_complete_date"])))
+                }else{
+                    setShippingDate('')
+                }
                 setRepairDetailId(data.data["repair1_detail_id"])
                 date = data.data["repair1_complete_date"]
             } else if (data.data["repair2_store_id"] === store.getState().shopId) {
@@ -120,6 +125,7 @@ export default function RepairInfo({ route, navigation }) {
             }
             if(Object.keys(data.returnd).length){
                 setIsReceiverNull(true)
+                
                 let items=[
                     { label: data.data["store_name"], value: data.data['store_id'] },
                     { label: '본사', value: 1 }
@@ -154,6 +160,9 @@ export default function RepairInfo({ route, navigation }) {
                 />
                 ))
             }else{
+                console.log("******************************")
+                console.log(date)
+                console.log("******************************")
                 setDatas(
                     
                         { receipt_id: data.data["receipt_id"] ,
@@ -211,6 +220,7 @@ export default function RepairInfo({ route, navigation }) {
                         postSendRepairInfo(datas.receiver,formatDate(new Date()),1,0,repairDetailId)
                     }
                     navigation.navigate('DetectCode',{ toGo: "ProductSend", datas: datas })
+                    console.log(datas)
                 }else{
                     Alert.alert(
                         "발송지 미설정",

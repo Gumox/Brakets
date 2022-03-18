@@ -87,8 +87,7 @@ function RepairMore({ navigation, route }) {
         try {
             const response = await fetch(Ip+'/api/needRepair',{method: 'POST',
             headers: {
-                'Accept': '',
-                'Content-Type': 'multipart/form-data'
+                'Accept': ''
                 },
             body: formdata
             });

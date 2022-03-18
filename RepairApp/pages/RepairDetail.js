@@ -197,7 +197,7 @@ function RepairDetail({ navigation, route }) {
                 <OverallView>
                     <Label>서비스 카드 번호</Label>
                     <Input
-                        editable={true}
+                        editable={false}
                         selectTextOnFocus={false}
                         value={cardId}
                         onChangeText={text => setCardID(text)}
@@ -205,7 +205,7 @@ function RepairDetail({ navigation, route }) {
 
                     <Label>브랜드</Label>
                     <Input
-                        editable={true}
+                        editable={false}
                         selectTextOnFocus={false}
                         value={brandNum}
                         onChangeText={text => setBrandNum(text)}
@@ -213,7 +213,7 @@ function RepairDetail({ navigation, route }) {
 
                     <Label>매장명</Label>
                     <Input
-                        editable={true}
+                        editable={false}
                         selectTextOnFocus={false}
                         value={storeName}
                         onChangeText={text => setStoreName(text)}
@@ -221,7 +221,7 @@ function RepairDetail({ navigation, route }) {
 
                     <Label>고객명</Label>
                     <Input
-                        editable={true}
+                        editable={false}
                         selectTextOnFocus={false}
                         value={customerName}
                         onChangeText={text => setCustomerName(text)}
@@ -229,7 +229,7 @@ function RepairDetail({ navigation, route }) {
 
                     <Label>스타일 No.</Label>
                     <Input
-                        editable={true}
+                        editable={false}
                         selectTextOnFocus={false}
                         value={styleNum}
                         onChangeText={text => setStyleNum(text)}
@@ -239,20 +239,20 @@ function RepairDetail({ navigation, route }) {
                     <MiddleView>
                         <Label>컬러</Label>
                         <Input
-                            editable={true}
+                            editable={false}
                             selectTextOnFocus={false}
                             value={color}
                             onChangeText={text => setColor(text)}
-                            style={{ width: 100 }}
+                            style={{ width: 80 }}
                         />
 
                         <Label>사이즈</Label>
                         <Input
-                            editable={true}
+                            editable={false}
                             selectTextOnFocus={false}
                             value={size}
                             onChangeText={text => setSize(text)}
-                            style={{ width: 100 }}
+                            style={{ width: 80 }}
                         />
                     </MiddleView>
 
