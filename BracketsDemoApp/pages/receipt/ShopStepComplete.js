@@ -8,7 +8,8 @@ import StateBarSolid from '../../components/StateBarSolid';
 import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom'
 import store from '../../store/store';
-import { Modal ,StyleSheet,View,Pressable,Image,Text} from 'react-native';
+import { Modal, StyleSheet, View, Pressable,
+        Image, Text, ScrollView } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
 import {useNetInfo}from "@react-native-community/netinfo";
@@ -61,7 +62,7 @@ const DataView = styled.View`
     width: 100%;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const TouchableView = styled.TouchableOpacity`
     align-items: center;
@@ -70,12 +71,12 @@ const TouchableView = styled.TouchableOpacity`
     width: 100%;
     font-size: 20px;
     background-color:#d6d6d6;
-    border-radius:10px
+    border-radius:10px;
 `;
 const ImgIcon =styled.Image`
     width: 25px;
     height: 20px;
-    margin_right:10px;
+    margin-right:10px;
 `;
 const CodeViewText = styled.Text`
     font-size: 20px;
@@ -86,7 +87,7 @@ const CodeView = styled.View`
     margin: 12px;
     width: 300px;
     background-color:#78909c;
-    border-radius:8px
+    border-radius:8px;
 `;
 
 const styles = StyleSheet.create({
