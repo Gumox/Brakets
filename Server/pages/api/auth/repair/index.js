@@ -74,7 +74,7 @@ const repair = async (req, res) => {
             res.status(200).json({ body:login , data: info });
           } else {
             console.log("No staff");
-            res.status(200).json({ body: null});
+            res.status(204).json({ body: null});
           }
 
 
