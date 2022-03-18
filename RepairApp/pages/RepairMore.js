@@ -55,14 +55,21 @@ function RepairMore({ navigation, route }) {
         const needImages =[]
         data.needRepairImage.forEach((obj,index) => {
             needImages.push({photo:Ip+obj["need_point_image"] , repair_need_id:obj["repair_need_id"]})
-            //console.log(needImages)
+            console.log()
+            console.log(needImages)
+            console.log()
             
         });
         setBeforeImages(beforeImgList)
         setAfterImages(afterImgList)
-        store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:needImages})
+        console.log("********************************")
+            console.log(needImages.length)
+            console.log()
+        if(needImages.length>0){
+            //store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:needImages})
+            setTakeNeedPhotos([...needImages,...takeNeedPhotos])
+        }
         
-        setTakeNeedPhotos(store.getState().needPhotos)
         ////console.log("error : "+Ip+data.data["image"])
         
     });
@@ -73,6 +80,8 @@ function RepairMore({ navigation, route }) {
         formdata.append("receipt", receipt_id);
         formdata.append("store", store.getState().shopId);
         formdata.append("image",  PathToFlie(image));
+        console.log(takeNeedPhotos)
+
         if(takeNeedPhotos != null|| takeNeedPhotos != undefined ||takeNeedPhotos !== []){
 
             takeNeedPhotos.forEach((obj,index) => {
@@ -181,14 +190,10 @@ function RepairMore({ navigation, route }) {
         )
     }
     
+    
     const repairNeedImage = store.getState().addRepairImageUri;
-    const [needRepair,setNeedRepair] =useState([])
-    useEffect(() => {
-        getTargetData(code);
-        console.log("takeNeedPhotos")
-        console.log(takeNeedPhotos)
-        console.log("takeNeedPhotos")
-        let repairNeeds =[];
+    let needRepair =[];
+    let repairNeeds =[];
         if(repairNeedImage !== null || store.getState().needPhotos !== []){
             let set =(<View key={0} style ={{flexDirection:"row",justifyContent : "space-between"}}><Label>추가 사진</Label></View>)
             repairNeeds[0]= (set)
@@ -236,9 +241,11 @@ function RepairMore({ navigation, route }) {
                 );
                 repairNeeds[((takeNeedPhotos).length)+1]=(need)
             }
-            console.log(repairNeeds)
+            needRepair = (repairNeeds)
         }
-        setNeedRepair(repairNeeds)
+    useEffect(() => {
+        getTargetData(code);
+        
     }, []);
     return (
         <ContainView>
@@ -293,7 +300,7 @@ function RepairMore({ navigation, route }) {
                             selectTextOnFocus={false}
                             value={color}
                             onChangeText={text => setColor(text)}
-                            style={{ width: 100 }}
+                            style={{ width: 80 }}
                         />
 
                         <Label>사이즈</Label>
@@ -302,7 +309,7 @@ function RepairMore({ navigation, route }) {
                             selectTextOnFocus={false}
                             value={size}
                             onChangeText={text => setSize(text)}
-                            style={{ width: 100 }}
+                            style={{ width: 80 }}
                         />
                     </MiddleView>
 
@@ -348,6 +355,7 @@ function RepairMore({ navigation, route }) {
 
                     <SmallButton
                         onPress={() => {
+                            console.log(takeNeedPhotos)
                             postRepairNeedPoint(receiptId,store.getState().photo,takeNeedPhotos)
                             store.dispatch({type:"STORE_ADD_REPAIR_IMAGE",addRepairImageUri:null})
                             store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:[]})
