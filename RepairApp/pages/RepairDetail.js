@@ -36,6 +36,8 @@ function RepairDetail({ navigation, route }) {
     const [shippingCost, setShippingCost] = useState("0");
     const [datas,setDatas] =useState([])
     const [shippingPlace, setShippingPlace] = useState('');
+    const [headquarterStoreId,setHeadquarterStoreId] =useState(0)
+    const [headquarterStoreName,setHeadquarterStoreName] =useState('')
 
     const [repairShop,setRepairShop] = useState('')
     const [repairDetailId,setRepairDetailId] = useState('')
@@ -78,6 +80,8 @@ function RepairDetail({ navigation, route }) {
             setSize(data.data['size'])
             setRequire(data.data["store_message"])
             setImage(data.data["image"])
+            setHeadquarterStoreId(data.data["headquarter_store_id"])
+            setHeadquarterStoreName(data.data["headquarter_store_name"])
 
             if(data.data["repair1_store_id"]===shop){
                 console.log("repair1_store_id")
@@ -187,7 +191,7 @@ function RepairDetail({ navigation, route }) {
     const setShipping=(value)=>{
         let items=[
             { label: storeName, value: storeId },
-            { label: '본사', value: 1 }
+            { label: headquarterStoreName, value: headquarterStoreId }
         ]
         items.forEach(obj => {
             if(obj.value === value){
@@ -355,7 +359,7 @@ function RepairDetail({ navigation, route }) {
                             }}
                             items={[
                                 { label: storeName, value: storeId },
-                                { label: '본사', value: 1 }
+                                { label: headquarterStoreName, value: headquarterStoreId }
                             ]}
                         />
                     </PickerView>
