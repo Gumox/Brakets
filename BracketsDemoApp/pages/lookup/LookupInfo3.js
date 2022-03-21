@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
 function LookupInfo3( { route,navigation } ) {
     const data =route.params.data;
     const images = route.params.images;
+    const needImages =route.params.needImages;
     console.log(images)
     
     const winW = Dimensions.get('window').width;
@@ -205,7 +206,7 @@ function LookupInfo3( { route,navigation } ) {
                         navigation.navigate("EnlargePhoto",{image: element})
                     
                     }}>
-                    <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
+                    <Image style={{width:200,height:300, margin:15, padding:10}} source={{uri : element}}></Image>
                 </Pressable>
             </View>
 
@@ -224,7 +225,7 @@ function LookupInfo3( { route,navigation } ) {
                         
                         navigation.navigate("EnlargePhoto",{image: element})
                     }}>
-                        <Image style={{width:150,height:150, margin:15, padding:10}} source={{uri : element}}></Image>
+                        <Image style={{width:200,height:300, margin:15, padding:10}} source={{uri : element}}></Image>
                     </Pressable>
                 </View>
             )
@@ -232,6 +233,37 @@ function LookupInfo3( { route,navigation } ) {
         }else{
             console.log(" in null \n")
         }
+    }
+    let needText;
+    let need=[];
+    if(needImages.length>0){    
+        
+        needImages.map((obj,i)=>{
+            const key = i
+            let element =ip + obj.need_point_image;
+            let insertImage=(
+                <View key ={key}>
+                    <Pressable onPress={()=>{
+                        
+                        navigation.navigate("EnlargePhoto",{image: element})
+                    }}>
+                        <Image style={{width:200,height:300, margin:15, padding:10}} source={{uri : element}}></Image>
+                    </Pressable>
+                </View>
+            )
+            need[key]=insertImage;
+        })
+        needText =(
+            <View>
+                
+                <Text style={{color:"#000000"}}>제품 추가 수선 필요 사진</Text>
+                <View style={{alignItems:"center"}}>
+                    <ScrollView style={{height : 300}} horizontal ={true}>
+                        {need}    
+                    </ScrollView>
+                </View>
+            </View>
+        )
     }
     let inFormField;
     if(checkMistake||contentAnalysis||result){
@@ -267,17 +299,19 @@ function LookupInfo3( { route,navigation } ) {
                     
                     <Text style={{color:"#000000"}}>제품 세부 사진 (수선전)</Text>
                     <View style={{alignItems:"center"}}>
-                        <ScrollView style={{height : 150}} horizontal ={true}>
+                        <ScrollView style={{height : 300}} horizontal ={true}>
                             {beforeImageViews}
                         </ScrollView>
                     </View>
                     <Text style={{color:"#000000"}}>제품 세부 사진 (수선 후)</Text>
                     
                     <View style={{alignItems:"center"}}>
-                        <ScrollView style={{height : 150}} horizontal ={true}>
+                        <ScrollView style={{height : 300}} horizontal ={true}>
                             {afterImageViews}    
                         </ScrollView>
                     </View>
+                    {needText}
+                    
                     <TopText>매장 접수 내용</TopText>
 
                         <InputText>{storeMessage}</InputText>

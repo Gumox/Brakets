@@ -84,6 +84,7 @@ const  formatDate = (inputDate)=> {
 }
 function LookupInfo( { route,navigation } ) {
     const data =route.params.data;
+    const needImages = route.params.needImages
     const images = route.params.images;
     const keys= Object.keys(data)
     const [number,setNumber] =useState(store.getState().number);
@@ -100,6 +101,7 @@ function LookupInfo( { route,navigation } ) {
     
     
     console.log(images)
+    console.log(needImages)
     useEffect(()=>{
         setCardCode(data["receipt_code"])                    //서비스카드번호
         if( data["receipt_category"] == 1){                  //접수구분
@@ -146,7 +148,7 @@ function LookupInfo( { route,navigation } ) {
             </Contents>
             <Button onPress={ ()=>{
                 if(netInfo.isConnected){
-                    navigation.navigate( 'LookupInfo2',{data:data , images:images})
+                    navigation.navigate( 'LookupInfo2',{data:data , images:images, needImages:needImages})
                 }else{
                     alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                 }

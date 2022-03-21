@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
  
 function LookupInfo2( { route,navigation } ) {
     const data =route.params.data;
-    
+    const needImages =route.params.needImages;
     const images = route.params.images;
     const keys= Object.keys(data)
 
@@ -160,7 +160,7 @@ function LookupInfo2( { route,navigation } ) {
               
      
             </Contents> 
-            <Button onPress={ ()=> navigation.navigate( 'LookupInfo3',{data:data ,images :images}) }>
+            <Button onPress={ ()=> navigation.navigate( 'LookupInfo3',{data:data ,images :images,needImages:needImages}) }>
                 다음
             </Button>
 

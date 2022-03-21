@@ -99,7 +99,7 @@ function LookupPage2({ route,navigation }) {
             code: code
           },
         })
-        navigation.navigate('LookupInfo',{data:obj,images: data.data})
+        navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
     }, []);
     console.log(data)
 
