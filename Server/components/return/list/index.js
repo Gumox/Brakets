@@ -297,7 +297,7 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
 
   return (
     <Wrapper>
-      <Styles>
+      <Styles >
         <Table columns={columns} data={value} handleDataClick={handleSearchButtonClick} />
       </Styles>
       {/*<Options
@@ -309,16 +309,26 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.nav`
   
   height: 95%;//70%
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
 `;
 
 const Styles = styled.div`
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   height: 80%;
 
   .table {

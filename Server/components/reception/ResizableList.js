@@ -283,7 +283,7 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
 
 export default ResizableList;
 
-const Wrapper = styled.div`
+const Wrapper = styled.nav`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -291,6 +291,15 @@ const Wrapper = styled.div`
   height: 35%;
   width: 100%;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+    
 `;
 
 const Styles = styled.div`

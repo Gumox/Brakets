@@ -13,6 +13,15 @@ const Wrapper = styled.div`
   width: 50%;
   border-bottom: 2px solid;
   border-right: 1px solid;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
 `;
 
 const Styles = styled.div`
@@ -36,6 +45,15 @@ const Styles = styled.div`
       overflow-y: scroll;
       overflow-x: hidden;
       min-height: 598px;
+      &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background: rgba(210, 210, 210, 0.4);
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(96, 96, 96, 0.7);
+        border-radius: 6px;
+      }
     }
 
     .tr {

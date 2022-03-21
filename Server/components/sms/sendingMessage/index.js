@@ -143,13 +143,22 @@ const SendMsg = ({}) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.nav`
   
   height: 90%;
   width: 50%;
   overflow: scroll;
   border-bottom: 2px solid;
   border-left: 1px solid;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
 `;
 
 const MsgView = styled.div`
