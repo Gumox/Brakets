@@ -36,8 +36,8 @@ function RepairReceiptModal (props) {
   const [selectAnalysis,setSelectAnalysis] = useState(0)
   const [deliveryType,setDeliveryType] = useState(1)
 
-  const [windowWidth,setWindowWidth] = useState()
-  const [windowHeight,setWindowHeight] = useState()
+  const [windowWidth,setWindowWidth] = useState(0)
+  const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{
       setWindowWidth(window.innerWidth)
       setWindowHeight(window.innerHeight)
@@ -147,6 +147,7 @@ function RepairReceiptModal (props) {
     setLineColor(checkHaveRepairDetail(el,info.store_id))
     setWindowWidth(window.innerWidth)
     setWindowHeight(window.innerHeight)
+    console.log(0)
     if(window.innerWidth<1125){
       setFontSizeTop((window.innerWidth)*0.012)
       setFontSizeBottom((window.innerWidth)*0.011)
@@ -165,7 +166,7 @@ function RepairReceiptModal (props) {
     return ()=>{
         window.removeEventListener('resize',handleResize);
     }
-  },[]);
+  },[1,el,info]);
 
   return (
     <div suppressHydrationWarning={true}>

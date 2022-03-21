@@ -23,8 +23,8 @@ const SettlementResult =({
     const [remarks,setRemarks] = useState(item.remarks)
     const repairStaff = "";
     const hqStaff = "";
-    const [windowWidth,setWindowWidth] = useState()
-    const [windowHeight,setWindowHeight] = useState()
+    const [windowWidth,setWindowWidth] = useState(0)
+    const [windowHeight,setWindowHeight] = useState(0)
     const handleResize = debounce(()=>{
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)

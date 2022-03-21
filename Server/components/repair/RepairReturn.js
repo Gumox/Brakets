@@ -7,7 +7,6 @@ import { debounce } from "lodash";
 const RepairReturn = (props) => {
     const receiver = props.receiver;
     const receiverId = props.receiverId;
-    console.log(props.receiverId)
     const info = props.infos;
     const shop = props.shop;
     const receipt_id = props.receipt;
@@ -17,8 +16,8 @@ const RepairReturn = (props) => {
     const [selectedSendType,setSelectedSendType] = useState(1);
     const [shipmentPay,setShipmentPay] = useState(0); 
     
-    const [windowWidth,setWindowWidth] = useState()
-    const [windowHeight,setWindowHeight] = useState()
+    const [windowWidth,setWindowWidth] = useState(0)
+    const [windowHeight,setWindowHeight] = useState(0)
     const handleResize = debounce(()=>{
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)

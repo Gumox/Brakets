@@ -48,8 +48,8 @@ const RepairHistory = (props) => {
     
     const [cashreceiptNum,setCashreceiptNum] = useState(0)
     
-    const [windowWidth,setWindowWidth] = useState()
-    const [windowHeight,setWindowHeight] = useState()
+    const [windowWidth,setWindowWidth] = useState(0)
+    const [windowHeight,setWindowHeight] = useState(0)
     const handleResize = debounce(()=>{
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
@@ -270,7 +270,7 @@ const RepairHistory = (props) => {
         
         typeInfo.unshift({text:"선택",level:1})
         setRepiarType(typeInfo)
-        console.log(typeInfo)
+        //console.log(typeInfo)
         sortInfo(info.body[0],typeInfo)
     }
     useEffect(()=>{
@@ -359,12 +359,10 @@ const RepairHistory = (props) => {
                                                 setRepairRedo3(!repairType3)
                                             }
                                         }}/>
+                                        <ItemText2 style={{marginLeft:5,minWidth:37}}>재수선</ItemText2>
                                     </div>
                                 </RightItemBox>
-                                <RightItemBox >
-                                    <ItemText2>재수선</ItemText2>
-                                </RightItemBox>
-                                <RightItemBox >
+                                <RightItemBox style={{flex:0.5}}>
                                     <img  src="/icons/trash.png" width={25} height={20} 
                                         onClick={()=>{deleteRepair(key)}}
                                     />
@@ -501,14 +499,6 @@ const AddTable =styled.button`
         background-color: ${COLOR.BRAUN};
         color: ${COLOR.WHITE};
     }
-
-`;
-const ItemTable = styled.div`
-  border: 2px solid  ${COLOR.BRAUN};
-  margin-right:10px;
-  margin-left:10px;
-  border-radius:5px;
-  height : 65px
 
 `;
 
