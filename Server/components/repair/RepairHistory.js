@@ -142,9 +142,6 @@ const RepairHistory = (props) => {
     }
     const sortInfo=(info,typeInfo)=>{
         
-    console.log("************")
-    console.log(info)
-    console.log("************")
         if(shop == info.repair1_store_id){
             setMessage(info.repair1_message);
             inputTypeCost(info,typeInfo,1);
@@ -266,17 +263,18 @@ const RepairHistory = (props) => {
         .then(response => res =response.json())
             window.location.reload();
     }
-    useEffect(()=>{
-        const fetchData = async () => {
-            const typeInfo = await getRepairType(null,brand,shop);
+    const fetchData = async () => {
+        const typeInfo = await getRepairType(null,brand,shop);
 
-            const info =await getReceiptRepairInfo(receipt_id);
-            
-            typeInfo.unshift({text:"선택",level:1})
-            setRepiarType(typeInfo)
-            console.log(typeInfo)
-            sortInfo(info.body[0],typeInfo)
-        }
+        const info =await getReceiptRepairInfo(receipt_id);
+        
+        typeInfo.unshift({text:"선택",level:1})
+        setRepiarType(typeInfo)
+        console.log(typeInfo)
+        sortInfo(info.body[0],typeInfo)
+    }
+    useEffect(()=>{
+        
         fetchData();
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)

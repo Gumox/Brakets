@@ -90,63 +90,65 @@ function RepairReceiptModal (props) {
       <></>
     )
   }
-  const judgmentResultHandler=(item)=>{
-    setSelectJudgmentName(item)
-  }
-  useEffect( () => {
-    const fetchData = async () => {
-      const fI = await getSelectList('faultDivision',hq_id)
-      const jI = await getSelectList('judgmentResult',hq_id)
-      const aI = await getSelectList('analysisType',hq_id)
-      const typeInfo = await getRepairType(hq_id);
 
 
-      store.dispatch({type:"ANALYSIS",analysis:aI});
-      store.dispatch({type:"JUDIMENT",judiment:jI});
-      store.dispatch({type:"FAULT",fault:fI});
-      store.dispatch({type:"REPAIR_TYPE",repair_type:typeInfo});//변경필요
+  const fetchData = async () => {
+    const fI = await getSelectList('faultDivision',hq_id)
+    const jI = await getSelectList('judgmentResult',hq_id)
+    const aI = await getSelectList('analysisType',hq_id)
+    const typeInfo = await getRepairType(hq_id);
 
-      localStorage.setItem('ANALYSIS',JSON.stringify(aI));
-      localStorage.setItem('JUDIMENT',JSON.stringify(jI));
-      localStorage.setItem('FAULT',JSON.stringify(fI));
-      localStorage.setItem('REPAIR_TYPE',JSON.stringify(typeInfo));
 
-      fI.unshift({faultItems_name:"선택",level:1})
-      jI.unshift({judgmentResult_name:"선택",level:1})
-      aI.unshift({analysisType_name:"선택",level:1})
-      typeInfo.unshift({text:"선택",level:1})
-      
-      setJudgmentLists(setSelectList(jI))
-      
-      for(let i=1;i<4;i++){
-        let resultId =`repair${i}_result_id`
-        let repairStoreId=`repair${i}_store_id`
-        let name =`repair${i}_result_name`
-        let analysis = `repair${i}_fault_id`
-        let fault =`repair${i}_analysis_id`
-        if(el[repairStoreId] == shop){
-          setSelectJudgmentValue(el[resultId])
-          setSelectJudgmentName(el[name])
-        }
-        if(el[fault] !== null){
-          setSelectFault(el[fault])
-        }if(el[analysis]!== null){
-          setSelectAnalysis(el[analysis])
-        }
+    store.dispatch({type:"ANALYSIS",analysis:aI});
+    store.dispatch({type:"JUDIMENT",judiment:jI});
+    store.dispatch({type:"FAULT",fault:fI});
+    store.dispatch({type:"REPAIR_TYPE",repair_type:typeInfo});//변경필요
+
+    localStorage.setItem('ANALYSIS',JSON.stringify(aI));
+    localStorage.setItem('JUDIMENT',JSON.stringify(jI));
+    localStorage.setItem('FAULT',JSON.stringify(fI));
+    localStorage.setItem('REPAIR_TYPE',JSON.stringify(typeInfo));
+
+    fI.unshift({faultItems_name:"선택",level:1})
+    jI.unshift({judgmentResult_name:"선택",level:1})
+    aI.unshift({analysisType_name:"선택",level:1})
+    typeInfo.unshift({text:"선택",level:1})
+    
+    setJudgmentLists(setSelectList(jI))
+    
+    for(let i=1;i<4;i++){
+      let resultId =`repair${i}_result_id`
+      let repairStoreId=`repair${i}_store_id`
+      let name =`repair${i}_result_name`
+      let analysis = `repair${i}_fault_id`
+      let fault =`repair${i}_analysis_id`
+      if(el[repairStoreId] == shop){
+        setSelectJudgmentValue(el[resultId])
+        setSelectJudgmentName(el[name])
       }
-      
-      setFaultLists(setSelectList(fI))
-      
-      setAnalysisLists(setSelectList(aI))
-      setRepiarTypeList(setSelectList(typeInfo))
+      if(el[fault] !== null){
+        setSelectFault(el[fault])
+      }if(el[analysis]!== null){
+        setSelectAnalysis(el[analysis])
+      }
     }
+    
+    setFaultLists(setSelectList(fI))
+    
+    setAnalysisLists(setSelectList(aI))
+    setRepiarTypeList(setSelectList(typeInfo))
+  }
+
+
+
+  useEffect( () => {
+    
     fetchData();
     setLineColor(checkHaveRepairDetail(el,info.store_id))
     setWindowWidth(window.innerWidth)
     setWindowHeight(window.innerHeight)
     if(window.innerWidth<1125){
       setFontSizeTop((window.innerWidth)*0.012)
-      console.log((window.innerWidth)*0.012)
       setFontSizeBottom((window.innerWidth)*0.011)
     }
     needImages.map((arr) => {
@@ -164,6 +166,7 @@ function RepairReceiptModal (props) {
         window.removeEventListener('resize',handleResize);
     }
   },[]);
+
   return (
     <div suppressHydrationWarning={true}>
        {process.browser &&

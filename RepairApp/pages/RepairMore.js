@@ -244,7 +244,15 @@ function RepairMore({ navigation, route }) {
             needRepair = (repairNeeds)
         }
     useEffect(() => {
-        getTargetData(code);
+        let isApiSubscribed = true;
+       
+        if (isApiSubscribed) {
+            getTargetData(code);
+        }
+        return () => {
+            // cancel the subscription
+            isApiSubscribed = false;
+        };
         
     }, []);
     return (

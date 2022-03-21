@@ -165,12 +165,17 @@ function RepairDetail({ navigation, route }) {
         beforeImageViews[key] =(before)
     }
     useEffect(() => {
-        if(shop === null ||shop == 0){
-            navigation.goBack();
-            Alert.alert("","사용자 정보 연결 실패")
+        let isApiSubscribed = true;
+        if(isApiSubscribed){
+            if(shop === null ||shop == 0){
+                navigation.goBack();
+                Alert.alert("","사용자 정보 연결 실패")
+            }
+            getTargetData(code);
         }
-        getTargetData(code);
-       
+        return () => {
+            isApiSubscribed = false;
+        };
     }, [code]);
 
     
