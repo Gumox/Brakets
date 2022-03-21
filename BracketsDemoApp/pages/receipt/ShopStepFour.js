@@ -5,10 +5,11 @@ import styled from 'styled-components/native';
 import ContainView from '../../components/ContainView';
 import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom';
-import {Alert, Image, View,Text, StyleSheet,Modal ,Pressable,Dimensions,Button} from 'react-native';
+import {Alert, Image, View,Text, StyleSheet,Modal ,Pressable,Dimensions,Button, Platform} from 'react-native';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import store from '../../store/store';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { split } from 'lodash';
@@ -24,20 +25,15 @@ Date.prototype.addDays = function(days) {
 
 function ShopStepFour({navigation}) {
     const service_date =store.getState().serviceDate;
-    
     const [dateInput2,setDateInput2] = useState(new Date().addDays(service_date))
-      
-
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
     store.dispatch({type:'SERVICECAED',value:barcode});
-    
-    const [modalVisible, setModalVisible] = React.useState(false);
-    
+    const [modalVisible, setModalVisible] = React.useState(false);   
     const cardImgUri =store.getState().card;
-
-  
     const netInfo = useNetInfo();
-    
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+
 
     const useInput=(inputDate)=> {
         const [date, setDate] = React.useState(inputDate);
@@ -51,6 +47,18 @@ function ShopStepFour({navigation}) {
         const showDatepicker = () => {
             showMode('date');
         };
+
+        const showDatePickerIos = () => { setDatePickerVisibility(true); };
+
+        const hideDatePicker = () => { setDatePickerVisibility(false); };
+        
+        const handleConfirm = (selectedDate) => {
+            const currentDate = selectedDate || date
+            setShow(Platform.OS === 'ios');
+            setDate(currentDate);
+            setDateInput2(currentDate.addDays(service_date))
+            hideDatePicker();
+        };
     
         const onChange = (event, selectedDate) => {
             const currentDate = selectedDate || date
@@ -63,7 +71,10 @@ function ShopStepFour({navigation}) {
             showDatepicker,
             show,
             mode,
-            onChange
+            onChange,
+            handleConfirm,
+            hideDatePicker,
+            showDatePickerIos
         }
     }
     const dateInput1 = useInput(new Date())
@@ -111,6 +122,35 @@ function ShopStepFour({navigation}) {
         fetch()
         
     })
+
+    let dataPicker;
+
+    if(Platform.OS === 'ios'){
+        console.log("ios")
+        dataPicker = (
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={dateInput1.handleConfirm}
+            onCancel={dateInput1.hideDatePicker}
+            locale='ko-kr'
+          />
+        )
+      }
+      else{
+        console.log("and")
+        startDatePicker = ((dateInput1.show) && (
+            <DateTimePicker
+                testID="dateTimePicker"
+                value={dateInput1.date}
+                mode={dateInput1.mode}
+                is24Hour={true}
+                display="default"
+                onChange={dateInput1.onChange}
+            />
+        ))
+      }
+
       
     return (
         <ContainView>
@@ -160,14 +200,15 @@ function ShopStepFour({navigation}) {
                 <Label> 서비스 카드 바코드</Label>
                 <Input value ={barcode}/>
                 <Label> 매장 접수일</Label>
-                <TouchableView onPress={dateInput1.showDatepicker}>
+                <TouchableView onPress={
+                    (Platform.OS === 'ios') ? (dateInput1.showDatePickerIos) : (dateInput1.showDatepicker)
+                    }>
                     <PrView>
                     <Label>{dateInput1.date.getFullYear()}년  {dateInput1.date.getMonth()+1}월  {dateInput1.date.getDate()}일</Label>
                     <ImgIcon source={require('../../Icons/calendar.png')}/>
                     </PrView>
                 </TouchableView>
-                
-                    {dateInput1.show && (
+                    {/* {dateInput1.show && (
                         <DateTimePicker
                         testID="dateTimePicker"
                         value={dateInput1.date}
@@ -176,7 +217,10 @@ function ShopStepFour({navigation}) {
                         display="default"
                         onChange={dateInput1.onChange}
                         />
-                    )}
+                    )} */}
+
+                    {dataPicker}
+
                 <PrView><Label> 고객 약속일 </Label><LabelPlus>+{service_date}일</LabelPlus></PrView>
                 <TouchableView >
                     <PrView>
@@ -300,6 +344,6 @@ const styles = StyleSheet.create({
       alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
-      },
-    }
-  });
+    },
+}
+});
