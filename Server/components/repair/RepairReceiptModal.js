@@ -42,6 +42,9 @@ function RepairReceiptModal (props) {
       setWindowWidth(window.innerWidth)
       setWindowHeight(window.innerHeight)
   },1000)
+  
+  const [fontSizeTop,setFontSizeTop] =useState(15) 
+  const [fontSizeBottom,setFontSizeBottom] =useState(12) 
 
   let images= [];
   imageList.forEach((obj) => {
@@ -96,7 +99,8 @@ function RepairReceiptModal (props) {
       const jI = await getSelectList('judgmentResult',hq_id)
       const aI = await getSelectList('analysisType',hq_id)
       const typeInfo = await getRepairType(hq_id);
-      
+
+
       store.dispatch({type:"ANALYSIS",analysis:aI});
       store.dispatch({type:"JUDIMENT",judiment:jI});
       store.dispatch({type:"FAULT",fault:fI});
@@ -140,6 +144,11 @@ function RepairReceiptModal (props) {
     setLineColor(checkHaveRepairDetail(el,info.store_id))
     setWindowWidth(window.innerWidth)
     setWindowHeight(window.innerHeight)
+    if(window.innerWidth<1125){
+      setFontSizeTop((window.innerWidth)*0.012)
+      console.log((window.innerWidth)*0.012)
+      setFontSizeBottom((window.innerWidth)*0.011)
+    }
     needImages.map((arr) => {
       arr.map((item,i)=>{
         if(item.receipt_id === el.receipt_id){
@@ -184,23 +193,23 @@ function RepairReceiptModal (props) {
               <Line/>
               <div style={{marginLeft:20,marginRight:20,flex:1}}>
                 <LeView>
-                  <ItemBox><ItemTextTop>브랜드</ItemTextTop><ItemTextBottom>{el.brand_name}</ItemTextBottom></ItemBox>
-                  <ItemBox><ItemTextTop>서비스 번호</ItemTextTop><ItemTextBottom>{el.receipt_code}</ItemTextBottom></ItemBox>
-                  <ItemBox><ItemTextTop>수선처</ItemTextTop><ItemTextBottom>{info.name}</ItemTextBottom></ItemBox>
-                  <ItemBox><ItemTextTop>생산업체</ItemTextTop><ItemTextBottom>{el.mfr_name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>브랜드</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.brand_name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>서비스 번호</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.receipt_code}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>수선처</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{info.name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>생산업체</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.mfr_name}</ItemTextBottom></ItemBox>
                 </LeView>
                 <LeView>
-                  <ItemBox><ItemTextTop>매장명</ItemTextTop><ItemTextBottom>{el.name}</ItemTextBottom></ItemBox>
-                  <ItemBox><ItemTextTop>매장 연락처</ItemTextTop><ItemTextBottom>{el.store_contact}</ItemTextBottom></ItemBox>
-                  <ItemBox><ItemTextTop>고객명</ItemTextTop><ItemTextBottom>{el.customer_name}</ItemTextBottom></ItemBox>
-                  <ItemBox><ItemTextTop>고객 연락처</ItemTextTop><ItemTextBottom>{el.customer_phone}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>매장명</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>매장 연락처</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.store_contact}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>고객명</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.customer_name}</ItemTextBottom></ItemBox>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>고객 연락처</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.customer_phone}</ItemTextBottom></ItemBox>
                 </LeView>
                 <LeView>
-                  <ItemBoxSmall><ItemTextTop>시즌</ItemTextTop><ItemTextBottom>{el.season_name}</ItemTextBottom></ItemBoxSmall>
-                  <ItemBox><ItemTextTop>스타일 No.</ItemTextTop><ItemTextBottom>{el.style_code}</ItemTextBottom></ItemBox>
-                  <ItemBoxSmall><ItemTextTop>Color</ItemTextTop><ItemTextBottom>{el.color}</ItemTextBottom></ItemBoxSmall>
-                  <ItemBoxSmall><ItemTextTop>Size</ItemTextTop><ItemTextBottom>{el.size}</ItemTextBottom></ItemBoxSmall>
-                  <ItemBoxSmall><ItemTextTop>차수</ItemTextTop><ItemTextBottom>{el.degree}</ItemTextBottom></ItemBoxSmall>
+                  <ItemBoxSmall><ItemTextTop style={{fontSize:fontSizeTop}}>시즌</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.season_name}</ItemTextBottom></ItemBoxSmall>
+                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>스타일 No.</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.style_code}</ItemTextBottom></ItemBox>
+                  <ItemBoxSmall><ItemTextTop style={{fontSize:fontSizeTop}}>Color</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.color}</ItemTextBottom></ItemBoxSmall>
+                  <ItemBoxSmall><ItemTextTop style={{fontSize:fontSizeTop}}>Size</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.size}</ItemTextBottom></ItemBoxSmall>
+                  <ItemBoxSmall><ItemTextTop style={{fontSize:fontSizeTop}}>차수</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.degree}</ItemTextBottom></ItemBoxSmall>
                 </LeView>
                 <Line2/>
                 <ItemText>매장 접수 내용</ItemText>
@@ -233,8 +242,8 @@ function RepairReceiptModal (props) {
             <Line/>
             <div style={{marginLeft:20,marginRight:20,flex:1}}>
               <RaView>
-                <ItemTextTop>수선처 접수일<ItemTextBottom style={{marginLeft:20}}>{formatDate(new Date(el.receipt_date))}</ItemTextBottom></ItemTextTop>
-                <ItemTextTop>운송 형태<ItemTextBottom style={{marginLeft:20}}>
+                <ItemTextTop style={{fontSize:fontSizeTop}}>수선처 접수일<ItemTextBottom style={{marginLeft:20}}>{formatDate(new Date(el.receipt_date))}</ItemTextBottom></ItemTextTop>
+                <ItemTextTop style={{fontSize:fontSizeTop}}>운송 형태<ItemTextBottom style={{marginLeft:20}}>
                     <select onChange={(e)=>{setDeliveryType(e.target.value)}}  style={styles.selectStyle} >
                     <option value={1} key={'매장행낭'}>매장행낭</option>
                     <option value={2} key={'본사행낭'}>본사행낭</option>
@@ -246,8 +255,8 @@ function RepairReceiptModal (props) {
               </RaView>
               <RaView>
                 <RightItemBox>
-                  <ItemTextTop>과실구분</ItemTextTop>
-                  <ItemTextBottom>
+                  <ItemTextTop style={{fontSize:fontSizeTop}}>과실구분</ItemTextTop>
+                  <ItemTextBottom style={{fontSize:fontSizeBottom}}>
                     <select onChange={(e)=>{setSelectFault(e.target.value)}} value={selectFault} style={styles.selectStyle} >
                       { 
                         faultLists
@@ -256,8 +265,8 @@ function RepairReceiptModal (props) {
                   </ItemTextBottom>
                 </RightItemBox>
                 <RightItemBox>
-                  <ItemTextTop>냬용분석</ItemTextTop>
-                  <ItemTextBottom>
+                  <ItemTextTop style={{fontSize:fontSizeTop}}>냬용분석</ItemTextTop>
+                  <ItemTextBottom style={{fontSize:fontSizeBottom}}>
                     <select onChange={(e)=>{setSelectAnalysis(e.target.value)}} value={selectAnalysis}  style={styles.selectStyle} >
                       {
                         analysisLists
@@ -266,8 +275,8 @@ function RepairReceiptModal (props) {
                   </ItemTextBottom>
                 </RightItemBox>
                 <RightItemBox>
-                  <ItemTextTop>판정결과</ItemTextTop>
-                  <ItemTextBottom>
+                  <ItemTextTop style={{fontSize:fontSizeTop}}>판정결과</ItemTextTop>
+                  <ItemTextBottom style={{fontSize:fontSizeBottom}}>
                     <select id="selectBox" style={styles.selectStyle} value={selectJudgmentValue} onChange={(e)=>{
                         var target = document.getElementById("selectBox");
                         setSelectJudgmentName(target.options[target.selectedIndex].text)
