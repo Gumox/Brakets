@@ -43,6 +43,8 @@ async function getReceipt(code) {
               style_type.style_code,
               product.color,
               product.size,
+              headquarter_store.store_id AS headquarter_store_id,
+              headquarter_store.name AS headquarter_store_name,
               receipt.store_message,
               repair1_detail_id,
               repair2_detail_id,
@@ -74,6 +76,7 @@ async function getReceipt(code) {
               LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id
               LEFT JOIN store AS repair2_store ON repair2.store_id = repair2_store.store_id
               LEFT JOIN store AS repair3_store ON repair3.store_id = repair3_store.store_id
+              LEFT JOIN store AS headquarter_store ON headquarter_store.brand_id = brand.headquarter_id
               WHERE receipt.receipt_code = ?`,
     values: [code],
   });
