@@ -2,18 +2,18 @@ import excuteQuery from "../db";
 import formatDate from "../../../functions/formatDate"
 const aligoapi = require('aligoapi');
 
-async function SetSmsMessageResult(sender,sms_result,sms_result_message,msg,mid,headquarterId) {
+async function SetSmsMessageResult(sender,sms_result,sms_result_message,msg,mid,headquarterId,send_number,calling_number) {
   const toDay = new Date()
   let inputDate = toDay.getFullYear()+"-"+(toDay.getMonth()+1)+"-"+toDay.getDate()+" "+toDay.getHours()+":"+toDay.getMinutes()+":"+toDay.getSeconds();
     const result = await excuteQuery({
-      query: 'INSERT INTO `sms_result` (`sender`, `sms_result`, `sms_result_message`, `msg`,`mid`, `headquarter_id`,send_date) VALUES (?,?,?,?,?,?,?)',
-      values: [sender,sms_result,sms_result_message,msg,mid,headquarterId,inputDate],
+      query: 'INSERT INTO `sms_result` (`sender`, `send_number`,`calling_number`,`sms_result`, `sms_result_message`, `msg`,`mid`, `headquarter_id`,send_date) VALUES (?,?,?,?,?,?,?,?,?)',
+      values: [sender,send_number,calling_number,sms_result,sms_result_message,msg,mid,headquarterId,inputDate],
     });
     console.log(result)
     return result;
   }
 
-const smsList = (req, res,sender,msg,mid,hq_id) => {
+const smsList = (req, res,sender,msg,mid,hq_id,sendNumber) => {
     let AuthData = {
         key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
         user_id: 'brackets',
@@ -36,8 +36,8 @@ const smsList = (req, res,sender,msg,mid,hq_id) => {
         //console.log(result)
         console.log(r.list)
         r.list.map(async(el)=>{
-            console.log(el.sms_state)
-            let result = await SetSmsMessageResult(sender,r.message,el.sms_state,msg,mid,hq_id)
+            console.log(el.receiver)
+            let result = await SetSmsMessageResult(sender,r.message,el.sms_state,msg,mid,hq_id,sendNumber,el.receiver)
         })
         if(result.error){
 
@@ -53,10 +53,10 @@ const smsList = (req, res,sender,msg,mid,hq_id) => {
     if (req.method === "POST") {
         console.log("--------------------------------------")
     console.log(req.body)
-    const { sender,mid ,headquarterId ,msg} = req.body.body
-      console.log(sender,mid ,headquarterId,msg)
+    const { sender,mid ,headquarterId ,msg,sendNumber} = req.body.body
+      console.log(sender,mid ,headquarterId,msg,sendNumber)
       try{
-        const sms = smsList(req, res ,sender,msg,mid,headquarterId)
+        const sms = smsList(req, res ,sender,msg,mid,headquarterId,sendNumber)
         res.status(200).send({data:"ss"})
         
       }catch(err){

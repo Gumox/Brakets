@@ -126,19 +126,9 @@ function Table({ columns, data, handleDataClick }) {
                     )
                   }
                 )} className="tr">
-                  {console.log('row is')}
-                  {console.log(row)}
                   {row.cells.map((cell, j) => {
                     return (
                       <div key={j} {...cell.getCellProps(
-                        {
-                          style: { 
-                            color: row.original["전표 발행 여부"] == "전표미발행" ? 'red' : '#ffa203',
-                            background: '#ebe8e8' 
-                          }
-                          // red
-                          // orange: #ffa203
-                        }
                         
                       )} className="td">
                         {cell.render('Cell')}
@@ -156,22 +146,23 @@ function Table({ columns, data, handleDataClick }) {
 }
 
 const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
-
-  console.log("asdad");
-  console.log(user);
-
+  //const data = _data
+  //console.log(data);
+  
+    // No   , megkey ,전송시각  , 수신자, 수신번호   , 내용, 발신번호       ,발신자    , TCS내용
+    // index, mid    ,send_date ,  name , send_number, msg,  calling_number,staff_code,sms_result
   const columns = React.useMemo(() => [
     {Header: 'No',   accessor: 'No'},
 
     { Header: 'MSGKEY', accessor: 'mid' },
     { Header: '전송시각', accessor: 'send_date' },
-    { Header: '제목', accessor: '제목' },
-    { Header: '수신자', accessor: '수신자' },
-    { Header: '수신번호', accessor: '수신번호' },
+    //{ Header: '제목', accessor: '제목' },
+    { Header: '수신자', accessor: 'name' },
+    { Header: '수신번호', accessor: 'send_number' },
     { Header: '내용', accessor: 'msg' },
-    { Header: '발신번호', accessor: '발신번호' },
+    { Header: '발신번호', accessor: 'calling_number' },
     { Header: '발신자', accessor: 'staff_code' },
-    { Header: 'TCS코드', accessor: 'TCS코드' },
+    //{ Header: 'TCS코드', accessor: 'TCS코드' },
     { Header: 'TCS내용', accessor: 'sms_result_message' },
 
   ], [])
@@ -182,8 +173,7 @@ const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
   return (
     <Wrapper>
       <Styles>
-        <Table columns={columns} data={[]} handleDataClick={handleDataClick} />
-        <div>3</div>
+        <Table columns={columns} data={data} handleDataClick={handleDataClick} />
       </Styles>
     </Wrapper>
   );
@@ -195,6 +185,18 @@ const Wrapper = styled.div`
   overflow: scroll;
   border-bottom: 2px solid;
   border-right: 1px solid;
+  &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background: rgba(210, 210, 210, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(96, 96, 96, 0.7);
+        border-radius: 6px;
+    }
+    .fixed-layer{
+        position: fixed;
+    }
 `;
 
 const Styles = styled.div`
@@ -210,6 +212,7 @@ const Styles = styled.div`
     border: 1px solid black;
 
     .tr {
+      
       :last-child {
         .td {
           border-bottom: 0;
@@ -223,12 +226,14 @@ const Styles = styled.div`
       padding: 0.5rem;
       border-bottom: 1px solid black;/
       border-right: 1px solid black;
+      border-right: 1px solid red;
 
       ${'' /* In this example we use an absolutely position resizer,
        so this is required. */}
       position: relative;
 
       :last-child {
+        
         border-right: 0;
       }
 

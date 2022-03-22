@@ -8,12 +8,9 @@ import COLOR from "../../../constants/color";
 
 // correct way
 
-const sendSms = async (user,{ _receivers, message }) => {
+const sendSms = async (user,sendNumber,{ _receivers, message }) => {
   if(_receivers){
-    console.log(_receivers)
     const receivers = _receivers.join(',').replace(/-/g,'')
-    console.log(receivers)
-    console.log(user.staff_id,user.headquarter_id)
       try {
       const[datas] =await Promise.all([
         axios.post(`${process.env.API_URL}/smsHandler`,{
@@ -38,7 +35,8 @@ const sendSms = async (user,{ _receivers, message }) => {
               sender: user.staff_id,
               headquarterId :user.headquarter_id,
               msg: message,
-              mid: datas.msg_id
+              mid: datas.msg_id,
+              sendNumber:sendNumber,
           },
         })
         .then(({ data }) => data)
@@ -90,7 +88,8 @@ const SendMsg = ({}) => {
   const [msgText, setMsgtext] = useState("");
   const user =useContext(UserContext)
   const [smsMessage,setSmsMessage] = useState([]);
-  console.log(user.staff_id)
+  const [sendNumber,setSendNumber] = useState('010-2768-7973');
+
   useEffect(()=>{
     const fetch =async()=>{
       let smsMsg = await getSmsMessage(user.headquarter_id)
@@ -102,7 +101,11 @@ const SendMsg = ({}) => {
   return (
     <Wrapper>
       <MsgView>
-        <SelectBox>
+        <SelectBox onChange={(e)=>{
+          console.log(e.target.value)
+          setSendNumber(e.target.value)
+          }}>
+          <option value="010-2768-7973">010-2768-7973</option>
           <option value="010-2768-7973">010-2768-7973</option>
         </SelectBox>
 
@@ -113,7 +116,7 @@ const SendMsg = ({}) => {
 
         <SendBtn
           onClick={() => 
-            sendSms(user,{ _receivers: store.getState().phone_num, message: msgText }).then((result) => {
+            sendSms(user,sendNumber,{ _receivers: store.getState().phone_num, message: msgText }).then((result) => {
               
             console.log('전송결과', result);
           })}

@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 import List from './list'
+import SelectList from "./list/selectList";
 import { UserContext } from "../../store/Context";
 import formatDate from "../../functions/formatDate";
 import _ from "lodash"
@@ -17,30 +18,65 @@ const SmsResult = ({}) => {
   const [year,setYear] =useState();
   const [pack,setPack] = useState([]);
   
-  const [openPack,setOpenPack] = useState([]);
-
-  console.log(selectDate)
+  const [openPack,setOpenPack] = useState({});
 
   const makePack =(arr)=>{
     const beforePack = _.sortBy(arr,'staff_code')
     let list =[]
     let index =0;
+    let nextList =[];
+    let nextIndex =0;
     console.log(beforePack)
     beforePack.map((el)=>{
       if(list[index] !=undefined){
-        console.log(list[index][0].staff_code)
+        
         if(list[index][0].staff_code !==el.staff_code){
-          console.log("out");
           index = index+1;
+          list[index] = [el]
         }else{
+          console.log(el.sms_result_message)
           list[index].push(el)
         }
       }else{
         list[index] = [el]
       }
     })
-    console.log(list)
-    setPack(list)
+    if(list.length>0){
+      list.map((arr2)=>{
+        
+        let wordIndex =['empty'];
+        const beforePack = _.sortBy(arr2,'sms_result_message')
+        beforePack.map((item)=>{
+
+          if(nextList[nextIndex] !=undefined){
+            if(item.sms_result_message !==  nextList[nextIndex][0].sms_result_message){
+              
+              nextIndex = nextIndex+1;
+              if(_.findIndex(wordIndex,item.sms_result_message)>0){
+                let insertIndex = _.findIndex(wordIndex,item.sms_result_message)
+                
+                nextList[insertIndex].push(item)
+
+              }else{
+                nextList[nextIndex] = [item]  
+                wordIndex[nextIndex] =[item.sms_result_message]
+              }
+            }else{
+              
+              nextList[nextIndex].push(item)
+            }
+            
+          }else{
+            nextList[nextIndex] = [item]
+            wordIndex[nextIndex] =[item.sms_result_message]
+          }
+          
+        })
+      })
+     
+    }
+    console.log(nextList)
+    setPack(nextList)
   }
   const getSmsResult = async(sendDate,month,year)=>{
     const datas = await axios.post(
@@ -55,6 +91,19 @@ const SmsResult = ({}) => {
     console.log(datas.data)
     makePack(datas.data)
     return datas.data
+  }
+  const unpack =(array)=>{
+    //console.log(array)
+    let returnList =[]
+    array.map((el,i)=>{
+      let obj = el;
+      let time = el.send_date;
+
+      obj["No"] = i+1;
+      obj["send_date"] = String(time).slice(0,10)
+      returnList.push(obj)
+    })
+    setOpenPack(returnList)
   }
   return (
  
@@ -95,19 +144,44 @@ const SmsResult = ({}) => {
           {
             pack.map((el,i)=>{
               return(
-                <LaView key={i} onClick={()=>{setOpenPack(el)}}><div>{el[0].staff_code}</div><div>결과</div><div>{el.length}</div></LaView>
+                <LaView key={i} onClick={()=>{
+                  unpack(el)
+                }}><div>{el[0].staff_code}</div><div>결과</div><div>{el.length}</div></LaView>
               )
             })
           }
         </TempView>
       </SmsInqueryView>
-        
-        {/*<List data={openPack}></List> */}
+      <ScrollList>
+      <SelectList data={openPack} style={{height:"50%"}}></SelectList>
+      </ScrollList>
+      
+        {/*
+         <List data={openPack}></List>
+         */}
     </>
  
   );
 };
+const ScrollList =styled.div`
 
+  height: 55%;
+  overflow: scroll;
+  border-bottom: 2px solid;
+  border-left: 1px solid;
+  &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+      background: rgba(96, 96, 96, 0.7);
+      border-radius: 6px;
+  }
+  .fixed-layer{
+      position: fixed;
+  }
+`
 const SmsInqueryView = styled.div`
   display: flex;
   flex-direction: row;
