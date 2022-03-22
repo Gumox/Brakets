@@ -37,7 +37,6 @@ const images = async (req, res) => {
         if (imageResult.error) throw new Error(imageResult.error);
         if (imageResult.length == 0) return res.status(204).send();
         if (needImageResult.error) throw new Error(needImageResult.error);
-        if (needImageResult.length == 0) return res.status(204).send();
         
         console.log(imageResult);
         res.status(200).json({ data: imageResult ,needImages :needImageResult});
