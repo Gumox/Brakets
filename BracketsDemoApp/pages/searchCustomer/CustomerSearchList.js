@@ -62,7 +62,7 @@ const Title = styled.Text`
 
 export default function CustomerSearchList({route, navigation}){
     const customers = route.params.customers;
-    
+    console.log(customers)
     const [cName,setCName] = useState();
     const [cPhone,setCPhone] = useState();
     let cInfoList =[];

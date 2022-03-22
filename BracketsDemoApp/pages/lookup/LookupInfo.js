@@ -78,9 +78,12 @@ const styles = StyleSheet.create({
 })
 const  formatDate = (inputDate)=> {
     const sp =  inputDate;
-    const date = sp.split("T")
-    
-    return date[0]
+    const date = String(sp).slice(0,10)
+    if(date !== 'null'){
+        return date
+    }else{
+        return ''
+    }
 }
 function LookupInfo( { route,navigation } ) {
     const data =route.params.data;

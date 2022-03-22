@@ -3,20 +3,18 @@ import Container from '../../components/Container';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
-import _, { values } from 'lodash';
+import _ from 'lodash';
 import Bottom from '../../components/Bottom';
-import Contents from '../../components/Contents'; 
-import { CheckBox, Icon } from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import ViewShot from "react-native-view-shot";
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
+import ip from '../../serverIp/Ip';
 
 import {
     View,
     Pressable,
     Text,
-    TouchableHighlight,
     Dimensions,
-    ImageBackground,
     Image,
     StyleSheet,
     Modal,
@@ -27,97 +25,7 @@ import { PathToFlie } from '../../Functions/PathToFlie';
 
 
 
-const Title = styled.Text`
-    color:#000000;
-  font-size : 24px;
-  font-weight : bold;
-`;
 
-const BlackText = styled.Text`
-    color:#000000;
-  margin-Top : 15px ;
-  font-size : 15px;
-  color : black;
-`;
-const DropBackground= styled.View`
-    width: 220px;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid #78909c;
-    margin-top:10px;
-`;
-const Label = styled.Text`
-    color:#000000;
-    font-size: 18px;
-    margin:12px;
-`;
-const PrView = styled.View`
-    flex-direction: row;
-    justify-content:space-around;
-`;
-const BtView = styled.View`
-    flex-direction: row;
-    justify-content:space-between;
-    width: 75%;
-`;
-const Input = styled.TextInput`
-    color:#000000;
-    width: 80%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const CautionText = styled.Text`
-    color: #FF0000;
-    font-size:15px;
-    margin-Bottom:10px;
-`;
-const ContentsScroll = styled.ScrollView`
-    width: 100%;
-    flex: 1;
-    align-content: center;
-`;
-const TextPrassble = styled.Pressable`
-    border-bottom: 2px solid;
-    margin:12px;
-    justifyContent: center;
-    align-items: center;
-`; 
-const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    xView:{
-        backgroundColor: "#78909c",
-        borderRadius: 20,
-    },
-    modalView: {
-      margin: 10,
-      width : Dimensions.get('window').width-30, 
-      height: Dimensions.get('window').height-400,
-      backgroundColor: "white",
-      borderRadius: 20,
-      paddingRight: 5,
-      paddingLeft: 5,
-      paddingTop: 15,
-      
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-    }
-  });
-  const ImgIcon =styled.Image`
-    width: 20px;
-    height: 20px;
-    margin-Right:5px;
-`;
 export default class CustomerInfo extends Component {
     constructor(props) {
         super(props);
@@ -129,7 +37,50 @@ export default class CustomerInfo extends Component {
             check3: false
         };
     }
-    
+    addReceipt = async () => {
+        
+        var formdata = new FormData();
+        
+        formdata.append("step",0);
+        formdata.append("store", store.getState().store_id);
+        formdata.append("staff", store.getState().userInfo[0].staff_id);
+
+        if(store.getState().receptionDivision.id == 3){
+        
+            formdata.append("customer", 0);
+            
+        }else{
+            formdata.append("customer", store.getState().customer.cId);
+            
+        }
+        formdata.append("signature",  PathToFlie(store.getState().customerSign));
+        console.log(formdata)
+        
+        try {
+            const response = await fetch(ip+'/api/addReceipt',{method: 'POST',
+            headers: {
+                'Accept': '',
+                'Content-Type': 'multipart/form-data'
+                },
+            body: formdata
+            });
+            const json = await response.json();
+            
+            console.log(json);
+            if(json.receipt_id != undefined){
+
+                store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
+            }
+            
+            
+        } catch (error) {
+            console.error(error);
+        } finally {
+            
+        }
+        
+
+    }
     
     render(){
         var cstSign;
@@ -286,6 +237,7 @@ export default class CustomerInfo extends Component {
                                 ]
                             )
                         }else {
+                            this.addReceipt();
                             this.props.navigation.navigate('ShopStepOne')
                         }
                     }}>
@@ -298,3 +250,83 @@ export default class CustomerInfo extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    xView:{
+        backgroundColor: "#78909c",
+        borderRadius: 20,
+    },
+    modalView: {
+      margin: 10,
+      width : Dimensions.get('window').width-30, 
+      height: Dimensions.get('window').height-400,
+      backgroundColor: "white",
+      borderRadius: 20,
+      paddingRight: 5,
+      paddingLeft: 5,
+      paddingTop: 15,
+      
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+    }
+  });
+  const ImgIcon =styled.Image`
+    width: 20px;
+    height: 20px;
+    margin-Right:5px;
+`;
+const Title = styled.Text`
+    color:#000000;
+  font-size : 24px;
+  font-weight : bold;
+`;
+
+
+const Label = styled.Text`
+    color:#000000;
+    font-size: 18px;
+    margin:12px;
+`;
+const PrView = styled.View`
+    flex-direction: row;
+    justify-content:space-around;
+`;
+const BtView = styled.View`
+    flex-direction: row;
+    justify-content:space-between;
+    width: 75%;
+`;
+const Input = styled.TextInput`
+    color:#000000;
+    width: 80%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
+const CautionText = styled.Text`
+    color: #FF0000;
+    font-size:15px;
+    margin-Bottom:10px;
+`;
+const ContentsScroll = styled.ScrollView`
+    width: 100%;
+    flex: 1;
+    align-content: center;
+`;
+const TextPrassble = styled.Pressable`
+    border-bottom: 2px solid;
+    margin:12px;
+    justifyContent: center;
+    align-items: center;
+`; 

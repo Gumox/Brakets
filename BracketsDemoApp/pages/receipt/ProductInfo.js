@@ -111,12 +111,11 @@ function ProductInfo({navigation, route}) {
     const addReceipt = async () => {
         
         var formdata = new FormData();
-
+        
+        formdata.append("step",1);
         formdata.append("store", store.getState().store_id);
-        formdata.append("brand", store.getState().brand_id);
         formdata.append("staff", store.getState().userInfo[0].staff_id);
-        formdata.append("category", store.getState().receptionDivision.id);
-        console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
+
         if(store.getState().receptionDivision.id == 3){
         
             formdata.append("customer", 0);
@@ -126,13 +125,18 @@ function ProductInfo({navigation, route}) {
             
         }
         
+        formdata.append("brand", store.getState().brand_id);
+        formdata.append("category", store.getState().receptionDivision.id);
+        console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
+        
+        
         
         formdata.append("pid", pid);
         formdata.append("pcode", codeInput);
         formdata.append("substitute", 0);//임시
         formdata.append("mfrid", mfrid);
+        formdata.append("receiptId", store.getState().receipt_id);
 
-        formdata.append("signature",  PathToFlie(store.getState().customerSign));
         console.log(formdata)
         
         try {
@@ -143,14 +147,9 @@ function ProductInfo({navigation, route}) {
                 },
             body: formdata
             });
-            const json = await response.json();
+            //const json = await response.json();
             
-            console.log(json);
-            if(json.receipt_id != undefined){
-
-                store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
-            }
-            console.log(store.getState().receipt_id + "...........")
+            //console.log(json);
             navigation.navigate( 'ShopStepTwo',
                 { 
                 codeType: codeType, 

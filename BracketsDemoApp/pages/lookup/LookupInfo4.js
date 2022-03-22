@@ -14,7 +14,7 @@ import styled from 'styled-components/native';
 import store from '../../store/store';
 import { Provider } from 'react-redux'
 import { CheckBox } from 'react-native-elements';
-import LookupCheckStep from '../../Functions/lookupCheckStep';
+import LookupCheckStep from '../../Functions/LookupCheckStep';
 import SetReReceiptInfo from '../../Functions/SetReReceiptInfo';
 
 
@@ -55,7 +55,10 @@ function LookupInfo4( { route,navigation } ) {
         console.log("step")
         console.log(step)
         console.log("step")
-        if(step ==1){
+        
+        if(step ==0){
+            navigation.navigate("ShopStepOne")
+        }else if(step ==1){
             navigation.navigate("ShopStepTwo")
         }else if(step ==2){
             navigation.navigate("ShopStepThree")

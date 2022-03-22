@@ -34,6 +34,7 @@ const getProductCategory = async () => {
 const SetReReceiptInfo=(data)=>{
     store.dispatch({type:'RECEIPT_ID',receipt_id: data.receipt_id});
     store.dispatch({type:'SEASON_ID',season_id: data.product_season_id})
+    store.dispatch({type:'CUSTOMER',customer:{cId: data.customer_id,cName:data.customer_name,cPhone:data.customer_phone}});
 
     if(data.category==1){
         store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"고객용",id:1}});

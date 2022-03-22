@@ -11,7 +11,8 @@ import {
   Dimensions,
   Keyboard,
   TouchableWithoutFeedback,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../../store/store';
@@ -20,67 +21,8 @@ import ip from '../../serverIp/Ip';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {useNetInfo}from "@react-native-community/netinfo";
 
-const Title = styled.Text`
-  font-size : 24px;
-  font-weight : bold;
-`;
-const BlackText = styled.Text`
-  margin-Top : 15px ;
-  font-size : 15px;
-  color : black;
-`;
-const DropBackground = styled.View`
-    width: 300px;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid #78909c;
-`;
-const Input = styled.TextInput`
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    border-radius:10px;
-    color: #000000;
-`;
-const Label = styled.Text`
-    font-size: 12px;
-    margin:10px;
-`;
-const PrView = styled.View`
-    flex-direction: row;
-    align-items: center;
-    width: 95%
-    justify-content: center;
-`;
-const PxView = styled.View`
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 300px;
-`;
-const ImgIcon = styled.Image`
-    width: 20px;
-    height: 20px;
-    margin:5px;
-`;
-const TouchableView = styled.TouchableOpacity`
-    width: 48%;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid #78909c;
-`;
-const styles = StyleSheet.create({
-  viewHandle: {
+import { CheckBox } from 'react-native-elements';
 
-    width: (Dimensions.get('window').width) * 0.75,
-    marginBottom: 10,
-  },
-  Lavel: {
-    fontSize: (Dimensions.get('window').width) * 0.04,
-    margin: 10,
-    color: "#000000"
-  },
-})
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -131,6 +73,7 @@ const useInput = (inputDate) => {
     mode,
     onChange,
     formatDate,
+    setReDate,
     reDate
   }
 }
@@ -146,9 +89,8 @@ function LookupPage({ navigation }) {
   const [isLoading, setLoading] = React.useState(true);
   const customers = [];
   const dateForm =  new Date()
-  console.log(dateForm)
   dateForm.setDate(1)
-  console.log(dateForm)
+  const [dateCheck,setDateCheck] = useState(true)
   const startDate = useInput(dateForm);
   const endDate = useInput(new Date());
 
@@ -186,16 +128,6 @@ function LookupPage({ navigation }) {
   };
 
 
-  const parseData = (body) => {
-
-    for (let i = 0; i < body.length; i++) {
-      console.log(body[i].name);
-      console.log(body[i].phone);
-      customers.push({ cName: body[i].name, cPhone: body[i].phone, cId: body[i].customer_id })
-      console.log(customers)
-    }
-  }
-
   const getData = useCallback(async (std, edd, name, phone,shopId) => {
 
     console.log("press")
@@ -221,7 +153,15 @@ function LookupPage({ navigation }) {
 
   const netInfo = useNetInfo();
   
-  
+  const checkBoxEvent =()=>{
+    if(dateCheck){
+      setDateCheck(!dateCheck)
+      startDate.setReDate(null)
+      endDate.setReDate(null)
+    }else{
+      setDateCheck(!dateCheck)
+    }
+  }
   let startDatePicker;
                           
   let endDatePicker;
@@ -278,22 +218,34 @@ function LookupPage({ navigation }) {
         <CenterText>
 
           <Label />
-          <View style={styles.viewHandle}><BlackText> 매장 접수일</BlackText></View>
+          <LaView style={styles.viewHandle}>
+            <BlackText > 매장 접수일</BlackText>
+            <CheckBox
+              checked={dateCheck}
+              checkedColor="red"
+              onPress={() =>{
+                checkBoxEvent()
+              }}
+            />
+          </LaView>
 
           <PxView>
-            <TouchableView onPress={
+            <TouchableOpacity
+              disabled={!dateCheck}
+              onPress={
               // startDate.showDatepicker
-              Platform.OS === 'ios' ? (
-                showDatePickerFirst
-              ): (
-                startDate.showDatepicker
+                Platform.OS === 'ios' ? (
+                  showDatePickerFirst
+                ): (
+                  startDate.showDatepicker
                 )
-              }>
+              
+              } style={styles.touchableView}>
               <PrView>
                 <View style={{ flex: 1, minHeight: 40, minWidth: 35 }}><Text style={styles.Lavel}>{startDate.reDate}</Text></View>
                 <View style={{ flex: 0.2 ,marginRight:5}}><ImgIcon source={require(cal)} /></View>
               </PrView>
-            </TouchableView>
+            </TouchableOpacity>
 
             {startDatePicker}
 
@@ -301,19 +253,20 @@ function LookupPage({ navigation }) {
             <View style={{ justifyContent: "center", alignItems: "center", margin: "1%" }}><Text>~</Text></View>
 
 
-            <TouchableView onPress={
+            <TouchableOpacity disabled={!dateCheck}
+              onPress={
               // startDate.showDatepicker
-              Platform.OS === 'ios' ? (
-                showDatePickerSecond
-              ): (
-                endDate.showDatepicker
-              )
-              }>
+                Platform.OS === 'ios' ? (
+                  showDatePickerSecond
+                ): (
+                  endDate.showDatepicker
+                )
+              } style={styles.touchableView}>
               <PrView>
                 <View style={{ flex: 1, minHeight: 40, minWidth: 35 }}><Text style={styles.Lavel}>{endDate.reDate}</Text></View>
                 <View style={{ flex: 0.2 ,marginRight:5}}><ImgIcon source={require('../../Icons/calendar.png')} /></View>
               </PrView>
-            </TouchableView>
+            </TouchableOpacity>
 
             {endDatePicker}
             {/* {endDate.show &&  */}
@@ -353,6 +306,7 @@ function LookupPage({ navigation }) {
         <Button onPress={() => {
           console.log(startDate.reDate)
           if(netInfo.isConnected){
+            console.log(startDate.reDate, endDate.reDate)
             getData(startDate.reDate, endDate.reDate, name, pNumber,shopId);
           }else{
             alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
@@ -369,3 +323,79 @@ function LookupPage({ navigation }) {
   )
 }
 export default LookupPage;
+
+const styles = StyleSheet.create({
+  viewHandle: {
+
+    width: (Dimensions.get('window').width) * 0.75,
+    marginBottom: 10,
+  },
+  Lavel: {
+    fontSize: (Dimensions.get('window').width) * 0.04,
+    margin: 10,
+    color: "#000000"
+  },
+  touchableView :{
+    
+    width: "48%",
+    borderRadius:10,
+    fontColor:"#ffffff",
+    borderWidth:2,
+    borderStyle: "solid",
+    borderColor: "#78909c",
+  }
+})
+
+const Title = styled.Text`
+  font-size : 24px;
+  font-weight : bold;
+`;
+const BlackText = styled.Text`
+  margin-Top : 15px ;
+  font-size : 15px;
+  color : black;
+`;
+const DropBackground = styled.View`
+    width: 300px;
+    border-radius:10px;
+    font-color:#ffffff;
+    border:2px solid #78909c;
+`;
+const Input = styled.TextInput`
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    border-radius:10px;
+    color: #000000;
+`;
+const Label = styled.Text`
+    font-size: 12px;
+    margin:10px;
+`;
+const PrView = styled.View`
+    flex-direction: row;
+    align-items: center;
+    width: 95%
+    justify-content: center;
+`;
+const LaView = styled.View`
+    flex-direction: row;
+    width: 95%
+`;
+const PxView = styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+`;
+const ImgIcon = styled.Image`
+    width: 20px;
+    height: 20px;
+    margin:5px;
+`;
+const TouchableView = styled.TouchableOpacity`
+    width: 48%;
+    border-radius:10px;
+    font-color:#ffffff;
+    border:2px solid #78909c;
+`;

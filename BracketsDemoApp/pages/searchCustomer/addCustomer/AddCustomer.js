@@ -181,7 +181,50 @@ export default class AddCustomer extends Component {
             
         }
     }
-    
+    addReceipt = async () => {
+        
+        var formdata = new FormData();
+        
+        formdata.append("step",0);
+        formdata.append("store", store.getState().store_id);
+        formdata.append("staff", store.getState().userInfo[0].staff_id);
+
+        if(store.getState().receptionDivision.id == 3){
+        
+            formdata.append("customer", 0);
+            
+        }else{
+            formdata.append("customer", store.getState().customer.cId);
+            
+        }
+        formdata.append("signature",  PathToFlie(store.getState().customerSign));
+        console.log(formdata)
+        
+        try {
+            const response = await fetch(ip+'/api/addReceipt',{method: 'POST',
+            headers: {
+                'Accept': '',
+                'Content-Type': 'multipart/form-data'
+                },
+            body: formdata
+            });
+            const json = await response.json();
+            
+            console.log(json);
+            if(json.receipt_id != undefined){
+
+                store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
+            }
+            
+            
+        } catch (error) {
+            console.error(error);
+        } finally {
+            
+        }
+        
+
+    }
     
     onSketchSave(saveEvent) {
         this.props.onSave && this.props.onSave(saveEvent);
@@ -373,6 +416,7 @@ export default class AddCustomer extends Component {
                             )
                         }else {
                             this.addCustomer(this.state.name,this.state.phone)
+                            this.addReceipt()
                             this.props.navigation.navigate('ShopStepOne')
                         }
                     }}>
