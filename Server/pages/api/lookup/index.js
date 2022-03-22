@@ -19,6 +19,7 @@ async function getLookup(query, values) {
                     receipt.category AS category,
                     receipt.receipt_type AS receipt_type,
                     receipt.signature AS signature,
+                    receipt.receiver AS receiver,
                     receipt.paid AS paid,
                     receipt.fee AS fee,
                     store.store_code AS store_code,
