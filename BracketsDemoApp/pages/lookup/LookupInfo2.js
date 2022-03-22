@@ -93,7 +93,6 @@ function LookupInfo2( { route,navigation } ) {
     const data =route.params.data;
     const needImages =route.params.needImages;
     const images = route.params.images;
-    const keys= Object.keys(data)
 
     const [season,setSeason] = useState();                  //시즌
     const [productStyle,setProductStyle] = useState();      //제품 스타일
@@ -105,10 +104,8 @@ function LookupInfo2( { route,navigation } ) {
     const [productPrice,setProductPrice] = useState();      //제품가격 
 
     useEffect(()=>{
-        var price = Number(data["product_tag_price"]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        console.log(typeof price)
-        console.log(price)
-        console.log(typeof price)
+        let price = Number(data["product_tag_price"]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        
         setSeason(data["product_season_name"])               //시즌
         setProductStyle(data["product_style_code"])          //제품 스타일
         setProductColor(data["product_color"])               //제품 색상

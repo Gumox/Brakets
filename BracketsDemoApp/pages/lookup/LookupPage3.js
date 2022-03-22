@@ -42,7 +42,7 @@ const Title = styled.Text`
 // 구조 분해 할당, Destructuring Assignment
 function LookupPage3({ route,navigation }) {
     const data =route.params.data
-    console.log(data)
+    //console.log(data)
     
     return (
         <ContainView>

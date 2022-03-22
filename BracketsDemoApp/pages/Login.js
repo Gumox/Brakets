@@ -37,6 +37,7 @@ function Login({ navigation }): React.ReactElement {
           store.dispatch({ type: 'storeName', storeName: _userName })
           store.dispatch({ type: 'STORE_ID', store_id: _data[0].store_id });
           store.dispatch({ type: 'USER_INFO', userInfo: _data })
+          store.dispatch({type:"BRAND_ID",brand_id:_data[0].brand_id })
           navigation.replace('ReceiptDivision');
         });
   }
@@ -51,6 +52,7 @@ function Login({ navigation }): React.ReactElement {
         store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
         store.dispatch({ type: 'storeName', storeName: UserInfo.userName })
         store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
+        store.dispatch({type:"BRAND_ID",brand_id:UserInfo.data[0].brand_id })
         // console.log(store.getState().userInfo[0].staff_id)
         navigation.replace('ReceiptDivision');
 

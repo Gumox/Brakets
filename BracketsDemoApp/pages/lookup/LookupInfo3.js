@@ -128,7 +128,7 @@ function LookupInfo3( { route,navigation } ) {
     const data =route.params.data;
     const images = route.params.images;
     const needImages =route.params.needImages;
-    console.log(images)
+    //console.log(images)
     
     const winW = Dimensions.get('window').width;
     const winH = Dimensions.get('window').height;
@@ -156,7 +156,7 @@ function LookupInfo3( { route,navigation } ) {
     const [afterImages,setAfterImages] =useState([]);        //제품 수선 후 세부 사진   
 
     useEffect(()=>{
-        console.log(data)
+        //console.log(data)
         if(data["receipt_type"] == 1){
             setReceiptType("수선")
         }
@@ -176,21 +176,24 @@ function LookupInfo3( { route,navigation } ) {
         setResult(data["result_name"])                         //판정결과
         
         const beforeImgList =[]                                  //제품 수선 전 사진
-        const afterImgList =[]                                   //제품 수선 후 사진
-        for (let i = 0; i < images.length; i++) {
-            const element = images[i];
-            console.log(i+":"+element)
-            
-            beforeImgList.push(ip+element["before_image"])
-            if(element["after_image"] === null){
-                afterImgList.push(element["after_image"])
+        const afterImgList =[]
+        if(images){
+            for (let i = 0; i < images.length; i++) { //제품 수선 후 사진
+                const element = images[i];
+                console.log(i+":"+element)
+                
+                beforeImgList.push(ip+element["before_image"])
+                if(element["after_image"] === null){
+                    afterImgList.push(element["after_image"])
+                }
+                else{
+                    afterImgList.push(ip+element["after_image"])
+                }
             }
-            else{
-                afterImgList.push(ip+element["after_image"])
-            }
-        }
-        setBeforeImages(beforeImgList)
-        setAfterImages(afterImgList)
+            setBeforeImages(beforeImgList)
+            setAfterImages(afterImgList)
+        }                                   
+        
          
     },[]);
     
@@ -236,7 +239,7 @@ function LookupInfo3( { route,navigation } ) {
     }
     let needText;
     let need=[];
-    if(needImages.length>0){    
+    if(needImages&&needImages.length>0){    
         
         needImages.map((obj,i)=>{
             const key = i

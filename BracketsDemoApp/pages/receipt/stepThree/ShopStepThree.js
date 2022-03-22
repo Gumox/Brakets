@@ -71,7 +71,6 @@ function ShopStepThree( { navigation } ) {
       var title = obj.receiver_name;
       i = i+1;
     }
-    console.log(obj.category_name+ " : " + obj.pcategory_id+"    "+obj.service_date);
     
   });
   const netInfo = useNetInfo();
@@ -106,13 +105,7 @@ function ShopStepThree( { navigation } ) {
         store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:json.list[0].receiver_name });
         
-        console.log();console.log(json.list);
-        console.log(json);
-        console.log("YYYYYYY");
-        console.log(store.getState().basicRepairStore)
-        console.log();
-        console.log();
-        console.log("AAAAAAAa");
+       
         setLoading(false);
           
       } catch (error) {
@@ -171,25 +164,19 @@ function ShopStepThree( { navigation } ) {
           <RNPickerSelect
             placeholder = {{label : '[필수] 옵션을 선택하세요', value: null}}
             style = { {border :'solid', borderWidth : 3, borderColor : 'black', padding: 2} }
-          onValueChange={(value) => 
+            onValueChange={(value) => 
             {setSelect(value)
               store.dispatch({type:"SELECTTYPESET" ,set : []});
-              console.log("        :"+value);
               
               store.dispatch({type:'RESET_TYPE_STORE',reset:[]});
               //getList(value,0);
-              console.log(store.getState().typeStore);
 
               
               Categories.forEach(obj => {
                 if(value === obj.category_name){
-                  console.log("???????????"+obj.pcategory_id);
                   
                   getRepairList(obj.pcategory_id);
-                  console.log(obj.service_date)
                   store.dispatch({type:"SERVICE_DATE",serviceDate:obj.service_date});
-                  console.log("+++");
-                  console.log(store.getState().basicRepairStore);
                   
                 }
 

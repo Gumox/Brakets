@@ -45,9 +45,6 @@ const styles = StyleSheet.create({
 
 export default function EnlargePhoto({ navigation ,route}){
     const image =route.params.image
-    console.log("111111111111111111111111111111")
-    console.log(route.params.image)
-    console.log("111111111111111111111111111111")
     React.useEffect(()=>{
        
         const backAction = () => {

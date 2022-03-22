@@ -101,7 +101,7 @@ function LookupPage2({ route,navigation }) {
         })
         navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
     }, []);
-    console.log(data)
+    //console.log(data)
 
     const netInfo = useNetInfo();
     

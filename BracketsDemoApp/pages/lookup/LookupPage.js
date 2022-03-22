@@ -171,10 +171,7 @@ function LookupPage({ navigation }) {
     setDatePickerVisibilitySecond(false);
   };
 
-  const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
-    hideDatePicker();
-  };
+  
 
   const handleConfirmFirst = (date) => {
     startDate.onChange("", date);

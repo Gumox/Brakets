@@ -44,7 +44,7 @@ function ReceiptDivision({navigation}) {
     const netInfo = useNetInfo();
     
     useEffect(()=>{
-
+        console.log(store.getState().brand_id)
         var i =1;
         var list =[]
         console.log('receipt division: ' + info)
@@ -137,7 +137,7 @@ function ReceiptDivision({navigation}) {
                     )
                 }
                 else{
-                    store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"선처리",id:2}});
+                    store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"매장용-선처리",id:2}});
                     console.log(store.getState().receptionDivision);
                     if(netInfo.isConnected){
                         navigation.navigate( 'SearchCustomer' )
