@@ -119,6 +119,38 @@ const controller = async (req, res) => {
           const receiptId = fields["receiptId"];
           const receipt = await updateReceipt(fields,receiptId);
           console.log(receipt)
+        }else{
+          if (err) throw new Error(err);
+          // receipt 생성
+          const receipt = await addReceipt(fields);
+          if (receipt.error) {
+            console.log("add Receipt failed");
+            throw new Error(receipt.error);
+          }
+
+          const receiptId = receipt["insertId"];
+          const customerId = fields["customer"];
+          if(files.signature){
+            const extension = files.signature.name.split(".").pop();
+            const filePath = `/storage/signature/${customerId}_${receiptId}.${extension}`;
+            const oldPath = files.signature.path;
+            const newPath = `./public${filePath}`;
+
+            // 파일 저장 (formidable 은 임시로 파일 저장해둠, 원하는 위치로 rename)
+            fs.rename(oldPath, newPath, (err) => {
+              if (err) throw new Error(err);
+            });
+
+            //
+            const results = await updateSignature(receiptId, filePath);
+            if (results.error) {
+              console.log("update Signature failed");
+              throw new Error(results.error);
+            }
+          }
+
+          console.log("add Receipt (step 1)");
+          res.status(200).json({ receipt_id: receiptId });
         }
       } catch (err) {
         console.log(err.message);
