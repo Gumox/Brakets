@@ -26,7 +26,9 @@ const ReceptionPage = ({ options, user }) => {
   });
   const [searchList, setSearchList] = useState([]); // 검색 결과 리스트
   const [targetData, setTargetData] = useState({}); // 리스트에서 선택한 데이터
+  const [overallImg, setOverallImg] = useState('');
   const [imageData, setImageData] = useState({});
+
 
   useEffect(() => {
     const getOptions = async () => {
@@ -144,14 +146,16 @@ const ReceptionPage = ({ options, user }) => {
 
   const getTargetData = useCallback(async (receiptCode) => {
     const { data } = await axios.get(`/api/receipt/${receiptCode}`);
+    console.log(receiptCode)
     if(data == ""){
       alert("정확한 서비스 카드 번호 및 RFID를 입력하세요.")
-    }     
+    }
+    // console.log("data is")
+    setOverallImg(data.data.image)
     setImageData(data.imageList);
     setTargetData(data.data);
-    // setSearchList(data.data)
-    // console.log(data)
   }, []);
+
   return (
     <UserContext.Provider value={user}>
       <Header path={router.pathname} />
@@ -168,7 +172,8 @@ const ReceptionPage = ({ options, user }) => {
             handleChangeTargetDataPrice,
             searchReceipts,
             getTargetData,
-            imageData
+            imageData,
+            overallImg
           }}
         />
       </OptionContext.Provider>
