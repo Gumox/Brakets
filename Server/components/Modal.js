@@ -63,6 +63,7 @@ const Section = styled.div`
   margin: 0 auto;
   background-color: ${({ backgroundColor = COLOR.WHITE }) => backgroundColor};
   border: 5px solid ${COLOR.BLACK};
+  overflow: auto;
 `;
 
 const CloseButton = styled.div`
