@@ -4,12 +4,20 @@ import COLOR from "../../constants/color";
 import formatDate from "../../functions/formatDate";
 import { getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
 import { debounce } from "lodash";
-const RepairReturn = (props) => {
-    const receiver = props.receiver;
-    const receiverId = props.receiverId;
-    const info = props.infos;
-    const shop = props.shop;
-    const receipt_id = props.receipt;
+const RepairReturn = ({
+    _receiver,
+    _receiverId,
+    infos,
+    shopId,
+    receipt,
+    closeTooltip = () => {}
+}) => {
+    const receiver = _receiver;
+    const receiverId = _receiverId;
+    const info = infos;
+    const shop = shopId;
+    const receipt_id = receipt;
+    
     const [repairDetailId, setRepairDetailId] = useState(null)
     const [selectedDate,setSelectedDate] = useState(null);
     const [message,setMessage] = useState("");
@@ -115,7 +123,10 @@ const RepairReturn = (props) => {
                 />
             </LaView>
             <LaView><ItemText>받는곳</ItemText><ItemText2>{receiver}</ItemText2></LaView>
-            <div style={{marginTop:50,display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <LaView style={{justifyContent : "space-around" ,width:"100%"}}>
+            <Cancel onClick={()=>{
+              closeTooltip()
+              }}>취소</Cancel>
             <CustomButton onClick={()=>{
               if(selectedDate !== null) {
                 onSave()
@@ -124,7 +135,7 @@ const RepairReturn = (props) => {
                 alert("발송일을 입력해 주세요")
               }
             }}>저장</CustomButton>
-            </div>
+            </LaView>
         </div>
     )
 }
@@ -149,6 +160,22 @@ const LaView = styled.div`
   margin:5px;
   align-items:center;
   flex-direction: row;
+`;
+const Cancel =styled.button`
+    min-width:50px;
+    min-height:30px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+    padding:5px;
+    border:2px;
+    color: #ffffff;
+    background-color: #4F4F4F;
+    &: hover{
+        background-color: ${COLOR.BRAUN};
+        color: ${COLOR.WHITE};
+    }
+
 `;
 const CustomButton = styled.button`
   width:50px;

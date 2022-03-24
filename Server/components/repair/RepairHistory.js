@@ -11,14 +11,21 @@ import ItemCost from "./receiptionHistory/itemCost";
 import ItemRedo from "./receiptionHistory/itemRedo";
 import image from "next/image";
 
-const RepairHistory = (props) => {
-    const info = props.infos;
-    const hq_id = props.hqId;
-    const brand =props.brand;
+const RepairHistory = ({
+    infos,
+    hqId,
+    brands,
+    shopId,
+    receipt,
+    closeTooltip=()=>{}
+}) => {
+    const info = infos;
+    const hq_id = hqId;
+    const brand = brands;
     const [repiarType,setRepiarType] = useState([])
 
-    const shop = props.shop;
-    const receipt_id = props.receipt;
+    const shop = shopId;
+    const receipt_id = receipt;
     const [repairDetailId, setRepairDetailId] = useState(null)
     const [message, setMessage] = useState("")
     const [storeRecept,setStoreRecept] = useState([])
@@ -401,7 +408,7 @@ const RepairHistory = (props) => {
                 />
             </LaView>
             <LaView style={{justifyContent : "space-around" ,width:"100%"}}>
-            <AddTable onClick={()=>props.close}>취소</AddTable>
+            <AddTable onClick={closeTooltip}>취소</AddTable>
             <CustomButton onClick={()=>{
                 if(info.fault == 0){alert("과실 구분 선택 필요")}
                 if(info.analysis == 0){alert("내용 분석 선택 필요")}

@@ -4,11 +4,15 @@ import COLOR from "../../constants/color";
 import { debounce } from "lodash";
 import { getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
 import formatDate from "../../functions/formatDate";
-const RepairOthers = (props) => {
+const RepairOthers = ({
+  shopId,
+  receiver,
+  receipt,
+  closeTooltip=()=>{}
+  }) => {
   
-  const shop = props.shop;
-  const receiver = props.receiver
-  const receipt_id = props.receipt;
+  const shop = shopId;
+  const receipt_id = receipt;
   const [message,setMessage] = useState("");
   const [repairDetailId, setRepairDetailId] = useState(null)
   const [windowWidth,setWindowWidth] = useState(0)
@@ -17,7 +21,7 @@ const RepairOthers = (props) => {
       setWindowWidth(window.innerWidth)
       setWindowHeight(window.innerHeight)
   },1000)
-
+  console.log(receiver)
   const onSave = async()=>{
     
     let res;
@@ -86,17 +90,35 @@ const RepairOthers = (props) => {
                     setMessage(e.target.value)
                 }}
             ></textarea>
-            <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <LaView style={{justifyContent : "space-around" ,width:"100%"}}>
+            <Cancel onClick={()=>{
+              closeTooltip()
+              }}>취소</Cancel>
               <CustomButton onClick={()=>{
                 onSave()
               }}>저장</CustomButton>
-            </div>
+            </LaView>
             
         </div>
     )
 }
 export default RepairOthers
+const Cancel =styled.button`
+    min-width:50px;
+    min-height:30px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+    padding:5px;
+    border:2px;
+    color: #ffffff;
+    background-color: #4F4F4F;
+    &: hover{
+        background-color: ${COLOR.BRAUN};
+        color: ${COLOR.WHITE};
+    }
 
+`;
 const CustomButton = styled.button`
   width:50px;
   height:30px;
@@ -130,10 +152,9 @@ const Line2 = styled.div`
   margin-top:10px;
   background-color: #C4C4C4
 `;
-const ItemTable = styled.div`
-  border: 2px solid  ${COLOR.BRAUN};
-  margin-right:10px;
-  margin-left:10px;
-  min-height : 60px
-
+const LaView = styled.div`
+  display: flex;  
+  margin:5px;
+  align-items:center;
+  flex-direction: row;
 `;

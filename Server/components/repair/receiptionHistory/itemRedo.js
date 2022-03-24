@@ -6,13 +6,14 @@ export default function ItemRedo(props){
     const redo1 = props.redo1;
     const redo2 = props.redo2;
     const redo3 = props.redo3;
+    const disable = props.disable;
 
     const checkBoxTag = (tof) => {
         let result ;
         if(tof){
-            result = (<input checked type="checkbox" name="xxx" value="yyy" onChange={()=>{ props.onChange()}}/>)
+            result = (<input disabled={disable} checked type="checkbox" name="xxx" value="yyy" onChange={()=>{ props.onChange()}}/>)
         }else{
-            result = (<input type="checkbox" name="xxx" value="yyy" onChange={()=>{ props.onChange()}}/>)
+            result = (<input disabled={disable} type="checkbox" name="xxx" value="yyy" onChange={()=>{ props.onChange()}}/>)
         }
         return(result)
     }

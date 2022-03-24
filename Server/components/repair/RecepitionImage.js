@@ -1,9 +1,7 @@
 
 import React,{useEffect,useState,useCallback} from "react";
 import styled from "styled-components";
-import COLOR from "../../constants/color";
-import Popup from 'reactjs-popup';
-import Modal from "../Modal";
+import Modal from "./Modal";
 import 'reactjs-popup/dist/index.css';
 import formatDate from "../../functions/formatDate";
 import Image from 'next/image';
@@ -46,12 +44,14 @@ function RecepitionImage (props) {
           />
       </ItemBox>
       {isProductImageModalOpen && (
-        <Modal handleCloseButtonClick={closeProductImage}>
+        <Modal handleCloseButtonClick={closeProductImage} width={windowHeight}>
           {
             <Image
               src={el.image}
               alt={el.name}
-              layout="fill"
+              style={{marginTop:10}}
+              width={windowHeight*0.22*3}
+              height={windowHeight*0.22*4}
               objectFit="contain"
             />
           }
@@ -78,6 +78,7 @@ const ItemBox =styled.div`
   margin-left:10px;
   margin-right:10px;
   flex:1;
+  cursor: pointer;
   height : 42px;
   
 `;

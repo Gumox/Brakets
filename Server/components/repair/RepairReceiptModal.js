@@ -1,5 +1,5 @@
 
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useRef} from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 import Popup from 'reactjs-popup';
@@ -30,6 +30,12 @@ function RepairReceiptModal (props) {
   const [judgment,setJudgment] = useState([])
   const [analysis,setAnalysis] = useState([])
   const [repiarType,setRepiarType] = useState([])
+
+  const [cancelSJN,setCancelSJN] = useState()
+  const [cancelSJI,setCancelSJI] = useState()
+  const [cancelSF,setCancelSF] = useState()
+  const [cancelSA,setCancelSA] = useState()
+
   const [selectJudgmentName,setSelectJudgmentName] = useState()
   const [selectJudgmentValue,setSelectJudgmentValue] = useState(0)
   const [selectFault,setSelectFault] =useState(0)
@@ -45,7 +51,15 @@ function RepairReceiptModal (props) {
   
   const [fontSizeTop,setFontSizeTop] =useState(15) 
   const [fontSizeBottom,setFontSizeBottom] =useState(12) 
-
+  const modalRef = useRef();
+  const closeTool = () => modalRef.current.close();
+  const closeTooltip = () => {
+    setSelectJudgmentName(cancelSJN)
+    setSelectJudgmentValue(cancelSJI)
+    setSelectFault(cancelSF)
+    setSelectAnalysis(cancelSA)
+    closeTool()
+  }
   let images= [];
   imageList.forEach((obj) => {
     if(obj.receipt_id === el.receipt_id){
@@ -71,19 +85,19 @@ function RepairReceiptModal (props) {
   let selectJudgmentBox;
   if(selectJudgmentName == "외주수선"){
     selectJudgmentBox =(
-      <RepairHistory hqId={hq_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType, result: selectJudgmentValue}} brand={el.brand_id} selectList={repiarTypeList} shop={info.store_id} receipt={el.receipt_id}></RepairHistory>
+      <RepairHistory hqId={hq_id} {...{closeTooltip}} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType, result: selectJudgmentValue}} brands={el.brand_id} selectList={repiarTypeList} shopId={info.store_id} receipt={el.receipt_id}></RepairHistory>
     )
   }else if(selectJudgmentName == "매장반송"){
     selectJudgmentBox =(
-      <RepairReturn receiver={"매장"} receiverId={el.store_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn _receiver={"매장"} {...{closeTooltip}} _receiverId={el.store_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shopId={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgmentName == "본사반송"){
     selectJudgmentBox =(
-      <RepairReturn receiver={"본사"} receiverId={1} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn _receiver={"본사"} {...{closeTooltip}} _receiverId={1} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shopId={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgmentName == "기타"){
     selectJudgmentBox =(
-      <RepairOthers infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shop={info.store_id} receipt={el.receipt_id}></RepairOthers>
+      <RepairOthers {...{closeTooltip}} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shopId={info.store_id} receipt={el.receipt_id}></RepairOthers>
     )
   }else{
     selectJudgmentBox =(
@@ -125,11 +139,15 @@ function RepairReceiptModal (props) {
       if(el[repairStoreId] == shop){
         setSelectJudgmentValue(el[resultId])
         setSelectJudgmentName(el[name])
+        setCancelSJI(el[resultId])
+        setCancelSJN(el[name])
       }
       if(el[fault] !== null){
         setSelectFault(el[fault])
+        setCancelSF(el[fault])
       }if(el[analysis]!== null){
         setSelectAnalysis(el[analysis])
+        setCancelSA(el[analysis])
       }
     }
     
@@ -139,7 +157,7 @@ function RepairReceiptModal (props) {
     setRepiarTypeList(setSelectList(typeInfo))
   }
 
-
+   
 
   useEffect( () => {
     
@@ -172,6 +190,7 @@ function RepairReceiptModal (props) {
     <div suppressHydrationWarning={true}>
        {process.browser &&
     <Popup  
+      ref={modalRef}
       trigger={
       <PrView style={{backgroundColor:lineColor}}><ContainText>
                 <ItemView>{el.receipt_code}</ItemView>
@@ -300,10 +319,17 @@ function RepairReceiptModal (props) {
             </div>
             
           </Half>
-          <div className="close" onClick={close} style={{fontSize:30,marginTop:-15}}>
-            &times;
-          </div>
-      </Container> )}
+          <CloseButton className="close" onClick={closeTooltip} >
+          <img
+              src="/close.png"
+              alt="close"
+              width="15px"
+              height="15px"
+              layout="fixed"
+            />
+          </CloseButton>
+      </Container> )
+      }
     </Popup>
     }
     </div>
@@ -331,6 +357,13 @@ const styles = {
     borderColor:COLOR.BRAUN
   }
 };
+const CloseButton = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 10; 
+`;
 const DetailImg = styled.img`
   width:270px;
   height:480px;
