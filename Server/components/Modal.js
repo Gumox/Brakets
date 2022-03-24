@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 
 import COLOR from "../constants/color";
 
 const Modal = ({ options, children, handleCloseButtonClick }) => {
+
+
+  useEffect(() => {
+    function handleEscapeKey(event) {
+      if (event.code === 'Escape') {
+        handleCloseButtonClick()
+      }
+    }
+  
+    document.addEventListener('keydown', handleEscapeKey)
+    return () => document.removeEventListener('keydown', handleEscapeKey)
+  }, [])
+
   return (
     <>
       <Wrapper>
