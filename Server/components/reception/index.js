@@ -14,6 +14,8 @@ import StoreInfo from "./Store";
 import List from "./List";
 import ResizableList from "./ResizableList";
 import { PRODUCT, RECEIPT } from "../../constants/field";
+import image from "next/image";
+import { symlink } from "fs";
 
 const Reception = ({
   targetBrandId,
@@ -30,6 +32,7 @@ const Reception = ({
   searchReceipts, // List 조회
   getTargetData, // Receipt 조회
   imageData,
+  overallImg,
   searchCode
 }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
@@ -50,7 +53,8 @@ const Reception = ({
     () => setIsReceiptImageModalOpen(false),
     []
   );
-  const [overallImg, setOverallImg] = useState('');
+
+  const [clickedImg, setClickedImg] = useState(overallImg);
 
 
   return (
@@ -59,7 +63,7 @@ const Reception = ({
         <InfoSubWrapper>
           <BasicInfo {...{ targetBrandId, setTargetBrandId, getTargetData, handleChangeInputData, searchReceipts, searchCode }} />
           <FilterInfo
-            {...{ targetBrandId,setInputData,inputData, searchList, handleChangeInputData, searchReceipts }}
+            {...{ targetBrandId, setInputData, inputData, searchList, handleChangeInputData, searchReceipts }}
           />
           <Section>
             <ProducInfo {...{ targetData, handleChangeTargetData, openProductImage }} />
@@ -69,7 +73,7 @@ const Reception = ({
           </Section>
           <Section>
             <DetailInfo {...{ targetData, handleChangeTargetData }} />
-            <ReceiptInfo {...{ targetData, handleChangeTargetData ,handleChangeRegisterDate,handleChangeTargetDataResultDetail,handleChangeTargetDataPrice}} />
+            <ReceiptInfo {...{ targetData, handleChangeTargetData, handleChangeRegisterDate, handleChangeTargetDataResultDetail, handleChangeTargetDataPrice }} />
           </Section>
         </InfoSubWrapper>
       </InfoWrapper>
@@ -87,103 +91,88 @@ const Reception = ({
           }
         </Modal>
       )}
-
       {/* TODO */}
       {isReceiptImageModalOpen && (
-        <Modal handleCloseButtonClick={closeReceiptImage}
-        >
+        <Modal handleCloseButtonClick={closeReceiptImage}>
+          <ImgViewTitle>
+            전체이미지
+          </ImgViewTitle>
+          <OverallImgWrapper>
+            <OverallImgView>
+              <Image
+                key={overallImg}
+                src={`http://34.64.182.76:8080${overallImg}`}
+                alt={""}
+                layout="fixed"
+                objectFit="contain"
+                width="500px"
+                height="500px"
+              />
+            </OverallImgView>
+          </OverallImgWrapper>
 
-          <div>
-            <div
-            style={{
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                marginTop: '50px',
-              }}
-            >
-              {
-                (overallImg == '') ? (
-                  <div
-                    style={{width: '500px', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                  >
-                    Empty
-                  </div>
-                ) : (
-                  <Image
-                    key={overallImg}
-                    src={`${overallImg}`}
-                    alt={""}
-                    layout="fixed"
-                    objectFit="contain"
-                    width="500px"
-                    height="500px"
-                  />
-                )
-              }
-            </div>
-            
-            <div
-              style={{
-                marginTop: 100,
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center'
-              }}
-            >
-              <text
-                style={{marginLeft: '10px'}}
-              > 
-              수선처 1
-              </text>
-              {imageData.map(
-                (v,i) =>
-                  (
-                    <div key={i}
-                      style={{display: 'flex', flexDirection: 'row'}}
-                    >
-                      <Image
-                        key={v.before_image}
-                        src={`http://34.64.182.76:8080${v.before_image}`}
-                        alt={""}
-                        layout="fixed"
-                        objectFit="contain"
-                        width="100px"
-                        height="100px"
-                        onClick={() => setOverallImg(`http://34.64.182.76:8080${v.before_image}`)}
-                      />
-                      {
-                        (
-                          v.after_image != null
-                        ) ? (
-                          <Image
-                            key={v.after_image}
-                            src={`http://34.64.182.76:8080${v.after_image}`}
-                            alt={""}
-                            layout="fixed"
-                            objectFit="contain"
-                            width="100px"
-                            height="100px"
-                            onClick={() => setOverallImg(`http://34.64.182.76:8080${v.after_image}`)}
-                          />
-                        ) : (
-                          <div
-                            style={{width: '100px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                          >
-                            Empty
-                          </div>
-                        )
-                      }
-                    </div>
-                )
-              )}
-              
-            </div>
-          </div>
+          <ImgViewTitle>
+            수선처 1
+          </ImgViewTitle>
+          <RepairImgWrapper>
+            {
+              imageData.map((v, i) =>
+              (
+                <>
+                <ImgViewSubTitle>
+
+                </ImgViewSubTitle>
+                  <RepairImgView>
+                    <Image
+                      key={i}
+                      src={`http://34.64.182.76:8080${v.before_image}`}
+                      alt={""}
+                      layout="fixed"
+                      objectFit="contain"
+                      width="150px"
+                      height="150px"
+
+                    />
+                  </RepairImgView>
+
+                  <ImgViewSubTitle>
+                  </ImgViewSubTitle>
+                  <RepairImgView>
+                    <Image
+                      key={i}
+                      src={`http://34.64.182.76:8080${v.before_image}`}
+                      alt={""}
+                      layout="fixed"
+                      objectFit="contain"
+                      width="150px"
+                      height="150px"
+                    />
+                  </RepairImgView>
+                </>
+              )
+              )
+            }
+          </RepairImgWrapper>
+
+
+
+
+          <ImgViewTitle>
+            수선처 2
+          </ImgViewTitle>
+          <RepairImgView>
+
+          </RepairImgView>
+
+          <ImgViewTitle>
+            수선처 3
+          </ImgViewTitle>
+          <RepairImgView>
+
+          </RepairImgView>
+
         </Modal>
       )}
-
-
     </Content>
   );
 };
@@ -210,9 +199,56 @@ const Section = styled.div`
   display: flex;
 `;
 
-const Row = styled.div`
+const ImgViewTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  margin: 25px;
+`;
+
+const ImgViewSubTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin: 25px;
+`;
+
+
+
+
+const OverallImgWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const OverallImgView = styled.div`
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px;
+  width: fit-content;
+`;
+
+
+const RepairImgView = styled.div`
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px;
+  width: fit-content;
+
+`
+
+const RepairImgWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+
+
 
 export default Reception;
