@@ -69,7 +69,10 @@ function Table({ columns, data, searchList, getTargetData }) {
                             prepareRow(row)
                             return (
                                 <div key={i} {...row.getRowProps(
-                                    {onClick: () => (getTargetData(row.original["서비스카드 번호"]))}
+                                    {
+                                        // TODO
+                                        onClick: () => (getTargetData(row.original["서비스카드 번호"]))
+                                    }
                                 )} className="tr">
                                     {row.cells.map((cell,j) => {
                                         return (
@@ -179,95 +182,58 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
     const data = searchList.map((receipt) =>(
 
         {
-        '서비스카드 번호':receipt[RECEIPT.CODE],
-        '매장코드':receipt[STORE.CODE],
-        '매장명':receipt[STORE.NAME],
-        '매장구분':STORE_CATEGORY[receipt[STORE.CATEGORY]],
-        '매장연락처':receipt[STORE.CONTACT],
-        '매장접수일':receipt[RECEIPT.RECEIPT_DATE] ? moment(receipt[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD") : "",
-        '고객ID':receipt[CUSTOMER.ID],
-        '접수구분':RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]],
-        '고객':receipt[CUSTOMER.NAME],
-        '고객연락처':receipt[CUSTOMER.CONTACT],
-        '시즌':receipt[PRODUCT.SEASON],
-        '스타일':receipt[PRODUCT.STYLE],
-        '차수':receipt[PRODUCT.DEGREE],
-        '컬러':receipt[PRODUCT.COLOR],
-        '사이즈':receipt[PRODUCT.SIZE],
-        '판매가':receipt[PRODUCT.PRICE],
-        '고객요구':RECEIPT_TYPE[receipt[RECEIPT.TYPE]],
-        '매장접수내용':receipt[RECEIPT.STORE_MESSAGE],
-        '고객약속일':receipt[RECEIPT.DUE_DATE]
-        ? moment(receipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD")
-        : "",
-        '본사접수일':receipt[RECEIPT.REGISTER_DATE]
-        ? moment(receipt[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD")
-        : "",
-        '발송일toS':receipt[RECEIPT.COMPLETE_DATE]
-        ? moment(receipt[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD")
-        : "",
-        '과실구분':receipt[RECEIPT.FAULT_NAME],
-        '내용분석':receipt[RECEIPT.ANALYSIS_NAME],
-        '판정결과':receipt[RECEIPT.RESULT_NAME],     
-        '수선처1':receipt.repair1_store_name,
-        '총수선비1':receipt.repair1_total,    
-        '수선처접수일1': 
-        (
-            receipt.repair1_register_date
-        ) ? (
-            moment(receipt.repair1_register_date).format("YYYY-MM-DD")
-        ) : (
-            ""
-        ),       
-        '재수선1':receipt.repair1_repair1_redo === 1 ? "Y" : "N",
-
-        '수선처2':receipt.repair2_store_name,    
-        '총수선비2':receipt.repair2_total,                
-        '수선처접수일2':
-        (
-            receipt.repair2_register_date
-        ) ? (
-            moment(receipt.repair2_register_date).format("YYYY-MM-DD")
-        ) : (
-            ""
-        ),          
-        '재수선2':receipt.repair2_repair1_redo === 1 ? "Y" : "N",
-
-        '수선처3':receipt.repair3_store_name,        
-        '총수선비3':receipt.repair3_total,              
-        '수선처접수일3':
-        (
-            receipt.repair3_register_date
-        ) ? (
-            moment(receipt.repair3_register_date).format("YYYY-MM-DD")
-        ) : (
-            ""
-        ),                    
-        '재수선3':receipt.repair3_repair1_redo === 1 ? "Y" : "N",
-
-        '생산업체':receipt[RECEIPT.MANUFACTURER_NAME],
-        '발송일toM':receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]
-        ? moment(
-            receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]
-          ).format("YYYY-MM-DD")
-        : "",
-        '본사설명':receipt[RECEIPT.MESSAGE],
-        '현금연수증번호':receipt[RECEIPT.CASHRECEIPT_NUM],
-
-        '수선처설명1':receipt.repair1_message,
-        '운송형태1':TRANSPORT_TYPE[receipt.repair1_delivery_type],
-        '발송방법1':SHIPPING_TYPE[receipt.repair1_shipment_type],
-        '발송비용1':receipt.repair1_shipment_price,
-
-        '수선처설명2':receipt.repair2_message,
-        '운송형태2':TRANSPORT_TYPE[receipt.repair2_delivery_type],
-        '발송방법2':SHIPPING_TYPE[receipt.repair2_shipment_type],
-        '발송비용2':receipt.repair2_shipment_price,
-        
-        '수선처설명3':receipt.repair3_message,
-        '운송형태3':TRANSPORT_TYPE[receipt.repair3_delivery_type],
-        '발송방법3':SHIPPING_TYPE[receipt.repair3_shipment_type],
-        '발송비용3':receipt.repair3_shipment_price,
+            '서비스카드 번호':receipt[RECEIPT.CODE] ? receipt[RECEIPT.CODE] : "" ,
+            '매장코드':receipt[STORE.CODE] ? receipt[STORE.CODE] : "",
+            '매장명':receipt[STORE.NAME] ? receipt[STORE.CODE] : "",
+            '매장구분':STORE_CATEGORY[receipt[STORE.CATEGORY]] ? STORE_CATEGORY[receipt[STORE.CATEGORY]] : "",
+            '매장연락처':receipt[STORE.CONTACT] ? receipt[STORE.CONTACT] : "",
+            '매장접수일':receipt[RECEIPT.RECEIPT_DATE] ? moment(receipt[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD") : "",
+            '고객ID':receipt[CUSTOMER.ID] ? receipt[CUSTOMER.ID] : "",
+            '접수구분':RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]] ? RECEIPT_CATEGORY_TYPE[receipt[RECEIPT.CATEGORY]] : "",
+            '고객':receipt[CUSTOMER.NAME] ? receipt[CUSTOMER.NAME] : "",
+            '고객연락처':receipt[CUSTOMER.CONTACT] ? receipt[CUSTOMER.CONTACT] : "",
+            '시즌':receipt[PRODUCT.SEASON] ? receipt[PRODUCT.SEASON] : "",
+            '스타일':receipt[PRODUCT.STYLE] ? receipt[PRODUCT.STYLE] : "",
+            '차수':receipt[PRODUCT.DEGREE] ? receipt[PRODUCT.DEGREE] : "",
+            '컬러':receipt[PRODUCT.COLOR] ? receipt[PRODUCT.COLOR] : "",
+            '사이즈':receipt[PRODUCT.SIZE] ? receipt[PRODUCT.SIZE] : "",
+            '판매가':receipt[PRODUCT.PRICE] ? receipt[PRODUCT.PRICE] : "",
+            '고객요구':RECEIPT_TYPE[receipt[RECEIPT.TYPE]] ? RECEIPT_TYPE[receipt[RECEIPT.TYPE]] : "",
+            '매장접수내용':receipt[RECEIPT.STORE_MESSAGE] ? receipt[RECEIPT.STORE_MESSAGE] : "",
+            '고객약속일':receipt[RECEIPT.DUE_DATE] ? moment(receipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD") : "",
+            '본사접수일':receipt[RECEIPT.REGISTER_DATE] ? moment(receipt[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD") : "",
+            '발송일toS':receipt[RECEIPT.COMPLETE_DATE] ? moment(receipt[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD") : "",
+            '과실구분':receipt[RECEIPT.FAULT_NAME] ? receipt[RECEIPT.FAULT_NAME] : "",
+            '내용분석':receipt[RECEIPT.ANALYSIS_NAME] ? receipt[RECEIPT.ANALYSIS_NAME] : "",
+            '판정결과':receipt[RECEIPT.RESULT_NAME] ? receipt[RECEIPT.RESULT_NAME] : "",
+            '수선처1':receipt.repair1_store_name ? receipt.repair1_store_name : "",
+            '총수선비1':receipt.repair1_total ? receipt.repair1_total : "",
+            '수선처접수일1': receipt.repair1_register_date ? moment(receipt.repair1_register_date).format("YYYY-MM-DD") : "",
+            '재수선1':receipt.repair1_repair1_redo === 1 ? "Y" : "N",
+            '수선처2':receipt.repair2_store_name ? receipt.repair2_store_name : "",
+            '총수선비2':receipt.repair2_total ? receipt.repair2_total : "",
+            '수선처접수일2':receipt.repair2_register_date ? moment(receipt.repair2_register_date).format("YYYY-MM-DD") : "",
+            '재수선2':receipt.repair2_repair1_redo === 1 ? "Y" : "N",
+            '수선처3':receipt.repair3_store_name ? receipt.repair3_store_name : "",
+            '총수선비3':receipt.repair3_total ? receipt.repair3_total : "",
+            '수선처접수일3': receipt.repair3_register_date ? moment(receipt.repair3_register_date).format("YYYY-MM-DD") : "",
+            '재수선3':receipt.repair3_repair1_redo === 1 ? "Y" : "N",
+            '생산업체':receipt[RECEIPT.MANUFACTURER_NAME] ? receipt[RECEIPT.MANUFACTURER_NAME] : "",
+            '발송일toM':receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE] ? moment(receipt[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]).format("YYYY-MM-DD") : "",
+            '본사설명':receipt[RECEIPT.MESSAGE] ? receipt[RECEIPT.MESSAGE] : "",
+            '현금연수증번호':receipt[RECEIPT.CASHRECEIPT_NUM] ? receipt[RECEIPT.CASHRECEIPT_NUM] : "",
+            '수선처설명1':receipt.repair1_message ? receipt.repair1_message : "",
+            '운송형태1':TRANSPORT_TYPE[receipt.repair1_delivery_type] ? TRANSPORT_TYPE[receipt.repair1_delivery_type] : "",
+            '발송방법1':SHIPPING_TYPE[receipt.repair1_shipment_type] ? SHIPPING_TYPE[receipt.repair1_shipment_type] : "",
+            '발송비용1':receipt.repair1_shipment_price ? receipt.repair1_shipment_price : "",
+            '수선처설명2':receipt.repair2_message ? receipt.repair2_message : "",
+            '운송형태2':TRANSPORT_TYPE[receipt.repair2_delivery_type] ? TRANSPORT_TYPE[receipt.repair2_delivery_type] : "",
+            '발송방법2':SHIPPING_TYPE[receipt.repair2_shipment_type] ? SHIPPING_TYPE[receipt.repair2_shipment_type] : "",
+            '발송비용2':receipt.repair2_shipment_price ? receipt.repair2_shipment_price : "",
+            '수선처설명3':receipt.repair3_message ? receipt.repair3_message : "",
+            '운송형태3':TRANSPORT_TYPE[receipt.repair3_delivery_type] ? TRANSPORT_TYPE[receipt.repair3_delivery_type] : "",
+            '발송방법3':SHIPPING_TYPE[receipt.repair3_shipment_type] ? SHIPPING_TYPE[receipt.repair3_shipment_type] : "",
+            '발송비용3':receipt.repair3_shipment_price ? receipt.repair3_shipment_price : "",            
         }
     ))
 
@@ -299,8 +265,7 @@ const Wrapper = styled.nav`
   &::-webkit-scrollbar-thumb {
     background: rgba(96, 96, 96, 0.7);
     border-radius: 6px;
-    
-`;
+}`;
 
 const Styles = styled.div`
   padding: 1rem;
