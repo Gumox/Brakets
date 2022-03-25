@@ -7,6 +7,7 @@ import Bottom from '../../components/Bottom';
 import {
   StyleSheet,
   Text,
+  Image,
   View,
   Dimensions,
   Keyboard,
@@ -20,9 +21,7 @@ import axios from 'axios';
 import ip from '../../serverIp/Ip';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {useNetInfo}from "@react-native-community/netinfo";
-
-import { CheckBox } from 'react-native-elements';
-
+import CheckBoxText from '../../components/CheckBoxText';
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -215,19 +214,21 @@ function LookupPage({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
+        
+        
+        
         <CenterText>
-
           <Label />
-          <LaView style={styles.viewHandle}>
-            <BlackText > 매장 접수일</BlackText>
-            <CheckBox
-              checked={dateCheck}
-              checkedColor="red"
-              onPress={() =>{
-                checkBoxEvent()
-              }}
+          <PxView>
+            <CheckBoxText
+              {...{checkBoxEvent}}
+              checkBoxColor={"red"}
+              check = {dateCheck}
+              text={"매장 접수일"}
             />
-          </LaView>
+          </PxView>
+          
+          
 
           <PxView>
             <TouchableOpacity
@@ -250,7 +251,7 @@ function LookupPage({ navigation }) {
             {startDatePicker}
 
             
-            <View style={{ justifyContent: "center", alignItems: "center", margin: "1%" }}><Text>~</Text></View>
+            <View style={{ justifyContent: "center", alignItems: "center", margin: "1%" }}><Text style={{color:"#000000"}}>~</Text></View>
 
 
             <TouchableOpacity disabled={!dateCheck}
@@ -330,6 +331,11 @@ const styles = StyleSheet.create({
     width: (Dimensions.get('window').width) * 0.75,
     marginBottom: 10,
   },
+  viewHandle2: {
+
+    width: (Dimensions.get('window').width) * 0.75,
+    marginLeft:-50,
+  },
   Lavel: {
     fontSize: (Dimensions.get('window').width) * 0.04,
     margin: 10,
@@ -343,9 +349,28 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderStyle: "solid",
     borderColor: "#78909c",
+  },
+  selectOptions:{
+    height:50,
+    position:"absolute",
+    right:15,
+    top:15,
   }
 })
+const CheckBoxView =styled.View`
+  align-items: center;
+  padding:-5px;
+  justify-content: center;
+`;
+const BarCodeIcon =styled.TouchableOpacity`
+  width:45px;
+  height:45px;
+  justify-content: center;
+  align-items: center;
+  borderRadius:15px;
+  background-color:rgba(0,100,200,0.5);
 
+`
 const Title = styled.Text`
   font-size : 24px;
   font-weight : bold;
