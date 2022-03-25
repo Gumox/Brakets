@@ -200,12 +200,12 @@ const Nav = styled.nav`
 `;
 const Line =styled.div`
   border:1px solid  ${COLOR.BRAUN};
-  width :100%
+  width :100%;
   margin:2px;
   height:2px;
   margin-bottom:10px;
   margin-top:10px;
-  background-color: ${COLOR.BRAUN}
+  background-color: ${COLOR.BRAUN};
 `;
 const ItemTable = styled.div`
   border: 2px solid  ${COLOR.BRAUN};
@@ -223,7 +223,7 @@ const ItemView = styled.div`
   min-height: 20px;
   width :100px;
   display: flex;  
-  justify-content:center
+  justify-content:center;
   `;
 const Container = styled.div`
     display:flex; 
