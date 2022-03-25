@@ -172,6 +172,7 @@ const lookup = async (req, res) => {
         endDate,
         customerName, // 고객이름
         customerContact,  // 연락처(뒷4자리)
+        code
       } = req.query;
       let query = "WHERE receipt.store_id = ?";
       let values = [shop];
@@ -222,6 +223,12 @@ const lookup = async (req, res) => {
           query += " AND customer.phone LIKE ? ";
         }
         values = [...values, `%${customerContact}`];
+        
+        
+      }if (code) {
+        query += " AND receipt.receipt_code = ? ";
+        
+        values = [...values, code];
         
         
       }
