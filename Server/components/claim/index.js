@@ -81,8 +81,8 @@ const Claim = () => {
         searchList = {searchList}
       />
       <List data={searchList}/>
-      {/*<Invoice state = {"출고확정"}/>
-      <Invoice state = {"출고대기"}/> */}
+      <Invoice state = {"출고확정"}/>
+      <Invoice state = {"출고대기"}/>
     </Content>
   );
 };
