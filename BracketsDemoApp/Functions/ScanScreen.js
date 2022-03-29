@@ -15,6 +15,8 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import Container from '../components/Container';
 import { RNCamera } from 'react-native-camera';
 import store from '../store/store';
+import styled from 'styled-components';
+import Button from '../components/Button';
 
 
 export default class ScanScreen extends Component {
@@ -31,7 +33,7 @@ export default class ScanScreen extends Component {
     this.setState({
         result: e,
         scan: false,
-        ScanResult: true
+        ScanResult: true,
     })
     
     if (check === 'http') {
@@ -42,11 +44,7 @@ export default class ScanScreen extends Component {
 
 
     } else {
-        this.setState({
-            result: e,
-            scan: false,
-            ScanResult: true
-        })
+        
         
         if(route.params.key !=null){
           if(route.params.key ==='ShopStepFour'){
@@ -79,7 +77,12 @@ export default class ScanScreen extends Component {
 
             this.props.navigation.replace(route.params.key,{code:check});
 
+          }else if(route.params.key === 'LookupPage'){
+
+            this.props.navigation.replace(route.params.key,{code:check});
+
           }
+          
           
           
            
@@ -92,6 +95,7 @@ export default class ScanScreen extends Component {
   
   render() {
     
+    const {route}=this.props;
     
     return (
       <Container>
@@ -116,7 +120,15 @@ export default class ScanScreen extends Component {
             }}
           />
         </View>
-      
+        <View style={{width:"100%",position:"absolute", bottom:30,zIndex:10,alignItems:"center",justifyContent:"center" }}>
+                    <Button
+                        onPress={ ()=> this.props.navigation.navigate('InputAlternativeNumber',{key:route.params.key })}
+                        >
+                        <Text>
+                            코드 직접 입력하기
+                        </Text>
+                    </Button>
+                </View>
     
       </Container>
       
@@ -124,3 +136,6 @@ export default class ScanScreen extends Component {
     );
   }
 }
+const ButtonView = styled.View`
+  align-items: center;
+`;

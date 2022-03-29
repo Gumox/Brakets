@@ -58,6 +58,5 @@ const CheckBoxView =styled.View`
 `;
 const LaView = styled.View`
     flex-direction: row;
-    width: 95%
     align-items:center;
 `;

@@ -47,6 +47,9 @@ function RepairDetail({ navigation, route }) {
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     const [afterImages,setAfterImages] =useState([]);
     
+    const stepArr =[1,4,5]
+    const [step,setStep] = useState()
+
     let beforeImgList = []
     let afterImgList = []
 
@@ -96,6 +99,7 @@ function RepairDetail({ navigation, route }) {
                 setRepairShop(data.data["repair3_store_id"])
                 setRepairDetailId(data.data["repair3_detail_id"])
             }else{
+                console.log(shop)
                 Alert.alert("해당 제품에 맞는 수선정보가 존재 하지 않습니다.","수선 접수를 진행해 주세요")
                 navigation.goBack();
             }
@@ -358,13 +362,15 @@ function RepairDetail({ navigation, route }) {
                         <RNPickerSelect
                             placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
                             style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
-                            onValueChange={(value) => {
+                            onValueChange={(value,index) => {
+                                console.log("step: ",stepArr[index])
+                                setStep(stepArr[index])
                                 setShippingPlace(value)
                                 setShipping(value)
                             }}
                             items={[
-                                { label: storeName, value: storeId },
-                                { label: headquarterStoreName, value: headquarterStoreId }
+                                { label: storeName, value: storeId ,step:4 },
+                                { label: headquarterStoreName, value: headquarterStoreId ,step: 5}
                             ]}
                         />
                     </PickerView>
@@ -392,10 +398,8 @@ function RepairDetail({ navigation, route }) {
                             else if(store.getState().afterImageUri1 != null || afterImages[0] !=null){
                                 console.log(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId,receiptId)
                                 postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
-                                postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId,receiptId,navigation)
+                                postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId,receiptId,step,navigation)
                                 
-                                //navigation.navigate("PhotoStep")
-                                //navigation.popToTop();
                             }
                             else if(shippingPlace == null){
                                 Alert.alert("","받는 곳을 입력해주세요")

@@ -40,7 +40,7 @@ function Bottom  (props){
           </BottomButtonText>
       </BottomButton>
 
-      <BottomButton onPress = {() => props.navigation.navigate( 'LookupPage')}>
+      <BottomButton onPress = {() => props.navigation.navigate( 'LookupPage',{code:null})}>
           <BottomButtonText>
               조회
           </BottomButtonText>

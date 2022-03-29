@@ -28,7 +28,7 @@ const PickerView = styled.View`
     width:90%;
     height:45px
     width:80%;
-    border:3px solid #797979;
+    border:3px solid rgb(0,80,120);
     border-radius:12px;
     justify-content: center;
     padding-left: 5px;
@@ -39,6 +39,10 @@ function ReceiptDivision({navigation}) {
     const info = store.getState().userInfo;
     const [seletStore, setSeletStore] = useState(null); 
     
+    const storeName = store.getState().storeName;
+    
+    const storeId = store.getState().store_id;
+
     const [shopInShop,setShopInShop] = useState();
     
     const netInfo = useNetInfo();
@@ -67,7 +71,7 @@ function ReceiptDivision({navigation}) {
         }else{
             setShopInShop(
                 <RNPickerSelect
-                    placeholder = {{label : '매장을 선택하세요', value: null }}
+                    placeholder = {{label : storeName, value: storeId }}
                     style = { {border :'solid', marginBottom : 50, borderWidth : 3, borderColor : '#000000', color:"#000000"} }
                     onValueChange={(value) => 
                         {   

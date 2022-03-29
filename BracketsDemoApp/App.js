@@ -27,9 +27,8 @@ import ShopStepComplete from './pages/receipt/ShopStepComplete';
 import TakeOverPage from './pages/takeOver/TakeOverPage';
 import CheckBarcode from './pages/takeOver/CheckBarcode';
 
-import LookupPage from './pages/lookup/LookupPage'
-import LookupPage2 from './pages/lookup/LookupPage2';
-import LookupPage3 from './pages/lookup/LookupPage3';
+import LookupPage_1 from './pages/lookup/LookupPage_1'
+import LookupPage from './pages/lookup/LookupPage';
 import LookupInfo from './pages/lookup/LookupInfo';
 import LookupInfo2 from './pages/lookup/LookupInfo2';
 import LookupInfo3 from './pages/lookup/LookupInfo3';
@@ -88,8 +87,6 @@ function App() {
 
         {/*조회*/}
         <Stack.Screen name="LookupPage" component={LookupPage} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="LookupPage2" component={LookupPage2} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="LookupPage3" component={LookupPage3} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
         <Stack.Screen name="LookupInfo" component={LookupInfo} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
         <Stack.Screen name="LookupInfo2" component={LookupInfo2} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
         <Stack.Screen name="LookupInfo3" component={LookupInfo3} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
