@@ -56,10 +56,10 @@ const ReceiptInfo = ({
     formData.append('receiptId', targetData["receipt_id"]);
     formData.append('customerId', targetData["customer_id"]);
 
-    const [inputPDF] = await Promise.all([
-        /*axios
+    const [data,inputPDF] = await Promise.all([
+        axios
         .put(`${process.env.API_URL}/receipt/inputSave`, { body: targetData  })
-        .then(({ data }) => data),*/
+        .then(({ data }) => data),
         axios
         .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
         .then(({ data }) => data),
