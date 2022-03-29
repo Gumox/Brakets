@@ -55,15 +55,15 @@ const ReceiptInfo = ({
     formData.append('deliberation', inputFlie[0]);
     formData.append('receiptId', targetData["receipt_id"]);
     formData.append('customerId', targetData["customer_id"]);
-
-    const [data,inputPDF] = await Promise.all([
+    console.log(targetData)
+    /*const [data,inputPDF] = await Promise.all([
         axios
         .put(`${process.env.API_URL}/receipt/inputSave`, { body: targetData  })
         .then(({ data }) => data),
         axios
         .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
         .then(({ data }) => data),
-      ])
+      ])*/
       
   }
   const [discount, setDiscount] = useState();
@@ -104,12 +104,12 @@ const ReceiptInfo = ({
     })
     
   }
-  const [inputFlieName,setInputFlieName]  = useState("");
+  const [inputFlieName,setInputFlieName]  = useState('');
   const [inputFlie,setInputFlie]  = useState([]);
-
-  function postFile(e) {   
-    // HTTP POST  
-  }
+  const [PDFfliePath,setPDFFliePath]  = useState([]);
+  
+ 
+  
   function setFile(e) {
     // Get the details of the files
     ///console.log(e.target.files[0].name)
@@ -124,7 +124,6 @@ const ReceiptInfo = ({
     }
     
   }
-  console.log(inputFlie)
   const [discouuntList,setDiscouuntList] = useState([]) 
   const [claimList,setClaimList] = useState([])
   useEffect(() => {
@@ -138,6 +137,12 @@ const ReceiptInfo = ({
       setDiscouuntList(discouuntList)
     }
     fetch();
+    if(targetData[RECEIPT.DELIBERATION_RESULT]){
+      let words = String(targetData[RECEIPT.DELIBERATION_RESULT]).split("/")
+      
+      setInputFlieName(words[words.length-1])
+      setPDFFliePath(targetData[RECEIPT.DELIBERATION_RESULT])
+    }
     if (!resultTypeMap[targetData[RECEIPT.RESULT_ID]]) return;
     if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("수선"))
       setIsRepiar(true);
@@ -485,9 +490,9 @@ const ReceiptInfo = ({
                   
                   <Filebox>
                       <input className="upload-name" value={inputFlieName} onChange={()=>{}}/>
-                      <label className="label" htmlFor="file">파일찾기</label> 
+                      <label className="label" htmlFor="file">파일</label> 
                       <input className="filebox_input" type="file" accept=".pdf" id="file" onChange={setFile.bind(this)}/>
-                      {/**<Link href={`//${inputFlieName}`} target="_blank" download>Download</Link> */}
+                      <Link href={PDFfliePath}  target="_blank" download ><PDFDownloadButton style={{marginLeft:15}} width="68px">다운로드</PDFDownloadButton></Link> 
                   </Filebox>
                 </Field>
                 {/* <Field>
@@ -561,6 +566,7 @@ const CustomRow = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding-top: 10px;
 `;
 
 const ReportButton = styled.button`
@@ -586,12 +592,13 @@ const Filebox = styled.div`
     color: #999999;
   }
   .label {
-    display: inline-block;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     min-height: max-content;
-    width: ${({ width = "100px" }) => width};
+    width: 60px;
     background-color: ${COLOR.FILTER_MAIN};
     color: ${COLOR.WHITE};
-    padding: 2px 20px;
     border-radius: 5px;
     border: none;
     word-break: keep-all;
@@ -606,7 +613,17 @@ const Filebox = styled.div`
     border: 0;
   }
 `;
-
+const PDFDownloadButton = styled.button`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width: 90px;
+  background-color: ${COLOR.FILTER_MAIN};
+  color: ${COLOR.WHITE};
+  border-radius: 5px;
+  border: none;
+  word-break: keep-all;
+`;
 const SaveButton = styled.button`
   min-height: max-content;
   width: 150px;
