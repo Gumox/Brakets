@@ -50,12 +50,21 @@ const ReceiptInfo = ({
       ),
     [resultType]
   );
-  const inputSave = async(targetData)=>{
-    const [data] = await Promise.all([
-      axios
+  const inputSave = async(targetData,inputFlie)=>{
+    const formData = new FormData();
+    formData.append('deliberation', inputFlie[0]);
+    formData.append('receiptId', targetData["receipt_id"]);
+    formData.append('customerId', targetData["customer_id"]);
+    console.log(targetData)
+    /*const [data,inputPDF] = await Promise.all([
+        axios
         .put(`${process.env.API_URL}/receipt/inputSave`, { body: targetData  })
         .then(({ data }) => data),
-      ])
+        axios
+        .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
+        .then(({ data }) => data),
+      ])*/
+      
   }
   const [discount, setDiscount] = useState();
   const [discountPrice, setDiscountPrice] = useState(targetData[RECEIPT.DISCOUNT_PRICE]);
@@ -63,6 +72,7 @@ const ReceiptInfo = ({
   
   const [claimPrice, setClaimPrice] = useState(targetData[RECEIPT.CLAIM_PRICE]);
   const [claimPriceDisable, setClaimPriceDisable] = useState(true);
+
 
   const getDiscountPrice =(value,e)=>{
     discouuntList.map((el)=>{
@@ -94,7 +104,26 @@ const ReceiptInfo = ({
     })
     
   }
+  const [inputFlieName,setInputFlieName]  = useState('');
+  const [inputFlie,setInputFlie]  = useState([]);
+  const [PDFfliePath,setPDFFliePath]  = useState([]);
   
+ 
+  
+  function setFile(e) {
+    // Get the details of the files
+    ///console.log(e.target.files[0].name)
+      console.log(e.target.files)
+    if(e.target.files[0]){
+      console.log(e.target.files[0].name)
+      setInputFlieName(e.target.files[0].name)
+      setInputFlie(e.target.files)
+    }else{
+      setInputFlieName('')
+      setInputFlie()
+    }
+    
+  }
   const [discouuntList,setDiscouuntList] = useState([]) 
   const [claimList,setClaimList] = useState([])
   useEffect(() => {
@@ -108,6 +137,12 @@ const ReceiptInfo = ({
       setDiscouuntList(discouuntList)
     }
     fetch();
+    if(targetData[RECEIPT.DELIBERATION_RESULT]){
+      let words = String(targetData[RECEIPT.DELIBERATION_RESULT]).split("/")
+      
+      setInputFlieName(words[words.length-1])
+      setPDFFliePath(targetData[RECEIPT.DELIBERATION_RESULT])
+    }
     if (!resultTypeMap[targetData[RECEIPT.RESULT_ID]]) return;
     if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("수선"))
       setIsRepiar(true);
@@ -452,7 +487,13 @@ const ReceiptInfo = ({
               <Row>
                 <Field>
                   <div>심의결과서</div>
-                  <ReportButton>파일저장</ReportButton>
+                  
+                  <Filebox>
+                      <input className="upload-name" value={inputFlieName} onChange={()=>{}}/>
+                      <label className="label" htmlFor="file">파일</label> 
+                      <input className="filebox_input" type="file" accept=".pdf" id="file" onChange={setFile.bind(this)}/>
+                      <Link href={PDFfliePath}  target="_blank" download ><PDFDownloadButton style={{marginLeft:15}} width="68px">다운로드</PDFDownloadButton></Link> 
+                  </Filebox>
                 </Field>
                 {/* <Field>
                 <Input
@@ -497,8 +538,8 @@ const ReceiptInfo = ({
                   alert("발송일 to S 를 입력해주세요")
                 }else{
                   
-                  console.log(targetData)
-                  inputSave(targetData)
+                  //console.log(targetData)
+                  inputSave(targetData,inputFlie)
                   confirm("저장이 완료되었습니다.")
                 }
               }}
@@ -525,6 +566,7 @@ const CustomRow = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding-top: 10px;
 `;
 
 const ReportButton = styled.button`
@@ -538,6 +580,50 @@ const ReportButton = styled.button`
   word-break: keep-all;
 `;
 
+const Filebox = styled.div`
+  display:flex;
+  .upload-name {
+    display: inline-block;
+    height: 25px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 50%;
+    color: #999999;
+  }
+  .label {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height: max-content;
+    width: 60px;
+    background-color: ${COLOR.FILTER_MAIN};
+    color: ${COLOR.WHITE};
+    border-radius: 5px;
+    border: none;
+    word-break: keep-all;
+    margin-left: 10px;
+  }
+  .filebox_input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+  }
+`;
+const PDFDownloadButton = styled.button`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width: 90px;
+  background-color: ${COLOR.FILTER_MAIN};
+  color: ${COLOR.WHITE};
+  border-radius: 5px;
+  border: none;
+  word-break: keep-all;
+`;
 const SaveButton = styled.button`
   min-height: max-content;
   width: 150px;

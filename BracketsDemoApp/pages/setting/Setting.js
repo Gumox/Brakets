@@ -46,7 +46,6 @@ const SecondTextView = styled.TextInput`
     width: 100%;
     padding: 8px;
     font-size: 20px;
-    background-color:#bdbdbd;
     border-radius:10px;
     color:#000000;
     margin-top: 20px;

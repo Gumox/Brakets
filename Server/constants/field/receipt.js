@@ -13,7 +13,7 @@ const FIELD = {
   REGISTER_DATE: `register_date`, //본사접수일
   COMPLETE_DATE: `complete_date`, // 발송일 to S (처리 완료일)
   RECEIVED_DATE: `received_date`, // 매장 인수일
-
+  
   FAULT_ID: `fault_id`, // 과실구분
   FAULT_NAME: `fault_name`, // 과실구분
   ANALYSIS_ID: `analysis_id`, // 내용분석
@@ -26,6 +26,8 @@ const FIELD = {
   DISCOUNT_PRICE: `discount_price`, // 할인율 적용가 = 실판매가 = 소비자 구매가
   CLAIM: `claim`, // 클레임가
   CLAIM_PRICE: `claim_price`, // 클레임가
+
+  DELIBERATION_RESULT:`deliberation_result`,
   REPAIR_DETAILS: [
     createRepairIds("repair1_"),
     createRepairIds("repair2_"),

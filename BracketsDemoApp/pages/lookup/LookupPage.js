@@ -1,27 +1,34 @@
-import React, { useState, useCallback } from 'react';
-import Container from '../../components/Container';
-import Button from '../../components/Button';
+import React, {useCallback ,useState,useRef, useEffect} from 'react';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
-import Bottom from '../../components/Bottom';
-import {
-  StyleSheet,
-  Text,
+import _ from 'lodash';
+import { 
+  ScrollView ,
+  TouchableOpacity,
+  TouchableHighlight,
+  Modal,
   Image,
   View,
   Dimensions,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Platform,
-  TouchableOpacity
+  Text,
+  FlatList,
+  StyleSheet,
+  Animated,
+  Pressable
 } from 'react-native';
+import ip from '../../serverIp/Ip';
+import Bottom from '../../components/Bottom';
+import Container from '../../components/Container';
+import axios from 'axios';
+import {useNetInfo}from "@react-native-community/netinfo";
+import LookupInfoCard from '../../components/LookupInfoCard';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../../store/store';
-import axios from 'axios';
-import ip from '../../serverIp/Ip';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import {useNetInfo}from "@react-native-community/netinfo";
 import CheckBoxText from '../../components/CheckBoxText';
+
+
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -76,351 +83,532 @@ const useInput = (inputDate) => {
     reDate
   }
 }
+function LookupPage({ route,navigation }) {
 
+    const scrollMinSize =(Dimensions.get('window').height)*0.
+    const [data, setData] = useState([]);
+    
+    const [name, setName] = useState(null)
+    const [pNumber, setPnumber] = useState(null);
+    const shopId = store.getState().store_id;
+    const cal = '../../Icons/calendar.png';
+    const [isLoading, setLoading] = useState(true);
+    const customers = [];
+    
+    const [modalVisible, setModalVisible] = useState(false);   
 
-function LookupPage({ navigation }) {
+    const dateForm =  new Date()
 
-  const [name, setName] = useState(null)
-  const [pNumber, setPnumber] = useState(null);
-  const shopId = store.getState().store_id;
-  const cal = '../../Icons/calendar.png';
-  const [data, setData] = React.useState([]);
-  const [isLoading, setLoading] = React.useState(true);
-  const customers = [];
-  const dateForm =  new Date()
-  dateForm.setDate(1)
-  const [dateCheck,setDateCheck] = useState(true)
-  const startDate = useInput(dateForm);
-  const endDate = useInput(new Date());
+    dateForm.setDate(1)
+    const [dateCheck,setDateCheck] = useState(true)
+    const startDate = useInput(dateForm);
+    const endDate = useInput(new Date());
 
-  const [isDatePickerVisibleFirst, setDatePickerVisibilityFirst] = useState(false);
-  const [isDatePickerVisibleSecond, setDatePickerVisibilitySecond] = useState(false);
+    
+    const [doReciptCheck,setDoReciptCheck] = useState(true)
+    const [compliteReceiptCheck,setCompliteReceiptCheck] = useState(true)
+    const [takeReciptCheck,setTakeReciptCheck] = useState(true)
   
-  const showDatePickerFirst = () => {
-    setDatePickerVisibilityFirst(true);
-  };
-
-  const showDatePickerSecond = () => {
-    setDatePickerVisibilitySecond(true);
-  };
-
-  const hideDatePickerFrist = () => {
-    setDatePickerVisibilityFirst(false);
-  };
-
-  const hideDatePickerSecond = () => {
-    setDatePickerVisibilitySecond(false);
-  };
-
+    const [isDatePickerVisibleFirst, setDatePickerVisibilityFirst] = useState(false);
+    const [isDatePickerVisibleSecond, setDatePickerVisibilitySecond] = useState(false);
+    
+    const showDatePickerFirst = () => {
+      setDatePickerVisibilityFirst(true);
+    };
   
-
-  const handleConfirmFirst = (date) => {
-    startDate.onChange("", date);
-    console.log('Start')
-    hideDatePickerFrist();
-  };
-
-  const handleConfirmSecond = (date) => {
-    endDate.onChange("sss", date);
-    console.log('End')
-    hideDatePickerSecond();
-  };
-
-
-  const getData = useCallback(async (std, edd, name, phone,shopId) => {
-
-    console.log("press")
-    console.log(name)
-    console.log(std)
-
-    const { data } = await axios.get(ip + "/api/lookup", {
-      params: {
-        shop: shopId,
-        customerName: name,
-        customerContact: phone,
-        dateOption: "receipt_date",
-        dateType: "all",
-        startDate: std,
-        endDate: edd
-      },
-    })
-
-    console.log(data.data.length)
-    //console.log(data.data)
-    navigation.navigate('LookupPage2', { data: data.data })
-  }, []);
-
-  const netInfo = useNetInfo();
+    const showDatePickerSecond = () => {
+      setDatePickerVisibilitySecond(true);
+    };
   
-  const checkBoxEvent =()=>{
-    if(dateCheck){
-      setDateCheck(!dateCheck)
+    const hideDatePickerFrist = () => {
+      setDatePickerVisibilityFirst(false);
+    };
+  
+    const hideDatePickerSecond = () => {
+      setDatePickerVisibilitySecond(false);
+    };
+  
+    
+  
+    const handleConfirmFirst = (date) => {
+      startDate.onChange("", date);
+      console.log('Start')
+      hideDatePickerFrist();
+    };
+  
+    const handleConfirmSecond = (date) => {
+      endDate.onChange("sss", date);
+      console.log('End')
+      hideDatePickerSecond();
+    };
+  
+  
+    const getData = useCallback(async (code,std, edd, name, phone,shopId,doReciptCheck,compliteReceiptCheck,takeReciptCheck) => {
+  
+      console.log("press")
+      console.log(name)
+      console.log(std)
+  
+      const { data } = await axios.get(ip + "/api/lookup", {
+        params: {
+          shop: shopId,
+          customerName: name,
+          customerContact: phone,
+          dateOption: "receipt_date",
+          dateType: "all",
+          startDate: std,
+          endDate: edd,
+          code:code
+        },
+      })
+      let sData =[]
+      for(let item of data.data){
+        if(doReciptCheck && item["step"] == 0){
+          console.log("???")
+          sData.push(item)
+        }
+        if(compliteReceiptCheck && item["step"] == 1){ 
+          sData.push(item)
+        }
+        if(takeReciptCheck && item["step"] == 2 ){
+          sData.push(item)
+        }
+        if(item["step"] == 4){
+          sData.push(item)
+        }
+        if(item["step"] == 5){
+          sData.push(item)
+        }
+        if(item["step"] == 6){
+          sData.push(item)
+        }
+        if(item["step"] == 7){
+          sData.push(item)
+        }
+        if(item["step"] == 8){
+          sData.push(item)
+        }
+
+      }
+  
+      setData( sData)
+    }, []);
+  
+    const netInfo = useNetInfo();
+    
+    const checkBoxEvent =()=>{
       startDate.setReDate(null)
       endDate.setReDate(null)
-    }else{
-      setDateCheck(!dateCheck)
+      /*if(dateCheck){
+        setDateCheck(!dateCheck)
+      }else{
+        setDateCheck(!dateCheck)
+      }*/
     }
-  }
-  let startDatePicker;
-                          
-  let endDatePicker;
 
-  if(Platform.OS === 'ios'){
-    console.log("ios")
-    startDatePicker = (
+    const doReciptCheckEvent =()=>{
+      if(doReciptCheck){
+        setDoReciptCheck(!doReciptCheck)
+      }else{
+        setDoReciptCheck(!doReciptCheck)
+      }
+    }
+
+    const compliteReceiptCheckEvent =()=>{
+      if(compliteReceiptCheck){
+        setCompliteReceiptCheck(!compliteReceiptCheck)
+      }else{
+        setCompliteReceiptCheck(!compliteReceiptCheck)
+      }
+    }
+
+    const takeReciptCheckEvent =()=>{
+      if(takeReciptCheck){
+        setTakeReciptCheck(!takeReciptCheck)
+      }else{
+        setTakeReciptCheck(!takeReciptCheck)
+      }
+    }
+    let startDatePicker;
+                            
+    let endDatePicker;
+  
+    if(Platform.OS === 'ios'){
+      console.log("ios")
+      startDatePicker = (
+        <DateTimePickerModal
+          isVisible={isDatePickerVisibleFirst}
+          mode="date"
+          onConfirm={handleConfirmFirst}
+          onCancel={hideDatePickerFrist}
+          locale='ko-kr'
+        />
+      )
+      endDatePicker = (
       <DateTimePickerModal
-        isVisible={isDatePickerVisibleFirst}
-        mode="date"
-        onConfirm={handleConfirmFirst}
-        onCancel={hideDatePickerFrist}
-        locale='ko-kr'
+          isVisible={isDatePickerVisibleSecond}
+          mode="date"
+          onConfirm={
+            handleConfirmSecond
+          }
+          onCancel={hideDatePickerSecond}
+          locale='ko-kr'
       />
-    )
-    endDatePicker = (
-    <DateTimePickerModal
-        isVisible={isDatePickerVisibleSecond}
-        mode="date"
-        onConfirm={
-          handleConfirmSecond
-        }
-        onCancel={hideDatePickerSecond}
-        locale='ko-kr'
-    />
-    )
-  }else{
-    console.log("and")
-    startDatePicker = (startDate.show && (
+      )
+    }else{
+      console.log("and")
+      startDatePicker = (startDate.show && (
+        <DateTimePicker
+          testID="startDateTimePicker"
+          value={startDate.date}
+          mode={startDate.mode}
+          is24Hour={true}
+          display="default"
+          onChange={(event, selectedDate) => {
+            startDate.onChange(event, selectedDate)
+          }}
+        />
+      ))
+      endDatePicker = (endDate.show && (
       <DateTimePicker
-        testID="startDateTimePicker"
-        value={startDate.date}
-        mode={startDate.mode}
+        testID="endDateTimePicker2"
+        value={endDate.date}
+        mode={endDate.mode}
         is24Hour={true}
         display="default"
-        onChange={(event, selectedDate) => {
-          startDate.onChange(event, selectedDate)
-        }}
-      />
-    ))
-    endDatePicker = (endDate.show && (
-    <DateTimePicker
-      testID="endDateTimePicker2"
-      value={endDate.date}
-      mode={endDate.mode}
-      is24Hour={true}
-      display="default"
-      onChange={endDate.onChange}
-    />))
-  }
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container>
-        
-        
-        
-        <CenterText>
-          <Label />
-          <PxView>
-            <CheckBoxText
-              {...{checkBoxEvent}}
-              checkBoxColor={"red"}
-              check = {dateCheck}
-              text={"매장 접수일"}
-            />
-          </PxView>
-          
-          
+        onChange={endDate.onChange}
+      />))
+    }
 
-          <PxView>
-            <TouchableOpacity
-              disabled={!dateCheck}
-              onPress={
-              // startDate.showDatepicker
-                Platform.OS === 'ios' ? (
-                  showDatePickerFirst
-                ): (
-                  startDate.showDatepicker
-                )
-              
-              } style={styles.touchableView}>
-              <PrView>
-                <View style={{ flex: 1, minHeight: 40, minWidth: 35 }}><Text style={styles.Lavel}>{startDate.reDate}</Text></View>
-                <View style={{ flex: 0.2 ,marginRight:5}}><ImgIcon source={require(cal)} /></View>
-              </PrView>
-            </TouchableOpacity>
+    const getImages = useCallback(async (code,obj) => {
 
-            {startDatePicker}
+        console.log("press")
+        const { data } = await axios.get(ip+"/api/lookup/images", {
+          params: { 
+            code: code
+          },
+        })
+        navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
+    }, []);
 
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    const fadeIn = (tof) => {
+      let toValue = Dimensions.get('window').height*0.35
+      if(tof){
+        toValue = 0
+
+      }
+      // Will change fadeAnim value to 1 in 5 seconds
+      Animated.timing(fadeAnim, {
+        toValue: -toValue,
+        duration: 250,
+        useNativeDriver: true,
+      }).start();
+
+      setModalVisible(!tof)
+    };
+    
+    
+    useEffect(()=>{
+      const code = route.params.code
+      if(code){
+        console.log(code)
+        getData(code,null,null, null, null,shopId,true,true,true)
+                      
+      }
+      
+    },[])
+    
+    return (
+        
+        <Container style= {{backgroundColor:"#ffffff"}}>
             
-            <View style={{ justifyContent: "center", alignItems: "center", margin: "1%" }}><Text style={{color:"#000000"}}>~</Text></View>
-
-
-            <TouchableOpacity disabled={!dateCheck}
-              onPress={
-              // startDate.showDatepicker
-                Platform.OS === 'ios' ? (
-                  showDatePickerSecond
-                ): (
-                  endDate.showDatepicker
-                )
-              } style={styles.touchableView}>
+            {/* <Title>조회 결과</Title>*/}
+            <CenterText >
+            <View style={{width: Dimensions.get('window').width*0.9}}>
+              <Text style={{color:"#000000"}}>매장 접수일</Text>
+            </View>
+            
+            <PxView>
+              
               <PrView>
-                <View style={{ flex: 1, minHeight: 40, minWidth: 35 }}><Text style={styles.Lavel}>{endDate.reDate}</Text></View>
-                <View style={{ flex: 0.2 ,marginRight:5}}><ImgIcon source={require('../../Icons/calendar.png')} /></View>
-              </PrView>
-            </TouchableOpacity>
+                
+                <TouchableOpacity
+                  disabled={!dateCheck}
+                  onPress={
+                  // startDate.showDatepicker
+                    Platform.OS === 'ios' ? (
+                      showDatePickerFirst
+                    ): (
+                      startDate.showDatepicker
+                    )
+                  
+                  } style={styles.touchableView}>
+                  <PrView>
+                    <View style={{ flex: 1,  minWidth: 35 }}><Text style={styles.Lavel}>{startDate.reDate}</Text></View>
+                    <View style={{ flex: 0.2 ,marginRight:5}}><ImgIcon source={require(cal)} /></View>
+                  </PrView>
+                </TouchableOpacity>
 
-            {endDatePicker}
-            {/* {endDate.show &&  */}
+                {startDatePicker}
+
+                
+                <View style={{ justifyContent: "center", alignItems: "center", margin: "1%" }}><Text style={{color:"#000000"}}>~</Text></View>
+
+                  
+                <TouchableOpacity disabled={!dateCheck}
+                  onPress={
+                  // startDate.showDatepicker
+                    Platform.OS === 'ios' ? (
+                      showDatePickerSecond
+                    ): (
+                      endDate.showDatepicker
+                    )
+                  } style={styles.touchableView}>
+                  <PrView>
+                    <View style={{ flex: 1,  minWidth: 35 }}><Text style={styles.Lavel}>{endDate.reDate}</Text></View>
+                    <View style={{ flex: 0.2 ,marginRight:5}}><ImgIcon source={require('../../Icons/calendar.png')} /></View>
+                  </PrView>
+                </TouchableOpacity>
+
+                {endDatePicker}
+                {/* {endDate.show &&  */}
+              </PrView>
+              <IconButton onPress ={()=>{
+                        getData(null,startDate.reDate, endDate.reDate, name, pNumber,shopId,doReciptCheck,compliteReceiptCheck,takeReciptCheck)
+                      }}>
+              <Image style={{width:20,height:20}} source={require('../../Icons/search.png')}/>
+            </IconButton>
           </PxView>
 
-          <Label />
-
-          <View style={styles.viewHandle}><BlackText>고객명</BlackText></View>
-          <DropBackground>
-            <Input
-              onChangeText={(value) => {
-                console.log(value)
-                setName(value)
-              }}
-              onSubmitEditing={(event) => (
-                console.log(">>>")
-              )}
-            ></Input>
-          </DropBackground>
-
-          <View style={styles.viewHandle}><BlackText>연락처 (뒤 4자리)</BlackText></View>
-          <DropBackground>
-            <Input
-              maxLength={4}
-              keyboardType='numeric'
-              onChangeText={(value) => {
-                console.log(value)
-                setPnumber(value)
-              }}
-              onSubmitEditing={(event) => (
-                console.log(">>>")
-              )}
-            ></Input>
-          </DropBackground>
-        </CenterText>
-        <Label />
-        <Button onPress={() => {
-          console.log(startDate.reDate)
-          if(netInfo.isConnected){
-            console.log(startDate.reDate, endDate.reDate)
-            getData(startDate.reDate, endDate.reDate, name, pNumber,shopId);
-          }else{
-            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
-          }
-          //navigation.navigate('LookupPage2')
-
-
-        }}>
-          조회
-        </Button>
-        <Bottom navigation={navigation} />
-      </Container>
-    </TouchableWithoutFeedback>
-  )
+            <TouchableOpacity style={styles.filter} onPress={() => fadeIn(modalVisible)}>
+              <Text style={{color:"#000000"}}>상세 조회 필터</Text>
+            </TouchableOpacity>
+                
+            
+            </CenterText>
+            <View style={{height:3,margin:5,borderRadius:5,width:"97%",backgroundColor:"rgb(248,248,248)"}}/>
+            <View style={{backgroundColor:"rgb(248,248,248)",width:"97%",height: "65%"}}>
+                <FlatList
+                    data={data}
+                    renderItem={({ item }) => (
+                        <LookupInfoCard data ={item} onPress={() => {
+                            if(netInfo.isConnected){
+                                getImages(item["receipt_code"],item)
+                            }else{
+                                alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                            }
+                        }}></LookupInfoCard>
+                    )}
+                    //Setting the number of column
+                    numColumns={2}
+                    keyExtractor={(item, index) => index}
+                />
+            </View>
+            <Bottom navigation={navigation} />
+            <Animated.View
+              style={[
+                styles.fadingContainer,
+                {
+                  // Bind opacity to animated value
+                  translateY: fadeAnim
+                }
+              ]}
+            >
+              <View style ={styles.bottomView} >    
+                  <View style={styles.modalView} >
+                      
+                   <LaView>
+                   <DropBackground style={{borderBottomWidth:2,borderBottomColor:"#000000",borderStyle:"solid"}}>
+                      <Input
+                          placeholder={"고객명"}
+                          placeholderTextColor="rgba(0,0,0,0.5)" 
+                          style={{fontSize:16}}
+                          value ={name}
+                          onChangeText={(value) => {
+                          console.log(value)
+                          setName(value)
+                      }}
+                      onSubmitEditing={(event) => (
+                          console.log(">>>")
+                      )}
+                      ></Input>
+                    </DropBackground>
+                    <DropBackground style={{borderBottomWidth:2,borderBottomColor:"#000000",borderStyle:"solid"}}>
+                      <Input
+                      maxLength={4}
+                      placeholder={"연락처 (뒤 4자리)"}
+                      placeholderTextColor="rgba(0,0,0,0.5)" 
+                      keyboardType='numeric'
+                      style={{fontSize:16}}
+                      value={pNumber}
+                      onChangeText={(value) => {
+                          console.log(value)
+                          setPnumber(value)
+                      }}
+                      onSubmitEditing={(event) => (
+                          console.log(">>>")
+                      )}
+                      ></Input>
+                        
+                    </DropBackground>
+                   </LaView>
+                    <LaView>
+                      <CheckBoxText
+                        {...{checkBoxEvent : doReciptCheckEvent}}
+                        checkBoxColor={"red"}
+                        check = {doReciptCheck}
+                        text={"접수중"}
+                      />
+                      <CheckBoxText
+                        {...{checkBoxEvent:compliteReceiptCheckEvent}}
+                        checkBoxColor={"red"}
+                        check = {compliteReceiptCheck}
+                        text={"접수완료"}
+                      />
+                      <CheckBoxText
+                        {...{checkBoxEvent: takeReciptCheckEvent}}
+                        checkBoxColor={"red"}
+                        check = {takeReciptCheck}
+                        text={"인수완료"}
+                      />
+                    </LaView>
+                    
+                  </View>
+                  <IconButton style={{width:45,position:"absolute", left:25,bottom:25}} onPress={()=>{
+                      navigation.navigate('ScanScreen', {key:'LookupPage'})
+                    }}>
+                      <Image source={require('../../Icons/barcode.png')} style={{width:32,height:18}}/>
+                  </IconButton>
+                  <TouchableOpacity style={{position:"absolute",right:25,bottom:30}} onPress={()=>{
+                    setData([])
+                    checkBoxEvent();
+                    setName();
+                    setPnumber();
+                    setDoReciptCheck(true);
+                    setCompliteReceiptCheck(true);
+                    setTakeReciptCheck(true);
+                    }}>
+                    <Text style={{color:"#000"}}>
+                      초기화
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+            </Animated.View>
+        </Container>
+    )
 }
 export default LookupPage;
 
 const styles = StyleSheet.create({
-  viewHandle: {
+    viewHandle: {
+  
+      width: (Dimensions.get('window').width) * 0.75,
+      marginBottom: 10,
+    },
+    viewHandle2: {
+  
+      width: (Dimensions.get('window').width) * 0.75,
+      marginLeft:-50,
+    },
+    Lavel: {
+      fontSize: 16,
+      margin:7,
+      color: "#000000",
+    },
+    fadingContainer: {
+      zIndex:20,
+      position:"absolute",
+      borderTopColor:"rgba(0,0,0,0.1)",
+      borderTopWidth:2,
+      borderStyle:"solid",
+      bottom:-Dimensions.get('window').height*0.35,
+      width:Dimensions.get('window').width,
+      height:Dimensions.get('window').height*0.3,
+    },
+    touchableView :{
+      
+      width: "40%",
+      minWidth:125,
+      height:40,
+      fontSize:10,
+      fontColor:"#ffffff",
+      borderBottomWidth:2,
+      borderStyle: "solid",
+    },
+    selectOptions:{
+      height:50,
+      position:"absolute",
+      right:15,
+      top:15,
+    },
+    filter:{
+      position:"absolute",
+      right:20,
+      top:140
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    topView:{
+      flex:1,
+      width:"100%",
+    },
+    bottomView:{
+      flex:1,
+      width:"100%",
+      backgroundColor: "#ffffff",
+    },
+    modalView: {
+      margin: 10,
+      backgroundColor: "white",
+    },
 
-    width: (Dimensions.get('window').width) * 0.75,
-    marginBottom: 10,
-  },
-  viewHandle2: {
+  })
 
-    width: (Dimensions.get('window').width) * 0.75,
-    marginLeft:-50,
-  },
-  Lavel: {
-    fontSize: (Dimensions.get('window').width) * 0.04,
-    margin: 10,
-    color: "#000000"
-  },
-  touchableView :{
-    
-    width: "48%",
-    borderRadius:10,
-    fontColor:"#ffffff",
-    borderWidth:2,
-    borderStyle: "solid",
-    borderColor: "#78909c",
-  },
-  selectOptions:{
-    height:50,
-    position:"absolute",
-    right:15,
-    top:15,
-  }
-})
-const CheckBoxView =styled.View`
-  align-items: center;
-  padding:-5px;
-  justify-content: center;
-`;
-const BarCodeIcon =styled.TouchableOpacity`
-  width:45px;
-  height:45px;
-  justify-content: center;
-  align-items: center;
-  borderRadius:15px;
-  background-color:rgba(0,100,200,0.5);
-
-`
-const Title = styled.Text`
-  font-size : 24px;
-  font-weight : bold;
-`;
-const BlackText = styled.Text`
-  margin-Top : 15px ;
-  font-size : 15px;
-  color : black;
-`;
-const DropBackground = styled.View`
-    width: 300px;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid #78909c;
-`;
 const Input = styled.TextInput`
     width: 100%;
     padding: 8px;
     font-size: 20px;
-    border-radius:10px;
-    color: #000000;
+    color :#000000;
 `;
-const Label = styled.Text`
-    font-size: 12px;
-    margin:10px;
-`;
+
 const PrView = styled.View`
     flex-direction: row;
-    align-items: center;
-    width: 95%
-    justify-content: center;
+    width: 95%;
+    height:50px;
 `;
 const LaView = styled.View`
     flex-direction: row;
-    width: 95%
+    justify-content: space-around;
+    width: 100%;
+    height:50px;
 `;
+const DropBackground = styled.View`
+    minWidth: 130px;
+`;
+const IconButton =styled.TouchableOpacity`
+  width:35px;
+  height:35px;
+  justify-content: center;
+  align-items: center;
+  borderRadius:10px;
+  background-color:rgb(0,80,150);
+
+`
 const PxView = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 300px;
 `;
+
 const ImgIcon = styled.Image`
-    width: 20px;
-    height: 20px;
-    margin:5px;
-`;
-const TouchableView = styled.TouchableOpacity`
-    width: 48%;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid #78909c;
+    width: 18px;
+    height: 18px;
+    marginTop:9px;
+    marginBottom:9px;
 `;

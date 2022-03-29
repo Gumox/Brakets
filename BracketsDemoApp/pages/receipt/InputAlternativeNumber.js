@@ -36,6 +36,8 @@ function InputAlternativeNumber({ navigation, route }) {
 
     const [input, setInput] = useState('');
     const key = route.params.key;
+
+    console.log(key)
     
     return (
         <>
@@ -52,7 +54,7 @@ function InputAlternativeNumber({ navigation, route }) {
 
                 <Button
                     onPress={() => (input != '') ? (
-                        navigation.navigate(key, { codeType: 'qrcode', code: input })
+                        navigation.navigate(key, { codeType: 'barcode', code: input })
                     ) : (
                         Alert.alert(
                             "입력 코드 오류",

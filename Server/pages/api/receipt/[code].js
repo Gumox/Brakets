@@ -26,6 +26,7 @@ async function getReceipt(code) {
                     receipt.discount_price AS discount_price,
                     receipt.claim AS claim,
                     receipt.claim_price AS claim_price,
+                    receipt.deliberation_result,
                     IF(receipt.substitute=0, "N", "Y") AS substitute,
                     receipt.mfr_id AS manufacturer_id,
                     mfr_store.store_code AS manufacturer_code,
