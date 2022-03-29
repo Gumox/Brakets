@@ -487,7 +487,7 @@ const ReceiptInfo = ({
                       <input className="upload-name" value={inputFlieName} onChange={()=>{}}/>
                       <label className="label" htmlFor="file">파일찾기</label> 
                       <input className="filebox_input" type="file" accept=".pdf" id="file" onChange={setFile.bind(this)}/>
-                      <Link href={`/files/${inputFlieName}`} target="_blank" download>Download</Link>
+                      {/**<Link href={`//${inputFlieName}`} target="_blank" download>Download</Link> */}
                   </Filebox>
                 </Field>
                 {/* <Field>
@@ -533,7 +533,7 @@ const ReceiptInfo = ({
                   alert("발송일 to S 를 입력해주세요")
                 }else{
                   
-                  console.log(targetData)
+                  //console.log(targetData)
                   inputSave(targetData,inputFlie)
                   confirm("저장이 완료되었습니다.")
                 }
