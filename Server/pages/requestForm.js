@@ -50,7 +50,7 @@ const Request = (props) => {
                             <InputBox style={{height:(14.142)*per,width:myWidth*0.31,borderTop:0}} value = {customerContract} onChange={(e)=>{setCustomerContract(e.target.value)}}></InputBox>
                         </PrView>
                         <PrView>
-                            <Box style={{height:(14.142)*per*8,fontSize:16,width:myWidth*0.119,borderTop:0}}>고 발 표</Box>
+                            <Box style={{height:(14.142)*per*8,fontSize:16,width:myWidth*0.119,borderTop:0}}>고 발 품</Box>
                             <div style={{width:myWidth*0.88}}>
                                 <InView>
                                     <Box style={{height:(14.142)*2, width:myWidth*0.117,borderLeft:0,borderTop:0}}>구입일</Box>
