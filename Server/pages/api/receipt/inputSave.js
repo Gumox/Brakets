@@ -104,6 +104,7 @@ const receipt = async (req, res) => {
             discount_price,
             claim,
             claim_price,
+            deliberation_request_date,
         } = req.body.body;
         let query = "";
         let values = [complete_date];
@@ -163,6 +164,10 @@ const receipt = async (req, res) => {
             query += `, claim_price = ?`
             values = [...values,claim_price]
           }
+        }
+        if(deliberation_request_date){              //심의의뢰일
+          query += `, deliberation_request_date = ?`
+          values = [...values,deliberation_request_date]
         }
      
         

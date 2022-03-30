@@ -27,6 +27,8 @@ async function getReceipt(code) {
                     receipt.claim AS claim,
                     receipt.claim_price AS claim_price,
                     receipt.deliberation_result,
+                    receipt.deliberation_request_date,
+                    receipt_store.name AS store_name,
                     IF(receipt.substitute=0, "N", "Y") AS substitute,
                     receipt.mfr_id AS manufacturer_id,
                     mfr_store.store_code AS manufacturer_code,
@@ -151,6 +153,7 @@ async function getReceipt(code) {
               LEFT JOIN brand ON brand.brand_id = product.brand_id
               LEFT JOIN style_type ON product.style_id = style_type.style_id
               LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
+              LEFT JOIN store AS receipt_store ON receipt.store_id = receipt_store.store_id
               LEFT JOIN store AS mfr_store ON receipt.mfr_id = mfr_store.store_id
               LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
               LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id

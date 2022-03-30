@@ -36,7 +36,6 @@ const ReceiptInfo = ({
 }) => {
   const { resultType, faultType, analysisType, repairList } =
     useContext(OptionContext);
-  
   const {name,headquarter_id} = useContext(UserContext)
 
   const [isRepair, setIsRepiar] = useState(false);
@@ -55,15 +54,16 @@ const ReceiptInfo = ({
     formData.append('deliberation', inputFlie[0]);
     formData.append('receiptId', targetData["receipt_id"]);
     formData.append('customerId', targetData["customer_id"]);
+    
     console.log(targetData)
-    /*const [data,inputPDF] = await Promise.all([
+    const [data,inputPDF] = await Promise.all([
         axios
         .put(`${process.env.API_URL}/receipt/inputSave`, { body: targetData  })
         .then(({ data }) => data),
         axios
         .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
         .then(({ data }) => data),
-      ])*/
+      ])
       
   }
   const [discount, setDiscount] = useState();
@@ -142,6 +142,12 @@ const ReceiptInfo = ({
       
       setInputFlieName(words[words.length-1])
       setPDFFliePath(targetData[RECEIPT.DELIBERATION_RESULT])
+      console.log("targetData[RECEIPT.DELIBERATION_RESULT] : " ,targetData[RECEIPT.DELIBERATION_RESULT])
+    }else{
+      
+      setInputFlieName([])
+      setPDFFliePath([])
+      
     }
     if (!resultTypeMap[targetData[RECEIPT.RESULT_ID]]) return;
     if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("수선"))
@@ -479,8 +485,16 @@ const ReceiptInfo = ({
                 <Field>
                   <Input
                     type="date"
-                    onChange={handleChangeTargetData}
                     title="심의의뢰일"
+                    name={RECEIPT.DELIBERATION_REQUEST_DATE}
+                    value={
+                      targetData[RECEIPT.DELIBERATION_REQUEST_DATE]
+                        ? moment(
+                            targetData[RECEIPT.DELIBERATION_REQUEST_DATE]
+                          ).format("YYYY-MM-DD")
+                        : undefined
+                    }
+                    onChange={handleChangeTargetData}
                   />
                 </Field>
               </Row>
