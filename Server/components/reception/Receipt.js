@@ -49,6 +49,7 @@ const ReceiptInfo = ({
       ),
     [resultType]
   );
+  console.log(targetData)
   const inputSave = async(targetData,inputFlie)=>{
     const formData = new FormData();
     formData.append('deliberation', inputFlie[0]);
@@ -343,14 +344,14 @@ const ReceiptInfo = ({
                     onChange={handleChangeTargetData}
                   />
                 </Field>
-                <Field marginRight="0px">
+                {/*<Field marginRight="0px">
                   <Input
                     title="수선대체상품"
                     styleOptions={{ width: "20px" }}
                     value={targetData[RECEIPT.MANUFACTURER_DETAIL.SUBSTITUTE]}
                     disabled={true}
                   />
-                </Field>
+                </Field> */}
               </Row>
               <Row>
                 <Field marginRight="10px">

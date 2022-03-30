@@ -7,8 +7,9 @@ import COLOR from "../../constants/color";
 import { PRODUCT, RECEIPT } from "../../constants/field";
 import { Row, Field, Section, SectionRow } from "../styled";
 import Input from "../Input";
-import SelectOption from "../SelectOption";
 import { DEFAULT_OPTION } from "../../constants/select-option";
+import UnTouchableInput from "../UnTouchableInput";
+import UnSelectOption from "../UnSelectOption";
 
 const ProducInfo = ({
   targetData = {},
@@ -22,7 +23,7 @@ const ProducInfo = ({
         <Section marginRight="0px" width="70%">
           <Row>
             <Field marginRight="10px">
-              <SelectOption
+              <UnSelectOption
                 title="시즌"
                 name={PRODUCT.SEASON_ID}
                 options={[DEFAULT_OPTION, ...seasonList]}
@@ -45,7 +46,7 @@ const ProducInfo = ({
           </Row>
           <Row>
             <Field marginRight="10px">
-              <Input
+              <UnTouchableInput
                 title="차수"
                 name={PRODUCT.DEGREE}
                 styleOptions={{ width: "30px" }}
@@ -55,7 +56,7 @@ const ProducInfo = ({
               />
             </Field>
             <Field marginRight="10px">
-              <Input
+              <UnTouchableInput
                 title="컬러"
                 name={PRODUCT.COLOR}
                 styleOptions={{ width: "40px" }}
@@ -65,7 +66,7 @@ const ProducInfo = ({
               />
             </Field>
             <Field marginRight="10px">
-              <Input
+              <UnTouchableInput
                 title="사이즈"
                 name={PRODUCT.SIZE}
                 styleOptions={{ width: "30px" }}
@@ -77,8 +78,8 @@ const ProducInfo = ({
           </Row>
           <Row>
             <Field marginRight="5px">
-              <Input
-                title="RFID코드"
+              <UnTouchableInput
+                title="바코드"
                 name={PRODUCT.RFID}
                 styleOptions={{ width: "210px" }}
                 value={targetData[PRODUCT.RFID] || ""}
@@ -87,7 +88,7 @@ const ProducInfo = ({
               />
             </Field>
             <Field marginRight="5px">
-              <Input
+              <UnTouchableInput
                 title="대체품번"
                 name={RECEIPT.SUBSTITUE}
                 value={targetData[RECEIPT.SUBSTITUE]}
@@ -99,7 +100,7 @@ const ProducInfo = ({
           </Row>
           <Row>
             <Field marginRight="0px">
-              <Input
+              <UnTouchableInput
                 type="date"
                 title="최초출고일"
                 name={PRODUCT.RELEASE_DATE}

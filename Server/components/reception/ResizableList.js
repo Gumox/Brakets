@@ -240,7 +240,6 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
             '발송비용3':receipt.repair3_shipment_price ? receipt.repair3_shipment_price : "",            
         }
     ))
-        console.log(searchList)
     return (
         <Wrapper>
             <Styles>

@@ -50,7 +50,7 @@ const BasicInfo = ({
         styleOptions={{ width: "200px" }}
       />
       <Input
-        title="서비스카드 번호 or RFID:"
+        title="서비스카드 번호 :"
         name={"receiptCode"}
         type="text"
         value={receiptCode}

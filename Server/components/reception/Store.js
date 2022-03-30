@@ -21,9 +21,6 @@ const StoreInfo = ({
   openReceiptImage = () => {},
 }) => {
   const { storeList, productCategoryList } = useContext(OptionContext);
-  console.log(DEFAULT_OPTION)
-  console.log(storeList)
-  console.log(targetData)
   return (
     <Wrapper>
       <SectionRow>

@@ -8,7 +8,6 @@ const UnSelectOption = ({
   name,
   options,
   value = "",
-  onChange = () => {},
   styleOptions = {},
   disabled = false,
 }) => {
@@ -42,8 +41,7 @@ const CustomLabel = styled.div`
   white-space: nowrap;
   margin-right: ${({ labelMarginRight = "5px" }) => labelMarginRight};
   font-size: ${({ labelFontSize = "12px" }) => labelFontSize};
-  color: ${({ disabled, color }) =>
-    color ? color : disabled ? COLOR.GRAY : COLOR.BLACK};
+  color: ${ COLOR.BLACK};
 `;
 
 const CustomDiv = styled.div`
