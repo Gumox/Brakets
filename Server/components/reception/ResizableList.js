@@ -197,7 +197,7 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
             '차수':receipt[PRODUCT.DEGREE] ? receipt[PRODUCT.DEGREE] : "",
             '컬러':receipt[PRODUCT.COLOR] ? receipt[PRODUCT.COLOR] : "",
             '사이즈':receipt[PRODUCT.SIZE] ? receipt[PRODUCT.SIZE] : "",
-            '판매가':receipt[PRODUCT.PRICE] ? receipt[PRODUCT.PRICE] : "",
+            '판매가':receipt[PRODUCT.TAG_PRICE] ? receipt[PRODUCT.TAG_PRICE] : "",
             '고객요구':RECEIPT_TYPE[receipt[RECEIPT.TYPE]] ? RECEIPT_TYPE[receipt[RECEIPT.TYPE]] : "",
             '매장접수내용':receipt[RECEIPT.STORE_MESSAGE] ? receipt[RECEIPT.STORE_MESSAGE] : "",
             '고객약속일':receipt[RECEIPT.DUE_DATE] ? moment(receipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD") : "",

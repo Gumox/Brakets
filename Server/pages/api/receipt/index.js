@@ -32,6 +32,8 @@ async function getReceipt(query, values) {
                     product.degree AS product_degree,
                     product.color AS product_color,
                     product.size AS product_size, 
+                    product.tag_price AS product_tag_price,
+                    product.org_price AS product_org_price,
                     receipt.cashreceipt_num AS cashreceipt_num,
                     analysis_type.analysis_name AS analysis_name,
                     result_type.result_name AS result_name,
