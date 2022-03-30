@@ -1,4 +1,4 @@
-import excuteQuery from "../db";
+import excuteQuery from "../../db";
 
 async function getImageList(code) {
   const result = await excuteQuery({
