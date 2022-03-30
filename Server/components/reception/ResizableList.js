@@ -206,6 +206,10 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
             '과실구분':receipt[RECEIPT.FAULT_NAME] ? receipt[RECEIPT.FAULT_NAME] : "",
             '내용분석':receipt[RECEIPT.ANALYSIS_NAME] ? receipt[RECEIPT.ANALYSIS_NAME] : "",
             '판정결과':receipt[RECEIPT.RESULT_NAME] ? receipt[RECEIPT.RESULT_NAME] : "",
+
+            "유상수선비" : receipt.fee,
+            "유상수선 유/무" : (receipt.paid == 1) ? "유" : "무",
+
             '수선처1':receipt.repair1_store_name ? receipt.repair1_store_name : "",
             '총수선비1':receipt.repair1_total ? receipt.repair1_total : "",
             '수선처접수일1': receipt.repair1_register_date ? moment(receipt.repair1_register_date).format("YYYY-MM-DD") : "",
@@ -236,7 +240,7 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
             '발송비용3':receipt.repair3_shipment_price ? receipt.repair3_shipment_price : "",            
         }
     ))
-
+        console.log(searchList)
     return (
         <Wrapper>
             <Styles>
