@@ -165,7 +165,6 @@ function RepairReceiptModal (props) {
     setLineColor(checkHaveRepairDetail(el,info.store_id))
     setWindowWidth(window.innerWidth)
     setWindowHeight(window.innerHeight)
-    console.log(0)
     if(window.innerWidth<1125){
       setFontSizeTop((window.innerWidth)*0.012)
       setFontSizeBottom((window.innerWidth)*0.011)

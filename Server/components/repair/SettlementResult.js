@@ -10,8 +10,8 @@ const SettlementResult =({
     index,
     excelList,
     checkList,
+    staffCode,
     setExcelList=()=>{},
-    excelListSet =()=>{},
     setCheckList =()=>{},
     })=>{
     const item =data
@@ -21,7 +21,7 @@ const SettlementResult =({
     const [disable,setDisable] = useState(false)
     const [adjustmentReason,setAdjustmentReason] = useState(item.adjustment_reason)
     const [remarks,setRemarks] = useState(item.remarks)
-    const repairStaff = "";
+    const repairStaff = item.repair_staff;
     const hqStaff = "";
     const [windowWidth,setWindowWidth] = useState(0)
     const [windowHeight,setWindowHeight] = useState(0)
@@ -76,6 +76,8 @@ const SettlementResult =({
         let obj={}
         if(check){
             obj["repair_detail_id"]=repair_detail_id
+            obj["hq_staff"] = staffCode
+            obj["repair_staff"] = staffCode
             obj["state"]=state
             obj["adjustment"]=adjustment
             obj["adjustment_reason"]=adjustment_reason
@@ -171,7 +173,7 @@ const SettlementResult =({
                 <ItemInsideView>{item.customer_name}</ItemInsideView>
                 <ItemInsideView>{item.customer_phone}</ItemInsideView>
             </div>
-            <ItemV style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{sortSettlementData(item,types,true)}</ItemV>
+            <ItemV style={{width:(windowWidth||0)*0.0692,minWidth:120}}>{sortSettlementData(item,types,true)}</ItemV>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPaymentState(item.repair_detail_state)}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{hqStaff}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPrice(0)}</ItemView>
@@ -179,11 +181,7 @@ const SettlementResult =({
                 <input disabled ={disable} type="number" style={{width:80}} value={adjustment||''} onChange={(e)=>{
                     setAdjustment(e.target.value)
                     pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,e.target.value,adjustmentReason,remarks,check)
-                    ////console.log("0000000000000000000000000000")
-                    ////console.log(excelList)
-                    ////console.log("0000000000000000000000000000")
                     const obj = rearrangementList(excelList,item,types,repairStaff,repairStaff,e.target.value,adjustmentReason,remarks)
-                    //excelListSet(obj,index)
                 }}/>
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{setPrice(adjustment)}</ItemView>
@@ -193,7 +191,6 @@ const SettlementResult =({
                     pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,adjustment,e.target.value,remarks,check)
                     increaseHeight(e)
                     const obj = rearrangementList(excelList,item,types,repairStaff,repairStaff,adjustment,e.target.value,remarks)
-                    //excelListSet(obj,index)
                 }}/>
             </ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{repairStaff}</ItemView>
@@ -204,7 +201,6 @@ const SettlementResult =({
                     pushCheckedList(checkList,item.repair_detail_id,item.repair_detail_state,adjustment,adjustmentReason,e.target.value,check)
                     increaseHeight(e)
                     const obj = rearrangementList(excelList,item,types,repairStaff,repairStaff,adjustment,adjustmentReason,e.target.value)
-                    //excelListSet(obj,index)
                 }}/>
             </ItemView>
         </Container></LaView>

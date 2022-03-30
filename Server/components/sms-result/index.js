@@ -79,18 +79,21 @@ const SmsResult = ({}) => {
     setPack(nextList)
   }
   const getSmsResult = async(sendDate,month,year)=>{
-    const datas = await axios.post(
-      `${process.env.API_URL}/sms/getSmsResult`,{
-        body:{
-          send_date:sendDate,
-          month:month,
-          year:year,
+    console.log(sendDate,month,year)
+    if(sendDate){
+      const datas = await axios.post(
+        `${process.env.API_URL}/sms/getSmsResult`,{
+          body:{
+            send_date:sendDate,
+            month:month,
+            year:year,
+          }
         }
-      }
-    );
-    console.log(datas.data)
-    makePack(datas.data)
-    return datas.data
+      );
+      console.log(datas.data)
+      makePack(datas.data)
+      return datas.data
+    }
   }
   const unpack =(array)=>{
     //console.log(array)
@@ -115,8 +118,11 @@ const SmsResult = ({}) => {
               <div style={{marginRight:10}}>조회일자:</div> 
               <input type={"date"} onChange={(e)=>{
                   if(e.target.value){
-                    console.log(1)
                     setSelectDate(formatDate(new Date(e.target.value)))
+                    if(check){
+                      setMonth((new Date(e.target.value)).getMonth()+1)
+                      setYear((new Date(e.target.value)).getFullYear())
+                    }
                   }else{
                     setSelectDate(null)
                   }
@@ -140,13 +146,20 @@ const SmsResult = ({}) => {
         </SmsInquery>
 
         <TempView>
-          <LaView><div>사용자</div><div>결과</div><div>count</div></LaView>
+          <LaView style={{fontSize: 20}}>
+            <WordBoxTop>사용자</WordBoxTop>
+            <WordBoxTop>결과</WordBoxTop>
+            <WordBoxTop style={{justifyContent:"right",paddingRight:10}}>count</WordBoxTop>
+          </LaView>
           {
             pack.map((el,i)=>{
               return(
-                <LaView key={i} onClick={()=>{
+                <HoverLine  key={i}><WordBoxUnder onClick={()=>{
                   unpack(el)
-                }}><div>{el[0].staff_code}</div><div>결과</div><div>{el.length}</div></LaView>
+                }}><WordBoxMiddle>{el[0].staff_code}</WordBoxMiddle>
+                   <WordBoxMiddle>{el[0].sms_result_message}</WordBoxMiddle>
+                   <WordBoxMiddle style={{justifyContent:"right",paddingRight:10}}>{el.length}</WordBoxMiddle>
+                </WordBoxUnder></HoverLine>
               )
             })
           }
@@ -182,10 +195,55 @@ const ScrollList =styled.div`
       position: fixed;
   }
 `
+const WordBoxTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left:1px;
+  align-items:center;
+  justify-content:center;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid rgba(192,189,185);
+  border-bottom: 2px solid rgba(132,130,124);
+  min-width: 120px;
+  
+`
+const WordBoxMiddle = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content:center;
+  border-right: 2px solid rgba(192,189,185);
+  min-width: 120px;
+  height: 30px;
+  
+`
+const WordBoxUnder = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  border-top: 2px solid rgba(132,130,124);
+  border-left: 2px solid rgba(192,189,185);
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  
+`
 const SmsInqueryView = styled.div`
   display: flex;
   flex-direction: row;
   height: 40%;
+`;
+const HoverLine = styled.div`
+  display: flex;
+  flex-direction: row;  
+  margin:2px;
+  align-items:center;
+  width: 90%;
+  
+  &: hover {
+    color:${COLOR.WHITE};
+    background-color: rgba(0, 119, 211);
+  }
 `;
 const LaView = styled.div`
   display: flex;
@@ -204,7 +262,17 @@ const SmsInquery = styled.div`
 const TempView = styled.div`
   width: 60%;
   border: 1px solid;
-  background-color:${COLOR.LIGHT_GRAY}
+  background-color:${COLOR.LIGHT_GRAY};
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: rgba(210, 210, 210, 0.4);
+}
+&::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+}
 `;
 
 const SmsButton = styled.button`

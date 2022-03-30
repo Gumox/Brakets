@@ -12,6 +12,7 @@ const loginRepair= async (query, values) => {
       query: `SELECT  
               staff.staff_id,
               staff.level,
+              staff.staff_code,
               store.store_id,
               store.store_code,
               store.store_type,

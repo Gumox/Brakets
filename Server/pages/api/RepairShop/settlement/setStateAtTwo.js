@@ -10,12 +10,13 @@ async function updatesStateAtTwo(List) {
           const result = await excuteQuery({
             query: `UPDATE repair_detail 
                     SET repair_detail_state = '2',
+                    repair_staff=?,
                     confirm_date = ?,
                     adjustment = ?,
                     adjustment_reason = ?,
                     remarks = ?
                     WHERE repair_detail.repair_detail_id = ?`,
-            values: [toDayString,data.adjustment,data.adjustment_reason,data.remarks,data.repair_detail_id],
+            values: [data.hq_staff,toDayString,data.adjustment,data.adjustment_reason,data.remarks,data.repair_detail_id],
         })
         console.log(result)
         if(result.error){
