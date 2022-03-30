@@ -19,7 +19,7 @@ const TouchableView = styled.TouchableOpacity`
     width: 100%;;
     border-radius:10px;
     font-color:#ffffff;
-    border:2px solid #78909c;
+    border:2px solid rgb(0,80,150);
 `;
 const ImgIcon =styled.Image`
     width: 20px;
@@ -34,7 +34,7 @@ const PrView = styled.View`
 `;
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  #78909c;
+    border:2px solid  rgb(0,80,150);
     border-radius: 12px;
     padding: 15px;
     margin-bottom : 30px;
@@ -102,6 +102,7 @@ function LookupInfo2( { route,navigation } ) {
     const [numbering,setNumbering] = useState();            //차수
     const [productExchange,setProductExchange] = useState();//제품 교환
     const [productPrice,setProductPrice] = useState();      //제품가격 
+    const [receiptType,setReceiptType] = useState();        //제품구분
 
     useEffect(()=>{
         let price = Number(data["product_tag_price"]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -114,6 +115,21 @@ function LookupInfo2( { route,navigation } ) {
         setNumbering(data["product_degree"])                 //차수
         setProductExchange(+data["image"])                   //제품 교환
         setProductPrice(price)           //제품가격
+
+
+        if(data["receipt_type"] == 1){
+            setReceiptType("수선")
+        }
+        else if(data["receipt_type"] == 2){
+            setReceiptType("교환")
+        }
+        else if(data["receipt_type"] == 3){
+            setReceiptType("환불")
+        }
+        else if(data["receipt_type"] == 4){
+            setReceiptType("심의")
+        }
+
     },[]);
     
    
@@ -154,6 +170,12 @@ function LookupInfo2( { route,navigation } ) {
                     <TopText>판매가</TopText>
                         <InputText>{productPrice}</InputText>
               </InfoView>
+              {receiptType&&(
+                  <InfoView>
+                    <TopText>고객 요구</TopText>
+                    <InputText>{receiptType}</InputText>
+                  </InfoView>
+              )}
               
      
             </Contents> 
