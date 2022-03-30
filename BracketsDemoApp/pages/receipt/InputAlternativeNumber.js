@@ -43,7 +43,7 @@ function InputAlternativeNumber({ navigation, route }) {
         <>
             <Container>
                 <AlternativeCodeView>
-                    <Label>대체 코드를 입력하세요.</Label>
+                    <Label>바코드를  직접 입력하세요.</Label>
                     <Input
                         value={input}
                         keyboardType='numeric'

@@ -37,7 +37,7 @@ function ReceiptDivision({navigation}) {
    
     const [itemList, setItemList]= useState([]);
     const info = store.getState().userInfo;
-    const [seletStore, setSeletStore] = useState(null); 
+    const [seletStore, setSeletStore] = useState(store.getState().store_id); 
     
     const storeName = store.getState().storeName;
     

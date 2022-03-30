@@ -388,8 +388,8 @@ function LookupPage({ route,navigation }) {
                 
             
             </CenterText>
-            <View style={{height:3,margin:5,borderRadius:5,width:"97%",backgroundColor:"rgb(248,248,248)"}}/>
-            <View style={{backgroundColor:"rgb(248,248,248)",width:"97%",height: "65%"}}>
+            <View style={{height:3,margin:5,borderRadius:5,width:"97%",backgroundColor:"rgb(232,232,232)"}}/>
+            <View style={{backgroundColor:"rgb(232,232,232)",width:"97%",height: "65%"}}>
                 <FlatList
                     data={data}
                     renderItem={({ item }) => (
@@ -546,7 +546,7 @@ const styles = StyleSheet.create({
     filter:{
       position:"absolute",
       right:20,
-      top:140
+      bottom:10
     },
     centeredView: {
       flex: 1,

@@ -9,6 +9,7 @@ const Container = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     margin:15px;
+    background-color:rgb(248,248,248);
     border:2px solid #ffffff;
 `;
 const PrView = styled.View`

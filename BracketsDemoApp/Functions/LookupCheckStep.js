@@ -7,6 +7,7 @@ const LookupCheckStep =(data)=>{
     //console.log(data.image)       // 3
     //console.log(data.receipt_code)// 4 
     //console.log(data.step)        // 5
+    console.log(data.signature)
     if(data.signature){
         step = 0;
         if(data.category){

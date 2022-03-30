@@ -53,7 +53,7 @@ function LookupInfo4( { route,navigation } ) {
     const reReceipt =(data)=>{
         SetReReceiptInfo(data)
         console.log("step")
-        console.log(step)
+        console.log(LookupCheckStep(data))
         console.log("step")
         
         if(step ==0){

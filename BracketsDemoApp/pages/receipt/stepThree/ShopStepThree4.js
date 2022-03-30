@@ -187,8 +187,6 @@ function ShopStepThree4({route,navigation}) {
         );
     }
     // ---
-    const [refreshing, setRefreshing] = React.useState(false);
-    
 
     
     React.useEffect(()=>{
@@ -258,7 +256,10 @@ function ShopStepThree4({route,navigation}) {
             <Input 
                  multiline={ true }
                  
-                 onChangeText={ value => inputTexts[0]=( value ) }/>
+                 onChangeText={ (value) => {
+                    inputTexts[0]=( value )
+                    store.dispatch({type:'ADD_REQUESR',addRequest:inputTexts});
+                }}/>
             <Label>수선처</Label>
             <Picker
                 placeholder={{ label: '기본위치: '+ basicSend,value: basicSend}}
@@ -279,7 +280,7 @@ function ShopStepThree4({route,navigation}) {
                 <ButtonBlack onPress={ ()=>
                     {
                         store.dispatch({type:'SELECTTYPESET',set:selectedTypeLists})
-                        store.dispatch({type:'ADD_REQUESR',addRequest:inputTexts});
+                        
                         if(netInfo.isConnected){
                             navigation.navigate( 'ShopStepThree5' );
                         }else{
