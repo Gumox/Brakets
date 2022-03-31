@@ -72,6 +72,7 @@ function ShopStepThree5({route,navigation}) {
             });
             const json = await response.json();
             console.log(json)
+            navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} )
            
         } catch (error) {
             console.error(error);
@@ -181,7 +182,6 @@ function ShopStepThree5({route,navigation}) {
                 <Button onPress={ ()=>{
                     if(netInfo.isConnected){ 
                         updateReceipt(store.getState().receipt_id)
-                        navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} )
                     }else{
                         alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                     } 
