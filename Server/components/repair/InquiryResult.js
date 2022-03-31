@@ -20,7 +20,7 @@ const InquiryResult =(props)=>{
     }
     return(
         <div>
-            <LaView onClick={()=>{setModalOpenCheckable(true)}}><Container>
+            <LaView /*onClick={()=>{setModalOpenCheckable(true)}}*/><Container>
                 <ItemView>{item.receipt_code}</ItemView>
                 <ItemView>{item.receipt_date}</ItemView>
                 <ItemView>{item.store_name}</ItemView>
@@ -77,8 +77,8 @@ const LaView = styled.div`
     display: flex;  
     align-items:center;
     flex-direction: coloum ;
-    &: hover {
+/*&: hover {
         background-color: ${COLOR.MOCCA};
-      }
+      }*/
 
 `;
