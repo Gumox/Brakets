@@ -131,8 +131,8 @@ const updateDetailImage = async(receiptId, num, imagePath) => {
                     const updateResult = await updateMainImage(receiptId, filePath);
                     if(updateResult.error) throw new Error(updateResult.error);
                 } else {
-                  console.log(stepThree)
-                  if(stepThree){
+                  console.log(stepThree[0].image)
+                  if(stepThree[0].image){
                     const saveResult = await updateDetailImage(receiptId, index, filePath, storeId);
                     if(saveResult.error) throw new Error(saveResult.error);                  
                   }else{
