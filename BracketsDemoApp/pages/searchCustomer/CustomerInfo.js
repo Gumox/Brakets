@@ -70,6 +70,8 @@ export default class CustomerInfo extends Component {
             if(json.receipt_id != undefined){
 
                 store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
+                
+                this.props.navigation.navigate('ShopStepOne')
             }
             
             
@@ -238,7 +240,6 @@ export default class CustomerInfo extends Component {
                             )
                         }else {
                             this.addReceipt();
-                            this.props.navigation.navigate('ShopStepOne')
                         }
                     }}>
                         접수하기
