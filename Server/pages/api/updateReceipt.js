@@ -54,7 +54,7 @@ const saveDetailImage = async(receiptId, num, imagePath, storeId) => {
 const updateDetailImage = async(receiptId, num, imagePath) => {
   return excuteQuery({
       query:
-        "UPDATE receipt SET before_image=? WHERE receipt_id=? AND num = ?",
+        "UPDATE receipt_image SET before_image=? WHERE receipt_id=? AND num = ?",
       values: [imagePath, receiptId,num],
     });
 }
