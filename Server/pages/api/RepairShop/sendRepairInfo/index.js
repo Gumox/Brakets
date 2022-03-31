@@ -33,7 +33,7 @@ const sendRepairInfo = async (req, res) => {
     const shipment_price = req.body.shipment_price;
     const repair_detail_id  = req.body.repair_detail_id ;
     const receipt_id =  req.body.receipt_id
-    const step =  req.body.receipt_id
+    const step =  req.body.step
 
     console.log("store : "+ store)
     
@@ -48,6 +48,7 @@ const sendRepairInfo = async (req, res) => {
         if (result) {
             console.log("update RepairInfo");
             const updateReceiver = await updateReceipt(receipt_id,store,step)
+            console.log(updateReceiver)
             //res.json({body});
             res.status(200).json({ changed: result.changedRows,changed2:updateReceiver.changedRows});
         } else {
