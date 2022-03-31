@@ -4,7 +4,7 @@ import Contents from '../../components/Contents';
 import SelectButton from '../../components/SelectButton';
 import Button from '../../components/Button';
 import Bottom from '../../components/Bottom';
-import _, { reduce, set, sortedLastIndex } from 'lodash';
+import _, { floor, reduce, set, sortedLastIndex } from 'lodash';
 import axios from "axios";
 import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert, Modal,Pressable} from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -19,119 +19,8 @@ import ip from '../../serverIp/Ip';
 import { CheckCode,CheckFaultDivision,CheckAnalysisType,CheckJudgmentResult } from '../../Functions/codeCheck';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {useNetInfo}from "@react-native-community/netinfo";
-const TouchableView = styled.TouchableOpacity`
-    width: 100%;;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid #78909c;
-`;
-const ImgIcon =styled.Image`
-    width: 20px;
-    height: 20px;
-    margin:5px;
-`;
-const PrView = styled.View`
-    flex-direction: row;
-    align-items: center;
-    width: 95%
-    justify-content: center;
-`;
-const InfoView =styled.View`
-    width: 100%;
-    border:2px solid  #78909c;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom : 30px;
-`;
 
-const Input = styled.TextInput`
-    color: #000000;
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const InputText = styled.Text`
-    color: #000000;
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const Half = styled.View`
-    width : 100%;
-    flex-direction : row;
-    justify-content : space-between;
-    align-items : center;  
-`;
 
-const HalfLine = styled.View`
-    width : 45%;
-    height : 100%;
-`;
-const Check =styled.View`
-    flex:1;
-    flex-direction : row;
-    width : 40%;
-    padding : 8px;
-    align-items : center;
-    justify-content : center;
-    `;
-const TotalMoney = styled.View`
-    flex:1;
-    flex-direction : row;
-    width : 50%;
-    margin-left: 10%;
-
-    `;
-
-const Btn = styled.TouchableOpacity`
-    width : 40%;
-    height: 50px;
-    background: #78909c;
-    justify-content: center;
-    align-items: center;
-    margin:15px;
-    border-radius:12px;    
-`;
-const InText = styled.Text`
-    color:#000000;
-`;
-
-const CloseBtn = styled.TouchableOpacity`
-    width: 5%;
-    height: 5%;
-    /* background: white; */
-    position: absolute;
-    right: 5%;
-    bottom:90%;
-`;
-const styles = StyleSheet.create({
-    Lavel:{
-        flex:1,
-        fontSize:(Dimensions.get('window').width)*0.04,
-        margin:10,
-        color: '#000000',
-    },
-    outView :{
-        backgroundColor:"#000000",
-        flex:1,
-        justifyContent:"center",
-        alignItems:"center"
-    },
-    centerView:{
-
-        justifyContent:"center",
-        alignItems:"center"
-    },
-    inView:{
-        justifyContent:"center",
-        alignItems:"center"
-    },
-      
-  })
 
 const  formatDate = (inputDate)=> {
     const sp =  inputDate;
@@ -170,7 +59,12 @@ function TakeOverPage( { route,navigation } ) {
     const [receiptType,setReceiptType] = useState();        //제품구분
     const [image,setImage] =useState();                     //제품 전체 사진
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
-    const [afterImages,setAfterImages] =useState([]);        //제품 수선 후 세부 사진      
+    const [afterImages,setAfterImages] =useState([]);        //제품 수선 후 세부 사진    
+    
+    
+    const [needImages,setNeedImages] =useState([]);         //제품 추가 필요 수선 부위 사진    
+
+
     const [storeMessage,setStoreMessage] =useState();       // 매장 접수 내용
     const [repairShop,setRepairShop] = useState();          //수선처 
     const [repairShopDate,setRepairShopDate] = useState();  //수선처 접수일
@@ -188,11 +82,17 @@ function TakeOverPage( { route,navigation } ) {
    
     
     const [requestImageModalVisible,setRequestImageModalVisible] = useState(false)
+
+
     
     const winW = Dimensions.get('window').width;
     const winH = Dimensions.get('window').height;
     
     const netInfo = useNetInfo();
+
+    const numberWithCommas = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' 원';
+    }
     
     const putReceiptComplete = async (pCode,cDate) => {
         
@@ -227,6 +127,16 @@ function TakeOverPage( { route,navigation } ) {
     }
     const [repair2,setRepair2] =useState();
     const [repair3,setRepair3] =useState();
+    const getImages = useCallback(async (code,) => {
+
+        console.log("press")
+        const { data } = await axios.get(ip+"/api/lookup/images", {
+          params: { 
+            code: code
+          },
+        })
+        setNeedImages(data.needImages)
+    }, []);
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(ip+`/api/receipt/${receiptId}`);
         
@@ -321,20 +231,30 @@ function TakeOverPage( { route,navigation } ) {
         setMainCenterSendDescription(readData["receipt_message"])//본사설명
 
 
-        setRepairPrice(readData["fee"])                          //수선비
+        setRepairPrice(floor(Number(readData["fee"])*1.1))                          //수선비
         if(readData["paid"] =="1"){                              //유상수선유무
+            console.log(readData["paid"])
             setSelection(true)
         }else(
             setSelection(false)
         )  
+        console.log("readData[paid]: ",readData["paid"])
+            
         
         if(readData["repair2_store_id"]){
             let repairShopDate = String(readData["repair2_register_date"]).slice(0, 10)
             let repairShopSendDate = String(readData["repair2_complete_date"]).slice(0, 10)
             let repairShopSendDescription = readData["repair2_message"]
+            let repairShopName= readData["repair2_store_name"]   
+            if(repairShopDate = 'null'){
+                repairShopDate = '';
+            }
+            if(repairShopSendDate = 'null'){
+                repairShopSendDate = '';
+            }
             setRepair2(
                 <View>
-                    <Text style={{marginBottom:10 ,color: '#000000'}}>수선처 2 : {repairShop}</Text>
+                    <Text style={{marginBottom:10 ,color: '#000000'}}>수선처 2 : {repairShopName}</Text>
                     <InfoView>
                         <InText>수선처 2 접수일</InText>
                         <InputText>{repairShopDate}</InputText>
@@ -353,9 +273,10 @@ function TakeOverPage( { route,navigation } ) {
             let repairShopDate = String(readData["repair3_register_date"]).slice(0, 10)
             let repairShopSendDate = String(readData["repair3_complete_date"]).slice(0, 10)
             let repairShopSendDescription = readData["repair3_message"]
+            let repairShopName= readData["repair3_store_name"]   
             setRepair3(
                 <View>
-                    <Text style={{marginBottom:10,color: '#000000'}}>수선처 3 : {repairShop}</Text>
+                    <Text style={{marginBottom:10,color: '#000000'}}>수선처 3 : {repairShopName}</Text>
                     <InfoView>
                         <InText>수선처 3 접수일</InText>
                         <InputText>{repairShopDate}</InputText>
@@ -446,7 +367,7 @@ function TakeOverPage( { route,navigation } ) {
                     <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
                         navigation.navigate("EnlargePhoto",{image: element})
                     }}>
-                    <Image style={{width:200 ,height:200 }} resizeMode = 'contain' source={{uri: element}}/>
+                    <CaptureImage style={{width:180 ,height:240 ,marginRight:15}} source={{uri: element}}/>
                     </Pressable>
                 </View>
             </View>
@@ -465,7 +386,7 @@ function TakeOverPage( { route,navigation } ) {
                             <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
                                 navigation.navigate("EnlargePhoto",{image: element})
                             }}>
-                            <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: element}}/>
+                            <CaptureImage style={{width:180 ,height:240, marginRight:15}} source={{uri: element}}/>
                             </Pressable>
                         </View>
                         
@@ -491,6 +412,38 @@ function TakeOverPage( { route,navigation } ) {
             </InfoView>
         )
     }
+    
+    let needText;
+    let need=[];
+    if(needImages&&needImages.length>0){    
+        
+        needImages.map((obj,i)=>{
+            const key = i
+            let element =ip + obj.need_point_image;
+            let insertImage=(
+                <View key ={key}>
+                    <Pressable onPress={()=>{
+                        
+                        navigation.navigate("EnlargePhoto",{image: element})
+                    }}>
+                        <CaptureImage style={{width:180 ,height:240 , margin:15, padding:10}} source={{uri : element}}/>
+                    </Pressable>
+                </View>
+            )
+            need[key]=insertImage;
+        })
+        needText =(
+            <View>
+                
+                <Text style={{color:"#000000"}}>제품 추가 수선 필요 사진</Text>
+                <View style={{alignItems:"center"}}>
+                    <ScrollView style={{height : 300}} horizontal ={true}>
+                        {need}    
+                    </ScrollView>
+                </View>
+            </View>
+        )
+    }
     useEffect(()=>{
         const fetch = async()=>{
                 
@@ -500,6 +453,7 @@ function TakeOverPage( { route,navigation } ) {
                 navigation.goBack();
             }else{
                 getTargetData(route.params.code);
+                getImages(route.params.code)
             }
         }
         fetch();
@@ -632,7 +586,7 @@ function TakeOverPage( { route,navigation } ) {
                         <View style ={{justifyContent:"center", width:"100%"}}>
                             <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
                             setRequestImageModalVisible(!requestImageModalVisible);}}>
-                            <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: image}}/>
+                            <CaptureImage style={{width:180 ,height:240}} source={{uri: image}}/>
                             </Pressable>
                         </View>
 
@@ -649,6 +603,8 @@ function TakeOverPage( { route,navigation } ) {
                             {afterImageViews}    
                         </ScrollView>
                     </View>
+                    
+                    {needText}
                     <InText>매장 접수 내용</InText>
                         <InputText>{storeMessage}</InputText>
               </InfoView>
@@ -725,7 +681,7 @@ function TakeOverPage( { route,navigation } ) {
                         />
                   </Check>
                 <TotalMoney>
-                    <Text style={{color : "#ff0000" ,fontSize :18 ,fontWeight :"bold"}}>수선비  {repairPrice}</Text>
+                    <Text style={{color : "#ff0000" ,fontSize :16 ,fontWeight :"bold"}}>수선비  {numberWithCommas(Number(repairPrice))}</Text>
                 </TotalMoney>
             </Half>
      
@@ -771,3 +727,121 @@ function TakeOverPage( { route,navigation } ) {
     )
 }
 export default TakeOverPage;
+
+const styles = StyleSheet.create({
+    Lavel:{
+        flex:1,
+        fontSize:(Dimensions.get('window').width)*0.04,
+        margin:10,
+        color: '#000000',
+    },
+    outView :{
+        backgroundColor:"#000000",
+        flex:1,
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    centerView:{
+
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    inView:{
+        justifyContent:"center",
+        alignItems:"center"
+    },
+      
+  })
+
+const TouchableView = styled.TouchableOpacity`
+    width: 100%;;
+    border-radius:10px;
+    font-color:#ffffff;
+    border:2px solid #78909c;
+`;
+const ImgIcon =styled.Image`
+    width: 20px;
+    height: 20px;
+    margin:5px;
+`;
+const PrView = styled.View`
+    flex-direction: row;
+    align-items: center;
+    width: 95%
+    justify-content: center;
+`;
+const InfoView =styled.View`
+    width: 100%;
+    border:2px solid  #78909c;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom : 30px;
+`;
+
+const Input = styled.TextInput`
+    color: #000000;
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
+const InputText = styled.Text`
+    color: #000000;
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
+const Half = styled.View`
+    width : 100%;
+    flex-direction : row;
+    justify-content : space-between;
+    align-items : center;  
+`;
+
+const HalfLine = styled.View`
+    width : 45%;
+    height : 100%;
+`;
+const Check =styled.View`
+    flex:1;
+    flex-direction : row;
+    width : 40%;
+    padding : 8px;
+    align-items : center;
+    justify-content : center;
+    `;
+const TotalMoney = styled.View`
+    flex:1;
+    flex-direction : row;
+    width : 50%;
+    margin-left: 10%;
+
+    `;
+
+const Btn = styled.TouchableOpacity`
+    width : 40%;
+    height: 50px;
+    background: #78909c;
+    justify-content: center;
+    align-items: center;
+    margin:15px;
+    border-radius:12px;    
+`;
+const InText = styled.Text`
+    color:#000000;
+`;
+
+const CloseBtn = styled.TouchableOpacity`
+    width: 5%;
+    height: 5%;
+    /* background: white; */
+    position: absolute;
+    right: 5%;
+    bottom:90%;
+`;
+
+const CaptureImage = styled.Image`
+`;
