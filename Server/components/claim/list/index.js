@@ -49,9 +49,7 @@ function Table({ columns, data, searchList, getTargetData }) {
       headerGroups,
       rows,
       prepareRow,
-      state: {selectedRowIds},
       selectedFlatRows,
-      resetResizing,
   } = useTable(
       {
           columns,
@@ -87,9 +85,6 @@ function Table({ columns, data, searchList, getTargetData }) {
   )
   
   store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
-  console.log("-------------------------------------------------------------------")
-  const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
-  console.log(store.getState().selected_data)
 
   return (
       <>
@@ -117,13 +112,7 @@ function Table({ columns, data, searchList, getTargetData }) {
                       {rows.map((row, i) => {
                           prepareRow(row)
                           return (
-                              <div key={i} {...row.getRowProps(
-                                  {
-                                    onClick: () => (
-                                      rows[row.id].toggleRowSelected()
-                                      )
-                                    }
-                              )} className="tr">
+                              <div key={i} {...row.getRowProps({onClick: () => (rows[row.id].toggleRowSelected())})} className="tr">
                                   {row.cells.map((cell,j) => {
                                       return (
                                           <div key={j} {...cell.getCellProps(
@@ -336,7 +325,7 @@ const Styles = styled.div`
 `
 
 const Wrapper = styled.div`
-  height: 90%;//50%
+  height: 50%;
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;
