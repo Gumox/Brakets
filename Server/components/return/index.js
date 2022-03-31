@@ -85,9 +85,9 @@ const Return = ({ options, user}) => {
         // extractToExcel = {extractToExcel}
         searchList = {searchList}
       />
-      <List data={searchList} user={user} handleSearchButtonClick={handleSearchButtonClick}/>
-      {/* <Options/> */}
-      {/*<Invoice data={searchList}/>*/}
+      <List data={searchList} user={user}/>
+      {/* <Options user={user} handleSearchButtonClick={handleSearchButtonClick}/>
+      <Invoice/> */}
     </Content>
   );
 };
