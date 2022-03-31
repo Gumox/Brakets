@@ -78,7 +78,8 @@ const ReceiptInfo = ({
 
   
   const [registerDate, setRegisterDate] = useState();
-  const [completeDate, setCompleteDate] = useState();
+  const [minCompleteDate,setMinCompleteDate] = useState()
+  const [completeDateChanged, setCompleteDateChanged] = useState(false);
 
 
   const getDiscountPrice =(value,e)=>{
@@ -181,14 +182,11 @@ const ReceiptInfo = ({
       const receiptDateToString =receiptDate.getFullYear()+"-"+(receiptDate.getMonth()+1)+"-"+receiptDate.getDate()
       setRegisterDate(receiptDateToString)
     }
-
-    if(targetData[RECEIPT.REGISTER_DATE] == null){
-      const cDate =new Date(targetData[RECEIPT.COMPLETE_DATE])
-      const cDateToString =cDate.getFullYear()+"-"+(cDate.getMonth()+1)+"-"+cDate.getDate()
-      setCompleteDate(cDateToString)
-      handleChangeRegisterDate(RECEIPT.REGISTER_DATE,cDateToString )
-
+    if(!completeDateChanged){
+      setMinCompleteDate(targetData[RECEIPT.COMPLETE_DATE])
     }
+
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetData[RECEIPT.RESULT_ID]]);
   return (
@@ -519,7 +517,7 @@ const ReceiptInfo = ({
                     value={
                       targetData[RECEIPT.DELIBERATION_REQUEST_DATE]
                         ? moment(
-                          completeDate
+                          targetData[RECEIPT.DELIBERATION_REQUEST_DATE]
                           ).format("YYYY-MM-DD")
                         : undefined
                     }
@@ -562,6 +560,7 @@ const ReceiptInfo = ({
                 type="date"
                 title="발송일 to S"
                 name={RECEIPT.COMPLETE_DATE}
+                min = {minCompleteDate}
                 value={
                   targetData[RECEIPT.COMPLETE_DATE]
                     ? moment(targetData[RECEIPT.COMPLETE_DATE]).format(
@@ -569,7 +568,10 @@ const ReceiptInfo = ({
                       )
                     : undefined
                 }
-                onChange={handleChangeTargetData}
+                onChange={(e)=>{
+                  handleChangeTargetData(e)
+                  setCompleteDateChanged(true)
+                }}
                 styleOptions={{ labelFontSize: "18px", color: COLOR.RED }}
               />
             </Field>

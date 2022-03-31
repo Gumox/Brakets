@@ -180,7 +180,7 @@ const receipt = async (req, res) => {
         }
         if(deliberation_request_date){              //심의의뢰일
           query += `, deliberation_request_date = ?`
-          values = [...values,deliberation_request_date]
+          values = [...values,String(deliberation_request_date).slice(0,10)]
         }
      
         

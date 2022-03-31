@@ -12,20 +12,39 @@ const Input = ({
   onKeyPress = () => {},
   styleOptions = {},
   disabled = false,
+  min,
 }) => {
+  let minInput
+  if(min){
+    if(type == 'date'){
+      minInput =(<CustomInput
+                  {...styleOptions}
+                  type={type}
+                  name={name}
+                  min ={min}
+                  value={value || ""}
+                  onChange={onChange}
+                  onKeyPress={onKeyPress}
+                  disabled={disabled}
+                />)
+
+    }
+  }else{
+    minInput =(<CustomInput
+                {...styleOptions}
+                type={type}
+                name={name}
+                value={value || ""}
+                onChange={onChange}
+                onKeyPress={onKeyPress}
+                disabled={disabled}
+              />)
+  }
   return (
     <Wrapper>
       <CustomLabel {...styleOptions} disabled={disabled}>{title}</CustomLabel>
       <InputBox {...styleOptions} disabled={disabled}>
-        <CustomInput
-          {...styleOptions}
-          type={type}
-          name={name}
-          value={value || ""}
-          onChange={onChange}
-          onKeyPress={onKeyPress}
-          disabled={disabled}
-        />
+        {minInput}
       </InputBox>
     </Wrapper>
   );
