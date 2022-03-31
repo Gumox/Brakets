@@ -48,6 +48,7 @@ const CustomDiv = styled.div`
   width: ${({ width = "100%" }) => width};
   max-width: ${({ maxWidth = "100px" }) => maxWidth};
   height: ${({ height = "20px" }) => height};
+  min-width:60px;
   outline: none;
   appearance: none;
   padding: 1px 5px 1px 5px;
