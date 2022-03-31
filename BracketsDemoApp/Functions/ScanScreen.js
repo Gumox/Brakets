@@ -120,9 +120,9 @@ export default class ScanScreen extends Component {
             }}
           />
         </View>
-        <View style={{width:"100%",position:"absolute", bottom:30,zIndex:10,alignItems:"center",justifyContent:"center" }}>
+        <View style={{width:"100%",position:"absolute", bottom:10,zIndex:10,alignItems:"center",justifyContent:"center" }}>
                     <Button
-                        onPress={ ()=> this.props.navigation.navigate('InputAlternativeNumber',{key:route.params.key })}
+                        onPress={ ()=> this.props.navigation.replace('InputAlternativeNumber',{key:route.params.key })}
                         >
                         <Text>
                             코드 직접 입력하기

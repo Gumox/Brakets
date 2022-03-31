@@ -54,7 +54,7 @@ function InputAlternativeNumber({ navigation, route }) {
 
                 <Button
                     onPress={() => (input != '') ? (
-                        navigation.navigate(key, { codeType: 'barcode', code: input })
+                        navigation.replace(key, { codeType: 'barcode', code: input })
                     ) : (
                         Alert.alert(
                             "입력 코드 오류",

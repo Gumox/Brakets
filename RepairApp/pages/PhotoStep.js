@@ -4,15 +4,27 @@ import Container from '../components/Container';
 import ReceiptButton from '../components/ReceiptButton';
 import Bottom from '../components/Bottom';
 import store from '../store/store';
+import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PhotoStep({ navigation,route }) {
     const staffInfo = store.getState().staffInfo
+    
+
     staffInfo.forEach((elt, index) => {
         console.log(elt.store_id)
         store.dispatch({ type: 'SHOP_ID', shopId: elt.store_id });
+       
 
-    });
+
+    }); 
+    if( !store.getState().shopId){
+        AsyncStorage.removeItem('userInfo'),
+        AsyncStorage.removeItem('staffInfo'),
+        navigation.reset({routes: [{name: 'Login'}]})
+        Alert.alert("사용자 정보 로드 실패","다시 로그인 해주세요")
+
+    }
     return (
 
         <Container>

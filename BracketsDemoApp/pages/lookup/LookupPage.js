@@ -312,6 +312,7 @@ function LookupPage({ route,navigation }) {
     
     useEffect(()=>{
       const code = route.params.code
+      console.log("code  ",code)
       if(code){
         console.log(code)
         getData(code,null,null, null, null,shopId,true,true,true)

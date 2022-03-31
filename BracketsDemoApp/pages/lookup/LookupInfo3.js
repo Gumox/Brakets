@@ -189,7 +189,7 @@ function LookupInfo3( { route,navigation } ) {
             <CenterView style={{borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
                 <Button onPress={ ()=>{
                     if(netInfo.isConnected){
-                        navigation.navigate( 'LookupInfo3',{data:data , images:images, needImages:needImages})
+                        navigation.navigate( 'LookupInfo4',{data:data , images:images, needImages:needImages})
                     }else{
                         alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                     }

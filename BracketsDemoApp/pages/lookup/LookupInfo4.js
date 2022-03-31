@@ -183,6 +183,22 @@ function LookupInfo4( { route,navigation } ) {
             </InfoView>
         )
     }
+    let toHq
+    if(mainCenterSendDate &&mainCenterDate ){
+        console.log("mainCenterSendDate",mainCenterSendDate)
+        console.log("mainCenterDate",mainCenterDate)
+        toHq =(
+            <InfoView>
+                <TopText>본사 접수일</TopText>
+                <InputText>{mainCenterDate}</InputText>
+                <TopText>본사 발송일</TopText>
+                <InputText>{mainCenterSendDate}</InputText>
+                <TopText>본사 설명</TopText>
+                <InputText>{mainCenterSendDescription}</InputText>
+            </InfoView>
+        )
+    }
+    
     
     return(
         <Container>
@@ -203,19 +219,14 @@ function LookupInfo4( { route,navigation } ) {
                 {repair3}
                 
 
-                <InfoView>
-                <TopText>본사 접수일</TopText>
-                <InputText>{mainCenterDate}</InputText>
-                <TopText>본사 발송일</TopText>
-                <InputText>{mainCenterSendDate}</InputText>
-                <TopText>본사 설명</TopText>
-                <InputText>{mainCenterSendDescription}</InputText>
-                </InfoView>
+                
 
                 {
                   inFormField
                 }
-
+                {
+                    toHq
+                }
                 <TopText style={{marginBottom : 10, marginLeft:10}}>매장 인수일</TopText>
                 <InputText >{selectDay}</InputText>
                 <Half style = {{marginBottom : 50}}>
