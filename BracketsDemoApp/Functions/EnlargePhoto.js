@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
 
 export default function EnlargePhoto({ navigation ,route}){
     const image =route.params.image
+    const resizeWidth =Dimensions.get('window').width-40;
     React.useEffect(()=>{
        
         const backAction = () => {
@@ -82,9 +83,9 @@ export default function EnlargePhoto({ navigation ,route}){
                             
                             <ImageZoom cropWidth={Dimensions.get('window').width-30}
                                     cropHeight={ Dimensions.get('window').height-125}
-                                    imageWidth={Dimensions.get('window').width-40}
-                                    imageHeight={ Dimensions.get('window').height-140}>
-                                    <Image style={{width:Dimensions.get('window').width-40, height: Dimensions.get('window').height-140}}
+                                    imageWidth={resizeWidth}
+                                    imageHeight={(resizeWidth/3)*4}>
+                                    <Image style={{width:resizeWidth, height:(resizeWidth/3)*4}}
                                     source={{uri:image}}/>
                             </ImageZoom>
                             

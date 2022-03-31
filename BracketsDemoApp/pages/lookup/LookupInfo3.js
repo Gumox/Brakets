@@ -124,7 +124,7 @@ function LookupInfo3( { route,navigation } ) {
                         navigation.navigate("EnlargePhoto",{image: element})
                     
                     }}>
-                    <Image style={{width:200,height:300, margin:15, padding:10}} source={{uri : element}}></Image>
+                    <CaptureImage style={{width:180 ,height:240 , margin:15, padding:10}} source={{uri : element}}/>
                 </Pressable>
             </View>
 
@@ -143,7 +143,7 @@ function LookupInfo3( { route,navigation } ) {
                         
                         navigation.navigate("EnlargePhoto",{image: element})
                     }}>
-                        <Image style={{width:200,height:300, margin:15, padding:10}} source={{uri : element}}></Image>
+                        <CaptureImage style={{width:180 ,height:240 , margin:15, padding:10}} source={{uri : element}}/>
                     </Pressable>
                 </View>
             )
@@ -165,7 +165,7 @@ function LookupInfo3( { route,navigation } ) {
                         
                         navigation.navigate("EnlargePhoto",{image: element})
                     }}>
-                        <Image style={{width:200,height:300, margin:15, padding:10}} source={{uri : element}}></Image>
+                        <CaptureImage style={{width:180 ,height:240 , margin:15, padding:10}} source={{uri : element}}/>
                     </Pressable>
                 </View>
             )
@@ -223,7 +223,7 @@ function LookupInfo3( { route,navigation } ) {
                             <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
                                 navigation.navigate("EnlargePhoto",{image: requestImage})
                             }}>
-                            <Image style={{width:200 ,height:300 }} resizeMode = 'contain' source={{uri: requestImage}}/>
+                            <CaptureImage style={{width:180 ,height:240 }}  source={{uri: requestImage}}/>
                             </Pressable>
                         </View>
                     
@@ -268,12 +268,15 @@ export default LookupInfo3;
 
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  rgb(0,80,150);
+    border:2px solid  rgb(0,80,120);
     border-radius: 12px;
     padding: 15px;
     margin-bottom : 30px;
 `;
-
+const CaptureImage = styled.Image`
+    width:200px;
+    height:300px;
+`;
 const InputText = styled.Text`
     color:#000000
     width: 100%;
@@ -293,7 +296,7 @@ const Half = styled.View`
 const Btn = styled.TouchableOpacity`
     width : 40%;
     height: 50px;
-    background: #78909c;
+    background: rgb(0,80,120);
     justify-content: center;
     align-items: center;
     margin:15px;

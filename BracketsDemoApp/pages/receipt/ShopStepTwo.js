@@ -90,7 +90,7 @@ function ShopStepTwo({navigation}) {
                   
             </CenterText>  
             <PView>
-                <CenterView><SelectButton iconImg = {<ImgIcon source={require('../../Icons/repair_blue.png')}/>} onPress={ ()=> {
+                <CenterView><SelectButton iconImg = {<ImgIcon style={{width:52,height:55}} source={require('../../Icons/repair.png')}/>} onPress={ ()=> {
                     if(netInfo.isConnected){
                         updateReceipt(store.getState().receipt_id,1)
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:1}});
@@ -100,7 +100,7 @@ function ShopStepTwo({navigation}) {
                     }
 
                 }}>수선</SelectButton>
-                <SelectButton iconImg = {<ImgIcon source={require('../../Icons/refund_blue.png')}/>} onPress={ ()=> {
+                <SelectButton iconImg = {<ImgIcon style={{width:51,height:55}} source={require('../../Icons/refund.png')}/>} onPress={ ()=> {
                     if(netInfo.isConnected){
                         updateReceipt(store.getState().receipt_id,3)
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"환불",id:3}});
@@ -111,7 +111,7 @@ function ShopStepTwo({navigation}) {
                     }
                 }}>환불</SelectButton>
                 </CenterView>
-                <CenterView><SelectButton  iconImg = {<ImgIcon source={require('../../Icons/exchange_blue.png')}/>} onPress={ ()=> {
+                <CenterView><SelectButton  iconImg = {<ImgIcon style={{width:48,height:55}}  source={require('../../Icons/exchange.png')}/>} onPress={ ()=> {
                     if(netInfo.isConnected){
                         updateReceipt(store.getState().receipt_id,2)
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
@@ -121,7 +121,7 @@ function ShopStepTwo({navigation}) {
                         alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                     }
                 }}>교환</SelectButton>
-                <SelectButton iconImg = {<ImgIcon source={require('../../Icons/deliberating_blue.png')}/>} onPress={ ()=> {
+                <SelectButton iconImg = {<ImgIcon style={{width:55,height:55}} source={require('../../Icons/deliberating.png')}/>} onPress={ ()=> {
                     if(netInfo.isConnected){
                         updateReceipt(store.getState().receipt_id,4)
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"심의",id:4}});
@@ -178,7 +178,7 @@ const TopStateView = styled.View`
     justify-content: center;
 `;
 
-const ImgIcon =styled.Image`
+const ImgIcon =styled.ImageBackground`
     width: 45px;
     height: 48px;
     padding : 5px;
