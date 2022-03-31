@@ -149,18 +149,18 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
         {Header: '본사설명', accessor: '본사설명'},
 
         // TOBE
-        {Header: '고객주소', accessor: '고객주소'},
+        //{Header: '고객주소', accessor: '고객주소'},
         {Header: '감가반품', accessor: '감가반품'},
         {Header: '클레임가 구분', accessor: '레임가 구분'},
         {Header: '클레임가', accessor: '클레임가'},
         {Header: '하자코드', accessor: '하자코드'},
         {Header: '심의', accessor: '심의'},
-        {Header: '등록자', accessor: '등록자'},
+        /*{Header: '등록자', accessor: '등록자'},
         {Header: '등록일시', accessor: '등록일시'},
         {Header: '접수자', accessor: '접수자'},
         {Header: '접수일시', accessor: '접수일시'},
         {Header: '처리자', accessor: '처리자'},
-        {Header: '처리일시', accessor: '처리일시'},
+        {Header: '처리일시', accessor: '처리일시'},*/
         {Header: 'SMS', accessor: 'SMS'},
         
         // ASIS
@@ -184,7 +184,7 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
         {
             '서비스카드 번호':receipt[RECEIPT.CODE] ? receipt[RECEIPT.CODE] : "" ,
             '매장코드':receipt[STORE.CODE] ? receipt[STORE.CODE] : "",
-            '매장명':receipt[STORE.NAME] ? receipt[STORE.CODE] : "",
+            '매장명':receipt[STORE.STORE_NAME] ? receipt[STORE.STORE_NAME] : "",
             '매장구분':STORE_CATEGORY[receipt[STORE.CATEGORY]] ? STORE_CATEGORY[receipt[STORE.CATEGORY]] : "",
             '매장연락처':receipt[STORE.CONTACT] ? receipt[STORE.CONTACT] : "",
             '매장접수일':receipt[RECEIPT.RECEIPT_DATE] ? moment(receipt[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD") : "",
@@ -197,7 +197,7 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
             '차수':receipt[PRODUCT.DEGREE] ? receipt[PRODUCT.DEGREE] : "",
             '컬러':receipt[PRODUCT.COLOR] ? receipt[PRODUCT.COLOR] : "",
             '사이즈':receipt[PRODUCT.SIZE] ? receipt[PRODUCT.SIZE] : "",
-            '판매가':receipt[PRODUCT.PRICE] ? receipt[PRODUCT.PRICE] : "",
+            '판매가':receipt[PRODUCT.TAG_PRICE] ? receipt[PRODUCT.TAG_PRICE] : "",
             '고객요구':RECEIPT_TYPE[receipt[RECEIPT.TYPE]] ? RECEIPT_TYPE[receipt[RECEIPT.TYPE]] : "",
             '매장접수내용':receipt[RECEIPT.STORE_MESSAGE] ? receipt[RECEIPT.STORE_MESSAGE] : "",
             '고객약속일':receipt[RECEIPT.DUE_DATE] ? moment(receipt[RECEIPT.DUE_DATE]).format("YYYY-MM-DD") : "",
@@ -206,6 +206,10 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
             '과실구분':receipt[RECEIPT.FAULT_NAME] ? receipt[RECEIPT.FAULT_NAME] : "",
             '내용분석':receipt[RECEIPT.ANALYSIS_NAME] ? receipt[RECEIPT.ANALYSIS_NAME] : "",
             '판정결과':receipt[RECEIPT.RESULT_NAME] ? receipt[RECEIPT.RESULT_NAME] : "",
+
+            "유상수선비" : receipt.fee,
+            "유상수선 유/무" : (receipt.paid == 1) ? "유" : "무",
+
             '수선처1':receipt.repair1_store_name ? receipt.repair1_store_name : "",
             '총수선비1':receipt.repair1_total ? receipt.repair1_total : "",
             '수선처접수일1': receipt.repair1_register_date ? moment(receipt.repair1_register_date).format("YYYY-MM-DD") : "",
@@ -236,7 +240,6 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
             '발송비용3':receipt.repair3_shipment_price ? receipt.repair3_shipment_price : "",            
         }
     ))
-
     return (
         <Wrapper>
             <Styles>

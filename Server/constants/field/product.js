@@ -10,7 +10,7 @@ const FIELD = {
   RELEASE_DATE: "product_release_date", // 최초출고일
   RFID: "product_code", // RFID 코드
   TAG_PRICE: "product_tag_price", // Tag가
-  ORG_PRICE : `org_price`, //원가
+  ORG_PRICE : `product_org_price`, //원가
 };
 
 export default FIELD;

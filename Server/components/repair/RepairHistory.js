@@ -408,7 +408,9 @@ const RepairHistory = ({
                 />
             </LaView>
             <LaView style={{justifyContent : "space-around" ,width:"100%"}}>
-            <AddTable onClick={closeTooltip}>취소</AddTable>
+            <AddTable onClick={()=>{
+                closeTooltip()
+            }}>취소</AddTable>
             <CustomButton onClick={()=>{
                 if(info.fault == 0){alert("과실 구분 선택 필요")}
                 if(info.analysis == 0){alert("내용 분석 선택 필요")}

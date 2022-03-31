@@ -28,6 +28,7 @@ const FIELD = {
   CLAIM_PRICE: `claim_price`, // 클레임가
 
   DELIBERATION_RESULT:`deliberation_result`,
+  DELIBERATION_REQUEST_DATE:`deliberation_request_date`,
   REPAIR_DETAILS: [
     createRepairIds("repair1_"),
     createRepairIds("repair2_"),

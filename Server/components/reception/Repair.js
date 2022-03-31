@@ -18,6 +18,8 @@ import SelectOption from "../SelectOption";
 import TextArea from "../TextArea";
 import Checkbox from "../Checkbox";
 import { getRepairShop } from "../../functions/getInfos";
+import UnTouchableInput from "../UnTouchableInput";
+import UnSelectOption from "../UnSelectOption";
 
 const RepairInfo = ({
   REPAIR,
@@ -40,7 +42,7 @@ const RepairInfo = ({
     <Wrapper>
           <Row>
             <Field marginRight="0px">
-              <SelectOption
+              <UnSelectOption
                 disabled ={true}
                 title="수선처"
                 name={REPAIR.PLACE_ID}
@@ -56,7 +58,7 @@ const RepairInfo = ({
           </Row>
           <Row>
             <Field marginRight="10px">
-              <Input
+              <UnTouchableInput
                 disabled ={true}
                 type="date"
                 title="수선처접수일"
@@ -71,7 +73,7 @@ const RepairInfo = ({
               />
             </Field>
             <Field>
-              <SelectOption
+              <UnSelectOption
                 disabled ={true}
                 title="운송형태"
                 name={REPAIR.DELIVERY_TYPE}
@@ -84,7 +86,7 @@ const RepairInfo = ({
         <Section marginRight="0px" width="40%">
           <Row>
             <Field marginRight="5px">
-              <SelectOption
+              <UnSelectOption
                 disabled ={true}
                 title="과실구분:"
                 name={REPAIR.FAULT_ID}
@@ -96,7 +98,7 @@ const RepairInfo = ({
             </Row>
             <Row>
             <Field marginRight="5px">
-              <SelectOption
+              <UnSelectOption
                 disabled ={true}
                 title="내용분석:"
                 name={REPAIR.ANALYSIS_ID}
@@ -108,7 +110,7 @@ const RepairInfo = ({
             </Row>
             <Row>
             <Field marginRight="0px">
-              <SelectOption
+              <UnSelectOption
                 disabled ={true}
                 title="판정결과:"
                 name={REPAIR.RESULT_ID}
@@ -132,7 +134,7 @@ const RepairInfo = ({
           {REPAIR.DETAILS.map((DETAIL, index) => (
             <Row key={index + 1}>
               <Field marginRight="5px">
-                <SelectOption
+                <UnSelectOption
                   disabled ={true}
                   title={`수선내용${index + 1}:`}
                   name={DETAIL.TYPE_ID}
@@ -153,7 +155,7 @@ const RepairInfo = ({
                 />
               </Field>
               <Field marginRight="5px">
-                <Input
+                <UnTouchableInput
                   title={`수선비${index + 1}`}
                   name={DETAIL.PRICE}
                   value={targetData[DETAIL.PRICE]}
@@ -175,7 +177,7 @@ const RepairInfo = ({
           ))}
       <Row>
         <Field marginRight="10px">
-          <Input
+          <UnTouchableInput
             type="date"
             disabled ={true}
             title="수선처발송일"
@@ -188,7 +190,7 @@ const RepairInfo = ({
           />
         </Field>
         <Field marginRight="10px">
-          <SelectOption
+          <UnSelectOption
             disabled ={true}
             title="발송방법:"
             name={REPAIR.SHIPMENT_TYPE}
@@ -197,7 +199,7 @@ const RepairInfo = ({
           />
         </Field>
         <Field marginRight="0px">
-          <Input
+          <UnTouchableInput
             disabled ={true}
             title="발송비용"
             name={REPAIR.SHIPMENT_PRICE}

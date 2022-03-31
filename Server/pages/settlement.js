@@ -17,7 +17,9 @@ export default function Settlement()  {
     const [companyList,setCompanyList] = useState(store.getState().company)
     const [shop,setShop] = useState(0)
     const [shopName,setShopName] = useState('')
-    const [userInfo,setUserInfo] = useState()
+    const [user,setUser] = useState()
+
+    const [userInfo,setUserInfo] = useState();
     
     const [hqId,setHqId] = useState()
     const [selectOption,setSelectOption] = useState(null)
@@ -63,10 +65,9 @@ export default function Settlement()  {
     }
     const excelListSet =useCallback((obj,index)=>{
         
-        console.log(obj)
+        
         chlidlist[index]=obj
         setExcelList(chlidlist)
-        console.log(chlidlist)
         //setExcelList([...excelList,obj])
     },[excelList])
     const sortCheckedList=(list)=>{
@@ -86,13 +87,14 @@ export default function Settlement()  {
         XLSX.writeFile(wb, "수선비 정산 목록.xlsx");
     }
     useEffect(()=>{
+        setUserInfo(JSON.parse(localStorage.getItem('USER_INFO')))
         const fetchData = async () => {
         
             setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
             setShopName(localStorage.getItem('SHOP_NAME'))
             setShop(localStorage.getItem('SHOP'))
             let user = JSON.parse(localStorage.getItem('USER'))
-            setUserInfo(user)
+            setUser(user)
             setDisable(checkDisable(user.level))
             let selectShop
             let typeList = await getRepairType(null,null,localStorage.getItem('SHOP'))
@@ -213,7 +215,8 @@ export default function Settlement()  {
                         <ButtonCheckC  disabled = {!disable} onClick={()=>{onClickOptionEdit(sortCheckedList(checkList))}}>내용 수정</ButtonCheckC>
                     </div>
                     <ItemTable>
-                    <Line2 style={{paddingTop:12}}>
+                    <Nav style={{overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:(windowHeight)*0.5}}>
+                    <Line2 style={{paddingTop:12, minWidth:1200}}>
                             <LaView ><Container>
                                 <CheckBoxView>#</CheckBoxView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>브랜드</ItemView>
@@ -221,7 +224,7 @@ export default function Settlement()  {
                                 
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선처</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>고객정보</ItemView>
-                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선내용(수량)</ItemView>
+                                <ItemView style={{width:(windowWidth)*0.0692, minWidth:120}}>수선내용(수량)</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>상태</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>본사 당담자</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선비</ItemView>
@@ -232,11 +235,11 @@ export default function Settlement()  {
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>비고</ItemView>
                             </Container></LaView>
                         </Line2>
-                    <Nav style={{overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:(windowHeight)*0.5}}>
+                   
                         
                         {   
                             settlementList.map((item,index)=>(
-                                <SettlementResult key = {index} data ={item} type ={types} index={index} excelList={excelList} checkList={checkList} {...{excelListSet,setExcelList,setCheckList}}></SettlementResult>
+                                <SettlementResult key = {index} data ={item} type ={types} index={index} staffCode ={userInfo.staff_code} excelList={excelList} checkList={checkList} {...{excelListSet,setExcelList,setCheckList}}></SettlementResult>
                             ))
                             
                         }
@@ -254,6 +257,7 @@ export default function Settlement()  {
 const Nav = styled.nav`
   overflow-y: auto;
   height: 100%;
+  
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;

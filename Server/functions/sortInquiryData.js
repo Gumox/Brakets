@@ -28,7 +28,21 @@ const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_fault
                 repair2_name = null,
                 repair3_name = null,
                 register_date = null,
-                send_date = null
+                send_date = null,
+                repair1_count=null,
+                repair2_count=null,
+                repair3_count=null,
+                repair1_redo =null,
+                repair2_redo =null,
+                repair3_redo =null,
+                fee =0,
+                paid =null,
+                repair_store_name = null,
+                cashreceipt_num = null,
+                
+                complete_date  = null,
+                shipment_type  = null,
+                shipment_price = null               
                 ;
             if(obj.repair1_store_id == shop){
 
@@ -41,7 +55,23 @@ const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_fault
                 repair3_price = obj.repair1_detail_repair3_price,
                 repair3_type_id = obj.repair1_detail_repair3_type_id,
                 repair_detail_id = obj.repair1_detail_id,
-                result_id = obj.repair1_detail_result_id
+                result_id = obj.repair1_detail_result_id,
+                
+                repair1_count=obj.repair1_detail_repair1_count,
+                repair2_count=obj.repair1_detail_repair2_count,
+                repair3_count=obj.repair1_detail_repair3_count,
+                repair1_redo =obj.repair1_detail_repair1_redo,
+                repair2_redo =obj.repair1_detail_repair2_redo,
+                repair3_redo =obj.repair1_detail_repair3_redo,
+                fee = obj.repair1_fee,
+                paid = obj.repair1_paid,
+                repair_store_name = obj.repair1_store_name,
+                cashreceipt_num =obj.repair1_cashreceipt_num
+                
+                complete_date  = obj.repair1_complete_date
+                shipment_type  = obj.repair1_shipment_type
+                shipment_price = obj.repair1_shipment_price  
+
                 if(obj.repair1_register_date == null){
                     register_date = obj.repair1_register_date
                 }else{
@@ -64,7 +94,23 @@ const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_fault
                 repair3_price = obj.repair2_detail_repair3_price,
                 repair3_type_id = obj.repair2_detail_repair3_type_id,
                 repair_detail_id = obj.repair2_detail_id,
-                result_id = obj.repair2_detail_result_id
+                result_id = obj.repair2_detail_result_id,
+                
+                repair1_count=obj.repair2_detail_repair1_count,
+                repair2_count=obj.repair2_detail_repair2_count,
+                repair3_count=obj.repair2_detail_repair3_count,
+                repair1_redo =obj.repair2_detail_repair1_redo,
+                repair2_redo =obj.repair2_detail_repair2_redo,
+                repair3_redo =obj.repair2_detail_repair3_redo,
+                fee = obj.repair2_fee,
+                paid = obj.repair2_paid 
+                repair_store_name = obj.repair2_store_name
+                cashreceipt_num =obj.repair1_cashreceipt_num
+
+                complete_date  = obj.repair2_complete_date
+                shipment_type  = obj.repair2_shipment_type
+                shipment_price = obj.repair2_shipment_price  
+
                 if(obj.repair2_register_date == null){
                     register_date = obj.repair2_register_date
                 }else{
@@ -87,7 +133,24 @@ const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_fault
                 repair3_price = obj.repair3_detail_repair3_price,
                 repair3_type_id = obj.repair3_detail_repair3_type_id,
                 repair_detail_id = obj.repair3_detail_id,
-                result_id = obj.repair3_detail_result_id 
+                result_id = obj.repair3_detail_result_id,
+                
+                repair1_count=obj.repair3_detail_repair1_count,
+                repair2_count=obj.repair3_detail_repair2_count,
+                repair3_count=obj.repair3_detail_repair3_count,
+                repair1_redo =obj.repair3_detail_repair1_redo,
+                repair2_redo =obj.repair3_detail_repair2_redo,
+                repair3_redo =obj.repair3_detail_repair3_redo,
+                
+                fee = obj.repair3_fee,
+                paid = obj.repair3_paid 
+                repair_store_name = obj.repair3_store_name
+                cashreceipt_num =obj.repair1_cashreceipt_num
+
+                complete_date  = obj.repair3_complete_date
+                shipment_type  = obj.repair3_shipment_type
+                shipment_price = obj.repair3_shipment_price  
+
                 if(obj.repair3_register_date == null){
                     register_date = obj.repair3_register_date
                 }else{
@@ -134,9 +197,11 @@ const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_fault
                 degree: obj.degree ,
                 headquarter_id: obj.headquarter_id,
                 message: obj.message,
+                repair_message:obj.repair_message,
                 mfr_id: obj.mfr_id,
                 mfr_name: obj.mfr_name,
-                name: obj.name,
+                headquarter_name:obj.headquarter_name,
+                headquarter_store_id:obj.headquarter_store_id,
                 product_name: obj.product_name,
                 receipt_code: obj.receipt_code,
                 receipt_date: formatDate(new Date(obj.receipt_date)),
@@ -150,6 +215,15 @@ const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_fault
                 style_code: obj.style_code,
                 repair_detail_analysis_id: analysis_id,
                 repair_detail_fault_id: fault_id,
+                
+                repair_detail_repair1_count: repair1_count,
+                repair_detail_repair2_count: repair2_count,
+                repair_detail_repair3_count: repair3_count,
+
+                repair_detail_repair1_redo: repair1_redo,
+                repair_detail_repair2_redo: repair2_redo,
+                repair_detail_repair3_redo: repair3_redo,
+
                 repair_detail_repair1_price: repair1_price,
                 repair_detail_repair1_type_id: repair1_type_id,
                 repair_detail_repair2_price: repair2_price,
@@ -165,7 +239,15 @@ const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_fault
                 repair2_name: repair2_name,
                 repair3_name: repair3_name,
                 register_date: register_date,
-                send_date: send_date
+                send_date: send_date,
+                paid :paid,
+                fee:fee,
+                repair_store_name : repair_store_name,
+                cashreceipt_num:cashreceipt_num,
+                
+                complete_date  : complete_date,
+                shipment_type  : shipment_type,
+                shipment_price : shipment_price
             }
             sorteddata.push(newObj)
         })

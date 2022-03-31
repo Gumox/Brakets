@@ -11,6 +11,16 @@ async function updateReceipt(query, values) {
 
   return result;
 }
+async function updateReceiptRepair(receipt_id,detail_id,num) {
+  const result = await excuteQuery({
+    query: `UPDATE receipt 
+            SET repair${num}_detail_id=?
+            WHERE receipt_id=?`,
+    values:[detail_id,receipt_id],
+  });
+
+  return result;
+}
 async function getRepairDetail( repair_detail_id ) {
     const result = await excuteQuery({
       query: `SELECT * 
@@ -51,11 +61,11 @@ async function updateMfr( send_date,mfr_detail_id  ) {
   
     return result;
   }
-  async function insertRepairDetail( repair_id,receipt_id,send_date ) {
+  async function insertRepairDetail( repair_store_id,receipt_id,send_date ) {
     const result = await excuteQuery({
       query: 
-            "INSERT INTO `mfr_detail` ( `store_id`,`receipt_id`, `send_date`) VALUES (?,?,?)",
-      values:[repair_id,receipt_id,send_date],
+            "INSERT INTO `repair_detail` ( `store_id`,`receipt_id`, `send_date`) VALUES (?,?,?)",
+      values:[repair_store_id,receipt_id,send_date],
     });
   
     return result;
@@ -84,29 +94,33 @@ const receipt = async (req, res) => {
             fault_id,
             analysis_id,
             receipt_message,
-            repair1_id,
-            repair2_id,
-            repair3_id,
             repair1_detail_id,
             repair2_detail_id,
             repair3_detail_id,
+            repair1_store_id,
+            repair2_store_id,
+            repair3_store_id,
             repair1_send_date,
             repair2_send_date,
             repair3_send_date,
             paid,
             fee,
             complete_date,  // 필수 : 발송일 to S
-            mfr_id,
             mfr_detail_id,
+            mfr_store_id,
             mfr_send_date,
             cashreceipt_num, // 현금영수증번호
             discount,
             discount_price,
             claim,
             claim_price,
+            deliberation_request_date,
         } = req.body.body;
+        console.log(repair1_store_id)
+        console.log(repair2_store_id)
+        console.log(repair3_store_id)
         let query = "";
-        let values = [complete_date];
+        let values = [String(complete_date).slice(0,10)];
 
         if(result_id){          // 판정결과
             query += `, result_id = ?`
@@ -139,7 +153,7 @@ const receipt = async (req, res) => {
         }
         if(register_date){          //본사 접수일
             query += `, register_date = ?`
-            values = [...values,register_date]
+            values = [...values,String(register_date).slice(0,10)]
         }
         
         if(cashreceipt_num){    //현금영수증
@@ -164,49 +178,70 @@ const receipt = async (req, res) => {
             values = [...values,claim_price]
           }
         }
+        if(deliberation_request_date){              //심의의뢰일
+          query += `, deliberation_request_date = ?`
+          values = [...values,deliberation_request_date]
+        }
      
         
         values = [...values,receipt_id]
         console.log(query)
         console.log(values)
         const receipt = await updateReceipt(query, values);
-        if(repair1_detail_id){
+        if(repair1_store_id){
             const repair =await getRepairDetail(repair1_detail_id)
             if(repair.length){
                 const updateResult = await updateRepairDetail(repair1_send_date,repair1_detail_id)
                 if (updateResult.error) throw new Error(updateResult.error);
-            }else{
-                const insertResult =await insertRepairDetail(repair1_id,receipt_id,repair1_send_date)
+            }else if(!repair1_detail_id){
+                const insertResult =await insertRepairDetail(repair1_store_id,receipt_id,repair1_send_date)
+                const insertId = insertResult.insertId
+                const updateResult = await updateRepairDetail(repair1_send_date,insertId)
+                const updateReceiptRepairShop =updateReceiptRepair(receipt_id,insertId,1)
                 if (insertResult.error) throw new Error(insertResult.error);
+                if (updateResult.error) throw new Error(updateResult.error);
+                if (updateReceiptRepairShop.error) throw new Error(updateReceiptRepairShop.error);
             }
         }
-        if(repair2_detail_id){
+        if(repair2_store_id){
             const repair =await getRepairDetail(repair2_detail_id)
             if(repair.length){
                 const updateResult = await updateRepairDetail(repair2_send_date,repair2_detail_id)
                 if (updateResult.error) throw new Error(updateResult.error);
-            }else{
-                const insertResult =await insertRepairDetail(repair2_id,receipt_id,repair2_send_date)
+            }else if(!repair2_detail_id){
+                const insertResult =await insertRepairDetail(repair2_store_id,receipt_id,repair2_send_date)
+                const insertId = insertResult.insertId
+                const updateResult = await updateRepairDetail(repair2_send_date,insertId)
+                const updateReceiptRepairShop =updateReceiptRepair(receipt_id,insertId,2)
+                console.log(insertId)
+                console.log(updateResult)
                 if (insertResult.error) throw new Error(insertResult.error);
+                if (updateResult.error) throw new Error(updateResult.error);
+                if (updateReceiptRepairShop.error) throw new Error(updateReceiptRepairShop.error);
             }
         }
-        if(repair3_detail_id){
+        if(repair3_store_id){
             const repair =await getRepairDetail(repair3_detail_id)
             if(repair.length){
                 const updateResult = await updateRepairDetail(repair3_send_date,repair3_detail_id)
                 if (updateResult.error) throw new Error(updateResult.error);
-            }else{
-                const insertResult =await insertRepairDetail(repair3_id,receipt_id,repair3_send_date)
+            }else if(!repair3_detail_id){
+                const insertResult =await insertRepairDetail(repair3_store_id,receipt_id,repair3_send_date)
+                const insertId = insertResult.insertId
+                const updateResult = await updateRepairDetail(repair3_send_date,insertId)
+                const updateReceiptRepairShop =updateReceiptRepair(receipt_id,insertId,3)
                 if (insertResult.error) throw new Error(insertResult.error);
+                if (updateResult.error) throw new Error(updateResult.error);
+                if (updateReceiptRepairShop.error) throw new Error(updateReceiptRepairShop.error);
             }
         }
-        if(mfr_detail_id){
+        if(mfr_store_id){
             const mfr =await getMfr(mfr_detail_id)
             if(mfr.length){
-                const updateResult = await updateMfr(mfr_send_date,mfr_detail_id)
+                const updateResult = await updateMfr(mfr_send_date,mfr_store_id)
                 if (updateResult.error) throw new Error(updateResult.error);
             }else{
-                const insertResult =await insertMfr(mfr_id,receipt_id,mfr_send_date)
+                const insertResult =await insertMfr(mfr_store_id,receipt_id,mfr_send_date)
                 if (insertResult.error) throw new Error(insertResult.error);
             }
         }
@@ -220,8 +255,3 @@ const receipt = async (req, res) => {
 };
 
 export default receipt;
-/*
-                    receipt.discount AS discount,
-                    receipt.discount_price AS discount_price,
-                    receipt.claim AS claim,
-                    receipt.claim_price AS claim_price, */

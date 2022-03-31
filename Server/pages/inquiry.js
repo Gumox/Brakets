@@ -45,9 +45,10 @@ export default function Inquiry() {
               })
             .then(({ data }) => data)
             .catch(error=>{
-
+                
             })
           ])
+          console.log(datas)
           return datas;
     }
     const setTable =useCallback( async(params ,fI,jI,aI) =>{
@@ -243,7 +244,7 @@ export default function Inquiry() {
                     {
                         data.map((item,i)=>(
                             
-                            <InquiryResult key={i} data = {item}></InquiryResult>
+                            <InquiryResult key={i} data = {item}/>
 
                         ))   
                     }

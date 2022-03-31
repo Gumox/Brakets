@@ -6,12 +6,9 @@ const SelectList = ({data})=>{
     let lists=[];
     if(data[0]){
         data.map((item,i)=>{
-            let top =0
-            if(i === 0){
-                top = 50;
-            }
+            
             lists[i]=(
-                <LaView style={{marginTop:top}}>
+                <LaView>
                     <ItemView>
                         {item.No}
                     </ItemView>
@@ -48,7 +45,7 @@ const SelectList = ({data})=>{
         <div>
             
             <Wrapper>
-                <LaView className="fixed-layer">
+                <LaView >
                     <ItemView>
                         No.
                     </ItemView>
@@ -102,12 +99,6 @@ export default SelectList
 
 const Wrapper = styled.nav`
     width: 100%;
-    .fixed-layer{
-        position: fixed;
-        z-index:10;
-        margin-top:-50px;
-        background-color: #ffffff;
-    }
 `;
 
 const ItemView = styled.div`

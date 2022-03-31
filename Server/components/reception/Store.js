@@ -11,8 +11,8 @@ import {
   RECEIPT_TYPE_OPTIONS,
 } from "../../constants/select-option";
 import { Row, Field, SectionRow, Section } from "../styled";
-import Input from "../Input";
-import SelectOption from "../SelectOption";
+import UnTouchableInput from "../UnTouchableInput";
+import UnSelectOption from "../UnSelectOption";
 import TextArea from "../TextArea";
 
 const StoreInfo = ({
@@ -27,17 +27,16 @@ const StoreInfo = ({
         <Section marginRight="5px" width="90%">
           <Row>
             <Field marginRight="5px">
-              <SelectOption
+              <UnTouchableInput
                 title="매장명"
                 name={STORE.ID}
                 options={[DEFAULT_OPTION, ...storeList]}
-                value={targetData[STORE.ID]}
-                onChange={handleChangeTargetData}
+                value={targetData[STORE.STORE_NAME]}
                 styleOptions={{ width: "180px", maxWidth: "180px" }}
               />
             </Field>
             <Field marginRight="5px">
-              <Input
+              <UnTouchableInput
                 type="date"
                 title="매장접수일"
                 name={RECEIPT.RECEIPT_DATE}
@@ -50,11 +49,12 @@ const StoreInfo = ({
                     : undefined
                 }
                 onChange={handleChangeTargetData}
+    
               />
             </Field>
 
             <Field marginRight="5px">
-              <Input
+              <UnTouchableInput
                 type="date"
                 title="고객약속일"
                 name={RECEIPT.DUE_DATE}
@@ -65,6 +65,7 @@ const StoreInfo = ({
                     : undefined
                 }
                 onChange={handleChangeTargetData}
+    
               />
             </Field>
             
@@ -80,7 +81,7 @@ const StoreInfo = ({
 
       <Row alignItems="flex-start">
         <Field marginRight="10px">
-          <SelectOption
+          <UnSelectOption
             title="접수구분"
             name={RECEIPT.CATEGORY}
             options={[DEFAULT_OPTION, ...RECEIPT_CATEGORY_OPTIONS]}
@@ -89,7 +90,7 @@ const StoreInfo = ({
           />
         </Field>
         <Field marginRight="10px">
-          <SelectOption
+          <UnSelectOption
             title="고객요구"
             name={RECEIPT.TYPE}
             options={[DEFAULT_OPTION, ...RECEIPT_TYPE_OPTIONS]}
@@ -99,7 +100,7 @@ const StoreInfo = ({
           />
         </Field>
         <Field marginRight="5px">
-          <SelectOption
+          <UnSelectOption
             title="제품구분"
             name={DETAIL.PRODUCT_CATEGORY_ID}
             options={[DEFAULT_OPTION, ...productCategoryList]}
@@ -112,21 +113,23 @@ const StoreInfo = ({
           />
         </Field>
         <Field marginRight="5px">
-              <Input
+              <UnTouchableInput
                 title="고객명"
                 name={CUSTOMER.NAME}
                 styleOptions={{ width: "100px" }}
                 value={targetData[CUSTOMER.NAME] || ""}
                 onChange={handleChangeTargetData}
+    
               />
             </Field>
             <Field marginRight="0px">
-              <Input
+              <UnTouchableInput
                 title="고객연락처"
                 name={CUSTOMER.CONTACT}
                 styleOptions={{ width: "100px" }}
                 value={targetData[CUSTOMER.CONTACT] || ""}
                 onChange={handleChangeTargetData}
+    
               />
             </Field>
       </Row>

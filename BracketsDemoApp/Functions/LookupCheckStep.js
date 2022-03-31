@@ -25,6 +25,32 @@ const LookupCheckStep =(data)=>{
             }
         }
     }
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log("data.category :",data.category  )
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    if(data.category == 3){
+        step = 1;
+        if(data.receipt_type){
+            step = 2;
+            if(data.image){
+                step = 3;
+                if(data.receipt_code){
+                    step = 4;
+                    if(data.step > 0){
+                        step = 5;
+                    }
+                }
+            }
+        }
+    }
     return step
 }
 export default LookupCheckStep

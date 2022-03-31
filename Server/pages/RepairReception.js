@@ -74,6 +74,7 @@ function RepairReception({options,user}) {
     localStorage.setItem('SHOP',shop_id)
     localStorage.setItem('SHOP_NAME',options.info[0].name)
     localStorage.setItem('USER',JSON.stringify(user))
+    localStorage.setItem('USER_INFO',JSON.stringify(options.info[0]))
 
   },[])
   return(

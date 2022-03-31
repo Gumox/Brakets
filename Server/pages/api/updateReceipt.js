@@ -51,6 +51,15 @@ const saveDetailImage = async(receiptId, num, imagePath, storeId) => {
       });
 }
 
+const updateDetailImage = async(receiptId, num, imagePath) => {
+  return excuteQuery({
+      query:
+        "UPDATE receipt_image SET before_image=? WHERE receipt_id=? AND num = ?",
+      values: [imagePath, receiptId,num],
+    });
+}
+
+
  const updateStepThree = async (receiptId, {pcategory, message, receiver}) => {
    console.log(receiptId, pcategory, message, receiver)
     return excuteQuery({
@@ -70,6 +79,13 @@ const saveDetailImage = async(receiptId, num, imagePath, storeId) => {
     return excuteQuery({
       query: "UPDATE receipt SET receipt_code=?, receipt_date=?, due_date=? WHERE receipt_id=?",
       values: [code, receiptdate, duedate, receiptId],
+    });
+  };
+
+  const checkStepThree = async (receiptId) => {
+    return excuteQuery({
+      query: "SELECT image FROM receipt  WHERE receipt_id=?",
+      values: [receiptId],
     });
   };
  
@@ -99,6 +115,8 @@ const saveDetailImage = async(receiptId, num, imagePath, storeId) => {
             results = await updateStepTwo(receiptId, fields);
          } else if (step === 3) {
             const images = ["image", "image1", "image2", "image3", "image4", "image5"];
+
+            const stepThree = await checkStepThree(receiptId)
             images.forEach(async (image, index) => {
                 if(!files[image]) return
                 const extension = files[image].name.split(".").pop();
@@ -113,8 +131,14 @@ const saveDetailImage = async(receiptId, num, imagePath, storeId) => {
                     const updateResult = await updateMainImage(receiptId, filePath);
                     if(updateResult.error) throw new Error(updateResult.error);
                 } else {
+                  console.log(stepThree[0].image)
+                  if(stepThree[0].image){
+                    const saveResult = await updateDetailImage(receiptId, index, filePath, storeId);
+                    if(saveResult.error) throw new Error(saveResult.error);                  
+                  }else{
                     const saveResult = await saveDetailImage(receiptId, index, filePath, storeId);
                     if(saveResult.error) throw new Error(saveResult.error);
+                  }
                 }
             });
             results = await updateStepThree(receiptId, fields);

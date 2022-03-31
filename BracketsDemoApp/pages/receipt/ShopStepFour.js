@@ -82,7 +82,7 @@ function ShopStepFour({navigation}) {
     
 
     const updateReceipt = async (receipt_id,code,receiptdate,duedate) => {
-        var formdata = new FormData();
+        const formdata = new FormData();
 
         formdata.append("step", "4");
         formdata.append("receipt", receipt_id);
@@ -208,7 +208,7 @@ function ShopStepFour({navigation}) {
                     <ImgIcon source={require('../../Icons/calendar.png')}/>
                     </PrView>
                 </TouchableView>
-                    {/* {dateInput1.show && (
+                    {dateInput1.show && (
                         <DateTimePicker
                         testID="dateTimePicker"
                         value={dateInput1.date}
@@ -217,7 +217,7 @@ function ShopStepFour({navigation}) {
                         display="default"
                         onChange={dateInput1.onChange}
                         />
-                    )} */}
+                    )} 
 
                     {dataPicker}
 

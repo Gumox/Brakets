@@ -37,7 +37,7 @@ function ReceiptDivision({navigation}) {
    
     const [itemList, setItemList]= useState([]);
     const info = store.getState().userInfo;
-    const [seletStore, setSeletStore] = useState(null); 
+    const [seletStore, setSeletStore] = useState(store.getState().store_id); 
     
     const storeName = store.getState().storeName;
     
@@ -119,7 +119,7 @@ function ReceiptDivision({navigation}) {
                     )
                 }
                 else{
-                    console.log("204")
+                    store.dispatch({ type: "STORE_CLEAR" })
                     store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"고객용",id:1}});
                     console.log(store.getState().receptionDivision);
                     if(netInfo.isConnected){
@@ -141,6 +141,7 @@ function ReceiptDivision({navigation}) {
                     )
                 }
                 else{
+                    store.dispatch({ type: "STORE_CLEAR" })
                     store.dispatch({type:'RECEPITION_DIVISION',receptionDivision: {name:"매장용-선처리",id:2}});
                     console.log(store.getState().receptionDivision);
                     if(netInfo.isConnected){
@@ -162,6 +163,7 @@ function ReceiptDivision({navigation}) {
                     )
                 }
                 else{
+                    store.dispatch({ type: "STORE_CLEAR" })
                     store.dispatch({type:'RECEPITION_DIVISION',receptionDivision:{name:"매장용",id:3} });
                     console.log(store.getState().receptionDivision);
                     if(netInfo.isConnected){

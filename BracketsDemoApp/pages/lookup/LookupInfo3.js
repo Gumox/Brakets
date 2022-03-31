@@ -1,138 +1,34 @@
 import React,{useState ,useEffect,useCallback} from 'react';
 import Container from '../../components/Container';
 import Contents from '../../components/Contents';
-import SelectButton from '../../components/SelectButton';
 import Button from '../../components/Button';
 import Bottom from '../../components/Bottom';
-import _, { reduce, sortedLastIndex } from 'lodash';
-import axios from "axios";
+import _ from 'lodash';
 import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert, Modal, Pressable} from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DateObject from "react-date-object";
-import { size } from 'lodash';
 import styled from 'styled-components/native';
-import store from '../../store/store';
-import { Provider } from 'react-redux'
-import { CheckBox } from 'react-native-elements';
-import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
+import {useNetInfo}from "@react-native-community/netinfo";
+import SetReReceiptInfo from '../../Functions/SetReReceiptInfo';
+import LookupCheckStep from '../../Functions/LookupCheckStep';
 
-const TouchableView = styled.TouchableOpacity`
-    width: 100%;;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid #78909c;
-`;
-const ImgIcon =styled.Image`
-    width: 20px;
-    height: 20px;
-    margin:5px;
-`;
-const PrView = styled.View`
-    flex-direction: row;
-    align-items: center;
-    width: 95%
-    justify-content: center;
-`;
-const InfoView =styled.View`
-    width: 100%;
-    border:2px solid  #78909c;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom : 30px;
-`;
 
-const Input = styled.TextInput`
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const InputText = styled.Text`
-    color:#000000
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const Half = styled.View`
-    width : 100%;
-    flex-direction : row;
-    justify-content : space-between;
-    align-items : center;  
-`;
-
-const HalfLine = styled.View`
-    width : 45%;
-    height : 100%;
-`;
-const Check =styled.View`
-    flex:1;
-    flex-direction : row;
-    width : 40%;
-    padding : 8px;
-    align-items : center;
-    justify-content : center;
-    `;
-const TotalMoney = styled.View`
-    flex:1;
-    flex-direction : row;
-    width : 50%;
-    margin-left: 10%;
-
-    `;
-
-const Btn = styled.TouchableOpacity`
-    width : 40%;
-    height: 50px;
-    background: #78909c;
-    justify-content: center;
-    align-items: center;
-    margin:15px;
-    border-radius:12px;    
-`;
-const TopText = styled.Text`
-    color:#000000
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-`;
-
-const styles = StyleSheet.create({
-    Lavel:{
-        flex:1,
-        fontSize:(Dimensions.get('window').width)*0.04,
-        margin:10,
-    },
-    outView :{
-        backgroundColor:"#000000",
-        flex:1,
-        justifyContent:"center",
-        alignItems:"center"
-    },
-    centerView:{
-
-        justifyContent:"center",
-        alignItems:"center"
-    },
-    inView:{
-        justifyContent:"center",
-        alignItems:"center"
-    },
-      
-})
- 
+const  formatDate = (inputDate)=> {
+    if(inputDate !== null&&inputDate!== undefined){
+        return String(inputDate).slice(0, 10)
+    }else{
+        return null
+    }
+}
 function LookupInfo3( { route,navigation } ) {
     const data =route.params.data;
     const images = route.params.images;
     const needImages =route.params.needImages;
     //console.log(images)
     
-    const winW = Dimensions.get('window').width;
-    const winH = Dimensions.get('window').height;
-    const keys= Object.keys(data)
+    const step = LookupCheckStep(data)
+
+    const netInfo = useNetInfo();
+
     const [receiptType,setReceiptType] = useState();        //제품구분
     const [storeMessage,setStoreMessage] =useState();       // 매장 접수 내용
     const [repairShop,setRepairShop] = useState();          //수선처 
@@ -144,19 +40,41 @@ function LookupInfo3( { route,navigation } ) {
     const [mainCenterSendDate,setMainCenterSendDate] = useState();//본사 발송일
     const [mainCenterSendDescription,setMainCenterSendDescription] = useState();//본사설명
     
-    const [checkMistake,setCheckMistake] = useState();      //과실 구분
-    const [contentAnalysis,setContentAnalysis] = useState();//내용분석
-    const [result,setResult] = useState();                  //판정결과
+
 
     const [requestImageModalVisible,setRequestImageModalVisible] = useState(false)
-    var requestImage =ip;
+    let requestImage =ip;
     requestImage += data["image"];
     
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     const [afterImages,setAfterImages] =useState([]);        //제품 수선 후 세부 사진   
 
+    
+    const [receiptDate,setReceiptDate] = useState();        //매장접수일
+    const [appointmentDate,setAppointmentDate] = useState();//고객약속일 
+
+    
+    const reReceipt =(data,step)=>{
+        SetReReceiptInfo(data)
+        
+        if(step ==0){
+            navigation.navigate("ShopStepOne")
+        }else if(step ==1){
+            navigation.navigate("ShopStepTwo")
+        }else if(step ==2){
+            navigation.navigate("ShopStepThree")
+        }else if(step ==3){
+            navigation.navigate("ShopStepFour")
+        }else if(step ==4){
+            navigation.navigate("ShopStepFive")
+        }
+    }
+
     useEffect(()=>{
-        //console.log(data)
+        
+        setReceiptDate(formatDate(data["receipt_date"]))     //매장접수일
+        setAppointmentDate(formatDate(data["due_date"]))     //고객약속일
+
         if(data["receipt_type"] == 1){
             setReceiptType("수선")
         }
@@ -171,9 +89,6 @@ function LookupInfo3( { route,navigation } ) {
         }
         
         setStoreMessage(data["store_message"])               //매장 접수 내용
-        setCheckMistake(data["fault_name"])                    //과실 구분
-        setContentAnalysis(data["analysis_name"])              //내용분석
-        setResult(data["result_name"])                         //판정결과
         
         const beforeImgList =[]                                  //제품 수선 전 사진
         const afterImgList =[]
@@ -197,8 +112,8 @@ function LookupInfo3( { route,navigation } ) {
          
     },[]);
     
-    var beforeImageViews =[];
-    var afterImageViews =[];
+    let beforeImageViews =[];
+    let afterImageViews =[];
     for (let i = 0; i < beforeImages.length; i++) {
         const element = beforeImages[i];
         const key = i
@@ -220,7 +135,7 @@ function LookupInfo3( { route,navigation } ) {
     for (let i = 0; i < afterImages.length; i++) {
         const element = afterImages[i];
         const key = i;
-        var visible = false;
+        let visible = false;
         if(element !== null){
             const after =(
                 <View key ={key}>
@@ -268,28 +183,40 @@ function LookupInfo3( { route,navigation } ) {
             </View>
         )
     }
-    let inFormField;
-    if(checkMistake||contentAnalysis||result){
-        inFormField =(
-            <InfoView>
-                <TopText>과실 구분</TopText>
-                <InputText>{checkMistake}</InputText>
-
-                <TopText>내용 분석</TopText>
-                <InputText>{contentAnalysis}</InputText>
-                <TopText>판정 결과</TopText>
-                <InputText>{result}</InputText>
-
-            </InfoView>
+    let btn
+    if(step>4){
+        btn =(
+            <CenterView style={{borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
+                <Button onPress={ ()=>{
+                    if(netInfo.isConnected){
+                        navigation.navigate( 'LookupInfo3',{data:data , images:images, needImages:needImages})
+                    }else{
+                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                    }
+                    
+                    }}>
+                    다음
+                </Button>
+            </CenterView>
+        )
+    }else{
+        btn=(
+            
+            <Half style={{borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
+                <Btn onPress = {() => {
+                    reReceipt(data,step)
+                }}><Text style ={{color : "#ffffff"}}>접수 계속</Text></Btn>
+                <Btn onPress = {() => {
+                    navigation.popToTop();
+                    navigation.navigate('LookupPage',{code:null});
+                }}><Text style ={{color : "#ffffff"}}>닫기</Text></Btn>
+            </Half>
         )
     }
     return(
         <Container>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
               <InfoView>
-                    <TopText>고객 요구</TopText>
-
-                    <InputText>{receiptType}</InputText>
                     <TopText>제품 전체 사진</TopText>
                     
                         <View style ={{justifyContent:"center", width:"100%"}}>
@@ -319,14 +246,17 @@ function LookupInfo3( { route,navigation } ) {
 
                         <InputText>{storeMessage}</InputText>
               </InfoView>
-              {
-                  inFormField
-              }
+              <InfoView>
+                    <TopText>매장 접수일</TopText>
+                        <InputText>{receiptDate}</InputText>
+                    <TopText>고객 약속일</TopText>
+                        <InputText>{appointmentDate}</InputText>
+                </InfoView>
+
+              
      
         </Contents>
-            <Button onPress={ ()=> navigation.navigate( 'LookupInfo4',{data:data}) }>
-                다음
-            </Button>
+            {btn}
             
 
         <Bottom navigation={navigation} />
@@ -335,3 +265,51 @@ function LookupInfo3( { route,navigation } ) {
     )
 }
 export default LookupInfo3;
+
+const InfoView =styled.View`
+    width: 100%;
+    border:2px solid  rgb(0,80,150);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom : 30px;
+`;
+
+const InputText = styled.Text`
+    color:#000000
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
+const Half = styled.View`
+    width : 100%;
+    flex-direction : row;
+    justify-content : space-between;
+    align-items : center;  
+`;
+
+const Btn = styled.TouchableOpacity`
+    width : 40%;
+    height: 50px;
+    background: #78909c;
+    justify-content: center;
+    align-items: center;
+    margin:15px;
+    border-radius:12px;    
+`;
+const TopText = styled.Text`
+    color:#000000
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+`;
+
+
+const CenterView = styled.View`
+    width : 100%;
+    flex-direction : row;
+    justify-content : center;
+    align-items : center;  
+`;

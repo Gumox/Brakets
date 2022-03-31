@@ -36,7 +36,6 @@ const ReceiptInfo = ({
 }) => {
   const { resultType, faultType, analysisType, repairList } =
     useContext(OptionContext);
-  
   const {name,headquarter_id} = useContext(UserContext)
 
   const [isRepair, setIsRepiar] = useState(false);
@@ -55,15 +54,19 @@ const ReceiptInfo = ({
     formData.append('deliberation', inputFlie[0]);
     formData.append('receiptId', targetData["receipt_id"]);
     formData.append('customerId', targetData["customer_id"]);
-    console.log(targetData)
-    /*const [data,inputPDF] = await Promise.all([
+    
+    const [data] = await Promise.all([
         axios
         .put(`${process.env.API_URL}/receipt/inputSave`, { body: targetData  })
         .then(({ data }) => data),
-        axios
-        .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
-        .then(({ data }) => data),
-      ])*/
+      ])
+    
+    const [inputPDF] = await Promise.all([
+      axios
+      .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
+      .then(({ data }) => data),
+    ])
+    window.location.reload();
       
   }
   const [discount, setDiscount] = useState();
@@ -72,6 +75,10 @@ const ReceiptInfo = ({
   
   const [claimPrice, setClaimPrice] = useState(targetData[RECEIPT.CLAIM_PRICE]);
   const [claimPriceDisable, setClaimPriceDisable] = useState(true);
+
+  
+  const [registerDate, setRegisterDate] = useState();
+  const [completeDate, setCompleteDate] = useState();
 
 
   const getDiscountPrice =(value,e)=>{
@@ -107,10 +114,15 @@ const ReceiptInfo = ({
   const [inputFlieName,setInputFlieName]  = useState('');
   const [inputFlie,setInputFlie]  = useState([]);
   const [PDFfliePath,setPDFFliePath]  = useState([]);
+  const [discouuntList,setDiscouuntList] = useState([]) 
+  const [claimList,setClaimList] = useState([])
   
  
-  
-  function setFile(e) {
+  //console.log(targetData)
+
+
+
+  const  setFile=(e)=> {
     // Get the details of the files
     ///console.log(e.target.files[0].name)
       console.log(e.target.files)
@@ -124,8 +136,9 @@ const ReceiptInfo = ({
     }
     
   }
-  const [discouuntList,setDiscouuntList] = useState([]) 
-  const [claimList,setClaimList] = useState([])
+
+
+  
   useEffect(() => {
     const fetch = async()=>{
       let list = await getRepairShop({repairShop:null})
@@ -142,6 +155,12 @@ const ReceiptInfo = ({
       
       setInputFlieName(words[words.length-1])
       setPDFFliePath(targetData[RECEIPT.DELIBERATION_RESULT])
+      console.log("targetData[RECEIPT.DELIBERATION_RESULT] : " ,targetData[RECEIPT.DELIBERATION_RESULT])
+    }else{
+      
+      setInputFlieName([])
+      setPDFFliePath([])
+      
     }
     if (!resultTypeMap[targetData[RECEIPT.RESULT_ID]]) return;
     if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("수선"))
@@ -151,8 +170,24 @@ const ReceiptInfo = ({
     if (resultTypeMap[targetData[RECEIPT.RESULT_ID]].includes("심의"))
       setIsReview(true);
     else setIsReview(false);
-    if(!targetData[RECEIPT.REGISTER_DATE]){
-      handleChangeRegisterDate(RECEIPT.REGISTER_DATE, moment().format("YYYY-MM-DD"))
+
+    if(!targetData[RECEIPT.REGISTER_DATE] == null){
+      const receiptDate =new Date()
+      const receiptDateToString =receiptDate.getFullYear()+"-"+(receiptDate.getMonth()+1)+"-"+receiptDate.getDate()
+      setRegisterDate(receiptDateToString)
+      handleChangeRegisterDate(RECEIPT.REGISTER_DATE,receiptDateToString )
+    }else{
+      const receiptDate =new Date(targetData[RECEIPT.REGISTER_DATE])
+      const receiptDateToString =receiptDate.getFullYear()+"-"+(receiptDate.getMonth()+1)+"-"+receiptDate.getDate()
+      setRegisterDate(receiptDateToString)
+    }
+
+    if(targetData[RECEIPT.REGISTER_DATE] == null){
+      const cDate =new Date(targetData[RECEIPT.COMPLETE_DATE])
+      const cDateToString =cDate.getFullYear()+"-"+(cDate.getMonth()+1)+"-"+cDate.getDate()
+      setCompleteDate(cDateToString)
+      handleChangeRegisterDate(RECEIPT.REGISTER_DATE,cDateToString )
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetData[RECEIPT.RESULT_ID]]);
@@ -168,7 +203,7 @@ const ReceiptInfo = ({
                 name={RECEIPT.REGISTER_DATE}
                 value={
                   targetData[RECEIPT.REGISTER_DATE]
-                    ? moment(targetData[RECEIPT.REGISTER_DATE]).format(
+                    ? moment(registerDate).format(
                         "YYYY-MM-DD"
                       )
                     : moment().format("YYYY-MM-DD")
@@ -299,7 +334,7 @@ const ReceiptInfo = ({
                       type="number"
                       title={`총 비용${index + 1}`}
                       name={REPAIR.TOTAL_PRICE}
-                      value={Number(targetData[REPAIR.TOTAL_PRICE])?.toLocaleString('ko-KR')}
+                      value={(Number(targetData[`repair${index + 1}_total`]))}
                       styleOptions={{ width: "100px" }}
                       onChange={handleChangeTargetData}
                     />
@@ -337,14 +372,14 @@ const ReceiptInfo = ({
                     onChange={handleChangeTargetData}
                   />
                 </Field>
-                <Field marginRight="0px">
+                {/*<Field marginRight="0px">
                   <Input
                     title="수선대체상품"
                     styleOptions={{ width: "20px" }}
                     value={targetData[RECEIPT.MANUFACTURER_DETAIL.SUBSTITUTE]}
                     disabled={true}
                   />
-                </Field>
+                </Field> */}
               </Row>
               <Row>
                 <Field marginRight="10px">
@@ -479,8 +514,16 @@ const ReceiptInfo = ({
                 <Field>
                   <Input
                     type="date"
-                    onChange={handleChangeTargetData}
                     title="심의의뢰일"
+                    name={RECEIPT.DELIBERATION_REQUEST_DATE}
+                    value={
+                      targetData[RECEIPT.DELIBERATION_REQUEST_DATE]
+                        ? moment(
+                          completeDate
+                          ).format("YYYY-MM-DD")
+                        : undefined
+                    }
+                    onChange={handleChangeTargetData}
                   />
                 </Field>
               </Row>

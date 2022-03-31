@@ -7,11 +7,11 @@ import excuteQuery from "../../db";
       values: [complete_date, shipment_type, shipment_price, Id],
     });
   };
-  const updateReceipt = async (Id,store) => {
+  const updateReceipt = async (Id,store,step) => {
     console.log("Id,store")
     console.log(Id,store)
     return excuteQuery({
-      query: "UPDATE receipt SET receiver=? WHERE receipt_id =?",
+      query: "UPDATE receipt SET receiver=? ,step = ? WHERE receipt_id =?",
       values: [store, Id],
     });
   };
@@ -33,6 +33,7 @@ const sendRepairInfo = async (req, res) => {
     const shipment_price = req.body.shipment_price;
     const repair_detail_id  = req.body.repair_detail_id ;
     const receipt_id =  req.body.receipt_id
+    const step =  req.body.receipt_id
 
     console.log("store : "+ store)
     
@@ -46,7 +47,7 @@ const sendRepairInfo = async (req, res) => {
             
         if (result) {
             console.log("update RepairInfo");
-            const updateReceiver = await updateReceipt(receipt_id,store)
+            const updateReceiver = await updateReceipt(receipt_id,store,step)
             //res.json({body});
             res.status(200).json({ changed: result.changedRows,changed2:updateReceiver.changedRows});
         } else {

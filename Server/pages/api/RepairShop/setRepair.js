@@ -118,7 +118,7 @@ const getReceiptInfo = async(receiptId) =>{
 const updateReceiptRepair = async (repair_detail_id,receiptId,num,paid) => {
   const insert = "repair"+num+"_detail_id"
   return excuteQuery({
-    query: `UPDATE receipt SET ${insert}=?, paid=? WHERE receipt_id=?`,
+    query: `UPDATE receipt SET ${insert}=?, paid=? , step=3 WHERE receipt_id=?`,
     values: [repair_detail_id,paid,receiptId],
   });
 };

@@ -147,7 +147,7 @@ const ReceptionPage = ({ options, user }) => {
     const { data } = await axios.get(`/api/receipt/${receiptCode}`);
     console.log(receiptCode)
     if(data == ""){
-      alert("정확한 서비스 카드 번호 및 RFID를 입력하세요.")
+      alert("정확한 서비스 카드 번호를 입력하세요.")
     }
     // console.log("data is")
     setOverallImg(data.data.image)
