@@ -268,7 +268,7 @@ export default LookupInfo3;
 
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  rgb(0,80,150);
+    border:2px solid  rgb(0,80,120);
     border-radius: 12px;
     padding: 15px;
     margin-bottom : 30px;
@@ -293,7 +293,7 @@ const Half = styled.View`
 const Btn = styled.TouchableOpacity`
     width : 40%;
     height: 50px;
-    background: #78909c;
+    background: rgb(0,80,120);
     justify-content: center;
     align-items: center;
     margin:15px;
