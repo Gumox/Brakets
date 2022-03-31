@@ -7,11 +7,7 @@ import store from "../../store/store";
 import axios from "axios";
 
 
-const Options = ({
-  value,
-  user, 
-  handleSearchButtonClick = () => {}
-}) => {
+const Options = ({ user, handleSearchButtonClick={} }) => {
 
   const [data, setData] = useState("");
   const [itemList, setItemList] = useState([]);
@@ -30,33 +26,27 @@ const Options = ({
     console.log(datas)
     return datas;
   }
-  
 
-  useEffect(() => {
-    let items =[];
-    store.getState().selected_data.selectedFlatRows.map((item) => {
-      items.push(item.original)
-    })
-    setItemList(items)
-    items=[];
-  }, [data])
 
   return (
     <Wrapper>
       <CustomerButton width="250px"
-        onClick={async() => {
-          let tempData = await insertLog(itemList, user);
-          console.log(itemList)
+        onClick={async () => {
+          const items = [];
+          store.getState().selected_data.selectedFlatRows.map((item) => {items.push(item.original)})
+          const tempData = await insertLog(items, user);
           setData(tempData);
-          console.log(tempData); // read
-          console.log("7845612384651")
-          
-          handleSearchButtonClick()
-          
-          console.log("7845612384651")
-          
-        }        
-      }
+
+          const len = store.getState().selected_data.selectedFlatRows.length;
+
+          if(len == 0){
+            confirm("전표를 발행할 건을 선택해주세요.")
+          } else{
+            confirm("전표가 발행되었습니다.");
+            handleSearchButtonClick();    
+          }
+        }
+        }
       >
         선택된 항목 전표 발생/취소 (+,-)
       </CustomerButton>
