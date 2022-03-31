@@ -297,7 +297,7 @@ function TakeOverPage( { route,navigation } ) {
     }, [])
 
     const useInput=(inputDate)=> {
-        const [date, setDate] = React.useState(inputDate);
+        let date = inputDate
         const [mode, setMode] = React.useState('date');
         const [show, setShow] = React.useState(false);
         
@@ -316,7 +316,8 @@ function TakeOverPage( { route,navigation } ) {
         const handleConfirm = (selectedDate) => {
             const currentDate = selectedDate || date
             setShow(Platform.OS === 'ios');
-            setDate(currentDate);
+            //setDate(currentDate);
+            date = currentDate
             setSelectDay(formatDate())
             hideDatePicker();
         };
@@ -336,7 +337,8 @@ function TakeOverPage( { route,navigation } ) {
         const onChange = (event, selectedDate) => {
             const currentDate = selectedDate || date
             setShow(Platform.OS === 'ios');
-            setDate(currentDate);
+            //setDate(currentDate);
+            date = currentDate
             setSelectDay(formatDate())
         }
         return {
@@ -350,6 +352,7 @@ function TakeOverPage( { route,navigation } ) {
             showDatePickerIos
         }
     }
+    
     const [selectDay, setSelectDay] =useState();
     const tDate = useInput(new Date()); 
     
@@ -476,7 +479,7 @@ function TakeOverPage( { route,navigation } ) {
       }
       else{
         console.log("and")
-        startDatePicker = ((tDate.show) && (
+        dataPicker = ((tDate.show) && (
             <DateTimePicker
                 testID="dateTimePicker"
                 value={tDate.date}
@@ -487,6 +490,25 @@ function TakeOverPage( { route,navigation } ) {
             />
         ))
       }
+    let toHq
+    if(mainCenterSendDate !== "null"&&mainCenterDate !== "null"){
+        console.log("mainCenterSendDate",mainCenterSendDate)
+        console.log("mainCenterDate",mainCenterDate)
+        toHq =(
+            <InfoView>
+                <InText>본사 접수일</InText>
+                {/* <InputText>{mainCenterDate}</InputText> */}
+                <InputText>{checkNull(mainCenterDate)}</InputText>
+
+                <InText>본사 발송일</InText>
+                {/* <InputText>{mainCenterSendDate}</InputText> */}
+                <InputText>{checkNull(mainCenterSendDate)}</InputText>
+
+                <InText>본사 설명</InText>
+                <InputText>{mainCenterSendDescription}</InputText>
+            </InfoView>
+        )
+    }
     
     return(
         <Container>
@@ -630,19 +652,8 @@ function TakeOverPage( { route,navigation } ) {
               {repair3}
               
 
-              <InfoView>
-                <InText>본사 접수일</InText>
-                {/* <InputText>{mainCenterDate}</InputText> */}
-                <InputText>{checkNull(mainCenterDate)}</InputText>
-
-                <InText>본사 발송일</InText>
-                {/* <InputText>{mainCenterSendDate}</InputText> */}
-                <InputText>{checkNull(mainCenterSendDate)}</InputText>
-
-                <InText>본사 설명</InText>
-                <InputText>{mainCenterSendDescription}</InputText>
-              </InfoView>
-
+              
+              {toHq}
               <Text style={{marginBottom : 10, marginLeft:10 ,color: '#000000'}}>매장 인수일</Text>
               
               
@@ -658,16 +669,7 @@ function TakeOverPage( { route,navigation } ) {
               <ImgIcon source={require('../../Icons/calendar.png')}/>
               </PrView>
               </TouchableView>
-              {/* {tDate.show && (
-                  <DateTimePicker
-                  testID="dateTimePickerT"
-                  value={tDate.date}
-                  mode={tDate.mode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={tDate.onChange}
-                  />
-              )} */}
+               
             {dataPicker}
 
             <Half style = {{marginBottom : 50}}>

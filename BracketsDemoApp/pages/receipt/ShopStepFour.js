@@ -36,7 +36,7 @@ function ShopStepFour({navigation}) {
 
 
     const useInput=(inputDate)=> {
-        const [date, setDate] = React.useState(inputDate);
+        let date = inputDate
         const [mode, setMode] = React.useState('date');
         const [show, setShow] = React.useState(false);
     
@@ -55,7 +55,7 @@ function ShopStepFour({navigation}) {
         const handleConfirm = (selectedDate) => {
             const currentDate = selectedDate || date
             setShow(Platform.OS === 'ios');
-            setDate(currentDate);
+            date = currentDate
             setDateInput2(currentDate.addDays(service_date))
             hideDatePicker();
         };
@@ -63,7 +63,7 @@ function ShopStepFour({navigation}) {
         const onChange = (event, selectedDate) => {
             const currentDate = selectedDate || date
             setShow(Platform.OS === 'ios');
-            setDate(currentDate);
+            date = currentDate
             setDateInput2(currentDate.addDays(service_date))
         }
         return {
@@ -139,7 +139,7 @@ function ShopStepFour({navigation}) {
       }
       else{
         console.log("and")
-        startDatePicker = ((dateInput1.show) && (
+        dataPicker = ((dateInput1.show) && (
             <DateTimePicker
                 testID="dateTimePicker"
                 value={dateInput1.date}
@@ -208,16 +208,7 @@ function ShopStepFour({navigation}) {
                     <ImgIcon source={require('../../Icons/calendar.png')}/>
                     </PrView>
                 </TouchableView>
-                    {dateInput1.show && (
-                        <DateTimePicker
-                        testID="dateTimePicker"
-                        value={dateInput1.date}
-                        mode={dateInput1.mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={dateInput1.onChange}
-                        />
-                    )} 
+                    
 
                     {dataPicker}
 
