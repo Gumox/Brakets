@@ -8,8 +8,8 @@ import excuteQuery from "../../db";
     });
   };
   const updateReceipt = async (Id,store,step) => {
-    console.log("Id,store")
-    console.log(Id,store)
+    console.log("Id,store,step")
+    console.log(Id,store,step)
     return excuteQuery({
       query: "UPDATE receipt SET receiver=? ,step = ? WHERE receipt_id =?",
       values: [store, step,Id],
