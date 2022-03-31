@@ -12,8 +12,6 @@ import {
 } from "../../../constants/type";
 import store from '../../../store/store'
 
-import Options from "../Options";
-
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -33,7 +31,7 @@ const IndeterminateCheckbox = React.forwardRef(
 )
 IndeterminateCheckbox.displayName = "return/list";
 
-function Table({ columns, data, handleDataClick }) {
+function Table({ columns, data }) {
 
   const defaultColumn = React.useMemo(
     () => ({
@@ -90,9 +88,7 @@ function Table({ columns, data, handleDataClick }) {
     }
   )
   store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
-  console.log("-------------------------------------------------------------------")
-  console.log(selectedFlatRows)
-  const seriveCode = selectedFlatRows.map(value => value.values["서비스카드 번호"]);
+  
   
   return (
 
@@ -121,23 +117,14 @@ function Table({ columns, data, handleDataClick }) {
             {rows.map((row, i) => {
               prepareRow(row)
               return (
-                <div key={i} {...row.getRowProps(
-                  {
-                    onClick: () => (
-                      // handleDataClick(row.original["서비스카드 번호"])
-                      rows[row.id].toggleRowSelected()
-                    )
-                  }
-                )} className="tr">
-                  {/* {console.log('row is')}
-                  {console.log(row)} */}
+                <div key={i} {...row.getRowProps({ onClick: () => (rows[row.id].toggleRowSelected())})} className="tr">
                   {row.cells.map((cell, j) => {
                     return (
                       <div key={j} {...cell.getCellProps(
                         {
                           style: { 
-                            color: row.original["전표 발행 여부"] == "전표미발행" ? 'red' : '#ffa203',
-                            background: '#ebe8e8' 
+                            color: row.original["전표 발행 여부"] == "전표 발행" ? 'white' : 'black',
+                            background: row.original["전표 발행 여부"] == "전표 발행" ? 'red' : 'orange'
                           }
                           // red
                           // orange: #ffa203
@@ -174,10 +161,7 @@ function Table({ columns, data, handleDataClick }) {
   )
 }
 
-const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
-
-  // console.log("asdad");
-  // console.log(user);
+const ReturnList = ({ data, user }) => {
 
   const columns = React.useMemo(() => [
 
@@ -243,7 +227,7 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
   ], [])
 
   const value = data.map((productReturn) => ({
-
+    "receipt_id": productReturn[RECEIPT.ID],
     "서비스카드 번호": productReturn[RECEIPT.CODE],
     "매장코드": productReturn[STORE.CODE],
     "매장명": productReturn[STORE.NAME],
@@ -289,7 +273,7 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
     "수정일시": "",
     "SMS": "",
     "감가반품": "",
-    "전표 발행 여부":[RECEIPT.ISSUED_INVOICE] == 0 ? "전표미발행" : "전표발행",
+    "전표 발행 여부":productReturn.issued == 1 ? "전표 발행" : "전표 미발행",
   }))
 
 
@@ -298,20 +282,15 @@ const ReturnList = ({ data, user, handleSearchButtonClick = () => { } }) => {
   return (
     <Wrapper>
       <Styles >
-        <Table columns={columns} data={value} handleDataClick={handleSearchButtonClick} />
+        <Table columns={columns} data={value}/>
       </Styles>
-      {/*<Options
-      data = {value}
-      user = {user}
-      handleSearchButtonClick={handleSearchButtonClick}
-      />*/}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.nav`
   
-  height: 95%;//70%
+  height: 50%;
   width: 100%;
   overflow: scroll;
   border-bottom: 2px solid;
@@ -348,7 +327,7 @@ const Styles = styled.div`
     .td {
       margin: 0;
       padding: 0.5rem;
-      border-bottom: 1px solid black;/
+      border-bottom: 1px solid black;
       border-right: 1px solid black;
 
       ${'' /* In this example we use an absolutely position resizer,
