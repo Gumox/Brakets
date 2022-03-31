@@ -46,7 +46,7 @@ function RecepitionImage (props) {
       {isProductImageModalOpen && (
         <Modal handleCloseButtonClick={closeProductImage} width={windowHeight}>
           {
-            <Image
+            <DetailImg
               src={el.image}
               alt={el.name}
               style={{marginTop:10}}
