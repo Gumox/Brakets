@@ -12,7 +12,7 @@ import excuteQuery from "../../db";
     console.log(Id,store)
     return excuteQuery({
       query: "UPDATE receipt SET receiver=? ,step = ? WHERE receipt_id =?",
-      values: [store, Id],
+      values: [store, step,Id],
     });
   };
   const getInfo = async (Id ) => {
