@@ -132,7 +132,7 @@ function ReceiptDivision({navigation}) {
                     if(netInfo.isConnected){
                         navigation.navigate( 'SearchCustomer' ) 
                     }else{
-                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                     }
                 }
             }}>고객용 제품</ReceiptButton>
@@ -154,7 +154,7 @@ function ReceiptDivision({navigation}) {
                     if(netInfo.isConnected){
                         navigation.navigate( 'SearchCustomer' )
                     }else{
-                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                     } 
                 }
             }}>매장용-선처리 제품</ReceiptButton>
@@ -176,7 +176,7 @@ function ReceiptDivision({navigation}) {
                     if(netInfo.isConnected){
                         navigation.navigate( 'ShopStepOne' )
                     }else{
-                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                     }
                 }
             }}>매장용 제품</ReceiptButton>

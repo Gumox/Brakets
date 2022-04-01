@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, Button} from 'react-native';
+import {View, Text, Image, Button,Alert} from 'react-native';
  
 import * as ImagePicker from "react-native-image-picker"
  
@@ -50,11 +50,17 @@ export default class AttachPic extends Component{
             ImagePicker.showImagePicker(options, (response)=>{
      
                 if(response.didCancel){
-                    alert('사용자가 취소하였습니다.');
+                    Alert.alert('사용자가 취소하였습니다.','',
+                    { text: "확인", onPress: () =>{}}
+                    );
                 }else if(response.error){
-                    alert('에러 : ', response.error);
+                    Alert.alert('에러 : ', response.error,'',
+                    { text: "확인", onPress: () =>{}}
+                    );
                 }else if(response.customButton){
-                    alert('커스텀버튼 선택 :'+response.customButton);
+                    Alert.alert('커스텀버튼 선택 :'+response.customButton,'',
+                    { text: "확인", onPress: () =>{}}
+                    );
                 }else{
                     // 이곳에 왔다면 이미지가 잘 선택된 것임
                     // 선택된 이미지의 경로 uri 얻어오기

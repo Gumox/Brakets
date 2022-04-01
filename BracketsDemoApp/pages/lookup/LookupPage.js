@@ -13,7 +13,8 @@ import {
   FlatList,
   StyleSheet,
   Animated,
-  Pressable
+  Pressable,
+  Alert
 } from 'react-native';
 import ip from '../../serverIp/Ip';
 import Bottom from '../../components/Bottom';
@@ -399,7 +400,7 @@ function LookupPage({ route,navigation }) {
                             if(netInfo.isConnected){
                                 getImages(item["receipt_code"],item)
                             }else{
-                                alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                                Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인", onPress: () =>{}})
                             }
                         }}></LookupInfoCard>
                     )}

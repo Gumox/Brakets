@@ -195,11 +195,11 @@ function ShopStepThree( { navigation } ) {
                 "수선유형을 선택해 주세요",
                 [
                   {
-                    text: "Cancel",
+                    text: "취소",
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                  { text: "확인", onPress: () => console.log("OK Pressed") }
                 ]
               );
               
@@ -212,7 +212,7 @@ function ShopStepThree( { navigation } ) {
               if(netInfo.isConnected){
                 navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
               }else{
-                alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
               }
               
             }}}>

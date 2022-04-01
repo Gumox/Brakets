@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import Container from '../../components/Container';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
@@ -52,7 +52,7 @@ function ShopStepOne( { navigation } ) {
                 if(netInfo.isConnected){
                     navigation.navigate( 'InputAlternativeNumber' ,{key:"ProductInfo"})
                 }else{
-                    alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                    Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                 }
                 }}>
                 대체 코드 작성</Alternative>
@@ -60,7 +60,7 @@ function ShopStepOne( { navigation } ) {
                 if(netInfo.isConnected){
                     navigation.navigate( 'BarcodeScreen')
                 }else{
-                    alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                    Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                 }
 
                 }}>

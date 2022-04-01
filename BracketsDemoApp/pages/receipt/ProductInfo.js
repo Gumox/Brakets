@@ -34,7 +34,7 @@ function ProductInfo({navigation, route}) {
     const checkBrand=(myBrand,productBrand)=>{
         if(myBrand != productBrand){
             navigation.goBack();
-            Alert.alert("","자사 브랜드 제품이 아닙니다 제품을 확인 해주세요");
+            Alert.alert("","자사 브랜드 제품이 아닙니다 제품을 확인 해주세요",{ text: "확인"});
         }
     }
     
@@ -277,7 +277,7 @@ function ProductInfo({navigation, route}) {
                             console.log(codeInput)
                             addReceipt();
                         }else{
-                            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                            Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                         }
                         
 

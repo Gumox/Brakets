@@ -139,11 +139,11 @@ function ShopStepThree2 ({ navigation ,route}) {
             "수선 부위를 표시해 주세요",
             [
               {
-                text: "Cancel",
+                text: "취소",
                 onPress: () => console.log("Cancel Pressed"),
                 style: "cancel"
               },
-              { text: "OK", onPress: () => console.log("OK Pressed") }
+              { text: "확인", onPress: () => console.log("OK Pressed") }
             ]
           );
         }

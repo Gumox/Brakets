@@ -127,7 +127,7 @@ function SearchCustomer({ navigation }) {
                 store.dispatch({ type: 'CUSTOMER_SIGN', customerSign: "" });
                 getCustomer({ "lastphone": pNumber });
               }else{
-                  alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
               }
           }
           else {

@@ -78,7 +78,7 @@ export default function CustomerSearchList({route, navigation}){
                     if(netInfo.isConnected){
                         store.dispatch({type:'CUSTOMER',customer: customers[key]});
                     }else{
-                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                     }
                     }}>
                     <PrView><Label>{customers[key].cName}   </Label><Label>{customers[key].cPhone}</Label></PrView>
@@ -105,12 +105,12 @@ export default function CustomerSearchList({route, navigation}){
                 if(netInfo.isConnected){
                     console.log(cName)
                     if(cName == null){
-                        Alert.alert("접수고객 미선택","접수 고객을 선택 해주세요")
+                        Alert.alert("접수고객 미선택","접수 고객을 선택 해주세요",{ text: "확인"})
                     }else{
                         navigation.navigate("CustomerInfo")
                     }
                 }else{
-                    alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
+                    Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                 }
             }}>
                 다음

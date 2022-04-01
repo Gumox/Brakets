@@ -68,6 +68,26 @@ function LookupInfo3( { route,navigation } ) {
             navigation.navigate("ShopStepFive")
         }
     }
+    
+    const deleteNotice=()=>{
+        Alert.alert(
+            "정말로 취소 하시겠습니까?",
+            "확인을 누르시면 접수내역이 삭제 됩니다",
+            [
+              {
+                text: "취소",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "확인", onPress: () =>{
+                DeleteReceipt(data.receipt_id)
+                navigation.popToTop();
+                navigation.navigate('LookupPage',{code:null});
+              } }
+            ]
+        );
+        
+    }
 
     useEffect(()=>{
         
@@ -190,7 +210,7 @@ function LookupInfo3( { route,navigation } ) {
                     if(netInfo.isConnected){
                         navigation.navigate( 'LookupInfo4',{data:data , images:images, needImages:needImages})
                     }else{
-                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                     }
                     
                     }}>
@@ -203,9 +223,7 @@ function LookupInfo3( { route,navigation } ) {
             
             <Half style={{padding:"3%",borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
                 <Btn onPress = {() => {
-                    DeleteReceipt(data.receipt_id)
-                    navigation.popToTop();
-                    navigation.navigate('LookupPage',{code:null});
+                    deleteNotice()
                 }}><Text style ={{color : "#ffffff"}}>접수 취소</Text></Btn>
                 <Btn onPress = {() => {
                     reReceipt(data,step)

@@ -10,7 +10,7 @@ import Bottom from '../../components/Bottom'
 import store from '../../store/store';
 import {
     Modal, StyleSheet, View, Pressable,
-    Image, Text, ScrollView
+    Image, Text, ScrollView, Alert
 } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
@@ -178,7 +178,7 @@ function ShopStepOne({ navigation , route}) {
                             store.dispatch({ type: "STORE_CLEAR" })
                             navigation.popToTop()
                         } else {
-                            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                            Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
                         }
                     }}>
                         완료
