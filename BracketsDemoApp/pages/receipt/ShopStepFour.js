@@ -157,7 +157,7 @@ function ShopStepFour({navigation,route}) {
 
       
     return (
-        <ContainView>
+        <ContainView style= {{backgroundColor:"#ffffff"}}>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
             <TopInfo></TopInfo>
             <Contents>

@@ -96,7 +96,7 @@ function SearchCustomer({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container>
+      <Container style= {{backgroundColor:"#ffffff"}}>
         <CenterText>
           <Title>고객 조회</Title>
 

@@ -98,7 +98,7 @@ export default class CustomerInfo extends Component {
             )
         }
         return (
-            <Container>
+            <Container style= {{backgroundColor:"#ffffff"}}>
                     <ContentsScroll>
                         <CenterText>
                             <Label/>

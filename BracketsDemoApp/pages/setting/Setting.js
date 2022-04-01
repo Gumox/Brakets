@@ -82,7 +82,7 @@ function Setting({ navigation }) {
     const storeEmail = store.getState().storeStaffId;
 
     return (
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
 
             <CenterText>
                 <OverallView>

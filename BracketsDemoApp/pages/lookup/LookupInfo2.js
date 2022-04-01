@@ -135,7 +135,7 @@ function LookupInfo2( { route,navigation } ) {
    
     
     return(
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
                 <InfoView>
                     <Half>

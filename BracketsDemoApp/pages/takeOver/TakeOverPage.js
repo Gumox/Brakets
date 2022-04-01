@@ -511,7 +511,7 @@ function TakeOverPage( { route,navigation } ) {
     }
     
     return(
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
                 <InfoView>
                   <InText>서비스 카드 번호</InText>

@@ -10,7 +10,7 @@ import store from '../../store/store';
 import {useNetInfo}from "@react-native-community/netinfo";
 import SetReReceiptInfo from '../../Functions/SetReReceiptInfo';
 import LookupCheckStep from '../../Functions/LookupCheckStep';
-import DeleteReceipt from '../../Functions/DeleteReceipt'
+import DeleteReceipt from '../../Functions/DeleteReceipt';
 
 const  formatDate = (inputDate)=> {
     const sp =  inputDate;
@@ -141,7 +141,7 @@ function LookupInfo( { route,navigation } ) {
     }else{
         btn=(
             
-            <Half style={{borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
+            <Half style={{padding:"3%",borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
                 <Btn onPress = {() => {
                     DeleteReceipt(data.receipt_id)
                     navigation.popToTop();
@@ -159,7 +159,7 @@ function LookupInfo( { route,navigation } ) {
     }
    
     return(
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
                 <InfoView>
                     <TopText>서비스 카드 번호</TopText>
@@ -272,9 +272,7 @@ const Half = styled.View`
     width : 100%;
     flex-direction : row;
     justify-content : space-between;
-    align-items : center; 
-    
-    padding:3%;
+    align-items : center;  
 `;
 const Btn = styled.TouchableOpacity`
     width : 30%;

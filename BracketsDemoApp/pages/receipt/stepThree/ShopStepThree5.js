@@ -150,7 +150,7 @@ function ShopStepThree5({route,navigation}) {
     
     return (
         
-        <ContainView>
+        <ContainView style= {{backgroundColor:"#ffffff"}}>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <TopInfo></TopInfo>
             <Contents>

@@ -38,7 +38,7 @@ export default function PrivacyNotice({navigation}) {
         }
     }
     return(
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <View style={{margin:30,flex:1,alignItems:"center",justifyContent:"center",marginBottom:fontSize*5}}>
                 {ntc}
             </View>

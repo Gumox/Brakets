@@ -178,7 +178,7 @@ function ProductInfo({navigation, route}) {
     return (
        
         
-            <ContainView>
+            <ContainView style= {{backgroundColor:"#ffffff"}}>
                 <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
                 
                 <TopInfoLess/>

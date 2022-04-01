@@ -81,7 +81,7 @@ function ShopStepOne({ navigation , route}) {
 
     return (
         <>
-            <ScrollView>
+            <ScrollView style= {{backgroundColor:"#ffffff"}}>
                 <TopStateView><StateBarSolid /><StateBarSolid /><StateBarSolid /><StateBarSolid /><StateBarSolid /></TopStateView>
                 <TopInfo></TopInfo>
                 <CenterText>

@@ -37,7 +37,7 @@ function ShopStepOne( { navigation } ) {
     const netInfo = useNetInfo();
     
     return (
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <TopStateView><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <TopInfoLess/>
             <CenterText>

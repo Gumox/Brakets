@@ -39,7 +39,7 @@ export default function Notice({navigation}) {
         }
     }
     return(
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <View style={{margin:30,flex:1,marginTop:fontSize*5}}>
                 {ntc}
             </View>

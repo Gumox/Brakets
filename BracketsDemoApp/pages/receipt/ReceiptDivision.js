@@ -47,7 +47,7 @@ function ReceiptDivision({navigation}) {
     
     const netInfo = useNetInfo();
     const colorScheme = Appearance.getColorScheme();
-    let bgColor = "rgb(230,230,230)"
+    let bgColor = "rgb(255,255,255)"
     if (colorScheme === 'dark') {
     // Use dark color scheme
         console.log("dark")
@@ -105,7 +105,7 @@ function ReceiptDivision({navigation}) {
 
     return (
         <>
-            <Container>
+            <Container style= {{backgroundColor:"#ffffff"}}>
             <Label/>
             <Label/>
             <TopIntro>접수 구분</TopIntro>

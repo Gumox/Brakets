@@ -53,7 +53,7 @@ function InputAlternativeNumber({ navigation, route }) {
     
     return (
         <>
-            <Container>
+            <Container style= {{backgroundColor:"#ffffff"}}>
                 <AlternativeCodeView>
                     <Label>바코드를  직접 입력하세요.</Label>
                     <Input

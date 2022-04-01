@@ -39,7 +39,7 @@ export default function CheckBarcode( { navigation } ) {
     //console.log(store.getState().recDate);
     
     return (
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <CenterText>
                 <RegistText>인수 확인</RegistText>
             </CenterText>

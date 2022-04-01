@@ -211,7 +211,7 @@ function ShopStepThree4({route,navigation}) {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        <ContainView>
+        <ContainView style= {{backgroundColor:"#ffffff"}}>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <TopInfo></TopInfo>
             <Contents>

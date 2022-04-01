@@ -132,7 +132,7 @@ function ShopStepThree( { navigation } ) {
       return () => backHandler.remove();
   },[]);
   return (
-      <Container>
+      <Container style= {{backgroundColor:"#ffffff"}}>
           <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/></TopStateView>
           <TopInfo></TopInfo>
 

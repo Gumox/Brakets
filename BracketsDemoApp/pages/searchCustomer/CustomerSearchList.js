@@ -90,7 +90,7 @@ export default function CustomerSearchList({route, navigation}){
     const netInfo = useNetInfo();
     
     return(
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <Label/>
             <Title>고객 목록</Title>
             <Label>고객 이름</Label>

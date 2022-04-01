@@ -18,7 +18,7 @@ function ShopStepFour2( { navigation } ) {
     const netInfo = useNetInfo();
     
     return (
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
         <TopStateView><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarSolid/><StateBarVoid/></TopStateView>
                 <TopInfo></TopInfo>
             <CenterText>

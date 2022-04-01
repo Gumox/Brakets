@@ -79,7 +79,7 @@ function ShopStepTwo({navigation}) {
     
     
     return (
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <TopStateView><StateBarSolid/><StateBarSolid/><StateBarVoid/><StateBarVoid/><StateBarVoid/></TopStateView>
             <TopInfoLess></TopInfoLess>
             <CenterText>

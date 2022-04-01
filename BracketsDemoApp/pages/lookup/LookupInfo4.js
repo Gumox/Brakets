@@ -201,7 +201,7 @@ function LookupInfo4( { route,navigation } ) {
     
     
     return(
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
                         
                 <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShop}</Text>

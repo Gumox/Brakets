@@ -250,7 +250,7 @@ export default class AddCustomer extends Component {
             )
         }
         return (
-            <Container>
+            <Container style= {{backgroundColor:"#ffffff"}}>
                     <ContentsScroll>
                         <CenterText>
                             <Label/>

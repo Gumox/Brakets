@@ -218,7 +218,7 @@ function LookupInfo3( { route,navigation } ) {
         )
     }
     return(
-        <Container>
+        <Container style= {{backgroundColor:"#ffffff"}}>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
               <InfoView>
                     <TopText>제품 전체 사진</TopText>
