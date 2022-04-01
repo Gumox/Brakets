@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert,Appearance } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 
@@ -11,6 +11,8 @@ import Bottom from '../../components/Bottom';
 import Button from '../../components/Button';
 import ReceiptButton from '../../components/ReceiptButton';
 import CenterText from '../../components/CenterText';
+
+
 
 const Label = styled.Text`
     font-size: 20px;
@@ -58,6 +60,11 @@ function Setting({ navigation }) {
     // const savedResultId = AsyncStorage.getItem('user_id', (err, result) => {
     //     console.log("load saved userId " + result);
     // });
+    const colorScheme = Appearance.getColorScheme();
+    if (colorScheme === 'dark') {
+    // Use dark color scheme
+        console.log("dark")
+    }
 
     const savedResultId = AsyncStorage.getItem('userInfo', (err, result) => {
         //user_id에 담긴 아이디 불러오기

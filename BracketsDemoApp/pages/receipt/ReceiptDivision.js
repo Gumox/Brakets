@@ -10,7 +10,7 @@ import ContainView from '../../components/ContainView';
 import Bottom from '../../components/Bottom';
 import RNPickerSelect from 'react-native-picker-select';
 import store from '../../store/store';
-import { Alert, View,Text } from 'react-native';
+import { Alert, View,Text,Appearance } from 'react-native';
 import {useNetInfo}from "@react-native-community/netinfo";
 
 const Label = styled.Text`
@@ -28,7 +28,7 @@ const PickerView = styled.View`
     width:90%;
     height:45px
     width:80%;
-    border:3px solid rgb(0,80,120);
+    border:3px solid rgb(0,80,130);
     border-radius:12px;
     justify-content: center;
     padding-left: 5px;
@@ -46,7 +46,14 @@ function ReceiptDivision({navigation}) {
     const [shopInShop,setShopInShop] = useState();
     
     const netInfo = useNetInfo();
-    
+    const colorScheme = Appearance.getColorScheme();
+    let bgColor = "rgb(230,230,230)"
+    if (colorScheme === 'dark') {
+    // Use dark color scheme
+        console.log("dark")
+        bgColor = "rgb(153,153,153)"
+    }
+
     useEffect(()=>{
         console.log(store.getState().brand_id)
         var i =1;
@@ -64,7 +71,7 @@ function ReceiptDivision({navigation}) {
             store.dispatch({ type: 'storeName', storeName: list[0].name })
             setSeletStore(list[0].value)
             setShopInShop(
-                    <Text style={{marginLeft:"5%",color:"#000000"}}>
+                    <Text style={{marginLeft:"5%"}}>
                         {text[1]}
                     </Text>
             )
@@ -72,7 +79,7 @@ function ReceiptDivision({navigation}) {
             setShopInShop(
                 <RNPickerSelect
                     placeholder = {{label : storeName, value: storeId }}
-                    style = { {border :'solid', marginBottom : 50, borderWidth : 3, borderColor : '#000000', color:"#000000"} }
+                    style = { {border :'solid', marginBottom : 50, borderWidth : 3, borderColor : '#000000'} }
                     onValueChange={(value) => 
                         {   
                             list.forEach(obj => {
@@ -102,7 +109,7 @@ function ReceiptDivision({navigation}) {
             <Label/>
             <Label/>
             <TopIntro>접수 구분</TopIntro>
-            <PickerView>
+            <PickerView style={{backgroundColor: bgColor}}>
                 {
                     shopInShop
                 }

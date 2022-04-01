@@ -226,7 +226,7 @@ const TopStateView = styled.View`
 `;
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  #78909c;
+    border:2px solid  rgb(0,80,130);
     border-radius:12px;
     
     padding:15px;

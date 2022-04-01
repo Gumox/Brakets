@@ -14,7 +14,7 @@ const RegistText= styled.Text`
 const BlueText = styled.Text`
     font-weight: bold;
     font-size: 20px;
-    color:#78909c;
+    color:rgb(0,80,130);
 `;
 const GrayText = styled.Text`
     font-size: 20px;
@@ -48,13 +48,11 @@ export default function CheckBarcode( { navigation } ) {
                 <BlueText>서비스 카드 바코드</BlueText>
                 <GrayText>를 스캔하세요</GrayText>
             </CenterText>
+            <CenterText/> 
             
             <AlternativeCodeBtn
                 onPress = {() => navigation.navigate('InputAlternativeNumber', {key:'TakeOverPage'})}
             >
-                <AlternativeCodeText>
-                    대체 코드 입력
-                </AlternativeCodeText>
             </AlternativeCodeBtn>
 
             <Button onPress={ ()=> navigation.navigate( 'ScanScreen',{key:'TakeOverPage'} ) }>

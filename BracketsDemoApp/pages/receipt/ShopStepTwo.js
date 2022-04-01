@@ -164,7 +164,7 @@ const TopIntro =styled.Text`
 const BlueText = styled.Text`
     font-weight: bold;
     font-size: 20px;
-    color:#78909c;
+    color:rgb(0,80,130);
     margin-Top:40px;
 `;
 const GrayText = styled.Text`

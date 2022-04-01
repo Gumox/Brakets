@@ -759,7 +759,7 @@ const TouchableView = styled.TouchableOpacity`
     width: 100%;;
     border-radius:10px;
     font-color:#ffffff;
-    border:2px solid #78909c;
+    border:2px solid rgb(0,80,130);
 `;
 const ImgIcon =styled.Image`
     width: 20px;
@@ -774,7 +774,7 @@ const PrView = styled.View`
 `;
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  #78909c;
+    border:2px solid  rgb(0,80,130);
     border-radius: 12px;
     padding: 15px;
     margin-bottom : 30px;
@@ -826,7 +826,7 @@ const TotalMoney = styled.View`
 const Btn = styled.TouchableOpacity`
     width : 40%;
     height: 50px;
-    background: #78909c;
+    background: rgb(0,80,130);
     justify-content: center;
     align-items: center;
     margin:15px;

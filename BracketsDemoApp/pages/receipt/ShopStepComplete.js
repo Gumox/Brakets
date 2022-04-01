@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import Container from '../../components/Container';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
@@ -16,143 +16,39 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
 import { useNetInfo } from "@react-native-community/netinfo";
 
-
-const Label = styled.Text`
-    font-size: 15px;
-    color:#000000;
-    margin-Top: 12px;
-    margin-bottom: 12px;
-    margin-left:12px;
-`;
-
-const RegistText = styled.Text`
-    font-weight: bold;
-    font-size: 30px;
-    color:#000000;
-    margin-bottom:10px;
-`;
-const BlueText = styled.Text`
-    font-weight: bold;
-    font-size: 20px;
-    color:#78909c;
-`;
-const GrayText = styled.Text`
-    font-size: 17px;
-    color:#858585;
-`;
-
-const PrView = styled.View`
-    flex-direction: row;
-    justify-content:center;
-    align-items: center;
-`;
-const TopStateView = styled.View`
-    
-    flex-direction: row;
-    padding:24px;
-    justify-content: center;
-`;
-const InnerView = styled.View`
-    align-items: center;
-    justify-content: center;
-`;
-const InfoView = styled.View`
-    width: 70%;
-    border:2px solid  #78909c;
-    border-radius:12px;
-    align-items: center;
-    padding:15px;
-    margin-bottom: 15px;
-`;
-const DataView = styled.View`
-    width: 100%;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const TouchableView = styled.TouchableOpacity`
-    align-items: center;
-    flex-direction:row;
-    justify-content:space-between;
-    width: 100%;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const ImgIcon = styled.Image`
-    width: 25px;
-    height: 20px;
-    margin-right:10px;
-`;
-const CodeViewText = styled.Text`
-    font-size: 20px;
-    color:#ffffff;
-`;
-const CodeView = styled.View`
-    align-items: center;
-    margin: 12px;
-    width: 300px;
-    background-color:#78909c;
-    border-radius:8px;
-`;
-const CloseBtn = styled.TouchableOpacity`
-    /* width: 50px; */
-    /* height: 50px; */
-`;
-
-const styles = StyleSheet.create({
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
-    },
-    xView: {
-        backgroundColor: "#78909c",
-        borderRadius: 20,
-    },
-    modalView: {
-        margin: 10,
-        backgroundColor: "white",
-        borderRadius: 20,
-        paddingRight: 5,
-        paddingLeft: 5,
-        paddingTop: 8,
-        paddingBottom: 8,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-    },
-    ViewCenter: {
-        justifyContent: "center",
-        alignItems: "center",
-    }
-});
 // 구조 분해 할당, Destructuring Assignment
-function ShopStepOne({ navigation }) {
-    const [barcode, setBarcode] = React.useState(store.getState().cardValue);
-    const [bag, setBag] = React.useState(store.getState().bagCodeValue);
+function ShopStepOne({ navigation , route}) {
+    const [barcode, setBarcode] = useState(store.getState().cardValue);
+    const [bag, setBag] = useState(store.getState().bagCodeValue);
 
 
     const cardImgUri = store.getState().card;
     const bagImgUri = store.getState().bagPicture;
 
 
-    const [modalVisible, setModalVisible] = React.useState(false);
-    const [modalVisible2, setModalVisible2] = React.useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible2, setModalVisible2] = useState(false);
 
     const sendForRepir = store.getState().basicRepairStore;
-    const [repairShop, setRepairShop] = React.useState(null);
+    const [repairShop, setRepairShop] = useState(null);
+    const [serviceCardPictureCheck, setServiceCardPictureCheck] = useState(true);
+    const [bagPictureCheck, setBagPictureCheck] = useState(true);
 
 
 
     const netInfo = useNetInfo();
 
-    React.useEffect(() => {
+    useEffect(() => {
         setRepairShop(sendForRepir)
+        if(cardImgUri){
+            setServiceCardPictureCheck(false)
+        }
+        if(bagImgUri){
+            console.log("bagImgUri")
+            console.log(bagImgUri)
+            console.log("bagImgUri")
+            setBagPictureCheck(false)
+        }
     }, []);
 
     const submitReceipt = async (receipt_id, bag_code) => {
@@ -189,7 +85,7 @@ function ShopStepOne({ navigation }) {
                 <TopStateView><StateBarSolid /><StateBarSolid /><StateBarSolid /><StateBarSolid /><StateBarSolid /></TopStateView>
                 <TopInfo></TopInfo>
                 <CenterText>
-                    <Image source={require('../../Icons/complete_blue.png')} style={{ width: 60, height: 60, marginBottom: 10 }}></Image>
+                    <Image source={require('../../Icons/complete.png')} style={{ width: 60, height: 60, marginBottom: 10 }}></Image>
                     <RegistText>접수 완료</RegistText>
                     <PrView><BlueText>완료</BlueText><GrayText> 버튼을 누르시면</GrayText></PrView>
                     <PrView><BlueText>수선 접수</BlueText><GrayText> 가</GrayText><BlueText> 완료</BlueText><GrayText> 됩니다</GrayText></PrView>
@@ -222,7 +118,7 @@ function ShopStepOne({ navigation }) {
                                                 source={{ uri: cardImgUri }} />
                                         </ImageZoom>
                                         <CloseBtn style={{marginTop: 5}}>
-                                            <CodeViewText style={{color: "#78909c", fontSize: 20}} onPress={() => setModalVisible(!modalVisible)}>
+                                            <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible(!modalVisible)}>
                                                 닫기
                                             </CodeViewText>
                                         </CloseBtn>
@@ -230,14 +126,14 @@ function ShopStepOne({ navigation }) {
                                 </View>
                             </View>
                         </Modal>
-                        <TouchableView onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label><ImgIcon source={require('../../Icons/image.png')} /></TouchableView>
+                        <TouchableView disabled={serviceCardPictureCheck} onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label>
+                        {!serviceCardPictureCheck&&(<ImgIcon source={require('../../Icons/image.png')} />)}
+                        </TouchableView>
 
                         <GrayText>받는 곳</GrayText>
                         <DataView><Label>{repairShop}</Label></DataView>
-                        {bag&&(
-                            <View>
-                                <GrayText>행낭 바코드</GrayText>
-                                <Modal
+                        {bag&&(<GrayText>행낭 바코드</GrayText>)}
+                        {bag&&(<Modal
                                     animationType="slide"
                                     transparent={true}
                                     visible={modalVisible2}
@@ -261,17 +157,19 @@ function ShopStepOne({ navigation }) {
                                                         source={{ uri: bagImgUri }} />
                                                 </ImageZoom>
                                                 <CloseBtn style={{marginTop: 5}}>
-                                                    <CodeViewText style={{color: "#78909c", fontSize: 20}} onPress={() => setModalVisible2(!modalVisible2)}>
+                                                    <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible2(!modalVisible2)}>
                                                         닫기
                                                     </CodeViewText>
                                                 </CloseBtn>
                                             </View>
                                         </View>
                                     </View>
-                                </Modal>
-                                <TouchableView onPress={() => setModalVisible2(!modalVisible)}><Label>{bag}</Label><ImgIcon source={require('../../Icons/image.png')} /></TouchableView>
-                            </View>
-                        )}
+                                </Modal>)}
+                        {bag&&(<TouchableView disabled= {bagPictureCheck} onPress={() => setModalVisible2(!modalVisible)}>
+                            <Label>{bag}</Label>
+                            {!bagPictureCheck&&(<ImgIcon source={require('../../Icons/image.png')} />)}
+                            </TouchableView>)}
+                            
 
                     </InfoView>
                     <Button onPress={() => {
@@ -294,3 +192,118 @@ function ShopStepOne({ navigation }) {
 }
 
 export default ShopStepOne;
+
+const styles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    xView: {
+        backgroundColor: "rgb(0,80,130)",
+        borderRadius: 20,
+    },
+    modalView: {
+        margin: 10,
+        backgroundColor: "white",
+        borderRadius: 20,
+        paddingRight: 5,
+        paddingLeft: 5,
+        paddingTop: 8,
+        paddingBottom: 8,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+    },
+    ViewCenter: {
+        justifyContent: "center",
+        alignItems: "center",
+    }
+});
+
+const Label = styled.Text`
+    font-size: 15px;
+    color:#000000;
+    margin-Top: 12px;
+    margin-bottom: 12px;
+    margin-left:12px;
+`;
+
+const RegistText = styled.Text`
+    font-weight: bold;
+    font-size: 30px;
+    color:#000000;
+    margin-bottom:10px;
+`;
+const BlueText = styled.Text`
+    font-weight: bold;
+    font-size: 20px;
+    color:rgb(0,80,130);
+`;
+const GrayText = styled.Text`
+    font-size: 17px;
+    color:#858585;
+`;
+
+const PrView = styled.View`
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+`;
+const TopStateView = styled.View`
+    
+    flex-direction: row;
+    padding:24px;
+    justify-content: center;
+`;
+const InnerView = styled.View`
+    align-items: center;
+    justify-content: center;
+`;
+const InfoView = styled.View`
+    width: 70%;
+    border:2px solid  rgb(0,80,130);
+    border-radius:12px;
+    align-items: center;
+    padding:15px;
+    margin-bottom: 15px;
+`;
+const DataView = styled.View`
+    width: 100%;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
+const TouchableView = styled.TouchableOpacity`
+    align-items: center;
+    flex-direction:row;
+    justify-content:space-between;
+    width: 100%;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
+const ImgIcon = styled.Image`
+    width: 25px;
+    height: 20px;
+    margin-right:10px;
+`;
+const CodeViewText = styled.Text`
+    font-size: 20px;
+    color:#ffffff;
+`;
+const CodeView = styled.View`
+    align-items: center;
+    margin: 12px;
+    width: 300px;
+    background-color:rgb(0,80,130);
+    border-radius:8px;
+`;
+const CloseBtn = styled.TouchableOpacity`
+    /* width: 50px; */
+    /* height: 50px; */
+`;

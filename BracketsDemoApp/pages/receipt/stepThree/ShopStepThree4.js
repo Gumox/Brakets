@@ -56,7 +56,7 @@ const TopStateView = styled.View`
 `;
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  #78909c;
+    border:2px solid  rgb(0,80,130);
     border-radius:12px;
     
     padding:15px;
@@ -222,7 +222,7 @@ function ShopStepThree4({route,navigation}) {
             <View style = {{width :180}}>
             <Picker
                 placeholder = {{label : selectedType,value: selectedType}}
-                style = { {width: 100,border :'solid', borderWidth : '3', borderColor : 'black',placeholder:{color: '#78909c'}} }
+                style = { {width: 100,border :'solid', borderWidth : '3', borderColor : 'black',placeholder:{color: 'rgb(0,80,130)'}} }
                 onValueChange={(value) =>
                 {
                     selectedTypeLists = value;
@@ -264,7 +264,7 @@ function ShopStepThree4({route,navigation}) {
             <Picker
                 placeholder={{ label: '기본위치: '+ basicSend,value: basicSend}}
                 
-                style = { {border :'solid', borderWidth : '3', borderColor : 'black' ,placeholder:{color: '#78909c'}} }
+                style = { {border :'solid', borderWidth : '3', borderColor : 'black' ,placeholder:{color: 'rgb(0,80,130)'}} }
                 onValueChange={(value) =>{
                     store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: value});
                     console.log(store.getState().basicRepairStore);

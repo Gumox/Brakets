@@ -44,7 +44,7 @@ const DropBackground= styled.View`
     width: 220px;
     border-radius:10px;
     font-color:#ffffff;
-    border:2px solid #78909c;
+    border:2px solid rgb(0,80,130);
     margin-top:10px;
 `;
 const Label = styled.Text`
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
       marginTop: 22
     },
     xView:{
-        backgroundColor: "#78909c",
+        backgroundColor: "rgb(0,80,130)",
         borderRadius: 20,
     },
     modalView: {

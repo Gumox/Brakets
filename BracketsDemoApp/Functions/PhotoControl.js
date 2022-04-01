@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     xView:{
-        backgroundColor: "#78909c",
+        backgroundColor: "rgb(0,80,130)",
         borderRadius: 20,
     },
     modalView: {

@@ -7,7 +7,6 @@ import styled from "styled-components";
 
 
 
-
 const CloseBtn = styled.TouchableOpacity`
     width: 5%;
     height: 5%;
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     xView:{
-        backgroundColor: "#78909c",
+        backgroundColor: "rgb(0,80,130)",
         borderRadius: 20,
     },
     modalView: {

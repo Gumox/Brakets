@@ -330,7 +330,7 @@ const TopStateView = styled.View`
 `;
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  #78909c;
+    border:2px solid  rgb(0,80,130);
     border-radius:12px;
     
     padding:15px;
@@ -345,7 +345,7 @@ const Half = styled.View`
 const Btn = styled.TouchableOpacity`
     width : 40%;
     height: 50px;
-    background: rgb(0,80,120);
+    background: rgb(0,80,130);
     justify-content: center;
     align-items: center;
     margin:15px;
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
       marginTop: 22
     },
     xView:{
-        backgroundColor: "#78909c",
+        backgroundColor: "rgb(0,80,130)",
         borderRadius: 20,
     },
     modalView: {

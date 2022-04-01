@@ -56,7 +56,7 @@ function LookupInfo4( { route,navigation } ) {
     const step = LookupCheckStep(data)
 
     const reReceipt =(data)=>{
-        SetReReceiptInfo(data)
+        SetReReceiptInfo(data,images)
         console.log("step")
         console.log(LookupCheckStep(data))
         console.log("step")
@@ -259,7 +259,7 @@ export default LookupInfo4;
 
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  rgb(0,80,120);
+    border:2px solid  rgb(0,80,130);
     border-radius: 12px;
     padding: 15px;
     margin-bottom : 30px;
@@ -306,7 +306,7 @@ const TotalMoney = styled.View`
 const Btn = styled.TouchableOpacity`
     width : 40%;
     height: 50px;
-    background: rgb(0,80,120);
+    background: rgb(0,80,130);
     justify-content: center;
     align-items: center;
     margin:15px;

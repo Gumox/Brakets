@@ -10,6 +10,7 @@ import store from '../../store/store';
 import {useNetInfo}from "@react-native-community/netinfo";
 import SetReReceiptInfo from '../../Functions/SetReReceiptInfo';
 import LookupCheckStep from '../../Functions/LookupCheckStep';
+import DeleteReceipt from '../../Functions/DeleteReceipt'
 
 const  formatDate = (inputDate)=> {
     const sp =  inputDate;
@@ -53,7 +54,7 @@ function LookupInfo( { route,navigation } ) {
     
 
     const reReceipt =(data,step)=>{
-        SetReReceiptInfo(data)
+        SetReReceiptInfo(data,images)
         
         if(step ==0){
             navigation.navigate("ShopStepOne")
@@ -71,7 +72,7 @@ function LookupInfo( { route,navigation } ) {
     useEffect(()=>{
         console.log()
         console.log()
-        console.log("step :",step)
+        console.log(data.receipt_id)
         console.log()
         console.log()
         if(data["receipt_code"]){
@@ -141,6 +142,11 @@ function LookupInfo( { route,navigation } ) {
         btn=(
             
             <Half style={{borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
+                <Btn onPress = {() => {
+                    DeleteReceipt(data.receipt_id)
+                    navigation.popToTop();
+                    navigation.navigate('LookupPage',{code:null});
+                }}><Text style ={{color : "#ffffff"}}>접수 취소</Text></Btn>
                 <Btn onPress = {() => {
                     reReceipt(data,step)
                 }}><Text style ={{color : "#ffffff"}}>접수 계속</Text></Btn>
@@ -227,7 +233,7 @@ export default LookupInfo;
 
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  rgb(0,80,120);
+    border:2px solid  rgb(0,80,130);
     border-radius: 12px;
     padding: 15px;
     margin-bottom : 30px;
@@ -243,12 +249,7 @@ const InputText = styled.Text`
     border-radius:10px;
     align-items : center;  
 `;
-const Half = styled.View`
-    width : 100%;
-    flex-direction : row;
-    justify-content : space-between;
-    align-items : center;  
-`;
+
 
 const HalfLine = styled.View`
     width : 45%;
@@ -267,12 +268,19 @@ const CenterView = styled.View`
     justify-content : center;
     align-items : center;  
 `;
+const Half = styled.View`
+    width : 100%;
+    flex-direction : row;
+    justify-content : space-between;
+    align-items : center; 
+    
+    padding:3%;
+`;
 const Btn = styled.TouchableOpacity`
-    width : 40%;
+    width : 30%;
     height: 50px;
-    background: rgb(0,80,120);
+    background: rgb(0,80,130);
     justify-content: center;
     align-items: center;
-    margin:15px;
     border-radius:12px;    
 `;

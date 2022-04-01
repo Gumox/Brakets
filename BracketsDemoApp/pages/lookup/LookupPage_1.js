@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     fontColor:"#ffffff",
     borderWidth:2,
     borderStyle: "solid",
-    borderColor: "#78909c",
+    borderColor: "rgb(0,80,130)",
   },
   selectOptions:{
     height:50,
@@ -383,7 +383,7 @@ const DropBackground = styled.View`
     width: 300px;
     border-radius:10px;
     font-color:#ffffff;
-    border:2px solid #78909c;
+    border:2px solid rgb(0,80,130);
 `;
 const Input = styled.TextInput`
     width: 100%;
@@ -421,5 +421,5 @@ const TouchableView = styled.TouchableOpacity`
     width: 48%;
     border-radius:10px;
     font-color:#ffffff;
-    border:2px solid #78909c;
+    border:2px solid rgb(0,80,130);
 `;

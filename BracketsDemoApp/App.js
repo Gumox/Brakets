@@ -54,58 +54,59 @@ import EnlargePhoto from './Functions/EnlargePhoto';
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const textColor = "rgb(0,80,130)"
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerStyle:{backgroundColor:"#BBDEFB"}}}>
+      <Stack.Navigator >
 
 
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
         {/* <Stack.Screen name="StartPage" component={StartPage} /> */}
 
         {/*접수*/}
-        <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{title: '', headerLeft: null, headerTintColor: "black"}} />
-        <Stack.Screen name="InputAlternativeNumber" component={InputAlternativeNumber} options={{ title: '' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="ProductInfo" component={ProductInfo} options={{ title: '1단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{title: '', headerLeft: null, headerTintColor: textColor}} />
+        <Stack.Screen name="InputAlternativeNumber" component={InputAlternativeNumber} options={{ title: '' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="ProductInfo" component={ProductInfo} options={{ title: '1단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
 
-        <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="ShopStepTwo" component={ShopStepTwo} options={{ title: '2단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
 
 
-        <Stack.Screen name="ShopStepThree" component={ShopStepThree} options={{ title: '3단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="ShopStepThree" component={ShopStepThree} options={{ title: '3단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
         <Stack.Screen name="ShopStepThree2" component={ShopStepThree2} options={{ headerShown: false }} />
         <Stack.Screen name="ShopStepThree3" component={ShopStepThree3} options={{ headerShown: false }} />
-        <Stack.Screen name="ShopStepThree4" component={ShopStepThree4} options={{ title: '3단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="ShopStepThree5" component={ShopStepThree5} options={{ title: '3단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="ShopStepThree4" component={ShopStepThree4} options={{ title: '3단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="ShopStepThree5" component={ShopStepThree5} options={{ title: '3단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
 
-        <Stack.Screen name="ShopStepFour" component={ShopStepFour} options={{ title: '4단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="ShopStepFour2" component={ShopStepFour2} options={{ title: '4단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="ShopStepFour" component={ShopStepFour} options={{ title: '4단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="ShopStepFour2" component={ShopStepFour2} options={{ title: '4단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
 
-        <Stack.Screen name="ShopStepFive" component={ShopStepFive} options={{ title: '5단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="ShopStepComplete" component={ShopStepComplete} options={{ title: '5단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="ShopStepFive" component={ShopStepFive} options={{ title: '5단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="ShopStepComplete" component={ShopStepComplete} options={{ title: '5단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
 
         {/*인수*/}
-        <Stack.Screen name="TakeOverPage" component={TakeOverPage} options={{  title: '인수' ,headerTitleAlign: 'center', headerTintColor: "black"}}/>
-        <Stack.Screen name="CheckBarcode" component={CheckBarcode} options={{  title: '' ,headerTitleAlign: 'center', headerTintColor: "black"}}/>
+        <Stack.Screen name="TakeOverPage" component={TakeOverPage} options={{  title: '인수' ,headerTitleAlign: 'center', headerTintColor: textColor}}/>
+        <Stack.Screen name="CheckBarcode" component={CheckBarcode} options={{  title: '' ,headerTitleAlign: 'center', headerTintColor: textColor}}/>
 
         {/*조회*/}
-        <Stack.Screen name="LookupPage" component={LookupPage} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="LookupInfo" component={LookupInfo} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="LookupInfo2" component={LookupInfo2} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="LookupInfo3" component={LookupInfo3} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="LookupInfo4" component={LookupInfo4} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="LookupPage" component={LookupPage} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="LookupInfo" component={LookupInfo} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="LookupInfo2" component={LookupInfo2} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="LookupInfo3" component={LookupInfo3} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="LookupInfo4" component={LookupInfo4} options={{ title: '조회' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
 
-        <Stack.Screen name="Setting" component={Setting} options={{  title: '설정' ,headerTitleAlign: 'center', headerTintColor: "black"}}/>
+        <Stack.Screen name="Setting" component={Setting} options={{  title: '설정' ,headerTitleAlign: 'center', headerTintColor: textColor}}/>
         
         
         
         {/*고객*/}
-        <Stack.Screen name="SearchCustomer" component={SearchCustomer} options={{  title: '',headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="CustomerSearchList" component={CustomerSearchList} options={{  title: '',headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="CustomerInfo" component={CustomerInfo} options={{  title: '',headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="AddCustomer" component={AddCustomer} options={{  title: '',headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="Notice" component={Notice} options={{  title: '수선 관련 고지 사항',headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="SmsNotice" component={SmsNotice} options={{  title: '문자 수신 동의 여부',headerTitleAlign: 'center', headerTintColor: "black"}} />
-        <Stack.Screen name="PrivacyNotice" component={PrivacyNotice} options={{  title: '개인 정보 동의 여부',headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="SearchCustomer" component={SearchCustomer} options={{  title: '',headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="CustomerSearchList" component={CustomerSearchList} options={{  title: '',headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="CustomerInfo" component={CustomerInfo} options={{  title: '',headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="AddCustomer" component={AddCustomer} options={{  title: '',headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="Notice" component={Notice} options={{  title: '수선 관련 고지 사항',headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="SmsNotice" component={SmsNotice} options={{  title: '문자 수신 동의 여부',headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="PrivacyNotice" component={PrivacyNotice} options={{  title: '개인 정보 동의 여부',headerTitleAlign: 'center', headerTintColor: textColor}} />
         
         {/*기능*/}
         <Stack.Screen
@@ -115,13 +116,13 @@ function App() {
             (
               Platform.OS == 'ios'
             ) ? (
-              {headerShown: true, title: '', headerTintColor: "black"}
+              {headerShown: true, title: '', headerTintColor: textColor}
             ) : (
               {headerShown: false}
             )}
         />
         <Stack.Screen name="TakePhoto" component={TakePhoto} options={{ headerShown: false }}  />
-        <Stack.Screen name="BarcodeScreen" component={BarcodeScreen}  options={{ title: '스캔' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="BarcodeScreen" component={BarcodeScreen}  options={{ title: '스캔' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
         <Stack.Screen name="PhotoControl" component={PhotoControl} options={{ headerShown: false }}  />
         <Stack.Screen name="Capture" component={Capture} options={{ headerShown: false }}  />
         <Stack.Screen name="EnlargePhoto" component={EnlargePhoto} options={{ headerShown: false }}  />

@@ -1,6 +1,5 @@
 import React, {useCallback ,useState,useRef, useEffect} from 'react';
 import styled from 'styled-components/native';
-import CenterText from '../../components/CenterText';
 import _ from 'lodash';
 import { 
   ScrollView ,
@@ -547,9 +546,6 @@ const styles = StyleSheet.create({
       top:15,
     },
     filter:{
-      /*position:"absolute",
-      right:20,
-      bottom:10*/
     },
     centeredView: {
       flex: 1,
@@ -571,6 +567,13 @@ const styles = StyleSheet.create({
     },
 
   })
+const CenterText = styled.View`
+    flex: 1;
+    padding: 24px;
+    justify-content: center;
+    align-items: center;
+    minHeight :120px;
+`;
 
 const Input = styled.TextInput`
     width: 100%;

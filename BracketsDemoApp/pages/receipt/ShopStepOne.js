@@ -86,7 +86,7 @@ const RegistText= styled.Text`
 const BlueText = styled.Text`
     font-weight: bold;
     font-size: 20px;
-    color:#78909c;
+    color:rgb(0,80,130);
 `;
 const GrayText = styled.Text`
     font-size: 20px;

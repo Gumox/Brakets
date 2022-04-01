@@ -6,7 +6,7 @@ import CenterText from '../../components/CenterText';
 
 import _ from 'lodash';
 import Button from '../../components/Button';
-import { Image,Text, View, TouchableHighlight } from "react-native";
+import { Image,Text, View, TouchableHighlight, Alert } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateObject from "react-date-object";
 import { size } from 'lodash';
@@ -63,7 +63,7 @@ const Title = styled.Text`
 export default function CustomerSearchList({route, navigation}){
     const customers = route.params.customers;
     console.log(customers)
-    const [cName,setCName] = useState();
+    const [cName,setCName] = useState(null);
     const [cPhone,setCPhone] = useState();
     let cInfoList =[];
     for (let i = 0; i < customers.length; i++) {
@@ -94,16 +94,21 @@ export default function CustomerSearchList({route, navigation}){
             <Label/>
             <Title>고객 목록</Title>
             <Label>고객 이름</Label>
-            <Input value ={cName}/>
+            <Input editable={false} value ={cName}/>
             <Label>연락처</Label>
-            <Input value ={cPhone}/>        
+            <Input editable={false} value ={cPhone}/>        
         
             <ContentsScroll>
                {cInfoList}
             </ContentsScroll>
             <Button onPress={ ()=> {
                 if(netInfo.isConnected){
-                    navigation.navigate("CustomerInfo")
+                    console.log(cName)
+                    if(cName == null){
+                        Alert.alert("접수고객 미선택","접수 고객을 선택 해주세요")
+                    }else{
+                        navigation.navigate("CustomerInfo")
+                    }
                 }else{
                     alert("네트워크 연결 실패\n 연결상태를 확인해주세요")
                 }

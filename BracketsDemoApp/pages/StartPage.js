@@ -18,7 +18,7 @@ const BottomView = styled.View`
 const BottomButton = styled.TouchableOpacity`
     width: 25%;
     height: 30%;
-    background: #78909c;
+    background: rgb(0,80,130);
     border-color: red;
     align-items: center;
     justify-content: center;
@@ -31,7 +31,7 @@ const BottomButtonText = styled.Text`
 `;
 
 const BottomEmptySpace = styled.View`
-    background: #78909c;
+    background: rgb(0,80,130);
     width: 100%;
     height: 3%;
 `;

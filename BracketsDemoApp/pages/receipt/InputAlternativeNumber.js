@@ -37,12 +37,19 @@ function InputAlternativeNumber({ navigation, route }) {
 
     const [input, setInput] = useState('');
     const key = route.params.key;
+    const naviAction = () =>{
+        
+        if(key=="ShopStepFour"){
+            store.dispatch({type:'SERVICECAED',value:input});
+            store.dispatch({type:'TAKE',take:null});
+        }else if(key === 'ShopStepComplete'){
+            store.dispatch({type:'BAGCODE',bag:input});
 
-    console.log(key)
-    if(key=="ShopStepFour"){
-        store.dispatch({type:'SERVICECAED',value:input});
-        store.dispatch({type:'TAKE',take:null});
+            store.dispatch({type:'BAGTAG',bagTag:null});
+        }
+        navigation.replace(key, { codeType: 'barcode', code: input })
     }
+
     
     return (
         <>
@@ -59,7 +66,7 @@ function InputAlternativeNumber({ navigation, route }) {
 
                 <Button
                     onPress={() => (input != '') ? (
-                        navigation.replace(key, { codeType: 'barcode', code: input })
+                        naviAction()
                     ) : (
                         Alert.alert(
                             "입력 코드 오류",

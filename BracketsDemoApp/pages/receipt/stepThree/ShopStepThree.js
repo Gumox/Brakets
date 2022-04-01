@@ -32,7 +32,7 @@ const Title = styled.Text`
 `;
 const BlueText = styled.Text`
   font-size : 20px;
-  color : #78909c;
+  color : rgb(0,80,130);
 `;
 const GrayText = styled.Text`
   font-size : 20px;
@@ -47,7 +47,7 @@ const DropBackground= styled.View`
     width: 220px;
     border-radius:10px;
     font-color:#ffffff;
-    border:2px solid #78909c;
+    border:2px solid rgb(0,80,130);
     margin-top:10px;
 `;
 

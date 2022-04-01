@@ -7,7 +7,7 @@
     </style>
 
 	<style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
-	    <item name="colorAccent">#78909c</item>
+	    <item name="colorAccent">#005082</item>
  	</style>
 
 </resources>

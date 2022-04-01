@@ -1,54 +1,56 @@
 import React from "react";
 import styled from "styled-components";
+import { Dimensions } from "react-native";
 
 const BottomView = styled.View`
-    height : 10%;
+    height : 70px;
     flex-direction: row;
 `;
 const BottomButton = styled.TouchableOpacity`
     width: 25%;
     height: 100%;
-    background: #BBDEFB;
+    background: rgb(0,80,130);
     align-items: center;
     justify-content: center;
 `;
 const BottomButtonText = styled.Text`
-    font-size: 16px;
+    font-size: ${Dimensions.get('window').width*0.035}px;
     font-weight: bold;
-    color: #000000;
+    color: rgb(230,230,230);
 `;
-const BottomItemBox = styled.View`
-  flex-direction: row;
-  width:100%
-  justify-content: space-between;
-  background-color :#BBDEFB;
-  margin-left : 20px;
-  margin-right : 20px;
+const BottomIcon = styled.Image`
+    width:${Dimensions.get('window').width*0.08}px;
+    height:${Dimensions.get('window').width*0.08}px;
+    marginBottom:5px;
 `;
 
 function Bottom  (props){
   return(
   <BottomView>
       <BottomButton onPress = {() => props.navigation.navigate( 'ReceiptDivision')}>
-          <BottomButtonText>
-              접수
-          </BottomButtonText>
+            <BottomIcon source={require('../Icons/writing.png')}/>
+            <BottomButtonText>
+                접수
+            </BottomButtonText>
       </BottomButton>
       <BottomButton onPress = {() => props.navigation.navigate( 'CheckBarcode')}>
-          <BottomButtonText>
-              인수
-          </BottomButtonText>
+            <BottomIcon source={require('../Icons/hand.png')}/>
+            <BottomButtonText>
+                인수
+            </BottomButtonText>
       </BottomButton>
 
       <BottomButton onPress = {() => props.navigation.navigate( 'LookupPage',{code:null})}>
-          <BottomButtonText>
-              조회
-          </BottomButtonText>
+            <BottomIcon source={require('../Icons/search2.png')}/>
+            <BottomButtonText>
+                조회
+            </BottomButtonText>
       </BottomButton>
       <BottomButton onPress = {() => props.navigation.navigate( 'Setting')}>
-          <BottomButtonText>
-              설정
-          </BottomButtonText>
+            <BottomIcon source={require('../Icons/settings.png')}/>
+            <BottomButtonText>
+                설정
+            </BottomButtonText>
       </BottomButton>
             
   </BottomView>

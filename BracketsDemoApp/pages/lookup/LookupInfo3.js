@@ -9,6 +9,7 @@ import styled from 'styled-components/native';
 import ip from '../../serverIp/Ip';
 import {useNetInfo}from "@react-native-community/netinfo";
 import LookupCheckStep from '../../Functions/LookupCheckStep';
+import DeleteReceipt from '../../Functions/DeleteReceipt';
 import SetReReceiptInfo from '../../Functions/SetReReceiptInfo';
 
 
@@ -23,29 +24,6 @@ function LookupInfo3( { route,navigation } ) {
     const data =route.params.data;
     const images = route.params.images;
     const needImages =route.params.needImages;
-    //console.log(images)
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log(data.product_category_name)
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
     const step = LookupCheckStep(data)
 
     const netInfo = useNetInfo();
@@ -223,7 +201,12 @@ function LookupInfo3( { route,navigation } ) {
     }else{
         btn=(
             
-            <Half style={{borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
+            <Half style={{padding:"3%",borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
+                <Btn onPress = {() => {
+                    DeleteReceipt(data.receipt_id)
+                    navigation.popToTop();
+                    navigation.navigate('LookupPage',{code:null});
+                }}><Text style ={{color : "#ffffff"}}>접수 취소</Text></Btn>
                 <Btn onPress = {() => {
                     reReceipt(data,step)
                 }}><Text style ={{color : "#ffffff"}}>접수 계속</Text></Btn>
@@ -289,7 +272,7 @@ export default LookupInfo3;
 
 const InfoView =styled.View`
     width: 100%;
-    border:2px solid  rgb(0,80,120);
+    border:2px solid  rgb(0,80,130);
     border-radius: 12px;
     padding: 15px;
     margin-bottom : 30px;
@@ -315,12 +298,11 @@ const Half = styled.View`
 `;
 
 const Btn = styled.TouchableOpacity`
-    width : 40%;
+    width : 30%;
     height: 50px;
-    background: rgb(0,80,120);
+    background: rgb(0,80,130);
     justify-content: center;
     align-items: center;
-    margin:15px;
     border-radius:12px;    
 `;
 const TopText = styled.Text`

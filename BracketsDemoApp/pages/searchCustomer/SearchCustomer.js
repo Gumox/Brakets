@@ -27,7 +27,7 @@ const DropBackground = styled.View`
     width: 300px;
     border-radius:10px;
     font-color:#ffffff;
-    border:2px solid #78909c;
+    border:2px solid rgb(0,80,130);
     margin-top:10px;
 `;
 const Input = styled.TextInput`

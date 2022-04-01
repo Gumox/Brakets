@@ -4,7 +4,7 @@ import { View } from 'react-native';
 const Container = styled.TouchableOpacity`
     width:140px;
     height:120px;
-    background: rgb(0,80,120);
+    background: rgb(0,80,130);
     border-radius:12px;
     margin:10px;
 `;
