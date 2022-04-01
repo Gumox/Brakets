@@ -6,6 +6,7 @@ async function getLookup(query, values) {
                     receipt.step,
                     receipt.receipt_code AS receipt_code,
                     receipt.pcategory_id AS product_category,
+                    product_category.product_category_name,
                     receipt.category AS receipt_category,
                     receipt.receipt_type AS receipt_type,
                     receipt.store_id AS store_id,
@@ -150,6 +151,7 @@ async function getLookup(query, values) {
             LEFT JOIN mfr_detail AS mfr ON receipt.mfr_detail_id = mfr.mfr_detail_id
             LEFT JOIN store AS mfr_store ON receipt.mfr_id = mfr_store.store_id
             LEFT JOIN store AS receiver ON receipt.receiver = receiver.store_id
+            LEFT JOIN product_category AS product_category ON receipt.pcategory_id = product_category.pcategory_id 
              ${query}`,
             
     values,
