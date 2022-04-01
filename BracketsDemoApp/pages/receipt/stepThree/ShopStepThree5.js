@@ -119,14 +119,6 @@ function ShopStepThree5({route,navigation}) {
 
     },[]);
     
-    console.log("------------------------------")
-    console.log()
-    console.log()
-    console.log(store.getState().photo)
-    console.log(store.getState().detailPhoto)
-    console.log()
-    console.log()
-    console.log("--------------------------------")
     uriList.push(store.getState().photo);
     if(store.getState().detailPhoto !=[]){
         uriList.push(store.getState().detailPhoto);

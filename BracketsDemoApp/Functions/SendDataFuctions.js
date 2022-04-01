@@ -3,16 +3,7 @@ import store from "../store/store";
 import { getList } from "./GetSendList";
 
 
-export function changeBasicSend(value,key){
-    const basicSendList = store.getState().basicRepairStore;
-    const data =store.getState().getProductCategory;
-    console.log("");
-    console.log("on hear");
-    console.log("");
-    console.log(basicSendList);
-    console.log("");
-    console.log("");
-    console.log("");
+export function changeBasicSend(value){
     const Categories = [];
 
     const productCategories = store.getState().getProductCategory;
@@ -29,12 +20,6 @@ export function changeBasicSend(value,key){
 
     Categories.forEach(obj =>{
         if(value === obj.category_name){
-            console.log("??");
-            console.log("??");
-            console.log(value);
-            console.log("??");
-            console.log("??");
-            console.log(obj.receiver_name);
             store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:obj.receiver_name});
             console.log(store.getState().basicRepairStore);
         }

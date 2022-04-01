@@ -78,7 +78,7 @@ function ShopStepThree4({route,navigation}) {
     uriList.push(store.getState().photo);
     uriList.push(store.getState().detailPhoto);
     
-    const selectedType = store.getState().selectType[0].value; 
+    const selectedType = store.getState().selectType; 
     const index = store.getState().indexNumber;
     const [sendList,setSendList] = React.useState([]);
     const [itemList , setItemList] = React.useState([]);
@@ -198,7 +198,7 @@ function ShopStepThree4({route,navigation}) {
     var inputTexts = [];
     var selectedTypeLists = [];
 
-    selectedTypeLists[0] = ( store.getState().selectType[0]);
+    selectedTypeLists[0] = ( store.getState().selectType);
 
     const styles = StyleSheet.create({
         container: {
@@ -225,7 +225,7 @@ function ShopStepThree4({route,navigation}) {
                 style = { {width: 100,border :'solid', borderWidth : '3', borderColor : 'black',placeholder:{color: '#78909c'}} }
                 onValueChange={(value) =>
                 {
-                    selectedTypeLists[0] = ( {key : 0 ,value : value});
+                    selectedTypeLists = value;
                     productCategories.forEach(obj => {
                         if(value === obj.category_name){
                             console.log("???????????"+obj.pcategory_id);
@@ -236,7 +236,7 @@ function ShopStepThree4({route,navigation}) {
                             
                           }
                     });
-                    changeSelectType(value,0);
+                    //changeSelectType(value,0);
                    
                     setBasicSend(store.getState().basicRepairStore);
                     
