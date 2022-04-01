@@ -4,6 +4,7 @@ import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import { Alert } from 'react-native';
 import Bottom from '../../components/Bottom';
+import store from '../../store/store';
 import { set } from 'lodash';
 import {useNetInfo}from "@react-native-community/netinfo";
 
@@ -38,6 +39,10 @@ function InputAlternativeNumber({ navigation, route }) {
     const key = route.params.key;
 
     console.log(key)
+    if(key=="ShopStepFour"){
+        store.dispatch({type:'SERVICECAED',value:input});
+        store.dispatch({type:'TAKE',take:null});
+    }
     
     return (
         <>

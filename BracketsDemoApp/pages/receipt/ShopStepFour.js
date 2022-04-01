@@ -23,7 +23,7 @@ Date.prototype.addDays = function(days) {
     return date;
 }
 
-function ShopStepFour({navigation}) {
+function ShopStepFour({navigation,route}) {
     const service_date =store.getState().serviceDate;
     const [dateInput2,setDateInput2] = useState(new Date().addDays(service_date))
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
@@ -33,7 +33,7 @@ function ShopStepFour({navigation}) {
     const netInfo = useNetInfo();
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-
+    console.log(route)
 
     const useInput=(inputDate)=> {
         let date = inputDate
@@ -120,7 +120,7 @@ function ShopStepFour({navigation}) {
             console.log("checkService: ")
             if(checkService.message){
                 alert("이미 등록된 서비스 카드 입니다.")
-                navigation.pop();
+                navigation.goBack();
             }
         }
         fetch()
@@ -164,42 +164,44 @@ function ShopStepFour({navigation}) {
                 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
                 <InfoView>
-                <CenterView>
+                {cardImgUri&&(
+                    <CenterView>
+                        
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                            setModalVisible(!modalVisible);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                            <View style ={styles.xView} >    
+                            <View style={styles.modalView} >
+                                
+                                <ImageZoom cropWidth={320}
+                                        cropHeight={400}
+                                        imageWidth={300}
+                                        imageHeight={400}>
+                                        <Image style={{width:300, height:400}}
+                                        source={{uri:cardImgUri}}/>
+                                </ImageZoom>
+                                
+                            </View>
+                            </View>
+                            </View>
+                        </Modal>
+                        
+                        
+                        <Pressable  onPress={() => setModalVisible(!modalVisible)}>
+                            <Image
+                            style ={{width:200,height:200}}
+                            source={{uri:cardImgUri}}
+                            />
+                        </Pressable>
                     
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                        }}
-                    >
-                        <View style={styles.centeredView}>
-                        <View style ={styles.xView} >    
-                        <View style={styles.modalView} >
-                            
-                            <ImageZoom cropWidth={320}
-                                    cropHeight={400}
-                                    imageWidth={300}
-                                    imageHeight={400}>
-                                    <Image style={{width:300, height:400}}
-                                    source={{uri:cardImgUri}}/>
-                            </ImageZoom>
-                            
-                        </View>
-                        </View>
-                        </View>
-                    </Modal>
-                    
-                    
-                    <Pressable  onPress={() => setModalVisible(!modalVisible)}>
-                        <Image
-                        style ={{width:200,height:200}}
-                        source={{uri:cardImgUri}}
-                        />
-                    </Pressable>
-                   
-                </CenterView>
+                    </CenterView>
+                )}
 
                 <Label> 서비스 카드 바코드</Label>
                 <Input value ={barcode}/>
