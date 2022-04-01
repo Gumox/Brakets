@@ -5,6 +5,7 @@ async function getLookup(query, values) {
     query: `SELECT receipt.receipt_id AS receipt_id,
                     receipt.step,
                     receipt.receipt_code AS receipt_code,
+                    receipt.pcategory_id AS product_category,
                     receipt.category AS receipt_category,
                     receipt.receipt_type AS receipt_type,
                     receipt.store_id AS store_id,
