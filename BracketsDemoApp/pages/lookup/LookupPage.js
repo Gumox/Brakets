@@ -327,7 +327,7 @@ function LookupPage({ route,navigation }) {
             
             {/* <Title>조회 결과</Title>*/}
             <CenterText >
-            <View style={{width: Dimensions.get('window').width*0.9}}>
+            <View style={{width: Dimensions.get('window').width*0.9,marginTop:10}}>
               <Text style={{color:"#000000"}}>매장 접수일</Text>
             </View>
             
@@ -382,10 +382,12 @@ function LookupPage({ route,navigation }) {
               <Image style={{width:20,height:20}} source={require('../../Icons/search.png')}/>
             </IconButton>
           </PxView>
-
-            <TouchableOpacity style={styles.filter} onPress={() => fadeIn(modalVisible)}>
-              <Text style={{color:"#000000"}}>상세 조회 필터</Text>
-            </TouchableOpacity>
+            <FilterView>
+              <TouchableOpacity style={styles.filter} onPress={() => fadeIn(modalVisible)}>
+                <Text style={{color:"#000000"}}>상세 조회 필터</Text>
+              </TouchableOpacity>
+              
+            </FilterView>       
                 
             
             </CenterText>
@@ -545,9 +547,9 @@ const styles = StyleSheet.create({
       top:15,
     },
     filter:{
-      position:"absolute",
+      /*position:"absolute",
       right:20,
-      bottom:10
+      bottom:10*/
     },
     centeredView: {
       flex: 1,
@@ -575,6 +577,12 @@ const Input = styled.TextInput`
     padding: 8px;
     font-size: 20px;
     color :#000000;
+`;
+const FilterView = styled.View`
+  width:${(Dimensions.get('window').width)*0.9}px;
+  marginTop:5px;
+  marginBottom:5px;
+  flex-direction: row-reverse;
 `;
 
 const PrView = styled.View`

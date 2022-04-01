@@ -81,7 +81,7 @@ function ShopStepFour({navigation}) {
 
     
 
-    const updateReceipt = async (receipt_id,code,receiptdate,duedate) => {
+    const updateReceipt = async (receipt_id,code,receiptdate,duedate,tof) => {
         const formdata = new FormData();
 
         formdata.append("step", "4");
@@ -101,7 +101,11 @@ function ShopStepFour({navigation}) {
             });
             const json = await response.json();
             console.log(json)
-            navigation.navigate( 'ShopStepFive' ) 
+            if(tof){
+                navigation.navigate( 'ShopStepFive' ) 
+            }else{
+                navigation.navigate( 'ShopStepComplete' ) 
+            }
         } catch (error) {
             console.error(error);
         } finally {
@@ -116,7 +120,7 @@ function ShopStepFour({navigation}) {
             console.log("checkService: ")
             if(checkService.message){
                 alert("이미 등록된 서비스 카드 입니다.")
-                navigation.goBack();
+                navigation.pop();
             }
         }
         fetch()
@@ -224,21 +228,38 @@ function ShopStepFour({navigation}) {
                 <View style ={{margin:30}}/>
             </Contents>
             <CenterView>
-                <ButtonBlack onPress={ ()=>{
+                <Half>
+                    <Btn onPress={ ()=>{
 
-                    if(netInfo.isConnected){
-                        const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
-                        const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
+                        if(netInfo.isConnected){
+                            const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
+                            const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
 
-                        updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate)
-                    
-                    }else{
-                        alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
-                    }
-                    
-                }}>
-                    다음: 5단계
-                </ButtonBlack>
+                            updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate,false)
+
+                        }else{
+                            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                        }
+
+                    }}>
+                        <Text style ={{color : "#ffffff"}}>행낭 사용 안함</Text>
+                    </Btn>
+                    <Btn onPress={ ()=>{
+
+                        if(netInfo.isConnected){
+                            const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
+                            const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
+
+                            updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate,true)
+
+                        }else{
+                            alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
+                        }
+
+                    }}>
+                        <Text style ={{color : "#ffffff"}}>다음: 5단계</Text>
+                    </Btn>
+                </Half>
             </CenterView>
             <Bottom navigation={navigation}/>
         </ContainView>
@@ -313,6 +334,21 @@ const InfoView =styled.View`
     padding:15px;
 `;
 
+const Half = styled.View`
+    width : 100%;
+    flex-direction : row;
+    justify-content : space-between;
+    align-items : center;  
+`;
+const Btn = styled.TouchableOpacity`
+    width : 40%;
+    height: 50px;
+    background: rgb(0,80,120);
+    justify-content: center;
+    align-items: center;
+    margin:15px;
+    border-radius:12px;    
+`;
 const styles = StyleSheet.create({
     centeredView: {
       flex: 1,

@@ -22,6 +22,7 @@ const getProductCategory = async () => {
         response => (response.status == '200') ? (
            console.log(response.data),
            store.dispatch({type:'GET_APL_TYPE',setAplType: response.data.body})
+           
         ) : (
             console.log("204")
         )
@@ -30,6 +31,33 @@ const getProductCategory = async () => {
         console.log(error)
         
     })
+}
+const getRepairList = async (id) => {
+    const bodyData = {
+      "category": store.getState().receptionDivision.id,
+      "receipt": store.getState().requirement.id,
+      "season_id": store.getState().season_id,
+      "pcategory_id": id
+
+      }
+      console.log(bodyData)
+    try {
+      const response = await fetch(ip+'/api/getRepairList',{method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+      body: JSON.stringify(bodyData)
+      });
+      const json = await response.json();
+      
+
+      store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
+      
+        
+    } catch (error) {
+      console.error(error);
+    } 
 }
 const SetReReceiptInfo=(data)=>{
     store.dispatch({type:'RECEIPT_ID',receipt_id: data.receipt_id});
@@ -49,9 +77,11 @@ const SetReReceiptInfo=(data)=>{
         getProductCategory();
     }else if(data.receipt_type==2){
         store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
+        getProductCategory();
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
     }else if(data.receipt_type==3){
         store.dispatch({type:'REQUIREMENT',requirement:{name:"환불",id:3}});
+        
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
     }else if(data.receipt_type==4){
         store.dispatch({type:'REQUIREMENT',requirement:{name:"심의",id:4}});
@@ -59,6 +89,30 @@ const SetReReceiptInfo=(data)=>{
     }
     if(data.image){
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: data.receiver_name});
+        
+        const Categories = [];
+        const itemList = [];
+        let i = 1;
+        const productCategories = store.getState().getProductCategory;
+
+        productCategories.forEach(obj => {
+            if(obj.receiver_name !== '아디다스코리아(본사)' ){
+            
+            itemList.push({ label: i+'.'+obj.category_name, value: obj.category_name })
+            Categories.push({'category_name' :obj.category_name, 'pcategory_id': obj.pcategory_id, 'service_date':  obj.service_date});
+            i = i+1;
+            }
+            
+        });
+        Categories.forEach(obj => {
+            if(data.product_category_name === obj.category_name){
+              
+              getRepairList(data.pcategory_id);
+              store.dispatch({type:"SERVICE_DATE",serviceDate:obj.service_date});
+              
+            }
+
+          });
     }
     if(data.receipt_code){
         store.dispatch({type:'SERVICECAED',value:data.receipt_code});

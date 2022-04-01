@@ -8,8 +8,8 @@ import { Image,Text, View, ScrollView, Dimensions ,StyleSheet, Alert, Modal, Pre
 import styled from 'styled-components/native';
 import ip from '../../serverIp/Ip';
 import {useNetInfo}from "@react-native-community/netinfo";
-import SetReReceiptInfo from '../../Functions/SetReReceiptInfo';
 import LookupCheckStep from '../../Functions/LookupCheckStep';
+import SetReReceiptInfo from '../../Functions/SetReReceiptInfo';
 
 
 const  formatDate = (inputDate)=> {
@@ -24,7 +24,28 @@ function LookupInfo3( { route,navigation } ) {
     const images = route.params.images;
     const needImages =route.params.needImages;
     //console.log(images)
-    
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log(data.product_category_name)
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log()
     const step = LookupCheckStep(data)
 
     const netInfo = useNetInfo();
@@ -55,7 +76,7 @@ function LookupInfo3( { route,navigation } ) {
 
     
     const reReceipt =(data,step)=>{
-        SetReReceiptInfo(data)
+        SetReReceiptInfo(data,images)
         
         if(step ==0){
             navigation.navigate("ShopStepOne")
@@ -64,7 +85,7 @@ function LookupInfo3( { route,navigation } ) {
         }else if(step ==2){
             navigation.navigate("ShopStepThree")
         }else if(step ==3){
-            navigation.navigate("ShopStepFour")
+            navigation.navigate("ShopStepFour2")
         }else if(step ==4){
             navigation.navigate("ShopStepFive")
         }

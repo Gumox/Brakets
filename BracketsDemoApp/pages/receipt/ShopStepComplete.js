@@ -156,7 +156,7 @@ function ShopStepOne({ navigation }) {
     }, []);
 
     const submitReceipt = async (receipt_id, bag_code) => {
-        var formdata = new FormData();
+        let formdata = new FormData();
 
         formdata.append("receipt", receipt_id);
         formdata.append("mailbag", bag_code);
@@ -234,40 +234,44 @@ function ShopStepOne({ navigation }) {
 
                         <GrayText>받는 곳</GrayText>
                         <DataView><Label>{repairShop}</Label></DataView>
-                        <GrayText>행낭 바코드</GrayText>
-                        <Modal
-                            animationType="slide"
-                            transparent={true}
-                            visible={modalVisible2}
-                            onRequestClose={() => {
-                                setModalVisible2(!modalVisible2);
-                            }}
-                        >
-                            <View style={styles.centeredView}>
-                                <View style={styles.xView} >
-                                    <View style={styles.modalView} >
-                                        <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                            <CodeViewText>
-                                                {bag}
-                                            </CodeViewText>
-                                        </CodeView>
-                                        <ImageZoom cropWidth={320}
-                                            cropHeight={400}
-                                            imageWidth={300}
-                                            imageHeight={400}>
-                                            <Image style={{ width: 300, height: 400 }}
-                                                source={{ uri: bagImgUri }} />
-                                        </ImageZoom>
-                                        <CloseBtn style={{marginTop: 5}}>
-                                            <CodeViewText style={{color: "#78909c", fontSize: 20}} onPress={() => setModalVisible2(!modalVisible2)}>
-                                                닫기
-                                            </CodeViewText>
-                                        </CloseBtn>
+                        {bag&&(
+                            <View>
+                                <GrayText>행낭 바코드</GrayText>
+                                <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    visible={modalVisible2}
+                                    onRequestClose={() => {
+                                        setModalVisible2(!modalVisible2);
+                                    }}
+                                >
+                                    <View style={styles.centeredView}>
+                                        <View style={styles.xView} >
+                                            <View style={styles.modalView} >
+                                                <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                                    <CodeViewText>
+                                                        {bag}
+                                                    </CodeViewText>
+                                                </CodeView>
+                                                <ImageZoom cropWidth={320}
+                                                    cropHeight={400}
+                                                    imageWidth={300}
+                                                    imageHeight={400}>
+                                                    <Image style={{ width: 300, height: 400 }}
+                                                        source={{ uri: bagImgUri }} />
+                                                </ImageZoom>
+                                                <CloseBtn style={{marginTop: 5}}>
+                                                    <CodeViewText style={{color: "#78909c", fontSize: 20}} onPress={() => setModalVisible2(!modalVisible2)}>
+                                                        닫기
+                                                    </CodeViewText>
+                                                </CloseBtn>
+                                            </View>
+                                        </View>
                                     </View>
-                                </View>
+                                </Modal>
+                                <TouchableView onPress={() => setModalVisible2(!modalVisible)}><Label>{bag}</Label><ImgIcon source={require('../../Icons/image.png')} /></TouchableView>
                             </View>
-                        </Modal>
-                        <TouchableView onPress={() => setModalVisible2(!modalVisible)}><Label>{bag}</Label><ImgIcon source={require('../../Icons/image.png')} /></TouchableView>
+                        )}
 
                     </InfoView>
                     <Button onPress={() => {

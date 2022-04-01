@@ -31,7 +31,7 @@ function ShopStepThree5({route,navigation}) {
         }
     });
     
-    const selectedType = store.getState().selectType[0].value; 
+    const selectedType = store.getState().selectType; 
     
     const [request,setRequet] =React.useState();
     const inputTexts = store.getState().addRequest;
@@ -45,7 +45,7 @@ function ShopStepThree5({route,navigation}) {
     const netInfo = useNetInfo();
 
     const updateReceipt = async (receipt_id) => {
-        var formdata = new FormData();
+        let formdata = new FormData();
 
         formdata.append("step", "3");
         formdata.append("receipt", receipt_id);
@@ -81,7 +81,7 @@ function ShopStepThree5({route,navigation}) {
         }
     }
     
-    React.useEffect(()=>{
+    useEffect(()=>{
         if(inputTexts == ''){
             setRequet("없음")
         }else{
@@ -118,10 +118,19 @@ function ShopStepThree5({route,navigation}) {
             }
 
     },[]);
-
-        
+    
+    console.log("------------------------------")
+    console.log()
+    console.log()
+    console.log(store.getState().photo)
+    console.log(store.getState().detailPhoto)
+    console.log()
+    console.log()
+    console.log("--------------------------------")
     uriList.push(store.getState().photo);
-    uriList.push(store.getState().detailPhoto);
+    if(store.getState().detailPhoto !=[]){
+        uriList.push(store.getState().detailPhoto);
+    }
     if(store.getState().photoArr.length>0){
         const addPhotos = store.getState().photoArr;
         
@@ -138,9 +147,9 @@ function ShopStepThree5({route,navigation}) {
        
         
     });
-    var photoImages =[];
-    for(var j=0; j < indexUriList.length ; j++){
-        var photoImage =(
+    let photoImages =[];
+    for(let j=0; j < indexUriList.length ; j++){
+        let photoImage =(
             <Image  key = {j} style={{width:90, height:100,marginLeft:3}}source={{uri:indexUriList[j]}}/>
         );
         photoImages[j] =(photoImage);

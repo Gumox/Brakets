@@ -21,6 +21,7 @@ import ShopStepThree4 from './pages/receipt/stepThree/ShopStepThree4';
 import ShopStepThree5 from './pages/receipt/stepThree/ShopStepThree5';
 
 import ShopStepFour from './pages/receipt/ShopStepFour';
+import ShopStepFour2 from './pages/receipt/ShopStepFour2';
 import ShopStepFive from './pages/receipt/ShopStepFive';
 import ShopStepComplete from './pages/receipt/ShopStepComplete';
 
@@ -77,6 +78,7 @@ function App() {
         <Stack.Screen name="ShopStepThree5" component={ShopStepThree5} options={{ title: '3단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
 
         <Stack.Screen name="ShopStepFour" component={ShopStepFour} options={{ title: '4단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
+        <Stack.Screen name="ShopStepFour2" component={ShopStepFour2} options={{ title: '4단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
 
         <Stack.Screen name="ShopStepFive" component={ShopStepFive} options={{ title: '5단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />
         <Stack.Screen name="ShopStepComplete" component={ShopStepComplete} options={{ title: '5단계' ,headerTitleAlign: 'center', headerTintColor: "black"}} />

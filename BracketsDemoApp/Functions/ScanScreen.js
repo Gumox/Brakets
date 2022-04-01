@@ -56,7 +56,7 @@ export default class ScanScreen extends Component {
               const imgUri = data.uri;
              
               store.dispatch({type:'TAKE',take:imgUri});
-              this.props.navigation.replace(route.params.key);
+              this.props.navigation.navigate(route.params.key);
             }
 
           }

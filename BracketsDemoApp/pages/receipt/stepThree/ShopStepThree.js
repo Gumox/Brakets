@@ -207,7 +207,7 @@ function ShopStepThree( { navigation } ) {
               
               store.dispatch({type:'PHOTORESET',setPhoto:[]});
               store.dispatch({type:'PLUSINDEXNUMBER',plus:-ix});
-              store.dispatch({type:'SELECTTYPE',typeSelect: {key:0,value:select}})
+              store.dispatch({type:'SELECTTYPE',typeSelect: select})
               store.dispatch({type:'DRAW',drawingImage: ""});
               if(netInfo.isConnected){
                 navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
