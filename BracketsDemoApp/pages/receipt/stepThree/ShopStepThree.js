@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import Container from '../../../components/Container';
 import Button from '../../../components/Button';
 import styled from 'styled-components/native';
@@ -10,7 +10,7 @@ import StateBarSolid from '../../../components/StateBarSolid';
 import StateBarVoid from '../../../components/StateBarVoid';
 import RNPickerSelect from 'react-native-picker-select';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
-import { Alert ,BackHandler,View,Text} from 'react-native';
+import { Alert ,BackHandler,View,Text,Appearance} from 'react-native';
 import store from '../../../store/store';
 import ip from '../../../serverIp/Ip';
 import { GetRepairList } from '../../../Functions/GetRepairList';
@@ -54,7 +54,7 @@ const DropBackground= styled.View`
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepThree( { navigation } ) {
 
-  const [select,setSelect] =  React.useState(null);
+  const [select,setSelect] =  useState(null);
 
   const ix = store.getState().indexNumber;
   const Categories = [];
@@ -78,7 +78,14 @@ function ShopStepThree( { navigation } ) {
 
 
 
-  const [isLoading, setLoading] = React.useState(true);
+  const [isLoading, setLoading] = useState(true);
+  const colorScheme = Appearance.getColorScheme();
+    let bgColor = "rgb(255,255,255)"
+    if (colorScheme === 'dark') {
+    // Use dark color scheme
+        console.log("dark")
+        bgColor = "rgb(153,153,153)"
+    }
 
   
     
@@ -114,7 +121,7 @@ function ShopStepThree( { navigation } ) {
         setLoading(false);
       }
   }
-  React.useEffect(()=>{
+  useEffect(()=>{
     console.log(Categories)
     console.log(itemList)
     
@@ -159,7 +166,7 @@ function ShopStepThree( { navigation } ) {
 
           <BlackText>고객 요구 선택</BlackText>
           <DropBackground
-            style = {{width: '75%', height: '7%', marginBottom: '5%'}}
+            style = {{width: '75%', height: '7%', marginBottom: '5%',backgroundColor: bgColor}}
           >
           <RNPickerSelect
             placeholder = {{label : '[필수] 옵션을 선택하세요', value: null}}

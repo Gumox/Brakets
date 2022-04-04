@@ -95,7 +95,7 @@ function ShopStepOne({ navigation , route}) {
                     <InfoView>
                         <GrayText>서비스 카드 번호</GrayText>
                         <Modal
-                            animationType="slide"
+                            animationType="fade"
                             transparent={true}
                             visible={modalVisible}
                             onRequestClose={() => {
@@ -103,27 +103,23 @@ function ShopStepOne({ navigation , route}) {
                             }}
                         >
                             <View style={styles.centeredView}>
-                                <View style={styles.xView} >
-                                    <View style={styles.modalView} >
-                                        <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                            <CodeViewText>
-                                                {barcode}
-                                            </CodeViewText>
-                                        </CodeView>
-                                        <ImageZoom cropWidth={320}
-                                            cropHeight={400}
-                                            imageWidth={300}
-                                            imageHeight={400}>
-                                            <Image style={{ width: 300, height: 400 }}
-                                                source={{ uri: cardImgUri }} />
-                                        </ImageZoom>
-                                        <CloseBtn style={{marginTop: 5}}>
-                                            <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible(!modalVisible)}>
-                                                닫기
-                                            </CodeViewText>
-                                        </CloseBtn>
-                                    </View>
-                                </View>
+                                    <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                        <CodeViewText>
+                                            {barcode}
+                                        </CodeViewText>
+                                    </CodeView>
+                                    <ImageZoom cropWidth={320}
+                                        cropHeight={400}
+                                        imageWidth={300}
+                                        imageHeight={400}>
+                                        <Image style={{ width: 300, height: 400 }}
+                                            source={{ uri: cardImgUri }} />
+                                    </ImageZoom>
+                                    <CloseBtn style={{marginTop: 5}}>
+                                        <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible(!modalVisible)}>
+                                            닫기
+                                        </CodeViewText>
+                                    </CloseBtn>
                             </View>
                         </Modal>
                         <TouchableView disabled={serviceCardPictureCheck} onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label>
@@ -134,7 +130,7 @@ function ShopStepOne({ navigation , route}) {
                         <DataView><Label>{repairShop}</Label></DataView>
                         {bag&&(<GrayText>행낭 바코드</GrayText>)}
                         {bag&&(<Modal
-                                    animationType="slide"
+                                    animationType="fade"
                                     transparent={true}
                                     visible={modalVisible2}
                                     onRequestClose={() => {
@@ -198,31 +194,22 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
-    },
-    xView: {
-        backgroundColor: "rgb(0,80,130)",
-        borderRadius: 20,
+        marginTop: 22,
     },
     modalView: {
         margin: 10,
         backgroundColor: "white",
-        borderRadius: 20,
+        borderRadius: 10,
         paddingRight: 5,
         paddingLeft: 5,
-        paddingTop: 8,
-        paddingBottom: 8,
+        paddingTop: 15,
+        paddingBottom: 15,
         alignItems: "center",
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
+        borderColor:"rgb(0,80,130)",
+        borderStyle:"solid",
+        borderWidth:2
     },
-    ViewCenter: {
-        justifyContent: "center",
-        alignItems: "center",
-    }
 });
 
 const Label = styled.Text`

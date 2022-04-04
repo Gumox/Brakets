@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import styled from 'styled-components/native';
 
 const Container = styled.TouchableOpacity`
@@ -73,6 +73,7 @@ function LookupInfoCard(props) {
     let basicInfoColor ="#000080"
     let stepTextSize = 15;
     let LongStepTextSize = 14;
+    let serviceCardFontSize = 14
 
     if(obj["step"] == 0){
         prdDiv="접수중";
@@ -137,6 +138,14 @@ function LookupInfoCard(props) {
         serviceCard = '미등록' 
         serviceCardColor = "#008000"
     }
+    console.log("serviceCard", serviceCard, String(serviceCard).length)
+    console.log('Dimensions.get("window").width ',Dimensions.get("window").width*0.04)
+    if(String(serviceCard).length>9){
+        let overSize = String(serviceCard).length - 9
+        console.log('width ',Dimensions.get("window").width*0.04-overSize)
+        console.log("serviceCard", serviceCard)
+        serviceCardFontSize= Dimensions.get("window").width*0.04-overSize;
+    }
     return (
         <Container onPress={ props.onPress }>
             <PrView3>
@@ -145,7 +154,7 @@ function LookupInfoCard(props) {
             </PrView3>
             <PrView3>
                 <Label>서비스#</Label>
-                <Label3 style={{color:serviceCardColor}}>{serviceCard}</Label3>
+                <Label3 style={{color:serviceCardColor,fontSize:serviceCardFontSize}}>{serviceCard}</Label3>
             </PrView3>
             <PrView3>
                 <Label>상태</Label>

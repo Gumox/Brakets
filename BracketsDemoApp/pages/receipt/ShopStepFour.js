@@ -33,7 +33,8 @@ function ShopStepFour({navigation,route}) {
     const netInfo = useNetInfo();
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-    console.log(route)
+    console.log(Dimensions.get("screen").height)
+    console.log(Dimensions.get("window").height)
 
     const useInput=(inputDate)=> {
         let date = inputDate
@@ -168,28 +169,35 @@ function ShopStepFour({navigation,route}) {
                     <CenterView>
                         
                         <Modal
-                            animationType="slide"
+                            animationType="fade"
                             transparent={true}
                             visible={modalVisible}
                             onRequestClose={() => {
                             setModalVisible(!modalVisible);
                             }}
                         >
-                            <View style={styles.centeredView}>
-                            <View style ={styles.xView} >    
+                            <CenterCardView onPress={()=>{setModalVisible(!modalVisible);}}>
+                            
+
                             <View style={styles.modalView} >
                                 
                                 <ImageZoom cropWidth={320}
                                         cropHeight={400}
                                         imageWidth={300}
-                                        imageHeight={400}>
+                                        imageHeight={400}
+                                        style={{marginTop:20}}
+                                        >
                                         <Image style={{width:300, height:400}}
                                         source={{uri:cardImgUri}}/>
                                 </ImageZoom>
+                                <CloseBtn style={{marginTop: 5}}>
+                                    <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible(!modalVisible)}>
+                                        닫기
+                                    </CodeViewText>
+                                </CloseBtn>
                                 
                             </View>
-                            </View>
-                            </View>
+                            </CenterCardView>
                         </Modal>
                         
                         
@@ -244,7 +252,7 @@ function ShopStepFour({navigation,route}) {
                         }
 
                     }}>
-                        <Text style ={{color : "#ffffff"}}>행낭 사용 안함</Text>
+                        <Text style ={{color : "#ffffff"}}>행낭 없음</Text>
                     </Btn>
                     <Btn onPress={ ()=>{
 
@@ -271,6 +279,54 @@ function ShopStepFour({navigation,route}) {
 
 export default ShopStepFour;
 
+
+const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22,
+      backgroundColor:"rgba(230,230,230,0.5)",
+      
+    },
+    
+    modalView: {
+      margin: 10,
+      backgroundColor: "white",
+      borderRadius: 10,
+      paddingRight: 5,
+      paddingLeft: 5,
+      paddingTop: 15,
+      paddingBottom: 15,
+      alignItems: "center",
+      shadowColor: "#000",
+      borderColor:"rgb(0,80,130)",
+      borderStyle:"solid",
+      borderWidth:2
+    }
+});
+const CenterCardView = styled.Pressable`
+    flex: 1;
+    justifyContent: center;
+    alignItems: center;
+    marginTop: 22px;
+`;
+
+const CodeViewText = styled.Text`
+    font-size: 20px;
+    color:#ffffff;
+`;
+const CodeView = styled.View`
+    align-items: center;
+    margin: 12px;
+    width: 300px;
+    background-color:rgb(0,80,130);
+    border-radius:8px;
+`;
+const CloseBtn = styled.TouchableOpacity`
+    /* width: 50px; */
+    /* height: 50px; */
+`;
 const TouchableView = styled.TouchableOpacity`
     width: 100%;
     background-color:#d6d6d6;
@@ -351,28 +407,3 @@ const Btn = styled.TouchableOpacity`
     margin:15px;
     border-radius:12px;    
 `;
-const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    xView:{
-        backgroundColor: "rgb(0,80,130)",
-        borderRadius: 20,
-    },
-    modalView: {
-      margin: 10,
-      backgroundColor: "white",
-      borderRadius: 20,
-      paddingRight: 5,
-      paddingLeft: 5,
-      paddingTop: 15,
-      paddingBottom: 15,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-    },
-}
-});
