@@ -78,7 +78,7 @@ const Reception = ({
         </InfoSubWrapper>
       </InfoWrapper>
 
-      <ResizableList {...{ searchList, getTargetData }} />
+      <ResizableList {...{ searchList, getTargetData ,targetData}} />
       {isProductImageModalOpen && (
         <Modal handleCloseButtonClick={closeProductImage}>
           {

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import moment from "moment";
+import COLOR from '../../constants/color';
 
 import { useTable, useBlockLayout, useResizeColumns } from 'react-table';
 import { RECEIPT, CUSTOMER, STORE, PRODUCT } from "../../constants/field";
@@ -12,8 +13,17 @@ import {
     SHIPPING_TYPE,
   } from "../../constants/type";
 
+function TableRow({children,backgroundColor}){
+    
+    return(
+        <TableRowDiv style={{backgroundColor:backgroundColor}}>
+            {children}
+        </TableRowDiv>
+    )
 
-function Table({ columns, data, searchList, getTargetData }) {
+}
+
+function Table({ columns, data, searchList, getTargetData ,targetData}) {
 
     const defaultColumn = React.useMemo(
         () => ({
@@ -67,25 +77,35 @@ function Table({ columns, data, searchList, getTargetData }) {
                     <div {...getTableBodyProps()}>
                         {rows.map((row, i) => {
                             prepareRow(row)
+                            let bgColor = COLOR.WHITE
+                            if(targetData["receipt_code"] === row.original["서비스카드 번호"]){
+                                bgColor = COLOR.MENU_MAIN
+                            }
                             return (
-                                <div key={i} {...row.getRowProps(
-                                    {
-                                        // TODO
-                                        onClick: () => (getTargetData(row.original["서비스카드 번호"]))
-                                    }
-                                )} className="tr">
-                                    {row.cells.map((cell,j) => {
-                                        return (
-                                            <div key={j} {...cell.getCellProps(
-                                                // {
-                                                //     style: {color: 'red'}
-                                                // }
-                                            )} className="td">
-                                                {cell.render('Cell')}
-                                            </div>
-                                        )
-                                    })}
-                                </div>
+                                <TableRow backgroundColor={bgColor}>
+                                    
+                                    <div key={i} {...row.getRowProps(
+                                        {
+                                            // TODO
+                                            onClick: () => {
+                                                getTargetData(row.original["서비스카드 번호"])
+                                            }
+                                            
+                                        }
+                                    )} className="tr">
+                                        {row.cells.map((cell,j) => {
+                                            return (
+                                                <div key={j} {...cell.getCellProps(
+                                                    // {
+                                                    //     style: {color: 'red'}
+                                                    // }
+                                                )} className="td">
+                                                    {cell.render('Cell')}
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </TableRow>
                             )
                         })}
                     </div>
@@ -95,7 +115,7 @@ function Table({ columns, data, searchList, getTargetData }) {
     )
 }
 
-const ResizableList = ({ searchList, getTargetData = () => {} }) => {
+const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => {
 
     const columns = React.useMemo(() => [
 
@@ -243,7 +263,7 @@ const ResizableList = ({ searchList, getTargetData = () => {} }) => {
     return (
         <Wrapper>
             <Styles>
-                <Table columns={columns} data={data} searchList={searchList} getTargetData={getTargetData}/>
+                <Table columns={columns} data={data} searchList={searchList} getTargetData={getTargetData} targetData={targetData}/>
             </Styles>
         </Wrapper>
 
@@ -268,6 +288,14 @@ const Wrapper = styled.nav`
   &::-webkit-scrollbar-thumb {
     background: rgba(96, 96, 96, 0.7);
     border-radius: 6px;
+}`;
+
+const TableRowDiv = styled.div`
+    cursor: pointer;
+
+    &:hover {
+    color:${COLOR.BLUE}
+    }
 }`;
 
 const Styles = styled.div`
