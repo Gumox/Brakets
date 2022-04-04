@@ -82,7 +82,7 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
                                 bgColor = COLOR.MENU_MAIN
                             }
                             return (
-                                <TableRow backgroundColor={bgColor}>
+                                <TableRow key={i} backgroundColor={bgColor} >
                                     
                                     <div key={i} {...row.getRowProps(
                                         {
