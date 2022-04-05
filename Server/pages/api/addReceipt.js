@@ -120,6 +120,7 @@ const controller = async (req, res) => {
           const receiptId = fields["receiptId"];
           const receipt = await updateReceipt(fields,receiptId);
           console.log(receipt)
+          res.status(200).json({ receipt:receipt, receipt_id: receiptId });
         }else{
           if (err) throw new Error(err);
           // receipt 생성
