@@ -96,7 +96,7 @@ function ShopStepTwo({navigation}) {
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:1}});
                         getProductCategory();
                     }else{
-                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
+                        Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
 
                 }}>수선</SelectButton>
@@ -107,7 +107,7 @@ function ShopStepTwo({navigation}) {
                         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
                         getProductCategory();
                     }else{
-                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
+                        Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
                 }}>환불</SelectButton>
                 </CenterView>
@@ -118,7 +118,7 @@ function ShopStepTwo({navigation}) {
                         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
                         getProductCategory();
                     }else{
-                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
+                        Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
                 }}>교환</SelectButton>
                 <SelectButton iconImg = {<ImgIcon style={{width:55,height:55}} source={require('../../Icons/deliberating.png')}/>} onPress={ ()=> {
@@ -128,7 +128,7 @@ function ShopStepTwo({navigation}) {
                         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
                         getProductCategory();
                     }else{
-                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
+                        Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
                 }}>심의</SelectButton></CenterView>
             </PView>  

@@ -717,7 +717,7 @@ function TakeOverPage( { route,navigation } ) {
                         putReceiptComplete(cardCode,selectDay);
                         navigation.popToTop();
                     }else{
-                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
+                        Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
                 }
               }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
