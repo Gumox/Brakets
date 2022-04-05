@@ -38,6 +38,7 @@ import LookupInfo4 from './pages/lookup/LookupInfo4';
 import Setting from './pages/setting/Setting';
 
 import InputAlternativeNumber from './pages/receipt/InputAlternativeNumber';
+import manualInputNumber from './pages/receipt/manualInputNumber';
 import ProductInfo from './pages/receipt/ProductInfo';
 import ScanScreen from './Functions/ScanScreen';
 import TakePhoto from './Functions/TakePhoto';
@@ -66,6 +67,7 @@ function App() {
         {/*접수*/}
         <Stack.Screen name="ReceiptDivision" component={ReceiptDivision} options={{title: '', headerLeft: null, headerTintColor: textColor}} />
         <Stack.Screen name="InputAlternativeNumber" component={InputAlternativeNumber} options={{ title: '' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
+        <Stack.Screen name="manualInputNumber" component={manualInputNumber} options={{ title: '' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
         <Stack.Screen name="ProductInfo" component={ProductInfo} options={{ title: '1단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
         <Stack.Screen name="ShopStepOne" component={ShopStepOne} options={{ title: '1단계' ,headerTitleAlign: 'center', headerTintColor: textColor}} />
 

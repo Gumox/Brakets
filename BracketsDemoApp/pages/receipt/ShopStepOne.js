@@ -52,7 +52,7 @@ function ShopStepOne( { navigation } ) {
                 if(netInfo.isConnected){
                     navigation.navigate( 'InputAlternativeNumber' ,{key:"ProductInfo"})
                 }else{
-                    Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
+                    Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
                 }
                 }}>
                 대체 코드 작성</Alternative>
@@ -60,7 +60,7 @@ function ShopStepOne( { navigation } ) {
                 if(netInfo.isConnected){
                     navigation.navigate( 'BarcodeScreen')
                 }else{
-                    Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
+                    Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
                 }
 
                 }}>

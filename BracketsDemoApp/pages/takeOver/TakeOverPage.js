@@ -143,7 +143,7 @@ function TakeOverPage( { route,navigation } ) {
         const readData = data.data;
         const keys= Object.keys(readData)
         if(readData.step == 2){
-            Alert.alert("인수완료된 물품입니다","서비스 카드를 다시 확인해 주세요",{ text: "확인"})
+            Alert.alert("인수완료된 물품입니다","서비스 카드를 다시 확인해 주세요",[{ text: "확인"}])
             navigation.goBack();
         }
         
@@ -452,7 +452,7 @@ function TakeOverPage( { route,navigation } ) {
                 
             const checkResult = await CheckCode(route.params.code)
             if(!checkResult){
-                Alert.alert("잘못된 바코드 입니다","",{ text: "확인"});
+                Alert.alert("잘못된 바코드 입니다","",[{ text: "확인"}]);
                 navigation.goBack();
             }else{
                 getTargetData(route.params.code);
@@ -717,7 +717,7 @@ function TakeOverPage( { route,navigation } ) {
                         putReceiptComplete(cardCode,selectDay);
                         navigation.popToTop();
                     }else{
-                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
+                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
                     }
                 }
               }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>

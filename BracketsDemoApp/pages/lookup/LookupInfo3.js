@@ -210,7 +210,7 @@ function LookupInfo3( { route,navigation } ) {
                     if(netInfo.isConnected){
                         navigation.navigate( 'LookupInfo4',{data:data , images:images, needImages:needImages})
                     }else{
-                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
+                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요")
                     }
                     
                     }}>
@@ -266,13 +266,13 @@ function LookupInfo3( { route,navigation } ) {
                     
                     <TopText>매장 접수 내용</TopText>
 
-                        <InputText>{storeMessage}</InputText>
+                        <InputText editable={false} multiline ={true}>{storeMessage}</InputText>
               </InfoView>
               <InfoView>
                     <TopText>매장 접수일</TopText>
-                        <InputText>{receiptDate}</InputText>
+                        <InputText editable={false}>{receiptDate}</InputText>
                     <TopText>고객 약속일</TopText>
-                        <InputText>{appointmentDate}</InputText>
+                        <InputText editable={false}>{appointmentDate}</InputText>
                 </InfoView>
 
               
@@ -299,10 +299,10 @@ const CaptureImage = styled.Image`
     width:200px;
     height:300px;
 `;
-const InputText = styled.Text`
+const InputText = styled.TextInput`
     color:#000000
     width: 100%;
-    height: 45px;
+    min-height: 45px;
     padding: 10px;
     font-size: 20px;
     background-color:#d6d6d6;

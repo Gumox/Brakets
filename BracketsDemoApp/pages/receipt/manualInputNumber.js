@@ -33,13 +33,21 @@ const AlternativeCodeView = styled.View`
     margin-bottom: 15%;
 `;
 
-function InputAlternativeNumber({ navigation, route }) {
+function manualInputNumber({ navigation, route }) {
 
     const [input, setInput] = useState('');
     const key = route.params.key;
     const naviAction = () =>{
         
-        navigation.replace(key, { codeType: 'barcode', code: input ,alter :true})
+        if(key=="ShopStepFour"){
+            store.dispatch({type:'SERVICECAED',value:input});
+            store.dispatch({type:'TAKE',take:null});
+        }else if(key === 'ShopStepComplete'){
+            store.dispatch({type:'BAGCODE',bag:input});
+
+            store.dispatch({type:'BAGTAG',bagTag:null});
+        }
+        navigation.replace(key, { codeType: 'barcode', code: input ,alter :false})
     }
 
     
@@ -47,7 +55,7 @@ function InputAlternativeNumber({ navigation, route }) {
         <>
             <Container style= {{backgroundColor:"#ffffff"}}>
                 <AlternativeCodeView>
-                    <Label>대체 코드를  직접 입력하세요</Label>
+                    <Label>바코드를  직접 입력하세요</Label>
                     <Input
                         value={input}
                         keyboardType='numeric'
@@ -77,4 +85,4 @@ function InputAlternativeNumber({ navigation, route }) {
     )
 }
 
-export default InputAlternativeNumber;
+export default manualInputNumber;

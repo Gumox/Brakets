@@ -43,7 +43,7 @@ class BarcodeScreen extends Component {
         
         this.props.navigation.replace(
             'ProductInfo',
-            {codeType: codeType, code: scanResult.data, serial: ''})
+            {codeType: codeType, code: scanResult.data, serial: '',alter:false})
         return;
     }
 
@@ -64,7 +64,7 @@ class BarcodeScreen extends Component {
 
                 <ButtonView>
                     <Button
-                        onPress={ ()=> this.props.navigation.navigate('InputAlternativeNumber',{key:"ProductInfo"})}
+                        onPress={ ()=> this.props.navigation.navigate('manualInputNumber',{key:"ProductInfo"})}
                         >
                         <Text>
                             코드 직접 입력하기

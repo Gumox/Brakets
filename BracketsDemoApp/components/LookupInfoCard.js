@@ -138,12 +138,8 @@ function LookupInfoCard(props) {
         serviceCard = '미등록' 
         serviceCardColor = "#008000"
     }
-    console.log("serviceCard", serviceCard, String(serviceCard).length)
-    console.log('Dimensions.get("window").width ',Dimensions.get("window").width*0.04)
     if(String(serviceCard).length>9){
         let overSize = String(serviceCard).length - 9
-        console.log('width ',Dimensions.get("window").width*0.04-overSize)
-        console.log("serviceCard", serviceCard)
         serviceCardFontSize= Dimensions.get("window").width*0.04-overSize;
     }
     return (

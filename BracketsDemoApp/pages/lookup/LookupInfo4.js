@@ -135,12 +135,12 @@ function LookupInfo4( { route,navigation } ) {
                     <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShopName}</Text>
                     <InfoView>
                         <TopText>수선처 접수일</TopText>
-                        <InputText>{formatDate(registerDate)}</InputText>
+                        <InputText editable={false}>{formatDate(registerDate)}</InputText>
                             
                         <TopText>수선처 발송일</TopText>
-                        <InputText>{formatDate(completeDate)}</InputText>
+                        <InputText editable={false}>{formatDate(completeDate)}</InputText>
                     <TopText>수선처 설명</TopText>
-                    <InputText>{message}</InputText>
+                    <InputText editable={false} multiline ={true}>{message}</InputText>
 
                     </InfoView>
                 </View>
@@ -156,12 +156,12 @@ function LookupInfo4( { route,navigation } ) {
                     <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShopName}</Text>
                     <InfoView>
                         <TopText>수선처 접수일</TopText>
-                        <InputText>{formatDate(registerDate)}</InputText>
+                        <InputText editable={false}>{formatDate(registerDate)}</InputText>
                             
                         <TopText>수선처 발송일</TopText>
-                        <InputText>{formatDate(completeDate)}</InputText>
+                        <InputText editable={false}>{formatDate(completeDate)}</InputText>
                     <TopText>수선처 설명</TopText>
-                    <InputText>{message}</InputText>
+                    <InputText editable={false} multiline ={true}>{message}</InputText>
 
                     </InfoView>
                 </View>
@@ -173,12 +173,12 @@ function LookupInfo4( { route,navigation } ) {
         inFormField =(
             <InfoView>
                 <TopText>과실 구분</TopText>
-                <InputText>{checkMistake}</InputText>
+                <InputText editable={false}>{checkMistake}</InputText>
 
                 <TopText>내용 분석</TopText>
-                <InputText>{contentAnalysis}</InputText>
+                <InputText editable={false}>{contentAnalysis}</InputText>
                 <TopText>판정 결과</TopText>
-                <InputText>{result}</InputText>
+                <InputText editable={false}>{result}</InputText>
 
             </InfoView>
         )
@@ -190,11 +190,11 @@ function LookupInfo4( { route,navigation } ) {
         toHq =(
             <InfoView>
                 <TopText>본사 접수일</TopText>
-                <InputText>{mainCenterDate}</InputText>
+                <InputText editable={false}>{mainCenterDate}</InputText>
                 <TopText>본사 발송일</TopText>
-                <InputText>{mainCenterSendDate}</InputText>
+                <InputText editable={false}>{mainCenterSendDate}</InputText>
                 <TopText>본사 설명</TopText>
-                <InputText>{mainCenterSendDescription}</InputText>
+                <InputText editable={false} multiline ={true}>{mainCenterSendDescription}</InputText>
             </InfoView>
         )
     }
@@ -207,12 +207,12 @@ function LookupInfo4( { route,navigation } ) {
                 <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShop}</Text>
                 <InfoView>
                     <TopText>수선처 접수일</TopText>
-                    <InputText>{formatDate(repairShopSendDate)}</InputText>
+                    <InputText editable={false}>{formatDate(repairShopSendDate)}</InputText>
                         
                     <TopText>수선처 발송일</TopText>
-                    <InputText>{repairShopSendDate}</InputText>
+                    <InputText editable={false}>{repairShopSendDate}</InputText>
                 <TopText>수선처 설명</TopText>
-                <InputText>{repairShopSendDescription}</InputText>
+                <InputText editable={false} multiline ={true}>{repairShopSendDescription}</InputText>
 
                 </InfoView>
                 {repair2}
@@ -228,7 +228,7 @@ function LookupInfo4( { route,navigation } ) {
                     toHq
                 }
                 <TopText style={{marginBottom : 10, marginLeft:10}}>매장 인수일</TopText>
-                <InputText >{selectDay}</InputText>
+                <InputText editable={false} >{selectDay}</InputText>
                 <Half style = {{marginBottom : 50}}>
                     <Check>
                         <Text style={{color:"#000000"}}>유상수선 </Text>
@@ -266,11 +266,11 @@ const InfoView =styled.View`
 `;
 
 
-const InputText = styled.Text`
+const InputText = styled.TextInput`
     width: 100%;
     padding: 10px;
     font-size: 20px;
-    height: 45px;
+    min-height: 45px;
     background-color:#d6d6d6;
     border-radius:10px;
     color:#000000;

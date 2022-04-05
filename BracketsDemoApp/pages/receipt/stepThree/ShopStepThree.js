@@ -151,7 +151,7 @@ function ShopStepThree( { navigation } ) {
             style={{marginBottom: '20%'}}
           >
               <Oneline>
-                  <BlueText>고객 요구</BlueText>
+                  <BlueText>제품 구분</BlueText>
                   <GrayText>선택 후</GrayText>
               </Oneline>
               <Oneline>
@@ -164,7 +164,7 @@ function ShopStepThree( { navigation } ) {
               </Oneline>
           </CenterText>
 
-          <BlackText>고객 요구 선택</BlackText>
+          <BlackText>제품 구분 선택</BlackText>
           <DropBackground
             style = {{width: '75%', height: '7%', marginBottom: '5%',backgroundColor: bgColor}}
           >
@@ -219,7 +219,7 @@ function ShopStepThree( { navigation } ) {
               if(netInfo.isConnected){
                 navigation.navigate( 'TakePhoto', {key : 'ShopStepThree2' });
               }else{
-                Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
+                Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
               }
               
             }}}>

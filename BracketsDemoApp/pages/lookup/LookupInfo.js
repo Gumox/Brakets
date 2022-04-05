@@ -123,6 +123,9 @@ function LookupInfo( { route,navigation } ) {
         setProductExchange(+data["image"])                   //제품 교환
         setProductPrice(price)           //제품가격
 
+        console.log(data)
+        console.log("data.product_id : ",data.product_id)
+
 
         if(data["receipt_type"] == 1){
             setReceiptType("수선")
@@ -148,7 +151,7 @@ function LookupInfo( { route,navigation } ) {
                     if(netInfo.isConnected){
                         navigation.navigate( 'LookupInfo3',{data:data , images:images, needImages:needImages})
                     }else{
-                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
+                        Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
                     }
                     
                     }}>
@@ -195,7 +198,7 @@ function LookupInfo( { route,navigation } ) {
                     )}
                 </InfoView>
 
-                <InfoView>
+                {(<InfoView>
                     <Half>
                       <HalfLine>
                             <TopText>시즌</TopText>
@@ -227,7 +230,7 @@ function LookupInfo( { route,navigation } ) {
                    
                     <TopText>판매가</TopText>
                         <InputText>{productPrice}</InputText>
-              </InfoView>
+                </InfoView>)}
               {receiptType&&(
                   <InfoView>
                     <TopText>요구 사항</TopText>

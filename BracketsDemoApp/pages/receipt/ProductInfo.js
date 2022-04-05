@@ -15,10 +15,12 @@ import store from '../../store/store';
 import { PathToFlie } from '../../Functions/PathToFlie';
 import ip from '../../serverIp/Ip';
 import {useNetInfo}from "@react-native-community/netinfo";
+import CheckBoxTextLeft from '../../components/CheckBoxTextLeft';
 
 function ProductInfo({navigation, route}) {
    
     const codeType = route.params.codeType
+    const alter = route.params.alter
     const [codeInput, setCodeInput] = useState(route.params.code)
     const [serialInput, setSerialInput] = useState(route.params.serial)
     const [productName, setProuctName] = useState('')
@@ -32,15 +34,18 @@ function ProductInfo({navigation, route}) {
     const [brandId, setBrandId] = useState('')
 
     const checkBrand=(myBrand,productBrand)=>{
+        console.log("is hear",3)
+        console.log(myBrand , productBrand)
         if(myBrand != productBrand){
             navigation.goBack();
-            Alert.alert("","자사 브랜드 제품이 아닙니다 제품을 확인 해주세요",{ text: "확인"});
+            Alert.alert("","자사 브랜드 제품이 아닙니다 제품을 확인 해주세요");
         }
     }
     
     const netInfo = useNetInfo();
     
     useEffect(()=>{
+        console.log("is hear",1)
         const fetch= ()=>{
             const option = {
                 url: ip+'/api/getProductInfo',
@@ -55,12 +60,13 @@ function ProductInfo({navigation, route}) {
                     code: codeInput
                 }
             }
-            console.log(codeType)
+            //console.log(codeType)
             axios(option)
             .then(
                 response => (response.status == '200') ? (
                     // TODO
                     // () ? (qrcode) : (barcode)
+                    console.log("is hear",2),
                     setCodeInput(response.data.body[0].qrcode),
         
                     setSerialInput(String(response.data.body[0].style_code)),
@@ -74,9 +80,10 @@ function ProductInfo({navigation, route}) {
                     setPid(response.data.body[0].product_id),
                     setBrandId(response.data.body[0].brand_id),
                     store.dispatch({type:'SEASON_ID',season_id: response.data.body[0].season_id}),
-                    console.log(response.data.body[0]),
+                    //console.log(response.data.body[0]),
                     
-                    checkBrand(store.getState().brand_id,response.data.body[0].brand_id)
+                    checkBrand(store.getState().brand_id,response.data.body[0].brand_id),
+                    console.log("is hear",4)
                     
                 ) : (
                     navigation.goBack(),
@@ -106,7 +113,9 @@ function ProductInfo({navigation, route}) {
 
 
 
-    
+    const checkEvent = ()=>{
+
+    }
     
     const addReceipt = async () => {
         
@@ -127,13 +136,13 @@ function ProductInfo({navigation, route}) {
         
         formdata.append("brand", store.getState().brand_id);
         formdata.append("category", store.getState().receptionDivision.id);
-        console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
+        //console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
         
         
         
         formdata.append("pid", pid);
         formdata.append("pcode", codeInput);
-        formdata.append("substitute", 0);//임시
+        formdata.append("substitute", Number(alter));//임시
         formdata.append("mfrid", mfrid);
         formdata.append("receiptId", store.getState().receipt_id);
 
@@ -149,7 +158,8 @@ function ProductInfo({navigation, route}) {
             });
             //const json = await response.json();
             
-            //console.log(json);
+            console.log(await response.json());
+
             navigation.navigate( 'ShopStepTwo',
                 { 
                 codeType: codeType, 
@@ -194,8 +204,16 @@ function ProductInfo({navigation, route}) {
                         selectTextOnFocus={false}
                         value = {codeInput}
                     />
+                    <LaView>
+                        <Label>스타일 No.</Label>
 
-                    <Label>스타일 No.</Label>
+                        <CheckBoxTextLeft
+                        {...{checkBoxEvent : checkEvent}}
+                        checkBoxColor={"red"}
+                        check = {alter}
+                        text={"대체 품번"}
+                      />
+                    </LaView>
 
                     <Input 
                         editable={false} 
@@ -255,7 +273,7 @@ function ProductInfo({navigation, route}) {
                         <ContainImg>
 
                             <Image 
-                                style={{width:160,height:180}}
+                                style={{width:160,height:160}}
                                 resizeMode = 'contain'
                                 source = {imageFile ? {
                                     uri: imageFile
@@ -277,7 +295,7 @@ function ProductInfo({navigation, route}) {
                             console.log(codeInput)
                             addReceipt();
                         }else{
-                            Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","",{ text: "확인"})
+                            Alert.alert("네트워크 연결 실패\n 연결 상태를 확인해주세요","")
                         }
                         
 
@@ -308,6 +326,10 @@ const PrView = styled.View`
     margin-bottom:30px;
     padding-bottom:30px;
 `;
+const LaView = styled.View`
+    flex-direction: row;
+    justify-content:space-between;
+`;
 const Input = styled.TextInput`
     width: 100%;
     padding: 8px;
@@ -326,7 +348,7 @@ const TopIntro =styled.Text`
     margin: 15px;
 `;
 const ContainImg =styled.View`
-    margin-top: 40px;
+    margin-top: 45px;
     background-color:#d6d6d6;
     border-radius:12px;
     justify-content: center;
