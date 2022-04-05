@@ -55,11 +55,12 @@ const updateSignature = async (receipt, signaturePath) => {
 const addReceiptZeroStep = async ({
   store,
   staff,
+  customer
 }) => {
   return excuteQuery({
     query:
-      "INSERT INTO `receipt`(`store_id`, `staff_id`) VALUES (?,?)",
-    values: [store, staff],
+      "INSERT INTO `receipt`(`store_id`, `staff_id`,`customer_id`) VALUES (?,?,?)",
+    values: [store, staff, customer],
   });
 };
 
