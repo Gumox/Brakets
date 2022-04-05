@@ -120,7 +120,7 @@ function ShopStepFour({navigation,route}) {
             console.log("checkService: ",checkService)
             console.log("checkService: ")
             if(checkService.message){
-                Alert.alert("이미 등록된 서비스 카드 입니다.","",{ text: "확인"})
+                Alert.alert("이미 등록된 서비스 카드 입니다.","",[{ text: "확인"}])
                 navigation.goBack();
             }
         }
