@@ -165,7 +165,7 @@ function SelectImageModal({overallImg,imageData,needImageData}){
                         checkNeedRepairStoreName(v)
                         return(
                             (
-                                <div>
+                                <div key={i}>
                                     
                                     {registNeedStoreNameCheck&&(
                                         <ImgViewSubTitle style={{marginTop:15}}>
