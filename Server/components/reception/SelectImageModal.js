@@ -62,7 +62,7 @@ function SelectImageModal({overallImg,imageData,needImageData}){
     return(
         <MainView>
             <LeftSideView>
-            <img
+            <Img
                     key={overallImg}
                     src={mainImage}
                     alt={""}
@@ -77,7 +77,7 @@ function SelectImageModal({overallImg,imageData,needImageData}){
                 </ImgViewTitle>
                 <OverallImgWrapper>
                     <OverallImgView onClick={()=>{setMainImage(`http://34.64.182.76${overallImg}`)}}>
-                        <img
+                        <Img
                             key={overallImg}
                             src={`http://34.64.182.76${overallImg}`}
                             alt={""}
@@ -93,7 +93,7 @@ function SelectImageModal({overallImg,imageData,needImageData}){
                 imageData.map((v, i) =>{
                     checkRepairStoreName(v)
                     return(
-                        <div>
+                        <div key={i}>
                             
                             {
                                 repairStoreNameCheck ?
@@ -113,8 +113,7 @@ function SelectImageModal({overallImg,imageData,needImageData}){
                             <ImgCardView>
                             
                                 <RepairImgView  onClick={()=>{setMainImage(`http://34.64.182.76${v.before_image}`)}}>
-                                    <img
-                                    key={i}
+                                    <Img
                                     src={`http://34.64.182.76${v.before_image}`}
                                     alt={""}
                                     layout="fixed"
@@ -134,8 +133,8 @@ function SelectImageModal({overallImg,imageData,needImageData}){
     
                             {v.after_image&&(<ImgCardView>
                                 <RepairImgView  onClick={()=>{setMainImage(`http://34.64.182.76${v.after_image}`)}}>
-                                    <img
-                                    key={i}
+                                    <Img
+                                    
                                     src={`http://34.64.182.76${v.after_image}`}
                                     alt={""}
                                     layout="fixed"
@@ -157,7 +156,7 @@ function SelectImageModal({overallImg,imageData,needImageData}){
             </RepairImgWrapper>
 
             {needImageData[0]
-                &&(<RepairImgWrapper>
+                &&(<RepairImgWrapper key={i}>
                         <ImgViewSubTitle style={{marginTop:15}}>
                                 추가 수선 필요 부위
                         </ImgViewSubTitle>
@@ -177,8 +176,7 @@ function SelectImageModal({overallImg,imageData,needImageData}){
                                         <ImgCardView>
                                         
                                         <RepairImgView  onClick={()=>{setMainImage(`http://34.64.182.76${v.need_point_image}`)}}>
-                                                <img
-                                                key={i}
+                                                <Img
                                                 src={`http://34.64.182.76${v.need_point_image}`}
                                                 alt={""}
                                                 layout="fixed"
@@ -210,6 +208,9 @@ function SelectImageModal({overallImg,imageData,needImageData}){
 }
 
 export default SelectImageModal
+
+const Img = styled.img`
+`;
 
 const MainView = styled.div`
 
