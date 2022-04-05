@@ -28,8 +28,12 @@ const Header = ({ path }) => {
         <MenuWrapper > 
             <h1 style={{marginLeft:"5%"}}>수선</h1>
             <OkImage src="/icons/OK_image.png" width={81} height={52} onClick={()=>{
-            if(store.getState().shopId !=3 && store.getState().shopId !=4){
+              let loadUser = JSON.parse(localStorage.getItem("USER"))
+            if(loadUser.level !=3 && loadUser.level !=4){
+              
               router.push("/");
+            }else{
+              router.push("/repair");
             }
         }}/>
             <div style={{margin:"15%"}}/>

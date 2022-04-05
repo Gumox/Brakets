@@ -156,7 +156,6 @@ const ReceiptInfo = ({
       
       setInputFlieName(words[words.length-1])
       setPDFFliePath(targetData[RECEIPT.DELIBERATION_RESULT])
-      console.log("targetData[RECEIPT.DELIBERATION_RESULT] : " ,targetData[RECEIPT.DELIBERATION_RESULT])
     }else{
       
       setInputFlieName([])

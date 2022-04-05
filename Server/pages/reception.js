@@ -27,6 +27,7 @@ const ReceptionPage = ({ options, user }) => {
   const [targetData, setTargetData] = useState({}); // 리스트에서 선택한 데이터
   const [overallImg, setOverallImg] = useState('');
   const [imageData, setImageData] = useState({});
+  const [needImageData, setNeedImageData] = useState({});
 
 
   useEffect(() => {
@@ -152,6 +153,7 @@ const ReceptionPage = ({ options, user }) => {
     // console.log("data is")
     setOverallImg(data.data.image)
     setImageData(data.imageList);
+    setNeedImageData(data.needImageList)
     setTargetData(data.data);
   }, []);
 
@@ -172,6 +174,7 @@ const ReceptionPage = ({ options, user }) => {
             searchReceipts,
             getTargetData,
             imageData,
+            needImageData,
             overallImg
           }}
         />

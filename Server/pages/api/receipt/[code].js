@@ -2,8 +2,37 @@ import excuteQuery from "../db";
 
 async function getImageList(code) {
   const result = await excuteQuery({
-    query: `SELECT num, type, before_image, before_store_id, after_image, after_store_id FROM receipt_image
+    query: `SELECT 
+              num, 
+              type, 
+              before_image,
+              before_store_id,
+              receipt_store.name AS receipt_store_name,
+              after_image,
+              after_store_id,
+              repair_store.name AS repair_store_name
+            FROM receipt_image
+
             LEFT JOIN receipt ON receipt_image.receipt_id = receipt.receipt_id
+            LEFT JOIN store AS receipt_store ON receipt_image.before_store_id = receipt_store.store_id
+            LEFT JOIN store AS repair_store ON receipt_image.after_store_id = repair_store.store_id
+
+            WHERE receipt.receipt_code = ?`,
+    values: [code],
+  });
+  return result;
+}
+async function getNeedImageList(code) {
+  const result = await excuteQuery({
+    query: `SELECT 
+                number AS num, 
+                repair_need_point.store_id, 
+                store.name AS store_name,
+                need_point_image  
+
+            FROM repair_need_point
+            LEFT JOIN store ON repair_need_point.store_id = store.store_id
+            LEFT JOIN receipt ON repair_need_point.receipt_id = receipt.receipt_id
             WHERE receipt.receipt_code = ?`,
     values: [code],
   });
@@ -180,11 +209,13 @@ const receipt = async (req, res) => {
     try {
       const receipt = await getReceipt(code);
       const imageResult = await getImageList(code);
+      const needImageResult = await getNeedImageList(code);
       if (receipt.error) throw new Error(receipt.error);
       if (receipt.length == 0) return res.status(204).send();
       console.log(receipt);
       console.log(imageResult);
-      res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult });
+      console.log(needImageResult);
+      res.status(200).json({ data: { ...receipt[0] }, imageList: imageResult ,needImageList: needImageResult});
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

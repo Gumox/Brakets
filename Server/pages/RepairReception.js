@@ -13,13 +13,19 @@ import {parseRepairReceptionData} from "../functions/parseExcelData";
 const XLSX = require('xlsx');
 
 function RepairReception({options,user}) {
-  const option =options.companys
-  const shop_id =options.info[0].store_id
-  const email = user.email
+
+  const [option,setOption] = useState(options.companys)
+  const [staff,setStaff] = useState(user)
+
+  const [shop_id,set_shop_id] = useState(options.info[0].store_id)
+  
+  const email = staff.email
   const [selectedCompany,setSelectedCompany] = useState(null)
   const [listData,setListData] = useState(options.list)
+
   const [code,setCode] = useState(null)
-  const [disable,setDisable] = useState(checkDisable(user.level))
+  const [disable,setDisable] = useState(checkDisable(staff.level))
+
   const [needImages,setNeedImages] = useState(options.needImages)
 
   let selectList = [{name:"전체",key:null}];
@@ -56,7 +62,7 @@ function RepairReception({options,user}) {
     setNeedImages(data.needImages)
   }
   let lists =[];
-  if(user.level==3 || user.level==4){
+  if(staff.level==3 || staff.level==4){
     listData.forEach((el,index) => {
       if(options.images != undefined){
           let items=(
@@ -69,12 +75,29 @@ function RepairReception({options,user}) {
       }
     })
   }
+
   useEffect(()=>{
+    console.log(option)
+    console.log()
+    let loadOptions =JSON.parse(localStorage.getItem("OPTIONS"))
+    let loadStaff =JSON.parse(localStorage.getItem("USER"))
+    
+      setStaff(loadStaff)
+      setOption(loadOptions.companys)
+      set_shop_id(loadOptions.info[0].store_id)
+  
+      //const email = user.email
+      setListData(loadOptions.list)
+      setNeedImages(loadOptions.needImages)
+
+      console.log(loadStaff)
+
+
     localStorage.setItem('COMPANY',JSON.stringify(selectItems));
     localStorage.setItem('SHOP',shop_id)
-    localStorage.setItem('SHOP_NAME',options.info[0].name)
+    localStorage.setItem('SHOP_NAME',loadOptions.info[0].name)
     localStorage.setItem('USER',JSON.stringify(user))
-    localStorage.setItem('USER_INFO',JSON.stringify(options.info[0]))
+    localStorage.setItem('USER_INFO',JSON.stringify(loadOptions.info[0]))
 
   },[])
   return(

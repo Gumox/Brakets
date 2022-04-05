@@ -5,6 +5,8 @@ export default createStore(function(state,action){
     
     if(state === undefined){
         return{
+            options:[],
+            user:[],
             company:[],
             shop:"",
             analysis:[],
@@ -19,6 +21,12 @@ export default createStore(function(state,action){
             toggled: false,
             send_sms_data:[]
         }
+    }
+    if(action.type === "OPTIONS"){
+        return{...state, options: action.options};
+    }
+    if(action.type === "USER"){
+        return{...state, user: action.user};
     }
     if(action.type === "COMPANY"){
         return{...state, company: action.company};

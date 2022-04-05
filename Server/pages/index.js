@@ -32,7 +32,7 @@ const Home = () => {
       {/*<CuetomLink onClick={() => router.push("/sms-result")}>
         SMS 결과
       </CuetomLink> */}
-      <CuetomLink onClick={() => router.push("/RepairReception")}>
+      <CuetomLink onClick={() => router.push("/repair")}>
         수선업체
       </CuetomLink>
     </Wrapper>

@@ -48,8 +48,10 @@ const Wrapper = styled.div`
   bottom: 0;
   left: 0;
   z-index: 99;
-  background-color: rgba(67, 67, 67, 0.3);
+  background-color: rgba(67, 67, 67, 0.5);
   width: 100%;
+  min-width:800px;
+  min-height:450px;
 `;
 
 const Section = styled.div`
@@ -62,16 +64,23 @@ const Section = styled.div`
   max-height: 100%;
   margin: 0 auto;
   background-color: ${({ backgroundColor = COLOR.WHITE }) => backgroundColor};
-  border: 5px solid ${COLOR.BLACK};
-  overflow: auto;
 `;
 
 const CloseButton = styled.div`
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 20px;
   cursor: pointer;
   z-index: 10; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width : 25px;
+  height : 25px;
+  background-color:${COLOR.WHITE};
+  border-radius : 12.5px;
 `;
 
 export default Modal;

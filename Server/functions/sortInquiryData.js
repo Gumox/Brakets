@@ -197,6 +197,7 @@ const sortInquiryData = async(data , params,_analysisType,_judgmentResult,_fault
                 degree: obj.degree ,
                 headquarter_id: obj.headquarter_id,
                 message: obj.message,
+                image:obj.image,
                 repair_message:obj.repair_message,
                 mfr_id: obj.mfr_id,
                 mfr_name: obj.mfr_name,
