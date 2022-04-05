@@ -61,7 +61,7 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData}){
     return(
         <MainView>
             <LeftSideView>
-            <img
+            <Img
                     key={overallImg}
                     src={mainImage}
                     alt={""}
@@ -75,7 +75,7 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData}){
                     <ImgCardView>
                         
                         <RepairImgView  onClick={()=>{setMainImage(`http://34.64.182.76${overallImg}`)}}>
-                            <img
+                            <Img
                             src={`http://34.64.182.76${overallImg}`}
                             alt={""}
                             layout="fixed"
@@ -95,14 +95,14 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData}){
             {
                 toDoRepairImage.map((v, i) =>{
                     return(
-                        <div>
+                        <div key={i}>
                             
                             
-                        <ImgCardDiv key={i}>
+                        <ImgCardDiv >
                             <ImgCardView>
                             
                                 <RepairImgView  onClick={()=>{setMainImage(`http://34.64.182.76${v.before_image}`)}}>
-                                    <img
+                                    <Img
                                     src={`http://34.64.182.76${v.before_image}`}
                                     alt={""}
                                     layout="fixed"
@@ -122,7 +122,7 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData}){
     
                             {v.after_image&&(<ImgCardView>
                                 <RepairImgView  onClick={()=>{setMainImage(`http://34.64.182.76${v.after_image}`)}}>
-                                    <img
+                                    <Img
                                     src={`http://34.64.182.76${v.after_image}`}
                                     alt={""}
                                     layout="fixed"
@@ -152,14 +152,13 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData}){
                     needImageData.map((v, i) =>{
                         return(
                             (
-                                <div>
+                                <div key={i}>
                                     
                                     <ImgCardDiv>
                                         <ImgCardView>
                                         
                                         <RepairImgView  onClick={()=>{setMainImage(`http://34.64.182.76${v.need_point_image}`)}}>
-                                                <img
-                                                key={i}
+                                                <Img
                                                 src={`http://34.64.182.76${v.need_point_image}`}
                                                 alt={""}
                                                 layout="fixed"
@@ -192,6 +191,9 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData}){
 
 export default SelectInquiryImageModal
 
+const Img = styled.img`
+
+`;
 const MainView = styled.div`
 
     width: 100%;
