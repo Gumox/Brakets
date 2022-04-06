@@ -1,5 +1,4 @@
 import excuteQuery from "../db";
-import formatDate from "../../../functions/formatDate"
 const aligoapi = require('aligoapi');
 
 async function SetSmsMessageResult(sender,sms_result,sms_result_message,msg,mid,headquarterId,send_number,calling_number) {
