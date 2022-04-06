@@ -147,8 +147,36 @@ function ProductInfo({navigation, route}) {
         formdata.append("receiptId", store.getState().receipt_id);
 
         console.log(formdata)
+
+        axios.post(ip+'/api/addReceipt', formdata , {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }})
+            .then((response) => {
+            // 응답 처리
+                const json =  response.data;
+                console.log(json);
+            
+                navigation.navigate( 'ShopStepTwo',
+                    { 
+                        codeType: codeType, 
+                        code: codeInput, 
+                        serialInput: serialInput,
+                        productName: productName,
+                        season: season,
+                        colorValue: colorValue,
+                        size: size,
+                        measure: measure,
+                        imageFile: imageFile
+                    }
+                )
+            })
+            .catch((error) => {
+            // 예외 처리
+            console.error(error);
+            })
         
-        try {
+        /*try {
             const response = await fetch(ip+'/api/addReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
@@ -179,7 +207,7 @@ function ProductInfo({navigation, route}) {
             console.error(error);
         } finally {
             
-        }
+        }*/
         
 
     }

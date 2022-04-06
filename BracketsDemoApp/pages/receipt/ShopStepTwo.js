@@ -11,6 +11,7 @@ import TopInfoLess from '../../components/TopInfoLess';
 import Bottom from '../../components/Bottom';
 import store from '../../store/store';
 import ip from '../../serverIp/Ip';
+import axios from 'axios';
 import {useNetInfo}from "@react-native-community/netinfo";
 
 function ShopStepTwo({navigation}) {
@@ -25,8 +26,38 @@ function ShopStepTwo({navigation}) {
     }
     
     const getProductCategory = async () => {
+        const body =  JSON.stringify(bodyData)
+
+        axios.post(ip+'/api/getProductCategory', body , {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }})
+            .then((response) => {
+            // 응답 처리
+                const json =  response.data;
+                console.log(json);
+                setData(json.body);
+
+                console.log(json.body);
+                console.log(data);
+
+                store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
+
+                console.log(store.getState().getProductCategory);
+
+                
+                navigation.navigate("ShopStepThree");
+            
+            
+            })
+            .catch((error) => {
+            // 예외 처리
+            console.error(error);
+            })
+
         
-        try {
+        /*try {
             const response = await fetch(ip+'/api/getProductCategory',{method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -48,7 +79,7 @@ function ShopStepTwo({navigation}) {
         } finally {
             setLoading(false);
             navigation.navigate("ShopStepThree");
-        }
+        }*/
     }
 
     const updateReceipt = async (receipt_id,typeN) => {
@@ -59,7 +90,23 @@ function ShopStepTwo({navigation}) {
         formdata.append("type", typeN);
         console.log(formdata)
 
-        try {
+        axios.post(ip+'/api/updateReceipt', formdata , {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }})
+            .then((response) => {
+            // 응답 처리
+                const json =  response.data;
+                console.log(json);
+            
+                
+            })
+            .catch((error) => {
+            // 예외 처리
+            console.error(error);
+            })
+
+        /*try {
             const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
             headers: {
                 'Accept': '',
@@ -74,7 +121,7 @@ function ShopStepTwo({navigation}) {
             console.error(error);
         } finally {
 
-        }
+        }*/
     }
     
     

@@ -13,6 +13,7 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 import { Alert ,BackHandler,View,Text,Appearance} from 'react-native';
 import store from '../../../store/store';
 import ip from '../../../serverIp/Ip';
+import axios  from 'axios';
 import { GetRepairList } from '../../../Functions/GetRepairList';
 import {useNetInfo}from "@react-native-community/netinfo";
 
@@ -97,8 +98,30 @@ function ShopStepThree( { navigation } ) {
         "pcategory_id": id
 
         }
-        console.log(bodyData)
-      try {
+        const body = JSON.stringify(bodyData)
+
+        axios.post(ip+'/api/getRepairList', bodyData , {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }})
+          .then((response) => {
+          // 응답 처리
+              const json =  response.data;
+              console.log(json);
+
+              store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
+              store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore:json.list[0].receiver_name });
+        
+          
+          
+          })
+          .catch((error) => {
+          // 예외 처리
+          console.error(error);
+          })
+
+      /*try {
         const response = await fetch(ip+'/api/getRepairList',{method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -119,9 +142,10 @@ function ShopStepThree( { navigation } ) {
         console.error(error);
       } finally {
         setLoading(false);
-      }
+      }*/
   }
   useEffect(()=>{
+    console.log(productCategories)
     console.log(Categories)
     console.log(itemList)
     

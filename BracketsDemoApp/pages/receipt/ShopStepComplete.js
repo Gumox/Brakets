@@ -102,7 +102,9 @@ function ShopStepOne({ navigation , route}) {
                                 setModalVisible(!modalVisible);
                             }}
                         >
-                            <View style={styles.centeredView}>
+                        <View style={styles.centeredView}>
+                            <View style={styles.xView} >
+                                <View style={styles.modalView} >
                                     <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
                                         <CodeViewText>
                                             {barcode}
@@ -120,6 +122,8 @@ function ShopStepOne({ navigation , route}) {
                                             닫기
                                         </CodeViewText>
                                     </CloseBtn>
+                                    </View>
+                                </View>
                             </View>
                         </Modal>
                         <TouchableView disabled={serviceCardPictureCheck} onPress={() => setModalVisible(!modalVisible)}><Label>{barcode}</Label>
@@ -128,8 +132,14 @@ function ShopStepOne({ navigation , route}) {
 
                         <GrayText>받는 곳</GrayText>
                         <DataView><Label>{repairShop}</Label></DataView>
-                        {bag&&(<GrayText>행낭 바코드</GrayText>)}
-                        {bag&&(<Modal
+                        
+                        <GrayText>행낭 바코드</GrayText>
+                        {bag&&(<View>
+                            </View>
+                        )}
+                        {bag&&(
+                            <View>
+                                <Modal
                                     animationType="fade"
                                     transparent={true}
                                     visible={modalVisible2}
@@ -160,7 +170,9 @@ function ShopStepOne({ navigation , route}) {
                                             </View>
                                         </View>
                                     </View>
-                                </Modal>)}
+                                </Modal>
+                            </View>    
+                            )}
                         {bag&&(<TouchableView disabled= {bagPictureCheck} onPress={() => setModalVisible2(!modalVisible)}>
                             <Label>{bag}</Label>
                             {!bagPictureCheck&&(<ImgIcon source={require('../../Icons/image.png')} />)}

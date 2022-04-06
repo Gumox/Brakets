@@ -32,7 +32,7 @@ const getProductCategory = async () => {
         
     })
 }
-const getRepairList = async (id) => {
+export const getRepairList = async (id) => {
     const bodyData = {
       "category": store.getState().receptionDivision.id,
       "receipt": store.getState().requirement.id,
@@ -50,16 +50,20 @@ const getRepairList = async (id) => {
       body: JSON.stringify(bodyData)
       });
       const json = await response.json();
+
+      console.log(json)
+      store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
+
+      return(json)
       
 
-      store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
       
         
     } catch (error) {
       console.error(error);
     } 
 }
-const SetReReceiptInfo=(data)=>{
+const SetReReceiptInfo=async(data)=>{
     store.dispatch({type:'RECEIPT_ID',receipt_id: data.receipt_id});
     store.dispatch({type:'SEASON_ID',season_id: data.product_season_id})
     store.dispatch({type:'CUSTOMER',customer:{cId: data.customer_id,cName:data.customer_name,cPhone:data.customer_phone}});
@@ -104,10 +108,13 @@ const SetReReceiptInfo=(data)=>{
             }
             
         });
+        const receiverListData = await getRepairList(data.pcategory_id);
+        
         Categories.forEach(obj => {
             if(data.product_category_name === obj.category_name){
               
-              getRepairList(data.pcategory_id);
+
+              
               store.dispatch({type:"SERVICE_DATE",serviceDate:obj.service_date});
               
             }

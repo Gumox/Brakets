@@ -132,19 +132,16 @@ export default function PhotoControl({ navigation ,route}){
         <Container style = {{backgroundColor : '#000000'}}>
             <ImgView  >
             <View style={styles.centeredView}>
-                        <View style ={styles.xView} >    
-                        <View style={styles.modalView} >
                             
                             <ImageZoom cropWidth={Dimensions.get('window').width-30}
                                     cropHeight={ Dimensions.get('window').height-125}
                                     imageWidth={Dimensions.get('window').width-40}
-                                    imageHeight={ Dimensions.get('window').height-140}>
-                                    <Image style={{width:Dimensions.get('window').width-40, height: Dimensions.get('window').height-140}}
+                                    imageHeight={  (Dimensions.get('window').width-40)/3*4}>
+                                    
+                                    <Image style={{width:Dimensions.get('window').width-40, height: (Dimensions.get('window').width-40)/3*4}}
                                     source={{uri:selected.value}}/>
                             </ImageZoom>
                             
-                        </View>
-                        </View>
                         </View>
                 {output}
             

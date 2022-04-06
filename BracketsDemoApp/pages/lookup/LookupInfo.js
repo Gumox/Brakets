@@ -8,9 +8,9 @@ import {Alert, Dimensions ,Text, View} from "react-native";
 import styled from 'styled-components/native';
 import store from '../../store/store';
 import {useNetInfo}from "@react-native-community/netinfo";
-import SetReReceiptInfo from '../../Functions/SetReReceiptInfo';
 import LookupCheckStep from '../../Functions/LookupCheckStep';
 import DeleteReceipt from '../../Functions/DeleteReceipt';
+import SetReReceiptInfo,{getRepairList} from '../../Functions/SetReReceiptInfo';
 
 const  formatDate = (inputDate)=> {
     const sp =  inputDate;
@@ -26,6 +26,15 @@ function LookupInfo( { route,navigation } ) {
     const data =route.params.data;
     const needImages = route.params.needImages
     const images = route.params.images;
+
+    console.log()
+    console.log()
+    console.log()
+    console.log()
+    console.log(images)
+    console.log()
+    console.log()
+    console.log()
     const step = LookupCheckStep(data)
 
     const [number,setNumber] =useState(store.getState().number);
@@ -53,8 +62,9 @@ function LookupInfo( { route,navigation } ) {
     const [receiptType,setReceiptType] = useState();        //제품구분
     
 
-    const reReceipt =(data,step)=>{
+    const reReceipt = async(data,step)=>{
         SetReReceiptInfo(data,images)
+        console.log(await getRepairList(data.pcategory_id))
         
         if(step ==0){
             navigation.navigate("ShopStepOne")

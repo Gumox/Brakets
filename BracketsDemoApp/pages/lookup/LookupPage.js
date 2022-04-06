@@ -27,7 +27,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import store from '../../store/store';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import CheckBoxText from '../../components/CheckBoxText';
-
+import NetworkLoading from '../../components/NetworkLoading';
 
 
 Date.prototype.addDays = function (days) {
@@ -144,7 +144,7 @@ function LookupPage({ route,navigation }) {
   
   
     const getData = useCallback(async (code,std, edd, name, phone,shopId,doReciptCheck,compliteReceiptCheck,takeReciptCheck) => {
-  
+      
       console.log("press")
       console.log(name)
       console.log(std)
@@ -192,6 +192,7 @@ function LookupPage({ route,navigation }) {
       }
       
       setData( sData)
+      setVisable(false)
     }, []);
   
     const netInfo = useNetInfo();
@@ -289,6 +290,7 @@ function LookupPage({ route,navigation }) {
           },
         })
         navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
+        setVisable(false)
     }, []);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -313,13 +315,13 @@ function LookupPage({ route,navigation }) {
     useEffect(()=>{
       const code = route.params.code
       if(code){
-        console.log(code)
+        setVisable(true)
         getData(code,null,null, null, null,shopId,true,true,true)
                       
       }
       
     },[])
-    
+    const [visable,setVisable]= useState(false)
     return (
         
         <Container style= {{backgroundColor:"#ffffff"}}>
@@ -377,6 +379,7 @@ function LookupPage({ route,navigation }) {
               </PrView>
               <IconButton onPress ={()=>{
                         if(netInfo.isConnected){
+                          setVisable(!visable)
                           getData(null,startDate.reDate, endDate.reDate, name, pNumber,shopId,doReciptCheck,compliteReceiptCheck,takeReciptCheck)
                         }else{
                             Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
@@ -401,6 +404,7 @@ function LookupPage({ route,navigation }) {
                     renderItem={({ item }) => (
                         <LookupInfoCard data ={item} onPress={() => {
                             if(netInfo.isConnected){
+                                setVisable(true)
                                 getImages(item["receipt_code"],item)
                             }else{
                                 Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
@@ -412,6 +416,7 @@ function LookupPage({ route,navigation }) {
                     keyExtractor={(item, index) => index}
                 />
             </View>
+            <NetworkLoading visable={visable} setVisable={setVisable}/>
             <Bottom navigation={navigation} />
             <Animated.View
               style={[

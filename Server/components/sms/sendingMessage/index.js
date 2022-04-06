@@ -18,7 +18,7 @@ const sendSms = async (user,sendNumber,{ _receivers, message }) => {
           
           senderId : user.staff_id,
           headquarterId :user.headquarter_id,
-          sender: '01027687973',
+          sender: sendNumber,
           receiver: receivers,
           msg: message,
           // 테스트모드
@@ -106,7 +106,7 @@ const SendMsg = ({}) => {
           setSendNumber(e.target.value)
           }}>
           <option value="010-2768-7973">010-2768-7973</option>
-          <option value="010-2768-7973">010-2768-7973</option>
+          <option value="010-2709-0856">010-2709-0856</option>
         </SelectBox>
 
         <TextBoxTop

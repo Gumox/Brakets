@@ -8,10 +8,11 @@ import styled from "styled-components";
 
 
 const CloseBtn = styled.TouchableOpacity`
-    width: 5%;
-    height: 5%;
+    width: 30px;
+    height: 30px;
     position: absolute;
-    right: 3%;
+    top: 2%;
+    right: 2%;
 `;
 
 const styles = StyleSheet.create({
@@ -75,7 +76,7 @@ export default function EnlargePhoto({ navigation ,route}){
                     style={{alignItems: 'center', justifyContent: 'center'}}
                     >
                     <Text
-                        style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}
+                        style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}
                     >✕</Text>
                 </CloseBtn>
                 <View style={styles.centeredView}>

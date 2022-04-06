@@ -8,7 +8,8 @@ import {
   Linking,
   Image,
   Dimensions,
-  View
+  View,
+  Alert
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -17,6 +18,7 @@ import { RNCamera } from 'react-native-camera';
 import store from '../store/store';
 import styled from 'styled-components';
 import Button from '../components/Button';
+import checkServiceCard from './checkServiceCard';
 
 
 export default class ScanScreen extends Component {
@@ -26,7 +28,7 @@ export default class ScanScreen extends Component {
 
     console.log(route.params.key);
 
-    const check = e.data.substring(0, 30);
+    const check = e.data.substring(0, 50);
 
     console.log('scanned data: ' + check);
     
@@ -51,12 +53,25 @@ export default class ScanScreen extends Component {
             store.dispatch({type:'SERVICECAED',value:check});
 
             if (this.camera) {
-              const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
+              /*const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
               const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
               const imgUri = data.uri;
              
-              store.dispatch({type:'TAKE',take:imgUri});
-              this.props.navigation.navigate(route.params.key);
+              store.dispatch({type:'TAKE',take:imgUri});*/
+
+              const checkService = await checkServiceCard(check)
+              console.log("checkService: ")
+              console.log("checkService: ",checkService)
+              console.log("checkService: ")
+              if(checkService.message){
+                this.props.navigation.goBack();
+                Alert.alert("이미 등록된 서비스 카드 입니다.","",[{ text: "확인"}])
+
+              }else{
+                this.props.navigation.replace(route.params.key);
+              }
+              
+
             }
 
           }
@@ -65,11 +80,11 @@ export default class ScanScreen extends Component {
             console.log(store.getState().bagCodeValue);
 
             if (this.camera) {
-              const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
+              /*const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
               const data = await this.camera.takePictureAsync(options); // this is photo data with file uri and base64
               const imgUri = data.uri;
              
-              store.dispatch({type:'BAGTAG',bagTag:imgUri});
+              store.dispatch({type:'BAGTAG',bagTag:imgUri});*/
               this.props.navigation.replace(route.params.key);
             }
           }
@@ -96,6 +111,7 @@ export default class ScanScreen extends Component {
   render() {
     
     const {route}=this.props;
+    console.log("????")
     
     return (
       <Container>

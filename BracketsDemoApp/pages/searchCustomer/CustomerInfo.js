@@ -9,7 +9,7 @@ import { CheckBox } from 'react-native-elements';
 import ViewShot from "react-native-view-shot";
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 import ip from '../../serverIp/Ip';
-
+import axios from 'axios';
 import {
     View,
     Pressable,
@@ -22,6 +22,7 @@ import {
 } from 'react-native';
 import store from '../../store/store';
 import { PathToFlie } from '../../Functions/PathToFlie';
+import NetworkLoading from '../../components/NetworkLoading';
 
 
 
@@ -30,6 +31,7 @@ export default class CustomerInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            counter: 0,
             color: '#FFFFFF',
             modalVisible: false,
             check1: false,
@@ -37,9 +39,14 @@ export default class CustomerInfo extends Component {
             check3: false
         };
     }
+    tick =() => {
+        this.setState({
+            counter: this.state.counter + 1
+        });
+    }
     addReceipt = async () => {
         
-        var formdata = new FormData();
+        let formdata = new FormData();
         
         formdata.append("step",0);
         formdata.append("store", store.getState().store_id);
@@ -55,31 +62,34 @@ export default class CustomerInfo extends Component {
         }
         formdata.append("signature",  PathToFlie(store.getState().customerSign));
         console.log(formdata)
-        
-        try {
-            const response = await fetch(ip+'/api/addReceipt',{method: 'POST',
-            headers: {
-                'Accept': '',
-                'Content-Type': 'multipart/form-data'
-                },
-            body: formdata
-            });
-            const json = await response.json();
-            
-            console.log(json);
-            if(json.receipt_id != undefined){
 
-                store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
-                
-                this.props.navigation.navigate('ShopStepOne')
-            }
+        axios.post(ip+'/api/addReceipt', formdata , {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }})
+            .then((response) => {
+            // 응답 처리
+                const json =  response.data;
+                console.log(json);
+
             
-            
-        } catch (error) {
-            console.error(error);
-        } finally {
-            
-        }
+                if(json.receipt_id != undefined){
+
+                    store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
+                    
+                    this.props.navigation.navigate('ShopStepOne')
+                }
+            })
+            .catch((error) => {
+            // 예외 처리
+                if(this.state.counter<1){
+                    console.log("001002030708090")
+                    this.tick()
+                    this.addReceipt()
+                }else{
+                    console.log(error)
+                }
+            })
         
 
     }
@@ -245,7 +255,6 @@ export default class CustomerInfo extends Component {
                         접수하기
                     </Button>
                     </View>
-                
                 <Bottom navigation={this.props.navigation}/>
             </Container>
         )

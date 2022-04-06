@@ -111,6 +111,13 @@ function LookupInfo3( { route,navigation } ) {
         
         const beforeImgList =[]                                  //제품 수선 전 사진
         const afterImgList =[]
+
+        
+        console.log("images")
+        console.log("")
+        console.log(images)
+        console.log("")
+        console.log("images")
         if(images){
             for (let i = 0; i < images.length; i++) { //제품 수선 후 사진
                 const element = images[i];
@@ -124,6 +131,12 @@ function LookupInfo3( { route,navigation } ) {
                     afterImgList.push(ip+element["after_image"])
                 }
             }
+            console.log("beforeImgList")
+            console.log("")
+            console.log(beforeImgList)
+            console.log("")
+            console.log("beforeImgList")
+            
             setBeforeImages(beforeImgList)
             setAfterImages(afterImgList)
         }                                   
