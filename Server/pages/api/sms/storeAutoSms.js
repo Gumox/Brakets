@@ -56,7 +56,6 @@ const controller =  async (req, res) => {
   if (req.method === "POST") {
     console.log(req.body)
     const { 
-      senderId,
       headquarterId,
       receiver,
       msg } = req.body
