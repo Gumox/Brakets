@@ -14,19 +14,19 @@ const XLSX = require('xlsx');
 
 function RepairReception({options,user}) {
 
-  const [option,setOption] = useState(options.companys)
-  const [staff,setStaff] = useState(user)
+  const [option,setOption] = useState()//options.companys)
+  const [staff,setStaff] = useState()//user)
 
-  const [shop_id,set_shop_id] = useState(options.info[0].store_id)
+  const [shop_id,set_shop_id] = useState()//options.info[0].store_id)
   
-  const email = staff.email
+  //const email = staff.email
   const [selectedCompany,setSelectedCompany] = useState(null)
-  const [listData,setListData] = useState(options.list)
+  const [listData,setListData] = useState()//options.list)
 
   const [code,setCode] = useState(null)
-  const [disable,setDisable] = useState(checkDisable(staff.level))
+  const [disable,setDisable] = useState()
 
-  const [needImages,setNeedImages] = useState(options.needImages)
+  const [needImages,setNeedImages] = useState()//options.needImages)
 
   let selectList = [{name:"전체",key:null}];
   if(option != null){option.map((item)=>(selectList.push({name:item.headquarter_name,key:item.hq_id})))}
@@ -61,20 +61,8 @@ function RepairReception({options,user}) {
     setListData(data.body)
     setNeedImages(data.needImages)
   }
-  let lists =[];
-  if(staff.level==3 || staff.level==4){
-    listData.forEach((el,index) => {
-      if(options.images != undefined){
-          let items=(
-            <div key={index} style={{paddingTop:1}}>
-              <RepairReceiptModal need={needImages} item={el} info ={options.info[0]} images ={options.images} shop={shop_id}/>
-            </div>
-        )
-        
-      lists[index] = items;
-      }
-    })
-  }
+  const [lists,setLists] =useState([]);
+ 
 
   useEffect(()=>{
     console.log(option)
@@ -92,12 +80,31 @@ function RepairReception({options,user}) {
 
       console.log(loadStaff)
 
+      setDisable(checkDisable(loadStaff.level))
 
-    localStorage.setItem('COMPANY',JSON.stringify(selectItems));
+
+    /*localStorage.setItem('COMPANY',JSON.stringify(selectItems));
     localStorage.setItem('SHOP',shop_id)
     localStorage.setItem('SHOP_NAME',loadOptions.info[0].name)
-    localStorage.setItem('USER',JSON.stringify(user))
-    localStorage.setItem('USER_INFO',JSON.stringify(loadOptions.info[0]))
+    localStorage.setItem('USER',JSON.stringify(loadStaff))
+    localStorage.setItem('USER_INFO',JSON.stringify(loadOptions.info[0]))*/
+
+    let itemList = []
+    if(loadStaff.level==3 || loadStaff.level==4){
+      loadOptions.list.forEach((el,index) => {
+        if(loadOptions.images){
+            let items=(
+              <div key={index} style={{paddingTop:1}}>
+                <RepairReceiptModal need={loadOptions.needImages} item={el} info ={loadOptions.info[0]} images ={loadOptions.images} shop={loadOptions.info[0].store_id}/>
+              </div>
+          )
+          
+          itemList[index] = items;
+        }
+      })
+      setLists(itemList)
+
+    }
 
   },[])
   return(
@@ -148,7 +155,7 @@ function RepairReception({options,user}) {
 }
 
 
-export const getServerSideProps = async (ctx) => {
+/*export const getServerSideProps = async (ctx) => {
   const {
     data: { isAuthorized, user },
   } = await axios.get(
@@ -208,7 +215,7 @@ export const getServerSideProps = async (ctx) => {
       }
     };
   }
-};
+};*/
 const Nav = styled.nav`
   overflow-y: auto;
   height: 100%;
