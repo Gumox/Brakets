@@ -84,7 +84,7 @@ async function getReceiptList(query,values) {
                 LEFT JOIN judgment_result AS repair2_result ON repair2_result.judgment_result_id  = repair2.result_id
                 LEFT JOIN judgment_result AS repair3_result ON repair3_result.judgment_result_id  = repair3.result_id
                 WHERE receipt.step = 1 AND receipt.receiver = ? ${query} 
-                ORDER BY receipt_date ASC
+                ORDER BY receipt.receipt_date ASC
                 `,
         values,
       });
