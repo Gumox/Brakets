@@ -21,7 +21,6 @@ const RepairOthers = ({
       setWindowWidth(window.innerWidth)
       setWindowHeight(window.innerHeight)
   },1000)
-  console.log(receiver)
   const onSave = async()=>{
     
     let res;

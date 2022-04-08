@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback,useRef} from 'react';
-import RepairHeader from '../components/RepairHeader'
+import MfrHeader from '../components/MfrHeader'
 import styled from 'styled-components';
 import COLOR from '../constants/color';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import store from '../store/store';
 import sortInquiryData from '../functions/sortInquiryData';
 import dateOptionListcontroll from '../functions/dateOptionListcontroll';
 import checkDisable from '../functions/checkDisable';
-import InquiryResult from '../components/repair/InquiryResult';
+import InquiryResult from '../components/mfr/InquiryResult';
 import {getSelectList, getRepairType } from '../functions/useInRepairReceiptModal'; 
 import { getBrandList } from '../functions/useInSettlement';
 import Image from 'next/image'
@@ -26,7 +26,7 @@ export default function Inquiry() {
     const [endDate,setEndDate] = useState(null)
     const [dateOption,setDateOption] = useState("receipt_date")
     const [brandList,setBrandList] = useState([])
-    const [companyList,setCompanyList] = useState(store.getState().company);
+    const [companyList,setCompanyList] = useState([]);
     const [disable,setDisable] = useState(true)
     const [faultInfo,setFaultInfo] = useState([])
     const [resultInfo,setResultInfo] = useState([])
@@ -37,10 +37,11 @@ export default function Inquiry() {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, dataWS, "sheet1");
         XLSX.writeFile(wb, "조회 목록.xlsx");
-      }
+    }
+
     const getData = async(params)=>{
         const[datas] =await Promise.all([
-            axios.get(`${process.env.API_URL}/RepairShop/getInquiryInfo`, {
+            axios.get(`${process.env.API_URL}/mfr/mfrInquiry`, {
                 params: params,
               })
             .then(({ data }) => data)
@@ -49,22 +50,23 @@ export default function Inquiry() {
             })
           ])
           //console.log(datas)
-          return datas;
+          return datas.body;
     }
-    const setTable =useCallback( async(params ,fI,jI,aI) =>{
+
+    const setTable =useCallback( async(params) =>{
         let datas = [];
         let types = await getRepairType(null,null,shopId)
         if(params.dateOption === "receipt_date"){
             datas = await getData(params)
-            let sort =await sortInquiryData(datas.body,params,fI,jI,aI,types)
-            setData(sort)
+            console.log(datas)
+            setData(datas)
         }else{
             datas = await getData(params)
-            let sort =await sortInquiryData(datas.body,params,fI,jI,aI,types)
-            let result  =dateOptionListcontroll(sort,params)
-            setData(result)
+            console.log(datas)
+            setData(datas)
         }
     },[setData]);
+
     const handleKeyPress = useCallback(
         (e,code) => {
           if (e.key !== "Enter") return;
@@ -77,25 +79,20 @@ export default function Inquiry() {
             dateOption : dateOption 
         },analysisInfo,resultInfo,faultInfo);
         },[brand, dateOption, endDate, setTable,startDate]
-      );
+    );
+
     useEffect(() => {
         const fetchData = async () => {
             let list =await getBrandList();
                 
-            const fI = await getSelectList('faultDivision',null)
-            const jI = await getSelectList('judgmentResult',null)
-            const aI = await getSelectList('analysisType',null)
-            
-            setFaultInfo(fI)   
-            setResultInfo(jI)  
-            setAnalysisInfo(aI)
-
+           
             list.unshift({brand_id: "",brand_name: "전체"})
             setBrandList(list);
             setShopId(localStorage.getItem('SHOP'))
             setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
             let user = JSON.parse(localStorage.getItem('USER'))
             setDisable(checkDisable(user.level))
+
             setTable({
                 shop_id: localStorage.getItem('SHOP'),
                 brand : brand,
@@ -103,14 +100,14 @@ export default function Inquiry() {
                 startDate : startDate,
                 endDate : endDate,
                 dateOption : dateOption 
-            },aI,jI,fI);
+            });
             
         }
         fetchData();
       },[]);
     return(
         <Nav style={{height:"100%"}}>
-            <RepairHeader/>
+            <MfrHeader/>
             <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
             <TopView>
                 <h2>조회</h2>
@@ -185,10 +182,9 @@ export default function Inquiry() {
                             },analysisInfo,resultInfo,faultInfo);
                         }}>
                         <option value="complete_date">매장접수일</option>
-                        <option value="register_date">수선처접수일</option>
-                        <option value="send_date">수선처발송일</option>
+                        <option value="mfr_register_date">업체접수일</option>
+                        <option value="mfr_complete_date">업체발송일</option>
                     </select>
-                    
                     
                     <input disabled={disable} type="date" style={{height:25, marginRight:10}} onChange={(e)=>{
                         setStartDate(e.target.value)
@@ -230,17 +226,8 @@ export default function Inquiry() {
                     <ItemView>스타일</ItemView>
                     <ItemView>컬러</ItemView>
                     <ItemView>사이즈</ItemView>
-                    <ItemView>과실구분</ItemView>
-                    <ItemView>내용분석</ItemView>
-                    <ItemView>판정결과</ItemView>
-                    <ItemView><pre>{"수선처\n접수일"}</pre></ItemView>
-                    <ItemView><pre>{"수선처\n발송일"}</pre></ItemView>
-                    <ItemView>수선내용1</ItemView>
-                    <ItemView>수선비용1</ItemView>
-                    <ItemView>수선내용2</ItemView>
-                    <ItemView>수선비용2</ItemView>
-                    <ItemView>수선내용3</ItemView>
-                    <ItemView>수선비용3</ItemView>
+                    <ItemView><pre>{" 업체\n접수일"}</pre></ItemView>
+                    <ItemView><pre>{" 업체\n발송일"}</pre></ItemView>
                     <ItemView><pre>{"  매장\n접수내용"}</pre></ItemView>
                 </Container></LaView>
                 <Line2/>
@@ -274,8 +261,10 @@ const ItemStyle = {
   alignitems: "center",
   justifyContent:"center"
 }
-const Nav = styled.nav`
+const Nav = styled.div`
   overflow-y: auto;
+  overFlow-x: scroll;
+  min-width:670px;
   height: 100%;
   &::-webkit-scrollbar {
     width: 8px;
@@ -288,24 +277,24 @@ const Nav = styled.nav`
   }
 `;
 const Line =styled.div`
-  border:1px solid  ${COLOR.BRAUN};
+  border:1px solid  ${COLOR.DARK_GREEN};
   width :100%
   margin:2px;
   height:2px;
   margin-bottom:10px;
   margin-top:10px;
-  background-color: ${COLOR.BRAUN}
+  background-color: ${COLOR.DARK_GREEN}
 `;
 const Line2 =styled.div`
-  border:1px solid  ${COLOR.BRAUN};
+  border:1px solid  ${COLOR.DARK_GREEN};
   width :100%
   margin:2px;
   height:2px;
   margin-top:10px;
-  background-color: ${COLOR.BRAUN}
+  background-color: ${COLOR.DARK_GREEN}
 `;
 const ItemTable = styled.div`
-  border: 2px solid  ${COLOR.BRAUN};
+  border: 2px solid  ${COLOR.DARK_GREEN};
   min-width:100%;
   min-height:200px;
   overflow: hidden;
@@ -318,15 +307,6 @@ const Container = styled.div`
     align-items: flex-start;
 `;
 
-
-const ContainerScroll = styled.nav`
-    margin-top:12px;
-    max-height: 400px;
-    min-height:200px;
-    width: 100%
-    overflow-y: scroll;
-
-`;
 const TopView = styled.div`
     padding:10px;
     display: flex;  
@@ -337,7 +317,7 @@ const TopView = styled.div`
 const ItemView = styled.div`
   font-size :12px;
   min-height: 55px;
-  width : 70px;
+  width : 80px;
   display: flex;  
   flex-direction: row ;
   align-items: center;

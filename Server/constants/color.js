@@ -23,7 +23,8 @@ const COLOR = {
   INDIGO:"#0A599A",
   MOCCA:"#CBBAA0",
   DARK_GREEN:"#006000",
-  LIGHT_GREEN:"rgb(233,255,127)"
+  LIGHT_GREEN:"rgb(233,255,127)",
+  GRAY_GRESS:"#9CCBAB"
 };
 
 export default COLOR;

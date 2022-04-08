@@ -125,7 +125,8 @@ async function getReceiptList(query,values) {
                 LEFT JOIN store AS repair1_detail_store ON repair1_detail.store_id = repair1_detail_store.store_id
                 LEFT JOIN store AS repair2_detail_store ON repair2_detail.store_id = repair2_detail_store.store_id
                 LEFT JOIN store AS repair3_detail_store ON repair3_detail.store_id = repair3_detail_store.store_id
-                WHERE repair_detail.store_id = ? AND receipt.step > 0  ${query} `,
+                WHERE repair_detail.store_id = ? AND receipt.step > 0  ${query} 
+                ORDER BY receipt.receipt_date ASC`,
         values,
       });
     
@@ -177,10 +178,10 @@ const controller = async (req, res) => {
       if (result.length) {
         console.log("List");
         const _result = _.uniqBy(result,"receipt_code") 
-        res.status(200).json({ body: _.sortBy(_result,"receipt_code")});
+        res.status(200).json({ body: result});
       } else {
         console.log("No List");
-        res.status(204).json({ message: "No List" });
+        res.status(200).json({ body: []});
       }
     } catch (err) {
       console.log(err.message);

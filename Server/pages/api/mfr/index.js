@@ -1,4 +1,4 @@
-import excuteQuery from "../../db";
+import excuteQuery from "../db";
 
  async function getNeedImageList(List) {
   let results=[]
@@ -41,27 +41,16 @@ async function getReceiptList(query,values) {
                         product.brand_id,
                         mfr.name AS mfr_name,
                         mfr.store_id AS mfr_id,
+                        mfr_detail.register_date AS mfr_register_date,
+                        mfr_detail.message AS mfr_message,
+                        mfr_detail.substitute AS mfr_substitute,
                         customer.name AS customer_name,
                         customer.phone  AS customer_phone,
                         product.name AS product_name,
-                        repair1.store_id AS repair1_store_id,
-                        repair1.result_id AS repair1_result_id,
-                        repair1_result.judgment_name AS repair1_result_name,
-                        repair1.fault_id AS repair1_fault_id,
-                        repair1.analysis_id AS repair1_analysis_id,
-                        repair2.store_id AS repair2_store_id,
-                        repair2.result_id AS repair2_result_id,
-                        repair2_result.judgment_name AS repair2_result_name,
-                        repair2.fault_id AS repair2_fault_id,
-                        repair2.analysis_id AS repair2_analysis_id,
-                        repair3.store_id AS repair3_store_id,
-                        repair3.result_id AS repair3_result_id,
-                        repair3_result.judgment_name AS repair3_result_name,
-                        repair3.fault_id AS repair3_fault_id,
-                        repair3.analysis_id AS repair3_analysis_id,
-                        receipt.repair1_detail_id,
-                        receipt.repair2_detail_id,
-                        receipt.repair3_detail_id,
+
+                        headquarter_store.name AS headquarter_store_name,
+                        headquarter_store.store_id AS headquarter_store_id,
+                        
                         receipt.mfr_id,
                         receipt.mfr_detail_id,
                         receipt.image
@@ -70,20 +59,12 @@ async function getReceiptList(query,values) {
                 LEFT JOIN mfr_detail ON receipt.receipt_id = mfr_detail.receipt_id
                 LEFT JOIN product ON product.product_id = receipt.product_id
                 LEFT JOIN store ON store.store_id = receipt.store_id
+                LEFT JOIN brand ON product.brand_id  = brand.brand_id 
+                LEFT JOIN store AS headquarter_store ON headquarter_store.brand_id  = brand.headquarter_id 
                 LEFT JOIN season_type ON season_type.season_id = product.season_id
                 LEFT JOIN style_type ON style_type.style_id  = product.style_id 
-                LEFT JOIN brand ON brand.brand_id = product.brand_id
                 LEFT JOIN store AS mfr ON mfr.store_id = product.mfr_id
                 LEFT JOIN customer ON customer.customer_id  =  receipt.customer_id
-                LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
-                LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id
-                LEFT JOIN repair_detail AS repair2 ON receipt.repair2_detail_id = repair2.repair_detail_id
-                LEFT JOIN store AS repair2_store ON repair2.store_id = repair2_store.store_id
-                LEFT JOIN repair_detail AS repair3 ON receipt.repair3_detail_id = repair3.repair_detail_id
-                LEFT JOIN store AS repair3_store ON repair3.store_id = repair3_store.store_id
-                LEFT JOIN judgment_result AS repair1_result ON repair1_result.judgment_result_id  = repair1.result_id
-                LEFT JOIN judgment_result AS repair2_result ON repair2_result.judgment_result_id  = repair2.result_id
-                LEFT JOIN judgment_result AS repair3_result ON repair3_result.judgment_result_id  = repair3.result_id
                 WHERE receipt.step > 0 AND receipt.receiver = ? ${query} 
                 ORDER BY receipt.receipt_date ASC
                 `,
@@ -122,6 +103,7 @@ const controller = async (req, res) => {
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("List");
+        console.log(result);
         let  needImages = await getNeedImageList(result)
         
         res.status(200).json({ body: result ,needImages : needImages});

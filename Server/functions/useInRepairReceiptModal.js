@@ -96,3 +96,6 @@ export const checkHaveRepairDetail =(el,shop)=>{
     if(el.repair3_result_id != null) {return COLOR.MOCCA}
   }
 }
+export const checkHaveMfrDetail =(el)=>{
+  if(el.mfr_register_date) {return "rgb(156,203,171)"}
+}

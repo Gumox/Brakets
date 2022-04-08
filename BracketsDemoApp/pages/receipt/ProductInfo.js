@@ -119,7 +119,7 @@ function ProductInfo({navigation, route}) {
     
     const addReceipt = async () => {
         
-        var formdata = new FormData();
+        let formdata = new FormData();
         
         formdata.append("step",1);
         formdata.append("store", store.getState().store_id);

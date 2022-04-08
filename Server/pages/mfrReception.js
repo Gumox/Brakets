@@ -1,10 +1,10 @@
 import React,{useState, useCallback, useEffect} from "react";
-import RepairHeader from "../components/RepairHeader"
+import MfrHeader from "../components/MfrHeader";
 import styled from "styled-components";
 import COLOR from "../constants/color";
 import axios from "axios";
 import _ from "lodash";
-import RepairReceiptModal from "../components/repair/RepairReceiptModal";
+import MfrReceiptModal from "../components/mfr/MfrReceiptModal";
 import store from "../store/store";
 import checkDisable from "../functions/checkDisable";
 import Image from 'next/image'
@@ -12,23 +12,22 @@ import {parseRepairReceptionData} from "../functions/parseExcelData";
 
 const XLSX = require('xlsx');
 
-function RepairReception({options,user}) {
+function mfrReception({options,user}) {
 
-  const [option,setOption] = useState()//options.companys)
-  const [staff,setStaff] = useState()//user)
+  const [option,setOption] = useState()
+  const [staff,setStaff] = useState()
 
-  const [shop_id,set_shop_id] = useState()//options.info[0].store_id)
+  const [shop_id,set_shop_id] = useState()
+  const [info,setInfo] = useState()
   
-  //const email = staff.email
   const [selectedCompany,setSelectedCompany] = useState(null)
-  const [listData,setListData] = useState()//options.list)
-  
-  const [info,setInfo] = useState(null)
+  const [listData,setListData] = useState()
+
   const [code,setCode] = useState(null)
   const [disable,setDisable] = useState()
-  
+
   const [images,setImages] = useState()
-  const [needImages,setNeedImages] = useState()//options.needImages)
+  const [needImages,setNeedImages] = useState()
 
   let selectList = [{name:"전체",key:null}];
   if(option != null){option.map((item)=>(selectList.push({name:item.headquarter_name,key:item.hq_id})))}
@@ -53,53 +52,58 @@ function RepairReception({options,user}) {
   const getOptions = async () => {
     const [data] = await Promise.all([
       axios
-        .get(`${process.env.API_URL}/RepairShop/getReceiptList`,{
+        .get(`${process.env.API_URL}/mfr`,{
           params: { shop_id: shop_id,hq_id:selectedCompany, code:code},})
         .then(({ data }) => data)
         .catch(error=>{
 
         })
     ]);
-    
-    let itemLists = []
+    console.log("***********")
+    console.log(data)
+    console.log(data.needImages)
+    console.log(info)
+    console.log(images)
+    console.log("***********")
+    let itemList = []
     data.body.forEach((el,index) => {
       
       let items=(
         <div key={index} style={{paddingTop:1}}>
-          <RepairReceiptModal need={data.needImages} item={el} info ={info} images ={images} shop={shop_id}/>
+          <MfrReceiptModal need={data.needImages} item={el} info ={info} images ={images} shop={shop_id}/>
         </div>
       )
-      itemLists[index] = items;
+      itemList[index] = items;
     })
+    setLists(itemList)
 
-    setLists(itemLists)
     setListData(data.body)
     setNeedImages(data.needImages)
   }
   const [lists,setLists] =useState([]);
-
- 
+  
   const fetch =async(loadStaff,info,shop_id)=>{
     const[list,images] =await Promise.all([
-      axios.get(`${process.env.API_URL}/RepairShop/getReceiptList?shop_id=${shop_id}`)
+      axios.get(`${process.env.API_URL}/mfr?shop_id=${shop_id}`)
       .then(({ data }) => data),
       axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getImageList?shop_id=${shop_id}`)
       .then(({ data }) => data)
     
     ])
-    setInfo(info)
     setListData(list.body);
     setImages( images.body),
     setNeedImages( list.needImages);
+    setInfo(info)
 
     let itemList = []
     if(loadStaff.level==3 || loadStaff.level==4){
+      console.log(list)
 
       list.body.forEach((el,index) => {
         if(images.body){
             let items=(
               <div key={index} style={{paddingTop:1}}>
-                <RepairReceiptModal need={list.needImages} item={el} info ={info} images ={images.body} shop={shop_id}/>
+                <MfrReceiptModal need={list.needImages} item={el} info ={info} images ={images.body} shop={shop_id}/>
               </div>
           )
           
@@ -120,28 +124,19 @@ function RepairReception({options,user}) {
       setOption(loadOptions.companys)
       set_shop_id(loadOptions.info[0].store_id)
   
-      //const email = user.email
       setListData(loadOptions.list)
-      setImages(loadOptions.images)
       setNeedImages(loadOptions.needImages)
 
 
       setDisable(checkDisable(loadStaff.level))
-
-
-    /*localStorage.setItem('COMPANY',JSON.stringify(selectItems));
-    localStorage.setItem('SHOP',shop_id)
-    localStorage.setItem('SHOP_NAME',loadOptions.info[0].name)
-    localStorage.setItem('USER',JSON.stringify(loadStaff))
-    localStorage.setItem('USER_INFO',JSON.stringify(loadOptions.info[0]))*/
-
-
-    fetch(loadStaff, loadOptions.info[0], loadOptions.info[0].store_id)
+    
+      
+      fetch(loadStaff, loadOptions.info[0], loadOptions.info[0].store_id)
 
   },[])
   return(
     <Nav style={{overflowY:"scroll"}}>
-      <RepairHeader/>
+      <MfrHeader/>
       <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
         <TopView>
               <h2>접수</h2>
@@ -167,7 +162,7 @@ function RepairReception({options,user}) {
                 onClick={()=>{getOptions()}}
                 >확인</button>  
               </Container> 
-            <div style={{color :"#ff0000"}}><h6>⚠️직접 입력 후 엔터를 누르거나 바코드 리더기를 이용해주세요</h6></div>
+            <div style={{color :"#ff0000"}}><h6> </h6></div>
 
         
         오늘의 접수 예정
@@ -186,68 +181,6 @@ function RepairReception({options,user}) {
   )
 }
 
-
-/*export const getServerSideProps = async (ctx) => {
-  const {
-    data: { isAuthorized, user },
-  } = await axios.get(
-    `${process.env.API_URL}/auth`,
-    ctx.req
-      ? {
-          withCredentials: true,
-          headers: {
-            cookie: ctx.req.headers.cookie || {},
-          },
-        }
-      : {}
-  )
-  .catch(error=>{
-
-  });
-  const {email :email} =user
-  
-    const [companys] = await Promise.all([
-      axios.get(`${process.env.API_URL}/auth/repair?email=${email}`)
-      .then(({ data }) => data)
-      .catch(error=>{
-
-      })
-    ]);
-  if(user.level>2&&user.level<5){
-    const[list,images] =await Promise.all([
-      axios.get(`${process.env.API_URL}/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
-      .then(({ data }) => data),
-      axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
-      .then(({ data }) => data)
-    
-    ])
-    return {
-      props: {
-        user,
-        options:{
-          companys : companys.data,
-          info : companys.body,
-          list : list.body,
-          images: images.body,
-          needImages : list.needImages
-        }
-      }
-    };
-  }
-  else if(user.level<2){
-    return {
-      props: {
-        user,
-        options:{
-          companys : companys.data,
-          info : companys.body,
-          list : [],
-          images: []
-        }
-      }
-    };
-  }
-};*/
 const Nav = styled.nav`
   overflow-y: auto;
   height: 100%;
@@ -262,16 +195,16 @@ const Nav = styled.nav`
   }
 `;
 const Line =styled.div`
-  border:1px solid  ${COLOR.BRAUN};
+  border:1px solid  ${COLOR.DARK_GREEN};
   width :100%;
   margin:2px;
   height:2px;
   margin-bottom:10px;
   margin-top:10px;
-  background-color: ${COLOR.BRAUN};
+  background-color: ${COLOR.DARK_GREEN};
 `;
 const ItemTable = styled.div`
-  border: 2px solid  ${COLOR.BRAUN};
+  border: 2px solid  ${COLOR.DARK_GREEN};
   min-width:100%;
   min-height:300px;
 
@@ -301,4 +234,4 @@ const TopView = styled.div`
     justify-content: space-between;      
 `;
 
-export default  RepairReception;
+export default  mfrReception;
