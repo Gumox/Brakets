@@ -48,7 +48,7 @@ export default function Inquiry() {
                 
             })
           ])
-          console.log(datas)
+          //console.log(datas)
           return datas;
     }
     const setTable =useCallback( async(params ,fI,jI,aI) =>{

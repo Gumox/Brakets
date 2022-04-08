@@ -21,7 +21,9 @@ const COLOR = {
   MADARIN: "#FFBA75",
   DARK_ORANGE:"#EC8000",
   INDIGO:"#0A599A",
-  MOCCA:"#CBBAA0"
+  MOCCA:"#CBBAA0",
+  DARK_GREEN:"#006000",
+  LIGHT_GREEN:"rgb(233,255,127)"
 };
 
 export default COLOR;

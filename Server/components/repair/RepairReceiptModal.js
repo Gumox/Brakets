@@ -271,7 +271,6 @@ function RepairReceiptModal (props) {
                     <option value={2} key={'본사행낭'}>본사행낭</option>
                     <option value={3} key={'택배'}>택배</option>
                     <option value={4} key={'퀵배송'}>퀵배송</option>
-                    <option value={5} key={'행낭 (행낭 바코드 X)'}>행낭 (행낭 바코드 X)</option>
                     </select>
                 </ItemTextBottom></ItemTextTop>
               </RaView>

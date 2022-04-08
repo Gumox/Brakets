@@ -156,7 +156,7 @@ function SelectImageModal({overallImg,imageData,needImageData}){
             </RepairImgWrapper>
 
             {needImageData[0]
-                &&(<RepairImgWrapper key={i}>
+                &&(<RepairImgWrapper >
                         <ImgViewSubTitle style={{marginTop:15}}>
                                 추가 수선 필요 부위
                         </ImgViewSubTitle>

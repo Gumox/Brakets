@@ -49,6 +49,7 @@ const ReceiptInfo = ({
       ),
     [resultType]
   );
+  
   const inputSave = async(targetData,inputFlie)=>{
     const formData = new FormData();
     formData.append('deliberation', inputFlie[0]);
@@ -118,10 +119,6 @@ const ReceiptInfo = ({
   const [discouuntList,setDiscouuntList] = useState([]) 
   const [claimList,setClaimList] = useState([])
   
- 
-  //console.log(targetData)
-
-
 
   const  setFile=(e)=> {
     // Get the details of the files

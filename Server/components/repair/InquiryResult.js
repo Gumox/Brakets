@@ -6,7 +6,6 @@ import store from "../../store/store";
 const InquiryResult =(props)=>{
     let results =[];
     const item =props.data;
-    console.log(item)
     const [modalOpenCheckable,setModalOpenCheckable] = useState(false)
     const closeProductImage = useCallback(
         () => setModalOpenCheckable(false),

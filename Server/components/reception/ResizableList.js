@@ -282,7 +282,7 @@ const Wrapper = styled.nav`
   overflow: scroll;
   &::-webkit-scrollbar {
     width: 8px;
-    height: 8px;
+    height: 10px;
     background: rgba(210, 210, 210, 0.4);
   }
   &::-webkit-scrollbar-thumb {
@@ -292,6 +292,7 @@ const Wrapper = styled.nav`
 
 const TableRowDiv = styled.div`
     cursor: pointer;
+    border-bottom:1px solid;
 
     &:hover {
     color:${COLOR.BLUE}
