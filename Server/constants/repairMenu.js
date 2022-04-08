@@ -3,7 +3,7 @@ const MENUS = [
 
     {
       title: "접수",
-      link: "/RepairReception",
+      link: "/repairReception",
     },
     {
       title: "조회",

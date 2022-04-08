@@ -48,7 +48,7 @@ function Home({options,user})  {
             <Title>수선 OK</Title>
             <Logout onClick={handleLogout}>Logout</Logout>
             
-            <CuetomLink onClick={() => router.push("/RepairReception")}>
+            <CuetomLink onClick={() => router.push("/repairReception")}>
                 접수
             </CuetomLink>
             <CuetomLink onClick={() => router.push("/inquiry")}>
