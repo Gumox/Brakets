@@ -10,7 +10,7 @@ import { checkHaveMfrDetail } from "../../functions/useInRepairReceiptModal";
 import { debounce } from "lodash";
 import Modal from "../Modal";
 import SelectInquiryImageModal from "./SelectInquiryImageModal";
-import ToggleButton from "./toggleButton";
+import ToggleButton from "./ToggleButton";
 
 function MfrReceiptModal (props) {
   const el =props.item;

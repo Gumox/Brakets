@@ -7,7 +7,7 @@ import COLOR from "../../constants/color";
 import { debounce } from "lodash";
 import Modal from "../Modal";
 import SelectInquiryImageModal from "./SelectInquiryImageModal";
-import ToggleButton from "./toggleButton";
+import ToggleButton from "./ToggleButton";
 
 const InquiryModal = ({
         item,
