@@ -73,6 +73,26 @@ function LookupInfo4( { route,navigation } ) {
             navigation.navigate("ShopStepFive")
         }
     }
+    const deleteNotice=()=>{
+        Alert.alert(
+            "정말로 취소 하시겠습니까?",
+            "확인을 누르시면 접수내역이 삭제 됩니다",
+            [
+              {
+                text: "취소",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "확인", onPress: () =>{
+                DeleteReceipt(data.receipt_id)
+                navigation.popToTop();
+                navigation.navigate('LookupPage',{code:null});
+              } }
+            ]
+        );
+        
+    }
+    
     let halfBtn
     if(step ==5){
         halfBtn=(
@@ -86,6 +106,9 @@ function LookupInfo4( { route,navigation } ) {
     }else{
         halfBtn=(
             <Half style={{borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
+                <BtnRed onPress = {() => {
+                    deleteNotice()
+                }}><Text style ={{color : "#ffffff"}}>접수 취소</Text></BtnRed>
                 <Btn onPress = {() => {
                     reReceipt(data)
                 }}><Text style ={{color : "#ffffff"}}>접수 계속</Text></Btn>
@@ -317,4 +340,13 @@ const TopText = styled.Text`
     padding: 8px;
     font-size: 20px;
     color:#000000;
+`;
+
+const BtnRed = styled.TouchableOpacity`
+    width : 30%;
+    height: 50px;
+    background: rgb(180,0,0);
+    justify-content: center;
+    align-items: center;
+    border-radius:12px;    
 `;

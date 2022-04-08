@@ -13,7 +13,6 @@ import ReceiptButton from '../../components/ReceiptButton';
 import CenterText from '../../components/CenterText';
 
 
-
 const Label = styled.Text`
     font-size: 20px;
     margin-Top: 12px;
@@ -54,7 +53,6 @@ const SecondTextView = styled.TextInput`
     margin-bottom: 5px;
 `;
 
-
 function Setting({ navigation }) {
 
     // const savedResultId = AsyncStorage.getItem('user_id', (err, result) => {
@@ -65,6 +63,13 @@ function Setting({ navigation }) {
     // Use dark color scheme
         console.log("dark")
     }
+
+    const body = {
+        "headquarterId":2,
+        "receiver":"01020614406",
+        "msg":"테스트 메시지"
+
+    }//AutoSms(body)
 
     const savedResultId = AsyncStorage.getItem('userInfo', (err, result) => {
         //user_id에 담긴 아이디 불러오기
@@ -106,8 +111,10 @@ function Setting({ navigation }) {
                                 text: "네",
                                 onPress: () => (
                                     AsyncStorage.removeItem('userInfo'),
-                                    console.log('123'),
+                                    
                                     navigation.reset({routes: [{name: 'Login'}]})
+
+                                    
                                     )
                             },
                             {

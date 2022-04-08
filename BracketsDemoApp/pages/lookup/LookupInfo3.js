@@ -235,9 +235,9 @@ function LookupInfo3( { route,navigation } ) {
         btn=(
             
             <Half style={{padding:"3%",borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
-                <Btn onPress = {() => {
+                <BtnRed onPress = {() => {
                     deleteNotice()
-                }}><Text style ={{color : "#ffffff"}}>접수 취소</Text></Btn>
+                }}><Text style ={{color : "#ffffff"}}>접수 취소</Text></BtnRed>
                 <Btn onPress = {() => {
                     reReceipt(data,step)
                 }}><Text style ={{color : "#ffffff"}}>접수 계속</Text></Btn>
@@ -349,4 +349,13 @@ const CenterView = styled.View`
     flex-direction : row;
     justify-content : center;
     align-items : center;  
+`;
+
+const BtnRed = styled.TouchableOpacity`
+    width : 30%;
+    height: 50px;
+    background: rgb(180,0,0);
+    justify-content: center;
+    align-items: center;
+    border-radius:12px;    
 `;

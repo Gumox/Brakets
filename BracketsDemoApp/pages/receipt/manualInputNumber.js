@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Container from '../../components/Container';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
@@ -37,6 +37,20 @@ function manualInputNumber({ navigation, route }) {
 
     const [input, setInput] = useState('');
     const key = route.params.key;
+    const [text,setText] = useState()
+
+    useEffect(()=>{
+
+        if(key=="ShopStepFour"){
+            setText("서비스 바코드")
+        }else if(key === 'ShopStepComplete'){
+            setText("행낭 바코드")
+        }else{
+            setText("서비스 바코드")
+        }
+
+    },[])
+    
     const naviAction = () =>{
         
         if(key=="ShopStepFour"){
@@ -55,7 +69,7 @@ function manualInputNumber({ navigation, route }) {
         <>
             <Container style= {{backgroundColor:"#ffffff"}}>
                 <AlternativeCodeView>
-                    <Label>바코드를  직접 입력하세요</Label>
+                    <Label>{text}를  직접 입력하세요</Label>
                     <Input
                         value={input}
                         keyboardType='numeric'
