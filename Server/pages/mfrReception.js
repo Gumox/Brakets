@@ -12,7 +12,7 @@ import {parseRepairReceptionData} from "../functions/parseExcelData";
 
 const XLSX = require('xlsx');
 
-function mfrReception({options,user}) {
+function MfrReception({options,user}) {
 
   const [option,setOption] = useState()
   const [staff,setStaff] = useState()
@@ -59,12 +59,6 @@ function mfrReception({options,user}) {
 
         })
     ]);
-    console.log("***********")
-    console.log(data)
-    console.log(data.needImages)
-    console.log(info)
-    console.log(images)
-    console.log("***********")
     let itemList = []
     data.body.forEach((el,index) => {
       
@@ -234,4 +228,4 @@ const TopView = styled.div`
     justify-content: space-between;      
 `;
 
-export default  mfrReception;
+export default  MfrReception;

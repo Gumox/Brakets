@@ -15,7 +15,7 @@ import { parseInquiryData } from '../functions/parseExcelData';
 
 const XLSX = require('xlsx');
 
-export default function Inquiry() {
+export default function MfrInquiry() {
    
     const [shopId,setShopId] = useState(store.getState().shop);
     const [data,setData] = useState([]);
