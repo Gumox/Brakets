@@ -169,7 +169,7 @@ async function getReceipt(code) {
                     repair3.shipment_type AS repair3_shipment_type,
                     repair3.shipment_price AS repair3_shipment_price,
                     receipt.mfr_detail_id,
-                    mfr.store_id AS mfr_store_id,
+                    receipt.mfr_id AS mfr_store_id,
                     DATE_FORMAT(mfr.send_date, '%Y-%m-%d %H:%i:%s') AS mfr_send_date,  
                     DATE_FORMAT(mfr.register_date, '%Y-%m-%d %H:%i:%s') AS mfr_register_date,  
                     IF(mfr.substitute=0, "Y", "N") AS mfr_substitute,

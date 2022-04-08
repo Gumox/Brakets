@@ -31,12 +31,13 @@ async function getRepairDetail( repair_detail_id ) {
   
     return result;
   }
-async function getMfr( mfr_detail_id  ) {
+async function updateMfrReceipt( mfr_detail_id,mfr_store_id,receipt_id  ) {
     const result = await excuteQuery({
-      query: `SELECT * 
-              FROM mfr_detail
-              WHERE mfr_detail_id  =?`,
-      values:[mfr_detail_id ],
+      query: `UPDATE receipt 
+              SET mfr_detail_id=?,
+                  receiver =?
+              WHERE receipt_id=?`,
+      values:[mfr_detail_id,mfr_store_id,receipt_id],
     });
   
     return result;
@@ -106,7 +107,6 @@ const receipt = async (req, res) => {
             paid,
             fee,
             complete_date,  // 필수 : 발송일 to S
-            mfr_detail_id,
             mfr_store_id,
             mfr_send_date,
             cashreceipt_num, // 현금영수증번호
@@ -116,9 +116,6 @@ const receipt = async (req, res) => {
             claim_price,
             deliberation_request_date,
         } = req.body.body;
-        console.log(repair1_store_id)
-        console.log(repair2_store_id)
-        console.log(repair3_store_id)
         let query = "";
         let values = [String(complete_date).slice(0,10)];
 
@@ -192,7 +189,9 @@ const receipt = async (req, res) => {
             const repair =await getRepairDetail(repair1_detail_id)
             if(repair.length){
                 const updateResult = await updateRepairDetail(repair1_send_date,repair1_detail_id)
+
                 if (updateResult.error) throw new Error(updateResult.error);
+
             }else if(!repair1_detail_id){
                 const insertResult =await insertRepairDetail(repair1_store_id,receipt_id,repair1_send_date)
                 const insertId = insertResult.insertId
@@ -235,15 +234,13 @@ const receipt = async (req, res) => {
                 if (updateReceiptRepairShop.error) throw new Error(updateReceiptRepairShop.error);
             }
         }
-        if(mfr_store_id){
-            const mfr =await getMfr(mfr_detail_id)
-            if(mfr.length){
-                const updateResult = await updateMfr(mfr_send_date,mfr_store_id)
-                if (updateResult.error) throw new Error(updateResult.error);
-            }else{
-                const insertResult =await insertMfr(mfr_store_id,receipt_id,mfr_send_date)
-                if (insertResult.error) throw new Error(insertResult.error);
-            }
+        if(mfr_send_date){
+            
+          const insertResult =await insertMfr(mfr_store_id,receipt_id,mfr_send_date)
+          if (insertResult.error) throw new Error(insertResult.error);
+          const updateReceipt = await updateMfrReceipt(insertResult.insertId,mfr_store_id,receipt_id)
+          if (updateReceipt.error) throw new Error(updateReceipt.error);
+            
         }
         if (receipt.error) throw new Error(receipt.error);
         res.status(200).json({ data: receipt });

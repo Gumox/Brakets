@@ -138,10 +138,6 @@ const getFeeInfo = async(id) =>{
 }
 const updateReceiptFee = async (receiptId,fee1,fee2,fee3) => {
   
-  console.log("*********************")
-  console.log(fee1,fee2,fee3)
-  console.log()
-  console.log("*********************")
   const insert = fee1+fee2+fee3
   return excuteQuery({
     query: `UPDATE receipt SET fee=? WHERE receipt_id=?`,
