@@ -20,8 +20,7 @@ async function getImageList(code) {
 }
 async function getRepairNeed_Point(id) {
   const result = await excuteQuery({
-    query: `SELECT repair_need_point.repair_need_id ,repair_need_point.receipt_id, 
-                   repair_need_point.store_id, repair_need_point.need_point_image
+    query: `SELECT *
             FROM repair_need_point
             LEFT JOIN receipt ON repair_need_point.receipt_id = receipt.receipt_id
             WHERE receipt.receipt_code = ?`,
