@@ -124,7 +124,6 @@ async function getReceipt(query, values) {
                     DATE_FORMAT(mfr.register_date, '%Y-%m-%d %H:%i:%s') AS mfr_register_date,  
                     IF(mfr.substitute=0, "N", "Y") AS mfr_substitute,
                     mfr.message AS mfr_message,
-                    mfr.redo AS mfr_redo,
                     DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date  
             FROM receipt 
             LEFT JOIN store ON receipt.store_id = store.store_id 

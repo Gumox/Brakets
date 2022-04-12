@@ -80,8 +80,7 @@ async function getReceiptList(receipt_id) {
                     mfr_store.name AS manufacturer_name,
                     mfr.store_id AS mfr_store_id,
                     IF(mfr.substitute=0, "N", "Y") AS mfr_substitute,
-                    mfr.message AS mfr_message,
-                    mfr.redo AS mfr_redo
+                    mfr.message AS mfr_message
                 FROM receipt 
                 LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
                 LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id

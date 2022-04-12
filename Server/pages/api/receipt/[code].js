@@ -174,7 +174,6 @@ async function getReceipt(code) {
                     DATE_FORMAT(mfr.register_date, '%Y-%m-%d %H:%i:%s') AS mfr_register_date,  
                     IF(mfr.substitute=0, "Y", "N") AS mfr_substitute,
                     mfr.message AS mfr_message,
-                    mfr.redo AS mfr_redo,
                     DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date,
                     receipt.image  
               FROM receipt 
