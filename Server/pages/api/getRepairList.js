@@ -1,10 +1,16 @@
 import excuteQuery from './db';
 
 
-async function getHeadquarters() {
+async function getHeadquarters(query,values) {
     return excuteQuery({
-        query: "SELECT store_id AS receiver_id, name AS receiver_name FROM store WHERE store_type=0 ORDER BY name",
-        values: []
+        query: `SELECT DISTINCT 
+                    store.store_id AS receiver_id,
+                    store.name AS receiver_name
+                    FROM store
+                    LEFT JOIN headquarter ON headquarter.headquarter_id = store.brand_id
+                    LEFT JOIN brand ON headquarter.headquarter_id = brand.headquarter_id
+                    WHERE store.store_type=0 ${query}`,
+        values
     });
 }
 
@@ -24,9 +30,17 @@ const controller =  async (req, res) => {
     const receipt = req.body.receipt; 	//1: 수선 2: 교환 3: 환불 4: 심의
     const pcategoryId = req.body.pcategory_id; 	//pcategory id
     const seasonId = req.body.season_id; // season_id
+    const brandId = req.body.brand_id; //   
+    
+    let query = ``
+    let values = []
+    if(brandId){
+        query+=`AND brand.brand_id = ?`;
+        values =[...values,brandId];    
+    }
 
     try{
-        const headquarters = await getHeadquarters();
+        const headquarters = await getHeadquarters(query,values);
         if (headquarters.error) throw new Error(headquarters.error);
 
         let repairPlaces = [];

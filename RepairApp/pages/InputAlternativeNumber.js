@@ -45,7 +45,7 @@ function InputAlternativeNumber({ navigation, route }) {
         <>
             <Container>
                     <TitleView>
-                        <Label> 대체 코드 입력 </Label>
+                        <Label>  코드 수동 입력 </Label>
                     </TitleView>
 
                     <InputView>
@@ -114,5 +114,5 @@ const Input = styled.TextInput`
     border : 1.5px;
     color: #000000;
     border-radius:10px
-    height: 40px;
+    min-height:40px;
 `;

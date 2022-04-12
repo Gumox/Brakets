@@ -168,12 +168,37 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData}){
                                                 />
                                             </RepairImgView>
                                             <ImgViewSubTitle>
+                                            수선 전 {i+1}
                                             </ImgViewSubTitle>
                 
                 
                                         </ImgCardView>
-                
+                                        {v.after_need_point_image &&
+                                        
+                                        (
+                                            <ImgCardView>
+                                            
+                                            <RepairImgView  onClick={()=>{setMainImage(`http://34.64.182.76${v.after_need_point_image}`)}}>
+                                                    <Img
+                                                    src={`http://34.64.182.76${v.after_need_point_image}`}
+                                                    alt={""}
+                                                    layout="fixed"
+                                                    width="120px"
+                                                    height="160px"
+                    
+                                                    />
+                                                </RepairImgView>
+                                                <ImgViewSubTitle>
+                                                수선 후 {i+1}
+                                                </ImgViewSubTitle>
+                    
+                    
+                                            </ImgCardView>
+                    
+                                        )
+                                    }
                                     </ImgCardDiv>
+                                    
                                 </div>
             
                                 
@@ -182,7 +207,7 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData}){
                     })}
                 </RepairImgWrapper>)
             }
-             
+            <div style={{margin:20}}/>
 
             </RightSideView>
         </MainView>

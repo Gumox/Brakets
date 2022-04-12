@@ -16,7 +16,9 @@ async function getNeedImageList(code) {
             repair_need_point.receipt_id,
             repair_need_point.number,
             repair_need_point.store_id,
-            repair_need_point.need_point_image
+            repair_need_point.need_point_image,
+            repair_need_point.after_store_id,
+            repair_need_point.after_need_point_image
             FROM repair_need_point
             LEFT JOIN receipt ON repair_need_point.receipt_id = receipt.receipt_id
             WHERE receipt.receipt_code = ?`,

@@ -33,7 +33,7 @@ function App() {
 
         <Stack.Screen name="PhotoStep" component = {PhotoStep} options={ {  title: '수선 촬영 선택' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
 
-        <Stack.Screen name="InputAlternativeNumber" component = {InputAlternativeNumber} options={ {  title: '대체 코드 입력' , headerTitleAlign: 'center', headerTintColor: "black"} } />
+        <Stack.Screen name="InputAlternativeNumber" component = {InputAlternativeNumber} options={ {  title: '코드 수동 입력' , headerTitleAlign: 'center', headerTintColor: "black"} } />
 
         <Stack.Screen name="RepairDetail" component = {RepairDetail} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
         <Stack.Screen name="RepairMore" component = {RepairMore} options={ {  title: '수선 내역' ,headerTitleAlign: 'center', headerTintColor: "black"} } />
@@ -47,7 +47,6 @@ function App() {
         <Stack.Screen name="RepairStepOne" component={RepairStepOne} options={{title: '', headerLeft: null, headerTintColor: "black"}}/>
 
         <Stack.Screen name="Picture" component = {Picture} options={ {  title: '', headerTintColor: "black"} } />
-        {/* <Stack.Screen name="DetectCode" component = {DetectCode} options={ { headerShown: false }} /> */}
         <Stack.Screen 
           name="DetectCode" 
           component = {DetectCode} 

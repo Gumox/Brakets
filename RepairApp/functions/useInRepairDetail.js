@@ -2,8 +2,8 @@ import ip from "../serverIp/Ip";
 
 import { PathToFlie } from '../functions/PathToFlie';
 import store from "../store/store";
-export const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,image2,image3,image4) => {
-    var formdata = new FormData();
+export const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,image2,image3,image4,needAfter) => {
+    let formdata = new FormData();
 
     formdata.append("receipt", receipt_id )//받는곳
     formdata.append("store", store_id) //수선처
@@ -12,7 +12,20 @@ export const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,i
     formdata.append("image2", PathToFlie(image2));
     formdata.append("image3", PathToFlie(image3));
     formdata.append("image4", PathToFlie(image4));
-    console.log(formdata)
+
+    const needAfterLabels =[]
+    if(needAfter.length>0){
+        needAfter.map((item)=>{
+            let label = "needAfter"+item.num;
+            formdata.append(label, PathToFlie(item.photo));
+            needAfterLabels.push(label)
+
+        })
+        formdata.append("needAfterLabels",JSON.stringify(needAfterLabels))
+    }else{
+        formdata.append("needAfterLabels",null)
+    }
+    console.log(formdata["_parts"]) 
 
     try {
         const response = await fetch(ip+'/api/RepairShop/sendRepairInfo/updateAfterImage',{method: 'PUT',
@@ -27,17 +40,17 @@ export const postUpdateAfterImage = async (receipt_id,sendType,store_id,image1,i
         if(json.msg == 'images saved'){
             if(sendType === 1){
                 store.dispatch({type:"IMAGE_RESET", reset:null})
+                store.dispatch({type:'NEED_PHOTOS_CLOSE_SET',needClosePhotos:[]}); 
             }
             else{
                 store.dispatch({type:"IMAGE_RESET", reset:null})
+                store.dispatch({type:'NEED_PHOTOS_CLOSE_SET',needClosePhotos:[]}); 
             }
         }
        
     } catch (error) {
         console.error(error);
-    } finally {
     }
-    
 }
 
 export const postSendRepairInfo = async (place,date,sendType,sendPay,repair_detail_id,receipt_id,step,navigation) => {

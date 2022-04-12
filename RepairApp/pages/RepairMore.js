@@ -2,6 +2,7 @@ import React, { useState, useEffect,useCallback } from 'react';
 import { Text, Image, Alert, View, Pressable } from 'react-native';
 import dayjs from 'dayjs';
 import axios from "axios";
+import _ from 'lodash';
 
 import Contents from '../components/Contents';
 import styled from 'styled-components/native';
@@ -11,6 +12,7 @@ import Bottom from '../components/Bottom';
 import Ip from '../serverIp/Ip';
 import store from '../store/store';
 import { PathToFlie } from '../functions/PathToFlie';
+import NetworkLoading from '../components/NetworkLoading';
 
 function RepairMore({ navigation, route }) {
     const code = route.params.data;
@@ -28,6 +30,7 @@ function RepairMore({ navigation, route }) {
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     const [afterImages,setAfterImages] =useState([]);
     const [needImages,setNeedImages] =useState([]);
+    const [visable,setVisable] = useState(false)
 
     const [takeNeedPhotos,setTakeNeedPhotos] = useState(store.getState().needPhotos);
     const getTargetData = useCallback(async (code) => {
@@ -54,7 +57,8 @@ function RepairMore({ navigation, route }) {
         }
         const needImages =[]
         data.needRepairImage.forEach((obj,index) => {
-            needImages.push({photo:Ip+obj["need_point_image"] , repair_need_id:obj["repair_need_id"]})
+            console.log(obj)
+            needImages.push({photo:Ip+obj["need_point_image"] , repair_need_id:obj["repair_need_id"],after:Ip+obj["after_need_point_image"],num : obj["number"]})
             console.log()
             console.log(needImages)
             console.log()
@@ -66,8 +70,9 @@ function RepairMore({ navigation, route }) {
             console.log(needImages.length)
             console.log()
         if(needImages.length>0){
-            //store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:needImages})
-            setTakeNeedPhotos([...needImages,...takeNeedPhotos])
+            let uniqueArr =_.uniqBy([...needImages,...takeNeedPhotos], "repair_need_id");
+            setTakeNeedPhotos(uniqueArr)
+            store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:uniqueArr})
         }
         
         ////console.log("error : "+Ip+data.data["image"])
@@ -75,23 +80,29 @@ function RepairMore({ navigation, route }) {
     });
 
     const postRepairNeedPoint = async (receipt_id,image,takeNeedPhotos) => {
-        var formdata = new FormData();
+        let formdata = new FormData();
 
         formdata.append("receipt", receipt_id);
         formdata.append("store", store.getState().shopId);
         formdata.append("image",  PathToFlie(image));
         console.log(takeNeedPhotos)
 
-        if(takeNeedPhotos != null|| takeNeedPhotos != undefined ||takeNeedPhotos !== []){
+        let sortedPhoto = _.sortBy(takeNeedPhotos,"num")
 
-            takeNeedPhotos.forEach((obj,index) => {
+        if(sortedPhoto != null|| sortedPhoto != undefined ||sortedPhoto !== []){
+
+            sortedPhoto.forEach((obj,index) => {
                 const img = 'image'+(index+1)
                 //console.log(img)
-                formdata.append(img, PathToFlie(takeNeedPhotos[index].photo))
+                formdata.append(img, PathToFlie(sortedPhoto[index].photo))
             });
             
         }
-        console.log(formdata)
+        console.log()
+        console.log()
+        console.log()
+        console.log(formdata["_parts"])
+        
         
         try {
             const response = await fetch(Ip+'/api/needRepair',{method: 'POST',
@@ -102,13 +113,16 @@ function RepairMore({ navigation, route }) {
             });
             const json = await response.json();
             console.log(json)
+            setVisable(false)
             navigation.popToTop();
             navigation.navigate("PhotoStep")
         } catch (error) {
             console.error(error);
+            setVisable(false)
+            Alert.alert("전송실패", "다시 시도해 주세요",[{text:"확인"}])
         } finally {
 
-        } 
+        }
     }
 
 
@@ -119,9 +133,11 @@ function RepairMore({ navigation, route }) {
         const element = beforeImages[i];
         const obj = afterImages[i]
         const key = i
-        let afterImage = "../Icons/camera.png"
-        if(obj !== null || obj === undefined){
-            afterImage = obj
+        let afterImage = null
+        if(obj){
+            if(obj.indexOf("null") < 0 ){
+                afterImage = obj
+            }
         }
         let before;
         let photo ='afterImageUri'+(key+1);
@@ -129,10 +145,15 @@ function RepairMore({ navigation, route }) {
         before =(
             <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                 <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
-                    <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
+                    <Image style={{width: 90, height: 120 , margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                 </Pressable>
-                <Pressable >
-                    <Image style={{width:100,height:120, margin:15, padding:10, marginRight:30}} source={{uri : afterImage}}></Image>
+                <Pressable onPress={()=>{
+                    if(afterImage !== null){
+                        console.log("afterImage : ",afterImage)
+                        navigation.navigate("PhotoControl",{img:afterImage})
+                    }
+                }}>
+                    <Image style={{width: 90, height: 120 , margin:15, padding:10, marginRight:30}} source={{uri : afterImage}}></Image>
                 </Pressable>
             </View>
         )
@@ -159,8 +180,7 @@ function RepairMore({ navigation, route }) {
                 <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
                     <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image ,code:code})}}>
                         <Image
-                            style={{ width: 150, height: 150 }}
-                            resizeMode='contain'
+                            style={{ width: 120, height: 160 }}
                             source={
                                 { uri: store.getState().photo }
                             }
@@ -177,8 +197,7 @@ function RepairMore({ navigation, route }) {
                 <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
                     <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image ,code:code})}}>
                         <Image
-                            style={{ width: 150, height: 150 }}
-                            resizeMode='contain'
+                            style={{ width: 120, height: 160 }}
                             source={
                                 { uri: Ip+image }
                             }
@@ -200,22 +219,29 @@ function RepairMore({ navigation, route }) {
             takeNeedPhotos.forEach((obj,index) => {
                 //console.log(obj)
                 let photo=(
-                    <View key={index+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
+                    <View key={index+1} style ={{flexDirection:"row",justifyContent : "space-around"}}>
     
-                    <Pressable onPress={() => {navigation.navigate("AddPhotoControl",{img:obj.photo,code:code})}}>
+                    <Pressable  style={{ width: 90, height: 140 , paddingTop:10,paddingBottom:10}} onPress={() => {navigation.navigate("AddPhotoControl",{img:obj.photo,code:code})}}>
                         <Image
-                            style={{ width: 100, height: 120 , padding:10, marginLeft:30}}
-                            resizeMode='contain'
+                            style={{ width: 90, height: 120 }}
                             source={
                                 { uri: obj.photo }
                             }
                         />
                     </Pressable>
                     
-                    <Pressable >
-                    <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
-    
-                    </View>
+                    <Pressable  style={{ width: 90, height: 140 , paddingTop:10,paddingBottom:10}} 
+                        onPress={() => {
+                            if(obj.after){
+                                navigation.navigate("PhotoControl",{img:obj.after})
+                            }
+                        }}>
+                        <Image
+                            style={{ width: 90, height: 120  }}
+                            source={
+                                { uri: obj.after }
+                            }
+                        />
                     </Pressable>
                 </View>
                 )
@@ -227,13 +253,14 @@ function RepairMore({ navigation, route }) {
                     <View key={takeNeedPhotos.length+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
     
                         <Pressable onPress={() => {navigation.navigate('TakePhoto',{key:"need",code:code})}}>
-                            <View style={{width:100,height:120,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
-                                <Text style={{color:"#ffffff", fontSize:20}}>필요 수선 부위 추가</Text>
+                            <View style={{width: 90, height: 120 ,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
+                                <Text style={{color:"#ffffff",fontSize:16}}>{" 필요 수선"}</Text>
+                                <Text style={{color:"#ffffff",fontSize:16}}>{" 부위 추가"}</Text>
                             </View>
                         </Pressable>
                         
                         <Pressable >
-                        <View style={{width:100,height:120,margin:15, padding:10, marginLeft:30}}>
+                        <View style={{width: 90, height: 120 ,margin:15, padding:10, marginLeft:30}}>
     
                         </View>
                         </Pressable>
@@ -363,7 +390,7 @@ function RepairMore({ navigation, route }) {
 
                     <SmallButton
                         onPress={() => {
-                            console.log(takeNeedPhotos)
+                            setVisable(true)
                             postRepairNeedPoint(receiptId,store.getState().photo,takeNeedPhotos)
                             store.dispatch({type:"STORE_ADD_REPAIR_IMAGE",addRepairImageUri:null})
                             store.dispatch({type:"SET_NEED_PHOTOS",needPhotos:[]})
@@ -374,7 +401,7 @@ function RepairMore({ navigation, route }) {
                     </SmallButton>
                 </BottomView>
             </Contents>
-
+            <NetworkLoading visable={visable} setVisable={setVisable}/>
             <Bottom navigation={navigation} />
         </ContainView>
     )

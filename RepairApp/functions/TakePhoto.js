@@ -15,6 +15,7 @@ import {
 import { RNCamera } from 'react-native-camera';
 import store from '../store/store';
 import styled from 'styled-components';
+import CheckNeedAfterImg from './CheckNeedAfterImg';
 
 
 //카메라 멘트 정렬
@@ -107,6 +108,14 @@ export default class TakePhoto extends Component {
         }
         
         this.props.navigation.replace("RepairDetail",{data:route.params.data});
+      }else if(route.params.key === 'NeedCloseShot'){
+        if(store.getState().needClosePhotos.length>0){
+        }
+        console.log("99999999999999999999999999999999")
+        CheckNeedAfterImg(imgUri,route.params.num)
+        //store.dispatch({type:'NEED_PHOTOS_CLOSE',needClosePhotos:{photo:imgUri,num:route.params.num}});        
+        this.props.navigation.replace("RepairDetail",{data:route.params.data});
+
       }else{
         store.dispatch({type:'NEED_PHOTOS',needPhotos:{photo:imgUri}});
         this.props.navigation.replace("RepairMore",{data:route.params.code});
@@ -123,12 +132,11 @@ export default class TakePhoto extends Component {
 
     
     
-    if(route.params.key ==="CloseShot"){
+    if(route.params.key ==="CloseShot" || route.params.key ==="NeedCloseShot"  ){
       readText1 ="수선  부위를";
       readText2 ="자세히 볼 수 있도록";
       readText3 ="근접해서 사진을 촬영하세요";
     }
-    state = {}
     return (
       <CameraButton>
         <View>

@@ -31,6 +31,7 @@ function Login({ navigation }) {
       }), () => {
         store.dispatch({ type: 'USER_EMAIL', userEmail: _userEmail });
         store.dispatch({ type: 'STAFF_INFO', staffInfo: _info });
+        navigation.replace('PhotoStep', { info: _info })
       })
   }
 
@@ -52,7 +53,6 @@ function Login({ navigation }) {
     if (info === null || info === undefined) {
 
     } else {
-      navigation.replace('PhotoStep', { info: info })
     }
   }
 
@@ -80,8 +80,8 @@ function Login({ navigation }) {
         response => (response.status == '200') ? (
           console.log("success"),
 
-          SaveInfo(response.data.data, result),
-          check(response.data.data)
+          SaveInfo(response.data.data, result)
+          //check(response.data.data)
         ) : (
           Alert.alert(
             "등록된 정보가 존재하지 않습니다.",""

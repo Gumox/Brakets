@@ -30,6 +30,7 @@ export default function AddPhotoControl({ navigation ,route}){
     const saved = store.getState().needPhotos;
     const changeData =[];
     const DeletePhoto = () =>{
+        console.log(saved)
         saved.forEach(obj => {
             if(selected !== obj.photo){
                 changeData.push(obj)

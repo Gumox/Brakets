@@ -13,6 +13,7 @@ const ImgView = styled.View`
     height:45px
     align-items: center;
     flex-Direction: row-reverse;
+    justify-content: space-between;
 `;
 
 
@@ -56,8 +57,19 @@ const styles = StyleSheet.create({
   
 
 export default function PhotoControl({ navigation ,route}){
-    const img =route.params.img
-    
+    const img = route.params.img
+    const retake = route.params.retake
+    let retakeView
+    if(retake){
+      retakeView=(
+        <TouchableView underlayColor={"#CCC"} style={{borderRadius:5,width:50,justifyContent:"center",alignItems:"center"}} 
+                       onPress ={ () =>{
+                          navigation.navigate("TakePhoto",{key:retake.key,num:retake.num,data:retake.data})
+                        }}>
+          <Text style = {{color : "#ffffff",width:50}}>다시찍기</Text>
+        </TouchableView>
+      )
+    }
 
     return(
 
@@ -66,9 +78,10 @@ export default function PhotoControl({ navigation ,route}){
       <Container style = {{backgroundColor : '#000000', padding: 10 }}>
             <ImgView>
 
-            <TouchableView underlayColor={"#CCC"} style={{borderRadius:15}} onPress ={ () =>{navigation.goBack()}}>
-                <Text style = {{color : "#ffffff"}}>✕</Text>
+            <TouchableView underlayColor={"#CCC"} style={{borderRadius:15,width:30,height:30,justifyContent:"center",alignItems:"center"}} onPress ={ () =>{navigation.goBack()}}>
+                <Text style = {{color : "#ffffff",fontSize:20}}>✕</Text>
             </TouchableView>
+            {retakeView}
             
             </ImgView>  
             <View >

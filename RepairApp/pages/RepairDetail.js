@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useCallback } from 'react';
-import { Text, Image, Alert, View, Pressable, BackHandler,TextInput,ImageBackground} from 'react-native';
+import { Text, Image, Alert, View, Pressable, BackHandler,TextInput,ImageBackground,Appearance} from 'react-native';
 import dayjs from 'dayjs';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RNPickerSelect from 'react-native-picker-select';
@@ -13,8 +13,9 @@ import Bottom from '../components/Bottom';
 import { postSendRepairInfo,postUpdateAfterImage } from '../functions/useInRepairDetail';
 import Ip from '../serverIp/Ip';
 import store from '../store/store';
-import imgPhoto from '../Icons/camera.png' 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import ip from '../serverIp/Ip';
+import {NeedAfterView} from "../functions/CheckNeedAfterImg"
+import COLOR from '../contents/color';
 
 function RepairDetail({ navigation, route }) {
     const code = route.params.data;
@@ -46,12 +47,26 @@ function RepairDetail({ navigation, route }) {
     const [btnDisabled, setBtnDiabled] = useState(true);
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     const [afterImages,setAfterImages] =useState([]);
+    const [needImages,setNeedImages] =useState([]); 
     
     const stepArr =[1,4,5]
     const [step,setStep] = useState()
 
     let beforeImgList = []
     let afterImgList = []
+
+    let selectBackground = COLOR.WHITE;
+    let selectTextColor = COLOR.SOIL;
+    let inputTextColor = COLOR.BLACK;
+    
+    const colorScheme = Appearance.getColorScheme();
+    if (colorScheme === 'dark') {
+        console.log("dark")
+        selectBackground = COLOR.ANOTHER_GRAY;
+        selectTextColor = COLOR.LIGHT_SOIL;
+        inputTextColor = COLOR.WHITE;
+
+    }
 
     
     const alertFunctionCode = ()=>{
@@ -66,7 +81,7 @@ function RepairDetail({ navigation, route }) {
     }     
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
-        console.log(data.data)
+        //console.log(data.needRepairImage)
         console.log()
         if(data.data === undefined){
             console.log("undefined")
@@ -117,6 +132,7 @@ function RepairDetail({ navigation, route }) {
             }
             setBeforeImages(beforeImgList)
             setAfterImages(afterImgList)
+            setNeedImages(data.needRepairImage)
         }    
     });
     
@@ -135,17 +151,17 @@ function RepairDetail({ navigation, route }) {
             afterImage = store.getState()[photo]
         }
         let before;
-        console.log(store.getState().afterImageUri1)
+        //console.log(store.getState().afterImageUri1)
         if(obj!==undefined &&store.getState()[photo] == null){
             
-        console.log("in")
+        //console.log("in")
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                     <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
-                        <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
+                        <Image style={{width:90,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
                     <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
-                        <ImageBackground style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : obj}}></ImageBackground>
+                        <ImageBackground style={{width:90,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : obj}}></ImageBackground>
                     </Pressable>
                 </View>
             )
@@ -154,12 +170,13 @@ function RepairDetail({ navigation, route }) {
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                     <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
-                        <Image style={{width:100,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
+                        <Image style={{width:90,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
                     <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
-                        <ImageBackground style={{width:100,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282",justifyContent:"center",alignItems:"center"}} source={{uri : afterImage}}>
+                        <ImageBackground style={{width:90,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282",justifyContent:"center",alignItems:"center"}} source={{uri : afterImage}}>
                             <Text style={{color:"#FFFFFF"}}>사진을</Text>
-                            <Text style={{color:"#FFFFFF"}}>추가하려면</Text>
+                            <Text style={{color:"#FFFFFF"}}>추가하거나</Text>
+                            <Text style={{color:"#FFFFFF"}}>변경하려면</Text>
                             <Text style={{color:"#FFFFFF"}}>클릭하세요</Text>
                         </ImageBackground>
                     </Pressable>
@@ -168,6 +185,12 @@ function RepairDetail({ navigation, route }) {
         }
         beforeImageViews[key] =(before)
     }
+
+    let need=NeedAfterView(needImages,navigation,code)
+    let needImagesView;
+    let afterNeed = store.getState().needClosePhotos;
+
+   
     useEffect(() => {
         let isApiSubscribed = true;
         if(isApiSubscribed){
@@ -287,8 +310,7 @@ function RepairDetail({ navigation, route }) {
                         <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:Ip+image})}}>
                         <View style = {{justifyContent: "center", alignItems: "center"}}>
                             <Image
-                                style={{ width: 120, height: 120 }}
-                                resizeMode='contain'
+                                style={{ width: 120, height: 160 }}
                                 source={
                                     { uri: Ip+image }
                                 }
@@ -312,6 +334,25 @@ function RepairDetail({ navigation, route }) {
 
                     </EnlargedPictureView>
                     {beforeImageViews}
+                    {needImages.length > 0 &&(
+                        <View>
+                            <Label>추가 수선 필요 부위</Label>
+                            <EnlargedPictureView>
+        
+                                <PictureView>
+                                    <SmallLabel>수선 전</SmallLabel>
+                                    <SmallLabel>(BEFORE)</SmallLabel>
+                                </PictureView>
+        
+                                <PictureView>
+                                    <SmallLabel>수선 후</SmallLabel>
+                                    <SmallLabel>(AFTER)</SmallLabel>
+                                </PictureView>
+        
+                            </EnlargedPictureView>
+                            {need}
+                        </View>
+                    )}
                 </OverallView>
 
 
@@ -323,6 +364,7 @@ function RepairDetail({ navigation, route }) {
                                 pointerEvents="none"
                                 editable={false}
                                 value={shippingDate}
+                                style={{backgroundColor:selectBackground, color:inputTextColor}}
                             />
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
@@ -334,10 +376,10 @@ function RepairDetail({ navigation, route }) {
                     </DatePickerButton>
 
                     <Label>발송 방법</Label>
-                    <PickerView>
+                    <PickerView style={{backgroundColor:selectBackground}}>
                         <RNPickerSelect
                             placeholder={{ label: '행낭', value: 1 }}
-                            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
+                            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: selectTextColor}} }
                             onValueChange={(value) => { setShippingMethod(value);
                                                         console.log(value)}}
                             items={[
@@ -354,14 +396,15 @@ function RepairDetail({ navigation, route }) {
                         editable={true}
                         keyboardType='numeric'
                         selectTextOnFocus={false}
+                        style={{backgroundColor:selectBackground ,color:inputTextColor}}
                         value={shippingCost}
                         onChangeText={vlaue => setShippingCost(vlaue)}
                     />
                     <Label>받는 곳</Label>
-                    <PickerView>
+                    <PickerView style={{backgroundColor:selectBackground}}>
                         <RNPickerSelect
                             placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
-                            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: '#AD8E5F'}} }
+                            style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: selectTextColor}} }
                             onValueChange={(value,index) => {
                                 console.log("step: ",stepArr[index])
                                 setStep(stepArr[index])
@@ -397,8 +440,26 @@ function RepairDetail({ navigation, route }) {
                             }
                             else if(store.getState().afterImageUri1 != null || afterImages[0] !=null){
                                 console.log(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId,receiptId)
-                                postUpdateAfterImage(receiptId,shippingMethod,store.getState().shopId,store.getState().afterImageUri1,store.getState().afterImageUri2,store.getState().afterImageUri3,store.getState().afterImageUri4)
-                                postSendRepairInfo(shippingPlace,shippingDate,shippingMethod,shippingCost,repairDetailId,receiptId,step,navigation)
+                                postUpdateAfterImage(
+                                                    receiptId,
+                                                    shippingMethod,
+                                                    store.getState().shopId,
+                                                    store.getState().afterImageUri1,
+                                                    store.getState().afterImageUri2,
+                                                    store.getState().afterImageUri3,
+                                                    store.getState().afterImageUri4,
+                                                    afterNeed
+                                                    )
+                                postSendRepairInfo(
+                                                    shippingPlace,
+                                                    shippingDate,
+                                                    shippingMethod,
+                                                    shippingCost,
+                                                    repairDetailId,
+                                                    receiptId,
+                                                    step,
+                                                    navigation
+                                                   )
                                 
                             }
                             else if(shippingPlace == null){
