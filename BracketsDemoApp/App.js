@@ -1,7 +1,7 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { Platform,StatusBar} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -52,12 +52,19 @@ import Notice from './pages/searchCustomer/Notice'
 import SmsNotice from './pages/searchCustomer/SmsNotice';
 import PrivacyNotice from './pages/searchCustomer/PrivacyNotice';
 import EnlargePhoto from './Functions/EnlargePhoto';
+
 const Stack = createNativeStackNavigator();
 
 function App() {
   const textColor = "rgb(0,80,130)"
+  
+
   return (
     <NavigationContainer>
+      <StatusBar
+        animated={true}
+        backgroundColor={"#000"}
+        barStyle={"light-content"}/>
       <Stack.Navigator >
 
 

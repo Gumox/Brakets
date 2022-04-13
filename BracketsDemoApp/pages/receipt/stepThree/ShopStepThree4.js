@@ -115,7 +115,8 @@ function ShopStepThree4({route,navigation}) {
             category: store.getState().receptionDivision.id,
             receipt: store.getState().requirement.id,
             season_id: store.getState().season_id,
-            pcategory_id: id
+            pcategory_id: id,
+            brand_id : store.getState().brand_id
   
           }
         try {
@@ -183,7 +184,7 @@ function ShopStepThree4({route,navigation}) {
                     navigation.navigate("TakePhoto",{key:"AddPhoto",value:0,index: index});
                 
                 }}>
-                <Image style={{width:40, height:40}} source ={require("../../../Icons/camera.png")}/><Text>사진</Text><Text>추가</Text></ContainImg>
+                <Image style={{width:40, height:40}} source ={require("../../../Icons/camera.png")}/><Text style={{color:"#000000"}}>사진</Text><Text style={{color:"#000000"}}>추가</Text></ContainImg>
         );
     }
     // ---

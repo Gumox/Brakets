@@ -37,7 +37,8 @@ export const getRepairList = async (id) => {
       "category": store.getState().receptionDivision.id,
       "receipt": store.getState().requirement.id,
       "season_id": store.getState().season_id,
-      "pcategory_id": id
+      "pcategory_id": id,
+      "brand_id" : store.getState().brand_id
 
       }
       console.log(bodyData)

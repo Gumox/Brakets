@@ -237,40 +237,20 @@ function ShopStepFour({navigation,route}) {
                 </InfoView>
                 <View style ={{margin:30}}/>
             </Contents>
-            <CenterView>
-                <Half>
-                    <Btn onPress={ ()=>{
+            <Button onPress={ ()=> {
+                
+                if(netInfo.isConnected){
+                    const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
+                    const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
 
-                        if(netInfo.isConnected){
-                            const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
-                            const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
+                    updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate,true)
 
-                            updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate,false)
-
-                        }else{
-                            Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
-                        }
-
-                    }}>
-                        <Text style ={{color : "#ffffff"}}>행낭 없음</Text>
-                    </Btn>
-                    <Btn onPress={ ()=>{
-
-                        if(netInfo.isConnected){
-                            const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
-                            const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
-
-                            updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate,true)
-
-                        }else{
-                            Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
-                        }
-
-                    }}>
-                        <Text style ={{color : "#ffffff"}}>다음: 5단계</Text>
-                    </Btn>
-                </Half>
-            </CenterView>
+                }else{
+                    Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
+                }
+                
+            }}>다음: 5단계
+            </Button>
             <Bottom navigation={navigation}/>
         </ContainView>
     )

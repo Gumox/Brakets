@@ -69,14 +69,14 @@ export default class DrawBoard extends Component {
  
  
                 <View style={{ flexDirection: 'row', backgroundColor: '#000',marginTop:10 , height : '10%'}}>
-                    <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center', paddingVertical:20 }} onPress={() => { this.refs.canvasRef.clear() }}>
-                        <Text style={{color:'#fff',fontWeight:'600'}}>CLEAR</Text>
+                    <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, justifyContent:"center",alignItems: 'center', paddingVertical:20 }} onPress={() => { this.refs.canvasRef.clear() }}>
+                        <Text style={{color:'#fff'}}>CLEAR</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center', paddingVertical:20, borderLeftWidth:1, borderRightWidth:1, borderColor:'#000' }} onPress={() => { {
+                    <TouchableHighlight underlayColor={"#CCCFFF"} style={{ flex: 1, alignItems: 'center',justifyContent:"center", paddingVertical:20, borderLeftWidth:1, borderRightWidth:1, borderColor:'#000' }} onPress={() => { {
                         this.onSketchSave();
                        
                     } }}>
-                        <Text style={{color:'#fff',fontWeight:'600'}}>저장</Text>
+                        <Text style={{color:'#fff'}}>저장</Text>
                     </TouchableHighlight>
                     
                 </View>

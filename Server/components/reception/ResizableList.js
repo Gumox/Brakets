@@ -78,7 +78,7 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
                         {rows.map((row, i) => {
                             prepareRow(row)
                             let bgColor = COLOR.WHITE
-                            if(targetData["receipt_code"] === row.original["서비스카드 번호"]){
+                            if(targetData["receipt_code"] === row.original["서비스카드 #"]){
                                 bgColor = COLOR.MENU_MAIN
                             }
                             return (
@@ -88,7 +88,7 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
                                         {
                                             // TODO
                                             onClick: () => {
-                                                getTargetData(row.original["서비스카드 번호"])
+                                                getTargetData(row.original["서비스카드 #"])
                                             }
                                             
                                         }
@@ -120,7 +120,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
     const columns = React.useMemo(() => [
 
         //ASIS
-        {Header: '서비스카드 번호',  accessor: '서비스카드 번호'},
+        {Header: '서비스카드 #',  accessor: '서비스카드 #'},
         {Header: '매장코드', accessor: '매장코드'},
         {Header: '매장명',   accessor: '매장명'},
         {Header: '매장구분', accessor: '매장구분'},
@@ -202,7 +202,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
     const data = searchList.map((receipt) =>(
 
         {
-            '서비스카드 번호':receipt[RECEIPT.CODE] ? receipt[RECEIPT.CODE] : "" ,
+            '서비스카드 #':receipt[RECEIPT.CODE] ? receipt[RECEIPT.CODE] : "" ,
             '매장코드':receipt[STORE.CODE] ? receipt[STORE.CODE] : "",
             '매장명':receipt[STORE.STORE_NAME] ? receipt[STORE.STORE_NAME] : "",
             '매장구분':STORE_CATEGORY[receipt[STORE.CATEGORY]] ? STORE_CATEGORY[receipt[STORE.CATEGORY]] : "",

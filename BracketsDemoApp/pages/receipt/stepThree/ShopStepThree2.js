@@ -23,13 +23,16 @@ const CenterView =styled.View`
 
 const BottomItemBox = styled.View`
   flex-direction: row;
-  
+  height:10%;
   justify-content: space-around;
- 
+  align-items: center;
+  background-color : #000000;
 `;
 const TouchableView = styled.TouchableHighlight`
-    flex:1
+    flex:1;
+    height:100%;
     align-items: center;
+    justify-content: center;
     padding:10px
     background-color : #000000;
 `;
@@ -106,49 +109,49 @@ function ShopStepThree2 ({ navigation ,route}) {
                     
       <BottomItemBox>
 
-      <TouchableView underlayColor={"#CCC"} onPress={ ()=> {
-        store.dispatch({type:'PHOTORESET',setPhoto:[]});
-        store.dispatch({type:'DRAW',drawingImage: ""});
-        navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}}><StepText>다시 찍기</StepText></TouchableView>
-      <TouchableView underlayColor={"#CCC"} onPress={()=>{ 
-        
-        if(route.params === undefined){
-          navigation.replace('ShopStepThree3')
-        }
-        else if(route.params.toGo=== "PhotoControl"){
-          const params = route.params; 
-          console.log(params);
-          navigation.replace('ShopStepThree3',{index: 0, key: 0, toGo: 'PhotoControl', value: route.params.value});
-        }
-        
-        }}><StepText>그리기</StepText></TouchableView>
-      <TouchableView  underlayColor={"#CCC"} onPress={()=> 
-      { 
-        if(imgUri2 != ""){
+        <TouchableView underlayColor={"#CCC"} onPress={ ()=> {
+          store.dispatch({type:'PHOTORESET',setPhoto:[]});
+          store.dispatch({type:'DRAW',drawingImage: ""});
+          navigation.replace( 'TakePhoto', {key : 'ShopStepThree2' } )}}><StepText>다시 찍기</StepText></TouchableView>
+        <TouchableView underlayColor={"#CCC"} onPress={()=>{ 
+          
           if(route.params === undefined){
-            
-            navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
+            navigation.replace('ShopStepThree3')
           }
           else if(route.params.toGo=== "PhotoControl"){
-            console.log(route.params);
-            //navigation.replace('PhotoControl', {key :route.params.key,value:route.params.value }); 
+            const params = route.params; 
+            console.log(params);
+            navigation.replace('ShopStepThree3',{index: 0, key: 0, toGo: 'PhotoControl', value: route.params.value});
           }
-        }else{
-          Alert.alert(
-            "",
-            "수선 부위를 표시해 주세요",
-            [
-              {
-                text: "취소",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel"
-              },
-              { text: "확인", onPress: () => console.log("OK Pressed") }
-            ]
-          );
+          
+          }}><StepText>그리기</StepText></TouchableView>
+        <TouchableView  underlayColor={"#CCC"} onPress={()=> 
+        { 
+          if(imgUri2 != ""){
+            if(route.params === undefined){
+              
+              navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
+            }
+            else if(route.params.toGo=== "PhotoControl"){
+              console.log(route.params);
+              //navigation.replace('PhotoControl', {key :route.params.key,value:route.params.value }); 
+            }
+          }else{
+            Alert.alert(
+              "",
+              "수선 부위를 표시해 주세요",
+              [
+                {
+                  text: "취소",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+                { text: "확인", onPress: () => console.log("OK Pressed") }
+              ]
+            );
+          }
         }
-      }
-      }><StepText>사진 사용</StepText></TouchableView>
+        }><StepText>사진 사용</StepText></TouchableView>
     
       </BottomItemBox>
   

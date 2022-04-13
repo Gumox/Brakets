@@ -33,16 +33,33 @@ function ShopStepFive( { navigation } ) {
                 <BlueText>행낭 바코드</BlueText>
                 <GrayText>를 스캔하세요</GrayText>
             </Contents>
-            <Button onPress={ ()=> {
-                if(netInfo.isConnected){
-                    navigation.navigate( 'ScanScreen',{key:'ShopStepComplete'} ) 
-                }else{
-                    Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
-                }
-                
-                }}>
-                코드 스캔
-            </Button>
+            <CenterView>
+                <Half>
+                    <Btn onPress={ ()=>{
+
+                        if(netInfo.isConnected){
+                            navigation.navigate( 'ShopStepComplete' ) 
+
+                        }else{
+                            Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
+                        }
+
+                    }}>
+                        <Text style ={{color : "#ffffff"}}>행낭 없음</Text>
+                    </Btn>
+                    <Btn onPress={ ()=>{
+                        if(netInfo.isConnected){
+                            navigation.navigate( 'ScanScreen',{key:'ShopStepComplete'} ) 
+                        }else{
+                            Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
+                        }
+
+                    }}>
+                        <Text style ={{color : "#ffffff"}}>코드 스캔</Text>
+                    </Btn>
+                </Half>
+            </CenterView>
+            
             
             <Bottom navigation={navigation}/>
         </Container>
@@ -71,4 +88,24 @@ const TopStateView = styled.View`
     padding:24px;
     color:#000000;
     justify-content: center;
+`;
+
+const Half = styled.View`
+    width : 100%;
+    flex-direction : row;
+    justify-content : space-between;
+    align-items : center;  
+`;
+const Btn = styled.TouchableOpacity`
+    width : 40%;
+    height: 50px;
+    background: rgb(0,80,130);
+    justify-content: center;
+    align-items: center;
+    margin:15px;
+    border-radius:12px;    
+`;
+
+const CenterView =styled.View`
+    align-items: center;
 `;

@@ -7,8 +7,8 @@ export default createStore(function(state,action){
 
 
         return{
-            cardValue:"",card:null,bagCodeValue:"",receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",customerSign:"",
-            receiverList:"",customer:"",serviceDate:"",startDate:"",endDate:"",brand_id:"",store_id:"",season_id:0,
+            cardValue:"",card:null,bagCodeValue:0,receptionDate:"",appointmentDate:"", receptionDivision:"",requirement: "",customerSign:"",
+            receiverList:"",customer:"",serviceDate:"",startDate:"",endDate:"",brand_id:0,store_id:"",season_id:0,
             selectType:"",bagPicture: null, photoArr:[],indexNumber:0,photo:"",detailPhoto:"",addPhoto1:"",addPhoto2:"",addPhoto3:"",
             typeStore:[],basicRepairStore : "",addRequest: [],getProductCategory:[],drawingImage:"",receipt_id: 0, 
             storeStaffId: "", storeName: "",userInfo:""}

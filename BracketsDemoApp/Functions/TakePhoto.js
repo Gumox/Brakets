@@ -54,15 +54,14 @@ const Label = styled.Text`
 const PressButton = styled.View`
   flex : 1;
   flex-direction : row;
-  justify-content : space-between;
   align-items : center;
   
 `;
-const CancelView = styled.View`
+const ButtonView = styled.View`
   flex : 1;
   align-items : flex-start;
   justify-content : center;
-  padding : 10px;
+  align-items : center;
 `;
 const CancelText = styled.Text`
   color : white;
@@ -176,18 +175,20 @@ export default class TakePhoto extends Component {
         </View>
     
         <PressButton>
-          <CancelView> 
+          <ButtonView> 
           <Touch onPress = {() => this.props.navigation.replace( 'ShopStepThree' )}>
               <CancelText>취소</CancelText>
           </Touch>
-          </CancelView>
-
+          </ButtonView>
+          <ButtonView>
           <Touch onPress = { this.onSuccess.bind(this)}>
               <Take/>
           </Touch>
+          </ButtonView>
 
-          <ChangeView>
-          </ChangeView>
+          <ButtonView>
+            
+          </ButtonView>
 
 
         </PressButton>

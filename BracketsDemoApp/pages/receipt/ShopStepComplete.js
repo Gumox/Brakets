@@ -76,7 +76,50 @@ function ShopStepOne({ navigation , route}) {
 
         }
     }
-
+    let isBagHave;
+    if(bag){
+        isBagHave=(
+            <View>
+                <GrayText>행낭 바코드</GrayText>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible2}
+                    onRequestClose={() => {
+                        setModalVisible2(!modalVisible2);
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.xView} >
+                            <View style={styles.modalView} >
+                                <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                    <CodeViewText>
+                                        {bag}
+                                    </CodeViewText>
+                                </CodeView>
+                                <ImageZoom cropWidth={320}
+                                    cropHeight={400}
+                                    imageWidth={300}
+                                    imageHeight={400}>
+                                    <Image style={{ width: 300, height: 400 }}
+                                        source={{ uri: bagImgUri }} />
+                                </ImageZoom>
+                                <CloseBtn style={{marginTop: 5}}>
+                                    <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible2(!modalVisible2)}>
+                                        닫기
+                                    </CodeViewText>
+                                </CloseBtn>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                <TouchableView disabled= {bagPictureCheck} onPress={() => setModalVisible2(!modalVisible)}>
+                    <Label>{bag}</Label>
+                    {!bagPictureCheck&&(<ImgIcon source={require('../../Icons/image.png')} />)}
+                </TouchableView>
+            </View> 
+        )
+    }
 
 
     return (
@@ -133,55 +176,13 @@ function ShopStepOne({ navigation , route}) {
                         <GrayText>받는 곳</GrayText>
                         <DataView><Label>{repairShop}</Label></DataView>
                         
-                        <GrayText>행낭 바코드</GrayText>
-                        {bag&&(<View>
-                            </View>
-                        )}
-                        {bag&&(
-                            <View>
-                                <Modal
-                                    animationType="fade"
-                                    transparent={true}
-                                    visible={modalVisible2}
-                                    onRequestClose={() => {
-                                        setModalVisible2(!modalVisible2);
-                                    }}
-                                >
-                                    <View style={styles.centeredView}>
-                                        <View style={styles.xView} >
-                                            <View style={styles.modalView} >
-                                                <CodeView style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                                    <CodeViewText>
-                                                        {bag}
-                                                    </CodeViewText>
-                                                </CodeView>
-                                                <ImageZoom cropWidth={320}
-                                                    cropHeight={400}
-                                                    imageWidth={300}
-                                                    imageHeight={400}>
-                                                    <Image style={{ width: 300, height: 400 }}
-                                                        source={{ uri: bagImgUri }} />
-                                                </ImageZoom>
-                                                <CloseBtn style={{marginTop: 5}}>
-                                                    <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible2(!modalVisible2)}>
-                                                        닫기
-                                                    </CodeViewText>
-                                                </CloseBtn>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </Modal>
-                            </View>    
-                            )}
-                        {bag&&(<TouchableView disabled= {bagPictureCheck} onPress={() => setModalVisible2(!modalVisible)}>
-                            <Label>{bag}</Label>
-                            {!bagPictureCheck&&(<ImgIcon source={require('../../Icons/image.png')} />)}
-                            </TouchableView>)}
+                        {isBagHave}
                             
 
                     </InfoView>
                     <Button onPress={() => {
                         if (netInfo.isConnected) {
+                            console.log(bag)
                             submitReceipt(store.getState().receipt_id, bag)
                             store.dispatch({ type: "STORE_CLEAR" })
                             navigation.popToTop()
