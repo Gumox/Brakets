@@ -56,7 +56,19 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
         <>
             <div>
                 <div {...getTableProps()} className="table">
-                    
+                <div style={{position:"sticky",top:0,zIndex:10}}>
+                <CustomTr>
+                    {headerGroups.map((headerGroup,i) => (
+                        <div key={i}{...headerGroup.getHeaderGroupProps()} >
+                            {headerGroup.headers.map((column,j) => (
+                                <div key={j} {...column.getHeaderProps()} className="thr">
+                                    {column.render('Header')}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </CustomTr>
+            </div>
 
                     <div {...getTableBodyProps()}>
                         {rows.map((row, i) => {
@@ -272,19 +284,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
     )
     return (
         <Wrapper>
-            <div style={{position:"sticky",top:0,zIndex:10}}>
-                <CustomTr>
-                    {headerGroups.map((headerGroup,i) => (
-                        <div key={i}{...headerGroup.getHeaderGroupProps()} className="CustomTr">
-                            {headerGroup.headers.map((column,j) => (
-                                <div key={j} {...column.getHeaderProps()} className="th">
-                                    {column.render('Header')}
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </CustomTr>
-            </div>
+            
             <Styles>
            
                 <Table columns={columns} data={data} searchList={searchList} getTargetData={getTargetData} targetData={targetData}/>
@@ -316,6 +316,7 @@ const Wrapper = styled.nav`
 
 const TableRowDiv = styled.div`
     cursor: pointer;
+    border-left:1px solid;
     border-bottom:1px solid;
     z-index: 1;
 
@@ -325,14 +326,12 @@ const TableRowDiv = styled.div`
 }`;
 const CustomTr=styled.div`
 
-margin-left: 1rem;
-margin-right: 1rem;
-padding-top: 1rem;
+padding-top: 5px;
 display: inline-block;
 background-color:${COLOR.WHITE};
 opacity:1;
 z-index:10;
-  .th{
+  .thr{
       
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -340,19 +339,20 @@ z-index:10;
     border-right: 0;
     background-color:${COLOR.MENU_MAIN};
     :last-child {
-        border-right: 1px solid;
+        border-right: 1px solid black;
         
       }
   },
 `
 
 const Styles = styled.div`
-  padding: 1rem;
+  padding-left: 15px;
+  padding-right: 15px;
 
   .table {
     display: inline-block;
+    border-right: 1px solid;
     border-spacing: 0;
-    border: 1px solid black;
 
     .tr {
       :last-child {
