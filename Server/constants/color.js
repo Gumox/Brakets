@@ -1,5 +1,6 @@
 const COLOR = {
   MENU_MAIN: "#BBDEFB",
+  MENU_SELECTED_COLOR:"rgb(211,238,253)",
   MENU_SELECTED: "rgba(255, 255, 255, 0.5)",
   FILTER_MAIN: "#717171;",
   BORDER_MAIN: "#78909C",
@@ -24,7 +25,7 @@ const COLOR = {
   MOCCA:"#CBBAA0",
   DARK_GREEN:"#006000",
   LIGHT_GREEN:"rgb(233,255,127)",
-  GRAY_GRESS:"#9CCBAB"
+  GRAY_GRESS:"#9CCBAB",
 };
 
 export default COLOR;

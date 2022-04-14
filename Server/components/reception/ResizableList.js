@@ -75,7 +75,7 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
                             prepareRow(row)
                             let bgColor = COLOR.WHITE
                             if(targetData["receipt_code"] === row.original["서비스카드 #"]){
-                                bgColor = COLOR.MENU_MAIN
+                                bgColor = COLOR.MENU_SELECTED_COLOR
                             }
                             return (
                                 <TableRow key={i} backgroundColor={bgColor} >
