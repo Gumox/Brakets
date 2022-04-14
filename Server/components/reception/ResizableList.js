@@ -321,12 +321,10 @@ z-index:10;
 `
 
 const Styles = styled.div`
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 1rem;
 
   .table {
     display: inline-block;
-    border-right: 1px solid;
     border-spacing: 0;
 
     .tr {
@@ -349,7 +347,6 @@ const Styles = styled.div`
       position: relative;
 
       :last-child {
-        border-right: 0;
       }
 
       
