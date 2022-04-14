@@ -56,23 +56,7 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
         <>
             <div>
                 <div {...getTableProps()} className="table">
-                    <div>
-                        {headerGroups.map((headerGroup,i) => (
-                            <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
-                                {headerGroup.headers.map((column,j) => (
-                                    <div key={j} {...column.getHeaderProps()} className="th">
-                                        {column.render('Header')}
-                                        {/* Use column.getResizerProps to hook up the events correctly */}
-                                        <div
-                                            {...column.getResizerProps()}
-                                            className={`resizer ${column.isResizing ? 'isResizing' : ''
-                                                }`}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
+                    
 
                     <div {...getTableBodyProps()}>
                         {rows.map((row, i) => {
@@ -260,9 +244,49 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
             '발송비용3':receipt.repair3_shipment_price ? receipt.repair3_shipment_price : "",            
         }
     ))
+    const defaultColumn = React.useMemo(
+        () => ({
+            minWidth: 100,
+            width: 100,
+            maxWidth: 150,
+        }),
+        []
+    )
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+        state,
+        resetResizing,
+    } = useTable(
+        {
+            columns,
+            data,
+            defaultColumn,
+        },
+        useBlockLayout,
+        useResizeColumns
+    )
     return (
         <Wrapper>
+            <div style={{position:"sticky",top:0,zIndex:10}}>
+                <CustomTr>
+                    {headerGroups.map((headerGroup,i) => (
+                        <div key={i}{...headerGroup.getHeaderGroupProps()} className="CustomTr">
+                            {headerGroup.headers.map((column,j) => (
+                                <div key={j} {...column.getHeaderProps()} className="th">
+                                    {column.render('Header')}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </CustomTr>
+            </div>
             <Styles>
+           
                 <Table columns={columns} data={data} searchList={searchList} getTargetData={getTargetData} targetData={targetData}/>
             </Styles>
         </Wrapper>
@@ -273,7 +297,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
 export default ResizableList;
 
 const Wrapper = styled.nav`
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
@@ -293,11 +317,34 @@ const Wrapper = styled.nav`
 const TableRowDiv = styled.div`
     cursor: pointer;
     border-bottom:1px solid;
+    z-index: 1;
 
     &:hover {
     color:${COLOR.BLUE}
     }
 }`;
+const CustomTr=styled.div`
+
+margin-left: 1rem;
+margin-right: 1rem;
+padding-top: 1rem;
+display: inline-block;
+background-color:${COLOR.WHITE};
+opacity:1;
+z-index:10;
+  .th{
+      
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border: 1px solid black;
+    border-right: 0;
+    background-color:${COLOR.MENU_MAIN};
+    :last-child {
+        border-right: 1px solid;
+        
+      }
+  },
+`
 
 const Styles = styled.div`
   padding: 1rem;
@@ -330,19 +377,7 @@ const Styles = styled.div`
         border-right: 0;
       }
 
-      .resizer {
-        display: inline-block;
-        /* background: black; */
-        width: 2px;
-        height: 100%;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transform: translateX(50%);
-        z-index: 1;
-        ${'' /* prevents from scrolling while dragging on touch devices */}
-        touch-action:none;
-      }
+      
     }
   }
 `
