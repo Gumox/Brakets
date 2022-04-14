@@ -16,8 +16,6 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import Picker from 'react-native-picker-select';
 import _ from 'lodash';
 import ip from '../../../serverIp/Ip';
-import { getList } from '../../../Functions/GetSendList';
-import { changeSelectSend ,changeBasicSend,changeSelectType} from '../../../Functions/SendDataFuctions';
 import {useNetInfo}from "@react-native-community/netinfo";
 
 
