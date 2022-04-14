@@ -58,8 +58,10 @@ const Stack = createNativeStackNavigator();
 function App() {
   const textColor = "rgb(0,80,130)";
   let statusBarColor = "#000000";
+  let statusBarStyle = "light-content"
   if(Platform.OS === 'ios'){
     statusBarColor = "#ffffff";
+    statusBarStyle = "dark-content"
   }
 
   
@@ -69,7 +71,7 @@ function App() {
       <StatusBar
         animated={true}
         backgroundColor={statusBarColor}
-        barStyle={"dark-content"}/>
+        barStyle={statusBarStyle}/>
       <Stack.Navigator >
 
 
