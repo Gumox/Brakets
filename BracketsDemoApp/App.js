@@ -1,6 +1,6 @@
 // In App.js in a new project
 
-import * as React from 'react';
+import React ,{useState}from 'react';
 import { Platform,StatusBar} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -56,15 +56,20 @@ import EnlargePhoto from './Functions/EnlargePhoto';
 const Stack = createNativeStackNavigator();
 
 function App() {
-  const textColor = "rgb(0,80,130)"
+  const textColor = "rgb(0,80,130)";
+  let statusBarColor = "#000000";
+  if(Platform.OS === 'ios'){
+    statusBarColor = "#ffffff";
+  }
+
   
 
   return (
     <NavigationContainer>
       <StatusBar
         animated={true}
-        backgroundColor={"#000"}
-        barStyle={"light-content"}/>
+        backgroundColor={statusBarColor}
+        barStyle={"dark-content"}/>
       <Stack.Navigator >
 
 

@@ -14,7 +14,8 @@ import {
   StyleSheet,
   Animated,
   Pressable,
-  Alert
+  Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 import ip from '../../serverIp/Ip';
 import Bottom from '../../components/Bottom';
@@ -111,6 +112,7 @@ function LookupPage({ route,navigation }) {
   
     const [isDatePickerVisibleFirst, setDatePickerVisibilityFirst] = useState(false);
     const [isDatePickerVisibleSecond, setDatePickerVisibilitySecond] = useState(false);
+    const [visable,setVisable]= useState(false)
     
     const showDatePickerFirst = () => {
       setDatePickerVisibilityFirst(true);
@@ -144,7 +146,7 @@ function LookupPage({ route,navigation }) {
   
   
     const getData = useCallback(async (code,std, edd, name, phone,shopId,doReciptCheck,compliteReceiptCheck,takeReciptCheck) => {
-      
+  
       console.log("press")
       console.log(name)
       console.log(std)
@@ -289,8 +291,8 @@ function LookupPage({ route,navigation }) {
             code: code
           },
         })
-        navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
         setVisable(false)
+        navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
     }, []);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -321,9 +323,12 @@ function LookupPage({ route,navigation }) {
       }
       
     },[])
-    const [visable,setVisable]= useState(false)
+    
     return (
-        
+      <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
         <Container style= {{backgroundColor:"#ffffff"}}>
             
             {/* <Title>조회 결과</Title>*/}
@@ -423,7 +428,10 @@ function LookupPage({ route,navigation }) {
                 styles.fadingContainer,
                 {
                   // Bind opacity to animated value
-                  translateY: fadeAnim
+                  
+                  transform:[{
+                    translateY:fadeAnim
+                  }]
                 }
               ]}
             >
@@ -508,11 +516,15 @@ function LookupPage({ route,navigation }) {
                 </View>
             </Animated.View>
         </Container>
+      </KeyboardAvoidingView>
     )
 }
 export default LookupPage;
 
 const styles = StyleSheet.create({
+   container: {
+    flex: 1
+   },
     viewHandle: {
   
       width: (Dimensions.get('window').width) * 0.75,
