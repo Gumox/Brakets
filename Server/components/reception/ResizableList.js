@@ -256,32 +256,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
             '발송비용3':receipt.repair3_shipment_price ? receipt.repair3_shipment_price : "",            
         }
     ))
-    const defaultColumn = React.useMemo(
-        () => ({
-            minWidth: 100,
-            width: 100,
-            maxWidth: 150,
-        }),
-        []
-    )
-
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-        state,
-        resetResizing,
-    } = useTable(
-        {
-            columns,
-            data,
-            defaultColumn,
-        },
-        useBlockLayout,
-        useResizeColumns
-    )
+    
     return (
         <Wrapper>
             
