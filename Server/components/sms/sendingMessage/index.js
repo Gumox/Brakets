@@ -150,12 +150,12 @@ const Wrapper = styled.nav`
   
   height: 90%;
   width: 50%;
-  overflow: scroll;
+  overflow: auto;
   border-bottom: 2px solid;
   border-left: 1px solid;
   &::-webkit-scrollbar {
     width: 8px;
-    height: 8px;
+    height: 10px;
     background: rgba(210, 210, 210, 0.4);
   }
   &::-webkit-scrollbar-thumb {

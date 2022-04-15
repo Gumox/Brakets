@@ -12,7 +12,7 @@ const Wrapper = styled.nav`
   overflow: auto;
   &::-webkit-scrollbar {
     width: 8px;
-    height: 8px;
+    height: 10px;
     background: rgba(210, 210, 210, 0.4);
   }
   &::-webkit-scrollbar-thumb {

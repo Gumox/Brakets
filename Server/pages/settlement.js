@@ -260,7 +260,7 @@ const Nav = styled.nav`
   
   &::-webkit-scrollbar {
     width: 8px;
-    height: 8px;
+    height: 10px;
     background: rgba(210, 210, 210, 0.3);
   }
   &::-webkit-scrollbar-thumb {

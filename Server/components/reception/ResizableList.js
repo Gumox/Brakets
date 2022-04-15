@@ -142,7 +142,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         {Header: '판정결과', accessor: '판정결과'},
 
         // TOBE
-        {Header: '결과분석(수선처1)', accessor: '결과분석(수선처1)'},
+        //{Header: '결과분석(수선처1)', accessor: '결과분석(수선처1)'},
         {Header: '수선미입고', accessor: '수선미입고'},
         {Header: '유상수선비', accessor: '유상수선비'},
         {Header: '유상수선 유/무', accessor: '유상수선 유/무'},
@@ -309,6 +309,7 @@ z-index:10;
   .thr{
       
     padding-top: 1rem;
+    padding-left: 1rem;
     padding-bottom: 1rem;
     border: 1px solid black;
     border-right: 0;
