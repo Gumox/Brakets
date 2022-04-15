@@ -174,7 +174,9 @@ function RepairReception({options,user}) {
         <Line/>
         <ItemTable >
           <div style={{marginTop:12}}></div>
-          <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
+          <div style={{position:"sticky",top:0,zIndex:10,backgroundColor:COLOR.WHITE}}>
+            <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
+          </div>  
           <hr/>
           
           {lists}

@@ -228,16 +228,19 @@ export default function ReturnUnregistered() {
             
             <Line/>
             <ItemTable >
-                <LaView><Container>
-                    <ItemView>#</ItemView>
-                    <ItemView>등록처</ItemView>
-                    <ItemView>미등록 반송 등록일</ItemView>
-                    <ItemView>서비스 번호</ItemView>
-                    <ItemView>받는곳</ItemView>
-                    <ItemView>고객이름</ItemView>
-                    <ItemView>매장명</ItemView>
-                    <ItemView>브랜드</ItemView>
-                </Container></LaView>
+                
+                <div style={{paddingTop:12,position:"sticky",top:0,zIndex:10,backgroundColor:COLOR.WHITE}}>
+                    <LaView><Container>
+                        <ItemView>#</ItemView>
+                        <ItemView>등록처</ItemView>
+                        <ItemView>미등록 반송 등록일</ItemView>
+                        <ItemView>서비스 번호</ItemView>
+                        <ItemView>받는곳</ItemView>
+                        <ItemView>고객이름</ItemView>
+                        <ItemView>매장명</ItemView>
+                        <ItemView>브랜드</ItemView>
+                    </Container></LaView>
+                </div>
                 <Line2/>
                 <Nav style={{marginTop:12,maxHeight: 400,maxWidth:"100%",minHeight:200}}>
                     {

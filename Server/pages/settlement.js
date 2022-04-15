@@ -216,7 +216,9 @@ export default function Settlement()  {
                     </div>
                     <ItemTable>
                     <Nav style={{overflow:"auto",maxHeight: 400,maxWidth:"100%",minHeight:(windowHeight)*0.5}}>
-                    <Line2 style={{paddingTop:12, minWidth:1200}}>
+                        
+                            <div style={{paddingTop:12,position:"sticky",top:0,zIndex:10,backgroundColor:COLOR.WHITE}}>
+                    <Line2 style={{ minWidth:1200}}>
                             <LaView ><Container>
                                 <CheckBoxView>#</CheckBoxView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>브랜드</ItemView>
@@ -234,7 +236,9 @@ export default function Settlement()  {
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>수선처 당담자</ItemView>
                                 <ItemView style={{width:(windowWidth)*0.0692, minWidth:82}}>비고</ItemView>
                             </Container></LaView>
+                            
                         </Line2>
+                        </div>
                    
                         
                         {   
@@ -311,6 +315,7 @@ const ItemView = styled.div`
   display: flex;  
   justify-content:center;
   padding-bottom : 20px;
+  background-color:${COLOR.WHITE}
   `;
 const LaView = styled.div`
     display: flex;  
