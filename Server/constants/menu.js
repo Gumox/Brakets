@@ -29,7 +29,7 @@ const MENUS = [
     },*/
     {
       title: "수선처",
-      link: "/RepairReception",
+      link: "/repair",
     },
   ];
 
