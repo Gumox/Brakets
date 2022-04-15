@@ -90,22 +90,22 @@ function Table({ columns, data, searchList, getTargetData }) {
       <>
           <div>
               <div {...getTableProps()} className="table">
-                  <div>
-                      {headerGroups.map((headerGroup,i) => (
-                          <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
-                              {headerGroup.headers.map((column,j) => (
-                                  <div key={j} {...column.getHeaderProps()} className="th">
-                                      {column.render('Header')}
-                                      {/* Use column.getResizerProps to hook up the events correctly */}
-                                      <div
-                                          {...column.getResizerProps()}
-                                          className={`resizer ${column.isResizing ? 'isResizing' : ''
-                                              }`}
-                                      />
-                                  </div>
-                              ))}
+                  <div style={{top:0,position:"sticky",zIndex:10}}>
+                    {headerGroups.map((headerGroup, i) => (
+                      <StickyStyles key={i}{...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column, j) => (
+                          <div key={j} {...column.getHeaderProps()} className="th">
+                            {column.render('Header')}
+                            {/* Use column.getResizerProps to hook up the events correctly */}
+                            <div
+                              {...column.getResizerProps()}
+                              className={`resizer ${column.isResizing ? 'isResizing' : ''
+                                }`}
+                            />
                           </div>
-                      ))}
+                        ))}
+                      </StickyStyles>
+                    ))}
                   </div>
 
                   <div {...getTableBodyProps()}>
@@ -141,7 +141,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
   const columns = React.useMemo(() => [
     
     // ASIS
-    {Header: '서비스카드 번호', accessor: '서비스카드 번호'},
+    {Header: '서비스카드#', accessor: '서비스카드#'},
     {Header: '매장코드', accessor: '매장코드'},
     {Header: '매장명', accessor: '매장명'},
     {Header: '매장구분', accessor: '매장구분'},
@@ -210,7 +210,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
   console.log(data);
 
   const value = data.map((claim) => ({
-    "서비스카드 번호" : claim[RECEIPT.CODE],
+    "서비스카드#" : claim[RECEIPT.CODE],
     "매장코드" : claim[STORE.CODE],
     "매장명":claim[STORE.NAME],
     "매장구분":STORE_CATEGORY[claim[STORE.CATEGORY]],
@@ -275,7 +275,11 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     </Wrapper>
   );
 };
-
+const StickyStyles = styled.div`
+background-color:${COLOR.WHITE};
+border-top:1px solid;
+  
+`
 const Styles = styled.div`
   padding: 1rem;
 
@@ -283,6 +287,7 @@ const Styles = styled.div`
     display: inline-block;
     border-spacing: 0;
     border: 1px solid black;
+    border-top: 0px;
 
     .tr {
       :last-child {
@@ -325,9 +330,9 @@ const Styles = styled.div`
 `
 
 const Wrapper = styled.div`
-  height: 50%;
+  height: 88%;//50
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
   border-bottom: 2px solid;
   &::-webkit-scrollbar {
     width: 8px;

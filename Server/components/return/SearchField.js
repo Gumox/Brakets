@@ -167,6 +167,7 @@ const Wrapper = styled.div`
   margin: 5px 15px 20px 15px;
   display: flex;
   flex-wrap: wrap;
+  heghit:10%;
 `;
 
 const ExtractBtn = styled.button`

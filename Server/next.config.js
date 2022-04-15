@@ -50,9 +50,14 @@ SOURCE_PATH = '/send/:path*'
     return config;
   },
 
+ 
+
   resolve: {
     fallback: {
       crypto: require.resolve("crypto-browserify"),
+    },
+    alias: {
+      path: require.resolve("path-browserify")
     },
   },
 };

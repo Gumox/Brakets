@@ -94,23 +94,24 @@ function Table({ columns, data }) {
 
     <>
       <div>
+      
         <div {...getTableProps()} className="table">
-          <div>
-            {headerGroups.map((headerGroup, i) => (
-              <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
-                {headerGroup.headers.map((column, j) => (
-                  <div key={j} {...column.getHeaderProps()} className="th">
-                    {column.render('Header')}
-                    {/* Use column.getResizerProps to hook up the events correctly */}
-                    <div
-                      {...column.getResizerProps()}
-                      className={`resizer ${column.isResizing ? 'isResizing' : ''
-                        }`}
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
+          <div style={{top:0,position:"sticky",zIndex:10}}>
+              {headerGroups.map((headerGroup, i) => (
+                <StickyStyles key={i}{...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column, j) => (
+                    <div key={j} {...column.getHeaderProps()} className="th">
+                      {column.render('Header')}
+                      {/* Use column.getResizerProps to hook up the events correctly */}
+                      <div
+                        {...column.getResizerProps()}
+                        className={`resizer ${column.isResizing ? 'isResizing' : ''
+                          }`}
+                      />
+                    </div>
+                  ))}
+                </StickyStyles>
+              ))}
           </div>
 
           <div {...getTableBodyProps()}>
@@ -139,6 +140,7 @@ function Table({ columns, data }) {
               )
             })}
           </div>
+          
         </div>
       </div>
       
@@ -147,7 +149,7 @@ function Table({ columns, data }) {
           {JSON.stringify(
             {
               // selectedRowIds: selectedRowIds,
-              'selectedFlatRows[].original': selectedFlatRows.map(value => value.values["서비스카드 번호"]),
+              'selectedFlatRows[].original': selectedFlatRows.map(value => value.values["서비스카드#"]),
               // 'storedData': store.getState("SELECTED_DATA")
               
             },
@@ -166,7 +168,7 @@ const ReturnList = ({ data, user }) => {
   const columns = React.useMemo(() => [
 
     // ASIS
-    { Header: '서비스카드 번호', accessor: '서비스카드 번호' },
+    { Header: '서비스카드#', accessor: '서비스카드#' },
     { Header: '매장코드', accessor: '매장코드' },
     { Header: '매장명', accessor: '매장명' },
     { Header: '매장구분', accessor: '매장구분' },
@@ -228,7 +230,7 @@ const ReturnList = ({ data, user }) => {
 
   const value = data.map((productReturn) => ({
     "receipt_id": productReturn[RECEIPT.ID],
-    "서비스카드 번호": productReturn[RECEIPT.CODE],
+    "서비스카드#": productReturn[RECEIPT.CODE],
     "매장코드": productReturn[STORE.CODE],
     "매장명": productReturn[STORE.NAME],
     "매장구분": STORE_CATEGORY[productReturn[STORE.CATEGORY]],
@@ -281,6 +283,7 @@ const ReturnList = ({ data, user }) => {
 
   return (
     <Wrapper>
+      
       <Styles >
         <Table columns={columns} data={value}/>
       </Styles>
@@ -290,9 +293,9 @@ const ReturnList = ({ data, user }) => {
 
 const Wrapper = styled.nav`
   
-  height: 50%;
+  height: 90%;//50
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
   border-bottom: 2px solid;
   &::-webkit-scrollbar {
     width: 8px;
@@ -305,6 +308,14 @@ const Wrapper = styled.nav`
   }
 `;
 
+const StickyStyles = styled.div`
+background-color:${COLOR.WHITE};
+border-top:1px solid;
+  :last-child {
+    
+  }
+  
+`
 const Styles = styled.div`
   padding-left: 1rem;
   padding-right: 1rem;
@@ -314,6 +325,7 @@ const Styles = styled.div`
     display: inline-block;
     border-spacing: 0;
     border: 1px solid black;
+    border-top : 0px ;
 
     .tr {
       :last-child {

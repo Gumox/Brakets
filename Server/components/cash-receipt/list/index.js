@@ -40,22 +40,22 @@ function Table({ columns, data, searchList, handleDataClick }) {
       <>
           <div>
               <div {...getTableProps()} className="table">
-                  <div>
-                      {headerGroups.map((headerGroup,i) => (
-                          <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
-                              {headerGroup.headers.map((column,j) => (
-                                  <div key={j} {...column.getHeaderProps()} className="th">
-                                      {column.render('Header')}
-                                      {/* Use column.getResizerProps to hook up the events correctly */}
-                                      <div
-                                          {...column.getResizerProps()}
-                                          className={`resizer ${column.isResizing ? 'isResizing' : ''
-                                              }`}
-                                      />
-                                  </div>
-                              ))}
+                  <div style={{top:0,position:"sticky",zIndex:10}}>
+                    {headerGroups.map((headerGroup, i) => (
+                      <StickyStyles key={i}{...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column, j) => (
+                          <div key={j} {...column.getHeaderProps()} className="th">
+                            {column.render('Header')}
+                            {/* Use column.getResizerProps to hook up the events correctly */}
+                            <div
+                              {...column.getResizerProps()}
+                              className={`resizer ${column.isResizing ? 'isResizing' : ''
+                                }`}
+                            />
                           </div>
-                      ))}
+                        ))}
+                      </StickyStyles>
+                    ))}
                   </div>
 
                   <div {...getTableBodyProps()}>
@@ -152,9 +152,9 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
 };
 
 const Wrapper = styled.nav`
-  height: calc(95% - 0px);//100% - 110px
+  height: calc(91% - 0px);//100% - 110px
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
   border-bottom: 2px solid;
   &::-webkit-scrollbar {
     width: 8px;
@@ -166,7 +166,11 @@ const Wrapper = styled.nav`
     border-radius: 6px;
   }
 `;
-
+const StickyStyles = styled.div`
+  background-color:${COLOR.WHITE};
+  border-top:1px solid;
+  
+`
 const Styles = styled.div`
   padding: 1rem;
 
@@ -174,6 +178,7 @@ const Styles = styled.div`
     display: inline-block;
     border-spacing: 0;
     border: 1px solid black;
+    border-top: 0px;
 
     .tr {
       :last-child {

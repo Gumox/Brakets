@@ -96,28 +96,25 @@ function Table({ columns, data, searchList, getTargetData }) {
   return (
       <>
           <div>
-              <div {...getTableProps(
-              )} className="table">
-                  <div>
-                      {headerGroups.map((headerGroup,i) => (
-                          <div key={i}{...headerGroup.getHeaderGroupProps()} className="tr">
-                              {headerGroup.headers.map((column,j) => (
-                                  <div key={j} {...column.getHeaderProps({
-                                    style: {height: 50, fontSize: 13}
-                                  })} className="th">
-                                      {column.render('Header')}
-                                      {/* Use column.getResizerProps to hook up the events correctly */}
-                                      <div
-                                          {...column.getResizerProps()}
-                                          className={`resizer ${column.isResizing ? 'isResizing' : ''
-                                              }`}
-                                      />
-                                  </div>
-                              ))}
+              <div {...getTableProps()} className="table">
+                  <div style={{top:0,position:"sticky",zIndex:10}}>
+                    {headerGroups.map((headerGroup, i) => (
+                      <StickyStyles key={i}{...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column, j) => (
+                          <div key={j} {...column.getHeaderProps()} className="th">
+                            {column.render('Header')}
+                            {/* Use column.getResizerProps to hook up the events correctly */}
+                            <div
+                              {...column.getResizerProps()}
+                              className={`resizer ${column.isResizing ? 'isResizing' : ''
+                                }`}
+                            />
                           </div>
-                      ))}
+                        ))}
+                      </StickyStyles>
+                    ))}
                   </div>
-
+                  
                   <div {...getTableBodyProps()}>
                       {rows.map((row, i) => {
                           prepareRow(row)
@@ -280,6 +277,8 @@ const Styles = styled.div`
     display: inline-block;
     border-spacing: 0;
     border: 1px solid black;
+    border-top: 0px;
+
 
     .tr {
       
@@ -325,9 +324,9 @@ const Styles = styled.div`
 
 const Wrapper = styled.nav`
   /* position: absolute; */
-  height: 95%;
+  height: 91%;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
   border-bottom: 2px solid;
   &::-webkit-scrollbar {
     width: 8px;
@@ -341,7 +340,11 @@ const Wrapper = styled.nav`
 `;
 
 
-
+const StickyStyles = styled.div`
+  background-color:${COLOR.WHITE};
+  border-top:1px solid;
+  
+`
 export default ReturnList;
 
         

@@ -3,6 +3,7 @@ import Image from "next/image";
 import axios from "axios";
 
 import Content from "../Content";
+import RelativeContent from "../RelativeContent";
 import SearchField from "./SearchField";
 import List from "./list";
 import Invoice from "./invoice";
