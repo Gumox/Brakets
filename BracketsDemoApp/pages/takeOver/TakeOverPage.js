@@ -688,22 +688,8 @@ function TakeOverPage( { route,navigation } ) {
             </Half>
      
             </Contents>
-            <Half>
-              <Btn onPress = {() => {
-                if(selectDay == null){
-                    Alert.alert(            
-                        "인수일 오류",             
-                        "인수일을 입력하세요",                   
-                        [                              
-                            { text: "확인"},
-                        ]
-                    )
-                }else{
-                    //putReceiptComplete(cardCode,selectDay);
-                    navigation.navigate("ReceiptDivision");
-                }
-              }}><Text style ={{color : "#ffffff"}}>재접수</Text></Btn> 
-              <Btn onPress = {() => {
+           
+            <Button onPress = {() => {
                 if(selectDay == null){
                     Alert.alert(            
                         "인수일 오류",             
@@ -720,8 +706,7 @@ function TakeOverPage( { route,navigation } ) {
                         Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
                 }
-              }}><Text style ={{color : "#ffffff"}}>인수완료</Text></Btn>
-            </Half> 
+              }}>인수완료</Button>
 
             <Bottom navigation={navigation} />
          

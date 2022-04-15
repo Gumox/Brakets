@@ -13,17 +13,6 @@ import ReceiptButton from '../../components/ReceiptButton';
 import CenterText from '../../components/CenterText';
 
 
-const Label = styled.Text`
-    font-size: 20px;
-    margin-Top: 12px;
-    margin-bottom: 12px;
-    margin-left:12px;
-`;
-
-const View = styled.View`
-    flex;
-`;
-
 const OverallView = styled.View`
     padding: 8px;
     padding-bottom: 30px;
@@ -64,12 +53,12 @@ function Setting({ navigation }) {
         console.log("dark")
     }
 
-    const body = {
-        "headquarterId":2,
-        "receiver":"01020614406",
-        "msg":"테스트 메시지"
+    const storeId = store.getState().store_id;
+    const smsBody = {
+        "storeId": storeId,
+        "receiptId":243,
 
-    }//AutoSms(body)
+    }//
 
     const savedResultId = AsyncStorage.getItem('userInfo', (err, result) => {
         //user_id에 담긴 아이디 불러오기

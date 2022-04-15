@@ -192,10 +192,16 @@ function LookupInfo( { route,navigation } ) {
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
                 <InfoView>
                     <TopText>서비스 카드 번호</TopText>
-                        <InputText>{cardCode}
-                                </InputText>
+                    <InputText>{cardCode}</InputText>
+
                     <TopText>접수 구분</TopText>
-                            <InputText>{checkReceipt}</InputText>
+                    <InputText>{checkReceipt}</InputText>
+            
+                    <TopText>매장명</TopText>
+                    <InputText>{data.store_name}</InputText>
+                    <TopText>매장 연락처</TopText>
+                    <InputText>{data.store_contact}</InputText>
+
                     {customerName&&(<View>
                             <TopText>고객명</TopText>
                             <InputText>{customerName}</InputText>

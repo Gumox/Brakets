@@ -15,6 +15,7 @@ import {
 import ImageZoom from 'react-native-image-pan-zoom';
 import ip from '../../serverIp/Ip';
 import { useNetInfo } from "@react-native-community/netinfo";
+import AutoSms from '../../Functions/AutoSms';
 
 // 구조 분해 할당, Destructuring Assignment
 function ShopStepOne({ navigation , route}) {
@@ -51,6 +52,17 @@ function ShopStepOne({ navigation , route}) {
         }
     }, []);
 
+    
+    const storeName = store.getState().storeName;
+
+    const storeId = store.getState().store_id;
+    const receiptId=store.getState().receipt_id
+
+    const smsBody = {
+        "storeId": storeId,
+        "receiptId":receiptId,
+
+    }//
     const submitReceipt = async (receipt_id, bag_code) => {
         let formdata = new FormData();
 
@@ -69,6 +81,7 @@ function ShopStepOne({ navigation , route}) {
             });
             const json = await response.json();
             console.log(json)
+            //AutoSms(smsBody)
 
         } catch (error) {
             console.error(error);
