@@ -37,13 +37,20 @@ const getTargetInfo = async (req, res) => {
     console.log("/api/RepairShop/unregistered");
     const {
         shop_id,
+        hq_id
     } = req.query;
     let query=``;
+    let values=[]
     if(shop_id){
       query = ` WHERE return_unregistered.return_store_id = ?`
+      values=[...values,shop_id]
+    }
+    if(hq_id){
+      query = ` WHERE return_unregistered.return_store_id = ?`
+      values=[...values,hq_id]
     }
     try {
-      const result = await getReceipt(query,shop_id);
+      const result = await getReceipt(query,values);
       if (result.error) throw new Error(result.error);
 
       res.status(200).json({ data: result });
