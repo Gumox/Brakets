@@ -42,30 +42,49 @@ const smsList = (req,msg,mid,hq_id,sendNumber) => {
       })
       return result
   }
-async function getSender(headquarterId) {
+
+async function getSender(storeId) {
   const result = await excuteQuery({
-    query: `SELECT headquarter_call 
-              FROM headquarter WHERE headquarter_id =?`,
-    values: [headquarterId],
+    query: `SELECT *
+            FROM headquarter 
+            LEFT JOIN brand ON headquarter.headquarter_id = brand.headquarter_id 
+            LEFT JOIN store ON store.brand_id = brand.brand_id 
+            WHERE store.store_type = 1 AND store.store_id =?`,
+    values: [storeId],
   });
 
   return result;
 }
+async function smsMessage(brand,store) {
+  const result = await excuteQuery({
+    query: `SELECT * 
+            FROM auto_sms_message 
+            WHERE auto_sms_message_id = 1`,
+  });
+  console.log(result[0])
+  const msg = brand+" "+result[0].auto_sms_message1+" "+store +result[0].auto_sms_message2
 
+  return msg;
+}
 const controller =  async (req, res) => {
   if (req.method === "POST") {
     console.log(req.body)
     const { 
+      storeId,
       headquarterId,
-      receiver,
-      msg } = req.body
+      receiver
+    } = req.body
 
-    const senderString = await getSender(headquarterId)
     
-    const sender =String(senderString[0].headquarter_call).replace(/-/g, '') 
+
+    const storeSenderString = await getSender(storeId)
+    const sender =String(storeSenderString[0].headquarter_call).replace(/-/g, '') 
+
+    const hq_id = storeSenderString[0].headquarter_id
+
+    const message = await smsMessage(storeSenderString[0].brand_name,storeSenderString[0].name)
 
     console.log(sender)
-
     
     
       
@@ -80,17 +99,17 @@ const controller =  async (req, res) => {
         
       sender: sender,
       receiver: receiver,
-      msg: msg,
+      msg: message,
     }
     console.log( req.body)
 
     aligoapi.send(req, AuthData)
       .then((r) => {
-        smsList(req,msg,r.msg_id,headquarterId,String(senderString[0].headquarter_call))
+        smsList(req,message,r.msg_id,hq_id,sender)
         res.status(200).send(r)
       })
       .catch((e) => {
-        res.status(203)
+        res.status(400)
         res.send(e)
       })
   }
@@ -98,3 +117,4 @@ const controller =  async (req, res) => {
 };
   
   export default controller;
+
