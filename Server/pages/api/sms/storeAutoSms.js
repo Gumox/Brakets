@@ -66,17 +66,28 @@ async function smsMessage(brand,store) {
 
   return msg;
 }
+async function getReceiver(receiptId){
+  const result = await excuteQuery({
+    query: `SELECT 
+            customer.phone
+            FROM receipt 
+            LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
+            WHERE receipt.receipt_id = ? `,
+    values: [receiptId],
+  });
+
+  return result[0].phone;
+}
 const controller =  async (req, res) => {
   if (req.method === "POST") {
     console.log(req.body)
     const { 
       storeId,
-      headquarterId,
-      receiver
+      receiptId,
     } = req.body
 
     
-
+    const customer=await getReceiver(receiptId)
     const storeSenderString = await getSender(storeId)
     const sender =String(storeSenderString[0].headquarter_call).replace(/-/g, '') 
 
@@ -85,6 +96,10 @@ const controller =  async (req, res) => {
     const message = await smsMessage(storeSenderString[0].brand_name,storeSenderString[0].name)
 
     console.log(sender)
+    console.log("customer :", customer)
+    
+
+    console.log("customer :", String(customer).replace(/-/g, ''))
     
     
       
@@ -98,7 +113,7 @@ const controller =  async (req, res) => {
     req.body = {
         
       sender: sender,
-      receiver: receiver,
+      receiver:  String(customer).replace(/-/g, ''),
       msg: message,
     }
     console.log( req.body)
