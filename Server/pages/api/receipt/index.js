@@ -241,9 +241,9 @@ const receipt = async (req, res) => {
 
       if(hasSent) {
         if(hasSent === "true") {
-          query += ` AND receipt.send_date IS NOT NULL `;
+          query += ` AND receipt.complete_date IS NOT NULL `;
         } else {
-          query += ` AND receipt.send_date IS NULL `;
+          query += ` AND receipt.complete_date IS NULL `;
         }
       }
 
@@ -274,7 +274,7 @@ const receipt = async (req, res) => {
 
       if (customerContact) {
         query += " AND customer.phone LIKE ? ";
-        values = [...values, `%${customerContact}`];
+        values = [...values, `%${customerContact}%`];
       }
 
       if (companyName) {

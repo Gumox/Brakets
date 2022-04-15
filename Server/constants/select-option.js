@@ -88,7 +88,7 @@ export const DATE_SEARCH_TYPE_OPTIONS = [
   },
   {
     value: "complete_date",
-    text: "매장발송일",
+    text: "발송일 to S",
   },
   {
     value: "register_date",

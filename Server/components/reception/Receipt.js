@@ -80,7 +80,7 @@ const ReceiptInfo = ({
   
   const [registerDate, setRegisterDate] = useState();
   const [minCompleteDate,setMinCompleteDate] = useState()
-  const [completeDateChanged, setCompleteDateChanged] = useState(false);
+  const [completeDateChanged, setCompleteDateChanged] = useState(true);
 
 
   const getDiscountPrice =(value,e)=>{
@@ -178,8 +178,9 @@ const ReceiptInfo = ({
       const receiptDateToString =receiptDate.getFullYear()+"-"+(receiptDate.getMonth()+1)+"-"+receiptDate.getDate()
       setRegisterDate(receiptDateToString)
     }
-    if(!completeDateChanged){
-      setMinCompleteDate(targetData[RECEIPT.COMPLETE_DATE])
+    if(completeDateChanged && targetData[RECEIPT.COMPLETE_DATE]){
+      let tos =moment(targetData[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD")
+      setMinCompleteDate(tos)
     }
 
     
@@ -566,7 +567,7 @@ const ReceiptInfo = ({
                 }
                 onChange={(e)=>{
                   handleChangeTargetData(e)
-                  setCompleteDateChanged(true)
+                  setCompleteDateChanged(false)
                 }}
                 styleOptions={{ labelFontSize: "18px", color: COLOR.RED }}
               />

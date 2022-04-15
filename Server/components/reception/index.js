@@ -56,7 +56,7 @@ const Reception = ({
     []
   );
 
-  const [clickedImg, setClickedImg] = useState(overallImg);
+
 
 
   return (

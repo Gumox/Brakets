@@ -120,7 +120,7 @@ const FilterInfo = ({
         <Row>
           <Field marginRight="5px">
             <SelectOption
-              title="접수여부"
+              title="본사접수 "
               name="hasRegistered"
               options={REGISTER_STEP_OPTIONS}
               value={inputData["hasRegistered"]}

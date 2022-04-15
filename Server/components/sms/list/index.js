@@ -13,37 +13,8 @@ const Wrapper = styled.div`
   width: 50%;
   border-bottom: 2px solid;
   border-right: 1px solid;
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 10px;
-    background: rgba(210, 210, 210, 0.4);
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(96, 96, 96, 0.7);
-    border-radius: 6px;
-  }
-`;
 
-const Styles = styled.div`
-  padding: 1rem;
-  ${'' /* These styles are suggested for the table fill all available space in its containing element */}
-  display: block;
-  ${'' /* These styles are required for a horizontaly scrollable table overflow */}
-  overflow: auto;
-
-  .table {
-    border-spacing: 0;
-    border: 1px solid black;
-
-    .thead {
-      ${'' /* These styles are required for a scrollable body to align with the header properly */}
-      overflow-y: auto;
-    }
-
-    .tbody {
-      ${'' /* These styles are required for a scrollable table body */}
-      overflow-y: scroll;
-      overflow-x: hidden;
+  overflow-y: scroll;
       min-height: 598px;
       &::-webkit-scrollbar {
         width: 8px;
@@ -54,29 +25,46 @@ const Styles = styled.div`
         background: rgba(96, 96, 96, 0.7);
         border-radius: 6px;
       }
+`;
+
+const Styles = styled.div`
+  padding: 1rem;
+  ${'' /* These styles are suggested for the table fill all available space in its containing element */}
+  display: block;
+  ${'' /* These styles are required for a horizontaly scrollable table overflow */}
+
+  .table {
+    
+
+    .thead {
+      ${'' /* These styles are required for a scrollable body to align with the header properly */}
+    }
+
+    .tbody {
+      ${'' /* These styles are required for a scrollable table body */}
+      
     }
 
     .tr {
       :last-child {
         .td {
-          border-bottom: 0;
+          border-bottom: 1px solid black;
         }
       }
-      border-bottom: 1px solid black;
     }
 
     .th,
     .td {
-      margin: 0;
       padding: 0.5rem;
-      border-right: 1px solid black;
+      border-left: 1px solid black;
+      border-top: 1px solid black;
 
       ${'' /* In this example we use an absolutely position resizer,
        so this is required. */}
       position: relative;
 
       :last-child {
-        border-right: 0;
+        border-right: 1px solid black;
       }
 
       .resizer {
@@ -197,6 +185,8 @@ function Table({ columns, data }) {
   return (
     <>
       <div {...getTableProps()} className="table">
+        
+        <div className="tbody">
         <div>
           {headerGroups.map((headerGroup,i) => (
             <div key={i}
@@ -209,19 +199,12 @@ function Table({ columns, data }) {
                 <div key={j} {...column.getHeaderProps(headerProps)} className="th">
                   {column.render('Header')}
                   {/* Use column.getResizerProps to hook up the events correctly */}
-                  {column.canResize && (
-                    <div
-                      {...column.getResizerProps()}
-                      className={`resizer ${column.isResizing ? 'isResizing' : ''
-                        }`}
-                    />
-                  )}
+                  
                 </div>
               ))}
             </div>
           ))}
         </div>
-        <div className="tbody">
           {rows.map((row,i) => {
             prepareRow(row)
             return (
@@ -250,6 +233,7 @@ function Table({ columns, data }) {
               </div>
             )
           })}
+          
         </div>
       </div>
     </>

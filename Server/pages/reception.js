@@ -66,7 +66,6 @@ const ReceptionPage = ({ options, user }) => {
     };
 
     getOptions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetBrandId]);
 
   const handleChangeInputData = useCallback(
@@ -139,18 +138,14 @@ const ReceptionPage = ({ options, user }) => {
       params: { brandId: targetBrandId, serviceCardId: serviceCardId },
     });
     setSearchList(data.data);
-    // console.log("result of search code is ")
-    // console.log(data)
   }, []);
 
 
   const getTargetData = useCallback(async (receiptCode) => {
     const { data } = await axios.get(`/api/receipt/${receiptCode}`);
-    console.log(receiptCode)
     if(data == ""){
       alert("정확한 서비스 카드 번호를 입력하세요.")
     }
-    // console.log("data is")
     setOverallImg(data.data.image)
     setImageData(data.imageList);
     setNeedImageData(data.needImageList)
