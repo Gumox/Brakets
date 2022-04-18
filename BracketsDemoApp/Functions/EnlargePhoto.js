@@ -70,6 +70,18 @@ export default function EnlargePhoto({ navigation ,route}){
     return(
         <Container style = {{backgroundColor : '#000000'}}>
             <View style={{margin:12}}>
+                
+                <View style={styles.centeredView}>
+                            
+                  <ImageZoom cropWidth={Dimensions.get('window').width-30}
+                          cropHeight={ Dimensions.get('window').height-125}
+                          imageWidth={resizeWidth}
+                          imageHeight={(resizeWidth/3)*4}>
+                          <Image style={{width:resizeWidth, height:(resizeWidth/3)*4}}
+                          source={{uri:image}}/>
+                  </ImageZoom>
+                  
+                </View>
                 <CloseBtn
                     onPress={() => {
                         navigation.goBack()}}
@@ -79,18 +91,6 @@ export default function EnlargePhoto({ navigation ,route}){
                         style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}
                     >✕</Text>
                 </CloseBtn>
-                <View style={styles.centeredView}>
-                            
-                            <ImageZoom cropWidth={Dimensions.get('window').width-30}
-                                    cropHeight={ Dimensions.get('window').height-125}
-                                    imageWidth={resizeWidth}
-                                    imageHeight={(resizeWidth/3)*4}>
-                                    <Image style={{width:resizeWidth, height:(resizeWidth/3)*4}}
-                                    source={{uri:image}}/>
-                            </ImageZoom>
-                            
-                        </View>
-            
             </View>
         </Container>
     )
