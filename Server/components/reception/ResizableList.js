@@ -115,27 +115,6 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
     const numberWithCommas = (num) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-    const repairDeliveryTypeName =(type)=>{
-        if(type){
-            if(type === 1){
-                return "매장행낭"
-            }
-            else if(type === 2){
-                return "본사행낭"
-            }
-            else if(type === 3){
-                return "택배"
-            }
-            else if(type === 4){
-                return "퀵배송"
-            }
-            else if(type === 5){
-                return "기타"
-            }
-        }else{
-            return ""
-        }
-    }
 
     const columns = React.useMemo(() => [
 

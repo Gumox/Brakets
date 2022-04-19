@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  useTable,
+  useTable,useBlockLayout,
   useResizeColumns,
   useFlexLayout,
   useRowSelect,
 } from 'react-table'
 import store from '../../../store/store';
+import COLOR from '../../../constants/color';
 
 const Wrapper = styled.div`
   height: 90%;
   width: 50%;
+  max-width:680px;
   border-bottom: 2px solid;
   border-right: 1px solid;
 
@@ -26,66 +28,62 @@ const Wrapper = styled.div`
         border-radius: 6px;
       }
 `;
-
 const Styles = styled.div`
   padding: 1rem;
-  ${'' /* These styles are suggested for the table fill all available space in its containing element */}
-  display: block;
-  ${'' /* These styles are required for a horizontaly scrollable table overflow */}
 
   .table {
-    
-
-    .thead {
-      ${'' /* These styles are required for a scrollable body to align with the header properly */}
-    }
-
-    .tbody {
-      ${'' /* These styles are required for a scrollable table body */}
-      
-    }
+    display: inline-block;
+    border-spacing: 0;
+    border: 1px solid black;
+    border-top: 0px;
 
     .tr {
       :last-child {
         .td {
-          border-bottom: 1px solid black;
+          border-bottom: 0;
         }
       }
     }
 
     .th,
     .td {
-      padding: 0.5rem;
-      border-left: 1px solid black;
-      border-top: 1px solid black;
+      margin: 0;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
 
       ${'' /* In this example we use an absolutely position resizer,
        so this is required. */}
       position: relative;
 
       :last-child {
-        border-right: 1px solid black;
+        border-right: 0;
       }
 
       .resizer {
-        right: 0;
-        background: black;
-        width: 0px;
+        display: inline-block;
+        /* background: black; */
+        width: 2px;
         height: 100%;
         position: absolute;
+        right: 0;
         top: 0;
+        transform: translateX(50%);
         z-index: 1;
         ${'' /* prevents from scrolling while dragging on touch devices */}
-        touch-action :none;
-
-        &.isResizing {
-          background: black;
-        }
+        touch-action:none;
       }
     }
   }
 `
 
+
+const StickyStyles = styled.div`
+  background-color:${COLOR.WHITE};
+  border-top:1px solid;
+  
+`
 const headerProps = (props, { column }) => getStyles(props, column.align)
 
 const cellProps = (props, { cell }) => getStyles(props, cell.column.align)
@@ -122,49 +120,51 @@ function Table({ columns, data }) {
   const defaultColumn = React.useMemo(
     () => ({
       // When using the useFlexLayout:
-      minWidth: 100, // minWidth is only used as a limit for resizing
+      minWidth: 50, // minWidth is only used as a limit for resizing
       width: 150, // width is used for both the flex-basis and flex-grow
       maxWidth: 200, // maxWidth is only used as a limit for resizing
     }),
     []
   )
 
-  const { 
-      getTableProps,
-      headerGroups, 
-      rows, 
-      prepareRow,
-      selectedFlatRows,
-    } = useTable(
-      {
-        columns,
-        data,
-        defaultColumn,
-    },
-    useResizeColumns,
-    useFlexLayout,
-    useRowSelect,
-    
+ 
+const {
+  getTableProps,
+  getTableBodyProps,
+  headerGroups,
+  rows,
+  prepareRow,
+  selectedFlatRows,
+} = useTable(
+  {
+      columns,
+      data,
+      defaultColumn,
+  },
+  useBlockLayout,
+  useResizeColumns,
+  useRowSelect,
+
     hooks => {
       hooks.allColumns.push(columns => [
         // Let's make a column for selection
         {
           id: 'selection',
           disableResizing: true,
-          minWidth: 100,
-          width: 100,
+          minWidth: 20,
+          width: 30,
           // maxWidth: 35,
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
+            <div style={{textAlign:"center"}}>
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
           Cell: ({ row }) => (
-            <div>
+            <div style={{textAlign:"center"}}>
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
             </div>
           ),
@@ -186,26 +186,22 @@ function Table({ columns, data }) {
     <>
       <div {...getTableProps()} className="table">
         
-        <div className="tbody">
-        <div>
-          {headerGroups.map((headerGroup,i) => (
-            <div key={i}
-              {...headerGroup.getHeaderGroupProps({
-                // style: { paddingRight: '15px' },
-              })}
-              className="tr"
-            >
-              {headerGroup.headers.map((column,j) => (
-                <div key={j} {...column.getHeaderProps(headerProps)} className="th">
+        <div style={{top:0,position:"sticky",zIndex:10}}>
+          {headerGroups.map((headerGroup, i) => (
+            <StickyStyles key={i}{...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column, j) => (
+                <div key={j} {...column.getHeaderProps()} className="th">
                   {column.render('Header')}
                   {/* Use column.getResizerProps to hook up the events correctly */}
                   
                 </div>
               ))}
-            </div>
+            </StickyStyles>
           ))}
         </div>
-          {rows.map((row,i) => {
+                  
+          
+        {rows.map((row,i) => {
             prepareRow(row)
             return (
               <div  key={i}{...row.getRowProps(
@@ -233,8 +229,6 @@ function Table({ columns, data }) {
               </div>
             )
           })}
-          
-        </div>
       </div>
     </>
   )
@@ -242,11 +236,11 @@ function Table({ columns, data }) {
 
 function ReturnList({ data }) {
   const columns = React.useMemo(() => [
-    { Header: 'No', accessor: 'No', width: 100, },
-    { Header: '이름', accessor: '이름', width: 100 },
-    { Header: '전화번호', accessor: '전화번호' },
-    { Header: '매장코드', accessor: '매장코드' },
-    { Header: '매장명', accessor: '매장명' },
+    { Header: () => (<div style={{textAlign:"center"}}>{'No'}</div>), accessor: 'No', width: 50,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    { Header: () => (<div style={{textAlign:"center"}}>{ '이름'}</div>), accessor: '이름', width: 100 ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    { Header: () => (<div style={{textAlign:"center"}}>{ '전화번호'}</div>), accessor: '전화번호' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    { Header: () => (<div style={{textAlign:"center"}}>{ '매장코드'}</div>), accessor: '매장코드' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    { Header: () => (<div style={{textAlign:"center"}}>{ '매장명'}</div>), accessor: '매장명' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
   ], [])
 
   // const rows = data.map((productReturn, i) => ({

@@ -4,6 +4,7 @@ import axios from "axios";
 import store from "../../../store/store";
 import { UserContext } from "../../../store/Context";
 import COLOR from "../../../constants/color";
+import { debounce } from "lodash";
 
 
 // correct way
@@ -89,6 +90,20 @@ const SendMsg = ({}) => {
   const user =useContext(UserContext)
   const [smsMessage,setSmsMessage] = useState([]);
   const [sendNumber,setSendNumber] = useState('010-2768-7973');
+  const [windowTof,setWindowTof] = useState(false)
+
+  const [windowWidth,setWindowWidth] = useState(0)
+    const [windowHeight,setWindowHeight] = useState(0)
+    const handleResize = debounce(()=>{
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
+    },1000)
+  
+  let myWidth;
+
+  if(windowTof){
+    myWidth =window.innerWidth-660
+  }
 
   useEffect(()=>{
     const fetch =async()=>{
@@ -97,9 +112,19 @@ const SendMsg = ({}) => {
     }
     fetch();
   },[user])
-  
+  useEffect(()=>{
+    if(!windowTof){
+      setWindowTof(true)
+    }
+    setWindowWidth(window.innerWidth)
+    setWindowHeight(window.innerHeight)
+    window.addEventListener('resize',handleResize);
+    return ()=>{
+        window.removeEventListener('resize',handleResize);
+    }
+  },[])
   return (
-    <Wrapper>
+    <Wrapper style={{width:myWidth}}>
       <MsgView>
         <SelectBox onChange={(e)=>{
           console.log(e.target.value)
@@ -149,7 +174,6 @@ const SendMsg = ({}) => {
 const Wrapper = styled.nav`
   
   height: 90%;
-  width: 50%;
   overflow: auto;
   border-bottom: 2px solid;
   border-left: 1px solid;

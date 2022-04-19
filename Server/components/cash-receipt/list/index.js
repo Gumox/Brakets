@@ -11,7 +11,7 @@ function Table({ columns, data, searchList, handleDataClick }) {
 
   const defaultColumn = React.useMemo(
       () => ({
-          minWidth: 100,
+          minWidth: 50,
           width: 100,
           maxWidth: 150,
       }),
@@ -63,7 +63,7 @@ function Table({ columns, data, searchList, handleDataClick }) {
                           prepareRow(row)
                           return (
                               <div key={i} {...row.getRowProps(
-                                  {onClick: () => (handleDataClick(row.original["서비스카드 번호"]))}
+                                  {onClick: () => (handleDataClick(row.original["서비스카드#"]))}
                               )} className="tr">
                                   {row.cells.map((cell,j) => {
                                       return (
@@ -86,35 +86,35 @@ function Table({ columns, data, searchList, handleDataClick }) {
 const ReturnList = ({ data, handleDataClick = () => {} }) => {
 
   const columns = React.useMemo(() => [
-    {Header: '서비스카드 번호', accessor: '서비스카드 번호'},
-    {Header: '현금영수증번호',   accessor: '현금영수증번호'},
-    {Header: '매장코드', accessor: '매장코드'},
-    {Header: '매장명', accessor: '매장명'},
-    {Header: '매장구분', accessor: '매장구분'},
-    {Header: '매장연락처', accessor: '매장연락처'},
-    {Header: '등록일', accessor: '등록일'},
-    {Header: '고객ID', accessor: '고객ID'},
-    {Header: '고객', accessor: '고객'},
-    {Header: '고객연락처', accessor: '고객연락처'},
-    {Header: '시즌', accessor: '시즌'},
-    {Header: '스타일', accessor: '스타일'},
-    {Header: '컬러', accessor: '컬러'},
-    {Header: '사이즈', accessor: '사이즈'},
-    {Header: '판매가', accessor: '판매가'},
-    {Header: '고객요구', accessor: '고객요구'},
-    {Header: '매장접수내용', accessor: '매장접수내용'},
-    {Header: '과실구분', accessor: '과실구분'},  
-    {Header: '고객약속일', accessor: '고객약속일'},
-    {Header: '본사접수일', accessor: '본사접수일'},
-    {Header: '내용분석', accessor: '내용분석'},
-    {Header: '판정결과', accessor: '판정결과'},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '서비스카드#'}</div>), accessor: '서비스카드#',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '현금영수증번호'}</div>),   accessor: '현금영수증번호',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '매장코드'}</div>), accessor: '매장코드',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '매장명'}</div>), accessor: '매장명',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '매장구분'}</div>), accessor: '매장구분',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '매장연락처'}</div>), accessor: '매장연락처',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '등록일'}</div>), accessor: '등록일',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '고객ID'}</div>), accessor: '고객ID',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '고객'}</div>), accessor: '고객',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '고객연락처'}</div>), accessor: '고객연락처',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '시즌'}</div>), accessor: '시즌',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '스타일'}</div>), accessor: '스타일',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '컬러'}</div>), accessor: '컬러',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '사이즈'}</div>), accessor: '사이즈',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '판매가'}</div>), accessor: '판매가',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '고객요구'}</div>), accessor: '고객요구',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '매장접수내용'}</div>), accessor: '매장접수내용',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '과실구분'}</div>), accessor: '과실구분',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},  
+    {Header: () => (<div style={{textAlign:"center"}}>{ '고객약속일'}</div>), accessor: '고객약속일',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '본사접수일'}</div>), accessor: '본사접수일',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '내용분석'}</div>), accessor: '내용분석',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '판정결과'}</div>), accessor: '판정결과',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
   ],[])
 
     console.log("data is")
     console.log(data)
 
     const value = data.map((cashReceipt) => ({
-      "서비스카드 번호":cashReceipt[RECEIPT.CODE],
+      "서비스카드#":cashReceipt[RECEIPT.CODE],
       "현금영수증번호":cashReceipt[RECEIPT.CASHRECEIPT_NUM] == null ? "미 발행 건" : cashReceipt[RECEIPT.CASHRECEIPT_NUM],
       "매장코드":cashReceipt[STORE.CODE],
       "매장명":cashReceipt[STORE.NAME],
