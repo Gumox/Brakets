@@ -116,11 +116,14 @@ const ReceptionPage = ({ options, user }) => {
   const handleChangeTargetDataPrice = useCallback(
     (e,data) => {
       if(RECEIPT.CLAIM == e.target.name){
-        setTargetData({ ...targetData, [RECEIPT.CLAIM_PRICE]: data });
+        setTargetData({ ...targetData, claim: e.target.value,claim_price: data });
       }
       else if(RECEIPT.DISCOUNT == e.target.name){
         setTargetData({ ...targetData, [RECEIPT.DISCOUNT_PRICE]: data });
+        setTargetData({ ...targetData, discount: e.target.value, discount_price: data });
       }
+
+      
     },
     [targetData]
   );

@@ -43,11 +43,11 @@ const getTargetInfo = async (req, res) => {
     let values=[]
     if(shop_id){
       query = ` WHERE return_unregistered.return_store_id = ?`
-      values=[...values,shop_id]
+      values=[shop_id]
     }
     if(hq_id){
-      query = ` WHERE return_unregistered.return_store_id = ?`
-      values=[...values,hq_id]
+      query = `WHERE brand.headquarter_id = ?`
+      values=[hq_id]
     }
     try {
       const result = await getReceipt(query,values);

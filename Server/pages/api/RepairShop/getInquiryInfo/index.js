@@ -125,7 +125,7 @@ async function getReceiptList(query,values) {
                 LEFT JOIN store AS repair1_detail_store ON repair1_detail.store_id = repair1_detail_store.store_id
                 LEFT JOIN store AS repair2_detail_store ON repair2_detail.store_id = repair2_detail_store.store_id
                 LEFT JOIN store AS repair3_detail_store ON repair3_detail.store_id = repair3_detail_store.store_id
-                WHERE repair_detail.store_id = ? AND receipt.step > 0  ${query} 
+                WHERE  receipt.step > 0   ${query} 
                 ORDER BY receipt.receipt_date ASC`,
         values,
       });
@@ -142,6 +142,7 @@ const controller = async (req, res) => {
         
         const {
             shop_id, //  id
+            hq_id,
             brand,
             code,
             startDate,
@@ -149,7 +150,17 @@ const controller = async (req, res) => {
             dateOption
         } = req.query;
         let query = "";
-        let values = [shop_id];
+        let values = [];
+
+        if(shop_id){
+          query += " AND repair_detail.store_id = ? ";
+          values = [...values, shop_id];
+        }
+
+        if(hq_id){
+          query += " AND brand.headquarter_id = ? ";
+          values = [...values, hq_id];
+        }
         
         if(brand){
             query += " AND brand.brand_id  = ? ";

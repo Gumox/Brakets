@@ -54,6 +54,7 @@ async function getReceipt(code) {
                     receipt.discount_price AS discount_price,
                     receipt.claim AS claim,
                     receipt.claim_price AS claim_price,
+                    claim.claim_text,
                     receipt.deliberation_result,
                     receipt.deliberation_request_date,
                     receipt_store.name AS store_name,
@@ -191,6 +192,7 @@ async function getReceipt(code) {
               LEFT JOIN store AS repair3_store ON repair3.store_id = repair3_store.store_id
               LEFT JOIN mfr_detail AS mfr ON receipt.mfr_detail_id = mfr.mfr_detail_id
               LEFT JOIN season_type ON product.season_id = season_type.season_id
+              LEFT JOIN claim ON claim.claim_id = receipt.claim
               WHERE receipt.receipt_code = ?`,
     values: [code],
   });

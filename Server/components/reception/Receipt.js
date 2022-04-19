@@ -88,6 +88,7 @@ const ReceiptInfo = ({
       if(value == el.value){
         if(el.text =='감가반품'){
           setDiscountPriceDisable(false)
+          handleChangeTargetDataPrice(e,targetData[RECEIPT.DISCOUNT_PRICE])
         }else{
           setDiscountPriceDisable(true)
           setDiscountPrice(el.discount_value*(targetData[PRODUCT.TAG_PRICE]))
@@ -101,13 +102,16 @@ const ReceiptInfo = ({
       if(value == el.value){
         setClaimPriceDisable(true)
         if(el.claim_type=='택가'){
+          console.log(el.claim_value*(targetData[PRODUCT.TAG_PRICE]))
           setClaimPrice(el.claim_value*(targetData[PRODUCT.TAG_PRICE]))
           handleChangeTargetDataPrice(e,el.claim_value*(targetData[PRODUCT.TAG_PRICE]))
         }else if(el.claim_type=='원가'){
+          console.log(el.claim_value*(targetData[PRODUCT.ORG_PRICE]))
           setClaimPrice(el.claim_value*(targetData[PRODUCT.ORG_PRICE]))
           handleChangeTargetDataPrice(e,el.claim_value*(targetData[PRODUCT.ORG_PRICE]))
         }else{
           setClaimPriceDisable(false)
+          handleChangeTargetDataPrice(e,targetData[RECEIPT.CLAIM_PRICE])
         }
       }
     })
@@ -428,7 +432,7 @@ const ReceiptInfo = ({
                       value={targetData[RECEIPT.DISCOUNT]}
                       onChange={(e)=>{
                         getDiscountPrice(e.target.value,e);
-                        handleChangeTargetData(e);
+                        //handleChangeTargetData(e);
                       }}
                       styleOptions={{ maxWidth: "80px", color: COLOR.PURPLE }}
                     />
@@ -438,7 +442,7 @@ const ReceiptInfo = ({
                       title="실판매가"
                       disabled={discountPriceDisable}
                       name={RECEIPT.DISCOUNT_PRICE}
-                      value={discountPrice}
+                      value={targetData[RECEIPT.DISCOUNT_PRICE]}
                       onChange={(e)=>{
                         setDiscountPrice(e.target.value);
                         handleChangeTargetData(e);
@@ -458,7 +462,8 @@ const ReceiptInfo = ({
                       options={[DEFAULT_OPTION, ...claimList]}
                       onChange={(e)=>{
                         getClaimPrice(e.target.value,e);
-                        handleChangeTargetData(e);
+                        //handleChangeTargetData(e);
+                        console.log(targetData.claim_price)
                       }}
                       value={targetData[RECEIPT.CLAIM]}
                       styleOptions={{ maxWidth: "100px", color: COLOR.PURPLE }}
@@ -466,11 +471,11 @@ const ReceiptInfo = ({
                     <Input
                       name={RECEIPT.CLAIM_PRICE}
                       disabled={claimPriceDisable}
-                      value={claimPrice}
+                      value={targetData["claim_price"]}
                       onChange={(e)=>{
-                        getClaimPrice(e.target.value);
-                        setClaimPrice(e.target.value);
+                        //setClaimPrice(e.target.value);
                         handleChangeTargetData(e);
+                        console.log(targetData)
                       }}
                       styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                     />

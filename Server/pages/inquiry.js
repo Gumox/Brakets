@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import COLOR from '../constants/color';
 import axios from 'axios';
 import store from '../store/store';
+import { debounce } from 'lodash';
 import sortInquiryData from '../functions/sortInquiryData';
 import dateOptionListcontroll from '../functions/dateOptionListcontroll';
 import checkDisable from '../functions/checkDisable';
 import InquiryResult from '../components/repair/InquiryResult';
 import {getSelectList, getRepairType } from '../functions/useInRepairReceiptModal'; 
+import {getData} from '../functions/useInInqiry';
 import { getBrandList } from '../functions/useInSettlement';
 import Image from 'next/image'
 import { parseInquiryData } from '../functions/parseExcelData';
@@ -17,6 +19,7 @@ const XLSX = require('xlsx');
 
 export default function Inquiry() {
    
+    const [userInfo,setUserInfo] = useState({})
     const [shopId,setShopId] = useState(store.getState().shop);
     const [data,setData] = useState([]);
     const [selectedCompany,setSelectedCompany] = useState(null)
@@ -31,6 +34,16 @@ export default function Inquiry() {
     const [faultInfo,setFaultInfo] = useState([])
     const [resultInfo,setResultInfo] = useState([])
     const [analysisInfo,setAnalysisInfo] = useState([])
+    const [tof,setTof] = useState(false)
+
+    let itemViewWidth;
+
+    const [windowWidth,setWindowWidth] = useState(0)
+    const [windowHeight,setWindowHeight] = useState(0)
+    const handleResize = debounce(()=>{
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
+    },1000)
     
     const getExcel =(data)=>{
         const dataWS = XLSX.utils.json_to_sheet(data);
@@ -38,24 +51,12 @@ export default function Inquiry() {
         XLSX.utils.book_append_sheet(wb, dataWS, "sheet1");
         XLSX.writeFile(wb, "조회 목록.xlsx");
       }
-    const getData = async(params)=>{
-        const[datas] =await Promise.all([
-            axios.get(`${process.env.API_URL}/RepairShop/getInquiryInfo`, {
-                params: params,
-              })
-            .then(({ data }) => data)
-            .catch(error=>{
-                
-            })
-          ])
-          //console.log(datas)
-          return datas;
-    }
+    
     const setTable =useCallback( async(params ,fI,jI,aI) =>{
         let datas = [];
         let types = await getRepairType(null,null,shopId)
         if(params.dateOption === "receipt_date"){
-            datas = await getData(params)
+            datas = await getData(params,userInfo.level)
             let sort =await sortInquiryData(datas.body,params,fI,jI,aI,types)
             setData(sort)
         }else{
@@ -65,6 +66,7 @@ export default function Inquiry() {
             setData(result)
         }
     },[setData]);
+
     const handleKeyPress = useCallback(
         (e,code) => {
           if (e.key !== "Enter") return;
@@ -77,7 +79,22 @@ export default function Inquiry() {
             dateOption : dateOption 
         },analysisInfo,resultInfo,faultInfo);
         },[brand, dateOption, endDate, setTable,startDate]
-      );
+    );
+
+    const windoewSize =(tof)=>{
+        if(tof){
+            if( window.innerWidth > 1472){
+                
+                let sWidth = window.innerWidth*0.96 - 10
+                console.log(sWidth/20)
+
+                itemViewWidth = Math.round(sWidth/20)
+            }else{
+                itemViewWidth = 70
+            }
+        }
+    }
+    windoewSize(tof);
     useEffect(() => {
         const fetchData = async () => {
             let list =await getBrandList();
@@ -85,7 +102,7 @@ export default function Inquiry() {
             const fI = await getSelectList('faultDivision',null)
             const jI = await getSelectList('judgmentResult',null)
             const aI = await getSelectList('analysisType',null)
-            
+
             setFaultInfo(fI)   
             setResultInfo(jI)  
             setAnalysisInfo(aI)
@@ -95,19 +112,56 @@ export default function Inquiry() {
             setShopId(localStorage.getItem('SHOP'))
             setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
             let user = JSON.parse(localStorage.getItem('USER'))
+            setUserInfo(user)
             setDisable(checkDisable(user.level))
-            setTable({
-                shop_id: localStorage.getItem('SHOP'),
-                brand : brand,
-                code : code,
-                startDate : startDate,
-                endDate : endDate,
-                dateOption : dateOption 
-            },aI,jI,fI);
+            if(user.level === 3){
+                setTable({
+                    shop_id: localStorage.getItem('SHOP'),
+                    brand : brand,
+                    code : code,
+                    startDate : startDate,
+                    endDate : endDate,
+                    dateOption : dateOption 
+                },aI,jI,fI);
+            }else if(user.level === 0 ||user.level === 1){
+                /*setTable({
+                    hq_id : user.headquarter_id,
+                    brand : brand,
+                    code : code,
+                    startDate : startDate,
+                    endDate : endDate,
+                    dateOption : dateOption 
+                },aI,jI,fI);*/
+            }
             
         }
         fetchData();
-      },[]);
+
+        setWindowWidth(window.innerWidth)
+        setWindowHeight(window.innerHeight)
+        console.log("/-/-/-/-/-/")
+        console.log(window.innerWidth)
+        console.log("/-/-/-/-/-/")
+        if( window.innerWidth > 1472){
+              
+          let sWidth = window.innerWidth*0.96 - 10
+          console.log(sWidth/20)
+          
+          itemViewWidth = Math.round(sWidth/20)
+        }else{
+          itemViewWidth = 70
+        }
+        setTof(true)
+
+        
+        window.addEventListener('resize',handleResize);
+        return ()=>{
+            window.removeEventListener('resize',handleResize);
+        }
+        
+    },[]);
+    
+      ///96% -10px
     return(
         <Nav style={{height:"100%"}}>
             <RepairHeader/>
@@ -220,36 +274,38 @@ export default function Inquiry() {
                 </Container>
             <Line/>
             <ItemTable >
-                <LaView ><Container>
-                    <ItemView>서비스 번호</ItemView>
-                    <ItemView>매장접수일</ItemView>
-                    
-                    <ItemView>매장명</ItemView>
-                    <ItemView>브랜드</ItemView>
-                    <ItemView>시즌</ItemView>
-                    <ItemView>스타일</ItemView>
-                    <ItemView>컬러</ItemView>
-                    <ItemView>사이즈</ItemView>
-                    <ItemView>과실구분</ItemView>
-                    <ItemView>내용분석</ItemView>
-                    <ItemView>판정결과</ItemView>
-                    <ItemView><pre>{"수선처\n접수일"}</pre></ItemView>
-                    <ItemView><pre>{"수선처\n발송일"}</pre></ItemView>
-                    <ItemView>수선내용1</ItemView>
-                    <ItemView>수선비용1</ItemView>
-                    <ItemView>수선내용2</ItemView>
-                    <ItemView>수선비용2</ItemView>
-                    <ItemView>수선내용3</ItemView>
-                    <ItemView>수선비용3</ItemView>
-                    <ItemView><pre>{"  매장\n접수내용"}</pre></ItemView>
-                </Container></LaView>
-                <Line2/>
+                
                             
-                <Nav style={{paddingTop:12,maxHeight: 400,minHeight:200, width: "100%"}}>
+                <Nav style={{maxHeight: 400,minHeight:200, width: "100%"}}>
+                <div style={{position:"sticky",position:"-webkit-sticky",top:0,backgroundColor:COLOR.WHITE,width:itemViewWidth*20+10}}>
+                <Container style={{paddingLeft:10,backgroundColor:COLOR.WHITE}}>
+                    <ItemView style={{width : itemViewWidth}}>서비스 번호</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>매장접수일</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>매장명</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>브랜드</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>시즌</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>스타일</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>컬러</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>사이즈</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>과실구분</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>내용분석</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>판정결과</ItemView>
+                    <ItemView style={{width : itemViewWidth}}><pre>{"수선처\n접수일"}</pre></ItemView>
+                    <ItemView style={{width : itemViewWidth}}><pre>{"수선처\n발송일"}</pre></ItemView>
+                    <ItemView style={{width : itemViewWidth}}>수선내용1</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>수선비용1</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>수선내용2</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>수선비용2</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>수선내용3</ItemView>
+                    <ItemView style={{width : itemViewWidth}}>수선비용3</ItemView>
+                    <ItemView style={{width : itemViewWidth}}><pre>{"  매장\n접수내용"}</pre></ItemView>
+                </Container>
+                <Line2 style={{width:itemViewWidth*20+10}}/>
+                </div>
                     {
                         data.map((item,i)=>(
                             
-                            <InquiryResult key={i} data = {item}/>
+                            <InquiryResult key={i} data = {item} width={itemViewWidth}/>
 
                         ))   
                     }
@@ -337,7 +393,6 @@ const TopView = styled.div`
 const ItemView = styled.div`
   font-size :12px;
   min-height: 55px;
-  width : 70px;
   display: flex;  
   flex-direction: row ;
   align-items: center;

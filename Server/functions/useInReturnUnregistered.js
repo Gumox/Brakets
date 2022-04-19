@@ -77,9 +77,9 @@ export const getReturnList = async(id,shopName)=>{
     }
     return datas;
 }
-export const getAllReturnList = async()=>{
+export const getAllReturnList = async(hq_id)=>{
   let[datas] =await Promise.all([
-      axios.get(`${process.env.API_URL}/RepairShop/unregistered`)
+      axios.get(`${process.env.API_URL}/RepairShop/unregistered?hq_id=${hq_id}`)
       .then(({ data }) => data.data)
       .catch(error=>{
 

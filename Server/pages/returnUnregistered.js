@@ -16,7 +16,7 @@ const XLSX = require('xlsx');
 
 export default function ReturnUnregistered() {
     
-    const [selectedCompany,setSelectedCompany] = useState(null)
+    const [userInfo,setUserInfo] = useState({})
     const [companyList,setCompanyList] = useState([])
     const [code,setCode] = useState()
     const [brandList,setBrandList] = useState([])
@@ -92,7 +92,39 @@ export default function ReturnUnregistered() {
             }
           }
         },[shopName]
-      );
+    );
+    console.log()
+
+    let companyDiv
+    if(userInfo.level === 3 ){
+        companyDiv = (
+            <div style={{display:'flex',alignItems:"center",justifyContent:"center",width:"100%",fontSize:15,fontWeight:"bold",msOverflowStyle:"none"}}>회사 설정 :
+                <select onChange={(e)=>{setHqId(e.target.value)}}  style={{marginLeft:10,marginRight: 10,minWidth:200,minHeight:30}} >
+                    <option value={null} >
+                        {"전체"}
+                        </option>
+                    {companyList.map((item) => (
+                        <option value={item.value} key={item.value}>
+                        {item.text}
+                        </option>
+                    ))}
+                </select>
+                <button 
+                    style={{marginLeft:10,width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
+                    onClick={()=>{searchTarget(hq_id,repair,brand,startDate,endDate)}}>
+                        확인
+                </button>  
+            </div>
+        )
+    }else if(userInfo.level ===0 || userInfo.level === 1){
+        let search = _.find(companyList, {'value':userInfo.headquarter_id});
+        console.log(search)
+        companyDiv =(
+            <div style={{display:'flex',alignItems:"center",justifyContent:"center",width:"100%",fontSize:15,fontWeight:"bold",msOverflowStyle:"none"}}>회사 :
+                {search  && <div style={{marginLeft : 15}}>{search.headquarter_name}</div>}
+            </div>
+        )
+    }
     
     useEffect( ()=>{
         const fetchData = async () => {
@@ -105,12 +137,16 @@ export default function ReturnUnregistered() {
             let list2 =await getStoreList();
             list2.unshift({store_id: "",name: "전체"})
             let user = JSON.parse(localStorage.getItem('USER'))
+
+            
+            setUserInfo(user)
+
             setDisable(checkDisable(user.level))
             let cpList = await getHeadquarter()
             let returnListData;
             if(checkDisable(user.level)){
                 //console.log("****************************")
-                returnListData = await getAllReturnList()
+                returnListData = await getAllReturnList(user.headquarter_id)
                 //console.log(returnListData)
                 //console.log("****************************")
             }else{
@@ -123,6 +159,11 @@ export default function ReturnUnregistered() {
             setBrandList(list);
             setCompanyList(cpList)
             setRepairShopList(list2)
+
+            if(user.level ===0 || user.level === 1){
+                let search = _.find(cpList, {'value':user.headquarter_id});
+                setHqId(search.value)
+            }
         }
         fetchData();
     },[])
@@ -137,20 +178,7 @@ export default function ReturnUnregistered() {
             </TopView>
                 <Line/>
                 <Container>
-                    <div style={{display:'flex',alignItems:"center",justifyContent:"center",width:"100%",fontSize:15,fontWeight:"bold",msOverflowStyle:"none"}}>회사 설정 :
-                    <select onChange={(e)=>{setHqId(e.target.value)}}  style={{marginLeft:10,marginRight: 10,minWidth:200,minHeight:30}} >
-                        {companyList.map((item) => (
-                            <option value={item.value} key={item.value}>
-                            {item.text}
-                        </option>
-                        ))}
-                    </select>
-                    <button 
-                        style={{marginLeft:10,width:40,height:22,fontSize:12,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
-                        onClick={()=>{searchTarget(hq_id,repair,brand,startDate,endDate)}}>
-                            확인
-                    </button>  
-                    </div>
+                   {companyDiv}
                 </Container>
                 <br/>
                 <hr style={{backgroundColor: `${COLOR.GRAY}`}}/>
