@@ -63,6 +63,11 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
                             {headerGroup.headers.map((column,j) => (
                                 <div key={j} {...column.getHeaderProps()} className="thr">
                                     {column.render('Header')}
+                                    <div
+                                        {...column.getResizerProps()}
+                                        className={`resizer ${column.isResizing ? 'isResizing' : ''
+                                        }`}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -148,7 +153,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         //{Header: () => (<div style={{textAlign:"center"}}>{'결과분석(수선처1)'}</div>), accessor: '결과분석(수선처1)',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선미입고'}</div>), accessor: '수선미입고',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'유상수선비'}</div>), accessor: '유상수선비',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'유상수선 유/무'}</div>), accessor: '유상수선 유/무',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'유상수선 Y/N'}</div>), accessor: '유상수선 Y/N',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
 
         //ASIS
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처1'}</div>), accessor: '수선처1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
@@ -228,7 +233,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
             '판정결과':receipt[RECEIPT.RESULT_NAME] ? receipt[RECEIPT.RESULT_NAME] : "",
 
             "유상수선비" : receipt.fee ? numberWithCommas(receipt.fee) : "",
-            "유상수선 유/무" : (receipt.paid == 1) ? "유" : "무",
+            "유상수선 Y/N" : (receipt.paid == 1) ? "Y" : "N",
 
             '수선처1':receipt.repair1_store_name ? receipt.repair1_store_name : "",
             '총수선비1':receipt.repair1_total ? numberWithCommas(receipt.repair1_total) : "",
@@ -308,6 +313,14 @@ const TableRowDiv = styled.div`
     color:${COLOR.BLUE}
     }
 }`;
+
+
+const StickyStyles = styled.div`
+    background-color:${COLOR.WHITE};
+    border-top:1px solid;
+  
+`
+
 const CustomTr=styled.div`
 
 padding-top: 5px;
