@@ -69,7 +69,6 @@ function ShopStepOne({ navigation , route}) {
         formdata.append("receipt", receipt_id);
         formdata.append("mailbag", bag_code);
         console.log(formdata)
-
         try {
             const response = await fetch(ip + '/api/submitReceipt', {
                 method: 'POST',
@@ -81,7 +80,12 @@ function ShopStepOne({ navigation , route}) {
             });
             const json = await response.json();
             console.log(json)
-            //AutoSms(smsBody)
+            if(store.getState().requirement.id === 1){
+                //AutoSms(smsBody)
+            }
+            store.dispatch({ type: "STORE_CLEAR" })
+            navigation.popToTop()
+            
 
         } catch (error) {
             console.error(error);
@@ -197,8 +201,7 @@ function ShopStepOne({ navigation , route}) {
                         if (netInfo.isConnected) {
                             console.log(bag)
                             submitReceipt(store.getState().receipt_id, bag)
-                            store.dispatch({ type: "STORE_CLEAR" })
-                            navigation.popToTop()
+                            
                         } else {
                             Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                         }

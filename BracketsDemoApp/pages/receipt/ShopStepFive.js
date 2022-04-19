@@ -93,7 +93,7 @@ const TopStateView = styled.View`
 const Half = styled.View`
     width : 100%;
     flex-direction : row;
-    justify-content : space-between;
+    justify-content : space-around;
     align-items : center;  
 `;
 const Btn = styled.TouchableOpacity`
