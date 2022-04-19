@@ -134,7 +134,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         {Header: () => (<div style={{textAlign:"center"}}>{'차수'}</div>), accessor: '차수',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'컬러'}</div>), accessor: '컬러',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'사이즈'}</div>), accessor: '사이즈',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'판매가'}</div>), accessor: '판매가',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'판매가'}</div>), accessor: '판매가',Cell: row => <div style={{ textAlign: "right" ,marginRight:10}}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'고객요구'}</div>), accessor: '고객요구',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'매장접수내용'}</div>), accessor: '매장접수내용',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'고객약속일'}</div>), accessor: '고객약속일',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
@@ -147,20 +147,20 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         // TOBE
         //{Header: () => (<div style={{textAlign:"center"}}>{'결과분석(수선처1)'}</div>), accessor: '결과분석(수선처1)',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선미입고'}</div>), accessor: '수선미입고',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'유상수선비'}</div>), accessor: '유상수선비',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'유상수선비'}</div>), accessor: '유상수선비',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'유상수선 유/무'}</div>), accessor: '유상수선 유/무',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
 
         //ASIS
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처1'}</div>), accessor: '수선처1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'총수선비1'}</div>), accessor: '총수선비1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'총수선비1'}</div>), accessor: '총수선비1',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처접수일1'}</div>), accessor: '수선처접수일1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'재수선1'}</div>), accessor: '재수선1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처2'}</div>), accessor: '수선처2',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'총수선비2'}</div>), accessor: '총수선비2',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'총수선비2'}</div>), accessor: '총수선비2',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처접수일2'}</div>), accessor: '수선처접수일2',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'재수선2'}</div>), accessor: '재수선2',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처3'}</div>), accessor: '수선처3',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'총수선비3'}</div>), accessor: '총수선비3',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'총수선비3'}</div>), accessor: '총수선비3',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처접수일3'}</div>), accessor: '수선처접수일3',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'재수선3'}</div>), accessor: '재수선3',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'생산업체'}</div>), accessor: '생산업체',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
@@ -171,7 +171,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         //{Header: () => (<div style={{textAlign:"center"}}>{'고객주소'}</div>), accessor: '고객주소',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'감가반품'}</div>), accessor: '감가반품',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'클레임가 구분'}</div>), accessor: '클레임가 구분',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'클레임가'}</div>), accessor: '클레임가',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'클레임가'}</div>), accessor: '클레임가',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'하자코드'}</div>), accessor: '하자코드',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'심의'}</div>), accessor: '심의',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         /*{Header: () => (<div style={{textAlign:"center"}}>{'등록자'}</div>), accessor: '등록자',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
@@ -187,17 +187,18 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처설명1'}</div>), accessor: '수선처설명1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'운송형태1'}</div>), accessor: '운송형태1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'발송방법1'}</div>), accessor: '발송방법1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'발송비용1'}</div>), accessor: '발송비용1',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'발송비용1'}</div>), accessor: '발송비용1',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처설명2'}</div>), accessor: '수선처설명2',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'운송형태2'}</div>), accessor: '운송형태2',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'발송방법2'}</div>), accessor: '발송방법2',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'발송비용2'}</div>), accessor: '발송비용2',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'발송비용2'}</div>), accessor: '발송비용2',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'수선처설명3'}</div>), accessor: '수선처설명3',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'운송형태3'}</div>), accessor: '운송형태3',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'발송방법3'}</div>), accessor: '발송방법3',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'발송비용3'}</div>), accessor: '발송비용3',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'발송비용3'}</div>), accessor: '발송비용3',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         ],[])
 
+        console.log(searchList)
     const data = searchList.map((receipt) =>(
 
         {

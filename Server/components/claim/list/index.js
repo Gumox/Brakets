@@ -139,7 +139,10 @@ function Table({ columns, data, searchList, getTargetData }) {
 }
 
 const ReturnList = ({ data, handleDataClick = () => {} }) => {
-
+  
+  const numberWithCommas = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   const columns = React.useMemo(() => [
     
     // ASIS
@@ -161,7 +164,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     {Header: () => (<div style={{textAlign:"center"}}>{ '컬러'}</div>), accessor: '컬러',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '사이즈'}</div>), accessor: '사이즈',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '판매가'}</div>), accessor: '판매가',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-    {Header: () => (<div style={{textAlign:"center"}}>{ '매장처리여부'}</div>), accessor: '매장처리여부',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    //{Header: () => (<div style={{textAlign:"center"}}>{ '매장처리여부'}</div>), accessor: '매장처리여부',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '클레임가구분'}</div>), accessor: '클레임가구분',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '클레임가'}</div>), accessor: '클레임가',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},  
     {Header: () => (<div style={{textAlign:"center"}}>{ '업체처리여부'}</div>), accessor: '업체처리여부',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
@@ -224,10 +227,10 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     "스타일":claim[PRODUCT.STYLE],
     "컬러":claim[PRODUCT.COLOR],
     "사이즈":claim[PRODUCT.SIZE], 
-    "판매가":claim[PRODUCT.PRICE],
-    "매장처리여부" : "",
-    "클레임가구분" : "",
-    "클레임가" : "",
+    "판매가":claim[PRODUCT.TAG_PRICE] ? numberWithCommas(claim[PRODUCT.TAG_PRICE]): "",
+    //"매장처리여부" : "",
+    "클레임가구분" : claim.claim_text ? numberWithCommas(claim.claim_text) : "",
+    "클레임가" : claim[RECEIPT.CLAIM_PRICE] ? numberWithCommas(claim[RECEIPT.CLAIM_PRICE]): "",
     "업체처리여부" : "",
     "클레임업체" : "",
     "업체코드" : "",
@@ -241,22 +244,23 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     "내용분석":claim[RECEIPT.ANALYSIS_NAME],
     "판정결과":claim[RECEIPT.RESULT_NAME],
     "수선미입고" : claim[RECEIPT.RESULT_DETAIL_NAME],
-    "유상수선비" : claim.fee,
-    "유상수선 유/무" : (claim.fee > 0) ? "유" : "무",
-    "수선처1" : "",
-    "총수선비1" : "",
-    "수선처접수일1" : "",
-    "재수선1" : "",
-    "수선처2" : "",
-    "총수선비2" : "",
-    "수선처접수일2" : "",
-    "재수선2" : "",
-    "수선처3" : "",
-    "총수선비3" : "",
-    "수선처접수일3" : "",
-    "재수선3" : "",
-    "발송일toM" : "",
-    "본사설명" : "",
+    "유상수선비" : claim.fee ? numberWithCommas(claim.fee):"",
+    "유상수선 유/무" : (claim.paid > 0) ? "유" : "무",
+    "수선처1": claim.repair1_store_name ?  claim.repair1_store_name : "",
+    "총수선비1": claim.repair1_repair1_price ?  numberWithCommas(claim.repair1_repair1_price + claim.repair1_repair2_price + claim.repair1_repair3_price ) : "",
+
+    "수선처접수일1": claim.repair1_register_date ? moment(claim.repair1_register_date).format("YYYY-MM-DD") : "",
+    "재수선1": (claim.repair1_repair1_redo > 0 || claim.repair1_repair2_redo > 0 || claim.repair1_repair3_redo > 0) ? ("Y") : ("N"),
+    "수선처2":  claim.repair2_store_name ?  claim.repair2_store_name : "",
+    "총수선비2":  claim.repair2_repair1_price ?  numberWithCommas(claim.repair2_repair1_price + claim.repair2_repair2_price + claim.repair2_repair3_price ) : "",
+    "수선처접수일2": claim.repair2_register_date ? moment(claim.repair2_register_date).format("YYYY-MM-DD") : "",
+    "재수선2": (claim.repair2_repair1_redo > 0 || claim.repair2_repair2_redo > 0 || claim.repair2_repair3_redo > 0) ? ("Y") : ("N"),
+    "수선처3":  claim.repair3_store_name ?  claim.repair3_store_name : "",
+    "총수선비3":  claim.repair3_repair1_price ?  numberWithCommas(claim.repair3_repair1_price + claim.repair3_repair2_price + claim.repair3_repair3_price ) : "",
+    "수선처접수일3": claim.repair3_register_date ? moment(claim.repair3_register_date).format("YYYY-MM-DD") : "",
+    "재수선3": (claim.repair3_repair1_redo > 0 || claim.repair3_repair2_redo > 0 || claim.repair3_repair3_redo > 0) ? ("Y") : ("N"),
+    '발송일toM':claim[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE] ? moment(claim[RECEIPT.MANUFACTURER_DETAIL.SEND_DATE]).format("YYYY-MM-DD") : "",
+    "본사설명" :claim[RECEIPT.MESSAGE] ? claim[RECEIPT.MESSAGE] : "",
     "하자코드" : "",
     "심의" : (claim[RECEIPT.TYPE] == 2) ? ("심의") : (""),
     "등록자" : "",

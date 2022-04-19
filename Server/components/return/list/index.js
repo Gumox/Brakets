@@ -191,7 +191,7 @@ const ReturnList = ({ data, user }) => {
     {Header: () => (<div style={{textAlign:"center"}}>{ '스타일'}</div>), accessor: '스타일' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '컬러'}</div>), accessor: '컬러' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '사이즈'}</div>), accessor: '사이즈' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-    {Header: () => (<div style={{textAlign:"center"}}>{ '판매가'}</div>), accessor: '판매가' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '판매가'}</div>), accessor: '판매가' ,Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '고객요구'}</div>), accessor: '고객요구' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '매장접수내용'}</div>), accessor: '매장접수내용' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
 
@@ -207,18 +207,18 @@ const ReturnList = ({ data, user }) => {
     // {Header: () => (<div style={{textAlign:"center"}}>{ '본사접수일'}</div>), accessor: '본사접수일' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
 
     // TOBE
-    {Header: () => (<div style={{textAlign:"center"}}>{ '유상수선비'}</div>), accessor: '유상수선비' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '유상수선비'}</div>), accessor: '유상수선비' ,Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '유상수선 유/무'}</div>), accessor: '유상수선 유/무' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '수선처1'}</div>), accessor: '수선처1' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-    {Header: () => (<div style={{textAlign:"center"}}>{ '총수선비1'}</div>), accessor: '총수선비1' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '총수선비1'}</div>), accessor: '총수선비1' ,Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '수선처접수일1'}</div>), accessor: '수선처접수일1' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '재수선1'}</div>), accessor: '재수선1' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '수선처2'}</div>), accessor: '수선처2' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-    {Header: () => (<div style={{textAlign:"center"}}>{ '총수선비2'}</div>), accessor: '총수선비2' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '총수선비2'}</div>), accessor: '총수선비2' ,Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '수선처접수일2'}</div>), accessor: '수선처접수일2' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '재수선2'}</div>), accessor: '재수선2' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '수선처3'}</div>), accessor: '수선처3' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-    {Header: () => (<div style={{textAlign:"center"}}>{ '총수선비3'}</div>), accessor: '총수선비3' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+    {Header: () => (<div style={{textAlign:"center"}}>{ '총수선비3'}</div>), accessor: '총수선비3' ,Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '수선처접수일3'}</div>), accessor: '수선처접수일3' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '재수선3'}</div>), accessor: '재수선3' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
     {Header: () => (<div style={{textAlign:"center"}}>{ '생산업체'}</div>), accessor: '생산업체' ,Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
@@ -235,6 +235,7 @@ const ReturnList = ({ data, user }) => {
   ], [])
 
   console.log(data)
+  console.log("data",data[0])
   const value = data.map((productReturn) => ({
     "receipt_id": productReturn[RECEIPT.ID],
     "서비스카드#": productReturn[RECEIPT.CODE],
@@ -250,7 +251,7 @@ const ReturnList = ({ data, user }) => {
     "스타일": productReturn[PRODUCT.STYLE],
     "컬러": productReturn[PRODUCT.COLOR],
     "사이즈": productReturn[PRODUCT.SIZE],
-    "판매가": productReturn[PRODUCT.PRICE],
+    "판매가": productReturn.product_tag_price ? numberWithCommas(productReturn.product_tag_price) : "",
     "고객요구": RECEIPT_TYPE[productReturn[RECEIPT.TYPE]],
     "매장접수내용": productReturn[RECEIPT.STORE_MESSAGE],
     "본사접수일": productReturn[RECEIPT.REGISTER_DATE] ? moment(productReturn[RECEIPT.REGISTER_DATE]).format("YYYY-MM-DD") : "",
@@ -258,11 +259,10 @@ const ReturnList = ({ data, user }) => {
     "과실구분": productReturn[RECEIPT.FAULT_NAME],
     "내용분석": productReturn[RECEIPT.ANALYSIS_NAME],
     "판정결과": productReturn[RECEIPT.RESULT_NAME],
-    "유상수선비": productReturn.fee,
+    "유상수선비": productReturn.fee ? numberWithCommas(productReturn.fee) : "",
     "유상수선 유/무": (productReturn.fee > 0) ? ("유") : ("무"),
     "수선처1": productReturn.repair1_store_name ?  productReturn.repair1_store_name : "",
     "총수선비1": productReturn.repair1_repair1_price ?  numberWithCommas(productReturn.repair1_repair1_price + productReturn.repair1_repair2_price + productReturn.repair1_repair3_price ) : "",
-
     "수선처접수일1": productReturn.repair1_register_date ? moment(productReturn.repair1_register_date).format("YYYY-MM-DD") : "",
     "재수선1": (productReturn.repair1_repair1_redo > 0 || productReturn.repair1_repair2_redo > 0 || productReturn.repair1_repair3_redo > 0) ? ("Y") : ("N"),
     "수선처2":  productReturn.repair2_store_name ?  productReturn.repair2_store_name : "",
@@ -274,7 +274,7 @@ const ReturnList = ({ data, user }) => {
     "수선처접수일3": productReturn.repair3_register_date ? moment(productReturn.repair3_register_date).format("YYYY-MM-DD") : "",
     "재수선3": (productReturn.repair3_repair1_redo > 0 || productReturn.repair3_repair2_redo > 0 || productReturn.repair3_repair3_redo > 0) ? ("Y") : ("N"),
     "생산업체": productReturn.manufacturer_name,
-    "발송일 to M":  productReturn.mfr_send_date ?  productReturn.mfr_send_date : "",
+    "발송일 to M":  productReturn.mfr_send_date ?  moment(productReturn.mfr_send_date).format("YYYY-MM-DD") : "",
     "본사설명": productReturn.message,
     "하자코드": "",
     "심의": (productReturn[RECEIPT.TYPE] == 2) ? ("심의") : (""),
