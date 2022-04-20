@@ -78,8 +78,6 @@ const RepairHistory = ({
 
     const downLoadUnitPriceList = async(brandId) =>{
         const result =await getUnitPriceList(brandId)
-        console.log(result)
-
         
         router.push(ip+result.unit_price_list)
     }
@@ -160,7 +158,6 @@ const RepairHistory = ({
         setStoreRecept(arr)
     }
     const sortInfo=(info,typeInfo)=>{
-        console.log(brand)
         
         if(shop == info.repair1_store_id){
             setMessage(info.repair1_message);
