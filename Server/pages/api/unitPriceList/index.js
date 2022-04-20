@@ -4,19 +4,54 @@ import excuteQuery from "../db";
 
 
 const addUnitPriceList = async (
-  brand_id,
-  unit_price_list
-) => {
-   const result = excuteQuery({
-    query:
-      "INSERT INTO `unit_price_list`(`brand_id`, `unit_price_list`) VALUES (?,?)",
-    values: [brand_id, unit_price_list],
+    brand_id,
+    unit_price_list,
+    timeStampToString
+  ) => {
+    const result = excuteQuery({
+      query:
+        "INSERT INTO `unit_price_list`(`brand_id`, `unit_price_list`) VALUES (?,?)",
+      values: [brand_id, unit_price_list,timeStampToString],
   });
-  console.log( brand_id,
-    unit_price_list)
+  console.log( brand_id,unit_price_list,timeStampToString)
+  return result
+};
+const updateUnitPriceList = async (
+    brand_id,
+    unit_price_list,
+    timeStampToString
+  ) => {
+    const result = excuteQuery({
+      query:
+        "UPDATE unit_price_list SET unit_price_list = ?, last_update = ? WHERE brand_id = ?",
+      values: [unit_price_list,timeStampToString,brand_id],
+  });
+  console.log( brand_id,unit_price_list,timeStampToString)
   return result
 };
 
+const updateUnitPriceListAsId = async (
+  unit_price_list_id ,
+  unit_price_list,
+  timeStampToString
+) => {
+  const result = excuteQuery({
+    query:
+      "UPDATE unit_price_list SET unit_price_list = ?, last_update = ? WHERE unit_price_list_id  = ?",
+    values: [unit_price_list,timeStampToString,unit_price_list_id ],
+});
+console.log( brand_id, unit_price_list,timeStampToString)
+return result
+};
+
+const check = async(brand_id)=>{
+  const result = excuteQuery({
+    query:
+      `SELECT * FROM unit_price_list WHERE brand_id = ?` ,
+    values: [brand_id],
+  });
+  return result
+}
 
 export const config = {
   api: {
@@ -36,8 +71,15 @@ const controller = async (req, res) => {
             if (err) throw new Error(err);
             const name = fields["brand"];
             const brand_id = fields["brand_id"];
-
+            const id = fields["unit_price_list_id"]
             
+
+            const  timeStamp = new Date()
+            const timeStampToString = timeStamp.getFullYear()+"-"+(timeStamp.getMonth()+1)+"-"+timeStamp.getDate()+" "+timeStamp.getHours()+":"+timeStamp.getMinutes()+":"+timeStamp.getSeconds()
+            console.log(timeStampToString)
+            console.log("timeStamp",timeStamp)
+            
+            const insertCheck = await check(brand_id)
 
             if(files["unitPriceList"]){
                 const extension = files.unitPriceList.name.split(".").pop();
@@ -51,15 +93,41 @@ const controller = async (req, res) => {
                 });
 
                 //
-                const results = await addUnitPriceList(brand_id, filePath);
-                if (results.error) {
+                if(id){
+                  const results = await updateUnitPriceListAsId(id, filePath,timeStampToString);
+  
+                  if (results.error) {
                     console.log("update unitPriceList failed");
                     throw new Error(results.error);
-                } 
+                  } 
 
-                res.status(200).json({ receipt_id: results });
+                  res.status(200).json({ receipt_id: results });
+                }else{
+                  console.log(insertCheck)
+                  if(insertCheck.length >0){
+                    const results = await updateUnitPriceList(brand_id, filePath,timeStampToString);
+  
+                    if (results.error) {
+                      console.log("update unitPriceList failed");
+                      throw new Error(results.error);
+                    } 
+  
+                    res.status(200).json({ receipt_id: results });
+                    
+                  }else{
+                    const results = await addUnitPriceList(brand_id, filePath,timeStampToString);
+  
+                    if (results.error) {
+                      console.log("update unitPriceList failed");
+                      throw new Error(results.error);
+                    } 
+  
+                    res.status(200).json({ receipt_id: results });
+                  }
+                }
+                
             }
-
+            
             
             
         } catch (err) {
