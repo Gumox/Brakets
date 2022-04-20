@@ -10,7 +10,7 @@ const addUnitPriceList = async (
   ) => {
     const result = excuteQuery({
       query:
-        "INSERT INTO `unit_price_list`(`brand_id`, `unit_price_list`) VALUES (?,?)",
+        "INSERT INTO `unit_price_list`(`brand_id`, `unit_price_list` ,`last_update`) VALUES (?,?,?)",
       values: [brand_id, unit_price_list,timeStampToString],
   });
   console.log( brand_id,unit_price_list,timeStampToString)
