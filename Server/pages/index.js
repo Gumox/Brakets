@@ -4,6 +4,7 @@ import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
 
+
 const Home = () => {
   const router = useRouter();
   const handleLogout = async () => {

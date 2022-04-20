@@ -99,3 +99,15 @@ export const checkHaveRepairDetail =(el,shop)=>{
 export const checkHaveMfrDetail =(el)=>{
   if(el.mfr_register_date) {return "rgb(156,203,171)"}
 }
+
+export const getUnitPriceList = async(brandId) => {
+  const[datas] =await Promise.all([
+    axios.get(`${process.env.API_URL}/unitPriceList/getList?brandId=${brandId}`
+    )
+    .then(({ data }) => data.data)
+    .catch(error=>{
+
+    })
+  ])
+  return datas;
+}

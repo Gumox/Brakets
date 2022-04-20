@@ -4,11 +4,13 @@ import styled from "styled-components";
 import COLOR from "../../constants/color";
 import formatDate from "../../functions/formatDate";
 import { debounce } from "lodash";
-import { getRepairType,getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
+import { getRepairType,getReceiptRepairInfo,getUnitPriceList} from "../../functions/useInRepairReceiptModal";
 import ItemCount from "./receiptionHistory/itemCount";
 import ItemType from "./receiptionHistory/itemType";
 import ItemCost from "./receiptionHistory/itemCost";
 import ItemRedo from "./receiptionHistory/itemRedo";
+import ip from "../../constants/ip";
+import Router, { useRouter } from "next/router";
 import image from "next/image";
 
 const RepairHistory = ({
@@ -23,6 +25,7 @@ const RepairHistory = ({
     const hq_id = hqId;
     const brand = brands;
     const [repiarType,setRepiarType] = useState([])
+    const router = useRouter();
 
     const shop = shopId;
     const receipt_id = receipt;
@@ -72,6 +75,15 @@ const RepairHistory = ({
             setStoreRecept(arr)
         }
     }
+
+    const downLoadUnitPriceList = async(brandId) =>{
+        const result =await getUnitPriceList(brandId)
+        console.log(result)
+
+        
+        router.push(ip+result.unit_price_list)
+    }
+
     const deleteRepair = (value) =>{
         let arr =[]
         storeRecept.map((obj,index)=>{
@@ -148,6 +160,7 @@ const RepairHistory = ({
         setStoreRecept(arr)
     }
     const sortInfo=(info,typeInfo)=>{
+        console.log(brand)
         
         if(shop == info.repair1_store_id){
             setMessage(info.repair1_message);
@@ -293,7 +306,7 @@ const RepairHistory = ({
     },[])
     return(
         <div>
-            <LaView><ItemText>수선 내역</ItemText><MoneyTable>고객 유상 단가표</MoneyTable><AddTable onClick={()=>{inputRepair()}}>+ 수선 내용 추가</AddTable> </LaView>
+            <LaView><ItemText>수선 내역</ItemText><MoneyTable onClick={()=>{downLoadUnitPriceList(brand)}}>고객 유상 단가표</MoneyTable><AddTable onClick={()=>{inputRepair()}}>+ 수선 내용 추가</AddTable> </LaView>
             <Line2 style={{marginBottom:20}}/>
             {
                 storeRecept.map((el,index)=>{
