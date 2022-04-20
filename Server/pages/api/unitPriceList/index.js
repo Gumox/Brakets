@@ -83,7 +83,7 @@ const controller = async (req, res) => {
 
             if(files["unitPriceList"]){
                 const extension = files.unitPriceList.name.split(".").pop();
-                const filePath = `/storage/unitPrice/${name}.${extension}`;
+                const filePath = `/storage/unitPrice/${name}_${timeStampToString}.${extension}`;
                 const oldPath = files.unitPriceList.path;
                 const newPath = `./public${filePath}`;
 
