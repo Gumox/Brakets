@@ -66,22 +66,31 @@ function Home({options,user})  {
 };
 
 export const getServerSideProps = async (ctx) => {
-    const {
-      data: { isAuthorized, user },
-    } = await axios.get(
-      `${process.env.API_URL}/auth`,
-      ctx.req
-        ? {
-            withCredentials: true,
-            headers: {
-              cookie: ctx.req.headers.cookie || {},
-            },
-          }
-        : {}
-    )
-    .catch(error=>{
   
-    });
+  console.log("ctx")
+  console.log(ctx.req.headers)
+  console.log("ctx")
+  const {
+    data: { isAuthorized, user },
+  } = await axios.get(
+    `${process.env.API_URL}/auth`,
+    ctx.req
+      ? {
+          withCredentials: true,
+          headers: {
+            cookie: ctx.req.headers.cookie || {},
+          },
+        }
+      : {}
+  );
+  if (!isAuthorized) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
     const {email :email} =user
     
       const [companys] = await Promise.all([

@@ -560,7 +560,7 @@ const ReceiptInfo = ({
             <Field marginRight="20px">
               <Input
                 type="date"
-                title="발송일 to S"
+                title="발송일 to S (처리일)"
                 name={RECEIPT.COMPLETE_DATE}
                 min = {minCompleteDate}
                 value={

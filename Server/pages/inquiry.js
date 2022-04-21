@@ -124,14 +124,14 @@ export default function Inquiry() {
                     dateOption : dateOption 
                 },aI,jI,fI);
             }else if(user.level === 0 ||user.level === 1){
-                /*setTable({
+                setTable({
                     hq_id : user.headquarter_id,
                     brand : brand,
                     code : code,
                     startDate : startDate,
                     endDate : endDate,
                     dateOption : dateOption 
-                },aI,jI,fI);*/
+                },aI,jI,fI);
             }
             
         }
@@ -320,6 +320,37 @@ export default function Inquiry() {
     )
 }
 
+export const getServerSideProps = async (ctx) => {
+    console.log("ctx")
+    console.log(ctx.req.headers)
+    console.log("ctx")
+    const {
+      data: { isAuthorized, user },
+    } = await axios.get(
+      `${process.env.API_URL}/auth`,
+      ctx.req
+        ? {
+            withCredentials: true,
+            headers: {
+              cookie: ctx.req.headers.cookie || {},
+            },
+          }
+        : {}
+    );
+    if (!isAuthorized) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login",
+        },
+      };
+    }
+    return {
+        props: {
+          
+        }
+      };
+  };
 const ItemStyle = { 
     
   fontSize :12,

@@ -116,6 +116,8 @@ function RepairReception({options,user}) {
     let loadOptions =JSON.parse(localStorage.getItem("OPTIONS"))
     let loadStaff =JSON.parse(localStorage.getItem("USER"))
     
+    console.log(loadStaff)
+    
       setStaff(loadStaff)
       setOption(loadOptions.companys)
       set_shop_id(loadOptions.info[0].store_id)
@@ -189,7 +191,7 @@ function RepairReception({options,user}) {
 }
 
 
-/*export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   const {
     data: { isAuthorized, user },
   } = await axios.get(
@@ -202,54 +204,21 @@ function RepairReception({options,user}) {
           },
         }
       : {}
-  )
-  .catch(error=>{
-
-  });
-  const {email :email} =user
-  
-    const [companys] = await Promise.all([
-      axios.get(`${process.env.API_URL}/auth/repair?email=${email}`)
-      .then(({ data }) => data)
-      .catch(error=>{
-
-      })
-    ]);
-  if(user.level>2&&user.level<5){
-    const[list,images] =await Promise.all([
-      axios.get(`${process.env.API_URL}/RepairShop/getReceiptList?shop_id=${companys.body[0].store_id}`)
-      .then(({ data }) => data),
-      axios.get(`${process.env.API_URL}/RepairShop/getReceiptList/getImageList?shop_id=${companys.body[0].store_id}`)
-      .then(({ data }) => data)
-    
-    ])
+  );
+  if (!isAuthorized) {
     return {
-      props: {
-        user,
-        options:{
-          companys : companys.data,
-          info : companys.body,
-          list : list.body,
-          images: images.body,
-          needImages : list.needImages
-        }
-      }
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
     };
   }
-  else if(user.level<2){
-    return {
+  return {
       props: {
-        user,
-        options:{
-          companys : companys.data,
-          info : companys.body,
-          list : [],
-          images: []
-        }
+        
       }
     };
-  }
-};*/
+};
 const Nav = styled.nav`
   overflow-y: auto;
   height: 100%;

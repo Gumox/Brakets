@@ -295,6 +295,47 @@ export default function ReturnUnregistered() {
         </Nav>
     )
 }
+
+export const getServerSideProps = async (ctx) => {
+    console.log("ctx")
+    console.log(ctx.req.headers)
+    console.log("ctx")
+    const {
+      data: { isAuthorized, user },
+    } = await axios.get(
+      `${process.env.API_URL}/auth`,
+      ctx.req
+        ? {
+            withCredentials: true,
+            headers: {
+              cookie: ctx.req.headers.cookie || {},
+            },
+          }
+        : {}
+    );
+    if (!isAuthorized) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login",
+        },
+      };
+    }
+    if(user){
+      console.log("user")
+      console.log("")
+      console.log("")
+      console.log("")
+      console.log("")
+      console.log("")
+      console.log(user)
+    }
+    return {
+        props: {
+          
+        }
+      };
+  };
 const Nav = styled.nav`
   overflow-y: auto;
   height: 100%;

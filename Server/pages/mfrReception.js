@@ -175,6 +175,34 @@ function MfrReception({options,user}) {
   )
 }
 
+export const getServerSideProps = async (ctx) => {
+  const {
+    data: { isAuthorized, user },
+  } = await axios.get(
+    `${process.env.API_URL}/auth`,
+    ctx.req
+      ? {
+          withCredentials: true,
+          headers: {
+            cookie: ctx.req.headers.cookie || {},
+          },
+        }
+      : {}
+  );
+  if (!isAuthorized) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
+  return {
+      props: {
+        
+      }
+    };
+};
 const Nav = styled.nav`
   overflow-y: auto;
   height: 100%;

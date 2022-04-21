@@ -71,7 +71,7 @@ const kakao = async (req, res) => {
         const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
         setCookie(res, "token", token, {
         httpOnly: true,
-        path: "/repair",
+        path: "/",
         });
         res.redirect("/repair")
         
@@ -79,17 +79,24 @@ const kakao = async (req, res) => {
         const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
         setCookie(res, "token", token, {
         httpOnly: true,
-        path: "/manufacturer",
+        path: "/",
         });
         res.redirect("/manufacturer");
 
-      }else if(user.level < 2 || user.level > 4){
+      }else if(user.level < 2 ){
         const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
         setCookie(res, "token", token, {
         httpOnly: true,
         path: "/",
         });
         res.redirect("/");
+      }else if(user.level == 5){
+        const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
+        setCookie(res, "token", token, {
+        httpOnly: true,
+        path: "/",
+        });
+        res.redirect("/adminBrackeks");
       }
       else{
         res.redirect("/login?r=fail");
