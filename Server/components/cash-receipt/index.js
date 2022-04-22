@@ -8,7 +8,7 @@ import SearchField from "./SearchField";
 import List from "./list";
 import Total from "./Total";
 
-const Return = () => {
+const Return = ({user}) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -50,10 +50,17 @@ const Return = () => {
     [targetData]
   );
   const handleSearchButtonClick = useCallback(() => {
+    let hq_id
+    if(user.level ==5){
+      hq_id = sessionStorage.getItem("ADMIN_HEADQURTER")
+    }else{
+      hq_id = user.headquarter_id
+    }
     axios
-      .get("/api/receipt", {
+      .get("/api/receipt", { 
         params: {
           ...inputData,
+          headquarter_id:hq_id,
           dateType: inputData["isMonthly"] ? "month" : "all",
           dateOption: "complete_date",
           
@@ -70,7 +77,6 @@ const Return = () => {
       .then((response) => setTargetData(response.data.data));
   }, []);
 
-  useEffect(() => console.log(targetData), [targetData]);
   return (
     <Content>
       <SearchField

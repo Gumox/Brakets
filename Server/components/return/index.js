@@ -55,13 +55,21 @@ const Return = ({ options, user}) => {
     [targetData]
   );
   const handleSearchButtonClick = useCallback(() => {
+    let hq_id
+    if(user.level ==5){
+      hq_id = sessionStorage.getItem("ADMIN_HEADQURTER")
+    }else{
+      hq_id = user.headquarter_id
+    }
     axios
       .get("/api/receipt", { 
         params: {
           ...inputData,
+          headquarter_id:hq_id,
           dateType: inputData["isMonthly"]? "month": "all",
           dateOption: 'return_date',
-          resultId: 4
+          resultId: 4,
+          
         } 
       })
       .then((response) => setSearchList(response.data.data));
@@ -71,10 +79,6 @@ const Return = ({ options, user}) => {
       .get(`/api/receipt/${receiptCode}`)
       .then((response) => setTargetData(response.data.data));
   }, []);
-
-  useEffect(() => 
-            // console.log(targetData), 
-            [targetData]);
   return (
     <Content>
       <SearchField

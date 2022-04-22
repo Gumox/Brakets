@@ -3,16 +3,25 @@ import cookies from "next-cookies";
 import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
+import _ from "lodash";
 
 import { OptionContext ,UserContext } from "../store/Context";
 import Header from "../components/Header";
+import MENUS from "../constants/menu";
 
 import SMS from '../components/sms';
 import store from "../store/store";
 
 const Sms = ({options, user}) => {
   const router = useRouter();
-  
+  if(user.level === 5){
+    if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
+      MENUS.push({
+        title: "브래키츠 관리자",
+        link: "/adminBrackeks/admin",
+      },)
+    }
+  }
   useEffect(()=>{
     console.log(store.getState().send_sms_data)
   },[])
@@ -55,14 +64,24 @@ export const getServerSideProps = async (ctx) => {
     .get(`${process.env.API_URL}/store/1`)
     .then(({ data }) => data);
 
-  return {
-    props: {
-      user,
-      options: {
-        storeList: stores ? stores.data : [],
-      },
-    },
-  };
+  if(user.level < 2 || user.level === 5){
+      
+      return {
+        props: {
+          user,
+          options: {
+            storeList: stores ? stores.data : [],
+          },
+        },
+      };
+    }else{
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login",
+        },
+      };
+  }
 };
 
 export default Sms;

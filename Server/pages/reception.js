@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import moment from "moment";
+import _ from "lodash";
 
 import { UserContext, OptionContext } from "../store/Context";
 import { getThisSeason, getCurrentSeasons } from "../utils/season";
@@ -12,6 +13,7 @@ import {
 
 import { RECEIPT } from "../constants/field";
 import Header from "../components/Header";
+import MENUS from "../constants/menu";
 import Reception from "../components/reception";
 import formatDate from "../functions/formatDate";
 import store from "../store/store";
@@ -37,7 +39,14 @@ const ReceptionPage = ({ options, user }) => {
   const [imageData, setImageData] = useState({});
   const [needImageData, setNeedImageData] = useState({});
 
-  console.log(inputData)
+  if(user.level === 5){
+    if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
+      MENUS.push({
+        title: "브래키츠 관리자",
+        link: "/adminBrackeks/admin",
+      },)
+    }
+  }
 
   useEffect(()=>{
     if(user.level === 5 ){

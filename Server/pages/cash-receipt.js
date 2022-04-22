@@ -3,18 +3,28 @@ import cookies from "next-cookies";
 import styled from "styled-components";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
+import _ from "lodash";
 
 import { OptionContext } from "../store/Context";
 import Header from "../components/Header";
+import MENUS from "../constants/menu";
 import CashReceipt from "../components/cash-receipt";
 
 const CashReceiptPage = ({options, user}) => {
+  if(user.level === 5){
+    if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
+      MENUS.push({
+        title: "브래키츠 관리자",
+        link: "/adminBrackeks/admin",
+      },)
+    }
+  }
   const router = useRouter();
   return (
     <>
       <Header path={router.pathname} />
       <OptionContext.Provider value={options}>
-        <CashReceipt />
+        <CashReceipt user={user}/>
       </OptionContext.Provider>
     </>
   );
@@ -47,14 +57,24 @@ export const getServerSideProps = async (ctx) => {
     .get(`${process.env.API_URL}/store/1`)
     .then(({ data }) => data);
 
-  return {
-    props: {
-      user,
-      options: {
-        storeList: stores ? stores.data : [],
-      },
-    },
-  };
+  if(user.level < 2 || user.level === 5){
+      
+      return {
+        props: {
+          user,
+          options: {
+            storeList: stores ? stores.data : [],
+          },
+        },
+      };
+    }else{
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login",
+        },
+      };
+  }
 };
 
 export default CashReceiptPage;

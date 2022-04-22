@@ -28,6 +28,8 @@ const Modal = ({ options, children, handleCloseButtonClick ,width}) => {
     
     
     sessionStorage.setItem('ADMIN_OPTIONS',JSON.stringify(await bracketsAdminSelect(selectCompany)));
+    
+    sessionStorage.setItem('ADMIN_HEADQURTER',selectCompany);
 
     console.log(await bracketsAdminSelect(selectCompany))
     

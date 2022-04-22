@@ -135,6 +135,7 @@ async function getReceipt(query, values) {
                     manager.staff_code AS manager_code,
                     DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date  
             FROM receipt 
+            JOIN brand ON receipt.brand_id = brand.brand_id
             LEFT JOIN store ON receipt.store_id = store.store_id 
             LEFT JOIN product ON receipt.product_id = product.product_id 
             LEFT JOIN season_type ON product.season_id = season_type.season_id
@@ -169,6 +170,7 @@ const receipt = async (req, res) => {
     console.log(req.query);
     try {
       const {
+        headquarter_id,
         brandId, // 브랜드 id
         isStoreType, // 매장별
         storeName,  // 매장명
@@ -194,6 +196,11 @@ const receipt = async (req, res) => {
       } = req.query;
       let query = "";
       let values = [];
+
+      if(headquarter_id) {
+        query += " AND brand.headquarter_id = ? ";
+        values = [...values, headquarter_id];
+      }
 
       if(brandId) {
         query += " AND receipt.brand_id = ? ";

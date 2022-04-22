@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
+import MENUS from "../constants/menu";
+import _ from "lodash";
 import store from "../store/store";
 
 
 const Home = ({user}) => {
   const router = useRouter();
+  
+  if(user.level === 5){
+    if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
+      MENUS.push({
+        title: "브래키츠 관리자",
+        link: "/adminBrackeks/admin",
+      },)
+    }
+  }
+  
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
     router.push("/login");
