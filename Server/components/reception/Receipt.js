@@ -584,6 +584,8 @@ const ReceiptInfo = ({
                   alert("발송일 to S 를 입력해주세요")
                 }else if(!completeDateChanged){
                   alert("발송일 to S 를 입력해주세요")
+                }else if(userInfo.level >1){
+                  alert("권한이 없습니다")
                 }else{
                   
                   //console.log(targetData)

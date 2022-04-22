@@ -98,11 +98,18 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  return {
-      props: {
-        
+    
+  
+  if(user.level ===5){
+    return { props: {user:user} };
+  }else{
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login'
       }
-    };
+    }
+  }
 };
 const styles = {
     menu:{

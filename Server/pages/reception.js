@@ -14,12 +14,16 @@ import { RECEIPT } from "../constants/field";
 import Header from "../components/Header";
 import Reception from "../components/reception";
 import formatDate from "../functions/formatDate";
+import store from "../store/store";
 
 
 const ReceptionPage = ({ options, user }) => {
   const router = useRouter();
+  const [receptionPageoptions,setReceptionPageoptions] = useState(options)
+  
+  
   const [selectOptions, setSelectOptions] = useState(options); // 전체 페이지에서 사용하는 select options
-  const [targetBrandId, setTargetBrandId] = useState(options.brandList[0].value); // brandlist 중 첫번째 항목
+  const [targetBrandId, setTargetBrandId] = useState(); // brandlist 중 첫번째 항목
   // Filter 입력 데이터
   const first = moment().format("YYYY-MM-01")
   const [inputData, setInputData] = useState({
@@ -35,8 +39,22 @@ const ReceptionPage = ({ options, user }) => {
 
   console.log(inputData)
 
+  useEffect(()=>{
+    if(user.level === 5 ){
+      let adminOptions = JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS")).options
+      setReceptionPageoptions(adminOptions)
+      
+      setSelectOptions(adminOptions)
+      setTargetBrandId(adminOptions.brandList[0].value)
+    }else{
+      setSelectOptions(receptionPageoptions)
+      setTargetBrandId(receptionPageoptions.brandList[0].value)
+    }
+  },[])
   useEffect(() => {
+    
     const getOptions = async () => {
+      console.log(targetBrandId)
       const [stores, productCategories, seasons] = await Promise.all([
         axios
           .get(`${process.env.API_URL}/store/1`, {
@@ -275,7 +293,23 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }else if(user.level === 5){
-
+    return {
+      props: {
+        user,
+        options: {
+          brandList:[],
+          storeList: [], // 브랜드에 따라서 달라짐
+          productCategoryList: [], // 브랜드에 따라서 달라짐
+          repairList:  [],
+          producerList: [],
+          faultType:  [],
+          analysisType: [],
+          resultType: [],
+          repairType: [],
+          seasonList: [],
+        },
+      }
+    }
   }else{
     return {
       redirect: {

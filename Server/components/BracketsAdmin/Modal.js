@@ -1,17 +1,21 @@
 import React, { useEffect,useState } from "react";
-import Image from "next/image";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+
+import bracketsAdminSelect from "../../functions/bracketsAdminSelect";
 
 import COLOR from "../../constants/color";
 import axios from "axios";
 
 const Modal = ({ options, children, handleCloseButtonClick ,width}) => {
+  const router = useRouter();
   const [companys,setCompanys] = useState([])
   const [selectCompany,setSelectCompany] = useState(0)
+  
   const getCompanys =async()=>{
     const [data] = await Promise.all([
       axios
-        .get(`${process.env.API_URL}/headquarter/headquarterStore`,)
+        .get(`${process.env.API_URL}/headquarter`,)
         .then(({ data }) => data.body)
         .catch(error=>{
 
@@ -21,16 +25,16 @@ const Modal = ({ options, children, handleCloseButtonClick ,width}) => {
     setCompanys(data)
   } 
   const setCompanyID =async()=>{
-    const [data] = await Promise.all([
-      axios
-        .post(`${process.env.API_URL}/headquarter?storeId=${selectCompany}`,)
-        .then(({ data }) => data.body)
-        .catch(error=>{
+    
+    
+    sessionStorage.setItem('ADMIN_OPTIONS',JSON.stringify(await bracketsAdminSelect(selectCompany)));
 
-        })
-    ]);
-    console.log(data)
-    setCompanys(data)
+    console.log(await bracketsAdminSelect(selectCompany))
+    
+    console.log("//")
+    console.log(JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS")).options)
+    router.push("/")
+
   } 
   useEffect(async()=>{
     await getCompanys();
@@ -39,23 +43,14 @@ const Modal = ({ options, children, handleCloseButtonClick ,width}) => {
     <>
       <Wrapper>
         <Section {...options} style={{width:width*0.7}}>
-          <CloseButton onClick={handleCloseButtonClick}>
-            
-            &times;
-            {/*<Image
-              src="/close.png"
-              alt="close"
-              width="15px"
-              height="15px"
-              layout="fixed"
-            /> */}
-          </CloseButton>
+          
             <ModalAlart > 
               <SelectMenuName>회사 선택</SelectMenuName>
             <SelectMenuName/>
               {companys&&
                 
                 <select style={{minWidth:130,fontSize:18}}  onChange={(e)=>{setSelectCompany(e.target.value)}} >
+                  <option value={null}>{" "}</option>
                   {
                     companys.map((item,index)=>{
                       return(
@@ -68,6 +63,10 @@ const Modal = ({ options, children, handleCloseButtonClick ,width}) => {
             <SelectMenuName/>
             <SelectMenuName/>
             <SelectMenuName/>
+              <PrView>
+                <CloseButton onClick={handleCloseButtonClick}>취소</CloseButton>
+                <SubmitButton onClick={()=>{setCompanyID()}}>확인</SubmitButton>
+              </PrView>
             </ModalAlart>
         </Section>
       </Wrapper>
@@ -105,6 +104,12 @@ const SelectMenuName = styled.div`
   font-size:30px;
   margin:20px;
 `;
+const PrView = styled.div`  
+  display: flex;
+  flex-direction: row;
+  width:500px;
+  justify-content: space-around;
+`;
 
 const Section = styled.div`
   position: relative;
@@ -121,20 +126,36 @@ const Section = styled.div`
   background-color: rgba(67, 67, 67, 0);
 `;
 
-const CloseButton = styled.div`
-  position: absolute;
+
+
+const CloseButton = styled.button`
+  
   display: flex;
-  width: 32px;
-  height: 32px;
+  width: 65px;
+  height: 30px;
   padding-Bottom:5px;
   justify-content: center;
   align-items: center;
-  font-size:30px;
-  top: 6px;
-  right: 12px;
+  font-size:20px;
   cursor: pointer;
-  z-index: 10; 
-  color:${COLOR.WHITE}
+  border-radius:10px;
+  background-color:${COLOR.GRAY};
+  color : ${COLOR.WHITE};
+`;
+
+const SubmitButton = styled.button`
+  
+  display: flex;
+  width: 65px;
+  height: 30px;
+  padding-Bottom:5px;
+  justify-content: center;
+  align-items: center;
+  font-size:20px;
+  cursor: pointer;
+  border-radius:10px;
+  background-color:${COLOR.INDIGO};
+  color : ${COLOR.WHITE};
 `;
 
 export default Modal;

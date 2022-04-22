@@ -71,7 +71,7 @@ export default function Inquiry() {
         (e,code) => {
           if (e.key !== "Enter") return;
           setTable({
-            shop_id: localStorage.getItem('SHOP'),
+            shop_id: sessionStorage.getItem('SHOP'),
             brand : brand,
             code : code,
             startDate : startDate,
@@ -109,14 +109,14 @@ export default function Inquiry() {
 
             list.unshift({brand_id: "",brand_name: "전체"})
             setBrandList(list);
-            setShopId(localStorage.getItem('SHOP'))
-            setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
-            let user = JSON.parse(localStorage.getItem('USER'))
+            setShopId(sessionStorage.getItem('SHOP'))
+            setCompanyList(JSON.parse(sessionStorage.getItem('COMPANY')))
+            let user = JSON.parse(sessionStorage.getItem('USER'))
             setUserInfo(user)
             setDisable(checkDisable(user.level))
             if(user.level === 3){
                 setTable({
-                    shop_id: localStorage.getItem('SHOP'),
+                    shop_id: sessionStorage.getItem('SHOP'),
                     brand : brand,
                     code : code,
                     startDate : startDate,

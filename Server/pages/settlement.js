@@ -88,23 +88,23 @@ export default function Settlement()  {
         XLSX.writeFile(wb, "수선비 정산 목록.xlsx");
     }
     useEffect(()=>{
-        setUserInfo(JSON.parse(localStorage.getItem('USER_INFO')))
+        setUserInfo(JSON.parse(sessionStorage.getItem('USER_INFO')))
         const fetchData = async () => {
         
-            setCompanyList(JSON.parse(localStorage.getItem('COMPANY')))
-            setShopName(localStorage.getItem('SHOP_NAME'))
-            setShop(localStorage.getItem('SHOP'))
-            let user = JSON.parse(localStorage.getItem('USER'))
+            setCompanyList(JSON.parse(sessionStorage.getItem('COMPANY')))
+            setShopName(sessionStorage.getItem('SHOP_NAME'))
+            setShop(sessionStorage.getItem('SHOP'))
+            let user = JSON.parse(sessionStorage.getItem('USER'))
             setUser(user)
             setDisable(checkDisable(user.level))
             let selectShop
-            let typeList = await getRepairType(null,null,localStorage.getItem('SHOP'))
+            let typeList = await getRepairType(null,null,sessionStorage.getItem('SHOP'))
             if(!checkDisable(user.level)){
-                let list = await getSettlementData({repairShop: localStorage.getItem('SHOP')})
+                let list = await getSettlementData({repairShop: sessionStorage.getItem('SHOP')})
                 //console.log(_.sortBy(list.data,'receipt_code'))
                 setSettlementList(_.sortBy(list.data,'receipt_code'))
                 selectShop=(
-                    <div>{localStorage.getItem('SHOP_NAME')}</div>
+                    <div>{sessionStorage.getItem('SHOP_NAME')}</div>
                 )
             }else{
                 let list = await getSettlementData({repairShop:null})

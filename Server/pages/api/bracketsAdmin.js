@@ -1,28 +1,24 @@
 import excuteQuery from "./db";
 
-async function codeCheck(code) {
+async function setCompany(id) {
   const result = await excuteQuery({
-    query: `SELECT * FROM receipt WHERE receipt_code = ?`,
-    values: [code],
+    query: `UPDATE staff_store SET store_id = ? WHERE staff_store.staff_store_id = 1`,
+    values: [id],
   });
 
   return result;
 }
 
 const check = async (req, res) => {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
     console.log("/api/bracketsAdmin");
     try {
-        const { code } = req.query;
-        const check = await codeCheck(code);
-        if (check.error) throw new Error(check.error)
+        const { companyStoreId } = req.query;
+        const result = await setCompany(companyStoreId);
+        if (result.error) throw new Error(check.error)
+        console.log(result)
+        res.status(200).json({ message : result });
         
-        if(check.length){
-            res.status(200).json({ message : true });
-        }
-        else{
-            res.status(200).json({ message : false });
-        }
         
     } catch (err) {
       console.log(err.message);

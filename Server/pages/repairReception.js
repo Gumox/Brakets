@@ -113,8 +113,8 @@ function RepairReception({options,user}) {
 
   useEffect(()=>{
     
-    let loadOptions =JSON.parse(localStorage.getItem("OPTIONS"))
-    let loadStaff =JSON.parse(localStorage.getItem("USER"))
+    let loadOptions =JSON.parse(sessionStorage.getItem("OPTIONS"))
+    let loadStaff =JSON.parse(sessionStorage.getItem("USER"))
     
     console.log(loadStaff)
     
@@ -131,11 +131,11 @@ function RepairReception({options,user}) {
       setDisable(checkDisable(loadStaff.level))
 
 
-    /*localStorage.setItem('COMPANY',JSON.stringify(selectItems));
-    localStorage.setItem('SHOP',shop_id)
-    localStorage.setItem('SHOP_NAME',loadOptions.info[0].name)
-    localStorage.setItem('USER',JSON.stringify(loadStaff))
-    localStorage.setItem('USER_INFO',JSON.stringify(loadOptions.info[0]))*/
+    /*sessionStorage.setItem('COMPANY',JSON.stringify(selectItems));
+    sessionStorage.setItem('SHOP',shop_id)
+    sessionStorage.setItem('SHOP_NAME',loadOptions.info[0].name)
+    sessionStorage.setItem('USER',JSON.stringify(loadStaff))
+    sessionStorage.setItem('USER_INFO',JSON.stringify(loadOptions.info[0]))*/
 
 
     fetch(loadStaff, loadOptions.info[0], loadOptions.info[0].store_id)

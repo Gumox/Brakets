@@ -26,17 +26,17 @@ function Home({options,user})  {
     store.dispatch({type:'USER',options:options});
     store.dispatch({type:'OPTIONS',user:user});
 
-    localStorage.setItem('OPTIONS',JSON.stringify(options));
-    localStorage.setItem('USER',JSON.stringify(user))
+    sessionStorage.setItem('OPTIONS',JSON.stringify(options));
+    sessionStorage.setItem('USER',JSON.stringify(user))
 
     
 
-    localStorage.setItem('COMPANY',JSON.stringify(selectItems));
+    sessionStorage.setItem('COMPANY',JSON.stringify(selectItems));
 
-    localStorage.setItem('SHOP',options.info[0].store_id)
-    localStorage.setItem('SHOP_NAME',options.info[0].name)
-    localStorage.setItem('USER',JSON.stringify(user))
-    localStorage.setItem('USER_INFO',JSON.stringify(options.info[0]))
+    sessionStorage.setItem('SHOP',options.info[0].store_id)
+    sessionStorage.setItem('SHOP_NAME',options.info[0].name)
+    sessionStorage.setItem('USER',JSON.stringify(user))
+    sessionStorage.setItem('USER_INFO',JSON.stringify(options.info[0]))
 
     
     console.log(user)

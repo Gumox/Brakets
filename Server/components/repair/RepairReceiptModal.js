@@ -118,10 +118,10 @@ function RepairReceiptModal (props) {
     store.dispatch({type:"FAULT",fault:fI});
     store.dispatch({type:"REPAIR_TYPE",repair_type:typeInfo});//변경필요
 
-    localStorage.setItem('ANALYSIS',JSON.stringify(aI));
-    localStorage.setItem('JUDIMENT',JSON.stringify(jI));
-    localStorage.setItem('FAULT',JSON.stringify(fI));
-    localStorage.setItem('REPAIR_TYPE',JSON.stringify(typeInfo));
+    sessionStorage.setItem('ANALYSIS',JSON.stringify(aI));
+    sessionStorage.setItem('JUDIMENT',JSON.stringify(jI));
+    sessionStorage.setItem('FAULT',JSON.stringify(fI));
+    sessionStorage.setItem('REPAIR_TYPE',JSON.stringify(typeInfo));
 
     fI.unshift({faultItems_name:"선택",level:1})
     jI.unshift({judgmentResult_name:"선택",level:1})

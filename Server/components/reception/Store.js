@@ -20,10 +20,8 @@ const StoreInfo = ({
   handleChangeTargetData = () => {},
   openReceiptImage = () => {},
 }) => {
-  console.log(targetData)
   const { storeList, productCategoryList,resultType } = useContext(OptionContext);
   const checkList =["본사수선","본사수선","외주수선","업체교환","매장반송"]
-  console.log(resultType)
   let result_name
   let result_name_tof = true
   let receiptDateView

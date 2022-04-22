@@ -3,9 +3,10 @@ import Router, { useRouter } from "next/router";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
+import store from "../store/store";
 
 
-const Home = () => {
+const Home = ({user}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -36,6 +37,18 @@ const Home = () => {
       <CuetomLink onClick={() => router.push("/repair")}>
         수선업체
       </CuetomLink>
+      {
+        user.level ==5 &&
+        <CuetomLink onClick={() => router.push("/adminBrackeks/admin")}>
+          브래키츠 관리자
+        </CuetomLink>
+      }
+      {
+        user.level == 0 &&
+        <CuetomLink onClick={() => router.push("/admin")}>
+          관리자
+        </CuetomLink>
+      }
     </Wrapper>
   );
 };
@@ -67,9 +80,9 @@ export const getServerSideProps = async (ctx) => {
     }
   }
   if(user.level <2){
-    return { props: {} };
+    return { props: {user} };
   }else if(user.level ===5){
-    return { props: {} };
+    return { props: {user:user} };
   }else{
     return {
       redirect: {

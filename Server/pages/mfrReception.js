@@ -111,8 +111,8 @@ function MfrReception({options,user}) {
 
   useEffect(()=>{
     
-    let loadOptions =JSON.parse(localStorage.getItem("OPTIONS"))
-    let loadStaff =JSON.parse(localStorage.getItem("USER"))
+    let loadOptions =JSON.parse(sessionStorage.getItem("OPTIONS"))
+    let loadStaff =JSON.parse(sessionStorage.getItem("USER"))
     
       setStaff(loadStaff)
       setOption(loadOptions.companys)

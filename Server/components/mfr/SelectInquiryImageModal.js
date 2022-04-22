@@ -43,7 +43,7 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData,tof = false
         })
 
     useEffect(()=>{
-        setShop(localStorage.getItem('SHOP'))
+        setShop(sessionStorage.getItem('SHOP'))
 
         setWindowWidth(window.innerWidth*0.9);
         setWindowHeight(window.innerHeight*0.8*0.9);

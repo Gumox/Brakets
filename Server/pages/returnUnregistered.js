@@ -76,7 +76,7 @@ export default function ReturnUnregistered() {
     const handleKeyPress = useCallback(async(e,code,returnList) => {
           if (e.key !== "Enter"){return;}
           else{
-            let input = await getTargetInfo(code,(localStorage.getItem('SHOP')*1),shopName);
+            let input = await getTargetInfo(code,(sessionStorage.getItem('SHOP')*1),shopName);
             
             if(input.length){
                 let toDay = formatDate(new Date())
@@ -128,15 +128,15 @@ export default function ReturnUnregistered() {
     
     useEffect( ()=>{
         const fetchData = async () => {
-            setShopName(localStorage.getItem('SHOP_NAME'))
+            setShopName(sessionStorage.getItem('SHOP_NAME'))
              
-            setShopId(localStorage.getItem('SHOP'))
+            setShopId(sessionStorage.getItem('SHOP'))
             let list =await getBrandList();
             list.unshift({brand_id: "",brand_name: "전체"})
 
             let list2 =await getStoreList();
             list2.unshift({store_id: "",name: "전체"})
-            let user = JSON.parse(localStorage.getItem('USER'))
+            let user = JSON.parse(sessionStorage.getItem('USER'))
 
             
             setUserInfo(user)
@@ -150,7 +150,7 @@ export default function ReturnUnregistered() {
                 //console.log(returnListData)
                 //console.log("****************************")
             }else{
-                returnListData = await getReturnList(localStorage.getItem('SHOP')*1,localStorage.getItem('SHOP_NAME'))
+                returnListData = await getReturnList(sessionStorage.getItem('SHOP')*1,sessionStorage.getItem('SHOP_NAME'))
             }
             //console.log(cpList)
             //console.log("****************************")

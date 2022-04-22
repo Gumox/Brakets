@@ -19,7 +19,8 @@ export default createStore(function(state,action){
             invoice_paid_repair_data: [],
             phone_num: [],
             toggled: false,
-            send_sms_data:[]
+            send_sms_data:[],
+            admin_options:{}
         }
     }
     if(action.type === "OPTIONS"){
@@ -69,6 +70,9 @@ export default createStore(function(state,action){
     }
     if(action.type === "SEND_SMS_DATA"){
         return{...state, send_sms_data: action.send_sms_data}
+    }
+    if(action.type === "SET_ADMIN_OPTIONS"){
+        return{...state, admin_options: action.admin_options}
     }
     return state;
 })
