@@ -31,10 +31,6 @@ const Modal = ({ options, children, handleCloseButtonClick ,width}) => {
     
     sessionStorage.setItem('ADMIN_HEADQURTER',selectCompany);
 
-    console.log(await bracketsAdminSelect(selectCompany))
-    
-    console.log("//")
-    console.log(JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS")).options)
     router.push("/")
 
   } 
@@ -67,7 +63,13 @@ const Modal = ({ options, children, handleCloseButtonClick ,width}) => {
             <SelectMenuName/>
               <PrView>
                 <CloseButton onClick={handleCloseButtonClick}>취소</CloseButton>
-                <SubmitButton onClick={()=>{setCompanyID()}}>확인</SubmitButton>
+                <SubmitButton onClick={()=>{
+                  if(selectCompany >0){
+                    setCompanyID()
+                  }else{
+                    alert("회사를 선택해주세요")
+                  }
+                }}>확인</SubmitButton>
               </PrView>
             </ModalAlart>
         </Section>
