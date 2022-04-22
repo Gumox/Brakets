@@ -1,4 +1,7 @@
 import "../styles/globals.css";
+
+import "../constants/react-pro-sidebar/custom.scss"
+
 import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {

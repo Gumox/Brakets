@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import moment from "moment";
 
 import { UserContext, OptionContext } from "../store/Context";
 import { getThisSeason, getCurrentSeasons } from "../utils/season";
@@ -14,14 +15,17 @@ import Header from "../components/Header";
 import Reception from "../components/reception";
 import formatDate from "../functions/formatDate";
 
+
 const ReceptionPage = ({ options, user }) => {
   const router = useRouter();
   const [selectOptions, setSelectOptions] = useState(options); // 전체 페이지에서 사용하는 select options
   const [targetBrandId, setTargetBrandId] = useState(options.brandList[0].value); // brandlist 중 첫번째 항목
   // Filter 입력 데이터
+  const first = moment().format("YYYY-MM-01")
   const [inputData, setInputData] = useState({
     dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
     dateType: "all",
+    startDate: first
   });
   const [searchList, setSearchList] = useState([]); // 검색 결과 리스트
   const [targetData, setTargetData] = useState({}); // 리스트에서 선택한 데이터
@@ -29,6 +33,7 @@ const ReceptionPage = ({ options, user }) => {
   const [imageData, setImageData] = useState({});
   const [needImageData, setNeedImageData] = useState({});
 
+  console.log(inputData)
 
   useEffect(() => {
     const getOptions = async () => {
@@ -51,9 +56,13 @@ const ReceptionPage = ({ options, user }) => {
       ]);
 
       // 브랜드가 바뀌면 전체 페이지가 초기화
+      
+      const first = moment().format("YYYY-MM-01")
+      console.log("startDate: ",imageData["startDate"])
       setInputData({
         dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
         dateType: "all",
+        startDate: first
       });
       setSearchList([]);
       setTargetData({});
@@ -155,6 +164,8 @@ const ReceptionPage = ({ options, user }) => {
     setTargetData(data.data);
   }, []);
 
+ 
+
   return (
     <UserContext.Provider value={user}>
       <Header path={router.pathname} />
@@ -210,58 +221,69 @@ export const getServerSideProps = async (ctx) => {
   }
 
   const { headquarter_id: headquarterId } = user;
-  const [brands, repairShops, producers, faults, analysis, results, repairs] =
-    await Promise.all([
-      axios
-        .get(`${process.env.API_URL}/brand`, { params: { headquarterId:headquarterId } })
-        .then(({ data }) => data), // 브랜드
-      axios
-        .get(`${process.env.API_URL}/store/2`, {
-          params: { brandId: headquarterId },
-        })
-        .then(({ data }) => data), // 수선처
-      axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
-      axios
-        .get(`${process.env.API_URL}/faultDivision`, {
-          params: {hq_id: "2"}
-        })
-        .then(({ data }) => data), // 과실구분
-      axios
-        .get(`${process.env.API_URL}/analysisType`, {
-          params: {hq_id: "2"}
-        })
-        .then(
-          ({ data }) => data), // 내용분석
-      axios
-        .get(`${process.env.API_URL}/judgmentResult`, {
-          params: {hq_id: "2"}
-        })
-        .then(({ data }) => data), // 판정결과
+  if(user.level<2){
+    const [brands, repairShops, producers, faults, analysis, results, repairs] =
+      await Promise.all([
+        axios
+          .get(`${process.env.API_URL}/brand`, { params: { headquarterId:headquarterId } })
+          .then(({ data }) => data), // 브랜드
+        axios
+          .get(`${process.env.API_URL}/store/2`, {
+            params: { brandId: headquarterId },
+          })
+          .then(({ data }) => data), // 수선처
+        axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
+        axios
+          .get(`${process.env.API_URL}/faultDivision`, {
+            params: {hq_id: "2"}
+          })
+          .then(({ data }) => data), // 과실구분
+        axios
+          .get(`${process.env.API_URL}/analysisType`, {
+            params: {hq_id: "2"}
+          })
+          .then(
+            ({ data }) => data), // 내용분석
+        axios
+          .get(`${process.env.API_URL}/judgmentResult`, {
+            params: {hq_id: "2"}
+          })
+          .then(({ data }) => data), // 판정결과
 
-        // TODO: 수선내용 api
-      axios
-        .get(`${process.env.API_URL}/type/repair`, {
-          params: { headquarterId },
-        })
-        .then(({ data }) => data), // 수선내용
-    ]);
-  return {
-    props: {
-      user,
-      options: {
-        brandList: brands ? brands.data : [],
-        storeList: [], // 브랜드에 따라서 달라짐
-        productCategoryList: [], // 브랜드에 따라서 달라짐
-        repairList: repairShops ? repairShops.data : [],
-        producerList: producers ? producers.data : [],
-        faultType: faults ? faults.body: [],
-        analysisType: analysis ? analysis.body: [],
-        resultType: results ? results.body: [],
-        repairType: repairs ? repairs.data: [],
-        seasonList: [],
+          // TODO: 수선내용 api
+        axios
+          .get(`${process.env.API_URL}/type/repair`, {
+            params: { headquarterId },
+          })
+          .then(({ data }) => data), // 수선내용
+      ]);
+    return {
+      props: {
+        user,
+        options: {
+          brandList: brands ? brands.data : [],
+          storeList: [], // 브랜드에 따라서 달라짐
+          productCategoryList: [], // 브랜드에 따라서 달라짐
+          repairList: repairShops ? repairShops.data : [],
+          producerList: producers ? producers.data : [],
+          faultType: faults ? faults.body: [],
+          analysisType: analysis ? analysis.body: [],
+          resultType: results ? results.body: [],
+          repairType: repairs ? repairs.data: [],
+          seasonList: [],
+        },
       },
-    },
-  };
+    };
+  }else if(user.level === 5){
+
+  }else{
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
 };
 
 export default ReceptionPage;

@@ -37,6 +37,7 @@ const ReceiptInfo = ({
   const { resultType, faultType, analysisType, repairList } =
     useContext(OptionContext);
   const {name,headquarter_id} = useContext(UserContext)
+  const userInfo = useContext(UserContext)
 
   const [isRepair, setIsRepiar] = useState(false);
   const [isReview, setIsReview] = useState(false);
@@ -55,10 +56,12 @@ const ReceiptInfo = ({
     formData.append('deliberation', inputFlie[0]);
     formData.append('receiptId', targetData["receipt_id"]);
     formData.append('customerId', targetData["customer_id"]);
+    const body ={...targetData,manager_id:userInfo.staff_id}
+    console.log(body)
     
-    const [data] = await Promise.all([
+    /*const [data] = await Promise.all([
         axios
-        .put(`${process.env.API_URL}/receipt/inputSave`, { body: targetData  })
+        .put(`${process.env.API_URL}/receipt/inputSave`, { body: body  })
         .then(({ data }) => data),
       ])
     
@@ -67,7 +70,7 @@ const ReceiptInfo = ({
       .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
       .then(({ data }) => data),
     ])
-    window.location.reload();
+    window.location.reload();*/
       
   }
   const [discount, setDiscount] = useState();
@@ -79,8 +82,7 @@ const ReceiptInfo = ({
 
   
   const [registerDate, setRegisterDate] = useState();
-  const [minCompleteDate,setMinCompleteDate] = useState()
-  const [completeDateChanged, setCompleteDateChanged] = useState(true);
+  const [completeDateChanged, setCompleteDateChanged] = useState(false);
 
 
   const getDiscountPrice =(value,e)=>{
@@ -181,10 +183,6 @@ const ReceiptInfo = ({
       const receiptDate =new Date(targetData[RECEIPT.REGISTER_DATE])
       const receiptDateToString =receiptDate.getFullYear()+"-"+(receiptDate.getMonth()+1)+"-"+receiptDate.getDate()
       setRegisterDate(receiptDateToString)
-    }
-    if(completeDateChanged && targetData[RECEIPT.COMPLETE_DATE]){
-      let tos =moment(targetData[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD")
-      setMinCompleteDate(tos)
     }
 
     
@@ -562,7 +560,7 @@ const ReceiptInfo = ({
                 type="date"
                 title="발송일 to S (처리일)"
                 name={RECEIPT.COMPLETE_DATE}
-                min = {minCompleteDate}
+                min = {String(moment().format("YYYY-MM-DD"))}
                 value={
                   targetData[RECEIPT.COMPLETE_DATE]
                     ? moment(targetData[RECEIPT.COMPLETE_DATE]).format(
@@ -572,16 +570,19 @@ const ReceiptInfo = ({
                 }
                 onChange={(e)=>{
                   handleChangeTargetData(e)
-                  setCompleteDateChanged(false)
+                  setCompleteDateChanged(true)
                 }}
                 styleOptions={{ labelFontSize: "18px", color: COLOR.RED }}
               />
             </Field>
             <SaveButton
               onClick={()=>{
+                console.log(completeDateChanged)
                 if(!targetData[RECEIPT.ID]){
                   alert("잘못된 입력입니다. \n서비스카드 번호를 확인해주세요")
                 }else if(!targetData[RECEIPT.COMPLETE_DATE]){
+                  alert("발송일 to S 를 입력해주세요")
+                }else if(!completeDateChanged){
                   alert("발송일 to S 를 입력해주세요")
                 }else{
                   

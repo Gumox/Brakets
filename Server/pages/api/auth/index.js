@@ -3,6 +3,23 @@ import jwt from 'jsonwebtoken';
 const auth = async (req, res) => {
     if (req.method === "GET") {
       const { token } = req.cookies;
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log(token)
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log()
+      console.log()
       if(!token || token === "") return res.status(200).json({ isAuthorized: false });
       
       try {

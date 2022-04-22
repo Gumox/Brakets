@@ -82,6 +82,9 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
                             if(targetData["receipt_code"] === row.original["서비스카드 #"]){
                                 bgColor = COLOR.MENU_SELECTED_COLOR
                             }
+                            if(row.original["접수일"]){
+                               console.log(row.original["접수일"])
+                            }
                             return (
                                 <TableRow key={i} backgroundColor={bgColor} >
                                     
@@ -179,12 +182,10 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         {Header: () => (<div style={{textAlign:"center"}}>{'클레임가'}</div>), accessor: '클레임가',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'하자코드'}</div>), accessor: '하자코드',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'심의'}</div>), accessor: '심의',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        /*{Header: () => (<div style={{textAlign:"center"}}>{'등록자'}</div>), accessor: '등록자',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'등록일시'}</div>), accessor: '등록일시',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'접수자'}</div>), accessor: '접수자',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'접수일시'}</div>), accessor: '접수일시',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        {Header: () => (<div style={{textAlign:"center"}}>{'접수일'}</div>), accessor: '접수일',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'처리자'}</div>), accessor: '처리자',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'처리일시'}</div>), accessor: '처리일시',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},*/
+        {Header: () => (<div style={{textAlign:"center"}}>{'처리일'}</div>), accessor: '처리일',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'SMS'}</div>), accessor: 'SMS',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         
         // ASIS
@@ -253,6 +254,15 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
             //'감가반품':receipt[RECEIPT.MESSAGE] ? receipt[RECEIPT.MESSAGE] : "",
             '클레임가 구분':receipt.claim_text ? receipt.claim_text : "",
             '클레임가':receipt[RECEIPT.CLAIM_PRICE] ? numberWithCommas(receipt[RECEIPT.CLAIM_PRICE]) : "",
+
+            
+            '접수자':receipt.staff_code   ? receipt.staff_code : "",
+            '접수일':receipt[RECEIPT.RECEIPT_DATE] ? moment(receipt[RECEIPT.RECEIPT_DATE]).format("YYYY-MM-DD") : "",
+            
+            '처리자':receipt.manager_code   ? receipt.manager_code : "",
+            '처리일':receipt[RECEIPT.COMPLETE_DATE] ? moment(receipt[RECEIPT.COMPLETE_DATE]).format("YYYY-MM-DD") : "",
+
+
 
             '본사설명':receipt[RECEIPT.MESSAGE] ? receipt[RECEIPT.MESSAGE] : "",
             '현금연수증번호':receipt[RECEIPT.CASHRECEIPT_NUM] ? receipt[RECEIPT.CASHRECEIPT_NUM] : "",

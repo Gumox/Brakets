@@ -131,6 +131,8 @@ async function getReceipt(query, values) {
                     DATE_FORMAT(mfr.register_date, '%Y-%m-%d %H:%i:%s') AS mfr_register_date,  
                     IF(mfr.substitute=0, "N", "Y") AS mfr_substitute,
                     mfr.message AS mfr_message,
+                    staff.staff_code,
+                    manager.staff_code AS manager_code,
                     DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date  
             FROM receipt 
             LEFT JOIN store ON receipt.store_id = store.store_id 
@@ -150,6 +152,8 @@ async function getReceipt(query, values) {
             LEFT JOIN mfr_detail AS mfr ON receipt.mfr_detail_id = mfr.mfr_detail_id
             LEFT JOIN store AS mfr_store ON receipt.mfr_id = mfr_store.store_id
             LEFT JOIN claim ON claim.claim_id = receipt.claim
+            LEFT JOIN staff ON staff.staff_id = receipt.staff_id
+            LEFT JOIN staff AS manager ON manager.staff_id = receipt.manager_id
             WHERE receipt.step = 1 ${query}`,
     values,
   });

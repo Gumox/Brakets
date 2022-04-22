@@ -3,7 +3,8 @@ import excuteQuery from "../db";
 async function updateReceipt(query, values) {
   const result = await excuteQuery({
     query: `UPDATE receipt 
-            SET complete_date=?
+            SET complete_date=?,
+                manager_id=?
                 ${query} 
             WHERE receipt_id=?`,
     values,
@@ -89,6 +90,7 @@ const receipt = async (req, res) => {
     try {
         const {
             receipt_id,     // 필수
+            manager_id,
             register_date,  
             result_id,
             result_detail,
@@ -117,7 +119,7 @@ const receipt = async (req, res) => {
             deliberation_request_date,
         } = req.body.body;
         let query = "";
-        let values = [String(complete_date).slice(0,10)];
+        let values = [String(complete_date).slice(0,10),manager_id];
 
         if(result_id){          // 판정결과
             query += `, result_id = ?`

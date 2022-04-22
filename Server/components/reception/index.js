@@ -122,7 +122,7 @@ const InfoWrapper = styled.nav`
 `;
 
 const InfoSubWrapper = styled.div`
-  min-width: 1590px;
+  min-width: 1650px;
 `;
 
 const Section = styled.div`

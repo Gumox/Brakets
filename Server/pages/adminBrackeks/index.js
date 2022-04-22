@@ -4,8 +4,7 @@ import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
 
-
-const Home = () => {
+const AdminHome = () => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -15,37 +14,18 @@ const Home = () => {
     <Wrapper>
       <Title>수선 OK</Title>
       <Logout onClick={handleLogout}>Logout</Logout>
-      <CuetomLink onClick={() => router.push("/reception")}>
-        수선접수/처리
+      
+      <CuetomLink onClick={() => router.push("/adminBrackeks/admin")}>
+        admin
       </CuetomLink>
-      <CuetomLink onClick={() => router.push("/return")}>
-        하자반품
-      </CuetomLink>
-      <CuetomLink onClick={() => router.push("/claim")}>
-        업체클레임
-      </CuetomLink>
-      <CuetomLink onClick={() => router.push("/paid-repair")}>
-        유상수선
-      </CuetomLink>
-      <CuetomLink onClick={() => router.push("/sms")}>
-        SMS 전송
-      </CuetomLink>
-      {/*<CuetomLink onClick={() => router.push("/sms-result")}>
-        SMS 결과
-      </CuetomLink> */}
-      <CuetomLink onClick={() => router.push("/repair")}>
-        수선업체
-      </CuetomLink>
+      
     </Wrapper>
   );
 };
 
 export const getServerSideProps = async (ctx) => {
-  console.log("ctx")
-  console.log(ctx.req.headers)
-  console.log("ctx")
   const {
-    data: { isAuthorized, user },
+    data: { isAuthorized },
   } = await axios.get(
     `${process.env.API_URL}/auth`,
     ctx.req
@@ -56,9 +36,8 @@ export const getServerSideProps = async (ctx) => {
           },
         }
       : {}
-  )
+  );
   if (!isAuthorized) {
-    
     return {
       redirect: {
         permanent: false,
@@ -66,19 +45,7 @@ export const getServerSideProps = async (ctx) => {
       }
     }
   }
-  if(user.level <2){
-    return { props: {} };
-  }else if(user.level ===5){
-    return { props: {} };
-  }else{
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/login'
-      }
-    }
-  }
-  
+  return { props: {} };
 };
 
 const Wrapper = styled.div`
@@ -113,4 +80,4 @@ const CuetomLink = styled.div`
   cursor: pointer;
 `;
 
-export default Home;
+export default AdminHome;

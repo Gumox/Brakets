@@ -37,11 +37,11 @@ const kakao = async (req, res) => {
 
     // DB 에서 해당 ID or Email 조회 (본사, 최고관리자 중에서 조회)
     const result = await excuteQuery({
-      query: `SELECT staff.staff_id, id, email, staff.name, level, store.brand_id AS headquarter_id,staff.level
+      query: `SELECT staff.staff_id, id, email, staff.name, level, store.brand_id AS headquarter_id
               FROM staff 
               JOIN staff_store ON staff.staff_id = staff_store.staff_id 
-              JOIN store ON staff_store.store_id = store.store_id
-              WHERE (id=? OR email=?)`,
+              LEFT JOIN store ON staff_store.store_id = store.store_id
+              WHERE (id=? OR email=?) AND staff.state = 1`,
       values: [userId, email],
     });
     if (result.error) {
@@ -61,7 +61,7 @@ const kakao = async (req, res) => {
           query: "UPDATE staff SET id=?,lastupdate=NOW() WHERE email=?",
           values: [userId, email],
         });
-        // console.log(result)
+         console.log(result)
       }
       
       // 해당 데이터로 token 만들어서 cookie 에 넣고

@@ -20,7 +20,40 @@ const StoreInfo = ({
   handleChangeTargetData = () => {},
   openReceiptImage = () => {},
 }) => {
-  const { storeList, productCategoryList } = useContext(OptionContext);
+  console.log(targetData)
+  const { storeList, productCategoryList,resultType } = useContext(OptionContext);
+  const checkList =["본사수선","본사수선","외주수선","업체교환","매장반송"]
+  console.log(resultType)
+  let result_name
+  let result_name_tof = true
+  let receiptDateView
+  resultType.map((item)=>{
+    if(item.value === targetData.result_id){
+      result_name = item.text;
+    }
+  })
+  checkList.map((elmt)=>{
+    if(elmt == result_name){
+      result_name_tof = false
+      receiptDateView = (
+        <UnTouchableInput
+                type="date"
+                title="인수일"
+                name={RECEIPT.RECEIVED_DATE}
+                styleOptions={{ padding: "1px 0px" }}
+                value={
+                  targetData[RECEIPT.RECEIVED_DATE]
+                    ? moment(targetData[RECEIPT.RECEIVED_DATE]).format(
+                        "YYYY-MM-DD"
+                      )
+                    : undefined
+                }
+                onChange={handleChangeTargetData}
+    
+              />
+      )
+    }
+  })
   return (
     <Wrapper>
       <SectionRow>
@@ -68,6 +101,12 @@ const StoreInfo = ({
     
               />
             </Field>
+            {receiptDateView}
+            { result_name_tof && 
+              <div style={{color:COLOR.RED,fontWeight:"bold"}}>
+                {result_name}
+              </div>
+            }
             
           </Row>
         </Section>

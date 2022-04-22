@@ -17,6 +17,7 @@ import SelectOption from "../SelectOption";
 import Checkbox from "../Checkbox";
 import store from "../../store/store";
 import axios from "axios";
+import moment from "moment";
 const FilterInfo = ({
   targetBrandId,
   inputData = {},
@@ -42,9 +43,8 @@ const FilterInfo = ({
     setInputData({ ...inputData, ["season"]: season,["style"]: null });
   }
   const router = useRouter();
-  useEffect(()=>{
-    
-  },[])
+
+  
   return (
     <Wrapper>
       <Title>조회</Title>
@@ -94,28 +94,6 @@ const FilterInfo = ({
             disabled={inputData["dateType"] === "day"}
             onChange={handleChangeInputData}
           />
-          <div>
-            <Field height="15px" marginRight="5px">
-              <Checkbox
-                type="radio"
-                title="기간전체"
-                name="dateType"
-                value="all"
-                checked={"all" === inputData["dateType"]}
-                onChange={handleChangeInputData}
-              />
-            </Field>
-            <Field height="15px" marginRight="5px">
-              <Checkbox
-                type="radio"
-                title="하루만"
-                name="dateType"
-                value="day"
-                checked={"day" === inputData["dateType"]}
-                onChange={handleChangeInputData}
-              />
-            </Field>
-          </div>
         </Field>
         <Row>
           <Field marginRight="5px">
