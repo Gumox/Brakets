@@ -14,8 +14,6 @@ export const getData = async(params,level)=>{
       dateOption : params.dateOption 
 
     }
-    console.log("paramsData")
-    console.log(paramsData)
     const[datas] =await Promise.all([
         axios.get(`${process.env.API_URL}/RepairShop/getInquiryInfo`, {
             params: paramsData,

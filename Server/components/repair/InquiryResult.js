@@ -80,6 +80,7 @@ const ItemView = styled.div`
 const LaView = styled.div`
     padding-top:10px;
     padding-bottom:10px;
+    border-bottom:2px solid #f2f2f2;;
     display: flex;  
     align-items:center;
     flex-direction: coloum ;

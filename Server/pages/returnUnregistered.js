@@ -391,6 +391,7 @@ const LaView = styled.div`
   padding:10px;
   display: flex;  
   align-items:center;
+  border-bottom:2px solid #f2f2f2;;
 
 `;
 const CenterView = styled.div`

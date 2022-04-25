@@ -239,14 +239,6 @@ export default function Inquiry() {
                     <select style={{marginLeft:10,marginRight: 10}} 
                         onChange={(e)=>{
                             setSelectedCompany(e.target.value)
-                            /*setTable({
-                                shop_id: shopId,
-                                brand : brand,
-                                code : code,
-                                startDate : startDate,
-                                endDate : endDate,
-                                dateOption : dateOption 
-                            },analysisInfo,resultInfo,faultInfo);*/
                         }}>
                         {companyList.map((item) => (
                             <option value={item.key} key={item.key}>
@@ -330,7 +322,6 @@ export default function Inquiry() {
                     <button 
                         style={{width:40,height:25,fontSize:12,marginLeft:20,backgroundColor : "#4f4f4f", color: COLOR.WHITE}}
                         onClick={()=>{
-                            console.log("8888")
                             setTable({
                                 hq_id:selectedCompany,
                                 shop_id: shopId,

@@ -253,6 +253,7 @@ const ItemInsideView = styled.div`
   justify-content:center;
 `;
 const LaView = styled.div`
+    border-bottom:2px solid #f2f2f2;;
     padding-top:10px;
     padding-bottom:10px;
     display: flex;  
