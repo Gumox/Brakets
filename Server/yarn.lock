@@ -11848,6 +11848,13 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
+"react-use-scroll-sync@^0.1.6":
+  "integrity" "sha512-SFMUgB0BHUsdOSBTOCm0cUkN6NdOFUhf2Kofb2zQHoA0cwRP3Zg06+mYBm4sQtACIPr83lN3PA8vNeZUOP9RJg=="
+  "resolved" "https://registry.npmjs.org/react-use-scroll-sync/-/react-use-scroll-sync-0.1.6.tgz"
+  "version" "0.1.6"
+  dependencies:
+    "lodash" "^4.17.15"
+
 "react@^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.0.0 || ^17.0.0", "react@^16.11.0 || ^17.0.0", "react@^16.3.0 || 17", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17.0.0-0", "react@^17.0.2", "react@>= 16", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || 18.x.x", "react@>=16", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"

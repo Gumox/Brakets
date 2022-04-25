@@ -23,6 +23,11 @@ const InquiryResult =(props)=>{
         <div>
             <LaView style={{paddingLeft:10}} onClick={()=>{setModalOpenCheckable(true)}} ><Container>
                 <ItemView style={{width : itemViewWidth}}>{item.receipt_code}</ItemView>
+                {
+                    props.level !== 3 &&
+                    <ItemView style={{width : itemViewWidth}}>{item.repair_store_name}</ItemView>
+
+                }
                 <ItemView style={{width : itemViewWidth}}>{item.receipt_date}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.store_name}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.brand_name}</ItemView>

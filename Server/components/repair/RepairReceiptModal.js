@@ -191,12 +191,13 @@ function RepairReceiptModal (props) {
     <Popup  
       ref={modalRef}
       trigger={
-      <PrView style={{backgroundColor:lineColor}}><ContainText>
-                <ItemView>{el.receipt_code}</ItemView>
+      <PrView style={{backgroundColor:lineColor}}>
+                <ItemView style={{marginLeft:10}}>{el.receipt_code}</ItemView>
                 <ItemView>{date}</ItemView>
                 <ItemView>{el.store_name}</ItemView>
                 <ItemView>{el.brand_name}</ItemView>
-      </ContainText></PrView>
+                <ItemViewMessage style={{flex:1,marginRight:10}}>{el.store_message}</ItemViewMessage>
+      </PrView>
       }  
       modal
       contentStyle={{ 
@@ -407,12 +408,13 @@ const RaView = styled.div`
   justify-content: space-around;
 `;
 const PrView = styled.div`
-  padding:10px;
   display: flex;  
   align-items:center;
+  border-bottom:2px solid #f2f2f2;;
 
   &: hover {
     background-color: ${COLOR.BRAUN};
+    color:${COLOR.WHITE};
   }
 `;
 const ItemBox =styled.div`
@@ -469,11 +471,19 @@ const ItemTable = styled.div`
   margin-left:10px;
   min-height : 60px;
 `;
-
+const ItemViewMessage = styled.div`
+  font-size :12px;
+  min-height: 20px;
+  padding-left:10px;
+  padding-right:10px;
+  display: flex;  
+  `;
 const ItemView = styled.div`
   font-size :12px;
+  padding-top:10px;
+  padding-bottom:10px;
   min-height: 20px;
   width :100px;
   display: flex;  
-  justify-content:center
+  justify-content:center;
   `;

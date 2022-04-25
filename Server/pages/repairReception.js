@@ -50,6 +50,9 @@ function RepairReception({options,user}) {
     XLSX.utils.book_append_sheet(wb, dataWS, "sheet1");
     XLSX.writeFile(wb, "접수목록.xlsx");
   }
+  
+  const [lists,setLists] =useState([]);
+
   const getOptions = async () => {
     const [data] = await Promise.all([
       axios
@@ -76,7 +79,6 @@ function RepairReception({options,user}) {
     setListData(data.body)
     setNeedImages(data.needImages)
   }
-  const [lists,setLists] =useState([]);
 
  
   const fetch =async(loadStaff,info,shop_id)=>{
@@ -116,26 +118,18 @@ function RepairReception({options,user}) {
     let loadOptions =JSON.parse(sessionStorage.getItem("OPTIONS"))
     let loadStaff =JSON.parse(sessionStorage.getItem("USER"))
     
-    console.log(loadStaff)
     
-      setStaff(loadStaff)
-      setOption(loadOptions.companys)
-      set_shop_id(loadOptions.info[0].store_id)
-  
-      //const email = user.email
-      setListData(loadOptions.list)
-      setImages(loadOptions.images)
-      setNeedImages(loadOptions.needImages)
+    setStaff(loadStaff)
+    setOption(loadOptions.companys)
+    set_shop_id(loadOptions.info[0].store_id)
+
+    setListData(loadOptions.list)
+    setImages(loadOptions.images)
+    setNeedImages(loadOptions.needImages)
+
+    setDisable(checkDisable(loadStaff.level))
 
 
-      setDisable(checkDisable(loadStaff.level))
-
-
-    /*sessionStorage.setItem('COMPANY',JSON.stringify(selectItems));
-    sessionStorage.setItem('SHOP',shop_id)
-    sessionStorage.setItem('SHOP_NAME',loadOptions.info[0].name)
-    sessionStorage.setItem('USER',JSON.stringify(loadStaff))
-    sessionStorage.setItem('USER_INFO',JSON.stringify(loadOptions.info[0]))*/
 
 
     fetch(loadStaff, loadOptions.info[0], loadOptions.info[0].store_id)
@@ -175,11 +169,9 @@ function RepairReception({options,user}) {
         오늘의 접수 예정
         <Line/>
         <ItemTable >
-          <div style={{marginTop:12}}></div>
           <div style={{position:"sticky",top:0,zIndex:10,backgroundColor:COLOR.WHITE}}>
-            <LaView><Container><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView></Container></LaView>
+            <LaView><ItemView>서비스 번호</ItemView><ItemView>매장접수일</ItemView><ItemView>매장명</ItemView><ItemView>브랜드</ItemView><ItemView style={{border:0}}>매장 메시지</ItemView></LaView>
           </div>  
-          <hr/>
           
           {lists}
         </ItemTable>
@@ -248,12 +240,15 @@ const ItemTable = styled.div`
 
 `;
 const LaView = styled.div`
-  padding:10px;
   display: flex;  
   align-items:center;
+  padding-left:10px;
 
 `;
 const ItemView = styled.div`
+  padding:10px;
+  padding-top:15px;
+  padding-bottom:15px;
   font-size :12px;
   min-height: 20px;
   width :100px;

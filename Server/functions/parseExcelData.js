@@ -7,6 +7,7 @@ export const parseRepairReceptionData =(dataList)=>{
         obj["매장접수일"]=item.receipt_date;
         obj["매장명"]=item.store_name;
         obj["브랜드"]=item.brand_name;
+        obj["매장 메시지"]=item.store_message;
         
         parseDataList[index] = obj
     })

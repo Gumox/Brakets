@@ -43,7 +43,7 @@ async function getReceipt(query, values) {
                     product.org_price AS product_org_price,
                     receipt.cashreceipt_num AS cashreceipt_num,
                     analysis_type.analysis_name AS analysis_name,
-                    result_type.result_name AS result_name,
+                    judgment_result.judgment_name AS result_name,
                     receipt.issued AS issued,
                     fault_type.fault_name AS fault_name,
                     receipt.repair1_detail_id,
@@ -142,7 +142,7 @@ async function getReceipt(query, values) {
             LEFT JOIN style_type ON product.style_id = style_type.style_id
             LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
             LEFT JOIN analysis_type ON receipt.analysis_id = analysis_type.analysis_id
-            LEFT JOIN result_type ON receipt.result_id = result_type.result_id
+            LEFT JOIN judgment_result ON receipt.result_id = judgment_result.judgment_result_id 
             LEFT JOIN fault_type ON receipt.fault_id = fault_type.fault_id
             LEFT JOIN repair_detail AS repair1 ON receipt.repair1_detail_id = repair1.repair_detail_id
             LEFT JOIN store AS repair1_store ON repair1.store_id = repair1_store.store_id

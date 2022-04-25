@@ -107,7 +107,19 @@ async function getReceiptList(query,values) {
                         repair3_detail.send_date AS repair3_send_date,
                         repair3_detail.complete_date AS repair3_complete_date,
                         repair3_detail.shipment_type AS repair3_shipment_type,
-                        repair3_detail.shipment_price AS repair3_shipment_price
+                        repair3_detail.shipment_price AS repair3_shipment_price,
+
+                        repair1_fault.fault_name AS repair1_fault_name,
+                        repair1_result.judgment_name AS repair1_result_name,
+                        repair1_analysis.analysis_name AS repair1_analysis_name,
+
+                        repair2_fault.fault_name AS repair2_fault_name,
+                        repair2_result.judgment_name AS repair2_result_name,
+                        repair2_analysis.analysis_name AS repair2_analysis_name,
+                        
+                        repair3_fault.fault_name AS repair3_fault_name,
+                        repair3_result.judgment_name AS repair3_result_name,
+                        repair3_analysis.analysis_name AS repair3_analysis_name
                 FROM repair_detail 
                 LEFT JOIN receipt ON repair_detail.receipt_id = receipt.receipt_id
                 LEFT JOIN receipt_detail ON receipt.receipt_id = receipt_detail.receipt_id
@@ -125,6 +137,19 @@ async function getReceiptList(query,values) {
                 LEFT JOIN store AS repair1_detail_store ON repair1_detail.store_id = repair1_detail_store.store_id
                 LEFT JOIN store AS repair2_detail_store ON repair2_detail.store_id = repair2_detail_store.store_id
                 LEFT JOIN store AS repair3_detail_store ON repair3_detail.store_id = repair3_detail_store.store_id
+
+                LEFT JOIN fault_type AS repair1_fault ON repair1_fault.fault_id = repair1_detail.fault_id 
+                LEFT JOIN judgment_result AS repair1_result ON repair1_result.judgment_result_id  = repair1_detail.result_id 
+                LEFT JOIN analysis_type AS repair1_analysis ON repair1_analysis.analysis_id = repair1_detail.analysis_id 
+                
+                LEFT JOIN fault_type AS repair2_fault ON repair2_fault.fault_id = repair2_detail.fault_id 
+                LEFT JOIN judgment_result AS repair2_result ON repair2_result.judgment_result_id  = repair2_detail.result_id 
+                LEFT JOIN analysis_type AS repair2_analysis ON repair2_analysis.analysis_id = repair2_detail.analysis_id 
+                
+                LEFT JOIN fault_type AS repair3_fault ON repair3_fault.fault_id = repair3_detail.fault_id 
+                LEFT JOIN judgment_result AS repair3_result ON repair3_result.judgment_result_id  = repair3_detail.result_id 
+                LEFT JOIN analysis_type AS repair3_analysis ON repair3_analysis.analysis_id = repair3_detail.analysis_id 
+
                 WHERE  receipt.step > 0   ${query} 
                 ORDER BY receipt.receipt_date ASC`,
         values,
@@ -188,7 +213,6 @@ const controller = async (req, res) => {
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("List");
-        const _result = _.uniqBy(result,"receipt_code") 
         res.status(200).json({ body: result});
       } else {
         console.log("No List");

@@ -3,9 +3,9 @@ import axios from "axios";
 export const getData = async(params,level)=>{
   let paramsData
 
-  if(level === 3){
     paramsData =
     {
+      hq_id: params.hq_id,
       shop_id: params.shop_id,
       brand : params.brand,
       code : params.code,
@@ -14,19 +14,8 @@ export const getData = async(params,level)=>{
       dateOption : params.dateOption 
 
     }
-  }
-  else if(level === 0|| level === 1){
-    paramsData =
-    {
-      hq_id: params.hq_id,
-      brand : params.brand,
-      code : params.code,
-      startDate : params.startDate,
-      endDate : params.endDate,
-      dateOption : params.dateOption 
-
-    }
-  }
+    console.log("paramsData")
+    console.log(paramsData)
     const[datas] =await Promise.all([
         axios.get(`${process.env.API_URL}/RepairShop/getInquiryInfo`, {
             params: paramsData,
