@@ -50,11 +50,18 @@ const ReceptionPage = ({ options, user }) => {
 
   useEffect(()=>{
     if(user.level === 5 ){
-      let adminOptions = JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS")).options
-      setReceptionPageoptions(adminOptions)
-      
-      setSelectOptions(adminOptions)
-      setTargetBrandId(adminOptions.brandList[0].value)
+      if(!JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS"))){
+        router.push("/adminBrackeks/admin")
+        alert("올바른 접근이 아닙니다")
+      }
+      else{
+        let adminOptions = JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS")).options
+        
+        setReceptionPageoptions(adminOptions)
+        
+        setSelectOptions(adminOptions)
+        setTargetBrandId(adminOptions.brandList[0].value)
+      }
     }else{
       setSelectOptions(receptionPageoptions)
       setTargetBrandId(receptionPageoptions.brandList[0].value)

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import styled from "styled-components";
 
 import { OptionContext, UserContext } from "../../store/Context";
@@ -7,6 +7,7 @@ import { COMPANY, STORE, RECEIPT } from "../../constants/field";
 import { DEFAULT_OPTION } from "../../constants/select-option";
 import Input from "../Input";
 import SelectOption from "../SelectOption";
+import axios from "axios";
 
 const BasicInfo = ({
   targetBrandId,
@@ -17,8 +18,9 @@ const BasicInfo = ({
   searchCode = () => {}
   
 }) => {
-  const {headquarter_id: headquarterId} = useContext(UserContext);
+  const {headquarter_id: headquarterId,level:level} = useContext(UserContext);
   const { brandList } = useContext(OptionContext);
+  const [headquarterCode, setHeadquarterCode] = useState("");
   const [receiptCode, setReceiptCode] = useState("");
   const handleKeyPress = useCallback(
     (e) => {
@@ -32,14 +34,39 @@ const BasicInfo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [receiptCode]
   );
+
+  const getHeadquarterInfo=async()=>{
+    let hq_id
+    if(level === 5){
+      hq_id = sessionStorage.getItem('ADMIN_HEADQURTER');
+    }else if(level <2){
+      hq_id = headquarterId
+    }
+    const [data] = await Promise.all([
+      axios
+      .get(`${process.env.API_URL}/headquarter/headquarterInfo`,{
+      params: { headquarterId: hq_id},})
+      .then(({ data }) => data.body)
+      .catch(error=>{
+
+      })
+    ]);
+    setHeadquarterCode(data.headquarter_code)
+    console.log(data)
+  }
+
+  useEffect(()=>{
+    getHeadquarterInfo()
+  },[])
+
   return (
     <Wrapper>
       <Input
         title="회사코드:"
         type="text"
-        value={headquarterId}
+        value={headquarterCode}
         disabled={true}
-        styleOptions={{ width: "20px" }}
+        styleOptions={{ width: "88px" }}
       />
       <SelectOption
         title="브랜드:"
