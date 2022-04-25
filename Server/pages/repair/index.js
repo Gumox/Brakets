@@ -67,9 +67,7 @@ function Home({options,user})  {
 
 export const getServerSideProps = async (ctx) => {
   
-  console.log("ctx")
-  console.log(ctx.req.headers)
-  console.log("ctx")
+  
   const {
     data: { isAuthorized, user },
   } = await axios.get(
