@@ -80,7 +80,7 @@ function Table({ columns, data, searchList, getTargetData }) {
   )
 }
 
-const List = ({ data, handleDataClick = () => {} }) => {
+const List = ({data}) => {
 
   const columns = React.useMemo(() => [
     {Header: 'No', accessor: 'No'},
@@ -106,12 +106,34 @@ const List = ({ data, handleDataClick = () => {} }) => {
     {Header: '최초수정일', accessor: '최초수정일'},
   ],[])
 
-    const value = [];
+  let invoiceData = (
+    data == ""
+  ) ? (
+    "empty"
+  ) : (
+    data.data.flat().map((v, index) => ({
+      "No": index + 1,
+      "서비스카드 코드": "",
+      '매장명': "",
+      '출고일': v.release_date == "" ? "" : moment(v.release_date).format("YYYY-MM-DD"),
+      '상태': v.status,
+      '시즌': v.season,
+      'PartCode': v.partcode,
+      '컬러': v.color,
+      '사이즈': v.size,
+      '수량': v.qty,
+      '금액': v.amount,
+      '최초생성자': v.created,
+      '최초생성일': v.created_date == "" ? "" : moment(v.created_date).format("YYYY-MM-DD HH:mm:SS"),
+      '최초수정자': v.edited,
+      '최초수정일': v.edited_date == "" ? "" : moment(v.edited_date).format("YYYY-MM-DD HH:mm:SS"),
+    }))
+  )
 
   return (
     <Wrapper>
       <Styles>
-        <Table columns={columns} data={value}/>
+        <Table columns={columns} data={invoiceData == "empty" ? [] : invoiceData} />
       </Styles>
     </Wrapper>
   );
@@ -171,30 +193,5 @@ const Styles = styled.div`
     }
   }
 `
-
-const TableHeader = styled.thead`
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableHeaderCell = styled.th`
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  border: 2px solid ${COLOR.BLACK};
-`;
-
-const TableRow = styled.tr`
-  cursor: pointer;
-`;
-
-const TableData = styled.td`
-  max-width: ${({ width = "100px" }) => width};
-  width: ${({ width = "100px" }) => width};
-  min-width: ${({ width = "100px" }) => width};
-  text-align: ${({ textAlign = "center" }) => textAlign};
-  border: 1px solid ${COLOR.GRAY};
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-`;
 
 export default List;

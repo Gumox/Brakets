@@ -91,8 +91,8 @@ const Return = ({ options, user}) => {
         searchList = {searchList}
       />
       <List data={searchList} user={user}/>
-      {/* <Options user={user} handleSearchButtonClick={handleSearchButtonClick}/>
-      <Invoice/> */}
+      <Options user={user} handleSearchButtonClick={handleSearchButtonClick}/>
+      <Invoice/>
     </Content>
   );
 };

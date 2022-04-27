@@ -110,9 +110,9 @@ const StoreInfo = ({
         </Section>
         <Section width="120px">
           {/* TODO */}
-          { targetData[RECEIPT.ID] && (
+          {targetData[RECEIPT.ID] && (
             <ImageButton onClick={openReceiptImage}>사진 보기</ImageButton>
-          ) }
+          )}
         </Section>
       </SectionRow>
 

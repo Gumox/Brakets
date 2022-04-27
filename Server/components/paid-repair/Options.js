@@ -1,58 +1,48 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import moment from "moment";
-
 import COLOR from "../../constants/color";
 import store from "../../store/store";
 import axios from "axios";
 
 
-
-const Options = ({value, user}) => {
+const Options = ({ user, handleSearchButtonClick={} }) => {
 
   const [data, setData] = useState("");
-  const [itemList, setItemList] = useState([]);
 
-  const insertLog = async(list, user) =>{
-    const[datas] =await Promise.all([
-      axios.put(`${process.env.API_URL}/invoiceLogPaidRepair`,{
-        body: {list:list, user:user.name},
+  const insertLog = async (list, user) => {
+    const [datas] = await Promise.all([
+      axios.put(`${process.env.API_URL}/invoiceLogPaidRepair`, {
+        body: { list: list, user: user.name },
       })
-      .then(({ data }) => data)
-      .catch(error=>{
-  
-      })
+        .then(({ data }) => data)
+        .catch(error => {
+
+        })
     ])
+    console.log(list, user);
     return datas;
   }
 
-    useEffect(() => {
-    let items =[];
-
-      store.getState().selected_data.selectedFlatRows?.map((item) => {
-        items.push(item.original)
-      })
-      setItemList(items)
-      items=[];
-
-    
-  }, [data])
-
-  useEffect(() => {
-      console.log(store.getState())
-  })
-
-
   return (
+
     <Wrapper>
       <CustomerButton width="250px"
-        onClick={async() => {
-          console.log(itemList)
-          let tempData = await insertLog(itemList, user);
-          console.log(itemList)
+        onClick={async () => {
+          const items = [];
+          store.getState().selected_data.selectedFlatRows.map((item) => {items.push(item.original)})
+          const tempData = await insertLog(items, user);
           setData(tempData);
-          console.log(tempData); // read
+
+          const len = store.getState().selected_data.selectedFlatRows.length;
+
+          if(len == 0){
+            confirm("전표를 발행할 건을 선택해주세요.")
+          } else{
+            confirm("전표가 발행되었습니다.");
+            handleSearchButtonClick();    
           }
+
+        }
         }
       >
         선택된 항목 전표 발생/취소 (+,-)

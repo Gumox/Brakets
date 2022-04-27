@@ -16,7 +16,7 @@ const ReturnInvoice = ({}) => {
   const [itemList, setItemList] = useState([])
 
 
-  const insertLog = async(list) =>{
+  const getInvoiceLog = async(list) =>{
     const[datas] =await Promise.all([
       axios.post(`${process.env.API_URL}/invoiceLogPaidRepair/getInvoiceList`,{
         body: {list:list},
@@ -30,7 +30,7 @@ const ReturnInvoice = ({}) => {
   }
 
   useEffect(async() => {
-    let tmp = await insertLog(itemList);
+    let tmp = await getInvoiceLog(itemList);
     setData(tmp);
   }, [itemList])
 
@@ -44,10 +44,8 @@ const ReturnInvoice = ({}) => {
     items=[];
   });
   
-    
-  const invoiceData = ( data == "" ) ? ( [] ) : ( data );
-  console.log("invoice data is");
-  console.log(invoiceData);
+  const invoiceData = data == "" ? [] : data;
+  
   return (
     <Wrapper>
         <List data={invoiceData}/>

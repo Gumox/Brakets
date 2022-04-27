@@ -61,7 +61,6 @@ function Table({ columns, data, searchList, getTargetData }) {
               prepareRow(row)
               return (
                 <div key={i} {...row.getRowProps(
-                  { onClick: () => (getTargetData(row.original["서비스카드 번호"])) }
                 )} className="tr">
                   {row.cells.map((cell, j) => {
                     return (
@@ -130,15 +129,10 @@ const List = ({ data, handleDataClick = () => { } }) => {
     }))
   )
 
-  useEffect(() => {
-
-    console.log("data is")
+  {
     console.log(data)
-    console.log(data == "" ? "true" : invoiceData)
-  }, [])
+  }
 
-  console.log("data is")
-  console.log(invoiceData)
   return (
     <Wrapper>
       <Styles>

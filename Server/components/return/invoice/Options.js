@@ -4,17 +4,34 @@ import moment from "moment";
 
 import COLOR from "../../../constants/color";
 
-const Options = ({}) => {
+const Options = ({ user, handleSearchButtonClick={} }) => {
+
+  const [data, setData] = useState("");
+
+  const insertLog = async (list, user) => {
+    const [datas] = await Promise.all([
+      axios.put(`${process.env.API_URL}/invoiceLogPaidRepair`, {
+        body: { list: list, user: user.name },
+      })
+        .then(({ data }) => data)
+        .catch(error => {
+
+        })
+    ])
+    console.log(list, user);
+    return datas;
+  }
+  
   return (
     <Wrapper>
-      <CustomerButton>일괄선택</CustomerButton>
-      <CustomerButton width="250px">
+      {/* <CustomerButton>일괄선택</CustomerButton> */}
+      {/* <CustomerButton width="250px">
         선택된 항목 전표 발생/취소 (+,-)
-      </CustomerButton>
-      <Notice>
+      </CustomerButton> */}
+      {/* <Notice>
         하자반품 처리된 건에 대해 전표를 발행하는 부분입니다. 기 발행된 건의
         경우 취소하면 -전표가 발행되며, 내용수정이 가능합니다.
-      </Notice>
+      </Notice> */}
     </Wrapper>
   );
 };

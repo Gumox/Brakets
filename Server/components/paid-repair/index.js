@@ -71,9 +71,9 @@ const Return = ({options, user}) => {
         handleSearchButtonClick={handleSearchButtonClick}
         searchList={searchList}
       />
-      <List data={searchList} user={user}/>
-      {/* <Options user={user} handleSearchButtonClick={handleSearchButtonClick}/>
-      <Invoice/> */}
+      <List data={searchList}/>
+      <Options user={user} handleSearchButtonClick={handleSearchButtonClick}/>
+      <Invoice/>
     </Content>
     
   );

@@ -64,8 +64,6 @@ const Claim = ({user}) => {
           headquarter_id:hq_id,
           dateType: inputData["isMonthly"]? "month": "all",
           dateOption: 'complete_date',
-
-          // TODO
           resultId: 6
         } 
       })
@@ -87,8 +85,8 @@ const Claim = ({user}) => {
         searchList = {searchList}
       />
       <List data={searchList}/>
-      {/* <Invoice state = {"출고확정"}/>
-      <Invoice state = {"출고대기"}/> */}
+      <Invoice state = {"출고확정"} user = {user} handleSearchButtonClick = {handleSearchButtonClick}/>
+      <Invoice state = {"출고대기"} user = {user} handleSearchButtonClick = {handleSearchButtonClick}/>
     </Content>
   );
 };
