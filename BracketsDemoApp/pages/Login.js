@@ -18,22 +18,22 @@ import ip from '../serverIp/Ip';
 function Login({ navigation }): React.ReactElement {
 
   const [userId, setUserID] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [useraccount, setUseraccount] = useState('');
   const [isOn, setIsOn] = useState(false);
 
   const isFirstRun = useRef(true);
 
-  function SaveInfo(_userName, _userEmail, _data){
+  function SaveInfo(_userName, _useraccount, _data){
       
       AsyncStorage.setItem(
         'userInfo',
         JSON.stringify({
           'userName': _userName,
-          'userEmail': _userEmail,
+          'useraccount': _useraccount,
           "data": _data
         }), () => {
-          console.log('user id and user email\'s saved: ' + _userName, _userEmail);
-          store.dispatch({ type: 'storeStaffId', storeStaffId: _userEmail });
+          console.log('user id and user account\'s saved: ' + _userName, _useraccount);
+          store.dispatch({ type: 'storeStaffId', storeStaffId: _useraccount });
           store.dispatch({ type: 'storeName', storeName: _userName })
           store.dispatch({ type: 'STORE_ID', store_id: _data[0].store_id });
           store.dispatch({ type: 'USER_INFO', userInfo: _data })
@@ -49,7 +49,7 @@ function Login({ navigation }): React.ReactElement {
         const UserInfo = JSON.parse(result);
         console.log(UserInfo.data[0])
         store.dispatch({ type: 'USER_INFO', userInfo: UserInfo.data })
-        store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
+        store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.useraccount });
         store.dispatch({ type: 'storeName', storeName: UserInfo.userName })
         store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
         store.dispatch({type:"BRAND_ID",brand_id:UserInfo.data[0].brand_id })
@@ -67,11 +67,11 @@ function Login({ navigation }): React.ReactElement {
       LoadInfo();
       return;
     }
-    console.log(userEmail)
+    console.log(useraccount)
     const option = {
 
-      url: ip + `/api/auth/store?email=${userEmail}`,
-      // url: `http://34.64.182.76/api/auth/store?email=$&userId=`,
+      url: ip + `/api/auth/store?account=${useraccount}`,
+      // url: `http://34.64.182.76/api/auth/store?account=$&userId=`,
 
       method: 'GET',
       header: {
@@ -83,7 +83,7 @@ function Login({ navigation }): React.ReactElement {
     axios(option)
       .then(
         response => (response.status == '200') && (response.data.data[0].name) ? (
-          SaveInfo(response.data.data[0].name, userEmail, response.data.data)
+          SaveInfo(response.data.data[0].name, useraccount, response.data.data)
         ) : (
           console.log("response" + response)
         )
@@ -112,7 +112,7 @@ function Login({ navigation }): React.ReactElement {
     await getProfile();
 
     //console.log("(sign in)user id: " + userId);
-    //console.log("(sign in)user email: " + userEmail);
+    //console.log("(sign in)user account: " + useraccount);
   };
 
   const signOutWithKakao = async (): Promise<void> => {
@@ -123,14 +123,14 @@ function Login({ navigation }): React.ReactElement {
     const profile: KakaoProfile = await getKakaoProfile();
 
     console.log("profile id is " + profile.id);
-    console.log("profile email is " + profile.email);
+    console.log("profile account is " + profile.account);
 
     setUserID(profile.id);
-    setUserEmail(profile.email);
+    setUseraccount(profile.account);
     setIsOn(!isOn);
 
     console.log("(get profile)user id: " + userId);
-    console.log("(get profile)user email: " + userEmail);
+    console.log("(get profile)user account: " + useraccount);
 
   }
 

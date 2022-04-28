@@ -64,7 +64,7 @@ function Setting({ navigation }) {
         //user_id에 담긴 아이디 불러오기
         if (result !== null) {
             const UserInfo = JSON.parse(result);
-            console.log('닉네임 : ' + UserInfo.userEmail); // 출력 => 닉네임 : User1 
+            console.log('닉네임 : ' + UserInfo.useraccount); // 출력 => 닉네임 : User1 
             console.log('휴대폰 : ' + UserInfo.userName); //  출력 => 휴대폰 : 010-xxxx-xxxx
             console.log("load saved userId " + result);
 
@@ -73,7 +73,7 @@ function Setting({ navigation }) {
     });
 
     const storeName = store.getState().storeName;
-    const storeEmail = store.getState().storeStaffId;
+    const storeaccount = store.getState().storeStaffId;
 
     return (
         <Container style= {{backgroundColor:"#ffffff"}}>

@@ -19,7 +19,7 @@ function RepairReception({options,user}) {
 
   const [shop_id,set_shop_id] = useState()//options.info[0].store_id)
   
-  //const email = staff.email
+  //const account = staff.account
   const [selectedCompany,setSelectedCompany] = useState(null)
   const [listData,setListData] = useState()//options.list)
   

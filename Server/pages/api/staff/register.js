@@ -4,8 +4,8 @@ async function registerStaffs(staffs) {
   for (let staff of staffs) {
     const staffInsertResult = await excuteQuery({
       query:
-        "INSERT INTO `staff`(`email`, `name`, `phone`, `level`) VALUES (?,?,?,?)",
-      values: [staff.email, staff.name, staff.phone, staff.level],
+        "INSERT INTO `staff`(`account`, `name`, `phone`, `level`) VALUES (?,?,?,?)",
+      values: [staff.account, staff.name, staff.phone, staff.level],
     });
 
     const staffId = staffInsertResult.insertId;
@@ -21,7 +21,7 @@ async function registerStaffs(staffs) {
   }
 }
 
-// staff = { email, name, phone, level, store };
+// staff = { account, name, phone, level, store };
 const staffRegister = async (req, res) => {
   if (req.method == "POST") {
     console.log(req.body);

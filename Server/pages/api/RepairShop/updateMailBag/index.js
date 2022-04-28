@@ -4,7 +4,7 @@ import excuteQuery from "../../db";
  * 0단계 고객 수정
  */
 
-async function updateMailBag(mailbagCode, receipt_id) {
+async function updataccountBag(mailbagCode, receipt_id) {
   return excuteQuery({
     query: "UPDATE receipt_detail SET mailbag=? WHERE receipt_id=?",
     values: [mailbagCode,receipt_id],
@@ -21,7 +21,7 @@ const insertHistory = async (receipt_id,mailbag_code,to, from) => {
   }
 const controller = async (req, res) => {
   if (req.method === "POST") {
-    console.log(`[${new Date().toISOString()}] /api/RepairShop/updateMailBag`);
+    console.log(`[${new Date().toISOString()}] /api/RepairShop/updataccountBag`);
     console.log(req.body);
 
     const to = req.body.to;
@@ -37,7 +37,7 @@ const controller = async (req, res) => {
 
     try {
         const historyResult = await insertHistory(receipt_id,code,to, from);
-        const result = await updateMailBag(code, receipt_id);
+        const result = await updataccountBag(code, receipt_id);
         console.log(result)
 
         if (historyResult.error) throw new Error(historyResult.error);

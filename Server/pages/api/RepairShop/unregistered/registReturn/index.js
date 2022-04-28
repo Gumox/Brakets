@@ -30,7 +30,7 @@ let results=[]
   return results
 }
 
-// staff = { email, name, phone, level, store };
+// staff = { account, name, phone, level, store };
 const registReturn = async (req, res) => {
   if (req.method == "POST") {
     console.log("api/RepairShop/unregistered/registReturn")

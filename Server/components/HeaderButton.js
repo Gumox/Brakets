@@ -15,6 +15,7 @@ const HeaderButton = ({ title, link, path }) => {
 
 const Wrapper = styled.div`
   width: 11%;
+  min-width:115px;
   height: 100%;
   display: flex;
   justify-content: center;

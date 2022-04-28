@@ -28,4 +28,4 @@ const staff = async (req, res) => {
 
 export default staff;
 
-// const staff = { name, email, phone, level };
+// const staff = { name, account, phone, level };

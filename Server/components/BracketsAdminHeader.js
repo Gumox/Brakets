@@ -19,15 +19,7 @@ const BracketsAdminHeader = ({ path }) => {
       <MenuWrapper>
         <MenuWrapper style={{width:250,justifyContent:"center"}}>
           <h1>수선</h1>
-          <OkImage src="/icons/OK_image.png" width={81} height={52} onClick={()=>{
-            let loadUser = JSON.parse(sessionStorage.getItem("USER"))
-          if(loadUser.level !=3 && loadUser.level !=4){
-            
-            router.push("/");
-          }else{
-            router.push("/repair");
-          }
-          }}/>
+          <OkImage src="/icons/OK_image.png" width={81} height={52} />
         </MenuWrapper>
         
         <h2 style={{marginLeft:"3%"}}>브래키츠 관리자</h2>

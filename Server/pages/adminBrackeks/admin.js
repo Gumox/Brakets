@@ -7,10 +7,11 @@ import { debounce } from "lodash";
 import BracketsAdminHeader from "../../components/BracketsAdminHeader";
 import COLOR from "../../constants/color";
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import Main from "../../components/BracketsAdmin/Main";
-import Modal from "../../components/BracketsAdmin/Modal";
+import Modal from "../../components/BracketsAdmin/LinkModal";
+import { UserContext } from "../../store/Context";
+import LeftSideBar from "../../components/BracketsAdmin/LeftSidebar";
 
-const AdminHome = () => {
+const AdminHome = ({user,infos,brands,staffs}) => {
     const router = useRouter();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,41 +38,26 @@ const AdminHome = () => {
         }
     },[])
     return (
-        <SrollWrapper>
+      <UserContext.Provider value={user}>
+        <Wrapper>
             <BracketsAdminHeader/>
             
-            <Wrapper>
+            <SrollWrapper>
                 <SidebarSpace>
-                    <ProSidebar>
-                        <Menu iconShape="square">
-                            <MenuItem></MenuItem>
-                            <SubMenu title="회사 관리">
-                                <MenuItem style={styles.menu} onClick={()=>{setPageNumber(1)}}>회사 목록</MenuItem>
-                                <MenuItem style={styles.menu} onClick={()=>{setPageNumber(2)}}>회사 등록</MenuItem>
-                            </SubMenu>
-                            <SubMenu title="전체관리자 관리">
-                                <MenuItem style={styles.menu} onClick={()=>{setPageNumber(3)}}>관리자 목록</MenuItem>
-                                <MenuItem style={styles.menu} onClick={()=>{setPageNumber(4)}}>관리자 등록</MenuItem>
-                            </SubMenu>
-                            <div style={{height:15}}/>
-                            <MenuItem onClick={() => {setIsModalOpen(true)}}>서비스 센터 웹 바로가기</MenuItem>
-                        </Menu>
-                    </ProSidebar>
+                    <LeftSideBar/>
                 </SidebarSpace>
             
                 <MainSpace  style={{height:windowHeight}}>
-                    <Main pageNumber ={pageNumber}/>
                 </MainSpace>
-            </Wrapper>
+            </SrollWrapper>
             {isModalOpen && (
               <Modal handleCloseButtonClick={closeModal} width={windowHeight}>
-                {
-                  
-                }
+                
               </Modal>
             )}
 
-        </SrollWrapper>
+        </Wrapper>
+      </UserContext.Provider>
     );
 };
 
@@ -98,10 +84,35 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
+  const [infos] = await Promise.all([
+    axios
+      .get(`${process.env.API_URL}/headquarter`,)
+      .then(({ data }) => data.body), 
+    ])
+    const [brands] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/brand/AllBrandList`,)
+        .then(({ data }) => data.data), 
+    ])
+    const [staffs] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/headquarter/staff`,)
+        .then(({ data }) => data.body), 
+    ])
+    
+    
     
   
   if(user.level ===5){
-    return { props: {user:user} };
+    return {
+      props:
+      {
+        user:user,
+        infos:infos,
+        brands:brands,
+        staffs:staffs
+      } 
+    };
   }else{
     return {
       redirect: {
@@ -116,10 +127,15 @@ const styles = {
         color:COLOR.BLACK
     },
 }
-
+const Wrapper = styled.div`
+    
+background-color:${COLOR.INDIGO};
+`;
 
 const SrollWrapper = styled.nav`
-  overflow: scroll;
+display:flex;
+flex-direction:row;
+  overflow: auto;
   &::-webkit-scrollbar {
     width: 8px;
     height: 10px;
@@ -133,18 +149,14 @@ const SrollWrapper = styled.nav`
 
 
 const SidebarSpace = styled.div`
+background-color:${COLOR.INDIGO};
 `;
 const MainSpace=styled.div`
     background-color:${COLOR.WHITE};
     width :100%;
-    height :100%;
 `;
 
-const Wrapper = styled.div`
-    background-color:${COLOR.INDIGO};
-    display:flex;
-    flex-direction:row;
-`;
+
 const Title = styled.div`
   margin-bottom: 30px;
   padding: 10px 30px;

@@ -59,7 +59,7 @@ const ReceiptInfo = ({
     const body ={...targetData,manager_id:userInfo.staff_id}
     console.log(body)
     
-    /*const [data] = await Promise.all([
+    const [data] = await Promise.all([
         axios
         .put(`${process.env.API_URL}/receipt/inputSave`, { body: body  })
         .then(({ data }) => data),
@@ -70,7 +70,7 @@ const ReceiptInfo = ({
       .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
       .then(({ data }) => data),
     ])
-    window.location.reload();*/
+    window.location.reload();
       
   }
   const [discount, setDiscount] = useState();

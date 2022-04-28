@@ -5,6 +5,7 @@ async function getList(query,values) {
         query: `SELECT 
                         receipt.receipt_code,
                         brand.headquarter_id,
+                        brand.brand_name,
                         brand.brand_code,
                         store.store_id,
                         store.name,

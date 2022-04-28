@@ -67,7 +67,7 @@ function Login({ navigation }) {
 
     const option = {
 
-      url: ip + `/api/auth/repair?email=${result}`,
+      url: ip + `/api/auth/repair?account=${result}`,
       method: 'GET',
       header: {
         'Content-Type': 'application/json'

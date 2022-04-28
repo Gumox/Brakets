@@ -2,7 +2,19 @@ import excuteQuery from "../db"
 
 async function getHeadquarter() {
     const result = await excuteQuery({
-        query: `SELECT headquarter_id  AS value, headquarter_name_kr AS text,headquarter_name FROM headquarter`,
+        query: `SELECT 
+                      headquarter_id  AS value,
+                      headquarter_name_kr AS text,
+                      headquarter_name,
+                      headquarter_code,
+                      headquarter_call,
+                      state,
+                      ceo,	
+                      ceo_address,	
+                      ceo_email,
+                      company_registration_number,
+                      timestamp
+                FROM headquarter`,
       });
     
       return result;

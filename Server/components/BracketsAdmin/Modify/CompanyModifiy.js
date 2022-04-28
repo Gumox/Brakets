@@ -1,38 +1,49 @@
 import React,{useState,useEffect} from "react";
 import styled from "styled-components";
-import COLOR from "../../constants/color";
+import COLOR from "../../../constants/color";
 import Link from 'next/link';
-const RegistCompay = () =>{
-    const [check,setCheck] = useState(false)
-    const [compayNameEN,setCompayNameEN] = useState("")
-    const [compayCode,setCompayCode] = useState("")
-    const [address,setAddress] = useState("")
+import remakeCallNumber from "../../../functions/remakeCallNumber";
+import axios from "axios";
+const CompanyModify = ({
+    info=[],
+    cancelButton=(e)=>{}
+}) =>{
+    const [state,setState] = useState(info.state)
 
-    const codeNameHandler =(e)=>{
-        //e.target.value = e.target.value.replace(/[^A-Za-z]/ig, '')
-        let nameEN =e.target.value;
-        nameEN.toUpperCase();
-        setCompayNameEN(e.target.value);
-        if(e.target.value.length>0){
-            setCompayCode(`H.${nameEN.toUpperCase()}`)
-        }else{
-            setCompayCode("")
+    const [ceo,setCeo] = useState(info.ceo)
+    const [ceoAddress,setCeoAddress] = useState(info.ceo_address)
+    const [ceoEmail,setceoEmail] = useState(info.ceo_email)
+    const [companyRegistrationNumber,setCompanyRegistrationNumber] = useState(info.company_registration_number)
+    const [call,setCall] = useState(info.headquarter_call)
+
+   
+    const modifyHeadquarter = async() =>{
+        const bodyData = {
+            state:state,
+            ceo:ceo,
+            ceo_address:ceoAddress,
+            ceo_email:ceoEmail,
+            company_registration_number:companyRegistrationNumber,
+            headquarter_call:call,
+
+            headquarter_id:info.value
         }
+        const [result] = await Promise.all([
+            axios
+              .post(`${process.env.API_URL}/headquarter/update`,bodyData)
+              .then(({ data }) => data.body), 
+            ])
+            console.log(result)
+        window.location.reload();
     }
-    const addressHandler =(e)=>{
-        let add = e.target.value
-        console.log(add)
-        
-        setAddress(add)
-        
-    }
+    
     
     return(
         <Wrapper>
             <InsideWrapper>
             <InputTableBox>
                 
-                <h3>회사 정보 등록</h3>
+                <h2>회사 정보 등록</h2>
                 <PrView>
                     <NameBox  >
                         회사 이름
@@ -47,13 +58,12 @@ const RegistCompay = () =>{
                             
                         </ColView>
                         <ColView>
-                            <div style={{ marginLeft:10,marginBottom:5,fontSize:15, flex:1}}><InputLine style={{textTransform: "uppercase",fontSize:13,}}></InputLine></div>
-                            <div style={{ marginLeft:10,marginTop:5,fontSize:15, flex:1}}>
-                            <InputLine value={compayNameEN}  
-                                style={{textTransform: "uppercase",fontSize:13,}}
-                                onChange={(e)=>{
-                                    codeNameHandler(e);
-                            }}></InputLine></div>
+                            <div style={{ marginLeft:10,marginBottom:5,fontSize:15, flex:1,fontWeight:"bold"}}>
+                                {info.text}
+                            </div>
+                            <div style={{ marginLeft:10,marginTop:5,fontSize:15, flex:1,fontWeight:"bold"}}>
+                                {info.headquarter_name}
+                            </div>
                             
                         </ColView>
                     </TwoNameBox>
@@ -66,7 +76,7 @@ const RegistCompay = () =>{
                     <InputBox>
                     <CenterView>
                         <div style={{marginLeft:10,fontSize:20}}>
-                        {compayCode}
+                            {info.headquarter_code}
                         </div>
                     </CenterView>
                     </InputBox>
@@ -79,7 +89,7 @@ const RegistCompay = () =>{
                     </NameBox>
 
                     <InputBox>
-                        <InputLine style={{flex:1, margin: 10}}></InputLine>
+                        <InputLine style={{flex:1, margin: 10}} value={ceo || ''} onChange={(e)=>{setCeo(e.target.value)}}></InputLine>
                     </InputBox>
 
                     <NameBox>
@@ -87,7 +97,7 @@ const RegistCompay = () =>{
                     </NameBox>
 
                     <InputBox>
-                        <InputLine type="number" style={{flex:1, margin: 10}}></InputLine>
+                        <InputLine style={{flex:1, margin: 10}} value={companyRegistrationNumber || ''}  onChange={(e)=>{setCompanyRegistrationNumber(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 
@@ -97,8 +107,8 @@ const RegistCompay = () =>{
                     </NameBox>
 
                     <InputBox>
-                        <InputLine value={address} type="number" style={{flex:1, margin: 10}} 
-                            onChange={(e)=>{addressHandler(e)}}                        
+                        <InputLine value={ceoAddress} style={{flex:1, margin: 10}} 
+                            onChange={(e)=>{setCeoAddress(remakeCallNumber(e))}}                        
                         />
                     </InputBox>
 
@@ -107,7 +117,7 @@ const RegistCompay = () =>{
                     </NameBox>
 
                     <InputBox>
-                        <InputLine style={{flex:1, margin: 10}}></InputLine>
+                        <InputLine style={{flex:1, margin: 10}} value={ceoEmail || ''} onChange={(e)=>{setceoEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 
@@ -124,7 +134,7 @@ const RegistCompay = () =>{
                         
                     </NameBox>
                     <InputBox style={{borderRight:0}}>
-                        <InputLine style={{flex:1, margin: 10}}></InputLine>
+                        <InputLine style={{flex:1, margin: 10}} value={call || ''} onChange={(e)=>{setCall(e.target.value)}}></InputLine>
                     </InputBox>
 
                     <NameBox style={{borderLeft:0,borderRight:0,borderColor:COLOR.BLACK }}>
@@ -148,36 +158,56 @@ const RegistCompay = () =>{
                     <LongInputBox style={{}}>
                         <PrView>
                             <CenterView style={{margin:10}}>
-                            <CheckBox type="checkbox" checked={check} onClick={()=>{setCheck(!check)}}/>
+                            <CheckBox type="checkbox" checked={state} onChange ={()=>{setState(!state)}}/>
                             <div>사용함</div>
 
                             </CenterView>
                             <CenterView style={{margin:15}}>
-                            <CheckBoxRed type="checkbox" checked={!check} onClick={()=>{setCheck(!check)}}/>
+                            <CheckBoxRed type="checkbox" checked={!state} onChange ={()=>{setState(!state)}}/>
                             <div>사용 안함</div>
 
                             </CenterView>
                         </PrView>
                     </LongInputBox>
                 </PrView>
-                
-                <PrView >
-                    <NameBox style={{height:100}}>
-                        메모
-                    </NameBox>
+                <CenterView>
+                <RegistButton onClick={()=>{modifyHeadquarter()}}>
+                    수정
+                </RegistButton>
 
-                    <LongInputBox style={{height:100}}>
-                        <InputLineArea multiple={true} style={{flex:1, margin: 10}}></InputLineArea>
-                    </LongInputBox>
-                </PrView>
+                <RegistButton style={{backgroundColor : COLOR.RED}} onClick={()=>{cancelButton()}}>
+                    취소
+                </RegistButton>
+            </CenterView>
+                
                 
             </InputTableBox>
             </InsideWrapper>
+           
         </Wrapper>
     )
 }
+const RegistButton =styled.button`
+    background-color : ${COLOR.INDIGO};
+    width:80px;
+    height : 50px;
+    color:${COLOR.WHITE};
+    margin:20px;
+    font-size:16px;
+    border-radius:10px;
+
+`
 const Wrapper  = styled.div`
     overflow:auto;
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 10px;
+        background: rgba(210, 210, 210, 0.4);
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(96, 96, 96, 0.7);
+        border-radius: 6px;
+      }
 `;
 const InsideWrapper  = styled.div`
     display:flex;
@@ -186,6 +216,7 @@ const InsideWrapper  = styled.div`
     flex-direction: column;
 `;
 const InputTableBox  = styled.div`
+    min-height:720px;
     width:1080px;
 `;
 const PrView  = styled.div`
@@ -292,4 +323,4 @@ const CheckBoxRed = styled.input `
 
 `
 
-export default RegistCompay
+export default CompanyModify

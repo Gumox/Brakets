@@ -7,7 +7,7 @@ import bracketsAdminSelect from "../../functions/bracketsAdminSelect";
 import COLOR from "../../constants/color";
 import axios from "axios";
 
-const Modal = ({ options, children, handleCloseButtonClick ,width}) => {
+const LinkModal = ({ options, children, handleCloseButtonClick ,width}) => {
   const router = useRouter();
   const [companys,setCompanys] = useState([])
   const [selectCompany,setSelectCompany] = useState(0)
@@ -162,4 +162,4 @@ const SubmitButton = styled.button`
   color : ${COLOR.WHITE};
 `;
 
-export default Modal;
+export default LinkModal;

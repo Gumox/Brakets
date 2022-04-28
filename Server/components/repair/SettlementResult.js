@@ -42,7 +42,7 @@ const SettlementResult =({
     const rearrangementList =(excel,item,type,hqStaff,repairStaff,adjustment,adjustmentReason,remarks) =>{
         let obj={}
         ////console.log(item)
-        obj["브랜드"] = item.brand_code;
+        obj["브랜드"] = item.brand_name;
         obj["서비스 번호"] = item.receipt_code;
         obj["매장정보"] = item.name+"\n"+item.store_contact;
         obj["고객정보"] = item.customer_name+"\n"+item.customer_phone;
@@ -163,7 +163,7 @@ const SettlementResult =({
         
            <LaView><Container>
             <CheckBoxView><input disabled ={disable} type= "checkbox" onClick={()=>{onCheck(!check)}}/></CheckBoxView>
-            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{item.brand_code}</ItemView>
+            <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{item.brand_name}</ItemView>
             <ItemView style={{width:(windowWidth||0)*0.0692,minWidth:83}}>{item.receipt_code}</ItemView>
             <div style={{width:(windowWidth||0)*0.0692,minWidth:83}}> 
                 <ItemInsideView>{item.name}</ItemInsideView>

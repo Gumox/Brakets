@@ -35,13 +35,13 @@ const store = async (req, res) => {
       try {
         const {
             userId, // 날짜기준
-            email, // 기간전체, 하루만
+            account, // 기간전체, 하루만
         } = req.query;
         let query = "";
         let values = [];
 
-        query += "AND (id=? OR email=?)";
-        values = [userId,email];
+        query += "AND (id=? OR account=?)";
+        values = [userId,account];
   
         console.log(query)
         console.log(values)

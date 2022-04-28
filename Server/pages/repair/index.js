@@ -89,10 +89,10 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-    const {email :email} =user
+    const {account :account} =user
     
       const [companys] = await Promise.all([
-        axios.get(`${process.env.API_URL}/auth/repair?email=${email}`)
+        axios.get(`${process.env.API_URL}/auth/repair?account=${account}`)
         .then(({ data }) => data)
         .catch(error=>{
   

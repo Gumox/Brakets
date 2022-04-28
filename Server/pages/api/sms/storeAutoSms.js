@@ -55,14 +55,14 @@ async function getSender(storeId) {
 
   return result;
 }
-async function smsMessage(brand,store) {
+async function smsMessage(brand,store,code) {
   const result = await excuteQuery({
     query: `SELECT * 
             FROM auto_sms_message 
             WHERE auto_sms_message_id = 1`,
   });
   console.log(result[0])
-  const msg = brand+" "+result[0].auto_sms_message1+" "+store +result[0].auto_sms_message2
+  const msg = brand+" "+result[0].auto_sms_message1+" "+store +result[0].auto_sms_message2+" "+code +result[0].auto_sms_message3
 
   return msg;
 }
