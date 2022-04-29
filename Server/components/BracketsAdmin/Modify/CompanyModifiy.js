@@ -8,6 +8,7 @@ const CompanyModify = ({
     info=[],
     cancelButton=(e)=>{}
 }) =>{
+    console.log(info)
     const [state,setState] = useState(info.state)
 
     const [ceo,setCeo] = useState(info.ceo)
@@ -28,6 +29,7 @@ const CompanyModify = ({
 
             headquarter_id:info.value
         }
+        console.log(bodyData)
         const [result] = await Promise.all([
             axios
               .post(`${process.env.API_URL}/headquarter/update`,bodyData)

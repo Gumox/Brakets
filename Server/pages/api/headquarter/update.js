@@ -27,7 +27,7 @@ async function getHeadquarter(
                     ceo_email = ?,
                     company_registration_number = ?,
                     headquarter_call = ?
-                    WHERE headquarter_id = 1
+                    WHERE headquarter_id = ?
                     `,
         values:[
             state,
@@ -78,6 +78,7 @@ const controller = async (req, res) => {
                                     headquarter_call,
                                     headquarter_id
                                     );
+                                    console.log(result)
       if (result.error) throw new Error(result.error);
         res.status(200).json({ body: result });
     } catch (err) {
