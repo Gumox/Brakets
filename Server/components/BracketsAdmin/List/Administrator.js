@@ -12,6 +12,7 @@ const Administrator = ({
     staffs,
     setModifyAcion=()=>{}
 }) =>{
+    console.log(staffs)
     return(
         <Wrapper>
             {staffs.map((item,index)=>{
@@ -55,7 +56,7 @@ const Administrator = ({
                     <HeaderCell >
                         <ModifyButton
                             onClick={()=>{setModifyAcion(
-                                <AdministratorModifiy info={item} setModifyAcion={setModifyAcion}/>
+                                <AdministratorModifiy staffs={staffs} info={item} setModifyAcion={setModifyAcion}/>
                             )}}
                         >수정</ModifyButton>
                     </HeaderCell>

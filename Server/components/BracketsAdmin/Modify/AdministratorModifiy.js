@@ -2,12 +2,14 @@ import React,{useState,useEffect,} from "react";
 import styled from "styled-components";
 import COLOR from "../../../constants/color";
 import { useRouter } from "next/router";
+import _ from "lodash";
 import Link from 'next/link';
 import remakeCallNumber from "../../../functions/remakeCallNumber";
 import axios from "axios";
 
 const AdministratorModifiy = ({
     info,
+    staffs=[],
     user,
     setModifyAcion=()=>{}
 }) =>{
@@ -35,7 +37,16 @@ const AdministratorModifiy = ({
             console.log(result)
         window.location.reload();
     }
-    
+    const checkBeforeModify = () =>{
+        let filt = _.filter(staffs,{headquarter_id: Number(info.headquarter_id)})
+        let check = _.filter(filt,{staff_state: 1})
+        if(check.length>0 && check[0].staff_id !== info.staff_id){
+            alert("해당 회사의 사용중인 전채관리자가 존재합니다")
+            setState(false)
+        }else{
+            setState(!state)
+        }
+    }
     return (
         <Wrapper>
             
@@ -118,12 +129,12 @@ const AdministratorModifiy = ({
                     <LongInputBox style={{}}>
                         <PrView>
                             <CenterView style={{margin:10}}>
-                            <CheckBox type="checkbox" checked={state} onChange ={()=>{setState(!state)}}/>
+                            <CheckBox type="checkbox" checked={state} onChange ={()=>{checkBeforeModify(!state)}}/>
                             <div>사용함</div>
 
                             </CenterView>
                             <CenterView style={{margin:15}}>
-                            <CheckBoxRed type="checkbox" checked={!state} onChange ={()=>{setState(!state)}}/>
+                            <CheckBoxRed type="checkbox" checked={!state} onChange ={()=>{checkBeforeModify(!state)}}/>
                             <div>사용 안함</div>
 
                             </CenterView>
