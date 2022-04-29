@@ -5,9 +5,19 @@ async function setHeadquarterAdministrator(
     account,
     name,
     phone,
-    staff_code
+    staff_code,
+    staff_email
 
 ) {
+  console.log(
+    state,
+    account,
+    name,
+    phone,
+    staff_code,
+    staff_email
+
+  )
     const result = await excuteQuery({
         query: `INSERT INTO 
                     staff(
@@ -15,16 +25,18 @@ async function setHeadquarterAdministrator(
                     account,
                     name,
                     phone,
-                    level
-                    staff_code
-                    ) VALUES (?,?,?,?,?,?)`,
+                    level,
+                    staff_code,
+                    staff_email
+                    ) VALUES (?,?,?,?,?,?,?)`,
         values:[
             state,
             account,
             name,
             phone,
+            0,
             staff_code,
-            0
+            staff_email
         ]
       });
     
@@ -56,7 +68,7 @@ async function getHeadquarterStore(
     headquarter_id
 ) {
   const resultStore = await excuteQuery({
-    query: `SELECT * FROM store WHERE brand_id =? `,
+    query: `SELECT * FROM store WHERE store_type=0 AND brand_id =? `,
     values:[headquarter_id]
   });
   
@@ -74,18 +86,22 @@ const controller = async (req, res) => {
             name,
             phone,
             staff_code,
+            staff_email,
             headquarter_id
         } =req.body
         
     try {
+      let _phone = String(phone).replace(/-/g,"")
       const result = await setHeadquarterAdministrator(
                                             state,
                                             account,
                                             name,
-                                            phone,
-                                            staff_code
+                                            _phone,
+                                            staff_code,
+                                            staff_email
                                     );
       if (result.error) throw new Error(result.error);
+      console.log(result)
 
       const staff_id = result.insertId
       const getStore = await getHeadquarterStore(headquarter_id)

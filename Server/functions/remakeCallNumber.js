@@ -1,5 +1,5 @@
-const remakeCallNumber=(e)=>{
-    let numberString = String(e.target.value).replace(/-/g,"")
+const remakeCallNumber=(value)=>{
+    let numberString = String(value).replace(/-/g,"")
     let fst="",scd = "",thr="";
     
     if(numberString.length >2){
@@ -38,7 +38,7 @@ const remakeCallNumber=(e)=>{
         }
         return(fst+scd+thr)
     }else{
-        return( e.target.value)
+        return( value)
     }
 
     

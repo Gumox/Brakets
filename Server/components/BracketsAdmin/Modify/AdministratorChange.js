@@ -6,25 +6,25 @@ import Link from 'next/link';
 import remakeCallNumber from "../../../functions/remakeCallNumber";
 import axios from "axios";
 
-const AdministratorModifiy = ({
+const AdministratorChange = ({
     info,
     user,
     setModifyAcion=()=>{}
 }) =>{
     console.log(info)
     const router = useRouter();
-    const [cCode,setCCode] =useState("")
-    const [state,setState] =useState(info.staff_state)
-    const [KakaoAcount,setKakaoAcount] =useState(info.staff_account)
-    const [staffEmail,setStaffEmail] =useState(info.staff_email)
-    const [phone,setPhone] =useState(info.staff_phone)
+    const cCode=info.headquarter_code
+    const [KakaoAcount,setKakaoAcount] =useState(null)
+    const [staffEmail,setStaffEmail] =useState(null)
+    const [administratorName,setAdministratorName] =useState(null)
+    const [phone,setPhone] =useState(null)
     const adminCode = info.staff_code;
 
-    const modifyAdministrator = async() =>{
+    const changeAdministrator = async() =>{
         const bodyData = {
-            state:state,
-            phone:phone,
-            staff_email:staffEmail,
+            state:false,
+            phone:info.staff_phone,
+            staff_email:info.staff_email,
             staff_id:info.staff_id,
         }
         const [result] = await Promise.all([
@@ -32,7 +32,23 @@ const AdministratorModifiy = ({
               .post(`${process.env.API_URL}/headquarter/updateAdministrator`,bodyData)
               .then(({ data }) => data.body), 
             ])
+
+        const body = {
+            state: true,
+            account: KakaoAcount,
+            name: administratorName,
+            phone: phone,
+            staff_code:adminCode,
+            staff_email:staffEmail,
+            headquarter_id :info.headquarter_id
+        }
+        const [regist] = await Promise.all([
+            axios
+                .post(`${process.env.API_URL}/headquarter/registAdministrator`,body)
+                .then(({ data }) => data.body), 
+            ])
             console.log(result)
+            router.push("/adminBrackeks/AdministratorList")
         window.location.reload();
     }
     
@@ -47,8 +63,42 @@ const AdministratorModifiy = ({
                 <InsideWrapper>
             <InputTableBox>
                 
-                <h2 style={{fontWeight:"bold"}}>{"전체관리자 정보 & 상태 수정"}</h2>
-                
+                <h2 style={{fontWeight:"bold"}}>{"전체관리자 변경"}</h2>
+                <PrView>
+                    <NameBox  >
+                        회사 이름
+                    </NameBox>
+                    
+
+                    <InputBox style={{alignItems:"center"}}>
+                        <ColView style={{ marginLeft:10,}}>
+                            <div style={{marginBottom:5,fontSize:15}}>한글</div>
+                            <div style={{marginTop:5,fontSize:15}}>영문</div>
+                            
+                        </ColView>
+                        <ColView>
+                            <div style={{ marginLeft:10,marginBottom:5,fontSize:15, flex:1, fontWeight:"bold"}}>
+                                {info.headquarter_name_kr}
+                            </div>
+
+                            <div style={{ marginLeft:10,marginTop:5,fontSize:15, flex:1, fontWeight:"bold"}}>
+                                {info.headquarter_name} 
+                            </div>
+                            
+                        </ColView>
+                    </InputBox>
+
+                    <NameBox>
+                        회사코드
+                    </NameBox>
+
+                    <InputBox>
+                        <CenterView  style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                            {cCode}
+                        </CenterView>
+                    </InputBox>
+                    
+                </PrView>
                 
                 <PrView>
                     <NameBox>
@@ -71,9 +121,7 @@ const AdministratorModifiy = ({
                     </NameBox>
 
                     <InputBox >
-                        <div style={{paddingLeft:20,display:"flex",alignItems:"center",fontWeight:"bold",fontSize:18}}>
-                            {info.staff_name}
-                        </div>
+                        <InputLine value={administratorName} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorName(e.target.value)}}></InputLine>
                     </InputBox>
 
                     <NameBox>
@@ -87,9 +135,7 @@ const AdministratorModifiy = ({
                     </NameBox>
 
                     <InputBox>
-                        <div style={{paddingLeft:20,display:"flex",alignItems:"center",fontWeight:"bold",fontSize:18}}>
-                            {KakaoAcount}
-                        </div>
+                         <InputLine value={KakaoAcount} style={{flex:1, margin: 10}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 <PrView>
@@ -110,34 +156,15 @@ const AdministratorModifiy = ({
                     </InputBox>
                 </PrView>
                 
-                <PrView>
-                    <NameBox>
-                        전체관리자 상태
-                    </NameBox>
-
-                    <LongInputBox style={{}}>
-                        <PrView>
-                            <CenterView style={{margin:10}}>
-                            <CheckBox type="checkbox" checked={state} onChange ={()=>{setState(!state)}}/>
-                            <div>사용함</div>
-
-                            </CenterView>
-                            <CenterView style={{margin:15}}>
-                            <CheckBoxRed type="checkbox" checked={!state} onChange ={()=>{setState(!state)}}/>
-                            <div>사용 안함</div>
-
-                            </CenterView>
-                        </PrView>
-                    </LongInputBox>
-                </PrView>
+               
                 
                 
                 
                     </InputTableBox>
                     </InsideWrapper>
                     <CenterView>
-                        <RegistButton onClick={()=>{modifyAdministrator()}}>
-                            수정
+                        <RegistButton onClick={()=>{changeAdministrator()}}>
+                            변경
                         </RegistButton>
                         <RegistButton  onClick={()=>{setModifyAcion(null)}}>
                             취소
@@ -301,4 +328,4 @@ const MainSpace=styled.div`
 
 
 
-export default AdministratorModifiy
+export default AdministratorChange

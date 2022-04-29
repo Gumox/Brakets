@@ -20,6 +20,7 @@ const AdministratorRegist = ({infos,user}) =>{
     const [administratorName,setAdministratorName] =useState()
     const [kakaoAcount,setKakaoAcount] =useState()
     const [administratorAddress,setAdministratorAddress] =useState()
+    const [administratorEmail,setAdministratorEmail] =useState()
     const [headquarterId,setHeadquarterId] =useState()
 
 
@@ -54,11 +55,12 @@ const AdministratorRegist = ({infos,user}) =>{
             name: administratorName,
             phone: administratorAddress,
             staff_code:adminCode,
+            staff_email:administratorEmail,
             headquarter_id :headquarterId
         }
         const [result] = await Promise.all([
             axios
-              .post(`${process.env.API_URL}/headquarter/regist`,bodyData)
+              .post(`${process.env.API_URL}/headquarter/registAdministrator`,bodyData)
               .then(({ data }) => data.body), 
             ])
             console.log(result)
@@ -185,7 +187,7 @@ const AdministratorRegist = ({infos,user}) =>{
                     </NameBox>
 
                     <InputBox>
-                        <InputLine style={{flex:1, margin: 10}}></InputLine>
+                        <InputLine value={administratorEmail} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 
@@ -205,7 +207,7 @@ const AdministratorRegist = ({infos,user}) =>{
                 
                 
                     <CenterView>
-                        <RegistButton>
+                        <RegistButton onClick={()=>{registAdministrator()}}>
                             등록
                         </RegistButton>
                     </CenterView>

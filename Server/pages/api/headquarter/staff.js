@@ -7,11 +7,13 @@ async function getHeadquarter() {
                     headquarter.headquarter_name,
                     headquarter.headquarter_name_kr,
                     headquarter.headquarter_code,
+                    staff.staff_id  AS staff_id,
                     staff.name AS staff_name,
                     staff.account AS staff_account,
                     staff.phone AS staff_phone,
                     staff.staff_code AS staff_code,
-                    staff.state AS staff_state
+                    staff.state AS staff_state,
+                    staff.staff_email
                 FROM staff
                 JOIN staff_store ON staff.staff_id = staff_store.staff_id 
                 LEFT JOIN store ON staff_store.store_id = store.store_id

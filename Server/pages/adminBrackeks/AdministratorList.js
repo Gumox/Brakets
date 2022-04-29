@@ -83,14 +83,14 @@ const AdministratorList = ({user,infos,brands,staffs}) => {
                                 </div>
                             </PrView>
                             <div style={{flex:3,display:"flex",alignItems:"center"}}>
-                                <CustomButton>조회</CustomButton>
+                               
                             </div>
                         </PrView>
                     <h2 style={{marginLeft:20}}>전체 관리자 목록</h2>
                         <InputTableBox>
                         <PrView>
                             
-                            <HeaderCell>
+                            <HeaderCell style={{borderLeft:"2px solid"}}>
                                 회사이름
                             </HeaderCell>
 
@@ -109,6 +109,9 @@ const AdministratorList = ({user,infos,brands,staffs}) => {
                             <HeaderCell>
                                 관리자 연락처
                             </HeaderCell>
+                            <HeaderCell>
+                                관리자 E-mail
+                            </HeaderCell>
                             
                             <HeaderCell>
                                 상태
@@ -118,7 +121,7 @@ const AdministratorList = ({user,infos,brands,staffs}) => {
                                 수정
                             </HeaderCell>
                             
-                            <HeaderCell style={{borderRight:0,color: COLOR.RED}}>
+                            <HeaderCell style={{color: COLOR.RED}}>
                                 관리자 변경
                             </HeaderCell>
                         </PrView>
@@ -203,7 +206,25 @@ const styles = {
 }
 const Wrapper = styled.div`
     
-background-color:${COLOR.INDIGO};
+  background-color:${COLOR.WHITE};
+
+  overflow:auto;
+  &::-webkit-scrollbar {
+      width: 8px;
+      height: 10px;
+      background: rgba(210, 210, 210, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(96, 96, 96, 0.7);
+      border-radius: 6px;
+    }
+`;
+
+const RowWrapper = styled.nav`
+display:flex;
+background-color :${COLOR.WHITE}
+flex-direction:row;
+
 `;
 
 const SrollWrapper = styled.nav`
@@ -281,13 +302,13 @@ const HeaderCell = styled.div`
     font-size:20px;
     flex:1;
     padding:5px;
-    border-bottom:2px solid ${COLOR.BLACK};
-    border-right : 1px solid ${COLOR.BLACK};
+    border:2px solid ${COLOR.BLACK};
+    border-left : 0px solid ${COLOR.BLACK};
 `;
 
 const InputTableBox  = styled.div`
+    min-height:720px;
     min-width:1080px;
-    border:2px solid;
     margin-top:20px;
 `;
 const PrView  = styled.div`

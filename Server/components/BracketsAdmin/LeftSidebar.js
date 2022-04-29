@@ -44,7 +44,6 @@ const LeftSideBar =({})=>{
                     <div style={{height:15}}/>
                     <MenuItem onClick={() => {
                         setIsModalOpen(true)
-                        console.log("0202")
                     }}>서비스 센터 웹 바로가기</MenuItem>
                 </Menu>
             </ProSidebar>
