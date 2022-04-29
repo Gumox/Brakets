@@ -139,7 +139,7 @@ const AdministratorModifiy = ({
                         <RegistButton onClick={()=>{modifyAdministrator()}}>
                             수정
                         </RegistButton>
-                        <RegistButton  onClick={()=>{setModifyAcion(null)}}>
+                        <RegistButton style={{backgroundColor:COLOR.RED}} onClick={()=>{setModifyAcion(null)}}>
                             취소
                         </RegistButton>
                     </CenterView>
