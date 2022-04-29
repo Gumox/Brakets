@@ -53,13 +53,13 @@ const repair = async (req, res) => {
       try {
         const {
             
-            account, // 기간전체, 하루만
+            email, // 기간전체, 하루만
         } = req.query;
         let query = "";
         let values = [];
 
         query += "account=?";
-        values = [account];
+        values = [email];
   
         console.log(query)
         console.log(values)
