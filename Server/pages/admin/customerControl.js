@@ -34,7 +34,7 @@ const CustomerControl = () => {
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/customerControl"}/>
       <InSideWrapper>
-        <SidebarSpace  style={{minHeight:`${windowHeight-110}px`}}>
+        <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <CustomerSideBar setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >{selectedView}</MainSpace>

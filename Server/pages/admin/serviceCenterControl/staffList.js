@@ -34,7 +34,7 @@ const ServiceCenterStaffList =  ({user,infos,brands,staffs}) => {
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/serviceCenterControl"}/>
       <InSideWrapper>
-        <SidebarSpace  style={{minHeight:`${windowHeight-110}px`}}>
+        <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <ServiceCenterSideBar path={"/admin/serviceCenterControl/staffList"}/>
         </SidebarSpace>
         <MainSpace >

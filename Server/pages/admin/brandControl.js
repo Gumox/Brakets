@@ -34,7 +34,7 @@ const BrandControl = () => {
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/brandControl"}/>
       <InSideWrapper>
-        <SidebarSpace  style={{minHeight:`${windowHeight-110}px`}}>
+        <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <BrandSideBar setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >{selectedView}</MainSpace>

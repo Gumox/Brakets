@@ -26,7 +26,7 @@ const CustomerSideBar =({setSelectedView = () => {} })=>{
     return(
         <div>
 
-            <ProSidebar style={{...styles.menu,minHeight:`${windowHeight-105}px`}}>
+            <ProSidebar style={{...styles.menu,}}>
                 <Menu  style={styles.menu} iconShape="square">
                     <MenuItem></MenuItem>
                     

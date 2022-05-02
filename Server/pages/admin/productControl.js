@@ -6,8 +6,7 @@ import axios from "axios";
 import AdminHeader from "../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../constants/color";
-import ServiceCenterSideBar from "../../components/admin/serviceCenter/ServiceCenterSideBar";
-
+import ProductSideBar from "../../components/admin/product/ProductSideBar";
 const ProductControl = () => {
   const router = useRouter();
   const handleLogout = async () => {
@@ -34,8 +33,8 @@ const ProductControl = () => {
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/productControl"}/>
       <InSideWrapper>
-        <SidebarSpace  style={{minHeight:`${windowHeight-110}px`}}>
-          <ServiceCenterSideBar setSelectedView={setSelectedView}/>
+        <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
+          <ProductSideBar setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >{selectedView}</MainSpace>
       </InSideWrapper>

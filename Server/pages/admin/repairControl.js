@@ -34,7 +34,7 @@ const RepairControl = () => {
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/repairControl"}/>
       <InSideWrapper>
-        <SidebarSpace  style={{minHeight:`${windowHeight-110}px`}}>
+        <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <RepairSideBar setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >{selectedView}</MainSpace>

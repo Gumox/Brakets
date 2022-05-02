@@ -34,7 +34,7 @@ const StoreControl = () => {
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/storeControl"}/>
       <InSideWrapper>
-        <SidebarSpace  style={{minHeight:`${windowHeight-110}px`}}>
+        <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <StoreSideBar setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >{selectedView}</MainSpace>
