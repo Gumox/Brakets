@@ -56,10 +56,10 @@ const Home = ({user}) => {
         </CuetomLink>
       }
       {
-        /*user.level == 0 &&
-        <CuetomLink onClick={() => router.push("/admin")}>
+        user.level == 0 &&
+        <CuetomLink onClick={() => router.push("/admin/serviceCenterControl")}>
           관리자
-        </CuetomLink>*/
+        </CuetomLink>
       }
     </Wrapper>
   );

@@ -5,9 +5,10 @@ import styled from "styled-components";
 import axios from "axios";
 import AdminHeader from "../../components/admin/AdminHeader";
 import { debounce } from "lodash";
+import COLOR from "../../constants/color";
 import ServiceCenterSideBar from "../../components/admin/serviceCenter/ServiceCenterSideBar";
 
-const AdminHome = () => {
+const ProductControl = () => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -31,8 +32,13 @@ const AdminHome = () => {
   const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin"}/>
-      <ServiceCenterSideBar/>
+      <AdminHeader path={"/admin/productControl"}/>
+      <InSideWrapper>
+        <SidebarSpace  style={{minHeight:`${windowHeight-110}px`}}>
+          <ServiceCenterSideBar setSelectedView={setSelectedView}/>
+        </SidebarSpace>
+        <MainSpace >{selectedView}</MainSpace>
+      </InSideWrapper>
     </Wrapper>
   );
 };
@@ -71,34 +77,23 @@ export const getServerSideProps = async (ctx) => {
 };
 
 const Wrapper = styled.div`
-height:200px;
-overflow: auto;
-&::-webkit-scrollbar {
-  width: 8px;
-  height: 10px;
-  background: rgba(210, 210, 210, 0.4);
-}
-&::-webkit-scrollbar-thumb {
-  background: rgba(96, 96, 96, 0.7);
-  border-radius: 6px;
-}
+  height:200px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+    background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
 `;
-const Title = styled.div`
-  margin-bottom: 30px;
-  padding: 10px 30px;
-  font-size: 45px;
-  font-weight: bold;
-  border: 2px solid;
-  border-radius: 10px;
+const SidebarSpace = styled.div`
+background-color:${COLOR.MENU_MAIN};
 `;
-
-const Logout = styled.button`
-  border: 1px solid;
-  background-color: transparent;
-  height: 26px;
-  padding: 2px 5px;
-  text-align: center;
-  border-radius: 10px;
+const MainSpace=styled.div`
+    width :100%;
 `;
 
 const CuetomLink = styled.div`
@@ -107,5 +102,10 @@ const CuetomLink = styled.div`
   border-bottom: 1px solid;
   cursor: pointer;
 `;
+const InSideWrapper = styled.nav`
+  display:flex;
+  flex-direction:row;
+  
+`;
 
-export default AdminHome;
+export default ProductControl;

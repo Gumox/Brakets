@@ -1,6 +1,6 @@
 import excuteQuery from "../db"
 
-async function getHeadquarter() {
+async function getHeadquarter(query,values) {
     const result = await excuteQuery({
         query: `SELECT
                     headquarter.headquarter_id,
@@ -18,8 +18,9 @@ async function getHeadquarter() {
                 JOIN staff_store ON staff.staff_id = staff_store.staff_id 
                 LEFT JOIN store ON staff_store.store_id = store.store_id
                 LEFT JOIN headquarter ON store.brand_id = headquarter.headquarter_id
-                WHERE staff.level = 0
+                WHERE  ${query}
                 `,
+          values
       });
     
       return result;
@@ -31,9 +32,17 @@ const controller = async (req, res) => {
         console.log(req.headers.referer);
         console.log("req.query");
         console.log(req.query);
+        const {headquarterId} = req.query
+
+        let query = "staff.level = 0";
+        let values = [];
+        if(headquarterId){
+          query = "headquarter.headquarter_id =? AND staff.level = 1"
+          values = [headquarterId]
+        }
         
     try {
-      const result = await getHeadquarter();
+      const result = await getHeadquarter(query,values);
       if (result.error) throw new Error(result.error);
         res.status(200).json({ body: result });
     } catch (err) {

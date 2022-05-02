@@ -25,20 +25,7 @@ module.exports = {
         "34.64.182.76"
     ], // TODO: Image 저장하거나, 특정 도메인 미리 설정 필요
   },
-  /*
-	  init: function () {
-		  return mysql.createConnection(db_info);
-		  },
-		  connect: function(conn) {
-		  conn.connect(function(err) {
-			  if(err) console.error('mysql connection error : ' + err);
-			  else console.log('mysql is connected successfully!');
-		  });
-		  },
-DESTINATION_URL = 'apis.aligo.in/send/:path*'
-SOURCE_PATH = '/send/:path*'
-	  */
-  //trailingSlash: 'true',
+  
   webpack5: true,
   webpack: (config) => {
     config.resolve.fallback = {

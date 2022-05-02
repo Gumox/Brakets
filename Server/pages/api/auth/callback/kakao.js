@@ -37,7 +37,7 @@ const kakao = async (req, res) => {
 
     // DB 에서 해당 ID or account 조회 (본사, 최고관리자 중에서 조회)
     const result = await excuteQuery({
-      query: `SELECT staff.staff_id, id, account, staff.name, level, store.brand_id AS headquarter_id
+      query: `SELECT staff.staff_id, id, account, staff.name, level, store.brand_id AS headquarter_id ,store.store_id
               FROM staff 
               JOIN staff_store ON staff.staff_id = staff_store.staff_id 
               LEFT JOIN store ON staff_store.store_id = store.store_id

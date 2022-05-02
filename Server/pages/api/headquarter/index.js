@@ -1,6 +1,6 @@
 import excuteQuery from "../db"
 
-async function getHeadquarter() {
+async function getHeadquarter(query,values) {
     const result = await excuteQuery({
         query: `SELECT 
                       headquarter_id  AS value,
@@ -14,7 +14,9 @@ async function getHeadquarter() {
                       ceo_email,
                       company_registration_number,
                       timestamp
-                FROM headquarter`,
+                FROM headquarter ${query}`
+                ,
+          values
       });
     
       return result;
@@ -26,9 +28,17 @@ const controller = async (req, res) => {
         console.log(req.headers.referer);
         console.log("req.query");
         console.log(req.query);
-        
+
+        const {headquarterId} = req.query
+        let query =""
+        let values =[]
+        if(headquarterId){
+          query = "WHERE headquarter_id= ?"
+          values = [headquarterId]
+        }
+
     try {
-      const result = await getHeadquarter();
+      const result = await getHeadquarter(query,values);
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("result");

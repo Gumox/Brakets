@@ -5,7 +5,7 @@ import Router, { useRouter } from "next/router";
 import COLOR from "../../constants/color";
 import LinkModal from "./LinkModal";
 
-const LeftSideBar =({})=>{
+const LeftSideBar =({s})=>{
     const router =useRouter()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const closeModal = useCallback(
@@ -33,16 +33,16 @@ const LeftSideBar =({})=>{
             <ProSidebar>
                 <Menu iconShape="square">
                     <MenuItem></MenuItem>
-                    <SubMenu title="회사 관리">
+                    <SubMenu style={{color:COLOR.WHITE}} title="회사 관리">
                         <MenuItem style={styles.menu} onClick={()=>{router.push("/adminBrackeks/CompanyList")}}>회사 목록</MenuItem>
                         <MenuItem style={styles.menu} onClick={()=>{router.push("/adminBrackeks/CompayRegist")}}>회사 등록</MenuItem>
                     </SubMenu>
-                    <SubMenu title="전체관리자 관리">
+                    <SubMenu style={{color:COLOR.WHITE}} title="전체관리자 관리">
                         <MenuItem style={styles.menu} onClick={()=>{router.push("/adminBrackeks/AdministratorList")}}>관리자 목록</MenuItem>
                         <MenuItem style={styles.menu} onClick={()=>{router.push("/adminBrackeks/AdministratorRegist")}}>관리자 등록</MenuItem>
                     </SubMenu>
                     <div style={{height:15}}/>
-                    <MenuItem onClick={() => {
+                    <MenuItem style={{color:COLOR.WHITE}} onClick={() => {
                         setIsModalOpen(true)
                     }}>서비스 센터 웹 바로가기</MenuItem>
                 </Menu>
@@ -60,6 +60,6 @@ const LeftSideBar =({})=>{
 export default LeftSideBar
 const styles = {
     menu:{
-        color:COLOR.BLACK
+        color:COLOR.WHITE
     },
 }
