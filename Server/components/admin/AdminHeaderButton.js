@@ -25,8 +25,10 @@ const Wrapper = styled.div`
   font-weight: bold;
   font-size: 15px;
   cursor: pointer;
+  border:2px solid ${COLOR.DARK_INDIGO};
   border-top:8px solid ${COLOR.DARK_INDIGO};
   border-bottom:8px solid ${COLOR.DARK_INDIGO};
+  border-radius:23px;
 
   &: hover {
     background-color: ${COLOR.MENU_MAIN};

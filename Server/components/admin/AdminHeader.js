@@ -47,7 +47,7 @@ const AdminHeader = ({ path }) => {
     </Wrapper>
     
       <Control>
-        <MenuWrapper style={{height:"50px",paddingLeft:`230px`,minWidth:"1080px"}}>
+        <MenuWrapper style={{height:"50px",paddingLeft:`230px`}}>
           {MENUS.map((menu) => (
             <AdminHeaderButton key={menu.link} {...menu} path={path} />
           ))}
@@ -67,7 +67,8 @@ const OkImage =styled.img`
   height: 52px;
 `;
 const Control =styled.div`
-  width :100%
+  width : 100%;
+  min-width: 1350px;
   margin-top:10px;
   background-color: ${COLOR.DARK_INDIGO};
 `;
