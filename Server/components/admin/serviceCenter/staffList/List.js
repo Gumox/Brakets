@@ -74,10 +74,16 @@ const StaffsList = ({
                                     </ModifyView>
                                 </HeaderCell>
                                 
-                                <HeaderCell style={{color: COLOR.RED}}>
-                                    <ChangeView>
+                                <HeaderCell style={{color: COLOR.RED}}
+                                    onClick={()=>{ 
+                                        setActionView(
+                                            <StaffChange staff={item} user={user} setActionView={setActionView}/>
+                                        )
+
+                                    }}>
+                                    <ModifyView style={{color: COLOR.RED}}>
                                         변경
-                                    </ChangeView>
+                                    </ModifyView>
                                 </HeaderCell>
                             </PrView>
                         )
