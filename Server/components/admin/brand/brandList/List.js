@@ -9,8 +9,37 @@ import remakeCallNumber from "../../../../functions/remakeCallNumber"
 const List = ({
     user=[],
     brands=[],
-    setActionView=()=>{}
 }) => {
+    
+    return(
+        <div>
+            {
+                brands.map((item,index)=>{
+                    if(index+1 !== brands.length){
+                        return(
+                            <Wrapper key={index}>
+                                <ListItem item={item}/>
+                            </Wrapper>
+                        )
+                    }else{
+                        return(
+                            <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
+                                <ListItem item={item}/>
+                            </Wrapper>
+                        )
+                    }
+                })
+            }
+        </div>
+    );
+};
+
+const ListItem =({item})=>{
+    
+    const [modifyOn,setModifyOn]= useState(false)
+    const [modifyBrandName,setModifyBrandName] = useState(item.brand_name);
+    const [modifyServiceDate,setModifyServiceDate] = useState(item.service_date);
+
     const emptySpace =(str)=>{
         console.log("s ",str)
         let name = ""
@@ -33,112 +62,56 @@ const List = ({
         alert("브랜드 정보가 수정되었습니다.")
         window.location.reload();
     }
+
     return(
-        <div>
-            {
-                brands.map((item,index)=>{
-                    console.log(item)
-                    const [modifyOn,setModifyOn] = useState(false)
-                    let modifyBrandName = item.brand_name;
-                    let modifyServiceDate = item.service_date;
-                    if(index+1 !== brands.length){
-                        return(
-                            <PrView key={index}>
+        <PrView >
                             
-                                <HeaderCell>
-                                    <ColView>
-                                        <InColView>{item.headquarter_name_kr}</InColView>
-                                        <InColView>({item.headquarter_name})</InColView>
-                                    </ColView>
-                                </HeaderCell>
+            <HeaderCell>
+                <ColView>
+                    <InColView>{item.headquarter_name_kr}</InColView>
+                    <InColView>({item.headquarter_name})</InColView>
+                </ColView>
+            </HeaderCell>
 
-                                <HeaderCell>
-                                    {!modifyOn && <div>{item.brand_name}</div>}
-                                    {modifyOn && <input style={{textAlign:"center"}} placeholder={item.brand_name} onChange={(e)=>{modifyBrandName = e.target.value}}/>}
-                                </HeaderCell>
+            <HeaderCell>
+                {!modifyOn && <div>{item.brand_name}</div>}
+                {modifyOn && <input style={{textAlign:"center"}} placeholder={item.brand_name} onChange={(e)=>{setModifyBrandName(e.target.value)}}/>}
+            </HeaderCell>
 
-                                <HeaderCell>
-                                    {!modifyOn && <div>{item.service_date+" 일"}</div>}
-                                    {modifyOn && <input type="number" style={{textAlign:"center"}} placeholder={item.service_date} onChange={(e)=>{modifyServiceDate = e.target.value}}/>}
-                                </HeaderCell>
+            <HeaderCell>
+                {!modifyOn && <div>{item.service_date+" 일"}</div>}
+                {modifyOn && <input type="number" style={{textAlign:"center"}} placeholder={item.service_date} onChange={(e)=>{setModifyServiceDate(e.target.value)}}/>}
+            </HeaderCell>
 
-                                
-                                <HeaderCell style={{color: COLOR.RED}}>
-                                    {!modifyOn && <ModifyView onClick={()=>{setModifyOn(!modifyOn)}}>
-                                     수정
-                                    </ModifyView>}
-                                    {modifyOn&&
-                                        <div style={{display:"flex",flexDirection:"row",justifyContent:"space-around",flex:1}}>
-                                            <ModifyView onClick={()=>{change(emptySpace(modifyBrandName),item.brand_id,modifyServiceDate)}}>
-                                                수정
-                                            </ModifyView>
-                                            <ChangeView onClick={()=>{setModifyOn(!modifyOn)}}>
-                                                취소
-                                            </ChangeView>
-                                        </div>
-                                    }
-                                </HeaderCell>
-                            </PrView>
-                        )
-                    }else{
-                        return(
-                            <PrView key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
-                            
-                                <HeaderCell>
-                                    <ColView>
-                                        <InColView>{item.headquarter_name_kr}</InColView>
-                                        <InColView>({item.headquarter_name})</InColView>
-                                    </ColView>
-                                </HeaderCell>
+            
+            <HeaderCell style={{color: COLOR.RED}}>
+                {!modifyOn && <ModifyView onClick={()=>{ setModifyOn(!modifyOn)}}>
+                    수정
+                </ModifyView>}
+                {modifyOn&&
+                    <div style={{display:"flex",flexDirection:"row",justifyContent:"space-around",flex:1}}>
+                        <ModifyView onClick={()=>{change(emptySpace(modifyBrandName),item.brand_id,modifyServiceDate)}}>
+                            수정
+                        </ModifyView>
+                        <ChangeView onClick={()=>{setModifyOn(!modifyOn)}}>
+                            취소
+                        </ChangeView>
+                    </div>
+                }
+            </HeaderCell>
+        </PrView>
+    )
+}
+const Wrapper  = styled.div`
+    border-left:2px solid ${COLOR.LIGHT_GRAY};
+    border-right:2px solid ${COLOR.LIGHT_GRAY};
+`;
 
-                                <HeaderCell>
-                                    {!modifyOn && <div>{item.brand_name}</div>}
-                                    {modifyOn && <input style={{textAlign:"center"}} placeholder={item.brand_name} onChange={(e)=>{modifyBrandName = e.target.value}}/>}
-                                </HeaderCell>
-
-                                <HeaderCell>
-                                    {!modifyOn && <div>{item.service_date+" 일"}</div>}
-                                    {modifyOn && <input type="number" style={{textAlign:"center"}} placeholder={item.service_date} onChange={(e)=>{modifyServiceDate = e.target.value}}/>}
-                                </HeaderCell>
-
-                                
-                                <HeaderCell style={{color: COLOR.RED}}>
-                                    {!modifyOn && <ModifyView onClick={()=>{setModifyOn(!modifyOn)}}>
-                                     수정
-                                    </ModifyView>}
-                                    {modifyOn&&
-                                        <div style={{display:"flex",flexDirection:"row",justifyContent:"space-around",flex:1}}>
-                                            <ModifyView onClick={()=>{change(emptySpace(modifyBrandName),item.brand_id,modifyServiceDate)}}>
-                                                수정
-                                            </ModifyView>
-                                            <ChangeView onClick={()=>{setModifyOn(!modifyOn)}}>
-                                                취소
-                                            </ChangeView>
-                                        </div>
-                                    }
-                                </HeaderCell>
-                            </PrView>
-                        )
-                    }
-                })
-            }
-        </div>
-    );
-};
 
 
 const ColView  = styled.div`
     display:flex;
     flex-direction: column;
-`;
-const TextView  = styled.textarea`
-    flex:1;
-    resize: none;
-    font-weight:bold;
-    font-size:12px;
-    border:0;
-    background-color:${COLOR.WHITE};
-
 `;
 const InColView  = styled.div`
     display:flex;
@@ -162,8 +135,6 @@ const HeaderCell = styled.div`
 const PrView  = styled.div`
     display:flex;
     flex-direction:row;
-    border-left:2px solid ${COLOR.LIGHT_GRAY};
-    border-right:2px solid ${COLOR.LIGHT_GRAY};
 `;
 const ModifyView = styled.div`
     color:${COLOR.CYAN_BLUE};
@@ -194,5 +165,7 @@ const ChangeView = styled.div`
     }
 
 `;
+
+
 
 export default List
