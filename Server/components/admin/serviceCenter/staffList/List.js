@@ -13,7 +13,6 @@ const StaffsList = ({
     staffs=[],
     setActionView=()=>{}
 }) => {
-    console.log(user)
     return(
         <div>
             {

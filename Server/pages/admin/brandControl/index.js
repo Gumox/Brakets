@@ -6,10 +6,10 @@ import axios from "axios";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
-import ServiceCenterSideBar from "../../../components/admin/serviceCenter/ServiceCenterSideBar";
-import StaffList from "../../../components/admin/serviceCenter/staffList";
+import BrandSideBar from "../../../components/admin/brand/BrandSideBar";
+import BrandList from "../../../components/admin/brand/brandList";
 
-const ServiceCenterStaffList =  ({user,infos,brands,staffs}) => {
+const BrandControlBrandList =  ({user,infos,brands,staffs}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -32,13 +32,13 @@ const ServiceCenterStaffList =  ({user,infos,brands,staffs}) => {
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/serviceCenterControl"}/>
+      <AdminHeader path={"/admin/brandControl"} minWidth={750}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <ServiceCenterSideBar path={"/admin/serviceCenterControl"}/>
+          <BrandSideBar path={"/admin/brandControl"}/>
         </SidebarSpace>
         <MainSpace >
-            <StaffList staffs={staffs} user={user}/>
+            <BrandList brands={brands} user={user}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -75,7 +75,7 @@ export const getServerSideProps = async (ctx) => {
       ])
       const [brands] = await Promise.all([
         axios
-          .get(`${process.env.API_URL}/brand/AllBrandList`,)
+          .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
           .then(({ data }) => data.data), 
       ])
       const [staffs] = await Promise.all([
@@ -133,4 +133,4 @@ const InSideWrapper = styled.nav`
   
 `;
 
-export default ServiceCenterStaffList;
+export default BrandControlBrandList;

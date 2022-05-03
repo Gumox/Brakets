@@ -7,9 +7,11 @@ import COLOR from "../../constants/color";
 const AdminHeaderButton = ({ title, link, path }) => {
   const router = useRouter();
   return (
-        <Wrapper selected={path === link} onClick={() => router.push(link)}>
-          {title}
-        </Wrapper>
+    <div style={{backgroundColor:COLOR.DARK_INDIGO}}>
+      <Wrapper selected={path === link} onClick={() => router.push(link)}>
+        {title}
+      </Wrapper>
+    </div>
   );
 };
 

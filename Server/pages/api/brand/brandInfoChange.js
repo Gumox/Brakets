@@ -1,14 +1,10 @@
 import excuteQuery from "../db";
 
-async function getBrand(brandName,headquarterId,serviceDate) {
+async function brandInfoChange(brandName,serviceDate,brandId) {
     const result = await excuteQuery({
-        query: `INSERT INTO 
-        brand(
-                brand_name,
-                headquarter_id,
-                service_date    ) VALUES (?,?,?)`,
+        query: `UPDATE brand SET brand_name = ?, service_date = ? WHERE brand_id = ?`,
         
-    values:[brandName,headquarterId,serviceDate]
+        values:[brandName,serviceDate,brandId]
   });
 
   return result;
@@ -16,11 +12,12 @@ async function getBrand(brandName,headquarterId,serviceDate) {
 
 const AllBrandList = async (req, res) => {
   if (req.method === "POST") {
-    console.log("/api/brand/regist");
-    const {brandName,headquarterId,serviceDate} = req.query;
+    console.log("/api/brand/serviceDateChange");
+    const {brandName,serviceDate,brandId} = req.query;
     console.log( req.query)
+    
     try {
-      const brand = await getBrand(brandName,headquarterId,serviceDate);
+      const brand = await brandInfoChange(brandName,serviceDate,brandId);
       //console.log(brand)
       if (brand.error) throw new Error(brand.error);
 

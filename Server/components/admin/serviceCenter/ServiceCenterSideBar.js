@@ -27,7 +27,7 @@ const ServiceCenterSideBar =({setSelectedView = () => {} ,path})=>{
         <div style={{ backgroundColor:COLOR.MENU_MAIN,}}>
 
                 <MenuWrapper  style={styles.menu}>
-                    <SideMenu selected={path === "/admin/serviceCenterControl/staffList"} style={{marginTop:"40px"}} onClick={() => router.push("/admin/serviceCenterControl/staffList")}>
+                    <SideMenu selected={path === "/admin/serviceCenterControl"} style={{marginTop:"40px"}} onClick={() => router.push("/admin/serviceCenterControl/")}>
                         직원 목록
                     </SideMenu>
                         

@@ -8,14 +8,13 @@ import COLOR from "../../constants/color";
 import MENUS from "../../constants/adminMenu";
 import AdminHeaderButton from "./AdminHeaderButton";
 
-const AdminHeader = ({ path }) => {
+const AdminHeader = ({ path ,minWidth}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
     router.push("/login");
   };
 
-  console.log(path)
 
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
@@ -23,6 +22,10 @@ const AdminHeader = ({ path }) => {
       setWindowWidth(window.innerWidth)
       setWindowHeight(window.innerHeight)
   },1000)
+  let settedWidth = 1350
+  if(minWidth){
+    settedWidth =250+minWidth;
+  }
   useEffect(()=>{
       
       setWindowWidth(window.innerWidth)
@@ -46,7 +49,7 @@ const AdminHeader = ({ path }) => {
       <Logout style={{marginRight:"2%"}} onClick={handleLogout}>Logout</Logout>
     </Wrapper>
     
-      <Control>
+      <Control style={{minWidth: `${settedWidth}px`}}>
         <MenuWrapper style={{height:"50px",paddingLeft:`230px`}}>
           {MENUS.map((menu) => (
             <AdminHeaderButton key={menu.link} {...menu} path={path} />
@@ -68,7 +71,6 @@ const OkImage =styled.img`
 `;
 const Control =styled.div`
   width : 100%;
-  min-width: 1350px;
   margin-top:10px;
   background-color: ${COLOR.DARK_INDIGO};
 `;

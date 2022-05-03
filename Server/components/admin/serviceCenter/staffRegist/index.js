@@ -39,7 +39,7 @@ const StaffRegist = ({infos,user,staffs}) =>{
               .then(({ data }) => data.body), 
             ])
         alert("새로운 서비스센터 직원이 등록되었습니다.")
-        router.push("/admin/serviceCenterControl/staffList")
+        router.push("/admin/serviceCenterControl")
     }
 
     const [windowWidth,setWindowWidth] = useState(0)

@@ -3,12 +3,13 @@ import Router, { useRouter } from "next/router";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
-import AdminHeader from "../../components/admin/AdminHeader";
+import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
-import COLOR from "../../constants/color";
-import BrandSideBar from "../../components/admin/brand/BrandSideBar";
+import COLOR from "../../../constants/color";
+import BrandSideBar from "../../../components/admin/brand/BrandSideBar";
+import BrandRegist from "../../../components/admin/brand/brandRegist";
 
-const BrandControl = () => {
+const ServiceCenterStaffList = ({infos,user,brands,staffs}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -29,15 +30,16 @@ const BrandControl = () => {
           window.removeEventListener('resize',handleResize);
       }
   },[])
-  const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/brandControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <BrandSideBar setSelectedView={setSelectedView}/>
+          <BrandSideBar path={"/admin/brandControl/brandRegist"}/>
         </SidebarSpace>
-        <MainSpace >{selectedView}</MainSpace>
+        <MainSpace >
+          <BrandRegist infos={infos[0]} staffs={staffs} user={user}/>
+        </MainSpace>
       </InSideWrapper>
     </Wrapper>
   );
@@ -64,8 +66,36 @@ export const getServerSideProps = async (ctx) => {
         destination: '/login'
       }
     }
-  }
-  if(user.level !== 0){
+  } const [infos] = await Promise.all([
+    axios
+      .get(`${process.env.API_URL}/headquarter?headquarterId=${user.headquarter_id}`,)
+      .then(({ data }) => data.body), 
+    ])
+    const [brands] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.data), 
+    ])
+    const [staffs] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/headquarter/staff?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.body), 
+    ])
+    
+    
+    
+  
+  if(user.level ===0){
+    return {
+      props:
+      {
+        user:user,
+        infos:infos,
+        brands:brands,
+        staffs:staffs
+      } 
+    };
+  }else{
     return {
       redirect: {
         permanent: false,
@@ -73,7 +103,6 @@ export const getServerSideProps = async (ctx) => {
       }
     }
   }
-  return { props: {} };
 };
 
 const Wrapper = styled.div`
@@ -87,13 +116,15 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar-thumb {
     background: rgba(96, 96, 96, 0.7);
     border-radius: 6px;
-  }
+}
 `;
 const SidebarSpace = styled.div`
   background-color:${COLOR.MENU_MAIN};
 `;
 const MainSpace=styled.div`
     width :100%;
+    
+    min-width:850px;
 `;
 const InSideWrapper = styled.nav`
   display:flex;
@@ -101,11 +132,4 @@ const InSideWrapper = styled.nav`
   
 `;
 
-const CuetomLink = styled.div`
-  margin-top: 20px;
-  font-size: 20px;
-  border-bottom: 1px solid;
-  cursor: pointer;
-`;
-
-export default BrandControl;
+export default ServiceCenterStaffList;
