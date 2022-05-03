@@ -19,14 +19,17 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ selected }) => (selected ? COLOR.MENU_SELECTED : COLOR.WHITE)};
-  color: ${COLOR.TEXT_MAIN};
+  background-color: ${({ selected }) => (selected ? COLOR.MOCCA : COLOR.WHITE)};
+  color: ${({ selected }) => (selected ? COLOR.WHITE : COLOR.TEXT_MAIN)};
   font-weight: bold;
   font-size: 15px;
   cursor: pointer;
-
+  margin-top:20px;
+  margin-left:2px;
+  margin-right:2px;
+  border-radius: 30px 30px 0px 0px; 
   &: hover {
-    background-color: ${COLOR.BRAUN};
+    background-color: ${COLOR.MOCCA};
     color: ${COLOR.WHITE};
   }
 `;

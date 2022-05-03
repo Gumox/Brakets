@@ -170,7 +170,7 @@ export default function ReturnUnregistered() {
     return(
         
         <Nav style={{minWidth:1150}}>
-            <RepairHeader/>
+            <RepairHeader path={"/returnUnregistered"}/>
             <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
                 <TopView>
                 <h2>미등록 반송</h2>
@@ -319,15 +319,7 @@ export const getServerSideProps = async (ctx) => {
         },
       };
     }
-    if(user){
-      console.log("user")
-      console.log("")
-      console.log("")
-      console.log("")
-      console.log("")
-      console.log("")
-      console.log(user)
-    }
+    
     return {
         props: {
           

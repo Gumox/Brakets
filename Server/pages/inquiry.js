@@ -220,7 +220,7 @@ export default function Inquiry() {
       ///96% -10px
     return(
         <Nav style={{height:"100%",minWidth:950}}>
-            <RepairHeader/>
+            <RepairHeader path={"/inquiry"}/>
             <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
             <TopView>
                 <h2>조회</h2>

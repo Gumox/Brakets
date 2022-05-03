@@ -36,12 +36,14 @@ const Header = ({ path }) => {
               router.push("/repair");
             }
         }}/>
-            <div style={{margin:"15%"}}/>
+            <div style={{padding:"15%"}}/>
             {MENUS.map((menu) => (
             <RepairHeaderButton key={menu.link} {...menu} path={path} />
             ))}
         </MenuWrapper>
+        
         </Wrapper>
+        
         <Line/>
         </>
     </div>
@@ -65,7 +67,6 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     background-color: ${COLOR.WHITE};
-    margin-bottom :20px
 `;
 
 const Top =styled.div`
@@ -77,11 +78,9 @@ const Top =styled.div`
 
 
 const Line =styled.div`
-  border:1px solid  ${COLOR.BRAUN};
-  width :100%
-  margin:2px;
-  height:2px;
   margin-top:10px;
+  border:1px solid  ${COLOR.BRAUN};
+  width :100%;
   background-color: ${COLOR.BRAUN}
 `;
 const MenuWrapper = styled.div`

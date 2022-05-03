@@ -139,7 +139,7 @@ export default function Settlement()  {
     },[]) 
     return(
         <Nav >
-        <RepairHeader/>
+        <RepairHeader path={"/settlement"}/>
         <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
         <TopView>
               <h2>수선비 정산</h2>

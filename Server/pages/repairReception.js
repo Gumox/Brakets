@@ -137,7 +137,7 @@ function RepairReception({options,user}) {
   },[])
   return(
     <Nav style={{overflowY:"scroll"}}>
-      <RepairHeader/>
+      <RepairHeader path={"/repairReception"}/>
       <div style={{paddingLeft: "2%",paddingRight: "2%"}}>
         <TopView>
               <h2>접수</h2>
