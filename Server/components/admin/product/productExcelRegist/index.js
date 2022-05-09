@@ -66,10 +66,10 @@ const ProductExcelRegist =({infos})=>{
                     </div>
                 </label> 
                 <input disabled value={excelName} placeholder="첨부파일" onChange={()=>{}}/>
-                <button style={{marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:60,color:COLOR.WHITE}}
+                <button style={{marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:80,color:COLOR.WHITE}}
                     onClick={()=>{registProduct()}}
                 >
-                    등록
+                    제품 등록
                 </button>
                 
                 <CustomInput type="file" id="file" 
