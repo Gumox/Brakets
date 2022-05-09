@@ -26,7 +26,6 @@ const ProductExcelRegist =({infos})=>{
     const readUploadFile = (e) => {
         e.preventDefault();
         if (e.target.files&&e.target.files[0]) {
-            console.log(e.target.files[0].name)
             setExcelName(e.target.files[0].name)
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -35,7 +34,6 @@ const ProductExcelRegist =({infos})=>{
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
                 const json = XLSX.utils.sheet_to_json(worksheet);
-                console.log(json);
                 setExcelToJson(json)
             };
             reader.readAsArrayBuffer(e.target.files[0]);
