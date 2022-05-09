@@ -2,11 +2,12 @@ import React,{useState} from "react";
 import styled from "styled-components";
 import axios from "axios";
 import COLOR from "../../../../constants/color";
+import Router, { useRouter } from "next/router";
 
 const XLSX = require('xlsx');
 
 const ProductExcelRegist =({infos})=>{
-    console.log(infos)
+    const router = useRouter();
     const [excelName,setExcelName] = useState("첨부파일")
 
     const [excelToJson,setExcelToJson] = useState([])
@@ -37,7 +38,8 @@ const ProductExcelRegist =({infos})=>{
               .post(`${process.env.API_URL}/product/registToExcel`,data)
               .then(({ data }) => data.body), 
             ])
-        alert("새로운 제품이 등록되었습니다.")
+        alert("제품이 등록되었습니다.")
+        router.push("/admin/productControl")
     }
 
     return(
