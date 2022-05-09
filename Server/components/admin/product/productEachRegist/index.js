@@ -152,7 +152,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
         formData.append('color', color)
         formData.append('degree', degree)
         formData.append('size', size)
-        formData.append('productName', productName)
+        formData.append('productName', emptySpace(productName))
         formData.append('useURL', useURL)
         formData.append('imgUrl', imgURL)
         formData.append('imgfiles',imgBase64)
@@ -163,7 +163,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
               .then(({ data }) => data.body), 
             ])
         alert("새로운 제품이 등록되었습니다.")
-        //router.push("/admin/productControl")
+        router.push("/admin/productControl")
     }
   
     return (
@@ -206,7 +206,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <LongInputBox >
-                        <InputLine value={productName} style={{flex:1,}} onChange={(e)=>{setProductName(emptySpace(e.target.value))}}></InputLine>
+                        <InputLine value={productName} style={{flex:1,}} onChange={(e)=>{setProductName(e.target.value)}}></InputLine>
                     </LongInputBox>
                 </PrView>
 
