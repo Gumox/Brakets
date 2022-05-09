@@ -11,7 +11,7 @@ async function getBrand(headquarterId) {
   return result;
 }
 
-const AllBrandList = async (req, res) => {
+const BrandList = async (req, res) => {
   if (req.method === "GET") {
     console.log("/api/brand/inHeadquarter");
     const {headquarterId} = req.query;
@@ -29,4 +29,4 @@ const AllBrandList = async (req, res) => {
   }
 };
 
-export default AllBrandList;
+export default BrandList;
