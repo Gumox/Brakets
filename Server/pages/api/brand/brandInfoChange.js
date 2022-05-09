@@ -10,7 +10,7 @@ async function brandInfoChange(brandName,serviceDate,brandId) {
   return result;
 }
 
-const AllBrandList = async (req, res) => {
+const BrandList = async (req, res) => {
   if (req.method === "POST") {
     console.log("/api/brand/serviceDateChange");
     const {brandName,serviceDate,brandId} = req.query;
@@ -29,4 +29,4 @@ const AllBrandList = async (req, res) => {
   }
 };
 
-export default AllBrandList;
+export default BrandList;

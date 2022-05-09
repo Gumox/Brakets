@@ -2,7 +2,7 @@ import excuteQuery from "../db";
 
 async function getSeason(brandId) {
   const result = await excuteQuery({
-    query: `SELECT season_id AS value, season_code AS text
+    query: `SELECT season_id AS value, season_code AS text ,season_name
               FROM season_type WHERE brand_id=?
               ORDER BY start_date DESC`,
     values: [brandId],

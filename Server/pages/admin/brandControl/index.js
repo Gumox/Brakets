@@ -9,7 +9,7 @@ import COLOR from "../../../constants/color";
 import BrandSideBar from "../../../components/admin/brand/BrandSideBar";
 import BrandList from "../../../components/admin/brand/brandList";
 
-const BrandControlBrandList =  ({user,infos,brands,staffs}) => {
+const BrandControl =  ({user,infos,brands,staffs}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -133,4 +133,4 @@ const InSideWrapper = styled.nav`
   
 `;
 
-export default BrandControlBrandList;
+export default BrandControl;

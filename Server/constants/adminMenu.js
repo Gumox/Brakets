@@ -8,7 +8,7 @@ const MENUS = [
       link: "/admin/brandControl",
     },
     {
-      title: "상품",
+      title: "제품",
       link: "/admin/productControl",
     },
     {

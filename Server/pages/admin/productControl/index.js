@@ -6,10 +6,9 @@ import axios from "axios";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
-import BrandSideBar from "../../../components/admin/brand/BrandSideBar";
-import BrandRegist from "../../../components/admin/brand/brandRegist";
-
-const BrandControlBrandRegist = ({infos,user,brands,staffs}) => {
+import ProductSideBar from "../../../components/admin/product/ProductSideBar";
+import ProductList from "../../../components/admin/product/productList";
+const ProductControl = ({user,infos,products,brands}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -30,15 +29,16 @@ const BrandControlBrandRegist = ({infos,user,brands,staffs}) => {
           window.removeEventListener('resize',handleResize);
       }
   },[])
+  const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/brandControl"}/>
+      <AdminHeader path={"/admin/productControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <BrandSideBar path={"/admin/brandControl/brandRegist"}/>
+          <ProductSideBar path={"/admin/productControl"} setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >
-          <BrandRegist infos={infos[0]} staffs={staffs} user={user}/>
+          <ProductList user={user} infos={infos} products={products} brands={brands}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -47,7 +47,7 @@ const BrandControlBrandRegist = ({infos,user,brands,staffs}) => {
 
 export const getServerSideProps = async (ctx) => {
   const {
-    data: { isAuthorized ,user},
+    data: { isAuthorized, user },
   } = await axios.get(
     `${process.env.API_URL}/auth`,
     ctx.req
@@ -63,23 +63,24 @@ export const getServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: '/login'
-      }
-    }
-  } const [infos] = await Promise.all([
+        destination: "/login",
+      },
+    };
+  }
+  const [infos] = await Promise.all([
     axios
-      .get(`${process.env.API_URL}/headquarter?headquarterId=${user.headquarter_id}`,)
+      .get(`${process.env.API_URL}/headquarter`,)
       .then(({ data }) => data.body), 
+    ])
+    const [products] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/product/inheadquarter?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.data), 
     ])
     const [brands] = await Promise.all([
       axios
         .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
         .then(({ data }) => data.data), 
-    ])
-    const [staffs] = await Promise.all([
-      axios
-        .get(`${process.env.API_URL}/headquarter/staff?headquarterId=${user.headquarter_id}`,)
-        .then(({ data }) => data.body), 
     ])
     
     
@@ -91,8 +92,8 @@ export const getServerSideProps = async (ctx) => {
       {
         user:user,
         infos:infos,
+        products:products,
         brands:brands,
-        staffs:staffs
       } 
     };
   }else{
@@ -116,15 +117,20 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar-thumb {
     background: rgba(96, 96, 96, 0.7);
     border-radius: 6px;
-}
+  }
 `;
 const SidebarSpace = styled.div`
-  background-color:${COLOR.MENU_MAIN};
+background-color:${COLOR.MENU_MAIN};
 `;
 const MainSpace=styled.div`
     width :100%;
-    
-    min-width:850px;
+`;
+
+const CuetomLink = styled.div`
+  margin-top: 20px;
+  font-size: 20px;
+  border-bottom: 1px solid;
+  cursor: pointer;
 `;
 const InSideWrapper = styled.nav`
   display:flex;
@@ -132,4 +138,4 @@ const InSideWrapper = styled.nav`
   
 `;
 
-export default BrandControlBrandRegist;
+export default ProductControl;

@@ -5,7 +5,8 @@ import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Router, { useRouter } from "next/router";
 import COLOR from "../../../constants/color";
 
-const ProductSideBar =({setSelectedView = () => {} })=>{
+const ProductSideBar =({path})=>{
+    console.log(path)
     const router =useRouter()
     
     const [windowWidth,setWindowWidth] = useState(0)
@@ -23,36 +24,35 @@ const ProductSideBar =({setSelectedView = () => {} })=>{
             window.removeEventListener('resize',handleResize);
         }
     },[])
+    let listColor = COLOR.BLACK;
+    let eachRegistColor = COLOR.BLACK;
+    let excelRegistColor = COLOR.BLACK;
+
+    if(path === "/admin/productControl"){
+        listColor = "rgb(133,133,133)";
+    }else if(path === "/admin/productControl/productEachRegist"){
+        eachRegistColor = "rgb(133,133,133)";
+    }else if(path === "/admin/productControl/productExcelRegist"){
+        excelRegistColor = "rgb(133,133,133)";
+    }
     return(
         <div>
 
-            <ProSidebar style={{...styles.menu,minHeight:`${windowHeight-105}px`}}>
+            <ProSidebar style={{...styles.menu,minHeight:`${windowHeight-120}px`}}>
                 <Menu  style={styles.menu} iconShape="square">
                     <MenuItem></MenuItem>
-                    <MenuItem  style={styles.menu} onClick={() => {
-                        setSelectedView(
-                            <div>
-                                1
-                            </div>
-                        )
+                    <MenuItem  style={{color : listColor }} onClick={() => {
+                        router.push("/admin/productControl")
                     }}>
                         상품 목록
                     </MenuItem>
-                    <MenuItem style={styles.menu} onClick={() => {
-                        setSelectedView(
-                            <div>
-                                2
-                            </div>
-                        )
+                    <MenuItem style={{color : eachRegistColor}} onClick={() => {
+                        router.push("/admin/productControl/productEachRegist")
                     }}>
                         상품 개별 등록
                     </MenuItem>
-                    <MenuItem style={styles.menu} onClick={() => {
-                        setSelectedView(
-                            <div>
-                                3
-                            </div>
-                        )
+                    <MenuItem style={{color : excelRegistColor}} onClick={() => {
+                        router.push("/admin/productControl")
                     }}>
                         상품 엑셀 등록
                     </MenuItem>

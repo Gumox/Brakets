@@ -75,7 +75,7 @@ export const getServerSideProps = async (ctx) => {
       ])
       const [brands] = await Promise.all([
         axios
-          .get(`${process.env.API_URL}/brand/AllBrandList`,)
+          .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
           .then(({ data }) => data.data), 
       ])
       const [staffs] = await Promise.all([
