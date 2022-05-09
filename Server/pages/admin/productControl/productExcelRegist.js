@@ -7,9 +7,9 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import ProductSideBar from "../../../components/admin/product/ProductSideBar";
-import ProductEachRegist from "../../../components/admin/product/productEachRegist";
+import ProductExcelRegist from "../../../components/admin/product/productExcelRegist";
 
-const ProductControlProductEachRegist = ({user,infos,brands}) => {
+const ProductControlProductExcelRegist = ({user,infos,brands}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -33,13 +33,13 @@ const ProductControlProductEachRegist = ({user,infos,brands}) => {
   const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/productControl"} minWidth={1000}/>
+      <AdminHeader path={"/admin/productControl"} minWidth={850}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <ProductSideBar path={"/admin/productControl/productEachRegist"} setSelectedView={setSelectedView}/>
+          <ProductSideBar path={"/admin/productControl/productExcelRegist"} setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >
-          <ProductEachRegist infos={infos} brands={brands} user={user}/>
+            <ProductExcelRegist infos={infos}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -127,4 +127,4 @@ const InSideWrapper = styled.nav`
   
 `;
 
-export default ProductControlProductEachRegist;
+export default ProductControlProductExcelRegist;

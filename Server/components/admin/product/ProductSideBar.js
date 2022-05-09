@@ -52,7 +52,7 @@ const ProductSideBar =({path})=>{
                         상품 개별 등록
                     </MenuItem>
                     <MenuItem style={{color : excelRegistColor}} onClick={() => {
-                        router.push("/admin/productControl")
+                        router.push("/admin/productControl/productExcelRegist")
                     }}>
                         상품 엑셀 등록
                     </MenuItem>

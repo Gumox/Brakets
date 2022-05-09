@@ -33,7 +33,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
     const [imgURL,setImgURL] =useState(null)
 
     const [imgBase64, setImgBase64] = useState(); // 파일 base64
-    const [imgFile, setImgFile] = useState("/icons/image.png");	//파일	
+    const [imgFile, setImgFile] = useState("/icons/imageSelect.png");	//파일	
 
     
     let disabledLineColor = COLOR.BLACK
@@ -319,7 +319,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                                 <label htmlFor="image_file">
                                     <ImageButton src={imgFile} onClick={(e)=>{onImageChange(e)}}/>
                                 </label>
-                                <ImageInput disabled={useURL || ""} type="file" accept="image/png, image/jpeg" id="image_file"   multiple="multiple" onChange={(e)=>{onImageChange(e)}}/>
+                                <ImageInput disabled={useURL} type="file" accept="image/png, image/jpeg" id="image_file"   multiple="multiple" onChange={(e)=>{onImageChange(e)}}/>
                                 
                             </div>
                             <div style={{display:"flex",flexDirection:"column",height:"160px",padding:"20px"}}>
@@ -353,7 +353,6 @@ const ProductEachRegist = ({infos,brands,user}) =>{
 const Wrapper = styled.div`
     padding:2%;
     background-color:${COLOR.WHITE};
-    justify-content:center;
     display:flex;
     min-width:750px;
 `;
