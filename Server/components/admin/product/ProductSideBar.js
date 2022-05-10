@@ -27,6 +27,8 @@ const ProductSideBar =({path})=>{
     let listColor = COLOR.BLACK;
     let eachRegistColor = COLOR.BLACK;
     let excelRegistColor = COLOR.BLACK;
+    let styleListColor = COLOR.BLACK;
+    let styleRegistColor = COLOR.BLACK;
 
     if(path === "/admin/productControl"){
         listColor = "rgb(133,133,133)";
@@ -35,6 +37,10 @@ const ProductSideBar =({path})=>{
     }else if(path === "/admin/productControl/productExcelRegist"){
         excelRegistColor = "rgb(133,133,133)";
     }
+    if(path === "/admin/productControl/ProductStyleList"){
+        styleListColor = "rgb(133,133,133)";
+    }
+    
     return(
         <div>
 
@@ -56,6 +62,12 @@ const ProductSideBar =({path})=>{
                     }}>
                         상품 엑셀 등록
                     </MenuItem>
+                    <MenuItem style={{color : styleListColor}} onClick={() => {
+                        router.push("/admin/productControl/ProductStyleList")
+                    }}>
+                        스타일
+                    </MenuItem>
+                    
                 </Menu>
             </ProSidebar>
         </div>

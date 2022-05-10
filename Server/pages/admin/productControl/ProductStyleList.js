@@ -7,8 +7,9 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import ProductSideBar from "../../../components/admin/product/ProductSideBar";
-import ProductList from "../../../components/admin/product/productList";
-const ProductControl = ({user,infos,products,brands}) => {
+import ProductStyleList from "../../../components/admin/product/style";
+
+const ProductControlProductStyleList = ({user,infos,styles,brands}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -35,10 +36,10 @@ const ProductControl = ({user,infos,products,brands}) => {
       <AdminHeader path={"/admin/productControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <ProductSideBar path={"/admin/productControl"} setSelectedView={setSelectedView}/>
+          <ProductSideBar path={"/admin/productControl/ProductStyleList"} setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >
-          <ProductList user={user} infos={infos} products={products} brands={brands}/>
+          <ProductStyleList user={user} infos={infos} styles={styles} brands={brands}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -72,9 +73,9 @@ export const getServerSideProps = async (ctx) => {
       .get(`${process.env.API_URL}/headquarter`,)
       .then(({ data }) => data.body), 
     ])
-    const [products] = await Promise.all([
+    const [styles] = await Promise.all([
       axios
-        .get(`${process.env.API_URL}/product/inHeadquarter?headquarterId=${user.headquarter_id}`,)
+        .get(`${process.env.API_URL}/product/styleInHeadquarter?headquarterId=${user.headquarter_id}`,)
         .then(({ data }) => data.data), 
     ])
     const [brands] = await Promise.all([
@@ -92,7 +93,7 @@ export const getServerSideProps = async (ctx) => {
       {
         user:user,
         infos:infos,
-        products:products,
+        styles:styles,
         brands:brands,
       } 
     };
@@ -138,4 +139,4 @@ const InSideWrapper = styled.nav`
   
 `;
 
-export default ProductControl;
+export default ProductControlProductStyleList;
