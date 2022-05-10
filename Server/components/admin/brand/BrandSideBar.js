@@ -30,7 +30,6 @@ const BrandSideBar =({
         let seasonListColor = COLOR.BLACK;
         let seasonRegistColor = COLOR.BLACK;
         let categoryListColor = COLOR.BLACK;
-        let categoryRegistColor = COLOR.BLACK;
     
         if(path === "/admin/brandControl"){
             listColor = "rgb(133,133,133)";
@@ -42,10 +41,8 @@ const BrandSideBar =({
         }else if(path === "/admin/brandControl/seasonRegist"){
             seasonRegistColor = "rgb(133,133,133)";
         }
-        else if(path === "/admin/brandControl/productExcelRegist"){
+         if(path === "/admin/brandControl/categoryList"){
             categoryListColor = "rgb(133,133,133)";
-        }else if(path === "/admin/brandControl/productExcelRegist"){
-            categoryRegistColor = "rgb(133,133,133)";
         }
     
     return(
@@ -65,6 +62,12 @@ const BrandSideBar =({
                         브랜드 등록
                     </MenuItem>
 
+                    <MenuItem style={{color : categoryListColor}} onClick={() => {
+                        router.push("/admin/brandControl/categoryList")
+                    }}>
+                        카테고리
+                    </MenuItem>
+
                     <SubMenu title="시즌">
                         <MenuItem style={{color : seasonListColor}} onClick={() => {
                             router.push("/admin/brandControl/seasonList")
@@ -79,19 +82,7 @@ const BrandSideBar =({
                         </MenuItem>
                     </SubMenu>
 
-                    <SubMenu title="카테고리">
-                        <MenuItem style={{color : categoryListColor}} onClick={() => {
-                            router.push("/admin/brandControl/")
-                        }}>
-                            카테고리 목록
-                        </MenuItem>
-
-                        <MenuItem style={{color : categoryRegistColor}} onClick={() => {
-                            router.push("/admin/brandControl/")
-                        }}>
-                            카테고리 등록
-                        </MenuItem>
-                    </SubMenu>
+                    
 
                    
                    
