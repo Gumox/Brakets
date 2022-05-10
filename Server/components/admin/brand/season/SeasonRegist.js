@@ -1,0 +1,200 @@
+import React ,{useEffect,useState,useCallback} from "react";
+import styled from "styled-components";
+import COLOR from "../../../../constants/color";
+import _ from "lodash";
+import moment from "moment";
+import axios from "axios";
+
+
+const SeasonRegist = ({user,infos,season,brands=[]}) => {
+    
+    console.log(brands)
+    const [selectBrandId,setSelectBrandId] = useState(brands[0].brand_id)
+
+    const [seasonName,setSeasonName] = useState(null)
+    const [seasonCode,setSeasonCode] = useState(null)
+
+    const [seasonStartDate,setSeasonStartDate] = useState(null)
+    const [seasonEndDate,setSeasonEndDate] = useState(null)
+
+    const emptySpace =(str)=>{
+        console.log("s ",str)
+        let name = ""
+        for(let i =0; i<str.length;i++){
+            if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
+                name += "_"
+            }else if(str[i] !== " " && str[i]){
+                name += str[i]
+            }
+        }
+        return(String(name).replace(/_/g," "))
+        
+    }
+
+    const registSeason = async() =>{
+        const data ={
+            seasonName : emptySpace(seasonName),
+            seasonCode : emptySpace(seasonCode),
+            startDate : seasonStartDate,
+            endDate : seasonEndDate,
+            brandId : selectBrandId
+        }
+        
+        const [result] = await Promise.all([
+            axios
+              .post(`${process.env.API_URL}/brand/registSeason`,data)
+              .then(({ data }) => data.body), 
+            ])
+        //alert("새로운 브랜드 가 등록되었습니다.")
+        //router.push("/admin/brandControl/seasonList")
+    }
+    return(
+        <Wrapper>
+          
+            <div>
+              
+            
+              <h2 style={{marginLeft:20}}>시즌 등록</h2>
+                  <InputTableBox>
+                  <PrView>
+                      
+                      <HeaderCell>
+                          <NameBox  >
+                            브랜드 이름
+                            </NameBox>
+                            <InputBox style={{justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:0}}>
+                                <select value={selectBrandId} style={{border:0,fontSize:20,fontWeight:"bold"}} onChange={(e)=>{setSelectBrandId(e.target.value)}}>
+                                    {
+                                        brands.map((item,index)=>(
+                                            <option key={index} value={item.brand_id}>{item.brand_name}</option>
+                                        ))
+                                    }
+                                </select>
+                            </InputBox>
+                      </HeaderCell>
+
+                    </PrView>
+
+                    <PrView>
+                        <HeaderCell>
+                          <NameBox  >
+                            시즌 이름
+                            </NameBox>
+                            <InputBox style={{borderBottom:0}}>
+                                <InputLine value={seasonName ||""} onChange={(e)=>{setSeasonName(e.target.value)}}/>
+                            </InputBox>
+                        </HeaderCell>
+                    
+                        <HeaderCell>
+                          <NameBox  >
+                            시즌 코드
+                            </NameBox>
+                            <InputBox style={{borderBottom:0}}>
+                                <InputLine value={seasonCode ||""} onChange={(e)=>{setSeasonCode(e.target.value)}}/>
+                            </InputBox>
+                        </HeaderCell>
+                    </PrView>
+
+                    <PrView>
+                        <HeaderCell>
+                          <NameBox  >
+                            시즌 시작일
+                            </NameBox>
+                            <InputBox style={{justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold"}}>
+                                <input type="date" value={seasonStartDate} style={{border:0,fontSize:16,cursor:"pointer"}} onChange={(e)=>{setSeasonStartDate(moment(e.target.value).format("YYYY-MM-DD"))}}/>
+                            </InputBox>
+                        </HeaderCell>
+                     
+                        <HeaderCell>
+                          <NameBox  >
+                            시즌 종료일
+                            </NameBox>
+                            <InputBox style={{justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold"}}>
+                                <input type="date" value={seasonEndDate} style={{border:0,fontSize:16,cursor:"pointer"}} onChange={(e)=>{setSeasonEndDate(moment(e.target.value).format("YYYY-MM-DD"))}}/>
+                            </InputBox>
+                        </HeaderCell>
+
+                    </PrView>
+
+                    <CenterView>
+                        <RegistButton onClick={()=>{registSeason()}}>
+                            등록
+                        </RegistButton>
+                    </CenterView>
+                    
+              </InputTableBox>
+            </div>
+            
+            
+        </Wrapper>
+    );
+};
+
+
+const Wrapper = styled.div`
+    padding:2%;
+    background-color:${COLOR.WHITE};
+`;
+const CenterView  = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+`;
+const NameBox  = styled.div`
+    height : 60px;
+    width:180px;
+    background-color:${COLOR.LIGHT_GRAY};
+    font-size: 18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`;
+const InputBox  = styled.div`
+    height : 60px;
+    min-width:180px;
+    flex:1;
+    display:flex;
+    border:2px solid ${COLOR.LIGHT_GRAY};
+    justyfiy-content:center;
+    ailgn-items:center;
+`;
+
+const RegistButton =styled.button`
+    background-color : ${COLOR.INDIGO};
+    width:80px;
+    height : 50px;
+    color:${COLOR.WHITE};
+    margin:20px;
+    font-size:16px;
+    border-radius:10px;
+
+`;
+const InputLine  = styled.input`
+    flex:1;
+    border:0;
+    text-align:center;
+    font-size:20px;
+    display:flex;
+
+`;
+const HeaderCell = styled.div`
+    display:flex;
+    height:60px;
+    min-width:20px;
+    justify-content:center;
+    align-items:center;
+    font-size:16px;
+    flex:1;
+`;
+
+const InputTableBox  = styled.div`
+    min-width:950px;
+    margin-top:20px;
+`;
+const PrView  = styled.div`
+    display:flex;
+    flex-direction:row;
+`;
+
+
+export default SeasonRegist

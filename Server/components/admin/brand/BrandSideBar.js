@@ -8,21 +8,114 @@ import COLOR from "../../../constants/color";
 const BrandSideBar =({
     setSelectedView = () => {} ,
     path})=>{
-    const router =useRouter()
+        const router =useRouter()
+    
+        const [windowWidth,setWindowWidth] = useState(0)
+        const [windowHeight,setWindowHeight] = useState(0)
+        const handleResize = debounce(()=>{
+            setWindowWidth(window.innerWidth)
+            setWindowHeight(window.innerHeight)
+        },1000)
+        useEffect(()=>{
+            
+            setWindowWidth(window.innerWidth)
+            setWindowHeight(window.innerHeight)
+            window.addEventListener('resize',handleResize);
+            return ()=>{
+                window.removeEventListener('resize',handleResize);
+            }
+        },[])
+        let listColor = COLOR.BLACK;
+        let registColor = COLOR.BLACK;
+        let seasonListColor = COLOR.BLACK;
+        let seasonRegistColor = COLOR.BLACK;
+        let categoryListColor = COLOR.BLACK;
+        let categoryRegistColor = COLOR.BLACK;
+        let styleListColor = COLOR.BLACK;
+        let styleRegistColor = COLOR.BLACK;
+    
+        if(path === "/admin/brandControl"){
+            listColor = "rgb(133,133,133)";
+        }else if(path === "/admin/brandControl/brandRegist"){
+            registColor = "rgb(133,133,133)";
+        }
+        else if(path === "/admin/brandControl/seasonList"){
+            seasonListColor = "rgb(133,133,133)";
+        }else if(path === "/admin/brandControl/seasonRegist"){
+            seasonRegistColor = "rgb(133,133,133)";
+        }
+        else if(path === "/admin/brandControl/productExcelRegist"){
+            categoryListColor = "rgb(133,133,133)";
+        }else if(path === "/admin/brandControl/productExcelRegist"){
+            categoryRegistColor = "rgb(133,133,133)";
+        }
+        else if(path === "/admin/brandControl/productExcelRegist"){
+            styleListColor = "rgb(133,133,133)";
+        }else if(path === "/admin/brandControl/productExcelRegist"){
+            styleRegistColor = "rgb(133,133,133)";
+        }
     
     return(
         <div style={{ backgroundColor:COLOR.MENU_MAIN,}}>
 
-                <MenuWrapper  style={styles.menu}>
-                    <SideMenu selected={path === "/admin/brandControl"} style={{marginTop:"40px"}} onClick={() => router.push("/admin/brandControl")}>
+            <ProSidebar style={{...styles.menu,minHeight:`${windowHeight-120}px`}}>
+                <Menu  style={styles.menu} iconShape="square">
+                    <MenuItem></MenuItem>
+                    <MenuItem  style={{color : listColor }} onClick={() => {
+                        router.push("/admin/brandControl")
+                    }}>
                         브랜드 목록
-                    </SideMenu>
-                        
-                   
-                    <SideMenu selected={path === "/admin/brandControl/brandRegist"} onClick={() => router.push("/admin/brandControl/brandRegist")}>
+                    </MenuItem>
+                    <MenuItem style={{color : registColor}} onClick={() => {
+                        router.push("/admin/brandControl/brandRegist")
+                    }}>
                         브랜드 등록
-                    </SideMenu>
-                </MenuWrapper>
+                    </MenuItem>
+
+                    <SubMenu title="시즌">
+                        <MenuItem style={{color : seasonListColor}} onClick={() => {
+                            router.push("/admin/brandControl/seasonList")
+                        }}>
+                            시즌 목록
+                        </MenuItem>
+
+                        <MenuItem style={{color : seasonRegistColor}} onClick={() => {
+                            router.push("/admin/brandControl/seasonRegist")
+                        }}>
+                            시즌 등록
+                        </MenuItem>
+                    </SubMenu>
+
+                    <SubMenu title="카테고리">
+                        <MenuItem style={{color : categoryListColor}} onClick={() => {
+                            router.push("/admin/brandControl/")
+                        }}>
+                            카테고리 목록
+                        </MenuItem>
+
+                        <MenuItem style={{color : categoryRegistColor}} onClick={() => {
+                            router.push("/admin/brandControl/")
+                        }}>
+                            카테고리 등록
+                        </MenuItem>
+                    </SubMenu>
+
+                    <SubMenu title="스타일">
+                        <MenuItem style={{color : styleListColor}} onClick={() => {
+                            router.push("/admin/brandControl/")
+                        }}>
+                            스타일 목록
+                        </MenuItem>
+
+                        <MenuItem style={{color : styleRegistColor}} onClick={() => {
+                            router.push("/admin/brandControl/")
+                        }}>
+                            스타일 등록
+                        </MenuItem>
+                    </SubMenu>
+                   
+                </Menu>
+            </ProSidebar>
         </div>
     )
     
