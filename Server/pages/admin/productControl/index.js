@@ -8,6 +8,7 @@ import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import ProductSideBar from "../../../components/admin/product/ProductSideBar";
 import ProductList from "../../../components/admin/product/productList";
+
 const ProductControl = ({user,infos,products,brands}) => {
   const router = useRouter();
   const handleLogout = async () => {

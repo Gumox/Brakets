@@ -2,9 +2,10 @@ import excuteQuery from "../db";
 
 async function getStyle(headquarterId) {
   const result = await excuteQuery({
-    query: `SELECT style_id AS value, style_code AS text ,style_type.brand_id, brand.brand_name
+    query: `SELECT style_id AS value, style_code AS text ,style_type.brand_id, brand.brand_name, style_type.pcategory_id,product_category.category_name
               FROM style_type 
               JOIN brand ON brand.brand_id = style_type.brand_id
+              JOIN product_category ON product_category.pcategory_id =style_type.pcategory_id
               WHERE brand.headquarter_id=?
               ORDER BY style_code ASC`,
     values: [headquarterId],

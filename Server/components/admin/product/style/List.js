@@ -49,6 +49,10 @@ const ListItem =({item})=>{
                 {item.text}
             </HeaderCell>
 
+            <HeaderCell>
+                {item.category_name}
+            </HeaderCell>
+
             
         </PrView>
     )

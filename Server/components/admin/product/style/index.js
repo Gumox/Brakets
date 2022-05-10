@@ -11,6 +11,7 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
     const [filtedStyles,setFiltedStyles] =useState(styles)
 
     const [selectedBrand,setSelectedBrand] = useState("")
+    const [selectedCategory,setSelectedCategory] = useState("")
 
     
     const [searchProductName,setSearchProductName] =useState("")
@@ -18,6 +19,7 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
     
     const [insertBrand,setInsertBrand] =useState(brands[0].brand_id)
     const [insertStyleNo,setInsertStyleNo] =useState(null)
+    const [categorys,setCategorys] = useState([])
     
     const emptySpace =(str)=>{
         console.log("s ",str)
@@ -52,11 +54,21 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
         window.location.reload();
     }
 
+    useEffect(()=>{
+        const uniqBycategorys = _.uniqBy(styles,"category_name")
+        let result =[]
+        uniqBycategorys.map((item)=>{
+          result.push({text:item.category_name})
+        })
+        setCategorys(result)
+  
+      },[])
+
     return(
         <Wrapper>
           
             <div>
-              <SearchBar style={{width:"450px"}}>
+              <SearchBar style={{width:"650px"}}>
                 <SearchBarHeader >
                     조회 조건
                 </SearchBarHeader>
@@ -74,10 +86,24 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                                 ))
                               }
                           </select>
-                      </PrView> 
+                      </PrView>
+                      <PrView style={{flex:1, backgroundColor:COLOR.WHITE,borderRadius:0,}}>
+                          <SelectItemHeader >
+                            카테고리
+                          </SelectItemHeader>
+                          <select style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
+                            onChange={(e)=>{setSelectedCategory(e.target.value)}}>
+                              <option  value={""} >{"전체"}</option>
+                              {
+                                categorys.map((item,index)=>(
+                                  <option key={index} value={item.text}>{item.text}</option>
+                                ))
+                              }
+                          </select>
+                      </PrView>
                     </PrView>
                 <SearchBarButton onClick={()=>{
-                  setFiltedStyles(stylesFilter(styles,selectedBrand))
+                  setFiltedStyles(stylesFilter(styles,selectedBrand,selectedCategory))
                 }}>
                     <div style={{font:"12px",fontWeight:"bold"}}>
                        조회
@@ -113,6 +139,10 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
 
                             <HeaderCell>
                                 스타일 No.
+                            </HeaderCell>
+
+                            <HeaderCell>
+                                카테고리
                             </HeaderCell>
 
                         </PrView>
@@ -182,11 +212,16 @@ const stylesNameParse=(styles,text)=>{
   }
   return result
 }
-const stylesFilter =(styles,brand)=>{
+const stylesFilter =(styles,brand,category)=>{
   let result = styles
   if(brand){
     result = (_.filter(result,function(o){
       return o.brand_id == brand
+    }))
+  }
+  if(category){
+    result = (_.filter(result,function(o){
+      return o.category_name == category
     }))
   }
   console.log(result)
@@ -214,7 +249,7 @@ const HeaderCell = styled.div`
 `;
 
 const InputTableBox  = styled.div`
-    width:580px;
+    width:810px;
     margin-top:20px;
 `;
 const PrView  = styled.div`
