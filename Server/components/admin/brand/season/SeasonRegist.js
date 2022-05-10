@@ -18,7 +18,6 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
     const [seasonEndDate,setSeasonEndDate] = useState(null)
 
     const emptySpace =(str)=>{
-        console.log("s ",str)
         let name = ""
         for(let i =0; i<str.length;i++){
             if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
@@ -32,6 +31,7 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
     }
 
     const registSeason = async() =>{
+
         const data ={
             seasonName : emptySpace(seasonName),
             seasonCode : emptySpace(seasonCode),
@@ -39,14 +39,30 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
             endDate : seasonEndDate,
             brandId : selectBrandId
         }
-        
-        const [result] = await Promise.all([
+
+        const [check] = await Promise.all([
             axios
-              .post(`${process.env.API_URL}/brand/registSeason`,data)
-              .then(({ data }) => data.body), 
+              .post(`${process.env.API_URL}/brand/checkRegistedSeason`,data)
+              .then(({ data }) => data), 
             ])
-        //alert("새로운 브랜드 가 등록되었습니다.")
-        //router.push("/admin/brandControl/seasonList")
+
+        console.log(check)
+        
+        if(check.info1 && check.info2){
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/brand/registSeason`,data)
+                .then(({ data }) => data.body), 
+                ])
+            alert("새로운 브랜드 가 등록되었습니다.")
+            router.push("/admin/brandControl/seasonList")
+        }else if(!check.info1 && check.info2){
+            alert("이미 등록된 시즌 이름입니다.")
+        }else if(check.info1 && !check.info2){
+            alert("이미 등록된 시즌 코드입니다.")
+        }else if(!check.info1 && !check.info2){
+            alert("이미 등록된 시즌입니다.")
+        }
     }
     return(
         <Wrapper>
