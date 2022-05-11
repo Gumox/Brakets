@@ -40,9 +40,9 @@ const SeasonList = ({user,infos,season,staffs}) => {
                           시즌 종료일
                       </HeaderCell>
 
-                      <HeaderCell style={{color: COLOR.RED}}>
+                      {/*<HeaderCell style={{color: COLOR.RED}}>
                           
-                      </HeaderCell>
+                      </HeaderCell>*/}
                   </PrView>
               </InputTableBox>
             </div>

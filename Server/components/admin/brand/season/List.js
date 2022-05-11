@@ -76,7 +76,7 @@ const ListItem =({item})=>{
                 {item.end_date ? moment(item.end_date).format("YYYY-MM-DD"):"" }
             </HeaderCell>
             
-            <HeaderCell style={{color: COLOR.RED}}>
+            {/*<HeaderCell style={{color: COLOR.RED}}>
                 {!modifyOn && <ModifyView onClick={()=>{ setModifyOn(!modifyOn)}}>
                     수정
                 </ModifyView>}
@@ -90,7 +90,7 @@ const ListItem =({item})=>{
                         </ChangeView>
                     </div>
                 }
-            </HeaderCell>
+            </HeaderCell>*/}
         </PrView>
     )
 }
