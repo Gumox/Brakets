@@ -8,7 +8,6 @@ const ProductList = ({user,infos,products,brands}) => {
     
     
     const [actionView,setActionView] = useState(null)
-    console.log(brands)
     const [filtedProducts,setFiltedProducts] =useState(products)
 
     const [selectedBrand,setSelectedBrand] = useState("")
@@ -156,11 +155,11 @@ const ProductList = ({user,infos,products,brands}) => {
                       </HeaderCell>
 
                       <HeaderCell style={{color: COLOR.RED,flex:1}}>
-                        수정
+                        
                       </HeaderCell>
                   </PrView>
 
-                  <List products={sortProducts(filtedProducts)}/>
+                  <List infos={infos} user={user} brands={brands} products={sortProducts(filtedProducts)} setActionView={setActionView}/>
                   
               </InputTableBox>
             </div>

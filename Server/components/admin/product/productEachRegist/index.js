@@ -96,16 +96,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
 
         if(seasonResult.length>0){
             setSeasonSelected(seasonResult[0].value)
-            const [stylesResult] = await Promise.all([
-                axios
-                .get(`${process.env.API_URL}/product/seasonStyle?seasonId=${seasonResult[0].value}&brandId=${brandId}`,)
-                .then(({ data }) => data.data), 
-            ])
-            setStyles(stylesResult) 
             
-            if(stylesResult.length>0){
-                setStyleSelected(stylesResult[0].value)
-            }
         }else{
             setStyles([]) 
             setStyleSelected(null)
@@ -114,6 +105,18 @@ const ProductEachRegist = ({infos,brands,user}) =>{
         
         if(categoryResult.length>0){
             setCategorySelected(categoryResult[0].pcategory_id)
+            console.log(`product/seasonStyleInBrand?pcategoryId=${categoryResult[0].pcategory_id}&brandId=${brandId}`)
+
+            const [stylesResult] = await Promise.all([
+                axios
+                .get(`${process.env.API_URL}/product/seasonStyleInBrand?pcategoryId=${categoryResult[0].value}&brandId=${brandId}`,)
+                .then(({ data }) => data.data), 
+            ])
+            setStyles(stylesResult) 
+            
+            if(stylesResult.length>0){
+                setStyleSelected(stylesResult[0].value)
+            }
         }else{
             setCategorySelected(null)
         }
@@ -121,17 +124,19 @@ const ProductEachRegist = ({infos,brands,user}) =>{
         
     }
     const getStyle= async(value,brandId) =>{
-        setSeasonSelected(value)
+        
+        setCategorySelected()
+
         let seasonId = null;
         if(value && value !== ""){
             seasonId = value
         }
-        console.log(`/product/seasonStyle?seasonId=${value}?brandId=${brandId}`)
+        console.log(`/product/seasonStyleInBrand?pcategoryId=${value}?brandId=${brandId}`)
 
         
         const [result] = await Promise.all([
             axios
-              .get(`${process.env.API_URL}/product/seasonStyle?seasonId=${value}&brandId=${brandId}`,)
+              .get(`${process.env.API_URL}/product/seasonStyleInBrand?pcategoryId=${value}&brandId=${brandId}`,)
               .then(({ data }) => data.data), 
         ])
         console.log(result)
@@ -234,7 +239,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBoxTr style={{borderLeft: `2px solid ${COLOR.LIGHT_GRAY}`,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <select value={seasonSelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{getStyle(e.target.value,brandId)}}>
+                        <select value={seasonSelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{setSeasonSelected(e.target.value)}}>
                             {
                                 seasons.map((item,index)=>(
                                     <option key={index} value={item.value}>{item.season_name}</option>
@@ -248,7 +253,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBoxTr style={{width:"150px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}} >
-                        <select value={categorySelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{setCategorySelected(e.target.value)}}>
+                        <select value={categorySelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{getStyle(e.target.value,brandId)}}>
                             {
                                 categorys.map((item,index)=>(
                                     <option key={index} value={item.pcategory_id}>{item.category_name}</option>
@@ -441,12 +446,12 @@ const InputLine  = styled.input`
 `;
 
 const ImageInput = styled.input`
-    object-fit:contain;
     visibility:hidden;
 `
 const ImageButton = styled.img`
     width:100px;
     height:100px;
+    object-fit: contain;
     background-color:${COLOR.WHITE};
     padding:10px;
     margin-left: 25px;

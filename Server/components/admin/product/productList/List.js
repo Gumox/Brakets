@@ -3,13 +3,18 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import axios from "axios";
 import _ from "lodash";
-
+import ProductModify from "./Modify";
 
 const List = ({
     user=[],
+    infos=[],
     products=[],
+    brands=[],
+    setActionView=()=>{}
 }) => {
-
+    const cancel =()=>{
+        setActionView(null)
+    }
     
     return(
         <div>
@@ -18,13 +23,13 @@ const List = ({
                     if(index+1 !== products.length){
                         return(
                             <Wrapper key={index}>
-                                <ListItem item={item}/>
+                                <ListItem item={item} cancel={cancel} infos={infos} brands={brands} user={user} setActionView={setActionView}/>
                             </Wrapper>
                         )
                     }else{
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
-                                <ListItem item={item}/>
+                                <ListItem item={item} cancel={cancel} infos={infos} brands={brands} user={user}  setActionView={setActionView}/>
                             </Wrapper>
                         )
                     }
@@ -34,8 +39,14 @@ const List = ({
     );
 };
 
-const ListItem =({item})=>{
-    
+const ListItem =({
+    item,
+    infos=[],
+    brands=[],
+    user=[],
+    setActionView=()=>{},
+    cancel=()=>{}
+})=>{
     
     return(
         <PrView>
@@ -76,8 +87,13 @@ const ListItem =({item})=>{
                 <TextInsider disabled value={item.name}/>
             </HeaderCell>
 
-            <HeaderCell style={{color: COLOR.RED,flex:1}}>
-            수정
+            <HeaderCell style={{color: COLOR.RED,flex:1}} >
+                <ModifyView style={{color: COLOR.RED}} 
+                onClick={()=>{setActionView(
+                    <ProductModify item={item} infos={infos} brands={brands} user={user} cancel={cancel}/>
+                    )}}>
+                    수정
+                </ModifyView>
             </HeaderCell>
 
         </PrView>
@@ -98,6 +114,7 @@ const HeaderCell = styled.div`
     flex:1;
     padding:5px;
 `;
+
 
 const PrView  = styled.div`
     display:flex;
