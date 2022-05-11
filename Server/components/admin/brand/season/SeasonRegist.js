@@ -3,12 +3,13 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import _ from "lodash";
 import moment from "moment";
+import Router, { useRouter } from "next/router";
 import axios from "axios";
 
 
 const SeasonRegist = ({user,infos,season,brands=[]}) => {
     
-    console.log(brands)
+    const router = useRouter();
     const [selectBrandId,setSelectBrandId] = useState(brands[0].brand_id)
 
     const [seasonName,setSeasonName] = useState(null)
@@ -46,7 +47,6 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
               .then(({ data }) => data), 
             ])
 
-        console.log(check)
         
         if(check.info1 && check.info2){
             const [result] = await Promise.all([
@@ -54,14 +54,14 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                 .post(`${process.env.API_URL}/brand/registSeason`,data)
                 .then(({ data }) => data.body), 
                 ])
-            alert("새로운 브랜드 가 등록되었습니다.")
+            alert("새로운 시즌이 등록되었습니다.")
             router.push("/admin/brandControl/seasonList")
-        }else if(!check.info1 && check.info2){
+        }
+        if(!check.info1){
             alert("이미 등록된 시즌 이름입니다.")
-        }else if(check.info1 && !check.info2){
+        }
+        if(!check.info2){
             alert("이미 등록된 시즌 코드입니다.")
-        }else if(!check.info1 && !check.info2){
-            alert("이미 등록된 시즌입니다.")
         }
     }
     return(
