@@ -19,10 +19,13 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
     
     const [insertBrand,setInsertBrand] =useState(brands[0].brand_id)
     const [insertStyleNo,setInsertStyleNo] =useState(null)
+    
+    const [styleCategorys,setStyleCategorys] =useState([])
+    const [insertCategory,setInsertCategory] =useState(null)
+    
     const [categorys,setCategorys] = useState([])
     
     const emptySpace =(str)=>{
-        console.log("s ",str)
         let name = ""
         for(let i =0; i<str.length;i++){
             if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
@@ -35,11 +38,26 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
         
     }
 
+    const getCategorys= async(brandId) =>{
+
+        setInsertBrand(brandId)
+
+        const [categoryResult] = await Promise.all([
+            axios
+                .post(`${process.env.API_URL}/getProductCategory`,{brand: brandId })
+                .then(({ data }) => data.body), 
+        ])
+    
+        setStyleCategorys(categoryResult)
+        setInsertCategory(categoryResult[0].pcategory_id)
+    }
+
     
     const addStyle= async() =>{
         const data=
             {  
                 styleNo:emptySpace(insertStyleNo),
+                category:insertCategory,
                 brandId:insertBrand
             }
         
@@ -50,7 +68,7 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
               .post(`${process.env.API_URL}/product/addStyle`,data)
               .then(({ data }) => data.data), 
         ])
-        console.log(result)
+        console.log(data)
         window.location.reload();
     }
 
@@ -128,7 +146,10 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
 
                             <h2 style={{marginLeft:"20px",padding:"5px"}}>스타일 목록</h2>
-                            <AddButton onClick={()=>{setAction(!action)}}>추가</AddButton>
+                            <AddButton onClick={()=>{
+                                getCategorys(insertBrand);
+                                setAction(!action)
+                            }}>추가</AddButton>
 
                         </div>
                         <PrView>
@@ -152,7 +173,7 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                     {
                         action && 
                         
-                        <div style={{margin:40,marginTop:140,height:"240px",width:"300px",display:"flex",flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <div style={{margin:40,marginTop:140,height:"300px",width:"300px",display:"flex",flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             <LaView style={{flex:1,borderRadius: "10px 10px 0% 0%",justifyContent:"center",alignItems:"center"}}>
                                 <h2>스타일 추가</h2>
                             </LaView>
@@ -163,11 +184,28 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
-                                    <select style={{flex:1,textAlign:"center",border:"0px"}} value={insertBrand} onChange={(e)=>{setInsertBrand(e.target.value)}} 
+                                    <select style={{flex:1,textAlign:"center",border:"0px"}} value={insertBrand} onChange={(e)=>{getCategorys(e.target.value)}} 
                                         >
                                         {
                                             brands.map((item,index)=>(
                                             <option key={index} value={item.brand_id}>{item.brand_name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                            </LaView>
+                            <LaView style={{flex:1,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                <div style={{flex:1,backgroundColor:COLOR.MENU_MAIN}}>
+                                    <HeaderCell>
+                                        카테고리
+                                    </HeaderCell>
+                                </div>
+                                <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
+                                    <select style={{flex:1,textAlign:"center",border:"0px"}} value={insertCategory} onChange={(e)=>{setInsertCategory(e.target.value)}} 
+                                        >
+                                        {
+                                            styleCategorys.map((item,index)=>(
+                                            <option key={index} value={item.pcategory_id}>{item.category_name}</option>
                                             ))
                                         }
                                     </select>
@@ -232,6 +270,8 @@ const sortStyles =(styles)=>{
   let sortByBrand = _.sortBy(styles,"brand_name")
   return (sortByBrand)
 }
+
+
 
 const Wrapper = styled.div`
     padding:2%;

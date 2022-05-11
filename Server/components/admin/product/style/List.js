@@ -10,7 +10,6 @@ const List = ({
     styles=[],
 }) => {
 
-    console.log(styles)
     
     return(
         <div>

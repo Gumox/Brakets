@@ -1,13 +1,14 @@
 import excuteQuery from "../db";
 
-async function addStyle( styleNo, brandId) {
+async function addStyle( styleNo,category, brandId) {
   const result = await excuteQuery({
     query: `INSERT INTO 
                 style_type(
                     style_code,
-                    brand_id
-                ) VALUES (?,?)`,
-    values: [ styleNo, brandId],
+                    brand_id,
+                    pcategory_id
+                ) VALUES (?,?,?)`,
+    values: [ styleNo, brandId,category],
   });
   return result;
 }
@@ -22,10 +23,11 @@ const controller = async (req, res) => {
     try {
       const {  
             styleNo,
-            brandId
+            brandId,
+            category
         } = req.body;
       
-        const style = await addStyle( styleNo, brandId) ;
+        const style = await addStyle( styleNo,category, brandId) ;
 
       if (style.error) throw new Error(style.error);
 
