@@ -11,7 +11,7 @@ const StoreList = ({user,infos,store,brands}) => {
     const [filted,setFilted] =useState(store)
 
     const [selectedBrand,setSelectedBrand] = useState("")
-    const [selectedSeason,setSelectedSeason] = useState("")
+    const [insertedAdress,setInsertedAdress] = useState(null)
     const [selectedCategory,setSelectedCategory] = useState("")
 
     
@@ -63,10 +63,15 @@ const StoreList = ({user,infos,store,brands}) => {
                                 ))
                               }
                           </select>
+                          <SelectItemHeader >
+                            주소
+                          </SelectItemHeader>
+                          <AdressSearchInput type={"text"} value={insertedAdress || ""} style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}
+                                             onChange={(e)=>{setInsertedAdress(e.target.value)}}/>
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
-                  setFilted(storeFilter(store,selectedBrand))
+                  setFilted(storeFilter(store,selectedBrand,insertedAdress))
                 }}>
                     <div style={{font:"12px",fontWeight:"bold"}}>
                        조회
@@ -147,19 +152,23 @@ const storeNameParse=(store,name)=>{
   }
   return result
 }
-const storeFilter =(store,brand)=>{
+const storeFilter =(store,brand,adress)=>{
   let result = store
+
+  console.log(store)
+
   if(brand){
     result = (_.filter(result,function(o){
       return o.brand_id == brand
     }))
   }
-  /*if(seasonName && seasonName !==""){
-    result = (_.filter(result,{"season_name":seasonName}))
+  if(adress){
+    result = (_.filter(result,function(o){
+      
+      return String(o.address).includes(adress) 
+    }))
   }
-  if(categoryName && categoryName !==""){
-    result = (_.filter(result,{"category_name":categoryName}))
-  }*/
+  
   return (result)
 }
 
@@ -258,5 +267,12 @@ const InColView  = styled.div`
     justify-content:center;
     align-items:center;
 `;
-
+const AdressSearchInput = styled.input`
+  border :0;
+  padding-left:10px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+  }
+`;
 export default StoreList
