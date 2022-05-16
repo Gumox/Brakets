@@ -9,6 +9,7 @@ import PostCode from "./PostCode";
 import SearchFocus from "./SearchFocus";
 import checkDuplicate from "./checkDuplicate";
 import getNextStoreCode from "./getNextStoreCode";
+import { checkAccount,checkPhone,checkEmail } from "../checkDuplicateManagerInfo";
 
 const StoreEachRegist = ({infos,brands,user,stores}) =>{
     const router = useRouter();
@@ -96,7 +97,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
     }
     const registStore = async()=>{
         
-        if(!duplicateCheck){
+        if(!duplicateCheck&&address&&storeContact){
             const data ={
                 storeName :storeName,
                 storeCode :storeCode,
@@ -106,23 +107,42 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                 contact : storeContact,
                 address : address +" "+detailAddress,
                 
-                managerAccount,
-                managerEmail,
-                managerName,
+                managerAccount :emptySpace(managerAccount || ""),
+                managerEmail :emptySpace(managerAccount || ""),
+                managerName : emptySpace(managerName || ""),
                 managerPhone,
                 managerCode : "A",
                 managerId
             }
-            const [result] = await Promise.all([
-                axios
-                .post(`${process.env.API_URL}/store/regist`,data)
-                .then(({ data }) => data.body), 
-                ])
             
+            const isAccount =await checkAccount(managerAccount)
+            const isPhone = await checkPhone(managerPhone) 
+            const isEmail = await checkEmail(managerEmail) 
+
+            if(!isAccount && !isPhone && !isEmail){
+                const [result] = await Promise.all([
+                    axios
+                    .post(`${process.env.API_URL}/store/regist`,data)
+                    .then(({ data }) => data.body), 
+                    ])
+                
                 alert("신규 매장이 등록 되었습니다.")
                 router.push("/admin/storeControl")
-        }else{
+
+            }else if(isAccount){
+                alert("신규 매니저 계정 중복")
+            }else if(isPhone){
+                alert("신규 매니저 연락처 중복")
+            }else if(isEmail){
+                alert("신규 매니저 이메일 중복")
+            }
+            
+        }else if(duplicateCheck){
             alert("사용 불가능한 매장명 입니다")
+        }else if(!address){
+            alert("매장 주소를 입력해 주세요")
+        }else if(!storeContact){
+            alert("매장 연락처를 입력해 주세요")
         }
     }
     const emptySpace =(str)=>{
@@ -143,10 +163,11 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
         let insertedValue = value
 
         if( !regExp.test(insertedValue) ){
-
+            insertedValue = String(insertedValue).replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gim,'') 
             alert("특수문자는 입력하실수 없습니다.");
        
-            insertedValue = insertedValue.substring( 0 , insertedValue.length - 1 ); 
+            
+            //insertedValue.substring( 0 , insertedValue.length - 1 ); 
        
          }
 

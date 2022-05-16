@@ -20,7 +20,7 @@ const AdminHome = () => {
       setWindowHeight(window.innerHeight)
   },1000)
   useEffect(()=>{
-      
+      router.push("admin/serviceCenterControl")
       setWindowWidth(window.innerWidth)
       setWindowHeight(window.innerHeight)
       window.addEventListener('resize',handleResize);

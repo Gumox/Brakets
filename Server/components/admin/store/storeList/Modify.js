@@ -168,7 +168,7 @@ const StoreModify = ({
                 console.log("??")
                 const isAccount =await checkAccount(managerAccount)
                 const isPhone = await checkPhone(managerPhone) 
-                const isEmail = await checkPhone(managerEmail) 
+                const isEmail = await checkEmail(managerEmail) 
                 if(!isAccount && !isPhone && !isEmail){
                     const [result] = await Promise.all([
                         axios
