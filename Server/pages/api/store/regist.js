@@ -139,6 +139,8 @@ const Regist = async (req, res) => {
         await setManagerStore(manager.insertId,store.insertId)
         
         if (manager.error) throw new Error(manager.error);
+
+        res.status(200).json({ data: store });
       }
 
     } catch (err) {

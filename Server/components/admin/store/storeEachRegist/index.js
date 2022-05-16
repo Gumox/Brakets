@@ -32,7 +32,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
     
     const [postCodeOn,setPostCodeOn]=useState(false)
     const [address,setAddress]=useState(null)
-    const [detailAddress,setDetailAddress]=useState(null)
+    const [detailAddress,setDetailAddress]=useState("")
 
     const [isNewManager,setIsNewManager]= useState(true)
     
