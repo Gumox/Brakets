@@ -12,10 +12,10 @@ const getAllRepairShop = async (req, res) => {
   if (req.method === "GET") {
     console.log("/api/store/getAllRepairShop");
     try {
-      const brand = await getRepairShop();
-      if (brand.error) throw new Error(brand.error);
+      const store = await getRepairShop();
+      if (store.error) throw new Error(store.error);
 
-      res.status(200).json({ data: brand });
+      res.status(200).json({ data: store });
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

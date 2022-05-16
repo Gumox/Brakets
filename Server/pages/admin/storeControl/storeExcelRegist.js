@@ -3,19 +3,17 @@ import Router, { useRouter } from "next/router";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
-import AdminHeader from "../../components/admin/AdminHeader";
+import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
-import COLOR from "../../constants/color";
-import StoreSideBar from "../../components/admin/store/StoreSideBar";
+import COLOR from "../../../constants/color";
+import StoreSideBar from "../../../components/admin/store/StoreSideBar";
+import StoreExcelRegist from "../../../components/admin/store/storeExcelRegist";
 
-const StoreControl = () => {
-  const router = useRouter();
-  const handleLogout = async () => {
-    await axios.get("/api/auth/logout");
-    router.push("/login");
-  };
+const StoreControlStoreExcelRegist = ({user,infos,brands,store}) => {
+  
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
+
   const handleResize = debounce(()=>{
       setWindowWidth(window.innerWidth)
       setWindowHeight(window.innerHeight)
@@ -29,15 +27,17 @@ const StoreControl = () => {
           window.removeEventListener('resize',handleResize);
       }
   },[])
-  const [selectedView,setSelectedView] = useState()
+
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/storeControl"}/>
+      <AdminHeader path={"/admin/storeControl"} minWidth={1000}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <StoreSideBar setSelectedView={setSelectedView}/>
+          <StoreSideBar path={"/admin/storeControl/storeExcelRegist"}/>
         </SidebarSpace>
-        <MainSpace >{selectedView}</MainSpace>
+        <MainSpace >
+          <StoreExcelRegist infos={infos} store={store}/>
+        </MainSpace>
       </InSideWrapper>
       
     </Wrapper>
@@ -65,8 +65,36 @@ export const getServerSideProps = async (ctx) => {
         destination: '/login'
       }
     }
-  }
-  if(user.level !== 0){
+  } const [infos] = await Promise.all([
+    axios
+      .get(`${process.env.API_URL}/headquarter?headquarterId=${user.headquarter_id}`,)
+      .then(({ data }) => data.body), 
+    ])
+    const [brands] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.data), 
+    ])
+    const [store] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/store/getStoreList?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.data), 
+    ])
+    
+    
+    
+  
+  if(user.level ===0){
+    return {
+      props:
+      {
+        user:user,
+        infos:infos,
+        brands:brands,
+        store:store
+      } 
+    };
+  }else{
     return {
       redirect: {
         permanent: false,
@@ -74,7 +102,6 @@ export const getServerSideProps = async (ctx) => {
       }
     }
   }
-  return { props: {} };
 };
 
 const Wrapper = styled.div`
@@ -88,24 +115,20 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar-thumb {
     background: rgba(96, 96, 96, 0.7);
     border-radius: 6px;
-  }
+}
 `;
 const SidebarSpace = styled.div`
   background-color:${COLOR.MENU_MAIN};
 `;
 const MainSpace=styled.div`
     width :100%;
-`;
-
-const CuetomLink = styled.div`
-  margin-top: 20px;
-  font-size: 20px;
-  border-bottom: 1px solid;
-  cursor: pointer;
+    
+    min-width:850px;
 `;
 const InSideWrapper = styled.nav`
   display:flex;
   flex-direction:row;
   
 `;
-export default StoreControl;
+
+export default StoreControlStoreExcelRegist;

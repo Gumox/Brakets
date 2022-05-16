@@ -8,7 +8,7 @@ import fileDownload from 'js-file-download'
 
 const XLSX = require('xlsx');
 
-const ProductExcelRegist =({infos})=>{
+const StoreExcelRegist =({infos,store})=>{
     const router = useRouter();
     const [excelName,setExcelName] = useState("첨부파일")
 
@@ -35,26 +35,28 @@ const ProductExcelRegist =({infos})=>{
                 const worksheet = workbook.Sheets[sheetName];
                 const json = XLSX.utils.sheet_to_json(worksheet);
                 setExcelToJson(json)
+                console.log(json)
             };
             reader.readAsArrayBuffer(e.target.files[0]);
         }
     }
-    const registProduct = async() =>{
-        const data = {headquarterId:infos[0].value ,list:excelToJson}
+    const registStore = async() =>{
+        const data = {headquarterId:infos[0].value ,list:excelToJson ,stores: store}
         
         const [result] = await Promise.all([
             axios
-              .post(`${process.env.API_URL}/product/registToExcel`,data)
-              .then(({ data }) => data.body), 
+              .post(`${process.env.API_URL}/store/registToExcel`,data)
+              .then(({ data }) => data), 
             ])
-        alert("제품이 등록되었습니다.")
-        router.push("/admin/productControl")
+        //console.log(result)
+        alert("매장이 등록되었습니다.")
+        router.push("/admin/storeControl")
     }
 
     return(
         <Wrapper>
             <InsideWrapper>
-            <div style={{marginBottom:20,fontSize:20,fontWeight:"bold"}}>제품 엑셀 업로드</div>
+            <div style={{marginBottom:20,fontSize:20,fontWeight:"bold"}}>매장 엑셀 업로드</div>
 
             <div style={{display:"flex",flexDirection:"row"}}>
                 <div style={{display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:COLOR.LIGHT_GRAY,paddingLeft:10,paddingRight:10,height:30}}>엑셀파일 업로드</div>
@@ -65,9 +67,9 @@ const ProductExcelRegist =({infos})=>{
                 </label> 
                 <input disabled value={excelName} placeholder="첨부파일" onChange={()=>{}}/>
                 <button style={{marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:80,color:COLOR.WHITE}}
-                    onClick={()=>{registProduct()}}
+                    onClick={()=>{registStore()}}
                 >
-                    제품 등록
+                    매장 등록
                 </button>
                 
                 <CustomInput type="file" id="file" 
@@ -77,7 +79,7 @@ const ProductExcelRegist =({infos})=>{
                 <div style={{marginTop:20,fontSize:15,fontWeight:"bold",color:COLOR.CYAN_BLUE}}>
                     엑셀 샘플 다운로드
                 </div>
-                    <ExcelDownload onClick={()=>{handleClick("/Product_Example.xlsx","Product_Example.xlsx")}}>
+                    <ExcelDownload onClick={()=>{handleClick("/Store_Example.xlsx","Store_Example.xlsx")}}>
                         <ExcelDownloadImage  src="/icons/excel.png"/>
                         <ExcelDownloadText style={{}}>
                             엑셀 샘플 다운로드
@@ -88,7 +90,7 @@ const ProductExcelRegist =({infos})=>{
         </Wrapper>
     )
 }
-export default ProductExcelRegist
+export default StoreExcelRegist
 
 const Wrapper = styled.div`
     padding:2%;

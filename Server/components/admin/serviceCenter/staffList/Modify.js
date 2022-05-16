@@ -129,7 +129,7 @@ const StaffModify = ({
                         직원 연락처
                     </NameBox>
 
-                    <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputBox >
                         <InputLine value={staffAddress || ""} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}}></InputLine>
                     </InputBox>
 
@@ -137,7 +137,7 @@ const StaffModify = ({
                         직원 이메일
                     </NameBox>
 
-                    <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputBox style={{borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={staffEmail || ""} style={{flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
@@ -146,7 +146,7 @@ const StaffModify = ({
                         직원 상태
                     </NameBox>
 
-                    <LongInputBox style={{}}>
+                    <LongInputBox >
                         <PrView>
                         <CenterView style={{margin:10}}>
                             <CheckBox type="checkbox" checked={state} onChange ={()=>{setState(!state)}}/>

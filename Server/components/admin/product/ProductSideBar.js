@@ -28,7 +28,6 @@ const ProductSideBar =({path})=>{
     let eachRegistColor = COLOR.BLACK;
     let excelRegistColor = COLOR.BLACK;
     let styleListColor = COLOR.BLACK;
-    let styleRegistColor = COLOR.BLACK;
 
     if(path === "/admin/productControl"){
         listColor = "rgb(133,133,133)";

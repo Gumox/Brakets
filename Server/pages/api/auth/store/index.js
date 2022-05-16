@@ -19,7 +19,7 @@ const loginStore= async (query, values) => {
               FROM staff 
               JOIN staff_store ON staff.staff_id = staff_store.staff_id 
               JOIN store ON staff_store.store_id = store.store_id
-              WHERE level = 2 AND store_type=1 ${query}`,
+              WHERE level = 2 AND store_type=1  AND staff.state = 1 ${query}`,
       values,
     });
     return result;

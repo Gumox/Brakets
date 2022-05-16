@@ -1,10 +1,11 @@
 import React,{useState,useCallback,useEffect} from "react";
 import { debounce } from "lodash";
+import styled from "styled-components";
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Router, { useRouter } from "next/router";
 import COLOR from "../../../constants/color";
 
-const StoreSideBar =({setSelectedView = () => {} })=>{
+const StoreSideBar =({path })=>{
     const router =useRouter()
     
     const [windowWidth,setWindowWidth] = useState(0)
@@ -22,41 +23,36 @@ const StoreSideBar =({setSelectedView = () => {} })=>{
             window.removeEventListener('resize',handleResize);
         }
     },[])
-    return(
-        <div>
 
-            <ProSidebar style={{...styles.menu,minHeight:`${windowHeight-105}px`}}>
-                <Menu  style={styles.menu} iconShape="square">
-                    <MenuItem></MenuItem>
-                    <MenuItem  style={styles.menu} onClick={() => {
-                        setSelectedView(
-                            <div>
-                                1
-                            </div>
-                        )
-                    }}>
+    
+    let listColor = COLOR.BLACK;
+    let eachRegistColor = COLOR.BLACK;
+    let excelRegistColor = COLOR.BLACK;
+
+    if(path === "/admin/storeControl"){
+        listColor = "rgb(133,133,133)";
+    }else if(path === "/admin/storeControl/storeEachRegist"){
+        eachRegistColor = "rgb(133,133,133)";
+    }else if(path === "/admin/storeControl/storeExcelRegist"){
+        excelRegistColor = "rgb(133,133,133)";
+    }
+    
+    return(
+        <div style={{zIndex:0}}>
+            <MenuWrapper  style={styles.menu}>
+                    <SideMenu selected={path === "/admin/storeControl"} style={{marginTop:"40px"}} onClick={() => router.push("/admin/storeControl/")}>
                         매장 목록
-                    </MenuItem>
-                    <MenuItem style={styles.menu} onClick={() => {
-                        setSelectedView(
-                            <div>
-                                2
-                            </div>
-                        )
-                    }}>
+                    </SideMenu>
+                        
+                   
+                    <SideMenu selected={path === "/admin/storeControl/storeEachRegist"} onClick={() => router.push("/admin/storeControl/storeEachRegist")}>
                         매장 개별 등록
-                    </MenuItem>
-                    <MenuItem style={styles.menu} onClick={() => {
-                        setSelectedView(
-                            <div>
-                                3
-                            </div>
-                        )
-                    }}>
+                    </SideMenu>
+
+                    <SideMenu selected={path === "/admin/storeControl/storeExcelRegist"} onClick={() => router.push("/admin/storeControl/storeExcelRegist")}>
                         매장 엑셀 등록
-                    </MenuItem>
-                </Menu>
-            </ProSidebar>
+                    </SideMenu>
+                </MenuWrapper>
         </div>
     )
     
@@ -69,3 +65,46 @@ const styles = {
         fontWeight:"bold",
     },
 }
+const MenuWrapper = styled.div`
+    width: 230px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+const SideMenu = styled.div`
+    margin:10px;
+    width: 11%;
+    min-width:115px;
+    height: 100%;
+    display: flex;
+    padding-left:10px;
+    align-items: center;
+    color: ${({ selected }) => (selected ? "rgb(133,133,133)": COLOR.BLACK )};
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+
+    &: hover {
+        color: rgb(180,180,180);
+}`
+/*<ProSidebar style={{...styles.menu,minHeight:`${windowHeight-120}px`}}>
+                <Menu  style={styles.menu} iconShape="square">
+                    <MenuItem></MenuItem>
+                    <MenuItem  style={{color : listColor }} onClick={() => {
+                        router.push("/admin/storeControl")
+                    }}>
+                        매장 목록
+                    </MenuItem>
+                    <MenuItem style={{color : eachRegistColor}} onClick={() => {
+                        router.push("/admin/storeControl/storeEachRegist")
+                    }}>
+                        매장 개별 등록
+                    </MenuItem>
+                    <MenuItem style={{color : excelRegistColor}} onClick={() => {
+                        router.push("/admin/storeControl/storeEachRegist")
+                    }}>
+                        매장 엑셀 등록
+                    </MenuItem>
+                    
+                </Menu>
+            </ProSidebar> */

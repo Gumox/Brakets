@@ -55,12 +55,10 @@ const ProductModify = ({
     }
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
-            console.log(event.target.files)
             setImgBase64(event.target.files[0]);
           let reader = new FileReader();
           reader.onload = (e) => {
             setImgFile(e.target.result);
-            console.log(e.target.result)
           };
           reader.readAsDataURL(event.target.files[0]);
         }else{
@@ -95,7 +93,6 @@ const ProductModify = ({
             ])
         alert("제품 정보가 수정되었습니다.")
         window.location.reload();
-        console.log(formData)
     }
   
     return (

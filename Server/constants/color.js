@@ -27,6 +27,7 @@ const COLOR = {
   DARK_GREEN:"#006000",
   LIGHT_GREEN:"rgb(233,255,127)",
   GRAY_GRESS:"#9CCBAB",
+  
 };
 
 export default COLOR;

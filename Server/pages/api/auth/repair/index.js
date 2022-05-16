@@ -20,7 +20,7 @@ const loginRepair= async (query, values) => {
               FROM staff 
               JOIN staff_store ON staff.staff_id = staff_store.staff_id 
               JOIN store ON staff_store.store_id = store.store_id
-              WHERE   ${query}`,
+              WHERE   ${query}  AND staff.state = 1`,
       values,
     });
     return result;
@@ -71,12 +71,12 @@ const repair = async (req, res) => {
         //console.log(user)
         
         if (login[0].level!==2) {
-            console.log("staff");
-            res.status(200).json({ body:login , data: info });
-          } else {
-            console.log("No staff");
-            res.status(204).json({ body: null});
-          }
+          console.log("staff");
+          res.status(200).json({ body:login , data: info });
+        } else {
+          console.log("No staff");
+          res.status(204).json({ body: null});
+        }
 
 
         
