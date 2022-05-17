@@ -5,7 +5,7 @@ import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Router, { useRouter } from "next/router";
 import COLOR from "../../../constants/color";
 
-const CustomerSideBar =({setSelectedView = () => {} })=>{
+const CustomerSideBar =({path})=>{
     const router =useRouter()
     
     const [windowWidth,setWindowWidth] = useState(0)
@@ -23,6 +23,13 @@ const CustomerSideBar =({setSelectedView = () => {} })=>{
             window.removeEventListener('resize',handleResize);
         }
     },[])
+
+    let listColor = COLOR.BLACK;
+
+    if(path === "/admin/customerControl"){
+        listColor = "rgb(133,133,133)";
+    }
+
     return(
         <div>
 
@@ -30,12 +37,8 @@ const CustomerSideBar =({setSelectedView = () => {} })=>{
                 <Menu  style={styles.menu} iconShape="square">
                     <MenuItem></MenuItem>
                     
-                    <MenuItem style={styles.menu} onClick={()=>{
-                        setSelectedView(
-                            <div>
-                                123
-                            </div>
-                        )
+                    <MenuItem style={{backgroundColor:COLOR.MENU_MAIN,color:listColor,fontWeight:"bold",}} onClick={()=>{
+                       
                     }}
                     >고객 목록</MenuItem>
                     
@@ -48,8 +51,6 @@ const CustomerSideBar =({setSelectedView = () => {} })=>{
 export default CustomerSideBar
 const styles = {
     menu:{
-        backgroundColor:COLOR.MENU_MAIN,
-        color:COLOR.BLACK,
-        fontWeight:"bold",
+        backgroundColor:COLOR.MENU_MAIN,color:COLOR.BLACK,fontWeight:"bold",
     },
 }

@@ -1,7 +1,4 @@
 import excuteQuery from "./db";
-/**
- * 0단계 고객 조회
- */
 
 async function getCustomer(name, phone ,headquarterId) {
   let query = "SELECT * FROM customer ";
