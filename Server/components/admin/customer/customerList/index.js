@@ -11,8 +11,6 @@ const CustomerList = ({user,infos,customers,brands}) => {
     const [actionView,setActionView] = useState(null)
     const [filtedCustomers,setFiltedCustomers] =useState(sortCustomers(customers))
 
-    const [selectedBrand,setSelectedBrand] = useState("")
-    const [selectedSeason,setSelectedSeason] = useState("")
     const [slicedArray,setSlicedArray] = useState(slicingArray(filtedCustomers,10))
 
     
@@ -25,13 +23,32 @@ const CustomerList = ({user,infos,customers,brands}) => {
     
     //console.log(sortCustomers(customers),10)
 
-    const SearchBarHandleer = ()=>{
+    const SearchBarHandler = ()=>{
         setPageNumber(1)
         let nameParse = customersNameParse(customers,searchCustomerName,)
-        let phoneParse = customersPhonParse(nameParse,searchCustomerPhone,)
+        let phoneParse = customersPhoneParse(nameParse,searchCustomerPhone,)
         setFiltedCustomers(sortCustomers(phoneParse))
         setSlicedArray(slicingArray(sortCustomers(phoneParse),10))
     }
+
+    const nameHandlePress = useCallback(
+        (e) => {
+          if (e.key == "Enter") {
+            SearchBarHandler()
+          }
+        },
+        
+        [searchCustomerName]
+    );
+    const phoneHandlePress = useCallback(
+        (e) => {
+          if (e.key == "Enter") {
+            SearchBarHandler()
+          }
+        },
+        
+        [searchCustomerPhone]
+    );
     
     return(
         <Wrapper>
@@ -49,6 +66,7 @@ const CustomerList = ({user,infos,customers,brands}) => {
 
                           <InsertInput value={searchCustomerName}
                             placeholder={"ex) 홍길동"}  
+                            onKeyPress={(e)=>{nameHandlePress(e)}}
                             onChange={(e)=>{setSearchCustomerName(e.target.value)}}/>
                           
                       </PrView> 
@@ -58,6 +76,7 @@ const CustomerList = ({user,infos,customers,brands}) => {
                           </SelectItemHeader>
                           <InsertInput value={searchCustomerPhone} 
                             placeholder={""} 
+                            onKeyPress={(e)=>{phoneHandlePress(e)}}
                             onChange={(e)=>{setSearchCustomerPhone(e.target.value)}}/>
                           
                       </PrView>
@@ -65,7 +84,7 @@ const CustomerList = ({user,infos,customers,brands}) => {
                     </PrView>
                 <SearchBarButton 
                     style={{font:"12px",fontWeight:"bold",cursor:"pointer"}}
-                    onClick={()=>{SearchBarHandleer()
+                    onClick={()=>{SearchBarHandler()
                 }}>
                 
                     <div style={{font:"12px",fontWeight:"bold",cursor:"pointer"}}>
@@ -125,7 +144,7 @@ const customersNameParse=(customers,name)=>{
 
   return nameResult
 }
-const customersPhonParse=(customers,phone)=>{
+const customersPhoneParse=(customers,phone)=>{
     let phoneResult
     if(phone && phone !==""){
         let filt = _.filter(customers,function(obj){
