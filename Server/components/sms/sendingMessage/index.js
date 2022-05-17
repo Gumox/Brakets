@@ -14,8 +14,8 @@ const sendSms = async (user,sendNumber,{ _receivers, message }) => {
     const receivers = _receivers.join(',').replace(/-/g,'')
       try {
       const[datas] =await Promise.all([
-        axios.post(`${process.env.API_URL}/smsHandler`,{
-          body: {
+        axios.post(`${process.env.API_URL}/smsHandler`,
+          {
           
           senderId : user.staff_id,
           headquarterId :user.headquarter_id,
@@ -24,22 +24,22 @@ const sendSms = async (user,sendNumber,{ _receivers, message }) => {
           msg: message,
           // 테스트모드
           testmode_yn: 'N'},
-        })
+        )
         .then(({ data }) => data)
         .catch(error=>{
     
         })
       ])
       const[messageResult] =await Promise.all([
-        axios.post(`${process.env.API_URL}/sms/list`,{
-          body: {
+        axios.post(`${process.env.API_URL}/sms/list`,
+          {
               sender: user.staff_id,
               headquarterId :user.headquarter_id,
               msg: message,
               mid: datas.msg_id,
               sendNumber:sendNumber,
-          },
-        })
+          }
+        )
         .then(({ data }) => data)
         .catch(error=>{
     
@@ -70,9 +70,7 @@ const getSmsMessage = async (hq_id) => {
 const setSmsResult = async (sender,mid,hq_id) => {
   try {
   const[datas] =await Promise.all([
-    axios.get(`${process.env.API_URL}/sms/list`,{
-      body:{sender:sender,mid:mid,headquarterId:hq_id}
-    })
+    axios.get(`${process.env.API_URL}/sms/list`,{sender:sender,mid:mid,headquarterId:hq_id})
     .then(({ data }) => data.data)
     .catch(error=>{
 

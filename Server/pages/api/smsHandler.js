@@ -9,7 +9,7 @@ const aligoapi = require('aligoapi');
       headquarterId,
       sender,
       receiver,
-      msg } = req.body.body
+      msg } = req.body
       
        
         let AuthData = {

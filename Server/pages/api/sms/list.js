@@ -52,7 +52,7 @@ const smsList = (req, res,sender,msg,mid,hq_id,sendNumber) => {
     if (req.method === "POST") {
         console.log("--------------------------------------")
     console.log(req.body)
-    const { sender,mid ,headquarterId ,msg,sendNumber} = req.body.body
+    const { sender,mid ,headquarterId ,msg,sendNumber} = req.body
       console.log(sender,mid ,headquarterId,msg,sendNumber)
       try{
         const sms = smsList(req, res ,sender,msg,mid,headquarterId,sendNumber)

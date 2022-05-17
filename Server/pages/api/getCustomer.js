@@ -3,7 +3,7 @@ import excuteQuery from "./db";
  * 0단계 고객 조회
  */
 
-async function getCustomer(name, phone) {
+async function getCustomer(name, phone ,headquarterId) {
   let query = "SELECT * FROM customer ";
 
   if (typeof name !== "undefined" && typeof phone !== "undefined")
@@ -13,6 +13,13 @@ async function getCustomer(name, phone) {
   else if (typeof phone !== "undefined")
     query += " WHERE phone LIKE '%" + phone + "'";
 
+  if(headquarterId){
+    if(query == "SELECT * FROM customer "){
+      query += ` WHERE headquarter_id = ${headquarterId} `;
+    }else{
+      query += ` AND headquarter_id = ${headquarterId} `;
+    }
+  }
   return excuteQuery({
     query: query,
     values: [],
@@ -25,10 +32,11 @@ const controller = async (req, res) => {
     console.log(req.body);
 
     const name = req.body.name;
+    const headquarterId = req.body.headquarterId;
     const phone = req.body.lastphone;
 
     try {
-      const result = await getCustomer(name, phone);
+      const result = await getCustomer(name, phone, headquarterId);
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("Custmer List");

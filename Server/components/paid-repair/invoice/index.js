@@ -18,9 +18,8 @@ const ReturnInvoice = ({}) => {
 
   const getInvoiceLog = async(list) =>{
     const[datas] =await Promise.all([
-      axios.post(`${process.env.API_URL}/invoiceLogPaidRepair/getInvoiceList`,{
-        body: {list:list},
-      })
+      axios.post(`${process.env.API_URL}/invoiceLogPaidRepair/getInvoiceList`,{list:list}
+      )
       .then(({ data }) => data)
       .catch(error=>{
   

@@ -113,12 +113,12 @@ const controller = async (req, res) => {
         console.log("req.headers.referer");
         console.log(req.headers.referer);
         console.log("req.query");
-        console.log(req.body.body);
+        console.log(req.body);
         
         const {
             list,
             user
-        } = req.body.body;
+        } = req.body;
         console.log(list)
 
     try {

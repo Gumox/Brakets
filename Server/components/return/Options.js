@@ -14,10 +14,9 @@ const Options = ({ user, handleSearchButtonClick={} }) => {
 
 
   const insertLog = async(list, user) =>{
+    const body= {list:list, user:user.name}
     const[datas] =await Promise.all([
-      axios.put(`${process.env.API_URL}/invoiceLog`,{
-        body: {list:list, user:user.name},
-      })
+      axios.put(`${process.env.API_URL}/invoiceLog`,body)
       .then(({ data }) => data)
       .catch(error=>{
   

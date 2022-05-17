@@ -16,9 +16,9 @@ const ReturnInvoice = ({ state, user, handleSearchButtonClick = {} }) => {
 
   const getInvoiceLogStore = async(list) =>{
     const[datas] =await Promise.all([
-      axios.post(`${process.env.API_URL}/invoiceLogClaimStore/getInvoiceList`,{
-        body: {list:list},
-      })
+      axios.post(`${process.env.API_URL}/invoiceLogClaimStore/getInvoiceList`,
+        {list:list},
+      )
       .then(({ data }) => data)
       .catch(error=>{
   
@@ -34,9 +34,9 @@ const ReturnInvoice = ({ state, user, handleSearchButtonClick = {} }) => {
 
   const getInvoiceLogCompany = async(list) =>{
     const[datas] =await Promise.all([
-      axios.post(`${process.env.API_URL}/invoiceLogClaimCompany/getInvoiceList`,{
-        body: {list:list},
-      })
+      axios.post(`${process.env.API_URL}/invoiceLogClaimCompany/getInvoiceList`,
+        {list:list},
+      )
       .then(({ data }) => data)
       .catch(error=>{
   
