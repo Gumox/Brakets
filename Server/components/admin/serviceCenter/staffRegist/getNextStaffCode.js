@@ -4,11 +4,12 @@ import _ from "lodash";
 const getNextStaffCode=(staffs)=>{
     const codeList =[];
     staffs.map((item)=>{
-        codeList.push(item.staff_code)
+        if(item.staff_code){
+            codeList.push(item.staff_code)
+        }
     })
     
     const dist = _.uniq(codeList)
-
     const filt =_.filter(dist,function(o){
         return o.length > 0
     })
@@ -20,7 +21,6 @@ const getNextStaffCode=(staffs)=>{
     })
     const lastNumber = _.sortBy(numbering).reverse()[0]
     const nextNumber = String(lastNumber+1)
-    let nextNumberToSting
     if(nextNumber.length === 1){
         return "000"+nextNumber
     }else if(nextNumber.length === 2){
