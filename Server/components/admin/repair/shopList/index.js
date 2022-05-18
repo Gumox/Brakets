@@ -104,9 +104,8 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
                 <SearchBarButton onClick={()=>{
                   searchBarHandler()
                 }}>
-                    <div style={{font:"12px",fontWeight:"bold"}}>
-                       조회
-                    </div>
+                    <SearchImage  src="/icons/search.png"/>
+                    
                 </SearchBarButton>
               </SearchBar>
             
@@ -262,8 +261,8 @@ const SelectItemHeader = styled.div`
 
 `;
 const SearchImage =styled.img`
-  width:25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 `;
 
@@ -293,6 +292,7 @@ const SearchBarButton = styled.div`
     justify-content:center;
     align-items:center;
 `;
+
 const ColView  = styled.div`
     display:flex;
     flex-direction: column;

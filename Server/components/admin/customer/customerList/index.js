@@ -87,9 +87,7 @@ const CustomerList = ({user,infos,customers,brands}) => {
                     onClick={()=>{SearchBarHandler()
                 }}>
                 
-                    <div style={{font:"12px",fontWeight:"bold",cursor:"pointer"}}>
-                       조회
-                    </div>
+                  <SearchImage  src="/icons/search.png"/>
                 </SearchBarButton>
               </SearchBar>
             
@@ -219,8 +217,8 @@ const SelectItemHeader = styled.div`
 
 `;
 const SearchImage =styled.img`
-  width:25px;
-  height: 25px;
+  width:20px;
+  height: 20px;
   cursor: pointer;
 `;
 

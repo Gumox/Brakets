@@ -44,9 +44,7 @@ const StoreList = ({user,infos,store,brands}) => {
                 <SearchBarButton onClick={()=>{
                   setFilted(storeFilter(store,selectedBrand,insertedStoreName))
                 }}>
-                    <div style={{font:"12px",fontWeight:"bold"}}>
-                       조회
-                    </div>
+                     <SearchImage  src="/icons/search.png"/>
                 </SearchBarButton>
               </SearchBar>
             
@@ -186,9 +184,9 @@ const SelectItemHeader = styled.div`
 
 `;
 const SearchImage =styled.img`
-  width:25px;
-  height: 25px;
-  cursor: pointer;
+  width : 20px;
+  height : 20px;
+  cursor : pointer;
 `;
 
 const SearchBar = styled.div`

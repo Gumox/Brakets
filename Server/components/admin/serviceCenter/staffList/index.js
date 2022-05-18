@@ -165,8 +165,8 @@ const PrView  = styled.div`
 `;
 
 const SearchImage =styled.img`
-  width:25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 `;
 
