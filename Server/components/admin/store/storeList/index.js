@@ -11,36 +11,7 @@ const StoreList = ({user,infos,store,brands}) => {
     const [filted,setFilted] =useState(store)
 
     const [selectedBrand,setSelectedBrand] = useState("")
-    const [insertedAdress,setInsertedAdress] = useState(null)
-    const [selectedCategory,setSelectedCategory] = useState("")
-
-    
-    const [searchProductName,setSearchProductName] =useState("")
-    
-    const [seasons,setSeasons] = useState([])
-    const [categorys,setCategorys] = useState([])
-
-    /*useEffect(()=>{
-      const uniqByseasons = _.uniqBy(store,"season_name")
-      let result =[]
-      uniqByseasons.map((item)=>{
-        result.push({text:item.season_name})
-      })
-      setSeasons(result)
-
-    },[])*/
-
-
-    useEffect(()=>{
-      const uniqBycategorys = _.uniqBy(store,"category_name")
-      let result =[]
-      uniqBycategorys.map((item)=>{
-        result.push({text:item.category_name})
-      })
-      setCategorys(result)
-
-    },[])
-    
+    const [insertedStoreName,setInsertedStoreName] = useState(null)
     
     return(
         <Wrapper>
@@ -64,31 +35,20 @@ const StoreList = ({user,infos,store,brands}) => {
                               }
                           </select>
                           <SelectItemHeader >
-                            주소
+                            매장명
                           </SelectItemHeader>
-                          <AdressSearchInput type={"text"} value={insertedAdress || ""} style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}
-                                             onChange={(e)=>{setInsertedAdress(e.target.value)}}/>
+                          <AdressSearchInput type={"text"} value={insertedStoreName || ""} style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}
+                                             onChange={(e)=>{setInsertedStoreName(e.target.value)}}/>
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
-                  setFilted(storeFilter(store,selectedBrand,insertedAdress))
+                  setFilted(storeFilter(store,selectedBrand,insertedStoreName))
                 }}>
                     <div style={{font:"12px",fontWeight:"bold"}}>
                        조회
                     </div>
                 </SearchBarButton>
               </SearchBar>
-              {/*<SearchBar>
-                <SearchBarHeader >
-                    매장 명
-                </SearchBarHeader>
-                
-                <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px"}} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
-
-                <SearchBarButton onClick={()=>{setFiltedstore(storeNameParse(store,searchProductName))}}>
-                    <SearchImage  src="/icons/search.png"/>
-                </SearchBarButton>
-            </SearchBar>*/}
             
               <h2 style={{marginLeft:20}}>매장 목록</h2>
                   <InputTableBox>
@@ -152,7 +112,7 @@ const storeNameParse=(store,name)=>{
   }
   return result
 }
-const storeFilter =(store,brand,adress)=>{
+const storeFilter =(store,brand,storeName)=>{
   let result = store
 
   console.log(store)
@@ -162,10 +122,10 @@ const storeFilter =(store,brand,adress)=>{
       return o.brand_id == brand
     }))
   }
-  if(adress){
+  if(storeName){
     result = (_.filter(result,function(o){
       
-      return String(o.address).includes(adress) 
+      return String(o.store_name).includes(storeName) 
     }))
   }
   

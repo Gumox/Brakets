@@ -9,8 +9,6 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
     const [actionView,setActionView] = useState(null)
 
     const [filted,setFilted] =useState(store)
-
-    const [selectedBrand,setSelectedBrand] = useState("")
     const [insertedAdress,setInsertedAdress] = useState(null)
 
     const [categorys,setCategorys] = useState([])
@@ -26,9 +24,45 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
 
     },[])
     
-    const parsedRepairShop = getRepairShopBrandList(repairShop)
+    const [parsedRepairShop,setParsedRepairShop] = useState(getRepairShopBrandList(repairShop))
+    const [searchBrandList,setSearchBrandList] = useState(_.uniqBy(repairShop,"brand_name"))
+
+    const [selectedRepairShop,setSelectedRepairShop] = useState("ALL")
+    const [selectedBrand,setSelectedBrand] = useState("ALL")
+    
     const repairShopName = _.uniqBy(repairShop,"repair_shop_name")
     console.log(parsedRepairShop)
+
+    const searchBarRepairShopHandler = (arr,value)=>{
+        let result = []
+        setSelectedRepairShop(value)
+        if(value !== "ALL"){
+            let inArr = _.filter(arr,{ 'repair_shop_name': value})
+            result.push(inArr)
+            //setSearchBrandList(_.uniqBy(inArr,"brand_name"))
+        }else{
+            result = arr
+            //setSearchBrandList(_.uniqBy(repairShop,"brand_name"))
+        }
+        
+    }   
+
+    const searchBarHandler = ()=>{
+        let result = getRepairShopBrandList(repairShop)
+        let arr = repairShop
+        if(selectedRepairShop !== "ALL"){
+            let inArr = _.filter(arr,{ 'repair_shop_name': selectedRepairShop})
+            arr = inArr
+            result = getRepairShopBrandList(inArr)
+        }
+
+        if(selectedBrand !== "ALL"){
+            let inArr = _.filter(arr,{ 'brand_name': selectedBrand})
+            result = getRepairShopBrandList(inArr)
+        }
+        console.log(result)
+        setParsedRepairShop(result)
+    }
     
     
     return(
@@ -43,30 +77,32 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
                             <SelectItemHeader >
                                 수선처
                             </SelectItemHeader>
-                            <select value={selectedBrand} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                                onChange={(e)=>{setSelectedBrand(e.target.value)}}>
-                                <option  value={""} >{"전체"}</option>
+                            <SearchSelect value={selectedRepairShop} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
+                                onChange={(e)=>{searchBarRepairShopHandler(repairShop,e.target.value)}}>
+                                <option  value={"ALL"} >{"전체"}</option>
                                 {
                                     repairShopName.map((item,index)=>(
-                                        <option key={index} value={item.repair_shop_id} >{item.repair_shop_name}</option>
+                                        <option key={index} value={item.repair_shop_name} >{item.repair_shop_name}</option>
                                     ))
                                 }
-                            </select>
+                            </SearchSelect>
                             <SelectItemHeader >
                                 브랜드
                             </SelectItemHeader>
-                            <select value={selectedBrand} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
+                            <SearchSelect value={selectedBrand} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
                                 onChange={(e)=>{setSelectedBrand(e.target.value)}}>
-                                <option  value={""} >{"전체"}</option>
+                                <option  value={"ALL"} >{"전체"}</option>
                                 {
-                                    
+                                    searchBrandList.map((item,index)=>(
+                                        <option key={index} value={item.brand_name} >{item.brand_name}</option>
+                                    ))
                                 }
-                            </select>
+                            </SearchSelect>
                           
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
-                  setFilted(storeFilter(store,selectedBrand,insertedAdress))
+                  searchBarHandler()
                 }}>
                     <div style={{font:"12px",fontWeight:"bold"}}>
                        조회
@@ -169,13 +205,10 @@ const getRepairShopBrandList =(arr) =>{
     let result = []
     
     if(arr.length > 0){
-        console.log("?????????????????????")
-        console.log(arr.length)
-        console.log(arr)
         let keys = _.uniqBy(arr,"repair_shop_name")
         keys.map((item)=>{
-        let inArr = _.filter(arr,{ 'repair_shop_name': item.repair_shop_name})
-        result.push(inArr)
+            let inArr = _.filter(arr,{ 'repair_shop_name': item.repair_shop_name})
+            result.push(inArr)
         })
     }
 
@@ -269,10 +302,9 @@ const InColView  = styled.div`
     font-size:14px;
     justify-content:center;
     align-items:center;
-`;
-const AdressSearchInput = styled.input`
+`
+const SearchSelect = styled.select`
   border :0;
-  padding-left:10px;
   &:focus { 
     outline: none !important;
     border-color: #719ECE;
