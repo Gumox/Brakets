@@ -3,13 +3,15 @@ import Router, { useRouter } from "next/router";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
-import AdminHeader from "../../components/admin/AdminHeader";
+import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
-import COLOR from "../../constants/color";
-import RepairSideBar from "../../components/admin/repair/RepairSideBar";
+import COLOR from "../../../constants/color";
+import RepairSideBar from "../../../components/admin/repair/RepairSideBar";
+import ShopList from "../../../components/admin/repair/shopList";
 
-const RepairControl = () => {
+const RepairControl = ({user,infos,repairShop}) => {
   const router = useRouter();
+  
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
     router.push("/login");
@@ -35,9 +37,11 @@ const RepairControl = () => {
       <AdminHeader path={"/admin/repairControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <RepairSideBar setSelectedView={setSelectedView}/>
+          <RepairSideBar path={"/admin/repairControl"}/>
         </SidebarSpace>
-        <MainSpace >{selectedView}</MainSpace>
+        <MainSpace >
+            <ShopList user={user} infos={infos} repairShop={repairShop}/>
+        </MainSpace>
       </InSideWrapper>
     </Wrapper>
   );
@@ -58,22 +62,55 @@ export const getServerSideProps = async (ctx) => {
       : {}
   );
   if (!isAuthorized) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/login'
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/login'
+        }
       }
     }
-  }
-  if(user.level !== 0){
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/login'
+    const [infos] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/headquarter`,)
+        .then(({ data }) => data.body), 
+    ])
+    const [brands] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.data), 
+    ])
+    const [store] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/store/getStoreList?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.data), 
+    ])
+    const [repairShop] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/RepairShop?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.data), 
+    ])
+
+
+  
+   if(user.level ===0){
+      return {
+        props:
+        {
+          user:user,
+          infos:infos,
+          brands:brands,
+          store:store,
+          repairShop:repairShop,
+        } 
+      };
+    }else{
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/login'
+        }
       }
     }
-  }
-  return { props: {} };
 };
 
 const Wrapper = styled.div`
