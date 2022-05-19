@@ -1,11 +1,12 @@
 import React,{useState,useCallback,useEffect} from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import { debounce } from "lodash";
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import Router, { useRouter } from "next/router";
 import COLOR from "../../../constants/color";
 
 const RepairSideBar =({path })=>{
+    
     const router =useRouter()
     
     const [windowWidth,setWindowWidth] = useState(0)
@@ -25,54 +26,29 @@ const RepairSideBar =({path })=>{
     },[])
 
 
-    let listColor = COLOR.BLACK;
-    let registColor = COLOR.BLACK;
-    let employeeListColor = COLOR.BLACK;
-    let employeeRegistColor = COLOR.BLACK;
-    console.log("path : ",path)
-
-    if(path === "/admin/repairControl"){
-        listColor = "rgb(133,133,133)";
-    }
-    if(path === "/admin/repairControl/"){
-        registColor = "rgb(133,133,133)";
-    }
-    if(path === "/admin/repairControl/"){
-        employeeListColor = "rgb(133,133,133)";
-    }
-    if(path === "/admin/repairControl/"){
-        employeeRegistColor = "rgb(133,133,133)";
-    }
+   
     return(
-        <div>
-
-            <ProSidebar style={{...styles.menu,minHeight:`${windowHeight-105}px`}}>
-                <Menu  style={styles.menu} iconShape="square">
-                    <MenuItem></MenuItem>
-                    <MenuItem  style={{backgroundColor:COLOR.MENU_MAIN,fontWeight:"bold",color:listColor}} onClick={() => {
-                        router.push("/admin/repairControl")
-                    }}>
+        <div style={{zIndex:0}}>
+            <MenuWrapper  style={{...styles.menu,minHeight:`${windowHeight-120}px`}}>
+                    <SideMenu selected={path === "/admin/repairControl"} style={{marginTop:"40px"}} onClick={() => router.push("/admin/repairControl")}>
                         수선처 목록
-                    </MenuItem>
-                    <MenuItem style={{backgroundColor:COLOR.MENU_MAIN,fontWeight:"bold",color:registColor}} onClick={() => {
-                        router.push("/admin/repairControl")
-                    }}>
+                    </SideMenu>
+                        
+                    <SideMenu selected={path === "/admin/repairControl/repairShopRegist"} onClick={() => router.push("/admin/repairControl/repairShopRegist")}>
                         수선처 등록
-                    </MenuItem>
-                    <MenuItem  style={{backgroundColor:COLOR.MENU_MAIN,fontWeight:"bold",color:employeeListColor}} onClick={() => {
-                        router.push("/admin/repairControl")
-                    }}>
+                    </SideMenu>
+
+                    <SideMenu selected={path === "/admin/repairControl/"} onClick={() => router.push("/admin/repairControl/")}>
                         수선처 직원 목록
-                    </MenuItem>
-                    <MenuItem style={{backgroundColor:COLOR.MENU_MAIN,fontWeight:"bold",color:employeeRegistColor}} onClick={() => {
-                        router.push("/admin/repairControl")
-                    }}>
+                    </SideMenu>
+
+                    <SideMenu selected={path === "/admin/repairControl/"} onClick={() => router.push("/admin/repairControl/")}>
                         수선처 직원 등록
-                    </MenuItem>
-                </Menu>
-            </ProSidebar>
+                    </SideMenu>
+                </MenuWrapper>
         </div>
     )
+    
     
 }
 export default RepairSideBar
@@ -83,3 +59,25 @@ const styles = {
         fontWeight:"bold",
     },
 }
+const MenuWrapper = styled.div`
+    width: 230px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+const SideMenu = styled.div`
+    margin:10px;
+    width: 11%;
+    min-width:130px;
+    height: 100%;
+    display: flex;
+    padding-left:10px;
+    align-items: center;
+    color: ${({ selected }) => (selected ? "rgb(133,133,133)": COLOR.BLACK )};
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+
+    &: hover {
+        color: rgb(180,180,180);
+}`

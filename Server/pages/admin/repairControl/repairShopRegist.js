@@ -7,11 +7,10 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import RepairSideBar from "../../../components/admin/repair/RepairSideBar";
-import ShopList from "../../../components/admin/repair/shopList";
+import ShopRegist from "../../../components/admin/repair/shopRegist";
 
-const RepairControl = ({user,infos,repairShop}) => {
+const RepairControlShopRegist = ({user,infos,repairShop}) => {
   const router = useRouter();
-  
   
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
@@ -30,13 +29,13 @@ const RepairControl = ({user,infos,repairShop}) => {
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/repairControl"}/>
+      <AdminHeader path={"/admin/repairControl"} minWidth={1030}/>
       <InSideWrapper>
-        <SidebarSpace  style={{minHeight:`${windowHeight-150}px`}}>
-          <RepairSideBar path={"/admin/repairControl"}/>
+        <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
+          <RepairSideBar path={"/admin/repairControl/repairShopRegist"}/>
         </SidebarSpace>
         <MainSpace >
-            <ShopList user={user} infos={infos} repairShop={repairShop}/>
+            <ShopRegist />
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -135,4 +134,4 @@ const InSideWrapper = styled.nav`
   
 `;
 
-export default RepairControl;
+export default RepairControlShopRegist;
