@@ -4,31 +4,30 @@ import COLOR from "../../../../constants/color";
 import axios from "axios";
 import _ from "lodash";
 import remakeCallNumber from "../../../../functions/remakeCallNumber";
+import StaffModify from "./StaffModify";
+import StaffChange from "./StaffChange";
 
 const List = ({
-    user=[],
-    infos=[],
     setActionView=()=>{},
-    repairShops
+    repairShopsStaffs=[]
 }) => {
     const cancel =()=>{
         setActionView(null)
     }
-    
     return(
         <div>
             {
-                repairShops.map((item,index)=>{
-                    if(index+1 !== repairShops.length){
+                repairShopsStaffs.map((item,index)=>{
+                    if(index+1 !== repairShopsStaffs.length){
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,}}>
-                                <ListItem item={item} cancel={cancel} infos={infos}  user={user}  setActionView={setActionView}/>
+                                <ListItem item={item} cancel={cancel}  setActionView={setActionView}/>
                             </Wrapper>
                         )
                     }else{
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
-                                <ListItem item={item} cancel={cancel} infos={infos}  user={user}  setActionView={setActionView}/>
+                                <ListItem item={item} cancel={cancel}  setActionView={setActionView}/>
                             </Wrapper>
                         )
                     }
@@ -40,8 +39,6 @@ const List = ({
 
 const ListItem =({
     item,
-    infos=[],
-    user=[],
     setActionView=()=>{},
     cancel=()=>{}
 })=>{
@@ -50,54 +47,67 @@ const ListItem =({
     return(
         <PrView>
                       
-        <HeaderCell >
-            {resortedItem[0].repair_shop_name}
-        </HeaderCell>
-
-        <HeaderCell>
-            {resortedItem[0].repair_shop_code}
-        </HeaderCell>
-
-        <HeaderCell>
-            <div style={{display:"flex",flexDirection:"column"}}>
+            <HeaderCell style={{flex:1 ,borderRadius: "10px 0px 0px 0px"}}>
                 {
-                    resortedItem.map((obj,index)=>(
-                        <PrView key={index} style={{justifyContent:"center"}}>
-                            <div>
-                                {obj.brand_name}
-                            </div>
-                            <div key={index} style={{marginLeft:10}}>
-                                {obj.pcategory_name}
-                            </div>
-                        </PrView>
-                    ))
+                    item.repair_shop_name
                 }
-            </div>
+            </HeaderCell>
+
+            <HeaderCell>
+                <TextInsider readOnly value={item.staff_code}/>
+                {
+                    //item.staff_code
+                }
+            </HeaderCell>
+
+            <HeaderCell >
+                {item.staff_name}
+            </HeaderCell>
+
+            <HeaderCell>
+                <TextInsider readOnly value={item.account} />
+            </HeaderCell>
+
+            <HeaderCell>
+                {remakeCallNumber(item.staff_phone)}
+            </HeaderCell>
             
-        </HeaderCell>
+            <HeaderCell>
+                {item.staff_state > 0 ?
+                    <HeaderCell style={{color:COLOR.CYAN_BLUE}}>
+                        On
+                    </HeaderCell>
+                    :
+                    <HeaderCell style={{color:COLOR.RED}}>
+                        Off
+                    </HeaderCell>
 
-        {/*<HeaderCell>
-            <div style={{display:"flex",flexDirection:"column"}}>
-                {
-                    resortedItem.map((obj,index)=>(
-                        <div key={index}>
-                            {obj.pcategory_name}
-                        </div>
-                    ))
                 }
-            </div>
-        </HeaderCell>*/}
-        
-        <HeaderCell>
-            {resortedItem[0].repair_shop_contact}
-        </HeaderCell>
-        
-        
-        
-        <HeaderCell style={{color: COLOR.RED,flex:1}}>
-            정보 변경
-        </HeaderCell>
-    </PrView>
+            </HeaderCell>
+
+            <HeaderCell>
+                <ModifyView onClick={()=>{
+                    setActionView(
+                        <StaffModify item={item} cancel={cancel}/>
+                    )
+                }}>
+                     수정
+                </ModifyView>
+            </HeaderCell>
+            
+            
+            <HeaderCell style={{color: COLOR.RED,flex:1}}
+                onClick={()=>{
+                    setActionView(
+                        <StaffChange item={item} cancel={cancel}/>
+                    )
+                }}
+            >
+                <ChangeView>
+                    변경
+                </ChangeView>
+            </HeaderCell>
+        </PrView>
     )
 }
 const Wrapper  = styled.div`
@@ -115,7 +125,16 @@ const HeaderCell = styled.div`
     flex:1;
     padding:5px;
 `;
-
+const ColView  = styled.div`
+    display:flex;
+    flex-direction: column;
+`;
+const InColView  = styled.div`
+    display:flex;
+    font-size:14px;
+    justify-content:center;
+    align-items:center;
+`
 
 const PrView  = styled.div`
     display:flex;

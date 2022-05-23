@@ -134,16 +134,3 @@ const Repair = async (req, res) => {
 };
 
 export default Repair;
-/*
-store_type,
-store_state,
-name,
-store_code,
-brand_id,
-store_category,
-use_mailbag,
-contact,
-address,
-store_registration_number,
-timestamp
-*/

@@ -25,7 +25,7 @@ const loginRepair= async (query, values) => {
     });
     return result;
 }
-const repairShopInfo= async (id) => {
+/*const repairShopInfo2 = async (id) => {
   
     const result = await excuteQuery({
       query: `SELECT DISTINCT
@@ -45,6 +45,34 @@ const repairShopInfo= async (id) => {
       values: [id],
     });
     return result;
+}*/
+
+const repairShopInfo= async (id) => {
+  
+  const result = await excuteQuery({
+    query: `SELECT DISTINCT
+            headquarter.headquarter_id AS hq_id,
+            headquarter_name,
+            headquarter_name_kr,
+            brand.brand_id,
+            brand_name,
+            brand_code,
+            store.name,
+            store.store_id
+
+            FROM pcategory_store
+
+            JOIN store ON pcategory_store.receiver_id = store.store_id 
+
+
+            JOIN product_category ON product_category.pcategory_id = pcategory_store.pcategory_id
+            JOIN brand ON product_category.brand_id = brand.brand_id 
+            JOIN headquarter ON brand.headquarter_id = headquarter.headquarter_id
+
+            WHERE store.store_id = ?`,
+    values: [id],
+  });
+  return result;
 }
 
 const repair = async (req, res) => {

@@ -11,18 +11,26 @@ const repairShopInfo= async (id) => {
                   store.contact AS repair_shop_contact,
                   store.store_state AS repair_shop_state,
 
-                  brand.brand_id,
-                  brand.brand_name,
                   brand.headquarter_id AS headquarter_id,
+
+                  staff.staff_id,
+                  staff.staff_code,
+                  staff.name AS staff_name,
+                  staff.account AS account,
+                  staff.staff_email AS staff_email,
+                  staff.level AS staff_level,
+                  staff.phone AS staff_phone,
+                  staff.state AS staff_state,
+                  staff_store_id
               
-                  product_category.category_name AS pcategory_name,
-                  pcategory_store.pcategory_id
               FROM pcategory_store
               
               JOIN product_category ON product_category.pcategory_id = pcategory_store.pcategory_id
               JOIN brand ON brand.brand_id  = product_category.brand_id 
               JOIN store ON store.store_id = pcategory_store.receiver_id
-  
+              JOIN staff_store ON staff_store.store_id = store.store_id
+              JOIN staff ON staff.staff_id = staff_store.staff_id
+
               WHERE brand.headquarter_id = ?
               ORDER BY pcategory_store.receiver_name ASC`,
       values: [id],

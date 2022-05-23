@@ -8,27 +8,24 @@ import remakeCallNumber from "../../../../functions/remakeCallNumber";
 const List = ({
     user=[],
     infos=[],
-    setActionView=()=>{},
-    repairShops
+    repairShops,
+    categorys =[]
 }) => {
-    const cancel =()=>{
-        setActionView(null)
-    }
-    
+    const categorysSorted = _.sortBy(_.sortBy(categorys,"season_name"),"category_name")
     return(
         <div>
             {
-                repairShops.map((item,index)=>{
-                    if(index+1 !== repairShops.length){
+                categorysSorted.map((item,index)=>{
+                    if(index+1 !== categorysSorted.length){
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,}}>
-                                <ListItem item={item} cancel={cancel} infos={infos}  user={user}  setActionView={setActionView}/>
+                                <ListItem item={item} infos={infos}  categorys={categorys} />
                             </Wrapper>
                         )
                     }else{
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
-                                <ListItem item={item} cancel={cancel} infos={infos}  user={user}  setActionView={setActionView}/>
+                                <ListItem item={item} infos={infos}  categorys={categorys} />
                             </Wrapper>
                         )
                     }
@@ -41,62 +38,22 @@ const List = ({
 const ListItem =({
     item,
     infos=[],
-    user=[],
-    setActionView=()=>{},
-    cancel=()=>{}
+    categorys=[],
 })=>{
     
-    let resortedItem =_.sortBy(_.sortBy(item,["pcategory_name"]),["brand_name"])
+    const brandCategorys = _.filter(_.sortBy(categorys,"category_name"),{"brand_name":item.brand_name})
+    const [selectedCategory, setSelectedCategory]= useState(brandCategorys[0].pcategory_id)
+
+    const [repairShopList,setRepairShopList] = useState([])
     return(
         <PrView>
+            <HeaderCell style={{flex:1 ,borderRadius: "10px 0px 0px 0px"}}>
+                {item.category_name}
+            </HeaderCell>
                       
-        <HeaderCell >
-            {resortedItem[0].repair_shop_name}
-        </HeaderCell>
-
-        <HeaderCell>
-            {resortedItem[0].repair_shop_code}
-        </HeaderCell>
-
-        <HeaderCell>
-            <div style={{display:"flex",flexDirection:"column"}}>
-                {
-                    resortedItem.map((obj,index)=>(
-                        <PrView key={index} style={{justifyContent:"center"}}>
-                            <div>
-                                {obj.brand_name}
-                            </div>
-                            <div key={index} style={{marginLeft:10}}>
-                                {obj.pcategory_name}
-                            </div>
-                        </PrView>
-                    ))
-                }
-            </div>
-            
-        </HeaderCell>
-
-        {/*<HeaderCell>
-            <div style={{display:"flex",flexDirection:"column"}}>
-                {
-                    resortedItem.map((obj,index)=>(
-                        <div key={index}>
-                            {obj.pcategory_name}
-                        </div>
-                    ))
-                }
-            </div>
-        </HeaderCell>*/}
-        
-        <HeaderCell>
-            {resortedItem[0].repair_shop_contact}
-        </HeaderCell>
-        
-        
-        
-        <HeaderCell style={{color: COLOR.RED,flex:1}}>
-            정보 변경
-        </HeaderCell>
+            <HeaderCell>
+                {item.receiver_name}
+            </HeaderCell>
     </PrView>
     )
 }
@@ -113,9 +70,22 @@ const HeaderCell = styled.div`
     align-items:center;
     font-size:16px;
     flex:1;
-    padding:5px;
 `;
-
+const HeaderCellv2 = styled.div`
+    display:flex;
+    min-height:60px;
+    min-width:20px;
+    font-size:16px;
+    flex:1;
+`;
+const SearchSelect = styled.select`
+    padding:15px;
+    border:0;
+    &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+  }
+`;
 
 const PrView  = styled.div`
     display:flex;

@@ -1,6 +1,6 @@
 import excuteQuery from "../db"
 
-async function setHeadquarterAdministrator(
+async function setStaff(
     state,
     account,
     name,
@@ -36,7 +36,7 @@ async function setHeadquarterAdministrator(
       return result;
 }
 
-async function setHeadquarterAdministratorStore(
+async function setStaffStore(
     staff_id,
     store_id
 ) {
@@ -53,6 +53,16 @@ async function setHeadquarterAdministratorStore(
   });
   
     return resultStore;
+}
+
+async function getStaffInfo(account) {
+const resultStore = await excuteQuery({
+  query: `SELECT * FROM staff
+          WHERE account = ?`,
+  values:[account]
+});
+
+  return resultStore;
 }
 
 const controller = async (req, res) => {
@@ -73,22 +83,30 @@ const controller = async (req, res) => {
         } =req.body
         
     try {
-      let _phone = String(phone).replace(/-/g,"")
-      const result = await setHeadquarterAdministrator(
-                                            state,
-                                            account,
-                                            name,
-                                            _phone,
-                                            level,
-                                            staff_code,
-                                            staff_email
-                                    );
-      if (result.error) throw new Error(result.error);
-      console.log(result)
 
-      const staff_id = result.insertId
-      const resultStore = await setHeadquarterAdministratorStore(staff_id, store_id);
+      const info = await getStaffInfo(account)
+        
+      if(info.length){
+        res.status(200).json({ body: info });
+      }else{
+          
+        let _phone = String(phone).replace(/-/g,"")
+        const result = await setStaff(
+                                              state,
+                                              account,
+                                              name,
+                                              _phone,
+                                              level,
+                                              staff_code,
+                                              staff_email
+                                      );
+        if (result.error) throw new Error(result.error);
+        console.log(result)
+
+        const staff_id = result.insertId
+        const resultStore = await setStaffStore(staff_id, store_id);
         res.status(200).json({ body: resultStore });
+      }
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

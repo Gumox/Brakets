@@ -38,11 +38,15 @@ const RepairSideBar =({path })=>{
                         수선처 등록
                     </SideMenu>
 
-                    <SideMenu selected={path === "/admin/repairControl/"} onClick={() => router.push("/admin/repairControl/")}>
+                    <SideMenu selected={path === "/admin/repairControl/brandDesignate"} onClick={() => router.push("/admin/repairControl/brandDesignate")}>
+                        수선처 - 브랜드 관리
+                    </SideMenu>
+
+                    <SideMenu selected={path === "/admin/repairControl/repairShopStaff"} onClick={() => router.push("/admin/repairControl/repairShopStaff")}>
                         수선처 직원 목록
                     </SideMenu>
 
-                    <SideMenu selected={path === "/admin/repairControl/"} onClick={() => router.push("/admin/repairControl/")}>
+                    <SideMenu selected={path === "/admin/repairControl/repairShopStaffRegist"} onClick={() => router.push("/admin/repairControl/repairShopStaffRegist")}>
                         수선처 직원 등록
                     </SideMenu>
                 </MenuWrapper>
@@ -68,7 +72,7 @@ const MenuWrapper = styled.div`
 const SideMenu = styled.div`
     margin:10px;
     width: 11%;
-    min-width:130px;
+    min-width:155px;
     height: 100%;
     display: flex;
     padding-left:10px;

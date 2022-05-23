@@ -30,12 +30,12 @@ async function getRepairPlaces(query,values) {
     
 const controller =  async (req, res) => {
   if (req.method === "POST") {
-    console.log(`[${new Date().toISOString()}] /api/getReapirList`);
+    console.log(`[${new Date().toISOString()}] /api/getRepairList`);
     console.log(req.body);
     const category = req.body.category; 	//1:고객용 2:매장용 3:선처리
     const receipt = req.body.receipt; 	//1: 수선 2: 교환 3: 환불 4: 심의
     const pcategoryId = req.body.pcategory_id; 	//pcategory id
-    const seasonId = req.body.season_id; // season_id
+    //const seasonId = req.body.season_id; // season_id
     const brandId = req.body.brand_id; //   
     
     let query = ``
@@ -56,11 +56,11 @@ const controller =  async (req, res) => {
         console.log("???","pcategoryId")
     }
 
-    if(seasonId){
+    /*if(seasonId){
         query2+=` AND pcategory_store.season_id=?`;
         values2 =[...values2,seasonId];    
         console.log("???","seasonId")
-    }
+    }*/
 
     try{
         const headquarters = await getHeadquarters(query,values);
