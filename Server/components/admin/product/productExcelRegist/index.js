@@ -77,7 +77,7 @@ const ProductExcelRegist =({infos})=>{
                 <div style={{marginTop:20,fontSize:15,fontWeight:"bold",color:COLOR.CYAN_BLUE}}>
                     엑셀 샘플 다운로드
                 </div>
-                    <ExcelDownload onClick={()=>{handleClick("/Product_Example.xlsx","Product_Example.xlsx")}}>
+                    <ExcelDownload onClick={()=>{handleClick("/Product_Example.xlsx","Product_Example2.xlsx")}}>
                         <ExcelDownloadImage  src="/icons/excel.png"/>
                         <ExcelDownloadText style={{}}>
                             엑셀 샘플 다운로드
