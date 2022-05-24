@@ -19,16 +19,16 @@ const Designate = ({
   
   const brandName =  _.find(brandCategoryList,{"brand_id":Number(selectedBrand)})
 
+  console.log(brandCategoryList)
+  console.log(brandName)
+  console.log("***")
+
   const [searchName,setSearchName] = useState("")
   const [pcategoryId,setPcategoryId] = useState(selectedCategory)
   const [receiverId,setReceiverId] = useState(null)
 
   const brandDesignate = async()=>{
 
-    console.log(
-
-      `pcategoryId=${pcategoryId}&receiverId=${receiverId}&receiverName=${searchName}`
-    )
     if(pcategoryId !== "ALL" && receiverId && searchName){
         const [result] = await Promise.all([
           axios
@@ -54,7 +54,6 @@ const Designate = ({
 
   return (
     <Wrapper>
-      <Section {...options}>
           <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"100%"}}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",width:"85%",height:"75%"}}>
                 <PrView style={{minWidth:"350px"}}>
@@ -64,7 +63,7 @@ const Designate = ({
                     </SelectItemHeader>
                     <SelectItemHeader style={{borderTop: 0, borderRight: 0,color: COLOR.DARK_INDIGO, backgroundColor: COLOR.WHITE}}>
                         {
-                          brandName.brand_name
+                          //brandName.brand_name
                         }
                     </SelectItemHeader>
                   </div>
@@ -92,7 +91,7 @@ const Designate = ({
                         수선처
                     </SelectItemHeader>
                     <div style={{minWidth:"350px",minHeight:65,border:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                      <div style={{position:"fixed"}}>
+                      <div style={{position:"relative"}}>
                           <SearchFocus shopList={repairShops} handler={dataHandler} name={searchName} setName={setSearchName}/>
                       </div>
                       
@@ -113,7 +112,6 @@ const Designate = ({
                   </PrView>
               </div>
             </div>
-      </Section>
     </Wrapper>
   );
 }
@@ -122,16 +120,12 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 99;
-    background-color: rgba(67, 67, 67, 0.5);
     width: 100%;
-    min-width:800px;
-    min-height:650px;
+    width:400px;
+    height:350px;
+    background-color:${COLOR.WHITE};
+    border: 2px solid ${COLOR.LIGHT_GRAY};
+    border-radius : 10px;
 `;
 
 const InsideWrapper = styled.div`
