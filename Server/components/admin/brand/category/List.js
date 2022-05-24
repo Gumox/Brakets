@@ -7,15 +7,15 @@ import _ from "lodash";
 
 const List = ({
     user=[],
-    caategorys=[],
+    categorys=[],
 }) => {
 
     
     return(
         <div>
-            {
-                caategorys.map((item,index)=>{
-                    if(index+1 !== caategorys.length){
+            {categorys.length ?
+                categorys.map((item,index)=>{
+                    if(index+1 !== categorys.length){
                         return(
                             <Wrapper key={index}>
                                 <ListItem item={item}/>
@@ -29,6 +29,9 @@ const List = ({
                         )
                     }
                 })
+                :
+                <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px",height:"60px"}}/>
+                            
             }
         </div>
     );

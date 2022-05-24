@@ -30,7 +30,6 @@ const BrandControlcategoryList =  ({user,infos,categorys,brands}) => {
           window.removeEventListener('resize',handleResize);
       }
   },[])
-  console.log(categorys)
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/brandControl"} minWidth={750}/>

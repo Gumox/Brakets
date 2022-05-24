@@ -3,12 +3,20 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import _ from "lodash";
 import List from "./List";
+import Paging from "../../Paging";
 
 const ProductList = ({user,infos,products,brands}) => {
     
     
     const [actionView,setActionView] = useState(null)
-    const [filtedProducts,setFiltedProducts] =useState(products)
+    const [filtedProducts,setFiltedProducts] =useState(sortProducts(products))
+
+    const slicingNumber =10
+    const [slicedArray,setSlicedArray] = useState(slicingArray(filtedProducts,slicingNumber))
+
+    const [pageNumber,setPageNumber] = useState(1)
+    
+    const max = Math.ceil(filtedProducts.length/slicingNumber)
 
     const [selectedBrand,setSelectedBrand] = useState("")
     const [selectedSeason,setSelectedSeason] = useState("")
@@ -19,6 +27,27 @@ const ProductList = ({user,infos,products,brands}) => {
     
     const [seasons,setSeasons] = useState([])
     const [categorys,setCategorys] = useState([])
+
+
+    const SearchSelectBarHandler = ()=>{
+
+      setPageNumber(1)
+      let sort = sortProducts(productsFilter(products,selectedBrand,selectedSeason,selectedCategory))
+      setFiltedProducts(sort)
+
+      setSlicedArray(slicingArray(sort,slicingNumber))
+
+    }
+    const nameHandlePress = useCallback(
+      (e) => {
+        if (e.key == "Enter") {
+          setSlicedArray(slicingArray(productsNameParse(products,searchProductName)))
+        }
+      },
+      
+      [searchProductName]
+    );
+  
 
     useEffect(()=>{
       const uniqByseasons = _.uniqBy(products,"season_name")
@@ -95,7 +124,7 @@ const ProductList = ({user,infos,products,brands}) => {
                       </PrView>
                     </PrView>
                 <SearchBarButton onClick={()=>{
-                  setFiltedProducts(productsFilter(products,selectedBrand,selectedSeason,selectedCategory))
+                  SearchSelectBarHandler()
                 }}>
                      <SearchImage  src="/icons/search.png"/>
                 </SearchBarButton>
@@ -105,15 +134,28 @@ const ProductList = ({user,infos,products,brands}) => {
                     제품 명
                 </SearchBarHeader>
                 
-                <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px"}} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
+                <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px",paddingLeft:20}}
+                       onKeyPress={(e)=>{nameHandlePress(e)}} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
 
-                <SearchBarButton onClick={()=>{setFiltedProducts(productsNameParse(products,searchProductName))}}>
+                <SearchBarButton onClick={()=>{
+                    setSlicedArray(slicingArray(productsNameParse(products,searchProductName)))
+                  }}>
                     <SearchImage  src="/icons/search.png"/>
                 </SearchBarButton>
               </SearchBar>
+
+
+
+
             
-              <h2 style={{marginLeft:20}}>제품 목록</h2>
-                  <InputTableBox>
+                <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,minWidth:"1080px",alignItems:"end",}}>
+                    <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold"}}>제품 목록</div>
+                    <div style={{marginRight:20,}}>{sortProducts(products).length} 건</div>
+                </PrView>
+
+
+                <Paging max={max} width={"1080px"} num={pageNumber} setNum={setPageNumber}/>
+                <InputTableBox>
                   <PrView>
                       
                       <HeaderCell style={{flex:1}}>
@@ -157,9 +199,10 @@ const ProductList = ({user,infos,products,brands}) => {
                       </HeaderCell>
                   </PrView>
 
-                  <List infos={infos} user={user} brands={brands} products={sortProducts(filtedProducts)} setActionView={setActionView}/>
+                  <List infos={infos} user={user} brands={brands} products={slicedArray[pageNumber-1]} setActionView={setActionView}/>
                   
               </InputTableBox>
+              <Paging max={max} width={"1080px"} num={pageNumber} setNum={setPageNumber}/>
             </div>
             }
             {
@@ -168,6 +211,23 @@ const ProductList = ({user,infos,products,brands}) => {
         </Wrapper>
     );
 };
+
+const slicingArray =(array,num)=>{
+  let len = array.length
+  let result=[]
+  let itemBox=[]
+  let index = 0
+  let nextIndex = num
+  while(index<len){
+      itemBox=_.slice(array,index,nextIndex)
+      index = index + num;
+      nextIndex = nextIndex + num
+      result.push(itemBox)
+  }
+  return(result)
+}
+
+
 const productsNameParse=(products,name)=>{
   let result
   if(name && name !==""){

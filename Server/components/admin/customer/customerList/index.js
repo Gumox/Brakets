@@ -96,7 +96,7 @@ const CustomerList = ({user,infos,customers,brands}) => {
                     <div style={{marginRight:20,}}>{sortCustomers(customers).length} 건</div>
                 </PrView>
 
-                <Paging max={max} width={"850px"} num={pageNumber} setNum={setPageNumber}/>
+                <Paging max={max} minWidth={"850px"} num={pageNumber} setNum={setPageNumber}/>
 
                 <InputTableBox style={{marginBottom:"10px"}}>
                   <PrView>
@@ -121,7 +121,7 @@ const CustomerList = ({user,infos,customers,brands}) => {
                   
                 </InputTableBox>
 
-                <Paging max={max} width={"850px"} num={pageNumber} setNum={setPageNumber}/>
+                <Paging max={max} minWidth={"850px"} num={pageNumber} setNum={setPageNumber}/>
             </div>
             
             
@@ -168,7 +168,6 @@ const slicingArray =(array,num)=>{
     let len = array.length
     let result=[]
     let itemBox=[]
-    let itemIndex=0
     let index = 0
     let nextIndex = num
     while(index<len){

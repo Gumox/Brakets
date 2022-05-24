@@ -13,7 +13,7 @@ const List = ({
     const sortedSeason = _.sortBy(season,"brand_name")
     return(
         <div>
-            {
+            {sortedSeason.length ?
                 sortedSeason.map((item,index)=>{
                     if(index+1 !== sortedSeason.length){
                         return(
@@ -29,6 +29,9 @@ const List = ({
                         )
                     }
                 })
+                :
+                <Wrapper style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px",height:"60px" }}/>
+                            
             }
         </div>
     );

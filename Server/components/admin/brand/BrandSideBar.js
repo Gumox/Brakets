@@ -27,6 +27,7 @@ const BrandSideBar =({
         },[])
         let listColor = COLOR.BLACK;
         let registColor = COLOR.BLACK;
+        let seasonColor = COLOR.BLACK;
         let seasonListColor = COLOR.BLACK;
         let seasonRegistColor = COLOR.BLACK;
         let categoryListColor = COLOR.BLACK;
@@ -37,8 +38,10 @@ const BrandSideBar =({
             registColor = "rgb(133,133,133)";
         }
         else if(path === "/admin/brandControl/seasonList"){
+            seasonColor = "rgb(133,133,133)";
             seasonListColor = "rgb(133,133,133)";
         }else if(path === "/admin/brandControl/seasonRegist"){
+            seasonColor = "rgb(133,133,133)";
             seasonRegistColor = "rgb(133,133,133)";
         }
          if(path === "/admin/brandControl/categoryList"){
@@ -68,7 +71,7 @@ const BrandSideBar =({
                         카테고리
                     </MenuItem>
 
-                    <SubMenu title="시즌">
+                    <SubMenu title="시즌" style={{color : seasonColor}}>
                         <MenuItem style={{color : seasonListColor}} onClick={() => {
                             router.push("/admin/brandControl/seasonList")
                         }}>

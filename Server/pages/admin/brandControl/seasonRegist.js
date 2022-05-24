@@ -30,7 +30,6 @@ const BrandControlSeasonRegist =  ({user,infos,season,brands}) => {
           window.removeEventListener('resize',handleResize);
       }
   },[])
-  console.log(season)
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/brandControl"} minWidth={750}/>

@@ -9,7 +9,7 @@ import COLOR from "../../../constants/color";
 import BrandSideBar from "../../../components/admin/brand/BrandSideBar";
 import SeasonList from "../../../components/admin/brand/season";
 
-const BrandControlSeasonList =  ({user,infos,season}) => {
+const BrandControlSeasonList =  ({user,infos,season,brands}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -30,7 +30,6 @@ const BrandControlSeasonList =  ({user,infos,season}) => {
           window.removeEventListener('resize',handleResize);
       }
   },[])
-  console.log(season)
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader path={"/admin/brandControl"} minWidth={750}/>
@@ -39,7 +38,7 @@ const BrandControlSeasonList =  ({user,infos,season}) => {
           <BrandSideBar path={"/admin/brandControl/seasonList"}/>
         </SidebarSpace>
         <MainSpace >
-            <SeasonList season={season} infos={infos}/>
+            <SeasonList season={season} infos={infos} brands={brands}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -79,6 +78,11 @@ export const getServerSideProps = async (ctx) => {
             .get(`${process.env.API_URL}/brand/season?headquarterId=${user.headquarter_id}`,)
             .then(({ data }) => data.data), 
     ])
+    const [brands] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
+        .then(({ data }) => data.data), 
+    ])
     
       
       
@@ -88,7 +92,8 @@ export const getServerSideProps = async (ctx) => {
         {
           user:user,
           infos:infos,
-          season:season
+          season:season,
+          brands:brands
         } 
       };
     }else{

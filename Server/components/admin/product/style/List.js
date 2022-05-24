@@ -13,7 +13,7 @@ const List = ({
     
     return(
         <div>
-            {
+            {styles.length ?
                 styles.map((item,index)=>{
                     if(index+1 !== styles.length){
                         return(
@@ -29,6 +29,9 @@ const List = ({
                         )
                     }
                 })
+                :
+                <Wrapper style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px",height:"60px"}}>
+                </Wrapper>
             }
         </div>
     );

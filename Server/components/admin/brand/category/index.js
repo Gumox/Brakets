@@ -4,17 +4,40 @@ import COLOR from "../../../../constants/color";
 import _ from "lodash";
 import List from "./List";
 import axios from "axios";
+import Paging from "../../Paging";
 
-const CategoryList = ({user,infos,categorys,products,brands}) => {
+const CategoryList = ({user,infos,categorys,brands}) => {
     
     const [action,setAction] = useState(false)
-    const [filtedCategorys,setFiltedCategorys] =useState(categorys)
+    const [filtedCategorys,setFiltedCategorys] =useState(sortCategorys(categorys))
+
+
+
+    const slcNum =10
+
+    const [slicedArray,setSlicedArray] = useState(slicingArray(filtedCategorys,slcNum))
+
+
+
+    const [pageNumber,setPageNumber] = useState(1)
+    
+    const max = Math.ceil(filtedCategorys.length/slcNum)
+    
+    const SearchBarHandler = ()=>{
+        setPageNumber(1)
+        let brandParse = categorysNameParse(categorys,selectedBrand)
+        let sort = sortCategorys(brandParse)
+
+        console.log(categorys)
+        console.log(brandParse)
+        console.log(sort)
+
+        setFiltedCategorys(sort)
+        setSlicedArray(slicingArray(sort,slcNum))
+
+    }
 
     const [selectedBrand,setSelectedBrand] = useState("")
-
-    
-    const [searchProductName,setSearchProductName] =useState("")
-
     
     const [insertBrand,setInsertBrand] =useState(brands[0].brand_id)
     const [insertCategoryName,setInsertCategoryName] =useState(null)
@@ -64,47 +87,41 @@ const CategoryList = ({user,infos,categorys,products,brands}) => {
                           <SelectItemHeader >
                             브랜드
                           </SelectItemHeader>
-                          <select style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
+                          <select value={selectedBrand} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
                             onChange={(e)=>{setSelectedBrand(e.target.value)}}>
                               <option  value={""} >{"전체"}</option>
                               {
                                 brands.map((item,index)=>(
-                                  <option key={index} value={item.brand_id}>{item.brand_name}</option>
+                                  <option key={index} value={item.brand_name}>{item.brand_name}</option>
                                 ))
                               }
                           </select>
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
-                  setFiltedCategorys(categorysFilter(categorys,selectedBrand))
+                    SearchBarHandler()
+                  
                 }}>
-                    <div style={{font:"12px",fontWeight:"bold"}}>
-                       조회
-                    </div>
-                </SearchBarButton>
-              </SearchBar>
-              {/*
-                <SearchBar>
-                <SearchBarHeader >
-                    카테고리
-                </SearchBarHeader>
-                
-                <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px"}} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
-
-                <SearchBarButton onClick={()=>{setFiltedCategorys(categorysNameParse(categorys,searchProductName))}}>
                     <SearchImage  src="/icons/search.png"/>
                 </SearchBarButton>
-
-                </SearchBar>
-                */}
+              </SearchBar>
+              
                 
                 <LaView>
                     <InputTableBox>
+
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
 
                             <h2 style={{marginLeft:"20px",padding:"5px"}}>카테고리 목록</h2>
-                            <AddButton onClick={()=>{setAction(!action)}}>추가</AddButton>
+                            <div style={{display:"flex",flexDirection:"row"}}>
+                                <div style={{marginRight:20,display:"flex",justifyContent:"center",alignItems:"center"}}>{(categorys).length} 건</div>
+                                <AddButton onClick={()=>{setAction(!action)}}>추가</AddButton>
+                            </div>
+                            
 
+                        </div>
+                        <div style={{marginBottom:10}}>
+                            <Paging max={max} width={"580px"} num={pageNumber} setNum={setPageNumber}/>
                         </div>
                         <PrView>
                         
@@ -117,15 +134,18 @@ const CategoryList = ({user,infos,categorys,products,brands}) => {
                             </HeaderCell>
 
                         </PrView>
-                        <List caategorys={sortCategorys(filtedCategorys)}/>
-                    
+                        <List categorys={slicedArray[pageNumber-1]}/>
+
+                        <div style={{marginTop:10}}>
+                            <Paging max={max} width={"580px"} num={pageNumber} setNum={setPageNumber}/>
+                        </div>
                     </InputTableBox>
                     {
                         action && 
                         
                         <div style={{margin:40,marginTop:140,height:"240px",width:"300px",display:"flex",
                                     flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`,
-                                    position:"fixed",left:"820px"
+                                    position:"sticky",top:"30px"
                                     }}>
                             <LaView style={{flex:1,borderRadius: "10px 10px 0% 0%",justifyContent:"center",alignItems:"center"}}>
                                 <h2>카테고리 추가</h2>
@@ -175,33 +195,38 @@ const CategoryList = ({user,infos,categorys,products,brands}) => {
     );
 };
 const categorysNameParse=(categorys,text)=>{
-  let result
-  if(text && text !==""){
-      let filt = _.filter(categorys,function(obj){
-        return obj.text.indexOf(text) !== -1;
-      })
-      result = filt
-  }else{
-      result =categorys
-  }
+    let result
+    if(text && text !==""){
+        let filt = _.filter(categorys,{"brand_name" : text})
+        result = filt
+    }else{
+        result = categorys
+    }
+    
   return result
 }
-const categorysFilter =(categorys,brand)=>{
-  let result = categorys
-  if(brand){
-    result = (_.filter(result,function(o){
-      return o.brand_id == brand
-    }))
-  }
-  console.log(result)
-  return (result)
-}
+
 
 const sortCategorys =(categorys)=>{
-  let sortByBrand = _.sortBy(categorys,"brand_name")
-  return (sortByBrand)
+    let sortByCategory= _.sortBy(categorys,"category_name")
+    let sortByBrand = _.sortBy(sortByCategory,"brand_name")
+    return (sortByBrand)
 }
 
+const slicingArray =(array,num)=>{
+    let len = array.length
+    let result=[]
+    let itemBox=[]
+    let index = 0
+    let nextIndex = num
+    while(index<len){
+        itemBox=_.slice(array,index,nextIndex)
+        index = index + num;
+        nextIndex = nextIndex + num
+        result.push(itemBox)
+    }
+    return(result)
+}
 const Wrapper = styled.div`
     padding:2%;
     background-color:${COLOR.WHITE};

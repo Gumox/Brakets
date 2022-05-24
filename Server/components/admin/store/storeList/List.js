@@ -19,7 +19,7 @@ const List = ({
     
     return(
         <div>
-            {
+            {store.length?
                 store.map((item,index)=>{
                     if(index+1 !== store.length){
                         return(
@@ -35,6 +35,10 @@ const List = ({
                         )
                     }
                 })
+                :
+                <Wrapper style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px",height:"60px"}}>
+                </Wrapper>
+
             }
         </div>
     );

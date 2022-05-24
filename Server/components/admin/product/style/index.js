@@ -4,11 +4,21 @@ import COLOR from "../../../../constants/color";
 import _ from "lodash";
 import List from "./List";
 import axios from "axios";
+import Paging from "../../Paging";
 
 const ProductStyleList = ({user,infos,styles,products,brands}) => {
     
     const [action,setAction] = useState(false)
-    const [filtedStyles,setFiltedStyles] =useState(styles)
+    const [filtedStyles,setFiltedStyles] =useState(sortStyles(styles))
+
+    
+    const slicingNumber =10
+    const [slicedArray,setSlicedArray] = useState(slicingArray(filtedStyles,slicingNumber))
+
+    const [pageNumber,setPageNumber] = useState(1)
+    
+    const max = Math.ceil(filtedStyles.length/slicingNumber)
+
 
     const [selectedBrand,setSelectedBrand] = useState("")
     const [selectedCategory,setSelectedCategory] = useState("")
@@ -72,6 +82,20 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
         window.location.reload();
     }
 
+    const SearchSelectBarHandler = ()=>{
+
+        setPageNumber(1)
+        setFiltedStyles(sortStyles(stylesFilter(styles,selectedBrand,selectedCategory)))
+        let sort =(sortStyles(stylesFilter(styles,selectedBrand,selectedCategory) ))
+        console.log(sort)
+        console.log(slicingArray(sort,slicingNumber))
+        setSlicedArray(slicingArray(sort,slicingNumber))
+        
+
+        
+    }
+    
+
     useEffect(()=>{
         const uniqBycategorys = _.uniqBy(styles,"category_name")
         let result =[]
@@ -121,11 +145,9 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                       </PrView>
                     </PrView>
                 <SearchBarButton onClick={()=>{
-                  setFiltedStyles(stylesFilter(styles,selectedBrand,selectedCategory))
+                    SearchSelectBarHandler()
                 }}>
-                    <div style={{font:"12px",fontWeight:"bold"}}>
-                       조회
-                    </div>
+                    <SearchImage  src="/icons/search.png"/>
                 </SearchBarButton>
               </SearchBar>
               <SearchBar>
@@ -133,9 +155,11 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                     스타일 코드
                 </SearchBarHeader>
                 
-                <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px"}} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
+                <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px",paddingLeft:20}} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
 
-                <SearchBarButton onClick={()=>{setFiltedStyles(stylesNameParse(styles,searchProductName))}}>
+                <SearchBarButton onClick={()=>{
+                    setSlicedArray(slicingArray(stylesNameParse(styles,searchProductName),slicingNumber))
+                    }}>
                     <SearchImage  src="/icons/search.png"/>
                 </SearchBarButton>
 
@@ -143,15 +167,26 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                 
                 <LaView>
                     <InputTableBox>
+
+
+                
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
 
                             <h2 style={{marginLeft:"20px",padding:"5px"}}>스타일 목록</h2>
-                            <AddButton onClick={()=>{
-                                getCategorys(insertBrand);
-                                setAction(!action)
-                            }}>추가</AddButton>
+                            <div style={{display:"flex",flexDirection:"row"}}>
+                                <div style={{marginRight:20,display:"flex",justifyContent:"center",alignItems:"center"}}>{(styles).length} 건</div>
+                                <AddButton onClick={()=>{
+                                    getCategorys(insertBrand);
+                                    setAction(!action)
+                                }}>추가</AddButton>
+                            </div>
+                            
 
                         </div>
+                        <div style={{marginBottom:10}}>
+                            <Paging max={max} width={"810px"} num={pageNumber} setNum={setPageNumber}/>
+                        </div>
+                        
                         <PrView>
                         
                             <HeaderCell style={{flex:1}}>
@@ -167,14 +202,19 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                             </HeaderCell>
 
                         </PrView>
-                        <List styles={sortStyles(filtedStyles)}/>
+                        <List styles={slicedArray[pageNumber-1]}/>
+
+                        <div style={{marginTop:10}}>
+                            <Paging max={max} width={"810px"} num={pageNumber} setNum={setPageNumber}/>
+                        </div>
                     
                     </InputTableBox>
                     {
                         action && 
                         
                         <div style={{margin:40,marginTop:140,height:"300px",width:"300px",display:"flex",flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <LaView style={{flex:1,borderRadius: "10px 10px 0% 0%",justifyContent:"center",alignItems:"center"}}>
+                            <LaView style={{flex:1,borderRadius: "10px 10px 0% 0%",justifyContent:"center",alignItems:"center",
+                                            position:"sticky",top:"30px"}}>
                                 <h2>스타일 추가</h2>
                             </LaView>
                             <LaView style={{flex:1,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -262,15 +302,29 @@ const stylesFilter =(styles,brand,category)=>{
       return o.category_name == category
     }))
   }
-  console.log(result)
   return (result)
 }
 
 const sortStyles =(styles)=>{
-  let sortByBrand = _.sortBy(styles,"brand_name")
-  return (sortByBrand)
+    let sortByCategory = _.sortBy(styles,"category_name")
+    let sortByBrand = _.sortBy(sortByCategory,"brand_name")
+    return (sortByBrand)
 }
 
+const slicingArray =(array,num)=>{
+    let len = array.length
+    let result=[]
+    let itemBox=[]
+    let index = 0
+    let nextIndex = num
+    while(index<len){
+        itemBox=_.slice(array,index,nextIndex)
+        index = index + num;
+        nextIndex = nextIndex + num
+        result.push(itemBox)
+    }
+    return(result)
+}
 
 
 const Wrapper = styled.div`

@@ -3,16 +3,46 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import _ from "lodash";
 import List from "./List";
+import Paging from "./Paging";
 
 const StoreList = ({user,infos,store,brands}) => {
     
     const [actionView,setActionView] = useState(null)
 
-    const [filted,setFilted] =useState(store)
+    const slicingNumber =10
+    const [filted,setFilted] =useState(sortStore(store))
+    const [slicedArray,setSlicedArray] = useState(slicingArray(filted,slicingNumber))
 
     const [selectedBrand,setSelectedBrand] = useState("")
     const [insertedStoreName,setInsertedStoreName] = useState(null)
     
+    const [pageNumber,setPageNumber] = useState(1)
+    
+    const max = Math.ceil(filted.length/slicingNumber)
+
+    const SearchSelectBarHandler = ()=>{
+
+      setPageNumber(1)
+      setFilted(storeFilter(store,selectedBrand,insertedStoreName))
+      let sort = sortStore(storeFilter(store,selectedBrand,insertedStoreName))
+      setFilted(sort)
+
+      console.log(sort)
+      console.log(slicingArray(sort,slicingNumber))
+      setSlicedArray(slicingArray(sort,slicingNumber))
+
+    }
+
+    const nameHandlePress = useCallback(
+      (e) => {
+        if (e.key == "Enter") {
+          SearchSelectBarHandler()
+        }
+      },
+      
+      [insertedStoreName]
+    );
+
     return(
         <Wrapper>
             {!actionView && <div>
@@ -38,18 +68,23 @@ const StoreList = ({user,infos,store,brands}) => {
                             매장명
                           </SelectItemHeader>
                           <AdressSearchInput type={"text"} value={insertedStoreName || ""} style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}
-                                             onChange={(e)=>{setInsertedStoreName(e.target.value)}}/>
+                                              onKeyPress={(e)=>{nameHandlePress(e)}} onChange={(e)=>{setInsertedStoreName(e.target.value)}}/>
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
-                  setFilted(storeFilter(store,selectedBrand,insertedStoreName))
+                  SearchSelectBarHandler()
                 }}>
                      <SearchImage  src="/icons/search.png"/>
                 </SearchBarButton>
               </SearchBar>
             
-              <h2 style={{marginLeft:20}}>매장 목록</h2>
-                  <InputTableBox>
+              <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,minWidth:"1080px",alignItems:"end",}}>
+                    <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold"}}>매장 목록</div>
+                    <div style={{marginRight:20,}}>{sortStore(store).length} 건</div>
+              </PrView>
+                  
+                <Paging max={max} minWidth={"1080px"} num={pageNumber} setNum={setPageNumber}/>
+                <InputTableBox>
                   <PrView>
                       
                       <HeaderCellV2 style={{flex:1 ,borderRadius: "10px 0px 0px 0px"}}>
@@ -84,9 +119,11 @@ const StoreList = ({user,infos,store,brands}) => {
                       </HeaderCell>
                   </PrView>
 
-                  <List infos={infos} user={user} brands={brands} store={sortStore(filted)} setActionView={setActionView}/>
+                  <List infos={infos} user={user} brands={brands} store={slicedArray[pageNumber-1]} setActionView={setActionView}/>
                   
-              </InputTableBox>
+
+                </InputTableBox>
+                <Paging max={max} minWidth={"1080px"} num={pageNumber} setNum={setPageNumber}/>
             </div>}
             {
                 actionView &&
@@ -96,20 +133,22 @@ const StoreList = ({user,infos,store,brands}) => {
         </Wrapper>
     );
 };
-
-
-const storeNameParse=(store,name)=>{
-  let result
-  if(name && name !==""){
-      let filt = _.filter(store,function(obj){
-        return obj.name.indexOf(name) !== -1;
-      })
-      result = filt
-  }else{
-      result =store
+const slicingArray =(array,num)=>{
+  let len = array.length
+  let result=[]
+  let itemBox=[]
+  let index = 0
+  let nextIndex = num
+  while(index<len){
+      itemBox=_.slice(array,index,nextIndex)
+      index = index + num;
+      nextIndex = nextIndex + num
+      result.push(itemBox)
   }
-  return result
+  return(result)
 }
+
+
 const storeFilter =(store,brand,storeName)=>{
   let result = store
 
@@ -130,12 +169,16 @@ const storeFilter =(store,brand,storeName)=>{
   return (result)
 }
 
+
+
 const sortStore =(store)=>{
   let sortByCategory =_.sortBy(store,"category_name");
   let sortBySeason = _.sortBy(sortByCategory,"season_name")
   let sortByBrand = _.sortBy(sortBySeason,"brand_name")
   return (sortByBrand)
 }
+
+
 
 const Wrapper = styled.div`
     padding:2%;
@@ -165,7 +208,8 @@ const HeaderCellV2 = styled.div`
 
 const InputTableBox  = styled.div`
     min-width:1080px;
-    margin-top:20px;
+    margin-top:10px;
+    margin-bottom:10px;
 `;
 const PrView  = styled.div`
     display:flex;
