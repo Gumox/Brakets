@@ -122,7 +122,7 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
                       </HeaderCell>
 
                       <HeaderCell >
-                        담당 브랜드 파트
+                        담당 브랜드 
                       </HeaderCell>
 
                       {/*<HeaderCell>
@@ -130,10 +130,11 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
                       </HeaderCell>*/}
                       
                       <HeaderCell>
-                        <ColView>
-                            <InColView> 수선처 </InColView>
-                            <InColView> 연락처 </InColView>
-                        </ColView>
+                        수선처 연락처
+                        {/*<ColView>
+                            <InColView>  </InColView>
+                            <InColView>  </InColView>
+                        </ColView>*/}
                       </HeaderCell>
                       
                       

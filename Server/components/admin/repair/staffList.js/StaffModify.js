@@ -21,13 +21,8 @@ const StaffModify = ({
     
     const [state,setState] = useState(item.staff_state)
 
-    const [staffCode,setStaffCode] = useState("")
-    const [staffName,setStaffName] =useState()
-    const [kakaoAcount,setKakaoAcount] =useState()
     const [staffAddress,setStaffAddress] =useState()
     const [staffEmail,setStaffEmail] =useState()
-
-    //const storeId =user.store_id;
 
     
     const modifyStaff = async() =>{

@@ -9,7 +9,11 @@ const List = ({
     user=[],
     infos=[],
     repairShops,
-    categorys =[]
+    allCheck=false,
+    setAllCheck=()=>{},
+    checkedList=[],
+    setCheckedList=()=>{},
+    categorys =[],
 }) => {
     const categorysSorted = _.sortBy(_.sortBy(categorys,"season_name"),"category_name")
     return(
@@ -19,13 +23,15 @@ const List = ({
                     if(index+1 !== categorysSorted.length){
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,}}>
-                                <ListItem item={item} infos={infos}  categorys={categorys} />
+                                <ListItem item={item} infos={infos}  categorys={categorys} allCheck={allCheck} setAllCheck={setAllCheck} 
+                                          checkedList={checkedList} setCheckedList={setCheckedList}/>
                             </Wrapper>
                         )
                     }else{
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
-                                <ListItem item={item} infos={infos}  categorys={categorys} />
+                                <ListItem item={item} infos={infos}  categorys={categorys}  allCheck={allCheck} setAllCheck={setAllCheck}
+                                          checkedList={checkedList} setCheckedList={setCheckedList}/>
                             </Wrapper>
                         )
                     }
@@ -39,22 +45,56 @@ const ListItem =({
     item,
     infos=[],
     categorys=[],
+    allCheck,
+    setAllCheck=()=>{},
+    checkedList=[],
+    setCheckedList=()=>{},
 })=>{
     
     const brandCategorys = _.filter(_.sortBy(categorys,"category_name"),{"brand_name":item.brand_name})
     const [selectedCategory, setSelectedCategory]= useState(brandCategorys[0].pcategory_id)
 
-    const [repairShopList,setRepairShopList] = useState([])
+    let check
+
+    let find = _.filter(checkedList,{"pcategory_store_id":item.pcategory_store_id})
+    if(find.length>0){
+        check = true 
+    }else{
+        check =false
+    }
+
+    const checkboxHandler =(value)=>{
+        //setCheck(value)
+        if(!value){
+            let result = _.filter(checkedList,function(o) {
+                return o.pcategory_store_id !== item.pcategory_store_id;
+            })
+            setCheckedList(result)
+        }else{
+            let result = []
+            if(checkedList.length>0){
+                result = checkedList
+            }
+            result.push(item)
+            result = _.uniqBy(result,"pcategory_store_id")
+            setCheckedList(result)
+        }
+    }
     return(
         <PrView>
-            <HeaderCell style={{flex:1 ,borderRadius: "10px 0px 0px 0px"}}>
+            <HeaderCell style={{flex:0,minWidth:40}}>
+                <input type={"checkbox"} checked={check} onChange={()=>{
+                    checkboxHandler(!check)
+                }}/>
+            </HeaderCell>
+            <HeaderCell>
                 {item.category_name}
             </HeaderCell>
                       
             <HeaderCell>
                 {item.receiver_name}
             </HeaderCell>
-    </PrView>
+        </PrView>
     )
 }
 const Wrapper  = styled.div`

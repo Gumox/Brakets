@@ -63,7 +63,7 @@ const ListItem =({
                 {
                     resortedItem.map((obj,index)=>(
                         <PrView key={index} style={{justifyContent:"center"}}>
-                            <div>
+                            <div style={{color: "rgb(100,200,100)"}}>
                                 {obj.brand_name}
                             </div>
                             <div key={index} style={{marginLeft:10}}>

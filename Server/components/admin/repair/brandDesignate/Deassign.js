@@ -9,25 +9,25 @@ import SearchFocus from './SearchFocus';
 const Deassign = ({
     options = {},
     children,
-    setDesignateOn = () => {},
-    searchList=[],
+    setDeassignOn = () => {},
+    checkedList=[],
+    brandName=""
 }) => {
   
 
-  const [searchName,setSearchName] = useState("")
 
-  const brandDeassign = async()=>{
+  const brandDeassign = ()=>{
 
-    
-    const [result] = await Promise.all([
+    checkedList.map(async(item)=>{
+      const [result] = await Promise.all([
         axios
-          .post(`${process.env.API_URL}/RepairShop/brandDeassign?pcategoryStoreId=${searchName}`,)
+          .post(`${process.env.API_URL}/RepairShop/brandDeassign?pcategoryStoreId=${item.pcategory_store_id}`,)
           .then(({ data }) => data.data), 
         ])
-      if(result){
-          alert("수선처이 해제 되었습니다")
-          window.location.reload()
-      }
+        console.log(result)
+    })
+    alert("수선처가 해제 되었습니다")
+    window.location.reload()
     
   }
 
@@ -40,16 +40,49 @@ const Deassign = ({
       <Section {...options}>
           <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"100%"}}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",width:"85%",height:"75%"}}>
+                    <PrView>
+                        <HeaderCell>
+                            브랜드
+                        </HeaderCell>
+                        <HeaderCell >
+                            카테고리
+                        </HeaderCell>
 
+                        <HeaderCell>
+                            지정 수선처
+                        </HeaderCell>
 
-                    <PrView style={{display:"flex",flex:1}}>
+                        
+                    </PrView>
+                    {
+                      checkedList.map((item,index)=>{
+                        console.log(item)
+                        return(
+                          <PrView key ={index}>
+                            <HeaderCell>
+                                {brandName}
+                            </HeaderCell>
+                            <HeaderCell >
+                                {item.category_name}
+                            </HeaderCell>
+    
+                            <HeaderCell >
+                                {item.receiver_name}
+                            </HeaderCell>
+  
+                          </PrView>
+  
+                        )
+                      })
+                    }
+                  <PrView style={{display:"flex",flex:1,position:"absolute",bottom:0}}>
                
                     <CenterView style={{minHeight:10,display:"flex",flex:1}}>
                         <CustomButton style={{backgroundColor:COLOR.RED}}  onClick={()=>{brandDeassign()}}>
                             삭제
                         </CustomButton>
 
-                        <CustomButton onClick={()=>{setDesignateOn(false)}}>
+                        <CustomButton onClick={()=>{setDeassignOn(false)}}>
                             취소
                         </CustomButton>
                     </CenterView>
@@ -76,6 +109,15 @@ const Wrapper = styled.div`
     min-width:800px;
     min-height:650px;
 `;
+const HeaderCell = styled.div`
+    display:flex;
+    min-width:150px;
+    justify-content:center;
+    align-items:center;
+    font-size:14px;
+    flex:1;
+    padding:5px;
+`;
 
 const InsideWrapper = styled.div`
   display: flex;
@@ -91,10 +133,22 @@ const Section = styled.div`
   /* width: ${({ width = "80%" }) => width}; */
   width: 45%;
 
-  height: ${({ height = "45%" }) => height};
+  min-height: ${({ height = "45%" }) => height};
+  max-height: ${({ height = "90%" }) => height};
   /* max-width: ${({ maxWidth = "760px" }) => maxWidth}; */
   margin: 0 auto;
   background-color: ${({ backgroundColor = COLOR.WHITE }) => backgroundColor};
+
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+    background: rgba(210, 210, 210, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.7);
+    border-radius: 6px;
+  }
 `;
 
 const CloseButton = styled.div`

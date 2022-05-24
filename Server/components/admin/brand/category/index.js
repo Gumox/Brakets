@@ -123,7 +123,10 @@ const CategoryList = ({user,infos,categorys,products,brands}) => {
                     {
                         action && 
                         
-                        <div style={{margin:40,marginTop:140,height:"240px",width:"300px",display:"flex",flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <div style={{margin:40,marginTop:140,height:"240px",width:"300px",display:"flex",
+                                    flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`,
+                                    position:"fixed",left:"820px"
+                                    }}>
                             <LaView style={{flex:1,borderRadius: "10px 10px 0% 0%",justifyContent:"center",alignItems:"center"}}>
                                 <h2>카테고리 추가</h2>
                             </LaView>

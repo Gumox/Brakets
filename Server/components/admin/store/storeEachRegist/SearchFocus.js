@@ -34,7 +34,7 @@ const SearchFocus = ({managerList,width,handler=()=>{},focusSeter=()=>{}}) => {
     }
   return(
     <div 
-      style={{display:"flex",width:"352px",position:"absolute",top:2,left:"147px",flexDirection:"column",border:"2px solid #FF0000"}}
+      style={{display:"flex",width:"352px",position:"absolute",top:2,left:"147px",flexDirection:"column"}}
       
       onFocus={()=>{
         setIsFocus(true)

@@ -9,7 +9,8 @@ const repairShopInfo= async (query,values) => {
                         brand.brand_name,
                         brand.brand_id,
                         pcategory_store.receiver_id,
-                        pcategory_store.receiver_name
+                        pcategory_store.receiver_name,
+                        pcategory_store_id
                         
 
                 FROM product_category 

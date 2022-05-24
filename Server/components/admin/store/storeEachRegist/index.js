@@ -115,9 +115,16 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                 managerId
             }
             
-            const isAccount =await checkAccount(managerAccount)
-            const isPhone = await checkPhone(managerPhone) 
-            const isEmail = await checkEmail(managerEmail) 
+            let isAccount = false
+            let isPhone = false
+            let isEmail = false 
+            if(isNewManager){
+                isAccount = await checkAccount(managerAccount)
+                isPhone = await checkPhone(managerPhone) 
+                isEmail = await checkEmail(managerEmail) 
+            
+            }
+            
 
             if(!isAccount && !isPhone && !isEmail){
                 const [result] = await Promise.all([

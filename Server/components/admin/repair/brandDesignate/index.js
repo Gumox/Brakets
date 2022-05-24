@@ -12,6 +12,7 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
 
     
     const [selectedBrand,setSelectedBrand] = useState()
+    const [selectedBrandName,setSelectedBrandName] = useState()
     const [selectedCategory,setSelectedCategory] = useState("ALL")
 
     
@@ -20,9 +21,11 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
 
     
     const [brandCategoryList,setBrandCategoryList] = useState([])
-    console.log(brandCategoryList)
 
     const categorysBrand = _.uniqBy(categorys,"brand_name")
+
+    const [allCheck,setAllCheck] = useState(false)
+    const [checkedList,setCheckedList] = useState(false)
 
     const [designateOn,setDesignateOn] = useState(false)
     const [deassignOn,setDeassignOn] = useState(false)
@@ -35,26 +38,63 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
     const searchHandler =(value)=>{
         let result = []
         result = _.filter(categorys,{"brand_id":Number(value)})
-        if(selectedCategory !== "ALL"){
+        
+        if(selectedCategory != "ALL"){
             let filt = _.filter(result,{"pcategory_id":Number(selectedCategory)})
-            console.log("selectedCategory")
-            console.log(selectedCategory)
             console.log(filt)
             result = filt
         }
         setSearchResult(result)
+    }
+
+    const allCheckHandler =(value)=>{
+        console.log(value)
+        if(value){
+            setAllCheck(value)
+            let result =[]
+            searchResult.map((item)=>{
+                result.push(item)
+            })
+            result = _.uniqBy(result,"pcategory_store_id")
+            setCheckedList(result)
+        }else{
+            setAllCheck(value)
+            setCheckedList([])
+        }
     }
     useEffect(()=>{
         if(categorys.length>0){
             setSelectedBrand(categorys[0].brand_id)
             searchHandler(categorys[0].brand_id)
         }
+        let stdBrdSaved =window.sessionStorage.getItem("BRAND_DESIGNATE_SELECTED_BRAND")
+        if(stdBrdSaved){
+            setSelectedBrand(stdBrdSaved)
+            searchHandler(stdBrdSaved)
+        }
         
     },[])
     useEffect(()=>{
         categorysBrandHandler()
+        setSelectedCategory("ALL")
+        window.sessionStorage.setItem("BRAND_DESIGNATE_SELECTED_BRAND",selectedBrand)
+
+        let brandName =_.find(categorysBrand,{"brand_id":Number(selectedBrand)})
+        if(brandName){ 
+            setSelectedBrandName(brandName.brand_name)
+        }
     },[selectedBrand])
+
     
+    useEffect(()=>{
+        if(checkedList.length !== searchResult.length){
+            setAllCheck(false)
+        }else{
+            setAllCheck(true)
+        }
+    },[checkedList])
+
+
     return(
         <Wrapper>
             <div>
@@ -104,14 +144,17 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
                 <h2 style={{marginLeft:20}}>검색 결과</h2>
                 <LaView style={{justifyContent:"end",width:"550px"}}>
                     <DivButton onClick={()=>{setDesignateOn(true)}}>추가</DivButton>
-                    <DivButton style={{color:COLOR.RED,marginLeft:20}} >삭제</DivButton>
+                    <DivButton style={{color:COLOR.RED,marginLeft:20}} onClick={()=>{setDeassignOn(true)}}>삭제</DivButton>
                 </LaView>
                 <InputTableBox style={{width:"550px"}}>
                     {
                         searchResult.length > 0 ?
                         <div>
                             <PrView>
-                                <HeaderCell style={{flex:1 ,borderRadius: "10px 0px 0px 0px"}}>
+                                <HeaderCell style={{flex:0,minWidth:40,marginLeft:"2px"}}>
+                                    <input type={"checkbox"} checked={allCheck} onChange={()=>{allCheckHandler(!allCheck)}}/>
+                                </HeaderCell>
+                                <HeaderCell >
                                     카테고리
                                 </HeaderCell>
 
@@ -122,7 +165,7 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
                                 
                             </PrView>
                             
-                            <List infos={infos} user={user} categorys={searchResult} />
+                            <List infos={infos} user={user} categorys={searchResult} allCheck={allCheck} setAllCheck={setAllCheck} checkedList={checkedList} setCheckedList={setCheckedList}/>
                         </div>
                         :
                         <PrView style={{backgroundColor:COLOR.WHITE,justifyContent:"center"}}>
@@ -144,7 +187,7 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
                             brandCategoryList={brandCategoryList} repairShops={repairShops}/>
             }
             {deassignOn &&
-                <Deassign />
+                <Deassign setDeassignOn={setDeassignOn} checkedList={checkedList} brandName={selectedBrandName}/>
             }
             
         </Wrapper>
