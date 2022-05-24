@@ -4,7 +4,7 @@ import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
 import AdminHeader from "../../../components/admin/AdminHeader";
-import { debounce } from "lodash";
+import _,{ debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import RepairSideBar from "../../../components/admin/repair/RepairSideBar";
 import StaffRegist from "../../../components/admin/repair/staffRegist";
