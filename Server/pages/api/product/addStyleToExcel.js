@@ -73,15 +73,11 @@ const controller = async (req, res) => {
         console.log(brands)
         for(let i =2; i<list.length; i++){
           const item = list[i]
-          console.log(item)
           const itemBrand =_.find(brands,{brand_name:item["brand_name"]})
-          console.log(itemBrand)
             if(itemBrand){
                 const itemCategory  = await getProductCategory(itemBrand.brand_id,item["category_name"])
                 const style = await getStyle(itemBrand.brand_id,item["style_code"])
                 
-                console.log(itemBrand.brand_id,item["category_name"])
-                console.log(itemCategory)
                 if(!style){
                     if(itemCategory){
                         const styleCode = item["style_code"],
@@ -89,7 +85,6 @@ const controller = async (req, res) => {
                                 pcategory_id = itemCategory.pcategory_id
 
                             const styleAdd = await addStyle(styleCode, pcategory_id, brandId)
-                            console.log(styleAdd)
                     }else{
                         const categoryAdd = await addCategory(item["category_name"],itemBrand.brand_id)
                         const styleCode = item["style_code"],
@@ -97,7 +92,6 @@ const controller = async (req, res) => {
                                 pcategory_id = categoryAdd.insertId
 
                             const styleAdd = await addStyle(styleCode, pcategory_id, brandId)
-                            console.log(styleAdd)
                     }
                 }
             }

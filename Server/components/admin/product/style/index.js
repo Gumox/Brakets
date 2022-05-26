@@ -6,7 +6,7 @@ import List from "./List";
 import axios from "axios";
 import Paging from "../../Paging";
 
-const ProductStyleList = ({user,infos,styles,products,brands}) => {
+const ProductStyleList = ({user,styles,products,brands}) => {
     
     const [action,setAction] = useState(false)
     const [filtedStyles,setFiltedStyles] =useState(sortStyles(styles))
