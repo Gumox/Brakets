@@ -7,14 +7,15 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import ProductSideBar from "../../../components/admin/product/ProductSideBar";
-import ProductStyleList from "../../../components/admin/product/style";
+import ExcelRegist from "../../../components/admin/product/style/ExcelRegist";
 
-const ProductControlProductStyleList = ({user,infos,styles,brands}) => {
+const ProductControlProductStyleList = ({user,styles,brands}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
     router.push("/login");
   };
+  console.log(user)
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{
@@ -36,10 +37,10 @@ const ProductControlProductStyleList = ({user,infos,styles,brands}) => {
       <AdminHeader user={user} path={"/admin/productControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <ProductSideBar path={"/admin/productControl/productStyleList"} setSelectedView={setSelectedView}/>
+          <ProductSideBar path={"/admin/productControl/productStyleExcelRegist"} setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >
-          <ProductStyleList user={user} infos={infos} styles={styles} brands={brands}/>
+          <ExcelRegist user={user}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -68,11 +69,6 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  const [infos] = await Promise.all([
-    axios
-      .get(`${process.env.API_URL}/headquarter`,)
-      .then(({ data }) => data.body), 
-    ])
     const [styles] = await Promise.all([
       axios
         .get(`${process.env.API_URL}/product/styleInHeadquarter?headquarterId=${user.headquarter_id}`,)
@@ -92,7 +88,6 @@ export const getServerSideProps = async (ctx) => {
       props:
       {
         user:user,
-        infos:infos,
         styles:styles,
         brands:brands,
       } 

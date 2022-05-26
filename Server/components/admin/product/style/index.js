@@ -212,9 +212,11 @@ const ProductStyleList = ({user,infos,styles,products,brands}) => {
                     {
                         action && 
                         
-                        <div style={{margin:40,marginTop:140,height:"300px",width:"300px",display:"flex",flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <LaView style={{flex:1,borderRadius: "10px 10px 0% 0%",justifyContent:"center",alignItems:"center",
-                                            position:"sticky",top:"30px"}}>
+                        <div style={{margin:40,marginTop:140,height:"300px",width:"300px",display:"flex",
+                                    flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`,
+                                    position:"sticky",top:"30px"
+                                }}>
+                            <LaView style={{flex:1,borderRadius: "10px 10px 0% 0%",justifyContent:"center",alignItems:"center"}}>
                                 <h2>스타일 추가</h2>
                             </LaView>
                             <LaView style={{flex:1,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -334,7 +336,7 @@ const Wrapper = styled.div`
 const HeaderCell = styled.div`
     display:flex;
     height:60px;
-    min-width:20px;
+    min-width:90px;
     justify-content:center;
     align-items:center;
     font-size:16px;

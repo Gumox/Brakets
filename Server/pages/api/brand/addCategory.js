@@ -1,13 +1,13 @@
 import excuteQuery from "../db";
 
-async function addStyle( styleNo, brandId) {
+async function addCategory( categoryName, brandId) {
   const result = await excuteQuery({
     query: `INSERT INTO 
                 product_category(
                     category_name,
                     brand_id
                 ) VALUES (?,?)`,
-    values: [ styleNo, brandId],
+    values: [ categoryName, brandId],
   });
   return result;
 }
@@ -25,7 +25,7 @@ const controller = async (req, res) => {
             brandId
         } = req.body;
       
-        const style = await addStyle( categoryName, brandId) ;
+        const style = await addCategory( categoryName, brandId) ;
 
       if (style.error) throw new Error(style.error);
 

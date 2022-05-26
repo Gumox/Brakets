@@ -6,7 +6,6 @@ import Router, { useRouter } from "next/router";
 import COLOR from "../../../constants/color";
 
 const ProductSideBar =({path})=>{
-    console.log(path)
     const router =useRouter()
     
     const [windowWidth,setWindowWidth] = useState(0)
@@ -28,18 +27,24 @@ const ProductSideBar =({path})=>{
     let eachRegistColor = COLOR.BLACK;
     let excelRegistColor = COLOR.BLACK;
     let styleListColor = COLOR.BLACK;
+    let styleExcelRegistColor = COLOR.BLACK;
 
     if(path === "/admin/productControl"){
         listColor = "rgb(133,133,133)";
-    }else if(path === "/admin/productControl/productEachRegist"){
+    }
+    if(path === "/admin/productControl/productEachRegist"){
         eachRegistColor = "rgb(133,133,133)";
-    }else if(path === "/admin/productControl/productExcelRegist"){
+    }
+    if(path === "/admin/productControl/productExcelRegist"){
         excelRegistColor = "rgb(133,133,133)";
     }
-    if(path === "/admin/productControl/ProductStyleList"){
+    if(path === "/admin/productControl/productStyleList"){
         styleListColor = "rgb(133,133,133)";
     }
-    
+    if(path === "/admin/productControl/productStyleExcelRegist"){
+        styleExcelRegistColor = "rgb(133,133,133)";
+    }
+
     return(
         <div>
 
@@ -51,6 +56,18 @@ const ProductSideBar =({path})=>{
                     }}>
                         상품 목록
                     </MenuItem>
+
+                    <MenuItem style={{color : styleListColor}} onClick={() => {
+                        router.push("/admin/productControl/productStyleList")
+                    }}>
+                        스타일
+                    </MenuItem>
+                    <MenuItem style={{color : styleExcelRegistColor}} onClick={() => {
+                        router.push("/admin/productControl/productStyleExcelRegist")
+                    }}>
+                        스타일 엑셀 등록
+                    </MenuItem>
+
                     <MenuItem style={{color : eachRegistColor}} onClick={() => {
                         router.push("/admin/productControl/productEachRegist")
                     }}>
@@ -60,11 +77,6 @@ const ProductSideBar =({path})=>{
                         router.push("/admin/productControl/productExcelRegist")
                     }}>
                         상품 엑셀 등록
-                    </MenuItem>
-                    <MenuItem style={{color : styleListColor}} onClick={() => {
-                        router.push("/admin/productControl/ProductStyleList")
-                    }}>
-                        스타일
                     </MenuItem>
                     
                 </Menu>
