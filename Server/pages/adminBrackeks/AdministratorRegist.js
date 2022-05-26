@@ -85,7 +85,7 @@ const AdministratorRegist = ({infos,user}) =>{
     return (
       <UserContext.Provider value={user}>
         <Wrapper style={{height:windowHeight}}>
-            <BracketsAdminHeader/>
+            <BracketsAdminHeader  user={user}/>
             
             <SrollWrapper>
                 <SidebarSpace style={{}}>

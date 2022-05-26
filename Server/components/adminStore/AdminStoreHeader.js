@@ -1,15 +1,12 @@
-import React,{useState,useEffect} from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import styled from "styled-components";
-import { debounce } from "lodash";
 
 import COLOR from "../../constants/color";
-import MENUS from "../../constants/adminMenu";
-import AdminHeaderButton from "./AdminHeaderButton";
 import logout from "../../functions/logoutfunc";
 
-const AdminHeader = ({ path ,minWidth,user}) => {
+const AdminStoreHeader = ({ path,user }) => {
   const router = useRouter();
   const handleLogout = () => {
     const result = logout(user)
@@ -17,27 +14,6 @@ const AdminHeader = ({ path ,minWidth,user}) => {
       router.push("/login");
     }
   };
-
-
-  const [windowWidth,setWindowWidth] = useState(0)
-  const [windowHeight,setWindowHeight] = useState(0)
-  const handleResize = debounce(()=>{
-      setWindowWidth(window.innerWidth)
-      setWindowHeight(window.innerHeight)
-  },1000)
-  let settedWidth = 1350
-  if(minWidth){
-    settedWidth =250+minWidth;
-  }
-  useEffect(()=>{
-      
-      setWindowWidth(window.innerWidth)
-      setWindowHeight(window.innerHeight)
-      window.addEventListener('resize',handleResize);
-      return ()=>{
-          window.removeEventListener('resize',handleResize);
-      }
-  },[])
   return (
     <div>
     <Wrapper>
@@ -47,19 +23,12 @@ const AdminHeader = ({ path ,minWidth,user}) => {
           <OkImage src="/icons/OK_image.png" width={81} height={52} />
         </MenuWrapper>
         
-        <h2 style={{marginLeft:"3%"}}>전체관리자</h2>
+        <h2 style={{marginLeft:"3%"}}>매장 관리</h2>
       </MenuWrapper>
       <Logout style={{marginRight:"2%"}} onClick={handleLogout}>Logout</Logout>
     </Wrapper>
-    
-      <Control style={{minWidth: `${settedWidth}px`}}>
-        <MenuWrapper style={{height:"50px",paddingLeft:`230px`}}>
-          {MENUS.map((menu) => (
-            <AdminHeaderButton key={menu.link} {...menu} path={path} />
-          ))}
-        </MenuWrapper>
-       
-      </Control> 
+      
+      <Line/>
     </div>
   );
 };
@@ -72,16 +41,14 @@ const OkImage =styled.img`
   margin-top: 5px; 
   height: 52px;
 `;
-const Control =styled.div`
-  width : 100%;
-  margin-top:10px;
-  background-color: ${COLOR.DARK_INDIGO};
-`;
+
+
 const Line =styled.div`
   width :100%
-  margin:5px;
-  height:5px;
-  background-color: ${COLOR.DARK_INDIGO}
+  margin:2px;
+  height:4px;
+  margin-top:10px;
+  background-color: ${COLOR.INDIGO}
 `;
 const Wrapper = styled.div`
   padding: 0px 1% 0px 1%;
@@ -112,4 +79,4 @@ const Logout = styled.button`
 `;
 
 
-export default AdminHeader;
+export default AdminStoreHeader;

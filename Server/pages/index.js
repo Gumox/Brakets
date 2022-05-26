@@ -91,6 +91,8 @@ export const getServerSideProps = async (ctx) => {
   }
   if(user.level <2){
     return { props: {user} };
+  }else if(user.level ===2){
+    return { props: {user:user} };
   }else if(user.level ===5){
     return { props: {user:user} };
   }else{

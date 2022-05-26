@@ -30,7 +30,7 @@ const StoreControlStoreExcelRegist = ({user,infos,brands,store}) => {
 
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/storeControl"} minWidth={1000}/>
+      <AdminHeader user={user} path={"/admin/storeControl"} minWidth={1000}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <StoreSideBar path={"/admin/storeControl/storeExcelRegist"}/>

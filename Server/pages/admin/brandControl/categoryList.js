@@ -32,7 +32,7 @@ const BrandControlcategoryList =  ({user,infos,categorys,brands}) => {
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/brandControl"} minWidth={750}/>
+      <AdminHeader user={user} path={"/admin/brandControl"} minWidth={750}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <BrandSideBar path={"/admin/brandControl/categoryList"}/>

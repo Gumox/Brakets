@@ -8,7 +8,7 @@ import { debounce } from "lodash";
 import COLOR from "../../constants/color";
 import PlatformSideBar from "../../components/admin/platformControl/PlatformSideBar";
 
-const PlatformControl = () => {
+const PlatformControl = ({user}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -32,7 +32,7 @@ const PlatformControl = () => {
   const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/platformControl"}/>
+      <AdminHeader user={user} path={"/admin/platformControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <PlatformSideBar setSelectedView={setSelectedView}/>

@@ -124,17 +124,9 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
                       <HeaderCell >
                         담당 브랜드 
                       </HeaderCell>
-
-                      {/*<HeaderCell>
-                        카테고리
-                      </HeaderCell>*/}
                       
                       <HeaderCell>
                         수선처 연락처
-                        {/*<ColView>
-                            <InColView>  </InColView>
-                            <InColView>  </InColView>
-                        </ColView>*/}
                       </HeaderCell>
                       
                       

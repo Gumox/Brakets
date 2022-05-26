@@ -40,7 +40,7 @@ const AdminHome = ({user,infos,brands,staffs}) => {
     return (
       <UserContext.Provider value={user}>
         <Wrapper>
-            <BracketsAdminHeader/>
+            <BracketsAdminHeader  user={user}/>
             
             <SrollWrapper>
                 <SidebarSpace>

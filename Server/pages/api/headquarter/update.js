@@ -1,6 +1,6 @@
 import excuteQuery from "../db"
 
-async function getHeadquarter(
+async function updateHeadquarter(
     state,
     ceo,
     ceo_address,
@@ -58,18 +58,10 @@ const controller = async (req, res) => {
             headquarter_call,
             headquarter_id
         } =req.body
-        console.log(
-            state,
-            ceo,
-            ceo_address,
-            ceo_email,
-            company_registration_number,
-            headquarter_call,
-            headquarter_id
-        )
+
         
     try {
-      const result = await getHeadquarter(
+      const result = await updateHeadquarter(
                                     state,
                                     ceo,
                                     ceo_address,

@@ -30,7 +30,7 @@ export async function staffLogin(type, store, kid, uid, phone, name) {
       else {
         const add_staff = await excuteQuery({
           query:
-            "INSERT INTO `staff`(`store_id`, `id`, `name`, `phone`) VALUES (?,?,?,?)",
+            "INSERT INTO `staff`(`store_id`, `id`, `name`, `account`) VALUES (?,?,?,?)",
           values: [store, kid, name, uid],
         });
 
@@ -49,7 +49,7 @@ export async function staffLogin(type, store, kid, uid, phone, name) {
     if (staffid != 0) {
       const result = await excuteQuery({
         query:
-          "INSERT INTO `staff_log`(`staff_id`, `status`, `phone`, `phone_uuid`) VALUES (?,?,?,?)",
+          "INSERT INTO `staff_log`(`staff_id`, `status`, `account`, `phone_uuid`) VALUES (?,?,?,?)",
         values: [staffid, state, phone, uid],
       });
 

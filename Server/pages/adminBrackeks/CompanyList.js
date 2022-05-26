@@ -44,7 +44,7 @@ const CompanyList = ({infos,brands,user,staffs}) =>{
     return(
         <UserContext.Provider value={user}>
         <Wrapper style={{height:windowHeight}}>
-            <BracketsAdminHeader/>
+            <BracketsAdminHeader  user={user}/>
             
             <SrollWrapper>
                 <SidebarSpace>

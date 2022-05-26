@@ -6,12 +6,15 @@ import styled from "styled-components";
 import MENUS from "../constants/repairMenu";
 import COLOR from "../constants/color";
 import store from "../store/store";
+import logout from "../functions/logoutfunc";
 
-const BracketsAdminHeader = ({ path }) => {
+const BracketsAdminHeader = ({ path,user }) => {
   const router = useRouter();
-  const handleLogout = async () => {
-    await axios.get("/api/auth/logout");
-    router.push("/login");
+  const handleLogout = () => {
+    const result = logout(user)
+    if(result){
+      router.push("/login");
+    }
   };
   return (
     <div>

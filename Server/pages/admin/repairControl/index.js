@@ -30,7 +30,7 @@ const RepairControl = ({user,infos,repairShop}) => {
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/repairControl"}/>
+      <AdminHeader user={user} path={"/admin/repairControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-150}px`}}>
           <RepairSideBar path={"/admin/repairControl"}/>

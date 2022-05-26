@@ -32,7 +32,7 @@ const BrandControlBrandRegist = ({infos,user,brands,staffs}) => {
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/brandControl"}/>
+      <AdminHeader user={user} path={"/admin/brandControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <BrandSideBar path={"/admin/brandControl/brandRegist"}/>

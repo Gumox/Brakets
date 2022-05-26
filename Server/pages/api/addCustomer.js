@@ -1,8 +1,5 @@
 import excuteQuery from "./db";
 
-/**
- * 0단계 고객 등록
- */
 
 async function addCustomer(name, phone) {
   return excuteQuery({

@@ -24,7 +24,6 @@ const BrandList = ({user,infos,brands,staffs}) => {
         }
 
     }
-    console.log(brands)
     
     return(
         <Wrapper>

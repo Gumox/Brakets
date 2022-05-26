@@ -33,7 +33,7 @@ const ProductControlProductStyleList = ({user,infos,styles,brands}) => {
   const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/productControl"}/>
+      <AdminHeader user={user} path={"/admin/productControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <ProductSideBar path={"/admin/productControl/ProductStyleList"} setSelectedView={setSelectedView}/>

@@ -9,7 +9,7 @@ import COLOR from "../../../constants/color";
 import CustomerSideBar from "../../../components/admin/customer/CustomerSideBar";
 import CustomerList from "../../../components/admin/customer/customerList";
 
-const CustomerControl = ({customers}) => {
+const CustomerControl = ({user,customers}) => {
 
     const router = useRouter();
 
@@ -38,7 +38,7 @@ const CustomerControl = ({customers}) => {
     const [selectedView,setSelectedView] = useState()
     return (
         <Wrapper style={{height:`${windowHeight}px`}}>
-        <AdminHeader path={"/admin/customerControl"}/>
+        <AdminHeader user={user} path={"/admin/customerControl"}/>
         <InSideWrapper>
             <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
             <CustomerSideBar path={"/admin/customerControl"}/>

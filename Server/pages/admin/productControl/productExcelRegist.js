@@ -33,7 +33,7 @@ const ProductControlProductExcelRegist = ({user,infos,brands}) => {
   const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/productControl"} minWidth={850}/>
+      <AdminHeader user={user} path={"/admin/productControl"} minWidth={850}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <ProductSideBar path={"/admin/productControl/productExcelRegist"} setSelectedView={setSelectedView}/>

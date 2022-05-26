@@ -2,13 +2,23 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import { setCookie } from "../../../../utils/cookies";
 import excuteQuery from "../../db";
-import store from "../../../../store/store";
+import moment from "moment";
+
+const setStaffLog = async (staffId, state, phone, uid)=>{
+  const curruntTime = moment().format("YYYY-MM-DD HH:mm:ss");
+  const result = await excuteQuery({
+    query:
+      "INSERT INTO staff_log(staff_id, status, account, kakao_uid ,timestamp) VALUES (?,?,?,?,?)",
+    values: [staffId, state, phone, uid,curruntTime],
+  });
+  return result
+}
 
 const REQUEST_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
 const REQUEST_TOKEN_INFO_URL = "https://kapi.kakao.com/v2/user/me";
 const THIRTY_MINUTES = 60 * 30 * 1000;
+
 const kakao = async (req, res) => {
-  console.log("is here")
   if (req.method === "GET") {
     const { code } = req.query;
 
@@ -32,23 +42,24 @@ const kakao = async (req, res) => {
     // 회원 고유 ID, account 조회
     const {
       id: userId,
-      kakao_account: { account },
+      kakao_account: { email },
     } = tokenInfoData;
+    console.log("account",tokenInfoData)
 
     // DB 에서 해당 ID or account 조회 (본사, 최고관리자 중에서 조회)
     const result = await excuteQuery({
-      query: `SELECT staff.staff_id, id, account, staff.name, level, store.brand_id AS headquarter_id ,store.store_id
+      query: `SELECT staff.staff_id, id, account, staff.name, level, store.brand_id AS headquarter_id ,store.store_id, staff.staff_code
               FROM staff 
               JOIN staff_store ON staff.staff_id = staff_store.staff_id 
               LEFT JOIN store ON staff_store.store_id = store.store_id
               WHERE (id=? OR account=?) AND staff.state = 1`,
-      values: [userId, account],
+      values: [userId, email],
     });
     if (result.error) {
       console.log(result.error);
     }
-    const user = result[0];
-    console.log(user)
+    let user = result[0];
+    user["access_token"] = accessToken
     if (!user) {
       // 없으면
       // login 페이지로 redirect
@@ -59,15 +70,32 @@ const kakao = async (req, res) => {
       if (!user.id) {
         const result = await excuteQuery({
           query: "UPDATE staff SET id=?,lastupdate=NOW() WHERE account=?",
-          values: [userId, account],
+          values: [userId, email],
         });
          console.log(result)
       }
+
+      await setStaffLog(user.staff_id, 1, email, userId)
       
       // 해당 데이터로 token 만들어서 cookie 에 넣고
       // 메인 페이지로 redirect
-      
-      if(user.level == 3){
+      if(user.level < 2 ){
+        const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
+        setCookie(res, "token", token, {
+        httpOnly: true,
+        path: "/",
+        });
+        res.redirect("/");
+      }else if(user.level == 2 && user.staff_code === "A"){
+
+        const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
+        setCookie(res, "token", token, {
+        httpOnly: true,
+        path: "/",
+        });
+        res.redirect("/adminStore/staffList");
+
+      }else if(user.level == 3){
         const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
         setCookie(res, "token", token, {
         httpOnly: true,
@@ -83,13 +111,6 @@ const kakao = async (req, res) => {
         });
         res.redirect("/manufacturer");
 
-      }else if(user.level < 2 ){
-        const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
-        setCookie(res, "token", token, {
-        httpOnly: true,
-        path: "/",
-        });
-        res.redirect("/");
       }else if(user.level == 5){
         const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET_KEY);
         setCookie(res, "token", token, {

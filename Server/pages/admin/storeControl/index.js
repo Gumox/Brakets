@@ -29,7 +29,7 @@ const StoreControl = ({user,infos,brands,store}) => {
   const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/storeControl"}/>
+      <AdminHeader user={user} path={"/admin/storeControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <StoreSideBar path={"/admin/storeControl"}/>

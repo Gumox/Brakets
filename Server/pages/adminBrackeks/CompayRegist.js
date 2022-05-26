@@ -89,7 +89,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
     return(
         <UserContext.Provider value={user}>
         <Wrapper style={{height:windowHeight }}>
-            <BracketsAdminHeader/>
+            <BracketsAdminHeader  user={user}/>
             
             <RowWrapper>
                 <SidebarSpace>

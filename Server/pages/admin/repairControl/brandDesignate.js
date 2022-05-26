@@ -29,7 +29,7 @@ const RepairControlBrandDesignate = ({user,infos,repairShops,categorys}) => {
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/repairControl"} minWidth={750}/>
+      <AdminHeader user={user} path={"/admin/repairControl"} minWidth={750}/>
         <InSideWrapper>
             <SidebarSpace  style={{minHeight:`${windowHeight-150}px`}}>
                 <RepairSideBar path={"/admin/repairControl/brandDesignate"}/>

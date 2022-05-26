@@ -31,7 +31,7 @@ const AdminHome = () => {
   const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin"}/>
+      <AdminHeader user={user} path={"/admin"}/>
       <ServiceCenterSideBar/>
     </Wrapper>
   );

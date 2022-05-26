@@ -32,7 +32,7 @@ const ServiceCenterStaffList = ({infos,user,staffs}) => {
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader path={"/admin/serviceCenterControl"}/>
+      <AdminHeader user={user} path={"/admin/serviceCenterControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <ServiceCenterSideBar path={"/admin/serviceCenterControl/staffRegist"}/>

@@ -3,18 +3,14 @@ import Router, { useRouter } from "next/router";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
-import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
-import COLOR from "../../../constants/color";
-import ProductSideBar from "../../../components/admin/product/ProductSideBar";
-import ProductEachRegist from "../../../components/admin/product/productEachRegist";
+import COLOR from "../../constants/color";
+import AdminStoreHeader from "../../components/adminStore/AdminStoreHeader";
+import AdminStoreLeftSidebar from "../../components/adminStore/AdminStoreLeftSidebar";
+import StaffList from "../../components/adminStore/staffList";
 
-const ProductControlProductEachRegist = ({user,infos,brands}) => {
-  const router = useRouter();
-  const handleLogout = async () => {
-    await axios.get("/api/auth/logout");
-    router.push("/login");
-  };
+const AdminStaffList = ({user,infos,brands,staffs}) => {
+
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{
@@ -30,25 +26,25 @@ const ProductControlProductEachRegist = ({user,infos,brands}) => {
           window.removeEventListener('resize',handleResize);
       }
   },[])
-  const [selectedView,setSelectedView] = useState()
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader user={user} path={"/admin/productControl"} minWidth={1000}/>
+    <AdminStoreHeader user={user}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <ProductSideBar path={"/admin/productControl/productEachRegist"} setSelectedView={setSelectedView}/>
+            <AdminStoreLeftSidebar/>
         </SidebarSpace>
-        <MainSpace >
-          <ProductEachRegist infos={infos} brands={brands} user={user}/>
+        <MainSpace  style={{height:windowHeight}}>
+          <StaffList staffs={staffs} />
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
   );
 };
 
+
 export const getServerSideProps = async (ctx) => {
   const {
-    data: { isAuthorized ,user},
+    data: { isAuthorized, user },
   } = await axios.get(
     `${process.env.API_URL}/auth`,
     ctx.req
@@ -64,30 +60,36 @@ export const getServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: '/login'
-      }
-    }
-  } const [infos] = await Promise.all([
+        destination: "/login",
+      },
+    };
+  }
+  const [infos] = await Promise.all([
     axios
-      .get(`${process.env.API_URL}/headquarter?headquarterId=${user.headquarter_id}`,)
+      .get(`${process.env.API_URL}/headquarter`,)
       .then(({ data }) => data.body), 
     ])
     const [brands] = await Promise.all([
       axios
-        .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
+        .get(`${process.env.API_URL}/brand/AllBrandList`,)
+        .then(({ data }) => data.data), 
+    ])
+    const [staffs] = await Promise.all([
+      axios
+        .get(`${process.env.API_URL}/store/getStoreStaff?staffId=${user.staff_id}`,)
         .then(({ data }) => data.data), 
     ])
     
     
-    
   
-  if(user.level ===0){
+  if(user.level ===2 && user.staff_code === 'A'){
     return {
       props:
       {
         user:user,
         infos:infos,
         brands:brands,
+        staffs:staffs
       } 
     };
   }else{
@@ -99,6 +101,7 @@ export const getServerSideProps = async (ctx) => {
     }
   }
 };
+  
 
 const Wrapper = styled.div`
   height:200px;
@@ -114,12 +117,10 @@ const Wrapper = styled.div`
 }
 `;
 const SidebarSpace = styled.div`
-  background-color:${COLOR.MENU_MAIN};
+  background-color:${COLOR.INDIGO};
 `;
 const MainSpace=styled.div`
     width :100%;
-    
-    min-width:850px;
 `;
 const InSideWrapper = styled.nav`
   display:flex;
@@ -127,4 +128,4 @@ const InSideWrapper = styled.nav`
   
 `;
 
-export default ProductControlProductEachRegist;
+export default AdminStaffList;

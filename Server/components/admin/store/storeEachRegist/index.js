@@ -176,7 +176,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
             
             //insertedValue.substring( 0 , insertedValue.length - 1 ); 
        
-         }
+        }
 
         if(insertedValue.length>0){
             const check = checkDuplicate(parseToBrand,insertedValue)
