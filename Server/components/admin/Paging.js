@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 
-const Paging = ({max = 0,num,width="100%",setNum =()=>{}}) =>{
+const Paging = ({max = 0,num,width="100%",minWidth,setNum =()=>{}}) =>{
     let pageView =[]
     for(let  i =0; i < max ; i++){
         pageView[i] = {page: i+1}
@@ -16,7 +16,7 @@ const Paging = ({max = 0,num,width="100%",setNum =()=>{}}) =>{
 
 
     return(
-        <div style={{width:width,display:"flex",flexDirection:"column"}}>
+        <div style={{width:width,minWidth:minWidth,display:"flex",flexDirection:"column"}}>
             <PrView>
             <ButtonStyle style={{cursor:"pointer"}} onClick={()=>{
                 if(num>1){

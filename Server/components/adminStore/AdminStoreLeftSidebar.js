@@ -35,10 +35,10 @@ const AdminStoreLeftSidebar =({s})=>{
                     <MenuItem></MenuItem>
                         <MenuItem style={styles.menu} 
                             onClick={()=>{router.push("/adminStore/staffList")
-                        }}>직원 목록</MenuItem>
+                        }}>매장 직원 목록</MenuItem>
                         <MenuItem style={styles.menu} 
                             onClick={()=>{router.push("/adminStore/staffRegist")
-                        }}>직원 등록</MenuItem>
+                        }}>매장 직원 등록</MenuItem>
                     <div style={{height:15}}/>
 
                 </Menu>

@@ -2,19 +2,20 @@ import React ,{useEffect,useState,useCallback} from "react";
 import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import _ from "lodash";
+import Paging from "../../Paging";
 import List from "./List";
-import Paging from "./Paging";
 
-const StoreList = ({user,infos,store,brands}) => {
+const StoreStaffList = ({user,storeStaffs,store,brands}) => {
     
     const [actionView,setActionView] = useState(null)
 
     const slicingNumber =10
-    const [filted,setFilted] =useState(sortStore(store))
+    const [filted,setFilted] =useState(sortStoreStaff(storeStaffs))
     const [slicedArray,setSlicedArray] = useState(slicingArray(filted,slicingNumber))
 
     const [selectedBrand,setSelectedBrand] = useState("")
-    const [insertedStoreName,setInsertedStoreName] = useState(null)
+    const [insertedStoreName,setInsertedStoreName] = useState("")
+    const [insertedStaffName,setInsertedStaffName] = useState("")
     
     const [pageNumber,setPageNumber] = useState(1)
     
@@ -23,17 +24,26 @@ const StoreList = ({user,infos,store,brands}) => {
     const SearchSelectBarHandler = ()=>{
 
       setPageNumber(1)
-      setFilted(storeFilter(store,selectedBrand,insertedStoreName))
-      let sort = sortStore(storeFilter(store,selectedBrand,insertedStoreName))
+      setFilted(storeFilter(storeStaffs,selectedBrand,insertedStoreName,insertedStaffName))
+      let sort = sortStoreStaff(storeFilter(storeStaffs,selectedBrand,insertedStoreName,insertedStaffName))
+    
+
       setFilted(sort)
 
-      console.log(sort)
-      console.log(slicingArray(sort,slicingNumber))
       setSlicedArray(slicingArray(sort,slicingNumber))
 
     }
 
-    const nameHandlePress = useCallback(
+    const staffNameHandlePress = useCallback(
+      (e) => {
+        if (e.key == "Enter") {
+          SearchSelectBarHandler()
+        }
+      },
+      
+      [insertedStaffName]
+    );
+    const storeNameHandlePress = useCallback(
       (e) => {
         if (e.key == "Enter") {
           SearchSelectBarHandler()
@@ -42,7 +52,6 @@ const StoreList = ({user,infos,store,brands}) => {
       
       [insertedStoreName]
     );
-
     return(
         <Wrapper>
             {!actionView && <div>
@@ -65,10 +74,16 @@ const StoreList = ({user,infos,store,brands}) => {
                               }
                           </SearchSelect>
                           <SelectItemHeader >
-                            매장명
+                            매장
                           </SelectItemHeader>
                           <AdressSearchInput type={"text"} value={insertedStoreName || ""} style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}
-                                              onKeyPress={(e)=>{nameHandlePress(e)}} onChange={(e)=>{setInsertedStoreName(e.target.value)}}/>
+                                              onKeyPress={(e)=>{storeNameHandlePress(e)}} onChange={(e)=>{setInsertedStoreName(e.target.value)}}/>
+
+                          <SelectItemHeader > 
+                            직원
+                          </SelectItemHeader>
+                          <AdressSearchInput type={"text"} value={insertedStaffName || ""} style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}
+                                              onKeyPress={(e)=>{staffNameHandlePress(e)}} onChange={(e)=>{setInsertedStaffName(e.target.value)}}/>
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
@@ -79,48 +94,44 @@ const StoreList = ({user,infos,store,brands}) => {
               </SearchBar>
             
               <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,minWidth:"1080px",alignItems:"end",}}>
-                    <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold"}}>매장 목록</div>
-                    <div style={{marginRight:20,}}>{sortStore(store).length} 건</div>
+                    <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold"}}>직원 목록</div>
+                    <div style={{marginRight:20,}}>{sortStoreStaff(store).length} 건</div>
               </PrView>
                   
                 <Paging max={max} minWidth={"1080px"} num={pageNumber} setNum={setPageNumber}/>
                 <InputTableBox>
                   <PrView>
                       
-                      <HeaderCellV2 style={{flex:1 ,borderRadius: "10px 0px 0px 0px"}}>
-                        브랜드
-                      </HeaderCellV2>
-
-                      <HeaderCellV2>
-                        매장코드
-                      </HeaderCellV2>
-
-                      <HeaderCellV2 >
-                        매장명
-                      </HeaderCellV2>
+                      <HeaderCell >
+                        매장
+                      </HeaderCell>
 
                       <HeaderCell>
-                        매장 매니저
+                        직원
+                      </HeaderCell>
+
+                      <HeaderCell >
+                        직급
+                      </HeaderCell>
+
+                      <HeaderCell>
+                        kakao 계정
                       </HeaderCell>
                       
                       <HeaderCell>
-                        <ColView>
-                            <InColView> 매니저 </InColView>
-                            <InColView> kakao 계정 </InColView>
-                        </ColView>
+                        연락처
                       </HeaderCell>
                       
                       <HeaderCell>
-                        매니저 연락처
+                        상태
                       </HeaderCell>
                       
                       <HeaderCell style={{color: COLOR.RED,flex:1}}>
-                        
+                            정보 수정
                       </HeaderCell>
                   </PrView>
 
-                  <List infos={infos} user={user} brands={brands} store={slicedArray[pageNumber-1]} setActionView={setActionView}/>
-                  
+                  <List brands={brands} store={slicedArray[pageNumber-1]} setActionView={setActionView}/>
 
                 </InputTableBox>
                 <Paging max={max} minWidth={"1080px"} num={pageNumber} setNum={setPageNumber}/>
@@ -148,34 +159,54 @@ const slicingArray =(array,num)=>{
   return(result)
 }
 
+const getStaffList =(arr) =>{
+    let result = []
+    if(arr.length > 0){
+        let keys = _.uniqBy(arr,"staff_id")
+        
+        keys.map((item)=>{
+            let inArr = _.filter(arr,{ 'staff_id': item.staff_id})
+            result.push(inArr)
+        })
+    }
 
-const storeFilter =(store,brand,storeName)=>{
+    return(result)
+}
+const storeFilter =(store,brand,storeName,staffName)=>{
   let result = store
 
-  console.log(store)
+  console.log(brand,storeName,staffName)
 
   if(brand){
     result = (_.filter(result,function(o){
       return o.brand_id == brand
     }))
   }
-  if(storeName){
+  if(storeName.length > 0){
+    console.log("?",brand,storeName,staffName,"?")
     result = (_.filter(result,function(o){
       
       return String(o.store_name).includes(storeName) 
     }))
+    console.log(result)
   }
-  
+  if(staffName.length > 0){
+    console.log("!",brand,staffName,"!")
+    result = (_.filter(result,function(o){
+      
+      return String(o.staff_name).includes(staffName) 
+    }))
+  }
+  console.log(result)
   return (result)
 }
 
 
 
-const sortStore =(store)=>{
-  let sortByCategory =_.sortBy(store,"category_name");
-  let sortBySeason = _.sortBy(sortByCategory,"season_name")
-  let sortByBrand = _.sortBy(sortBySeason,"brand_name")
-  return (sortByBrand)
+const sortStoreStaff =(storeStaff)=>{
+  let sortByStaffCode =_.sortBy(storeStaff,"staff_code");
+  let sortByStore = _.sortBy(sortByStaffCode,"store_name")
+  return (sortByStore)
 }
 
 
@@ -194,16 +225,15 @@ const HeaderCell = styled.div`
     flex:1;
     padding:5px;
 `;
-const HeaderCellV2 = styled.div`
-    display:flex;
-    height:60px;
-    min-width:20px;
-    justify-content:center;
-    align-items:center;
-    font-size:16px;
-    background-color:${COLOR.MENU_MAIN};
-    flex:1;
-    padding:5px;
+
+const SearchSelect = styled.select`
+  border :0;
+  border: 2px solid ${COLOR.LIGHT_GRAY};
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+  }
 `;
 
 const InputTableBox  = styled.div`
@@ -277,13 +307,4 @@ const AdressSearchInput = styled.input`
     border-color: #719ECE;
   }
 `;
-const SearchSelect = styled.select`
-  border :0;
-  border: 2px solid ${COLOR.LIGHT_GRAY};
-  min-width:175px;
-  &:focus { 
-    outline: none !important;
-    border-color: #719ECE;
-  }
-`;
-export default StoreList
+export default StoreStaffList

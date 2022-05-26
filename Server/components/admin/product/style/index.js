@@ -119,7 +119,7 @@ const ProductStyleList = ({user,styles,products,brands}) => {
                           <SelectItemHeader >
                             브랜드
                           </SelectItemHeader>
-                          <select style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
+                          <SearchSelect style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
                             onChange={(e)=>{setSelectedBrand(e.target.value)}}>
                               <option  value={""} >{"전체"}</option>
                               {
@@ -127,13 +127,13 @@ const ProductStyleList = ({user,styles,products,brands}) => {
                                   <option key={index} value={item.brand_id}>{item.brand_name}</option>
                                 ))
                               }
-                          </select>
+                          </SearchSelect>
                       </PrView>
                       <PrView style={{flex:1, backgroundColor:COLOR.WHITE,borderRadius:0,}}>
                           <SelectItemHeader >
                             카테고리
                           </SelectItemHeader>
-                          <select style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
+                          <SearchSelect style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
                             onChange={(e)=>{setSelectedCategory(e.target.value)}}>
                               <option  value={""} >{"전체"}</option>
                               {
@@ -141,7 +141,7 @@ const ProductStyleList = ({user,styles,products,brands}) => {
                                   <option key={index} value={item.text}>{item.text}</option>
                                 ))
                               }
-                          </select>
+                          </SearchSelect>
                       </PrView>
                     </PrView>
                 <SearchBarButton onClick={()=>{
@@ -411,5 +411,14 @@ const AddButton =styled.h2`
         background-color:${COLOR.LIGHT_GRAY};
     }
 `
-
+const SearchSelect = styled.select`
+  border :0;
+  border: 2px solid ${COLOR.LIGHT_GRAY};
+  height:30px;
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+  }
+`;
 export default ProductStyleList
