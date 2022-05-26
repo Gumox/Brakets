@@ -6,13 +6,9 @@ import axios from "axios";
 import _,{ debounce } from "lodash";
 
 const StaffRegist = ({infos,user,staffs=[]}) =>{
-    
-    console.log(staffs)
+ 
 
     const brandList =  _.sortBy(_.filter(staffs,{"staff_code":'A'}),"brand_name")
-    console.log(brandList)
-    
-
     const router = useRouter();
     const [store,setStore] =useState("")
 

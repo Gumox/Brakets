@@ -12,9 +12,6 @@ const StaffModify = ({
     cencel=()=>{}
 }) =>{
     
-    console.log("item")
-    console.log(item)
-
     const brandList =  _.sortBy(_.filter(staffs,{"staff_code":'A'}),"brand_name")
     
     let brandListToString = ""
