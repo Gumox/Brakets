@@ -6,7 +6,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import ControlFaultList from "../../../components/admin/platformControl/serviceCenterWeb/ControlFault";
+import ControlFaultList from "../../../components/admin/platformControl/serviceCenterWeb/ControlFaultList";
 
 const ControlFault = ({user,faultType}) => {
   const [windowWidth,setWindowWidth] = useState(0)
