@@ -6,7 +6,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import ControlClaimList from "../../../components/admin/platformControl/serviceCenterWeb/controlClaim";
+import ControlClaimList from "../../../components/admin/platformControl/serviceCenterWeb/claimList";
 
 const ControlAnalysis = ({user,claim}) => {
   const [windowWidth,setWindowWidth] = useState(0)

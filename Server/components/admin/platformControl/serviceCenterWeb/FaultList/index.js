@@ -6,7 +6,7 @@ import axios from "axios";
 import List from "./List";
 import Paging from "../../../Paging";
 
-const FaultList = ({user,faultType}) => {
+const ControlFaultList = ({user,faultType}) => {
     const [addState,setAddState] = useState(false)
     const [faultName,setFaultName] = useState("")
 
@@ -240,4 +240,4 @@ const SearchImage =styled.img`
   cursor: pointer;
 `;
 
-export default FaultList
+export default ControlFaultList

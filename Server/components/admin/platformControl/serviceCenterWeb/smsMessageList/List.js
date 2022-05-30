@@ -59,9 +59,6 @@ const ListItem =({
 
     const smsMessageText =item.text
 
-   
-    
-
     if(num === "add"){
         return(
             <PrView>

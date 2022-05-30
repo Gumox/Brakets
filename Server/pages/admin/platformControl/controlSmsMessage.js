@@ -6,7 +6,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import ControlSmsMessage from "../../../components/admin/platformControl/serviceCenterWeb/controlSmsMessage";
+import ControlSmsMessageList from "../../../components/admin/platformControl/serviceCenterWeb/smsMessageList";
 
 const ControlAnalysis = ({user,smsMessage}) => {
   const [windowWidth,setWindowWidth] = useState(0)
@@ -33,7 +33,7 @@ const ControlAnalysis = ({user,smsMessage}) => {
           <PlatformSideBar path={"/admin/platformControl/controlSmsMessage"}/>
         </SidebarSpace>
         <MainSpace >
-          <ControlSmsMessage user={user} list={smsMessage}/>
+          <ControlSmsMessageList user={user} list={smsMessage}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
