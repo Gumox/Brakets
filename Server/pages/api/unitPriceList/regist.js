@@ -13,7 +13,6 @@ const addUnitPriceList = async (
         "INSERT INTO `unit_price_list`(`brand_id`, `unit_price_list` ,`last_update`) VALUES (?,?,?)",
       values: [brand_id, unit_price_list,timeStampToString],
   });
-  console.log( brand_id,unit_price_list,timeStampToString)
   return result
 };
 const updateUnitPriceList = async (
@@ -26,7 +25,6 @@ const updateUnitPriceList = async (
         "UPDATE unit_price_list SET unit_price_list = ?, last_update = ? WHERE brand_id = ?",
       values: [unit_price_list,timeStampToString,brand_id],
   });
-  console.log( brand_id,unit_price_list,timeStampToString)
   return result
 };
 
@@ -40,7 +38,6 @@ const updateUnitPriceListAsId = async (
       "UPDATE unit_price_list SET unit_price_list = ?, last_update = ? WHERE unit_price_list_id  = ?",
     values: [unit_price_list,timeStampToString,unit_price_list_id ],
 });
-console.log( brand_id, unit_price_list,timeStampToString)
 return result
 };
 
@@ -72,6 +69,9 @@ const controller = async (req, res) => {
               const name = String(fields["brand"]).replace(/ /g,"").toUpperCase()
               const brand_id = fields["brand_id"];
               const id = fields["unit_price_list_id"]
+
+              console.log("name","brand_id")
+              console.log(name,brand_id)
               
 
               const  timeStamp = new Date()
@@ -80,8 +80,11 @@ const controller = async (req, res) => {
               console.log("timeStamp",timeStamp)
               
               const insertCheck = await check(brand_id)
+              console.log("is")
+              console.log(insertCheck)
 
               if(files["unitPriceList"]){
+
                   const extension = files.unitPriceList.name.split(".").pop();
                   const filePath = `/storage/unitPrice/${name}.${extension}`;
                   const oldPath = files.unitPriceList.path;
@@ -102,9 +105,11 @@ const controller = async (req, res) => {
                     } 
 
                     res.status(200).json({ receipt_id: results });
+
                   }else{
                     console.log(insertCheck)
                     if(insertCheck.length >0){
+
                       const results = await updateUnitPriceList(brand_id, filePath,timeStampToString);
     
                       if (results.error) {
