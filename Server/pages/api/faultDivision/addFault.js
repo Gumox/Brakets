@@ -1,39 +1,30 @@
 import excuteQuery from "../db"
 
-async function getAnalysisType(addQuery,id) {
+async function addFaultDivision(faultName ,headquarterId) {
     const result = await excuteQuery({
-        query: `SELECT  
-                analysis_id  AS value,
-                analysis_name  AS text,
-                analysis_code,
-                headquarter_id,
-                level,
-                state
-                FROM analysis_type
-                ${addQuery}`,
-        values:[id],
+        query: `INSERT INTO 
+                fault_type(
+                    fault_name,
+                    headquarter_id
+                    ) VALUES (?,?)`,
+        values:[faultName ,headquarterId],
       });
     
       return result;
 }
 
 const controller = async (req, res) => {
-    if (req.method === "GET") {
+    if (req.method === "POST") {
         console.log("req.headers.referer");
         console.log(req.headers.referer);
         console.log("req.query");
         console.log(req.query);
         
-        const { hq_id ,state } = req.query;
-        let addQuery ='';
-      if(hq_id){
-        addQuery =`WHERE headquarter_id=?`
-      }
-      if(state === 1){
-        addQuery +=`AND analysis_type.state = 1`
-      }
+        const { faultName ,headquarterId } = req.query;
+
     try {
-      const result = await getAnalysisType(addQuery,hq_id);
+      const result = await addFaultDivision(faultName ,headquarterId);
+
       if (result.error) throw new Error(result.error);
       if (result.length) {
         console.log("result");

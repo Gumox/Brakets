@@ -36,8 +36,7 @@ const List = ({
                     }
                 })
                 :
-                <Wrapper style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px",height:"60px"}}>
-                </Wrapper>
+                <Wrapper style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px",height:"60px"}}/>
 
             }
         </div>

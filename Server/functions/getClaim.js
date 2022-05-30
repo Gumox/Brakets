@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const getClaim =async(headquarterId)=>{
     const[datas] =await Promise.all([
-        axios.get(`${process.env.API_URL}/claim?headquarterId=${headquarterId}`)
+        axios.get(`${process.env.API_URL}/claim?headquarterId=${headquarterId}&state=1`)
         .then(({ data }) => data.data)
         .catch(error=>{
 
@@ -12,7 +12,7 @@ export const getClaim =async(headquarterId)=>{
 }
 export const getDiscount =async(headquarterId)=>{
     const[datas] =await Promise.all([
-        axios.get(`${process.env.API_URL}/discount?headquarterId=${headquarterId}`)
+        axios.get(`${process.env.API_URL}/discount?headquarterId=${headquarterId}&state=1`)
         .then(({ data }) => data.data)
         .catch(error=>{
 

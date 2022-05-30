@@ -9,7 +9,7 @@ import COLOR from "../../../constants/color";
 import ServiceCenterSideBar from "../../../components/admin/serviceCenter/ServiceCenterSideBar";
 import StaffList from "../../../components/admin/serviceCenter/staffList";
 
-const ServiceCenterStaffList =  ({user,infos,brands,staffs}) => {
+const ServiceCenterStaffList =  ({user,brands,staffs}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -68,11 +68,7 @@ export const getServerSideProps = async (ctx) => {
         },
       };
     }
-    const [infos] = await Promise.all([
-      axios
-        .get(`${process.env.API_URL}/headquarter`,)
-        .then(({ data }) => data.body), 
-      ])
+  
       const [brands] = await Promise.all([
         axios
           .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
@@ -92,7 +88,6 @@ export const getServerSideProps = async (ctx) => {
         props:
         {
           user:user,
-          infos:infos,
           brands:brands,
           staffs:staffs
         } 

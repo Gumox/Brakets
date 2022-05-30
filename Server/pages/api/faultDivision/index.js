@@ -7,6 +7,7 @@ async function getFaultDivision(addQuery,id) {
                   fault_name AS text,
                   fault_code,	
                   level,
+                  state,
                   headquarter_id
                 FROM fault_type 
                 ${addQuery}`,
@@ -23,14 +24,15 @@ const controller = async (req, res) => {
         console.log("req.query");
         console.log(req.query);
         
-        const {
-            hq_id
-        } = req.query;
+        const { hq_id ,state } = req.query;
         let addQuery ='';
-      if(hq_id){
-        addQuery =`WHERE headquarter_id=?`
-      }
 
+        if(hq_id){
+          addQuery =`WHERE headquarter_id=?`
+        }
+        if(state == 1){
+          addQuery +=` AND state = 1`
+        }
     try {
       const result = await getFaultDivision(addQuery,hq_id);
       if (result.error) throw new Error(result.error);

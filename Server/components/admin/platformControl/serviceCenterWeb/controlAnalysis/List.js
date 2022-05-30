@@ -1,23 +1,23 @@
 import React ,{useEffect,useState,useCallback} from "react";
 import styled from "styled-components";
-import COLOR from "../../../../constants/color";
+import COLOR from "../../../../../constants/color";
 import axios from "axios";
 import _ from "lodash";
 
 
 const List = ({
     user=[],
-    categorys=[],
+    list=[],
 }) => {
 
     
     return(
         <div>
-            {categorys.length ?
-                categorys.map((item,index)=>{
-                    if(index+1 !== categorys.length){
+            {list.length ?
+                list.map((item,index)=>{
+                    if(index+1 !== list.length){
                         return(
-                            <Wrapper key={index}>
+                            <Wrapper key={index} style={{borderBottom:`1px solid ${COLOR.LIGHT_GRAY}`}}>
                                 <ListItem item={item}/>
                             </Wrapper>
                         )
@@ -38,23 +38,51 @@ const List = ({
 };
 
 const ListItem =({item})=>{
-    
-    
+    console.log(item)
+    const [stateCheck,setStateCheck] = useState(item.state)
+
+   
+    const stateCheckHandler =(value)=>{
+        setStateCheck(value)
+        changeState(item.value,value)
+    }
+
+   
+    const changeState= async(analysisId,state) =>{
+        let data ={
+            stateOn:true,
+            analysisId:analysisId,
+            state: state
+        }
+        const [result] = await Promise.all([
+            axios
+            .post(`${process.env.API_URL}/analysisType/changeState`,data)
+            .then(({ data }) => data.data), 
+        ])
+    }
+
     return(
         <PrView>
                       
-            <HeaderCell style={{flex:1}}>
-                {item.brand_name}
+            <HeaderCell>
+                {item.text}
             </HeaderCell>
 
-            <HeaderCell>
-                {item.category_name}
+            
+            <HeaderCell style={{flex:3}}>
+                <PrView>
+                    <CheckBox checked={stateCheck} type="checkbox" onChange={()=>{stateCheckHandler(!stateCheck)}}/>
+                    <div style={{fontSize:13,marginLeft:"20px",display:"flex",alignItems:"center",color:COLOR.CYAN_BLUE}}>On</div>
+                    <CheckBoxRed checked={!stateCheck} style={{marginLeft:20}} type="checkbox" onChange={()=>{stateCheckHandler(!stateCheck)}}/>
+                    <div style={{fontSize:13,marginLeft:"20px",display:"flex",alignItems:"center",color:COLOR.RED}}>Off</div>
+                </PrView>
             </HeaderCell>
 
             
         </PrView>
     )
 }
+
 const Wrapper  = styled.div`
     border-left:2px solid ${COLOR.LIGHT_GRAY};
     border-right:2px solid ${COLOR.LIGHT_GRAY};
@@ -67,7 +95,7 @@ const HeaderCell = styled.div`
     justify-content:center;
     align-items:center;
     font-size:16px;
-    flex:1;
+    flex:2;
     padding:5px;
 `;
 
@@ -114,6 +142,40 @@ const ChangeView = styled.div`
 
 `;
 
+const CheckBox = styled.input `
+    appearance: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-clip: content-box;
+    border: 1.5px solid #bbbbbb;
+    border-radius: 10px;
+    padding:3px;
+
+    &:checked{
+
+        background-color: ${COLOR.INDIGO};
+        border-radius: 10px;
+    }
+
+`
+const CheckBoxRed = styled.input `
+    appearance: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-clip: content-box;
+    border: 1.5px solid #bbbbbb;
+    border-radius: 10px;
+    padding:3px;
+
+    &:checked{
+
+        background-color: ${COLOR.RED};
+        border-radius: 10px;
+    }
+
+`
 
 
 export default List

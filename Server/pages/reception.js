@@ -265,18 +265,18 @@ export const getServerSideProps = async (ctx) => {
         axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
         axios
           .get(`${process.env.API_URL}/faultDivision`, {
-            params: {hq_id: "2"}
+            params: {hq_id: headquarterId,state:1}
           })
           .then(({ data }) => data), // 과실구분
         axios
           .get(`${process.env.API_URL}/analysisType`, {
-            params: {hq_id: "2"}
+            params: {hq_id: headquarterId,state:1}
           })
           .then(
             ({ data }) => data), // 내용분석
         axios
           .get(`${process.env.API_URL}/judgmentResult`, {
-            params: {hq_id: "2"}
+            params: {hq_id: headquarterId}
           })
           .then(({ data }) => data), // 판정결과
 

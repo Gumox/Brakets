@@ -14,12 +14,12 @@ const bracketsAdminSelect =async(selectCompany)=>{
         axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
         axios
           .get(`${process.env.API_URL}/faultDivision`, {
-            params: {hq_id: headquarterId}
+            params: {hq_id: headquarterId,state:1}
           })
           .then(({ data }) => data), // 과실구분
         axios
           .get(`${process.env.API_URL}/analysisType`, {
-            params: {hq_id: headquarterId}
+            params: {hq_id: headquarterId,state:1}
           })
           .then(
             ({ data }) => data), // 내용분석

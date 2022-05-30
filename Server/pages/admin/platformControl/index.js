@@ -3,10 +3,10 @@ import Router, { useRouter } from "next/router";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import axios from "axios";
-import AdminHeader from "../../components/admin/AdminHeader";
+import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
-import COLOR from "../../constants/color";
-import PlatformSideBar from "../../components/admin/platformControl/PlatformSideBar";
+import COLOR from "../../../constants/color";
+import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
 
 const PlatformControl = ({user}) => {
   const router = useRouter();
@@ -44,37 +44,61 @@ const PlatformControl = ({user}) => {
 };
 
 export const getServerSideProps = async (ctx) => {
-  const {
-    data: { isAuthorized ,user},
-  } = await axios.get(
-    `${process.env.API_URL}/auth`,
-    ctx.req
-      ? {
-          withCredentials: true,
-          headers: {
-            cookie: ctx.req.headers.cookie || {},
-          },
+    const {
+      data: { isAuthorized, user },
+    } = await axios.get(
+      `${process.env.API_URL}/auth`,
+      ctx.req
+        ? {
+            withCredentials: true,
+            headers: {
+              cookie: ctx.req.headers.cookie || {},
+            },
+          }
+        : {}
+    );
+    if (!isAuthorized) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login",
+        },
+      };
+    }
+  
+      const [brands] = await Promise.all([
+        axios
+          .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
+          .then(({ data }) => data.data), 
+      ])
+      const [staffs] = await Promise.all([
+        axios
+          .get(`${process.env.API_URL}/headquarter/staff?headquarterId=${user.headquarter_id}`,)
+          .then(({ data }) => data.body), 
+      ])
+      
+      
+      
+    
+    if(user.level ===0){
+      return {
+        props:
+        {
+          user:user,
+          brands:brands,
+          staffs:staffs
+        } 
+      };
+    }else{
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/login'
         }
-      : {}
-  );
-  if (!isAuthorized) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/login'
       }
     }
-  }
-  if(user.level !== 0){
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/login'
-      }
-    }
-  }
-  return { props: {} };
 };
+  
 
 const Wrapper = styled.div`
   height:200px;
