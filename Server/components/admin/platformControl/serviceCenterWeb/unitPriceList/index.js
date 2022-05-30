@@ -40,6 +40,18 @@ const UnitPriceListControl =({user,brands})=>{
         const selectBrand = _.find(brands,{"brand_id" : Number(value)})
         setBrandId(value)
         setBrandName(selectBrand.brand_name)
+
+        console.log("22")
+        console.log(value)
+
+        const [result] = await Promise.all([
+            axios
+              .get(`${process.env.API_URL}/unitPriceList?brandId=${value}`)
+              .then(({ data }) => data.data), 
+        ])
+
+        console.log(result)
+        setUnitPriceList(result)
         
 
     }
@@ -68,6 +80,7 @@ const UnitPriceListControl =({user,brands})=>{
     }
 
     useState(()=>{
+        console.log("33")
         const fetch =async()=>{
             const [result] = await Promise.all([
                 axios
@@ -79,7 +92,7 @@ const UnitPriceListControl =({user,brands})=>{
         }
         fetch()
         
-    },[brandId])
+    },[])
     
 
     return(
