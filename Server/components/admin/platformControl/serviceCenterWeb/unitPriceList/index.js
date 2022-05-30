@@ -41,8 +41,6 @@ const UnitPriceListControl =({user,brands})=>{
         setBrandId(value)
         setBrandName(selectBrand.brand_name)
 
-        console.log("22")
-        console.log(value)
 
         const [result] = await Promise.all([
             axios
@@ -50,7 +48,6 @@ const UnitPriceListControl =({user,brands})=>{
               .then(({ data }) => data.data), 
         ])
 
-        console.log(result)
         setUnitPriceList(result)
         
 
@@ -74,13 +71,11 @@ const UnitPriceListControl =({user,brands})=>{
               .post(`${process.env.API_URL}/unitPriceList/regist`,formData)
               .then(({ data }) => data), 
             ])
-        console.log(result)
         alert("고객유상단가표가 등록되었습니다.")
         window.location.reload()
     }
 
     useState(()=>{
-        console.log("33")
         const fetch =async()=>{
             const [result] = await Promise.all([
                 axios
