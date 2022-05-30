@@ -37,7 +37,9 @@ const PlatformControl = ({user}) => {
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <PlatformSideBar setSelectedView={setSelectedView}/>
         </SidebarSpace>
-        <MainSpace >{selectedView}</MainSpace>
+        <MainSpace >
+          
+        </MainSpace>
       </InSideWrapper>
     </Wrapper>
   );
