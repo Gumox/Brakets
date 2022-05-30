@@ -6,7 +6,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import ControlFaultList from "../../../components/admin/platformControl/serviceCenterWeb/ControlFaultList";
+import FaultList from "../../../components/admin/platformControl/serviceCenterWeb/FaultList";
 
 const ControlFault = ({user,faultType}) => {
   const [windowWidth,setWindowWidth] = useState(0)
@@ -32,7 +32,7 @@ const ControlFault = ({user,faultType}) => {
           <PlatformSideBar path={"/admin/platformControl/controlFault"}/>
         </SidebarSpace>
         <MainSpace >
-            <ControlFaultList faultType={faultType} user={user}/>
+            <FaultList faultType={faultType} user={user}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>

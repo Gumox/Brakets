@@ -25,7 +25,7 @@ const MENUS = [
     },
     {
       title: "플랫폼 관리",
-      link: "/admin/platformControl",
+      link: "/admin/platformControl/controlFault",
     },
   ];
 
