@@ -102,7 +102,7 @@ export const checkHaveMfrDetail =(el)=>{
 
 export const getUnitPriceList = async(brandId) => {
   const[datas] =await Promise.all([
-    axios.get(`${process.env.API_URL}/unitPriceList/getList?brandId=${brandId}`
+    axios.get(`${process.env.API_URL}/unitPriceList?brandId=${brandId}`
     )
     .then(({ data }) => data.data)
     .catch(error=>{

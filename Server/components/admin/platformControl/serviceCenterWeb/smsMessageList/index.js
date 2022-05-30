@@ -6,7 +6,7 @@ import axios from "axios";
 import List from "./List";
 import Paging from "../../../Paging";
 
-const ControlSmsMessage = ({user,list}) => {
+const ControlSmsMessageList = ({user,list}) => {
     console.log(user)
     const [addState,setAddState] = useState(false)
     const [changeState,setChangeState] = useState(false)
@@ -372,4 +372,4 @@ const SearchImage =styled.img`
   cursor: pointer;
 `;
 
-export default ControlSmsMessage
+export default ControlSmsMessageList

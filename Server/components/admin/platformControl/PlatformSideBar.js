@@ -91,7 +91,7 @@ const PlatformSideBar =({
         } 
 
 
-        if(path === "/admin/platformControl/controlFaults"){
+        if(path === "/admin/platformControl/controlUnitPriceList"){
             controlRweb = true;
             controlRwebColor = "rgb(133,133,133)";
             controlPaidFeeColor = "rgb(133,133,133)";
@@ -161,7 +161,7 @@ const PlatformSideBar =({
 
                     <SubMenu title="수선처 web" style={{color : controlRwebColor}} defaultOpen={controlRweb}>
                         <MenuItem style={{color : controlPaidFeeColor}} onClick={() => {
-                            router.push("/admin/platformControl/controlFault")
+                            router.push("/admin/platformControl/controlUnitPriceList")
                         }}>
                            고객유상단가표 관리
                         </MenuItem>
