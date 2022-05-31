@@ -11,17 +11,13 @@ const RepairTypeEachRegist = ({
     repairShops=[]
 }) =>{
 
-    console.log(user)
-    console.log(brands)
-    console.log(repairShops)
-    
     const router = useRouter();
     
-    const sortedBrands =SortArray(brands)
+    const sortedBrands =sortArray(brands)
     const [brand,setBrand] =useState(sortedBrands[0].brand_id)
     const [brandName,setBrandName] =useState("")
     
-    const sortedRepairShop =SortArray2(repairShops)
+    const sortedRepairShop =sortArray2(repairShops)
     const [repairShop,setRepairShop] =useState(sortedRepairShop[0].repair_shop_id)
     const [repairName,setRepairName] =useState(null)
     const [repairPrice,setRepairPrice] =useState(null)
@@ -171,12 +167,12 @@ const RepairTypeEachRegist = ({
     );
 };
 
-const SortArray =(array)=>{
+const sortArray =(array)=>{
     let sort1=_.sortBy(array,"brand_name")
     
     return(sort1)
 }
-const SortArray2 =(array)=>{
+const sortArray2 =(array)=>{
     let sort1=_.sortBy(array,"repair_shop_name")
     let uniq =_.uniqBy(sort1,"repair_shop_name")
     
