@@ -3,26 +3,18 @@ import excuteQuery from "../db";
 async function repairTypeRegist(
     repairName,
     repairPrice,
-    headquarterId,
-    brandId,
-    storeId 
+    repairId 
 ) {
   const result = await excuteQuery({
-    query: `INSERT INTO 
-            repair_type(
-
-                repair_name,
-                repair_price,
-                headquarter_id,
-                brand_id,
-                store_id
-                ) VALUES (?,?,?,?,?)`,
+    query: `UPDATE repair_type 
+                SET 
+                repair_name = ?,
+                repair_price = ? 
+            WHERE repair_id = ?`,
     values: [
         repairName,
         repairPrice,
-        headquarterId,
-        brandId,
-        storeId 
+        repairId 
     ],
   });
 
@@ -31,27 +23,24 @@ async function repairTypeRegist(
 
 const productCategory = async (req, res) => {
   if (req.method === "POST") {
-    console.log("/api/type/repairTypeRegist");
+    console.log("/api/type/modifyRepairType");
     console.log("req.body");
     console.log(req.body);
     
     const { 
         repairName,
         repairPrice,
-        headquarterId,
-        brandId,
-        storeId 
+        repairId ,
     } = req.body;
 
     try {
         const result = await repairTypeRegist( 
                                                 repairName,
                                                 repairPrice,
-                                                headquarterId,
-                                                brandId,
-                                                storeId 
+                                                repairId 
                                                 );
         if (result.error) throw new Error(result.error);
+        console.log(result)
 
         res.status(200).json({ data: result });
     } catch (err) {

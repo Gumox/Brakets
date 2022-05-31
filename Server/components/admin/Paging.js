@@ -15,123 +15,129 @@ const Paging = ({max = 0,num,width="100%",minWidth,setNum =()=>{}}) =>{
     }
 
 
-    return(
-        <div style={{width:width,minWidth:minWidth,display:"flex",flexDirection:"column"}}>
-            <PrView>
-            <ButtonStyle style={{cursor:"pointer"}} onClick={()=>{
-                if(num>1){
-                    clicker(num-1)
-                }
-            }}>{"이전"}</ButtonStyle>
-            {
-                pageView.map((item,index)=>{
-                    if(max>4){
-                        if(num === 1){
-                            let numColor = COLOR.BLACK
-                            let weight = "normal"
-                            if(num === item.page){
-                                numColor = COLOR.DARK_INDIGO
-                                weight = "bold"
-                            }
-                            if(index < 3){
-                                
-                                return(
-                                    <ButtonStyle key={index} style={{color:numColor,fontWeight: weight,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
-                                )
-                            }else if(index === max-1){
-                                return(
-                                    <PrView key={index}>
-                                        <ButtonStyle style={{color:numColor,fontWeight: weight}} >...</ButtonStyle>
-                                        <ButtonStyle style={{color:numColor,fontWeight: weight,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
-                                    </PrView>
-                                )
-                            }
-                        }else if(num === max){
-                            let numColor = COLOR.BLACK
-                            let weight = "normal"
-                            if(num === item.page){
-                                numColor = COLOR.DARK_INDIGO
-                                weight = "bold"
-                            }
-                            if(item.page > max-3){
-                                
-                                return(
-                                    <ButtonStyle key={index} style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
-                                )
-                            }else if(item.page === max){
-                                return(
+    if(max>0){
+        return(
+            <div style={{width:width,minWidth:minWidth,display:"flex",flexDirection:"column"}}>
+                <PrView>
+                <ButtonStyle style={{cursor:"pointer"}} onClick={()=>{
+                    if(num>1){
+                        clicker(num-1)
+                    }
+                }}>{"이전"}</ButtonStyle>
+                {
+                    pageView.map((item,index)=>{
+                        if(max>4){
+                            if(num === 1){
+                                let numColor = COLOR.BLACK
+                                let weight = "normal"
+                                if(num === item.page){
+                                    numColor = COLOR.DARK_INDIGO
+                                    weight = "bold"
+                                }
+                                if(index < 3){
                                     
-                                    <ButtonStyle key={index} style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
-                                )
-                            }else if(item.page === 1){
-                                return(
-                                    <PrView key={index}>
-                                        <ButtonStyle style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
-                                        <ButtonStyle style={{color:numColor,fontWeight: weight}} >...</ButtonStyle>
-                                    </PrView>
-                                )
+                                    return(
+                                        <ButtonStyle key={index} style={{color:numColor,fontWeight: weight,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
+                                    )
+                                }else if(index === max-1){
+                                    return(
+                                        <PrView key={index}>
+                                            <ButtonStyle style={{color:numColor,fontWeight: weight}} >...</ButtonStyle>
+                                            <ButtonStyle style={{color:numColor,fontWeight: weight,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
+                                        </PrView>
+                                    )
+                                }
+                            }else if(num === max){
+                                let numColor = COLOR.BLACK
+                                let weight = "normal"
+                                if(num === item.page){
+                                    numColor = COLOR.DARK_INDIGO
+                                    weight = "bold"
+                                }
+                                if(item.page > max-3){
+                                    
+                                    return(
+                                        <ButtonStyle key={index} style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
+                                    )
+                                }else if(item.page === max){
+                                    return(
+                                        
+                                        <ButtonStyle key={index} style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
+                                    )
+                                }else if(item.page === 1){
+                                    return(
+                                        <PrView key={index}>
+                                            <ButtonStyle style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
+                                            <ButtonStyle style={{color:numColor,fontWeight: weight}} >...</ButtonStyle>
+                                        </PrView>
+                                    )
+                                }
+                            }else{
+                                let numColor = COLOR.BLACK
+                                let weight = "normal"
+                                if(num === item.page){
+                                    numColor = COLOR.DARK_INDIGO
+                                    weight = "bold"
+                                }
+                                
+                                if(num -2 < item.page && num + 2 > item.page){
+                                    return(
+                                        <ButtonStyle key={index} style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
+                                    )
+                                }
+                                else if(item.page === 1 ){
+                                    let dots; 
+                                    if(num > 3){
+                                        dots=(<ButtonStyle style={{color:numColor,fontWeight: weight,backgroundColor:COLOR.WHITE}} >...</ButtonStyle>)
+                                    }
+                                    return(
+                                        <PrView key={index}>
+                                            <ButtonStyle style={{color:numColor,fontWeight: weight,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
+                                            {dots}
+                                        </PrView>
+                                    )
+                                }
+                                else if(item.page == max ){
+                                    let dots; 
+                                    if(num < max-2){
+                                        dots=(<ButtonStyle style={{color:numColor,fontWeight: weight, backgroundColor:COLOR.WHITE}} >...</ButtonStyle>)
+                                    }
+                                    return(
+                                        <PrView key={index}>
+                                            {dots}
+                                            <ButtonStyle style={{color:numColor,fontWeight: weight,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
+                                        </PrView>
+                                    )
+                                }
                             }
                         }else{
-                            let numColor = COLOR.BLACK
-                            let weight = "normal"
-                            if(num === item.page){
-                                numColor = COLOR.DARK_INDIGO
-                                weight = "bold"
-                            }
-                            
-                            if(num -2 < item.page && num + 2 > item.page){
+                                let numColor = COLOR.BLACK
+                                let weight = "normal"
+                                if(num === item.page){
+                                    numColor = COLOR.DARK_INDIGO
+                                    weight = "bold"
+                                }
                                 return(
                                     <ButtonStyle key={index} style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
                                 )
-                            }
-                            else if(item.page === 1 ){
-                                let dots; 
-                                if(num > 3){
-                                    dots=(<ButtonStyle style={{color:numColor,fontWeight: weight,backgroundColor:COLOR.WHITE}} >...</ButtonStyle>)
-                                }
-                                return(
-                                    <PrView key={index}>
-                                        <ButtonStyle style={{color:numColor,fontWeight: weight,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
-                                        {dots}
-                                    </PrView>
-                                )
-                            }
-                            else if(item.page == max ){
-                                let dots; 
-                                if(num < max-2){
-                                    dots=(<ButtonStyle style={{color:numColor,fontWeight: weight, backgroundColor:COLOR.WHITE}} >...</ButtonStyle>)
-                                }
-                                return(
-                                    <PrView key={index}>
-                                        {dots}
-                                        <ButtonStyle style={{color:numColor,fontWeight: weight,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
-                                    </PrView>
-                                )
-                            }
                         }
-                    }else{
-                            let numColor = COLOR.BLACK
-                            let weight = "normal"
-                            if(num === item.page){
-                                numColor = COLOR.DARK_INDIGO
-                                weight = "bold"
-                            }
-                            return(
-                                <ButtonStyle key={index} style={{color:numColor,fontWeight: weight ,cursor:"pointer"}} onClick={()=>{clicker(item.page)}}>{item.page}</ButtonStyle>
-                            )
-                    }
 
-                })          
-            }
-            <ButtonStyle style={{cursor:"pointer"}} onClick={()=>{
-                if(num < max){
-                    clicker(num+1)
+                    })          
                 }
-            }}>{"다음"}</ButtonStyle>
-            </PrView>
-            
-        </div>
-    )
+                <ButtonStyle style={{cursor:"pointer"}} onClick={()=>{
+                    if(num < max){
+                        clicker(num+1)
+                    }
+                }}>{"다음"}</ButtonStyle>
+                </PrView>
+                
+            </div>
+        )
+    }else{
+        return(
+            <div></div>
+        )
+    }
 }
 export default Paging
 

@@ -49,6 +49,8 @@ const PlatformSideBar =({
         let controlPaidFeeColor = COLOR.BLACK;
 
         let controlRepairColor = COLOR.BLACK;
+
+        let controlListColor = COLOR.BLACK;
         let controlEachRegistColor = COLOR.BLACK;
         let controlExcelRegistColor = COLOR.BLACK;
     
@@ -96,7 +98,14 @@ const PlatformSideBar =({
             controlRwebColor = "rgb(133,133,133)";
             controlPaidFeeColor = "rgb(133,133,133)";
         }
-        
+
+        else if(path === "/admin/platformControl/controlRepairTypeList"){
+            controlRweb = true;
+            controlRwebRc = true;
+            controlRwebColor = "rgb(133,133,133)";
+            controlRepairColor = "rgb(133,133,133)";
+            controlListColor = "rgb(133,133,133)";
+        }
         else if(path === "/admin/platformControl/controlRepairTypeEachRegist"){
             controlRweb = true;
             controlRwebRc = true;
@@ -167,6 +176,11 @@ const PlatformSideBar =({
                         </MenuItem>
 
                         <SubMenu title="수선내용 수선비 관리" style={{color : controlRepairColor}} defaultOpen={controlRwebRc}>
+                            <MenuItem style={{color : controlListColor}} onClick={() => {
+                                router.push("/admin/platformControl/controlRepairTypeList")
+                            }}>
+                                목록
+                            </MenuItem>
                             <MenuItem style={{color : controlEachRegistColor}} onClick={() => {
                                 router.push("/admin/platformControl/controlRepairTypeEachRegist")
                             }}>
