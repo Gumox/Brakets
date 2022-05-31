@@ -32,13 +32,11 @@ const RepairTypeListControl = ({user,repairTypes,brands}) => {
         let result = sortArray(repairTypes)
 
         if(brand !== "ALL"){
-            console.log("is")
             result = _.filter(sortArray(repairTypes),{"brand_id":Number(brand)})
         }
         if(repairShop !== "ALL"){
             result = _.filter(sortArray(repairTypes),{"store_id":Number(repairShop)})
         }
-        console.log(result.length)
         setFilted(result)
         setSlicedArray(slicingArray(result,slcNum))
     }
