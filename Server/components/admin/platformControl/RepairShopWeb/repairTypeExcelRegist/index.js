@@ -9,7 +9,7 @@ import _ from "lodash";
 
 const XLSX = require('xlsx');
 
-const RepairTypeExcelRegist =({
+const RepairTypeExcelRegistControl =({
     user,
     brands=[],
     repairShops=[]
@@ -101,7 +101,7 @@ const RepairTypeExcelRegist =({
         </Wrapper>
     )
 }
-export default RepairTypeExcelRegist
+export default RepairTypeExcelRegistControl
 
 const sortArray =(array)=>{
     let sort1=_.sortBy(array,"brand_name")

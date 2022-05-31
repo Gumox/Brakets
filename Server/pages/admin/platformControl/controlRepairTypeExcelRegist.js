@@ -6,7 +6,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import RepairTypeExcelRegist from "../../../components/admin/platformControl/RepairShopWeb/repairTypeExcelRegist";
+import RepairTypeExcelRegistControl from "../../../components/admin/platformControl/RepairShopWeb/repairTypeExcelRegist";
 
 const ControlFault = ({user,brands,repairShops}) => {
   console.log(repairShops)
@@ -33,7 +33,7 @@ const ControlFault = ({user,brands,repairShops}) => {
           <PlatformSideBar path={"/admin/platformControl/controlRepairTypeExcelRegist"}/>
         </SidebarSpace>
         <MainSpace >
-          <RepairTypeExcelRegist user={user} brands={brands} repairShops={repairShops}/>
+          <RepairTypeExcelRegistControl user={user} brands={brands} repairShops={repairShops}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>

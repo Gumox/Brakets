@@ -6,7 +6,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import RepairTypeEachRegist from "../../../components/admin/platformControl/RepairshopWeb/RepairTypeEachRegist";
+import RepairTypeEachRegistControl from "../../../components/admin/platformControl/RepairshopWeb/RepairTypeEachRegist";
 
 const ControlFault = ({user,brands,repairShops}) => {
   const [windowWidth,setWindowWidth] = useState(0)
@@ -32,7 +32,7 @@ const ControlFault = ({user,brands,repairShops}) => {
           <PlatformSideBar path={"/admin/platformControl/controlRepairTypeEachRegist"}/>
         </SidebarSpace>
         <MainSpace >
-          <RepairTypeEachRegist user={user} brands={brands} repairShops={repairShops}/>
+          <RepairTypeEachRegistControl user={user} brands={brands} repairShops={repairShops}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>

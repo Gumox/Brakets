@@ -5,7 +5,7 @@ import Router, { useRouter } from "next/router";
 import axios from "axios";
 import _ from "lodash";
 
-const RepairTypeEachRegist = ({
+const RepairTypeEachRegistControl = ({
     user,
     brands=[],
     repairShops=[]
@@ -264,4 +264,4 @@ const LongInputBox  = styled.div`
 
 
 
-export default RepairTypeEachRegist
+export default RepairTypeEachRegistControl
