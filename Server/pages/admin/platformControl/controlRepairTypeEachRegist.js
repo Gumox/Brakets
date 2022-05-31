@@ -6,7 +6,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import RepairTypeEachRegistControl from "../../../components/admin/platformControl/RepairShopWeb/repairTypeRegist";
+import RepairTypeEachRegistControl from "../../../components/admin/platformControl/RepairshopWeb/repairTypeEachRegist";
 
 const ControlFault = ({user,brands,repairShops}) => {
   const [windowWidth,setWindowWidth] = useState(0)
