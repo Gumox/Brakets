@@ -6,8 +6,8 @@ import Router, { useRouter } from "next/router";
 import COLOR from "../../../constants/color";
 
 const PlatformSideBar =({
-    setSelectedView = () => {} ,
-    path})=>{
+    path,
+})=>{
         const router =useRouter()
     
         const [windowWidth,setWindowWidth] = useState(0)
@@ -97,14 +97,14 @@ const PlatformSideBar =({
             controlPaidFeeColor = "rgb(133,133,133)";
         }
         
-        else if(path === "/admin/platformControl/controlFaults"){
+        else if(path === "/admin/platformControl/controlRepairTypeEachRegist"){
             controlRweb = true;
             controlRwebRc = true;
             controlRwebColor = "rgb(133,133,133)";
             controlRepairColor = "rgb(133,133,133)";
             controlEachRegistColor = "rgb(133,133,133)";
         }
-        else if(path === "/admin/platformControl/controlFaults"){
+        else if(path === "/admin/platformControl/controlRepairTypeExcelRegist"){
             controlRweb = true;
             controlRwebRc = true;
             controlRwebColor = "rgb(133,133,133)";
@@ -168,13 +168,13 @@ const PlatformSideBar =({
 
                         <SubMenu title="수선내용 수선비 관리" style={{color : controlRepairColor}} defaultOpen={controlRwebRc}>
                             <MenuItem style={{color : controlEachRegistColor}} onClick={() => {
-                                router.push("/admin/platformControl/controlFault")
+                                router.push("/admin/platformControl/controlRepairTypeEachRegist")
                             }}>
                                 수선단가 개별 등록
                             </MenuItem>
 
                             <MenuItem style={{color : controlExcelRegistColor}} onClick={() => {
-                                router.push("/admin/platformControl/controlFault")
+                                router.push("/admin/platformControl/controlRepairTypeExcelRegist")
                             }}>
                                 수선단가 엑셀 등록
                             </MenuItem>

@@ -6,9 +6,9 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import UnitPriceListControl from "../../../components/admin/platformControl/RepairShopWeb/unitPriceList";
+import RepairTypeEachRegist from "../../../components/admin/platformControl/RepairshopWeb/RepairTypeEachRegist";
 
-const ControlFault = ({user,brands}) => {
+const ControlFault = ({user,brands,repairShops}) => {
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{
@@ -29,10 +29,10 @@ const ControlFault = ({user,brands}) => {
       <AdminHeader user={user} path={"/admin/platformControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <PlatformSideBar path={"/admin/platformControl/controlUnitPriceList"}/>
+          <PlatformSideBar path={"/admin/platformControl/controlRepairTypeEachRegist"}/>
         </SidebarSpace>
         <MainSpace >
-            <UnitPriceListControl user={user} brands={brands}/>
+          <RepairTypeEachRegist user={user} brands={brands} repairShops={repairShops}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -67,7 +67,11 @@ export const getServerSideProps = async (ctx) => {
           .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
           .then(({ data }) => data.data), 
       ])
-        
+      const [repairShops] = await Promise.all([
+        axios
+          .get(`${process.env.API_URL}/RepairShop?headquarterId=${user.headquarter_id}`,)
+          .then(({ data }) => data.data), 
+      ])
         
         
       
@@ -76,7 +80,8 @@ export const getServerSideProps = async (ctx) => {
           props:
           {
             user:user,
-            brands:brands
+            brands:brands,
+            repairShops:repairShops
           } 
         };
       }else{

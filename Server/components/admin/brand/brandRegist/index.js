@@ -6,7 +6,6 @@ import axios from "axios";
 import { debounce } from "lodash";
 
 const BrandRegist = ({infos,user}) =>{
-    console.log(infos)
     const router = useRouter();
     const cName =infos.headquarter_name
     const cNameKr =infos.text
@@ -15,7 +14,6 @@ const BrandRegist = ({infos,user}) =>{
     const [serviceDate,setServiceDate] =useState(null)
 
     const emptySpace =(str)=>{
-        console.log("s ",str)
         let name = ""
         for(let i =0; i<str.length;i++){
             if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
