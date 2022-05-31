@@ -6,10 +6,10 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
-import RepairTypeExcelRegistControl from "../../../components/admin/platformControl/RepairShopWeb/repairTypeExcelRegist";
+import AppNoticeControl from "../../../components/admin/platformControl/storeApp/appNotice";
 
-const ControlRepairTypeExcelRegist = ({user,brands,repairShops}) => {
-  console.log(repairShops)
+const ControlAppNotice = ({user,notice,smsNotice,privacy}) => {
+  console.log(notice)
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{
@@ -30,10 +30,10 @@ const ControlRepairTypeExcelRegist = ({user,brands,repairShops}) => {
       <AdminHeader user={user} path={"/admin/platformControl"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-          <PlatformSideBar path={"/admin/platformControl/controlRepairTypeExcelRegist"}/>
+          <PlatformSideBar path={"/admin/platformControl/controlAppNotice"}/>
         </SidebarSpace>
         <MainSpace >
-          <RepairTypeExcelRegistControl user={user} brands={brands} repairShops={repairShops}/>
+            <AppNoticeControl user={user} notice={notice[0]} smsNotice={smsNotice[0]} privacy={privacy[0]}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>
@@ -62,17 +62,45 @@ export const getServerSideProps = async (ctx) => {
           },
         };
       }
-    
-      const [brands] = await Promise.all([
-        axios
-          .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
-          .then(({ data }) => data.data), 
-      ])
-      const [repairShops] = await Promise.all([
-        axios
-          .get(`${process.env.API_URL}/RepairShop?headquarterId=${user.headquarter_id}`,)
-          .then(({ data }) => data.data), 
-      ])
+
+        let noticeData ={
+          noticeType:1,
+          headquarterId:user.headquarter_id
+        }
+        const[notice] =await Promise.all([
+
+          axios.post(`${process.env.API_URL}/notice/noticeByNoticeType`,noticeData)
+          .then(({ data }) => data.data)
+          .catch(error=>{
+
+          })
+        ])
+        let smsNoticeData ={
+          noticeType:2,
+          headquarterId:user.headquarter_id
+        }
+        const[smsNotice] =await Promise.all([
+
+          axios.post(`${process.env.API_URL}/notice/noticeByNoticeType`,smsNoticeData)
+          .then(({ data }) => data.data)
+          .catch(error=>{
+
+          })
+        ])
+
+        let privacyData ={
+          noticeType:3,
+          headquarterId:user.headquarter_id
+        }
+        const[privacy] =await Promise.all([
+
+          axios.post(`${process.env.API_URL}/notice/noticeByNoticeType`,privacyData)
+          .then(({ data }) => data.data)
+          .catch(error=>{
+
+          })
+        ])
+        
         
         
       
@@ -81,8 +109,9 @@ export const getServerSideProps = async (ctx) => {
           props:
           {
             user:user,
-            brands:brands,
-            repairShops:repairShops
+            notice:notice,
+            smsNotice:smsNotice,
+            privacy:privacy
           } 
         };
       }else{
@@ -126,4 +155,4 @@ const CuetomLink = styled.div`
   cursor: pointer;
 `;
 
-export default ControlRepairTypeExcelRegist;
+export default ControlAppNotice;

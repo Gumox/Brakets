@@ -24,7 +24,6 @@ const ControlAnalysis = ({user,smsMessage}) => {
           window.removeEventListener('resize',handleResize);
       }
   },[])
-  console.log(smsMessage)
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
       <AdminHeader user={user} path={"/admin/platformControl"}/>

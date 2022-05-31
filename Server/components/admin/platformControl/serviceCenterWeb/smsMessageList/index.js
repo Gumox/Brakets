@@ -7,7 +7,6 @@ import List from "./List";
 import Paging from "../../../Paging";
 
 const ControlSmsMessageList = ({user,list}) => {
-    console.log(user)
     const [addState,setAddState] = useState(false)
     const [changeState,setChangeState] = useState(false)
 

@@ -81,12 +81,12 @@ const PlatformSideBar =({
         }
 
 
-        if(path === "/admin/platformControl/controlFaults"){
+        if(path === "/admin/platformControl/controlAppNotice"){
             controlStApp = true;
             controlStAppColor = "rgb(133,133,133)";
             controlCustomerAlertColor = "rgb(133,133,133)";
         }
-        else if(path === "/admin/platformControl/controlFaults"){
+        else if(path === "/admin/platformControl/controlAutoSmsMessage"){
             controlStApp = true;
             controlStAppColor = "rgb(133,133,133)";
             controlSmsAutoColor = "rgb(133,133,133)";
@@ -156,13 +156,13 @@ const PlatformSideBar =({
 
                     <SubMenu title="매장 app" style={{color : controlStAppColor}} defaultOpen={controlStApp}>
                         <MenuItem style={{color : controlCustomerAlertColor}} onClick={() => {
-                            router.push("/admin/platformControl/controlFault")
+                            router.push("/admin/platformControl/controlAppNotice")
                         }}>
                             고객동의 고지사항 관리
                         </MenuItem>
 
                         <MenuItem style={{color : controlSmsAutoColor}} onClick={() => {
-                            router.push("/admin/platformControl/controlFault")
+                            router.push("/admin/platformControl/controlAutoSmsMessage")
                         }}>
                             자동발송 문구 관리
                         </MenuItem>

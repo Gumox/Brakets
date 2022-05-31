@@ -8,7 +8,7 @@ import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
 import RepairTypeListControl from "../../../components/admin/platformControl/RepairShopWeb/repairTypeList";
 
-const ControlFault = ({user,repairTypes,brands}) => {
+const ControlRepairTypeList = ({user,repairTypes,brands}) => {
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{
@@ -125,4 +125,4 @@ const CuetomLink = styled.div`
   cursor: pointer;
 `;
 
-export default ControlFault;
+export default ControlRepairTypeList;

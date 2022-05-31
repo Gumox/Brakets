@@ -8,7 +8,7 @@ import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
 import ControlClaimList from "../../../components/admin/platformControl/serviceCenterWeb/claimList";
 
-const ControlAnalysis = ({user,claim}) => {
+const ControlClaim = ({user,claim}) => {
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{
@@ -122,4 +122,4 @@ const CuetomLink = styled.div`
   cursor: pointer;
 `;
 
-export default ControlAnalysis;
+export default ControlClaim;

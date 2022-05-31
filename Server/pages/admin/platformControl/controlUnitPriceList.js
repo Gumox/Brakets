@@ -8,7 +8,7 @@ import COLOR from "../../../constants/color";
 import PlatformSideBar from "../../../components/admin/platformControl/PlatformSideBar";
 import UnitPriceListControl from "../../../components/admin/platformControl/RepairShopWeb/unitPriceList";
 
-const ControlFault = ({user,brands}) => {
+const ControlUnitPriceList = ({user,brands}) => {
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{
@@ -120,4 +120,4 @@ const CuetomLink = styled.div`
   cursor: pointer;
 `;
 
-export default ControlFault;
+export default ControlUnitPriceList;
