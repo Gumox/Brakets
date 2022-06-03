@@ -1,11 +1,11 @@
 import excuteQuery from "./db";
 
 
-async function addCustomer(name, phone) {
+async function addCustomer(headquarterId,name, phone) {
   return excuteQuery({
     query:
-      "INSERT INTO `customer`(`name`, `phone`) VALUES (?,?)",
-    values: [name, phone],
+      "INSERT INTO customer(headquarter_id,name, phone) VALUES (?,?,?)",
+    values: [headquarterId,name, phone],
   });
 }
 
@@ -13,10 +13,10 @@ const controller = async (req, res) => {
   if (req.method === "POST") {
     console.log(`[${new Date().toISOString()}] /api/addCustomer`);
     console.log(req.body);
-    const { name, phone } = req.body;
+    const {headquarterId, name, phone } = req.body;
 
     try {
-      const result = await addCustomer(name, phone);
+      const result = await addCustomer(headquarterId,name, phone);
       if (result.error) throw new Error(result.error);
       if (result["affectedRows"]) {
         console.log("add Custmer");
