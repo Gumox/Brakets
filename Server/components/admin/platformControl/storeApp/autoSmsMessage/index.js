@@ -1,0 +1,190 @@
+import React ,{useEffect,useState,useCallback} from "react";
+import styled from "styled-components";
+import COLOR from "../../../../../constants/color";
+import _ from "lodash";
+import axios from "axios";
+import AutoSmsMessage from "./AutoSmsMessage";
+
+const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage}) => {
+
+    const scroller =(e)=>{
+
+    }
+    
+    const [onClickSmsReceipt,setOnClickSmsReceipt] = useState(false)
+    
+    const [onClickTakeOver,setOnClickTakeOver] = useState(false)
+
+    console.log(receiptSmsMessage)
+    return(
+        <Wrapper>
+            <div>
+              
+            
+              <h2 style={{marginLeft:20}}>매장 APP – 자동발송 문자메시지 문구 설정과 관리</h2>
+
+              <LaView style={{justifyContent:"space-between",marginBottom:10}}>
+                  <ColView>
+                      <InColView style={{marginLeft:20}}>{"아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게"}</InColView>
+                      <InColView style={{marginLeft:20}}>{" 자주 사용하는 문자메시지 문구를 만드세요. "}</InColView>
+                  </ColView>
+                  <div style={{width:50}}>
+
+                  </div>
+              </LaView>
+            </div>
+            <LaView style={{justifyContent:"space-evenly"}}>
+                
+                <DivContainer>
+                    <HeaderCell>
+                        접수
+                    </HeaderCell>
+                    {onClickSmsReceipt 
+                        ?
+                        <div style={{width:"100%",justifyContent:"space-evenly",display:"flex"}}>
+                            <DivButton onClick={()=>{modifyText(privacy.id,privacyText,privacyRedText)}}>
+                                확인
+                            </DivButton>
+                            <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickSmsReceipt(!onClickSmsReceipt)}}>
+                                취소
+                            </DivButton>
+                        </div>
+                        :
+                        <DivButton onClick={()=>{setOnClickSmsReceipt(!onClickSmsReceipt)}}>
+                            수정
+                        </DivButton>
+
+                    }
+                    <PhoneImage size={35} style={{backgroundSize :"cover",backgroundImage :`url(/icons/iPhoneMessage.png)`}}>
+                        <AppTitle size={35} style={{fontWeight:"bold",paddingBottom:5}}>
+                            {info.headquarter_call}
+                        </AppTitle>
+                        <AppPage size={35}>
+                            <AutoSmsMessage text={receiptSmsMessage} state={onClickSmsReceipt}/>
+                        </AppPage>
+                    </PhoneImage>
+                    
+                </DivContainer>
+                <DivContainer>
+                    <HeaderCell>
+                        인수
+                    </HeaderCell>
+                    {onClickTakeOver 
+                        ?
+                        <div style={{width:"100%",justifyContent:"space-evenly",display:"flex"}}>
+                            <DivButton onClick={()=>{modifyText(privacy.id,privacyText,privacyRedText)}}>
+                                확인
+                            </DivButton>
+                            <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickTakeOver(!onClickTakeOver)}}>
+                                취소
+                            </DivButton>
+                        </div>
+                        :
+                        <DivButton onClick={()=>{setOnClickTakeOver(!onClickTakeOver)}}>
+                            수정
+                        </DivButton>
+
+                    }
+                    <PhoneImage size={35} style={{backgroundSize :"cover",backgroundImage :`url(/icons/iPhoneMessage.png)`}}>
+                        <AppTitle size={35} style={{fontWeight:"bold",paddingBottom:5}}>
+                            {info.headquarter_call}
+                        </AppTitle>
+                        <AppPage size={35}>
+                            <AutoSmsMessage text={takeOverSmsMessage} state={onClickTakeOver}/>
+                        </AppPage>
+                    </PhoneImage>
+            </DivContainer>
+            </LaView>
+            
+        </Wrapper>
+    )
+};
+export default AutoSmsMessageControl
+const Wrapper = styled.div`
+    padding:2%;
+    background-color:${COLOR.WHITE};
+`;
+
+const DivContainer = styled.div`
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;
+`
+const PhoneImage =styled.div`
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    flex-direction : column;
+    padding-bottom:15px;
+    width: ${({ size }) => (size ? size*7 :24)}px;
+    height: ${({ size }) => (size ? size*13.8: 52 )}px;
+`;
+const AppTitle = styled.div`
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    color: ${COLOR.BLACK};
+    width: ${({ size }) => (size ? (size*7)-30 :24)}px;
+    height: ${({ size }) => (size ? size+10 :40)}px;
+    margin-top:35px;
+`
+const AppPage = styled.div`
+    display : flex;
+    margin-bottom:50px;
+    width: ${({ size }) => (size ? (size*7)-30 :24)}px;
+    flex:1;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 5px;
+        background: rgba(210, 210, 210, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(96, 96, 96, 0.7);
+        border-radius: 6px;
+    }
+`;
+const LaView  = styled.div`
+    display:flex;
+    flex-direction:row;
+    align-items:center; 
+    width:800px;
+`;
+const ColView  = styled.div`
+    display:flex;
+    flex-direction: column;
+`;
+const InColView  = styled.div`
+    display:flex;
+    font-size:10px;
+    align-items:center;
+`;
+const HeaderCell = styled.div`
+    display:flex;
+    height:60px;
+    width: 245px;
+    border-radius: 10px;
+    justify-content:center;
+    align-items:center;
+    font-size:16px;
+    flex:1;
+    padding:5px;
+    background-color: ${COLOR.LIGHT_GRAY};
+`;
+const DivButton = styled.div`
+    color:${COLOR.CYAN_BLUE};
+    width:50px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:15px;
+    padding:5px;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover{
+        background-color:${COLOR.LIGHT_GRAY};
+    }
+
+`;
