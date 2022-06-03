@@ -2,10 +2,11 @@ import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import COLOR from "../../../../../constants/color";
 
-const AutoSmsMessage = ({text="",state=false})=>{
-    const [message1,setMessage1] = useState(text.auto_sms_message1)
-    const [message2,setMessage2] = useState(text.auto_sms_message2)
-    const [message3,setMessage3] = useState(text.auto_sms_message3)
+const AutoSmsMessage = ({text="",state=false,message1,message2,message3,
+    setMessage1=()=>{},
+    setMessage2=()=>{},
+    setMessage3=()=>{}
+})=>{
 
     
     const [message1Height,setMessage1Height] = useState(heightMaker(text.auto_sms_message1))

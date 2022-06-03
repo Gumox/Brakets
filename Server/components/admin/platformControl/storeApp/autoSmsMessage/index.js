@@ -7,15 +7,25 @@ import AutoSmsMessage from "./AutoSmsMessage";
 
 const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage}) => {
 
-    const scroller =(e)=>{
+    
+    const [messageReceipt1,setMessageReceipt1] = useState(receiptSmsMessage.auto_sms_message1)
+    const [messageReceipt2,setMessageReceipt2] = useState(receiptSmsMessage.auto_sms_message2)
+    const [messageReceipt3,setMessageReceipt3] = useState(receiptSmsMessage.auto_sms_message3)
 
-    }
+    
+    const [messageTakeOver1,setMessageTakeOver1] = useState(takeOverSmsMessage.auto_sms_message1)
+    const [messageTakeOver2,setMessageTakeOver2] = useState(takeOverSmsMessage.auto_sms_message2)
+    const [messageTakeOver3,setMessageTakeOver3] = useState(takeOverSmsMessage.auto_sms_message3)
+
+    
     
     const [onClickSmsReceipt,setOnClickSmsReceipt] = useState(false)
     
     const [onClickTakeOver,setOnClickTakeOver] = useState(false)
 
-    console.log(receiptSmsMessage)
+    const modifyText =()=>{
+
+    }
     return(
         <Wrapper>
             <div>
@@ -60,7 +70,8 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
                             {info.headquarter_call}
                         </AppTitle>
                         <AppPage size={35}>
-                            <AutoSmsMessage text={receiptSmsMessage} state={onClickSmsReceipt}/>
+                            <AutoSmsMessage text={receiptSmsMessage} state={onClickSmsReceipt} message1={messageReceipt1} message2={messageReceipt2} message3={messageReceipt3} 
+                            setMessage1={setMessageReceipt1} setMessage2={setMessageReceipt2} setMessage3={setMessageReceipt3}/>
                         </AppPage>
                     </PhoneImage>
                     
@@ -90,7 +101,8 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
                             {info.headquarter_call}
                         </AppTitle>
                         <AppPage size={35}>
-                            <AutoSmsMessage text={takeOverSmsMessage} state={onClickTakeOver}/>
+                            <AutoSmsMessage text={takeOverSmsMessage} state={onClickTakeOver} message1={messageTakeOver1} message2={messageTakeOver2} message3={messageTakeOver3}
+                            setMessage1={setMessageTakeOver1} setMessage2={setMessageTakeOver2} setMessage3={setMessageTakeOver3}/>
                         </AppPage>
                     </PhoneImage>
             </DivContainer>
