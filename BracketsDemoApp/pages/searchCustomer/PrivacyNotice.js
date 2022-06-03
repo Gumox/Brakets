@@ -41,7 +41,7 @@ export default function PrivacyNotice({navigation}) {
     return(
         <Container style= {{backgroundColor:"#ffffff"}}>
             <View style={{margin:30,flex:1,alignItems:"center",justifyContent:"center",marginBottom:fontSize*5}}>
-                <MyText style={{fontSize:fontSize, margin:fontSize}}>
+                <MyText style={{fontSize:fontSize, margin:fontSize, textAlign: 'center'}}>
                     {textData}
                 </MyText>
                 {redTextData.length >0
@@ -58,7 +58,6 @@ export default function PrivacyNotice({navigation}) {
     )
 }
 const MyText = styled.Text`
-    display : flex;
     flex-direction : column;
     color : #000000;
 `;

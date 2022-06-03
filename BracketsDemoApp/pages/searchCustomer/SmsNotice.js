@@ -59,7 +59,6 @@ export default function SmsNotice({navigation}) {
     )
 }
 const MyText = styled.Text`
-    display : flex;
     flex-direction : column;
     color : #000000;
 `;

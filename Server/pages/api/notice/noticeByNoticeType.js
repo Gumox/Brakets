@@ -17,12 +17,16 @@ async function getNotice( noticeType,headquarterId) {
   return result;
 }
 
-async function updateNotice(text,noticeId) {
+async function updateNotice( text,redText,noticeId) {
   const result = await excuteQuery({
-    query: `UPDATE notice SET text = ? WHERE id = ?`,
-    values: [text,noticeId],
+    query: `UPDATE notice 
+            SET text = ?,
+                red_text = ?
+            WHERE notice.id =?`,
+    values:[ text,redText,noticeId]
+    
   });
-
+  
   return result;
 }
 
@@ -41,12 +45,16 @@ const notice = async (req, res) => {
       res.status(400).json({ err: err.message });
     }
   } else if (req.method == "PUT") {
-    const { text ,noticeId} = req.body;
+
+    const { text, redText, noticeId} = req.body;
     try {
-      const result = updateNotice(text,noticeId);
+      const result = await updateNotice(text, redText, noticeId);
+
+      console.log(result)
       if (result.error) throw new Error(result.error);
 
-      res.status(200);
+      res.status(200).json({ message: true });
+
     } catch (err) {
       console.log(err.message);
       res.status(400).json({ err: err.message });

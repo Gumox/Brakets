@@ -13,11 +13,43 @@ const AppNoticeControl = ({
     smsNotice,
     privacy
 }) => {
-    const [onClickNoice,setOnClickNoice] = useState(false)
+
+    const [onClickNotice,setOnClickNotice] = useState(false)
     
-    const [onClickSmsNoice,setOnClickSmsNoice] = useState(false)
+    const [onClickSmsNotice,setOnClickSmsNotice] = useState(false)
     
     const [onClickPrivacy,setOnClickPrivacy] = useState(false)
+
+    
+    const [noticeText,setNoticeText] = useState(notice.text)
+    const [noticeRedText,setNoticeRedText] = useState(notice.red_text)
+    
+    const [smsNoticeText,setSmsNoticeText] = useState(smsNotice.text)
+    const [smsNoticeRedText,setSmsNoticeRedText] = useState(smsNotice.red_text)
+    
+    const [privacyText,setPrivacyText] = useState(privacy.text)
+    const [privacyRedText,setPrivacyRedText] = useState(privacy.red_text)
+
+    const modifyText = async(id,text,redText) =>{
+        let data={
+            noticeId: id,
+
+            text: text,
+            redText: redText
+        }
+        const[result] =await Promise.all([
+
+            axios.put(`${process.env.API_URL}/notice/noticeByNoticeType`,data)
+            .then(({ data }) => data.data)
+            .catch(error=>{
+  
+            })
+        ])
+        alert("수정 되었습니다.")
+        window.location.reload()
+        
+    }
+
     return(
         <Wrapper>
             <div>
@@ -27,8 +59,8 @@ const AppNoticeControl = ({
 
               <LaView style={{justifyContent:"space-between",marginBottom:10}}>
                   <ColView>
-                      <InColView style={{marginLeft:20}}>{"아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게"}</InColView>
-                      <InColView style={{marginLeft:20}}>{" 자주 사용하는 문자메시지 문구를 만드세요. "}</InColView>
+                      <InColView style={{marginLeft:20}}>{"아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게 자주 사용하는 문자메시지 문구를 만드세요. "}</InColView>
+                      <InColView style={{marginLeft:20}}>{""}</InColView>
                   </ColView>
                   <div style={{width:50}}>
 
@@ -37,18 +69,18 @@ const AppNoticeControl = ({
             </div>
             <LaView style={{justifyContent:"space-between",}}>
                 <DivContainer style={{}}>
-                    {onClickNoice 
+                    {onClickNotice 
                         ?
                         <div style={{width:"100%",justifyContent:"space-evenly",display:"flex"}}>
-                            <DivButton>
-                                수정
+                            <DivButton onClick={()=>{modifyText(notice.id,noticeText,noticeRedText)}}>
+                                확인
                             </DivButton>
-                            <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickNoice(!onClickNoice)}}>
+                            <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickNotice(!onClickNotice)}}>
                                 취소
                             </DivButton>
                         </div>
                         :
-                        <DivButton onClick={()=>{setOnClickNoice(!onClickNoice)}}>
+                        <DivButton onClick={()=>{setOnClickNotice(!onClickNotice)}}>
                             수정
                         </DivButton>
 
@@ -56,38 +88,57 @@ const AppNoticeControl = ({
                     
 
                     <PhoneImage size={35} style={{backgroundSize :"cover",backgroundImage :`url(/icons/app.png)`}}>
-                        <AppTitle size={35} >
+                        <AppTitle size={35} style={{color:"rgb(0,80,130)" ,fontWeight:"bold"}} >
                             수선관련고지사항
                         </AppTitle>
-                        <AppPage size={35}>
-                            <Notice data={notice.text}/>
+                        <AppPage size={35} check={!onClickNotice}>
+                            {
+                                onClickNotice
+                                ?
+                                <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center"}}>
+                                    <ModifyArea value={noticeText} style={{flex:0.7,borderRadius:0}} onChange={(e)=>{setNoticeText(e.target.value)}}></ModifyArea>
+                                    
+                                    <ModifyArea value={noticeRedText || ""} style={{flex:0.3,color:COLOR.RED,borderColor:COLOR.RED}} onChange={(e)=>{setNoticeRedText(e.target.value)}}></ModifyArea>
+                                </div>
+                                :
+                                <Notice data={noticeText} red={noticeRedText || ""} fontSize={((35*7)-30)*0.05}/>
+                            }
                         </AppPage>
                     </PhoneImage>
                 </DivContainer>
                 
                 <DivContainer >
-                    {onClickSmsNoice 
+                    {onClickSmsNotice 
                         ?
                         <div style={{width:"100%",justifyContent:"space-evenly",display:"flex"}}>
-                            <DivButton>
-                                수정
+                            <DivButton onClick={()=>{modifyText(smsNotice.id,smsNoticeText,smsNoticeRedText)}}>
+                                확인
                             </DivButton>
-                            <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickSmsNoice(!onClickSmsNoice)}}>
+                            <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickSmsNotice(!onClickSmsNotice)}}>
                                 취소
                             </DivButton>
                         </div>
                         :
-                        <DivButton onClick={()=>{setOnClickSmsNoice(!onClickSmsNoice)}}>
+                        <DivButton onClick={()=>{setOnClickSmsNotice(!onClickSmsNotice)}}>
                             수정
                         </DivButton>
 
                     }
                     <PhoneImage size={35} style={{backgroundSize :"cover",backgroundImage :`url(/icons/app.png)`}}>
-                        <AppTitle size={35} >
+                        <AppTitle size={35} style={{color:"rgb(0,80,130)" ,fontWeight:"bold"}}>
                             문자수신동의여부
                         </AppTitle>
-                        <AppPage size={35}>
-                            <SmsNotice data={smsNotice.text}/>
+                        <AppPage size={35} check={!onClickSmsNotice}>
+                        {onClickSmsNotice 
+                            ?
+                            <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center"}}>
+                                <ModifyArea value={smsNoticeText} style={{flex:0.7,borderRadius:0}} onChange={(e)=>{setSmsNoticeText(e.target.value)}}></ModifyArea>
+                                
+                                <ModifyArea value={smsNoticeRedText ||""} style={{flex:0.3,color:COLOR.RED,borderColor:COLOR.RED}} onChange={(e)=>{setSmsNoticeRedText(e.target.value)}}></ModifyArea>
+                            </div>
+                            :
+                            <SmsNotice data={smsNoticeText} red={smsNoticeRedText || ""} fontSize={((35*7)-30)*0.05}/>
+                        }
                         </AppPage>
                     </PhoneImage>
                 </DivContainer>
@@ -96,8 +147,8 @@ const AppNoticeControl = ({
                     {onClickPrivacy 
                         ?
                         <div style={{width:"100%",justifyContent:"space-evenly",display:"flex"}}>
-                            <DivButton>
-                                수정
+                            <DivButton onClick={()=>{modifyText(privacy.id,privacyText,privacyRedText)}}>
+                                확인
                             </DivButton>
                             <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickPrivacy(!onClickPrivacy)}}>
                                 취소
@@ -110,11 +161,20 @@ const AppNoticeControl = ({
 
                     }
                     <PhoneImage size={35} style={{backgroundSize :"cover",backgroundImage :`url(/icons/app.png)`}}>
-                        <AppTitle size={35} >
+                        <AppTitle size={35} style={{color:"rgb(0,80,130)" ,fontWeight:"bold"}}>
                             개인정보동의여부
                         </AppTitle>
-                        <AppPage size={35}>
-                            <PrivacyNotice data={privacy.text}/>
+                        <AppPage size={35} check={!onClickPrivacy}>
+                        {onClickPrivacy 
+                            ?
+                            <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center"}}>
+                                <ModifyArea value={privacyText} style={{flex:0.7,borderRadius:0,textAlign:"center"}} onChange={(e)=>{setPrivacyText(e.target.value)}}></ModifyArea>
+                                
+                                <ModifyArea value={privacyRedText ||""} style={{flex:0.3,color:COLOR.RED,borderColor:COLOR.RED}} onChange={(e)=>{setPrivacyRedText(e.target.value)}}></ModifyArea>
+                            </div>
+                            :
+                            <PrivacyNotice data={privacyText} red={privacyRedText || ""} fontSize={((35*7)-30)*0.05}/>
+                        }
                         </AppPage>
                     </PhoneImage>
 
@@ -124,6 +184,7 @@ const AppNoticeControl = ({
     )
 };
 export default AppNoticeControl
+
 
 const DivButton = styled.div`
     color:${COLOR.CYAN_BLUE};
@@ -171,6 +232,17 @@ const AppPage = styled.div`
     display : flex;
     width: ${({ size }) => (size ? (size*7)-30 :24)}px;
     flex:1;
+    margin-bottom:  ${({ check }) => (check ? 5 :0)}px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 10px;
+        background: rgba(210, 210, 210, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(96, 96, 96, 0.7);
+        border-radius: 6px;
+    }
 `
 const LaView  = styled.div`
     display:flex;
@@ -178,6 +250,30 @@ const LaView  = styled.div`
     flex-direction:row;
     align-items:center; 
     width:950px;
+`;
+const ModifyArea = styled.textarea`
+    resize: none;
+    margin-left:5px;
+    margin-right:5px;
+    margin-bottom:3px;
+    border-radius : 0 0 16px 16px;
+    flex:1;
+    font-size:12px;
+    border:2px solid #000000;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background: rgba(210, 210, 210, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(96, 96, 96, 0.7);
+        border-radius: 6px;
+    }
+    &:focus { 
+        outline: none !important;
+        //border-bottom-color: #719ECE;
+    }
 `;
 const ColView  = styled.div`
     display:flex;

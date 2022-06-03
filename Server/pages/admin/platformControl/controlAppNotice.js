@@ -9,7 +9,6 @@ import PlatformSideBar from "../../../components/admin/platformControl/PlatformS
 import AppNoticeControl from "../../../components/admin/platformControl/storeApp/appNotice";
 
 const ControlAppNotice = ({user,notice,smsNotice,privacy}) => {
-  console.log(notice)
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{

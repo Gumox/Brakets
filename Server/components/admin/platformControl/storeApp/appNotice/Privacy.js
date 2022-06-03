@@ -1,35 +1,26 @@
 import React ,{useCallback,useState}from "react";
 import styled from "styled-components";
 
-const PrivacyNotice = ({data}) => {
-    const [textData,setTextData] =useState(data)
+const PrivacyNotice = ({data,red="",minHeight=0,fontSize="12px"}) => {
 
-    console.log(textData)
-    let ntc =[]
-    
-    if(textData !== null){
-        const textNotice = textData.split("*")
-        
-        console.log("Text notice")
-        for (let i = 0; i <textNotice.length; i++) {
-            const element =textNotice[i];
-            const key =i;
-            if(element != ""){
-                console.log(element)
-                var fontColor ="#000000"
-                
-                var noticeInfo =(
-                    <Text key = {key} style={{fontSize:11,color:fontColor, margin:12}}>{element}</Text>
-                )
-                ntc[key] = (noticeInfo); 
-            }
-            
-        }
-    }
+    let ntc = data
+   
     return(
-        <Container >
-            <View style={{margin:30,flex:1,alignItems:"center",justifyContent:"center",marginBottom:12*5}}>
-                {ntc}
+        <Container style= {{minHeight:minHeight}}>
+            <View style={{margin:20,flex:1,marginTop:12*5,paddingBottom:0}}>
+                <div style={{fontSize: fontSize,textAlign:"center"}}>
+                    {ntc}
+                </div>
+                
+                {red.length >0
+                    &&
+                    <div style={{color: "#FF0000",fontSize: fontSize}}>
+                        {"\n"}
+                        {red}   
+                    </div>
+                    
+
+                }
             </View>
         </Container>
     )
@@ -42,6 +33,10 @@ const Container = styled.div`
   
 `;
 const View = styled.div`
+
+    display : flex;
+    flex-direction : column;
+    white-space: pre-wrap;
 `;
 const Text = styled.div`
    font-size:12px;
