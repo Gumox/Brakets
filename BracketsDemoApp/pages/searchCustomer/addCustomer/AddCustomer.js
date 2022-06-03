@@ -11,9 +11,6 @@ import ViewShot from "react-native-view-shot";
 import ip from '../../../serverIp/Ip';
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 
-
-
-
 import {
     View,
     Pressable,
@@ -28,97 +25,6 @@ import {
 } from 'react-native';
 import store from '../../../store/store';
 
-const Title = styled.Text`
-    color:#000000;
-  font-size : 24px;
-  font-weight : bold;
-`;
-
-const BlackText = styled.Text`
-    color:#000000;
-  margin-Top : 15px ;
-  font-size : 15px;
-  color : black;
-`;
-const DropBackground= styled.View`
-    width: 220px;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid rgb(0,80,130);
-    margin-top:10px;
-`;
-const Label = styled.Text`
-    color:#000000;
-    font-size: 18px;
-    margin:12px;
-`;
-const PrView = styled.View`
-    flex-direction: row;
-    justify-content:space-around;
-`;
-const BtView = styled.View`
-    flex-direction: row;
-    justify-content:space-between;
-    width: 75%;
-`;
-const Input = styled.TextInput`
-    color:#000000;
-    width: 80%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const CautionText = styled.Text`
-    color: #FF0000;
-    font-size:15px;
-    margin-Bottom:10px;
-`;
-const ContentsScroll = styled.ScrollView`
-    width: 100%;
-    flex: 1;
-    align-content: center;
-`;
-const TextPrassble = styled.Pressable`
-    border-bottom: 2px solid;
-    margin:12px;
-    justifyContent: center;
-    align-items: center;
-`; 
-const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    xView:{
-        backgroundColor: "rgb(0,80,130)",
-        borderRadius: 20,
-    },
-    modalView: {
-      margin: 10,
-      width : Dimensions.get('window').width-30, 
-      height: Dimensions.get('window').height-400,
-      backgroundColor: "white",
-      borderRadius: 20,
-      paddingRight: 5,
-      paddingLeft: 5,
-      paddingTop: 15,
-      
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-    }
-  });
-  const ImgIcon =styled.Image`
-    width: 20px;
-    height: 20px;
-    margin-Right:5px;
-`;
 export default class AddCustomer extends Component {
     constructor(props) {
         super(props);
@@ -126,26 +32,25 @@ export default class AddCustomer extends Component {
             color: '#FFFFFF',
             name:"",
             phone:0,
+            userInfo : store.getState().userInfo[0],
             modalVisible: false,
             check1: false,
             check2: false,
             check3: false
         };
     }
-    addCustomer = async (name,phone) => {
+    addCustomer = async (headquarterId,name,phone) => {
         let setPhone ;
         if(phone.length == 10){
             setPhone = phone.slice(0,3)+"-"+phone.slice(3,6)+"-"+phone.slice(6,10);
-            console.log(setPhone)
         }else if(phone.length == 11){
             setPhone =  phone.slice(0,3)+"-"+phone.slice(3,7)+"-"+phone.slice(7,11)
-            console.log(setPhone)
         }
         const bodyData ={
+            headquarterId:headquarterId,
             name: name,
             phone: setPhone
         }
-        console.log(bodyData)
         try {
             const response = await fetch(ip+'/api/addCustomer',{method: 'POST',
             headers: {
@@ -164,13 +69,11 @@ export default class AddCustomer extends Component {
                     ]
                   )
             }
-            console.log(json)
             const newCustomer ={
                 cId: json.customer_id,
                 cName: name,
                 cPhone: phone
             }
-            console.log(newCustomer)
 
             store.dispatch({type:'CUSTOMER',customer: newCustomer });
             
@@ -183,7 +86,7 @@ export default class AddCustomer extends Component {
     }
     addReceipt = async () => {
         
-        var formdata = new FormData();
+        let formdata = new FormData();
         
         formdata.append("step",0);
         formdata.append("store", store.getState().store_id);
@@ -198,7 +101,6 @@ export default class AddCustomer extends Component {
             
         }
         formdata.append("signature",  PathToFlie(store.getState().customerSign));
-        console.log(formdata)
         
         try {
             const response = await fetch(ip+'/api/addReceipt',{method: 'POST',
@@ -230,8 +132,6 @@ export default class AddCustomer extends Component {
         this.props.onSave && this.props.onSave(saveEvent);
         
         const image = "file://"+saveEvent.localFilePath;
-
-        console.log(image);
         store.dispatch({type:'CUSTOMER_SIGN',customerSign: image});
         this.setState({modalVisible: false})
     }
@@ -240,7 +140,6 @@ export default class AddCustomer extends Component {
         let cstSign;
         if(store.getState().customerSign == ""){console.log("''")}
         if(store.getState().customerSign != ""){
-            console.log("this Sav :    "+store.getState().customerSign);
             cstSign =(
                 <Image source={{uri: store.getState().customerSign}} style={{width:250,height:140, position : 'absolute',left:0,top:0}}/>
             )
@@ -259,7 +158,6 @@ export default class AddCustomer extends Component {
                             <BtView><Label>이름</Label><Label/></BtView>
                             <Input 
                              onChangeText={(value)=> {
-                                console.log(value)
                                 this.setState({name : value})
                                 console.log(this.state.name)
                                 console.log(this.state.phone)
@@ -268,8 +166,8 @@ export default class AddCustomer extends Component {
                             <Input
                                 maxLength={11}
                                 keyboardType='numeric'
+                                placeholder="  - 없이 입력해주세요"
                                 onChangeText={(value)=> {
-                                    console.log(value)
                                     this.setState({phone : value})
                                     console.log(this.state.phone)
                                     console.log(this.state.name)
@@ -415,7 +313,7 @@ export default class AddCustomer extends Component {
                                 ]
                             )
                         }else {
-                            this.addCustomer(this.state.name,this.state.phone)
+                            this.addCustomer(this.state.userInfo.headquarter_id,this.state.name,this.state.phone)
                             this.addReceipt()
                             this.props.navigation.navigate('ShopStepOne')
                         }
@@ -429,3 +327,96 @@ export default class AddCustomer extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    xView:{
+        backgroundColor: "rgb(0,80,130)",
+        borderRadius: 20,
+    },
+    modalView: {
+      margin: 10,
+      width : Dimensions.get('window').width-30, 
+      height: Dimensions.get('window').height-400,
+      backgroundColor: "white",
+      borderRadius: 20,
+      paddingRight: 5,
+      paddingLeft: 5,
+      paddingTop: 15,
+      
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+    }
+});
+
+const Title = styled.Text`
+    color:#000000;
+  font-size : 24px;
+  font-weight : bold;
+`;
+
+const BlackText = styled.Text`
+    color:#000000;
+  margin-Top : 15px ;
+  font-size : 15px;
+  color : black;
+`;
+const DropBackground= styled.View`
+    width: 220px;
+    border-radius:10px;
+    font-color:#ffffff;
+    border:2px solid rgb(0,80,130);
+    margin-top:10px;
+`;
+const Label = styled.Text`
+    color:#000000;
+    font-size: 18px;
+    margin:12px;
+`;
+const PrView = styled.View`
+    flex-direction: row;
+    justify-content:space-around;
+`;
+const BtView = styled.View`
+    flex-direction: row;
+    justify-content:space-between;
+    width: 75%;
+`;
+const Input = styled.TextInput`
+    color:#000000;
+    width: 80%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
+const CautionText = styled.Text`
+    color: #FF0000;
+    font-size:15px;
+    margin-Bottom:10px;
+`;
+const ContentsScroll = styled.ScrollView`
+    width: 100%;
+    flex: 1;
+    align-content: center;
+`;
+const TextPrassble = styled.Pressable`
+    border-bottom: 2px solid;
+    margin:12px;
+    justifyContent: center;
+    align-items: center;
+`; 
+  const ImgIcon =styled.Image`
+    width: 20px;
+    height: 20px;
+    margin-Right:5px;
+`;

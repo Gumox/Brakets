@@ -18,48 +18,6 @@ import Bottom from '../../components/Bottom';
 import {useNetInfo}from "@react-native-community/netinfo";
 
 
-const Label = styled.Text`
-    color:#000000;
-    font-size: 18px;
-    margin:12px;
-`;
-const PrView = styled.View`
-    flex-direction: row;
-    justify-content:space-around;
-`;
-const BtView = styled.View`
-    flex-direction: row;
-    justify-content:space-between;
-    width: 75%;
-`;
-const Input = styled.TextInput`
-    color:#000000
-    width: 80%;
-    padding: 8px;
-    font-size: 20px;
-    background-color:#d6d6d6;
-    border-radius:10px;
-`;
-const ContentsScroll = styled.ScrollView`
-    width: 100%;
-    flex: 1;
-    margin-top: 13%;
-    align-content: center;
-`;
-const CustomerListText = styled.Text`
-    color:#000000;
-    width : 95%;
-    height : 15%;
-    border-top: 2px solid;
-    border-bottom: 2px solid;
-    
-`;
-const Title = styled.Text`
-    color:#000000;
-  font-size : 24px;
-  font-weight : bold;
-`;
-
 export default function CustomerSearchList({route, navigation}){
     const customers = route.params.customers;
     console.log(customers)
@@ -120,3 +78,46 @@ export default function CustomerSearchList({route, navigation}){
 
 }
 
+
+
+const Label = styled.Text`
+    color:#000000;
+    font-size: 18px;
+    margin:12px;
+`;
+const PrView = styled.View`
+    flex-direction: row;
+    justify-content:space-around;
+`;
+const BtView = styled.View`
+    flex-direction: row;
+    justify-content:space-between;
+    width: 75%;
+`;
+const Input = styled.TextInput`
+    color:#000000
+    width: 80%;
+    padding: 8px;
+    font-size: 20px;
+    background-color:#d6d6d6;
+    border-radius:10px;
+`;
+const ContentsScroll = styled.ScrollView`
+    width: 100%;
+    flex: 1;
+    margin-top: 13%;
+    align-content: center;
+`;
+const CustomerListText = styled.Text`
+    color:#000000;
+    width : 95%;
+    height : 15%;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    
+`;
+const Title = styled.Text`
+    color:#000000;
+  font-size : 24px;
+  font-weight : bold;
+`;

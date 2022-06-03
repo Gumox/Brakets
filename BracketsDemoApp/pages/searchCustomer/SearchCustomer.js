@@ -11,37 +11,12 @@ import ip from '../../serverIp/Ip';
 import { Keyboard, TouchableWithoutFeedback,TouchableHighlight } from 'react-native';
 import {useNetInfo}from "@react-native-community/netinfo";
 
-const Title = styled.Text`
-  color :#000000
-  font-size : 24px;
-  font-weight : bold;
-  color:#000000;
-  marginBottom:15px;
-`;
-const BlackText = styled.Text`
-  color :#000000
-  font-size : 15px;
-  color : black;
-`;
-const DropBackground = styled.View`
-    width: 300px;
-    border-radius:10px;
-    font-color:#ffffff;
-    border:2px solid rgb(0,80,130);
-    margin-top:10px;
-`;
-const Input = styled.TextInput`
-    color:#000000;
-    width: 100%;
-    padding: 8px;
-    font-size: 20px;
-    border-radius:10px;
-`;
-
 // 구조 분해 할당, Destructuring Assignment
 function SearchCustomer({ navigation }) {
 
   const [pNumber, setPnumber] = useState(null);
+
+  const userInfo =store.getState().userInfo[0]
 
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
@@ -125,7 +100,7 @@ function SearchCustomer({ navigation }) {
                 setData([]);
                 console.log(data);
                 store.dispatch({ type: 'CUSTOMER_SIGN', customerSign: "" });
-                getCustomer({ "lastphone": pNumber });
+                getCustomer({ lastphone: pNumber ,headquarterId:userInfo.headquarter_id});
               }else{
                 Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
               }
@@ -149,3 +124,31 @@ function SearchCustomer({ navigation }) {
   )
 }
 export default SearchCustomer;
+
+
+const Title = styled.Text`
+  color :#000000
+  font-size : 24px;
+  font-weight : bold;
+  color:#000000;
+  marginBottom:15px;
+`;
+const BlackText = styled.Text`
+  color :#000000
+  font-size : 15px;
+  color : black;
+`;
+const DropBackground = styled.View`
+    width: 300px;
+    border-radius:10px;
+    font-color:#ffffff;
+    border:2px solid rgb(0,80,130);
+    margin-top:10px;
+`;
+const Input = styled.TextInput`
+    color:#000000;
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    border-radius:10px;
+`;
