@@ -2,7 +2,12 @@ import excuteQuery from "../db";
 
 async function getNotice( noticeType,headquarterId) {
   const result = await excuteQuery({
-    query: `SELECT text
+    query: `SELECT 
+              id,
+              notice_type,
+              text,
+              red_text,
+              headquarter_id
               FROM notice 
               WHERE notice_type = ? 
               AND headquarter_id = ?`,
