@@ -7,6 +7,7 @@ import AutoSmsMessage from "./AutoSmsMessage";
 
 const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage}) => {
 
+    console.log(receiptSmsMessage)
     
     const [messageReceipt1,setMessageReceipt1] = useState(receiptSmsMessage.auto_sms_message1)
     const [messageReceipt2,setMessageReceipt2] = useState(receiptSmsMessage.auto_sms_message2)
@@ -23,8 +24,24 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
     
     const [onClickTakeOver,setOnClickTakeOver] = useState(false)
 
-    const modifyText =()=>{
+    const modifyText = async(text1,text2,text3,id)=>{
+        let data={
+            autoSmsMessage1 : text1,
+            autoSmsMessage2 : text2,
+            autoSmsMessage3 : text3,
+            autoSmsMessageId : id
+        }
 
+        const[result] =await Promise.all([
+
+            axios.put(`${process.env.API_URL}/sms/autoSmsMessage`,data)
+            .then(({ data }) => data.data)
+            .catch(error=>{
+  
+            })
+        ])
+        alert("수정 되었습니다.")
+        window.location.reload()
     }
     return(
         <Wrapper>
@@ -52,7 +69,7 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
                     {onClickSmsReceipt 
                         ?
                         <div style={{width:"100%",justifyContent:"space-evenly",display:"flex"}}>
-                            <DivButton onClick={()=>{modifyText(privacy.id,privacyText,privacyRedText)}}>
+                            <DivButton onClick={()=>{modifyText(messageReceipt1,messageReceipt2,messageReceipt3,receiptSmsMessage.auto_sms_message_id)}}>
                                 확인
                             </DivButton>
                             <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickSmsReceipt(!onClickSmsReceipt)}}>
@@ -83,7 +100,7 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
                     {onClickTakeOver 
                         ?
                         <div style={{width:"100%",justifyContent:"space-evenly",display:"flex"}}>
-                            <DivButton onClick={()=>{modifyText(privacy.id,privacyText,privacyRedText)}}>
+                            <DivButton onClick={()=>{modifyText(messageTakeOver1,messageTakeOver2,messageTakeOver3,takeOverSmsMessage.auto_sms_message_id)}}>
                                 확인
                             </DivButton>
                             <DivButton style={{color:COLOR.RED}} onClick={()=>{setOnClickTakeOver(!onClickTakeOver)}}>
