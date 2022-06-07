@@ -299,7 +299,7 @@ const ReturnList = ({ data, user }) => {
 
 const Wrapper = styled.nav`
   
-  height: 90%;//50
+  height: calc(95.5% - 23px);;//50
   width: 100%;
   overflow: auto;
   border-bottom: 2px solid;

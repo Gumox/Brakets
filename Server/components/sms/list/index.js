@@ -10,7 +10,7 @@ import store from '../../../store/store';
 import COLOR from '../../../constants/color';
 
 const Wrapper = styled.div`
-  height: 90%;
+  height: calc(95% - 15px);;
   width: 50%;
   max-width:680px;
   border-bottom: 2px solid;

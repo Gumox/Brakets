@@ -336,7 +336,7 @@ const Styles = styled.div`
 `
 
 const Wrapper = styled.div`
-  height: 88%;//50
+  height: calc(92% - 25px);//50%
   width: 100%;
   overflow: auto;
   border-bottom: 2px solid;

@@ -326,7 +326,7 @@ const Styles = styled.div`
 
 const Wrapper = styled.nav`
   /* position: absolute; */
-  height: 91%;
+  height: calc(95% - 25px);
   width: 100%;
   overflow: auto;
   border-bottom: 2px solid;

@@ -171,7 +171,7 @@ const SendMsg = ({}) => {
 
 const Wrapper = styled.nav`
   
-  height: 90%;
+  height: calc(95% - 15px);
   overflow: auto;
   border-bottom: 2px solid;
   border-left: 1px solid;

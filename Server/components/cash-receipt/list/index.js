@@ -152,7 +152,7 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
 };
 
 const Wrapper = styled.nav`
-  height: calc(91% - 0px);//100% - 110px
+  height: calc(95% - 25px);//100% - 110px
   width: 100%;
   overflow: auto;
   border-bottom: 2px solid;

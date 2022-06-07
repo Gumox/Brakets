@@ -5,17 +5,6 @@ import styled from "styled-components";
 import List from './list'
 import Send from './sendingMessage'
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  margin-top: 10px;
-  /* padding: 10px; */
-  border: 2px solid;
-
-  
-`;
-
 
 const Sms = ({}) => {
 
@@ -89,5 +78,16 @@ const Sms = ({}) => {
     </Wrapper>    
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  margin-top: 10px;
+  /* padding: 10px; */
+  border: 2px solid;
+
+  
+`;
 
 export default Sms;
