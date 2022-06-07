@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
+import _ from "lodash";
 
 import Content from "../Content";
 import Modal from "../Modal";
@@ -10,7 +11,12 @@ import Invoice from './invoice'
 import Options from "./Options";
 import store from "../../store/store";
 
-const Return = ({options, user}) => {
+const Return = ({options, user ,results}) => {
+
+  console.log(results)
+  const paidId = _.find(results,{"text": "외주수선"})
+  console.log(paidId)
+
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const [inputData, setInputData] = useState({});
   const [targetData, setTargetData] = useState({});
@@ -55,7 +61,10 @@ const Return = ({options, user}) => {
         params: {
           ...inputData,
           headquarter_id:hq_id,
-          dateType: inputData["isMonthly"]? "month": "all", dateOption: 'complete_date', hasCharged: true, resultId: 3
+          dateType: inputData["isMonthly"]? "month": "all", 
+          dateOption: 'complete_date', 
+          hasCharged: true, 
+          resultId: paidId.value
         }
       })
       .then((response) => setSearchList(response.data.data));
@@ -72,8 +81,12 @@ const Return = ({options, user}) => {
         searchList={searchList}
       />
       <List data={searchList}/>
-      <Options user={user} handleSearchButtonClick={handleSearchButtonClick}/>
-      <Invoice/>
+      {
+        //<Options user={user} handleSearchButtonClick={handleSearchButtonClick}/>
+      }
+      {
+        //<Invoice/>
+      }
     </Content>
     
   );

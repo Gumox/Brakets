@@ -16,7 +16,6 @@ async function getInvoiceList(List) {
         results.push(result)
       }
     }
-    console.log(results)
     return results;
   }
 
@@ -29,7 +28,7 @@ async function getInvoiceList(List) {
         
         const {
             list
-        } = req.body.body;
+        } = req.body;
         // console.log(list)
     try {
       const invoiceList = await getInvoiceList(list)

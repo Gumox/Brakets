@@ -83,7 +83,7 @@ function Table({ columns, data, searchList, getTargetData ,targetData}) {
                                 bgColor = COLOR.MENU_SELECTED_COLOR
                             }
                             if(row.original["접수일"]){
-                               console.log(row.original["접수일"])
+
                             }
                             return (
                                 <TableRow key={i} backgroundColor={bgColor} >
@@ -204,7 +204,6 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         {Header: () => (<div style={{textAlign:"center"}}>{'발송비용3'}</div>), accessor: '발송비용3',Cell: row => <div style={{ textAlign: "right" ,marginRight:10 }}>{row.value}</div>},
         ],[])
 
-        console.log(searchList)
     const data = searchList.map((receipt) =>(
 
         {

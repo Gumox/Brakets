@@ -52,7 +52,6 @@ const BasicInfo = ({
       })
     ]);
     setHeadquarterCode(data.headquarter_code)
-    console.log(data)
   }
 
   useEffect(()=>{

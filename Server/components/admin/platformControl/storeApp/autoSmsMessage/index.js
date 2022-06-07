@@ -60,7 +60,7 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
                   </div>
               </LaView>
             </div>
-            <LaView style={{justifyContent:"space-evenly"}}>
+            <LaView style={{justifyContent:"space-evenly",marginTop:50}}>
                 
                 <DivContainer>
                     <HeaderCell>

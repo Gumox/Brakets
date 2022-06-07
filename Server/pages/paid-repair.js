@@ -10,7 +10,7 @@ import Header from "../components/Header";
 import MENUS from "../constants/menu";
 import PaidRepair from "../components/paid-repair";
 
-const PaidRepairPage = ({options, user}) => {
+const PaidRepairPage = ({options, user,results}) => {
   const router = useRouter();
   if(user.level === 5){
     if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
@@ -24,7 +24,7 @@ const PaidRepairPage = ({options, user}) => {
     <>
       <Header path={router.pathname} />
       <OptionContext.Provider value={options} >
-        <PaidRepair user={user}/>
+        <PaidRepair user={user} results={results}/>
       </OptionContext.Provider>
     </>
   );
@@ -57,11 +57,23 @@ export const getServerSideProps = async (ctx) => {
     .get(`${process.env.API_URL}/store/1`)
     .then(({ data }) => data);
 
+  const { headquarter_id: headquarterId } = user;
+  const [results] =
+    await Promise.all([
+      
+      axios
+        .get(`${process.env.API_URL}/judgmentResult`, {
+          params: {hq_id: headquarterId}
+        })
+        .then(({ data }) => data.body), // 판정결과
+    ]);
+
   if(user.level < 2 || user.level === 5){
       
       return {
         props: {
           user,
+          results: results,
           options: {
             storeList: stores ? stores.data : [],
           },

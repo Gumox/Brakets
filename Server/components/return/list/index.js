@@ -234,8 +234,6 @@ const ReturnList = ({ data, user }) => {
 
   ], [])
 
-  console.log(data)
-  console.log("data",data[0])
   const value = data.map((productReturn) => ({
     "receipt_id": productReturn[RECEIPT.ID],
     "서비스카드#": productReturn[RECEIPT.CODE],

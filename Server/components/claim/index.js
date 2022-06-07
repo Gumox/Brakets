@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
+import _ from "lodash";
 
 import Content from "../Content";
 import RelativeContent from "../RelativeContent";
@@ -10,7 +11,11 @@ import List from "./list"
 import Invoice from './invoice'
 
 
-const Claim = ({user}) => {
+const Claim = ({user,results}) => {
+
+  const claimId = _.find(results,{"text": "업체클레임"})
+
+
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => setIsProductImageModalOpen(true),
@@ -64,10 +69,11 @@ const Claim = ({user}) => {
           headquarter_id:hq_id,
           dateType: inputData["isMonthly"]? "month": "all",
           dateOption: 'complete_date',
-          resultId: 6
+          resultId: claimId.value // 유동값으로 변경 필요
         } 
       })
-      .then((response) => setSearchList(response.data.data));
+      .then((response) => {
+        setSearchList(response.data.data)});
   }, [inputData]);
   const searchTargetData = useCallback((receiptCode) => {
     axios
@@ -85,8 +91,10 @@ const Claim = ({user}) => {
         searchList = {searchList}
       />
       <List data={searchList}/>
+      {/*
       <Invoice state = {"출고확정"} user = {user} handleSearchButtonClick = {handleSearchButtonClick}/>
       <Invoice state = {"출고대기"} user = {user} handleSearchButtonClick = {handleSearchButtonClick}/>
+      */}
     </Content>
   );
 };

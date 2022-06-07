@@ -70,7 +70,6 @@ const ReceptionPage = ({ options, user }) => {
   useEffect(() => {
     
     const getOptions = async () => {
-      console.log(targetBrandId)
       const [stores, productCategories, seasons] = await Promise.all([
         axios
           .get(`${process.env.API_URL}/store/1`, {
@@ -92,7 +91,6 @@ const ReceptionPage = ({ options, user }) => {
       // 브랜드가 바뀌면 전체 페이지가 초기화
       
       const first = moment().format("YYYY-MM-01")
-      console.log("startDate: ",imageData["startDate"])
       setInputData({
         dateOption: DATE_SEARCH_TYPE_OPTIONS[0].value,
         dateType: "all",
@@ -172,7 +170,6 @@ const ReceptionPage = ({ options, user }) => {
   );
 
   const searchReceipts = useCallback(async () => {
-    console.log(inputData)
     const { data } = await axios.get("/api/receipt", {
       params: { ...inputData, brandId: targetBrandId },
     });

@@ -10,7 +10,7 @@ import Header from "../components/Header";
 import MENUS from "../constants/menu";
 import Claim from "../components/claim";
 
-const ClaimPage = ({options, user}) => {
+const ClaimPage = ({options, user, results}) => {
   if(user.level === 5){
     if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
       MENUS.push({
@@ -24,7 +24,7 @@ const ClaimPage = ({options, user}) => {
     <>
       <Header path={router.pathname} />
       <OptionContext.Provider value={options}>
-        <Claim user={user}/>
+        <Claim user={user} results={results}/>
       </OptionContext.Provider>
     </>
   );
@@ -56,11 +56,24 @@ export const getServerSideProps = async (ctx) => {
   const stores = await axios
     .get(`${process.env.API_URL}/store/1`)
     .then(({ data }) => data);
+
+  const { headquarter_id: headquarterId } = user;
+  const [results] =
+    await Promise.all([
+      
+      axios
+        .get(`${process.env.API_URL}/judgmentResult`, {
+          params: {hq_id: headquarterId}
+        })
+        .then(({ data }) => data.body), // 판정결과
+  ]);
+
     if(user.level < 2 || user.level === 5){
       
       return {
         props: {
           user,
+          results:results,
           options: {
             storeList: stores ? stores.data : [],
           },

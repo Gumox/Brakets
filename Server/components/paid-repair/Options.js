@@ -5,7 +5,7 @@ import store from "../../store/store";
 import axios from "axios";
 
 
-const Options = ({ user, handleSearchButtonClick={} }) => {
+const Options = ({ user, handleSearchButtonClick=()=>{} }) => {
 
   const [data, setData] = useState("");
 

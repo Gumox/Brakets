@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
+import _ from "lodash";
 
 import Content from "../Content";
 import RelativeContent from "../RelativeContent";
@@ -12,7 +13,12 @@ import ReactExport from "react-export-excel";
 
 
 
-const Return = ({ options, user}) => {
+const Return = ({ options, user,results}) => {
+
+  
+  console.log(results)
+  const returnId = _.find(results,{"text": "하자반품"})
+  console.log(returnId)
   
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
@@ -68,7 +74,7 @@ const Return = ({ options, user}) => {
           headquarter_id:hq_id,
           dateType: inputData["isMonthly"]? "month": "all",
           dateOption: 'return_date',
-          resultId: 4,
+          resultId: returnId.value,
           
         } 
       })
@@ -91,8 +97,10 @@ const Return = ({ options, user}) => {
         searchList = {searchList}
       />
       <List data={searchList} user={user}/>
+      {/*
       <Options user={user} handleSearchButtonClick={handleSearchButtonClick}/>
       <Invoice/>
+      */}
     </Content>
   );
 };
