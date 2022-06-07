@@ -42,7 +42,8 @@ const AdminHeader = ({ path ,minWidth,user}) => {
     <div>
     <Wrapper>
       <MenuWrapper>
-        <MenuWrapper style={{width:250,justifyContent:"center"}}>
+        <MenuWrapper style={{width:250,justifyContent:"center"}} 
+            onClick={()=>{ router.push("/"); }}>
           <h1>수선</h1>
           <OkImage src="/icons/OK_image.png" width={81} height={52} />
         </MenuWrapper>
@@ -76,12 +77,6 @@ const Control =styled.div`
   width : 100%;
   margin-top:10px;
   background-color: ${COLOR.DARK_INDIGO};
-`;
-const Line =styled.div`
-  width :100%
-  margin:5px;
-  height:5px;
-  background-color: ${COLOR.DARK_INDIGO}
 `;
 const Wrapper = styled.div`
   padding: 0px 1% 0px 1%;
