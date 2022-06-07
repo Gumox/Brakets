@@ -13,9 +13,7 @@ import store from "../../store/store";
 
 const Return = ({options, user ,results}) => {
 
-  console.log(results)
   const paidId = _.find(results,{"text": "외주수선"})
-  console.log(paidId)
 
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const [inputData, setInputData] = useState({});
