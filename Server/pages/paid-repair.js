@@ -66,7 +66,7 @@ export const getServerSideProps = async (ctx) => {
           params: {hq_id: headquarterId}
         })
         .then(({ data }) => data.body), // 판정결과
-    ]);
+  ]);
 
   if(user.level < 2 || user.level === 5){
       
