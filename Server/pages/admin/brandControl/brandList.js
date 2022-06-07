@@ -9,7 +9,7 @@ import COLOR from "../../../constants/color";
 import BrandSideBar from "../../../components/admin/brand/BrandSideBar";
 import BrandList from "../../../components/admin/brand/brandList";
 
-const BrandControlBrandList =  ({user,infos,brands,staffs}) => {
+const BrandControlBrandList =  ({user,brands,staffs}) => {
   const router = useRouter();
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -68,11 +68,7 @@ export const getServerSideProps = async (ctx) => {
         },
       };
     }
-    const [infos] = await Promise.all([
-      axios
-        .get(`${process.env.API_URL}/headquarter`,)
-        .then(({ data }) => data.body), 
-      ])
+   
       const [brands] = await Promise.all([
         axios
           .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)

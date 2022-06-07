@@ -12,7 +12,7 @@ import MENUS from "../constants/menu";
 import SMS from '../components/sms';
 import store from "../store/store";
 
-const Sms = ({options, user}) => {
+const Sms = ({options, user,infos}) => {
   const router = useRouter();
   if(user.level === 5){
     if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
@@ -30,7 +30,7 @@ const Sms = ({options, user}) => {
       <Header path={router.pathname} />
       <UserContext.Provider value={user}>
       <OptionContext.Provider value={options}>
-        <SMS/>
+        <SMS infos={infos}/>
       </OptionContext.Provider>
       </UserContext.Provider>
     </>
@@ -64,11 +64,18 @@ export const getServerSideProps = async (ctx) => {
     .get(`${process.env.API_URL}/store/1`)
     .then(({ data }) => data);
 
+  const [infos] = await Promise.all([
+    axios
+      .get(`${process.env.API_URL}/headquarter?headquarterId=${user.headquarter_id}`,)
+      .then(({ data }) => data.body), 
+    ])
+
   if(user.level < 2 || user.level === 5){
       
       return {
         props: {
           user,
+          infos,
           options: {
             storeList: stores ? stores.data : [],
           },

@@ -6,8 +6,7 @@ import List from './list'
 import Send from './sendingMessage'
 
 
-const Sms = ({}) => {
-
+const Sms = ({infos}) => {
 
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
@@ -74,7 +73,7 @@ const Sms = ({}) => {
   return (
     <Wrapper>
       <List data={searchList}/>
-      <Send/>
+      <Send infos={infos[0]}/>
     </Wrapper>    
   );
 };

@@ -82,12 +82,12 @@ const setSmsResult = async (sender,mid,hq_id) => {
   }
 };
 
-const SendMsg = ({}) => {
+const SendMsg = ({infos}) => {
 
   const [msgText, setMsgtext] = useState("");
   const user =useContext(UserContext)
   const [smsMessage,setSmsMessage] = useState([]);
-  const [sendNumber,setSendNumber] = useState('010-2768-7973');
+  const [sendNumber,setSendNumber] = useState(infos.headquarter_call);
   const [windowTof,setWindowTof] = useState(false)
 
   const [windowWidth,setWindowWidth] = useState(0)
@@ -128,8 +128,7 @@ const SendMsg = ({}) => {
           console.log(e.target.value)
           setSendNumber(e.target.value)
           }}>
-          <option value="010-2768-7973">010-2768-7973</option>
-          <option value="010-2709-0856">010-2709-0856</option>
+          <option value={infos.headquarter_call}>{infos.headquarter_call}</option>
         </SelectBox>
 
         <TextBoxTop
