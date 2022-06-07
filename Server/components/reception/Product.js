@@ -98,7 +98,7 @@ const ProducInfo = ({
               />
             </Field>
           </Row>
-          <Row>
+          {/*<Row>
             <Field marginRight="0px">
               <UnTouchableInput
                 type="date"
@@ -115,7 +115,7 @@ const ProducInfo = ({
                 disabled={true}
               />
             </Field>
-          </Row>
+          </Row>*/}
         </Section>
         <Section width="120px">
           {targetData[PRODUCT.IMAGE] && (

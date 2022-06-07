@@ -18,6 +18,7 @@ import Checkbox from "../Checkbox";
 import store from "../../store/store";
 import axios from "axios";
 import moment from "moment";
+
 const FilterInfo = ({
   targetBrandId,
   inputData = {},

@@ -28,7 +28,7 @@ const MENUS = [
       link: "/sms-result",
     },*/
     {
-      title: "수선처",
+      title: "수선업체",
       link: "/repair",
     },
   ];

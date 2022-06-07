@@ -15,6 +15,7 @@ import List from "./List";
 import ResizableList from "./ResizableList";
 import { PRODUCT, RECEIPT } from "../../constants/field";
 import SelectImageModal from "./SelectImageModal";
+import ImageModal from "../ImageModal";
 
 import { symlink } from "fs";
 
@@ -39,8 +40,11 @@ const Reception = ({
 }) => {
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
-    () => setIsProductImageModalOpen(true),
-    []
+    () => {
+    setIsProductImageModalOpen(true)
+    console.log(targetData[PRODUCT.IMAGE])
+    }
+    ,[]
   );
   const closeProductImage = useCallback(
     () => setIsProductImageModalOpen(false),
@@ -82,16 +86,16 @@ const Reception = ({
 
       <ResizableList {...{ searchList, getTargetData ,targetData}} />
       {isProductImageModalOpen && (
-        <Modal handleCloseButtonClick={closeProductImage}>
+        <ImageModal handleCloseButtonClick={closeProductImage}>
           {
-            <Image
+            <ProductImage
               src={targetData[PRODUCT.IMAGE]}
               alt={targetData[PRODUCT.STYLE]}
               layout="fill"
               objectFit="contain"
             />
           }
-        </Modal>
+        </ImageModal>
       )}
       {/* TODO */}
       {isReceiptImageModalOpen && (
@@ -128,6 +132,11 @@ const InfoSubWrapper = styled.div`
 const Section = styled.div`
   display: flex;
 `;
+
+const ProductImage = styled.img`
+
+`;
+
 
 
 
