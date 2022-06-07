@@ -91,7 +91,6 @@ function Table({ columns, data, searchList, getTargetData }) {
   )
 
   store.dispatch({type:"SELECTED_DATA", selected_data:{selectedFlatRows}})
-  console.log("-------------------------------------------------------------------")
   const seriveCode = selectedFlatRows.map(value => value.values["서비스카드#"]);
   
 
@@ -208,8 +207,7 @@ const ReturnList = ({ data, user }) => {
     ],[])
 
 
-    console.log("data is")
-    console.log(data)
+    
     const value = data.map((pairRepair) => ({
       "receipt_id":pairRepair[RECEIPT.ID],
       "서비스카드#":pairRepair[RECEIPT.CODE],
