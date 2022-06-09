@@ -95,7 +95,7 @@ const StoreList = ({user,infos,store,brands}) => {
                         매장코드
                       </HeaderCellV2>
 
-                      <HeaderCellV2 >
+                      <HeaderCellV2 style={{border:`2px solid ${COLOR.MENU_MAIN}`}}>
                         매장명
                       </HeaderCellV2>
 
@@ -190,7 +190,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
     padding:5px;
 `;
@@ -200,7 +200,7 @@ const HeaderCellV2 = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     background-color:${COLOR.MENU_MAIN};
     flex:1;
     padding:5px;
@@ -222,7 +222,7 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 

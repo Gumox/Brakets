@@ -31,7 +31,7 @@ const StaffsList = ({
                     }
                     if(index+1 !== staffs.length){
                         return(
-                            <PrView key={index}>
+                            <PrView key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             
                                 <HeaderCell //style={{borderLeft:"2px solid"}}
                                 >

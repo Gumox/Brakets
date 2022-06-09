@@ -67,7 +67,7 @@ const ListItem =({
 
             <HeaderCell >
                 <View>
-                    <div style={{fontSize:"14px"}}>
+                    <div style={{fontSize:"13px"}}>
                         {item.barcode}
                     </div>
                 </View>
@@ -75,14 +75,18 @@ const ListItem =({
 
             <HeaderCell style={{flex:1.5}}>
                 <View>
-                    <div style={{fontSize:"14px"}}>
+                    <div style={{fontSize:"13px"}}>
                         {item.style_code}
                     </div>
                 </View>
             </HeaderCell>
             
             <HeaderCell>
-                {item.color}
+                <View>
+                    <div style={{fontSize:"13px"}}>
+                        {item.color}
+                    </div>
+                </View>
             </HeaderCell>
             
             <HeaderCell style={{flex:0.75}}>
@@ -95,7 +99,7 @@ const ListItem =({
             
             <HeaderCell style={{flex:3}}>
                 <View>
-                    <div style={{fontSize:"14px"}}>
+                    <div style={{fontSize:"13px"}}>
                         {item.name}
                     </div>
                 </View>
@@ -124,7 +128,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:14px;
+    font-size:13px;
     flex:1;
     padding:5px;
 `;

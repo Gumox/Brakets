@@ -7,7 +7,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { debounce } from "lodash";
 import COLOR from "../../../constants/color";
 import ProductSideBar from "../../../components/admin/product/ProductSideBar";
-import ProductStyleList from "../../../components/admin/product/style";
+import StyleList from "../../../components/admin/product/style";
 
 const ProductControlProductStyleList = ({user,infos,styles,brands}) => {
   const router = useRouter();
@@ -39,7 +39,7 @@ const ProductControlProductStyleList = ({user,infos,styles,brands}) => {
           <ProductSideBar path={"/admin/productControl/productStyleList"} setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >
-          <ProductStyleList user={user} infos={infos} styles={styles} brands={brands}/>
+          <StyleList user={user} infos={infos} styles={styles} brands={brands}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>

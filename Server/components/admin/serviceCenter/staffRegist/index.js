@@ -212,7 +212,7 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 16px;
+    font-size: 15px;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -222,7 +222,7 @@ const NameBox  = styled.div`
     height : 60px;
     width:140px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 16px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -246,7 +246,7 @@ const LongInputBox  = styled.div`
 const InputLine  = styled.input`
     border 0px;
     padding-left:10px;
-    font-size: 16px;
+    font-size: 15px;
 
 `;
 

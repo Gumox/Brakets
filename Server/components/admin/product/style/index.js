@@ -6,7 +6,7 @@ import List from "./List";
 import axios from "axios";
 import Paging from "../../Paging";
 
-const ProductStyleList = ({user,styles,products,brands}) => {
+const StyleList = ({user,styles,products,brands}) => {
     
     const [action,setAction] = useState(false)
     const [filtedStyles,setFiltedStyles] =useState(sortStyles(styles))
@@ -119,7 +119,7 @@ const ProductStyleList = ({user,styles,products,brands}) => {
                           <SelectItemHeader >
                             브랜드
                           </SelectItemHeader>
-                          <SearchSelect style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
+                          <SearchSelect style={{paddingLeft:20,flex:1,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
                             onChange={(e)=>{setSelectedBrand(e.target.value)}}>
                               <option  value={""} >{"전체"}</option>
                               {
@@ -256,7 +256,7 @@ const ProductStyleList = ({user,styles,products,brands}) => {
                             <LaView style={{flex:1,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 <div style={{flex:1,backgroundColor:COLOR.MENU_MAIN}}>
                                     <HeaderCell>
-                                        스타일 No.
+                                        스타일 NO.
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
@@ -339,7 +339,7 @@ const HeaderCell = styled.div`
     min-width:90px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:15px;
     flex:1;
     padding:5px;
 `;
@@ -421,4 +421,4 @@ const SearchSelect = styled.select`
     border-color: #719ECE;
   }
 `;
-export default ProductStyleList
+export default StyleList

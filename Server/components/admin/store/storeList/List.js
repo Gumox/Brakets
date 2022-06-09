@@ -23,7 +23,7 @@ const List = ({
                 store.map((item,index)=>{
                     if(index+1 !== store.length){
                         return(
-                            <Wrapper key={index}>
+                            <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 <ListItem item={item} cancel={cancel} infos={infos} brands={brands} user={user} store={store} setActionView={setActionView}/>
                             </Wrapper>
                         )
@@ -62,10 +62,14 @@ const ListItem =({
 
 
             <HeaderCell>
-                <TextInsider disabled value={item.store_code}/>
+                <View>
+                    <div style={{fontSize:"13px"}}>
+                        {item.store_code}
+                    </div>
+                </View>
             </HeaderCell>
 
-            <HeaderCell >
+            <HeaderCell style={{borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                 {item.store_name}
             </HeaderCell>
 
@@ -75,11 +79,19 @@ const ListItem =({
             </HeaderCell>
             
             <HeaderCell>
-                <TextInsider disabled value={item.staff_account}/>
+                <View>
+                    <div style={{fontSize:"13px"}}>
+                        {item.staff_account }
+                    </div>
+                </View>
             </HeaderCell>
             
             <HeaderCell>
-                {remakeCallNumber(item.staff_phone)}
+                <View>
+                    <div style={{fontSize:"13px"}}>
+                        {remakeCallNumber(item.staff_phone)}
+                    </div>
+                </View>
             </HeaderCell>
             
             <HeaderCell style={{color: COLOR.RED,flex:1}}>
@@ -105,12 +117,17 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:1;
     padding:5px;
 `;
 
+const View = styled.div`
 
+    display : flex;
+    flex-direction : column;
+    white-space: pre-wrap;
+`;
 const PrView  = styled.div`
     display:flex;
     flex-direction:row;
@@ -129,7 +146,7 @@ const ModifyView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
@@ -144,7 +161,7 @@ const ChangeView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
