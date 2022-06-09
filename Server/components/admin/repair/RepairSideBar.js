@@ -67,7 +67,7 @@ const MenuWrapper = styled.div`
     width: 230px;
     height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
 `;
 const SideMenu = styled.div`
     margin:10px;
