@@ -77,7 +77,7 @@ const SideMenu = styled.div`
     display: flex;
     padding-left:10px;
     align-items: center;
-    color: ${({ selected }) => (selected ? "rgb(133,133,133)": COLOR.BLACK )};
+    color: ${({ selected }) => (selected ? COLOR.BLACK: "rgb(133,133,133)" )};
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;

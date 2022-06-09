@@ -25,30 +25,30 @@ const BrandSideBar =({
                 window.removeEventListener('resize',handleResize);
             }
         },[])
-        let listColor = COLOR.BLACK;
-        let registColor = COLOR.BLACK;
-        let seasonColor = COLOR.BLACK;
-        let seasonListColor = COLOR.BLACK;
-        let seasonRegistColor = COLOR.BLACK;
-        let categoryListColor = COLOR.BLACK;
+        let listColor = "rgb(133,133,133)";
+        let registColor = "rgb(133,133,133)";
+        let seasonColor = "rgb(133,133,133)";
+        let seasonListColor = "rgb(133,133,133)";
+        let seasonRegistColor = "rgb(133,133,133)";
+        let categoryListColor = "rgb(133,133,133)";
         let seasonMenuOpen = false
     
         if(path === "/admin/brandControl"){
-            listColor = "rgb(133,133,133)";
+            listColor = COLOR.BLACK;
         }else if(path === "/admin/brandControl/brandRegist"){
-            registColor = "rgb(133,133,133)";
+            registColor = COLOR.BLACK;
         }
         else if(path === "/admin/brandControl/seasonList"){
-            seasonColor = "rgb(133,133,133)";
-            seasonListColor = "rgb(133,133,133)";
+            seasonColor = COLOR.BLACK;
+            seasonListColor = COLOR.BLACK;
             seasonMenuOpen = true;
         }else if(path === "/admin/brandControl/seasonRegist"){
-            seasonColor = "rgb(133,133,133)";
-            seasonRegistColor = "rgb(133,133,133)";
+            seasonColor = COLOR.BLACK;
+            seasonRegistColor = COLOR.BLACK;
             seasonMenuOpen = true;
         }
          if(path === "/admin/brandControl/categoryList"){
-            categoryListColor = "rgb(133,133,133)";
+            categoryListColor = COLOR.BLACK;
         }
     
     return(

@@ -27,7 +27,7 @@ const ControlAutoSmsMessage = ({user,info,receiptSmsMessage,takeOverSmsMessage})
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader user={user} path={"/admin/platformControl"}/>
+      <AdminHeader user={user} path={"/admin/platformControl/controlFault"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <PlatformSideBar path={"/admin/platformControl/controlAutoSmsMessage"}/>

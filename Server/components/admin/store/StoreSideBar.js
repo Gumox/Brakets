@@ -25,16 +25,16 @@ const StoreSideBar =({path })=>{
     },[])
 
     
-    let listColor = COLOR.BLACK;
-    let eachRegistColor = COLOR.BLACK;
-    let excelRegistColor = COLOR.BLACK;
+    let listColor = "rgb(133,133,133)";
+    let eachRegistColor = "rgb(133,133,133)";
+    let excelRegistColor = "rgb(133,133,133)";
 
     if(path === "/admin/storeControl"){
-        listColor = "rgb(133,133,133)";
+        listColor = COLOR.BLACK;
     }else if(path === "/admin/storeControl/storeEachRegist"){
-        eachRegistColor = "rgb(133,133,133)";
+        eachRegistColor = COLOR.BLACK;
     }else if(path === "/admin/storeControl/storeExcelRegist"){
-        excelRegistColor = "rgb(133,133,133)";
+        excelRegistColor = COLOR.BLACK;
     }
     
     return(
@@ -87,7 +87,7 @@ const SideMenu = styled.div`
     display: flex;
     padding-left:10px;
     align-items: center;
-    color: ${({ selected }) => (selected ? "rgb(133,133,133)": COLOR.BLACK )};
+    color: ${({ selected }) => (selected ? COLOR.BLACK: "rgb(133,133,133)" )};
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;

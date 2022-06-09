@@ -24,10 +24,10 @@ const CustomerSideBar =({path})=>{
         }
     },[])
 
-    let listColor = COLOR.BLACK;
+    let listColor = "rgb(133,133,133)";
 
     if(path === "/admin/customerControl"){
-        listColor = "rgb(133,133,133)";
+        listColor = COLOR.BLACK;
     }
 
     return(

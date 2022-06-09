@@ -44,7 +44,7 @@ export default ServiceCenterSideBar
 const styles = {
     menu:{
         backgroundColor:COLOR.MENU_MAIN,
-        color:COLOR.BLACK,
+        color:"rgb(133,133,133)",
         fontWeight:"bold",
     },
 }
@@ -64,7 +64,7 @@ const SideMenu = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${({ selected }) => (selected ? "rgb(133,133,133)": COLOR.BLACK )};
+    color: ${({ selected }) => (selected ? COLOR.BLACK: "rgb(133,133,133)" )};
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;

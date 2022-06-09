@@ -31,94 +31,94 @@ const PlatformSideBar =({
         let controlRweb = false
         let controlRwebRc = false
         
-        let controlSwebColor = COLOR.BLACK;
-        let controlStAppColor = COLOR.BLACK;
-        let controlRwebColor = COLOR.BLACK;
+        let controlSwebColor = "rgb(133,133,133)";
+        let controlStAppColor = "rgb(133,133,133)";
+        let controlRwebColor = "rgb(133,133,133)";
         
 
-        let controlFaultColor = COLOR.BLACK;
-        let controlAnalysisColor = COLOR.BLACK;
-        let controlClaimColor = COLOR.BLACK;
-        let controlSmsColor = COLOR.BLACK;
+        let controlFaultColor = "rgb(133,133,133)";
+        let controlAnalysisColor = "rgb(133,133,133)";
+        let controlClaimColor = "rgb(133,133,133)";
+        let controlSmsColor = "rgb(133,133,133)";
 
-        let controlCustomerAlertColor = COLOR.BLACK;
-        let controlSmsAutoColor = COLOR.BLACK;
+        let controlCustomerAlertColor = "rgb(133,133,133)";
+        let controlSmsAutoColor = "rgb(133,133,133)";
 
 
         
-        let controlPaidFeeColor = COLOR.BLACK;
+        let controlPaidFeeColor = "rgb(133,133,133)";
 
-        let controlRepairColor = COLOR.BLACK;
+        let controlRepairColor = "rgb(133,133,133)";
 
-        let controlListColor = COLOR.BLACK;
-        let controlEachRegistColor = COLOR.BLACK;
-        let controlExcelRegistColor = COLOR.BLACK;
+        let controlListColor = "rgb(133,133,133)";
+        let controlEachRegistColor = "rgb(133,133,133)";
+        let controlExcelRegistColor = "rgb(133,133,133)";
     
         if(path === "/admin/platformControl"){
-            listColor = "rgb(133,133,133)";
+            listColor = COLOR.BLACK;
 
         }
 
         if(path === "/admin/platformControl/controlFault"){
             controlSweb= true;
-            controlSwebColor = "rgb(133,133,133)";
-            controlFaultColor = "rgb(133,133,133)";
+            controlSwebColor = COLOR.BLACK;
+            controlFaultColor = COLOR.BLACK;
         }
         else if(path === "/admin/platformControl/controlAnalysis"){
             controlSweb= true;
-            controlSwebColor = "rgb(133,133,133)";
-            controlAnalysisColor = "rgb(133,133,133)";
+            controlSwebColor = COLOR.BLACK;
+            controlAnalysisColor = COLOR.BLACK;
         }
         else if(path === "/admin/platformControl/controlClaim"){
             controlSweb= true;
-            controlSwebColor = "rgb(133,133,133)";
-            controlClaimColor = "rgb(133,133,133)";
+            controlSwebColor = COLOR.BLACK;
+            controlClaimColor = COLOR.BLACK;
         }
         else if(path === "/admin/platformControl/controlSmsMessage"){
             controlSweb= true;
-            controlSwebColor = "rgb(133,133,133)";
-            controlSmsColor = "rgb(133,133,133)";
+            controlSwebColor = COLOR.BLACK;
+            controlSmsColor = COLOR.BLACK;
         }
 
 
         if(path === "/admin/platformControl/controlAppNotice"){
             controlStApp = true;
-            controlStAppColor = "rgb(133,133,133)";
-            controlCustomerAlertColor = "rgb(133,133,133)";
+            controlStAppColor = COLOR.BLACK;
+            controlCustomerAlertColor = COLOR.BLACK;
         }
         else if(path === "/admin/platformControl/controlAutoSmsMessage"){
             controlStApp = true;
-            controlStAppColor = "rgb(133,133,133)";
-            controlSmsAutoColor = "rgb(133,133,133)";
+            controlStAppColor = COLOR.BLACK;
+            controlSmsAutoColor = COLOR.BLACK;
         } 
 
 
         if(path === "/admin/platformControl/controlUnitPriceList"){
             controlRweb = true;
-            controlRwebColor = "rgb(133,133,133)";
-            controlPaidFeeColor = "rgb(133,133,133)";
+            controlRwebColor = COLOR.BLACK;
+            controlPaidFeeColor = COLOR.BLACK;
         }
 
         else if(path === "/admin/platformControl/controlRepairTypeList"){
             controlRweb = true;
             controlRwebRc = true;
-            controlRwebColor = "rgb(133,133,133)";
-            controlRepairColor = "rgb(133,133,133)";
-            controlListColor = "rgb(133,133,133)";
+            controlRwebColor = COLOR.BLACK;
+            controlRepairColor = COLOR.BLACK;
+            controlListColor = COLOR.BLACK;
         }
         else if(path === "/admin/platformControl/controlRepairTypeEachRegist"){
             controlRweb = true;
             controlRwebRc = true;
-            controlRwebColor = "rgb(133,133,133)";
-            controlRepairColor = "rgb(133,133,133)";
-            controlEachRegistColor = "rgb(133,133,133)";
+            controlRwebColor = COLOR.BLACK;
+            controlRepairColor = COLOR.BLACK;
+            controlEachRegistColor = COLOR.BLACK;
         }
         else if(path === "/admin/platformControl/controlRepairTypeExcelRegist"){
             controlRweb = true;
             controlRwebRc = true;
-            controlRwebColor = "rgb(133,133,133)";
-            controlRepairColor = "rgb(133,133,133)";
-            controlExcelRegistColor = "rgb(133,133,133)";
+            controlRwebColor = COLOR.BLACK;
+            controlRepairColor = COLOR.BLACK;
+            controlExcelRegistColor = COLOR.BLACK;
         }
 
     return(

@@ -26,7 +26,7 @@ const ControlAnalysis = ({user,analysisType}) => {
   },[])
   return (
     <Wrapper style={{height:`${windowHeight}px`}}>
-      <AdminHeader user={user} path={"/admin/platformControl"}/>
+      <AdminHeader user={user} path={"/admin/platformControl/controlFault"}/>
       <InSideWrapper>
         <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
           <PlatformSideBar path={"/admin/platformControl/controlAnalysis"}/>
