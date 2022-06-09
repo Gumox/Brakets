@@ -75,6 +75,8 @@ const ProductList = ({user,infos,products,brands}) => {
         <Wrapper>
           {!actionView &&
             <div>
+              <div style={{marginLeft:20,marginBottom:20,fontSize:"18px",fontWeight:"bold"}}>상품 목록</div>
+
               <SearchBar style={{width:"950px"}}>
                 <SearchBarHeader >
                     조회 조건
@@ -131,7 +133,7 @@ const ProductList = ({user,infos,products,brands}) => {
               </SearchBar>
               <SearchBar>
                 <SearchBarHeader >
-                    제품 명
+                    상품명
                 </SearchBarHeader>
                 
                 <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px",paddingLeft:20}}
@@ -149,14 +151,15 @@ const ProductList = ({user,infos,products,brands}) => {
 
             
                 <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,minWidth:"1080px",alignItems:"end",}}>
-                    <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold"}}>제품 목록</div>
+                    
+                  <div style={{marginLeft:20,}}></div>
+                    <Paging max={max} width={"1080px"} num={pageNumber} setNum={setPageNumber}/>
                     <div style={{marginRight:20,}}>{sortProducts(products).length} 건</div>
                 </PrView>
 
 
-                <Paging max={max} width={"1080px"} num={pageNumber} setNum={setPageNumber}/>
                 <InputTableBox>
-                  <PrView>
+                  <PrView style={{paddingLeft:"2px",paddingRight:"2px"}}>
                       
                       <HeaderCell style={{flex:1}}>
                         브랜드
@@ -174,7 +177,7 @@ const ProductList = ({user,infos,products,brands}) => {
                         바코드
                       </HeaderCell>
 
-                      <HeaderCell>
+                      <HeaderCell style={{flex:1.5}}>
                         스타일 NO.
                       </HeaderCell>
                       
@@ -182,16 +185,16 @@ const ProductList = ({user,infos,products,brands}) => {
                         컬러
                       </HeaderCell>
                       
-                      <HeaderCell>
+                      <HeaderCell style={{flex:0.75}}>
                         차수
                       </HeaderCell>
                       
-                      <HeaderCell>
+                      <HeaderCell style={{flex:0.75}}>
                         사이즈
                       </HeaderCell>
                       
                       <HeaderCell style={{flex:3}}>
-                        제품명
+                        상품명
                       </HeaderCell>
 
                       <HeaderCell style={{color: COLOR.RED,flex:1}}>
@@ -276,7 +279,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:15px;
     flex:1;
     padding:5px;
     /*border:2px solid ${COLOR.BLACK};
@@ -298,7 +301,7 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 

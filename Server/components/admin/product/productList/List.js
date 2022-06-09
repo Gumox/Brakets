@@ -22,7 +22,7 @@ const List = ({
                 products.map((item,index)=>{
                     if(index+1 !== products.length){
                         return(
-                            <Wrapper key={index}>
+                            <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 <ListItem item={item} cancel={cancel} infos={infos} brands={brands} user={user} setActionView={setActionView}/>
                             </Wrapper>
                         )
@@ -66,27 +66,39 @@ const ListItem =({
             </HeaderCell>
 
             <HeaderCell >
-                <TextInsider disabled value={item.barcode}/>
+                <View>
+                    <div style={{fontSize:"14px"}}>
+                        {item.barcode}
+                    </div>
+                </View>
             </HeaderCell>
 
-            <HeaderCell>
-                <TextInsider disabled value={item.style_code}/>
+            <HeaderCell style={{flex:1.5}}>
+                <View>
+                    <div style={{fontSize:"14px"}}>
+                        {item.style_code}
+                    </div>
+                </View>
             </HeaderCell>
             
             <HeaderCell>
                 {item.color}
             </HeaderCell>
             
-            <HeaderCell>
+            <HeaderCell style={{flex:0.75}}>
                 {item.degree}차
             </HeaderCell>
             
-            <HeaderCell>
+            <HeaderCell style={{flex:0.75}}>
                 {item.size}
             </HeaderCell>
             
             <HeaderCell style={{flex:3}}>
-                <TextInsider disabled value={item.name}/>
+                <View>
+                    <div style={{fontSize:"14px"}}>
+                        {item.name}
+                    </div>
+                </View>
             </HeaderCell>
 
             <HeaderCell style={{color: COLOR.RED,flex:1}} >
@@ -112,11 +124,16 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
     padding:5px;
 `;
+const View = styled.div`
 
+    display : flex;
+    flex-direction : column;
+    white-space: pre-wrap;
+`;
 
 const PrView  = styled.div`
     display:flex;
