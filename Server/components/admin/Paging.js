@@ -149,7 +149,7 @@ const ButtonStyle = styled.div`
     justify-content:center;
     align-items:center;
     height : 20px;
-    font-size: 16px;
+    font-size: 13px;
 
 `
 const PrView  = styled.div`

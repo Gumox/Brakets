@@ -117,7 +117,7 @@ const RepairTypeEachRegistControl = ({
                         </LongInputBox>
                     </PrView>
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             수선처 설정
                         </NameBox>
 
@@ -132,7 +132,7 @@ const RepairTypeEachRegistControl = ({
                         </LongInputBox>
                     </PrView>
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             수선 내용
                         </NameBox>
 
@@ -141,7 +141,7 @@ const RepairTypeEachRegistControl = ({
                         </LongInputBox>
                     </PrView>
                     <PrView>
-                        <NameBox style={{borderRadius: "0 0 0 10px"}}>
+                        <NameBox style={{borderRadius: "0 0 0 10px",borderTop:`2px solid rgb(244,244,244)`}}>
                             수선비 (수선단가)
                         </NameBox>
 
@@ -243,7 +243,7 @@ const NameBox  = styled.div`
     height : 60px;
     width:240px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     align-items:center;

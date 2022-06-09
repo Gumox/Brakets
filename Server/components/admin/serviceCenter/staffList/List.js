@@ -21,12 +21,12 @@ const StaffsList = ({
                     if(item.staff_state){
                         state = (
                         <div style={{color:COLOR.CYAN_BLUE ,fontWeight:"bold"}}>
-                            On
+                            ON
                         </div>)
                     }else{
                         state = (
                         <div style={{color:COLOR.RED ,fontWeight:"bold"}}>
-                            Off
+                            OFF
                         </div>)
                     }
                     if(index+1 !== staffs.length){
@@ -43,7 +43,11 @@ const StaffsList = ({
                                 </HeaderCell>
         
                                 <HeaderCell>
-                                    <TextView disabled value={item.staff_account || ""}/>
+                                    <View>
+                                        <div style={{fontSize:"14px"}}>
+                                            {item.staff_account}
+                                        </div>
+                                    </View>
                                 </HeaderCell>
         
                                 <HeaderCell>
@@ -54,14 +58,18 @@ const StaffsList = ({
                                     {remakeCallNumber(item.staff_phone)}
                                 </HeaderCell>
                                 <HeaderCell>
-                                    <TextView disabled value={item.staff_email || ""}/>
-                                </HeaderCell>
+                                    <View>
+                                        <div style={{fontSize:"14px"}}>
+                                            {item.staff_email}
+                                        </div>
+                                    </View>
+                                </HeaderCell>   
                                 
-                                <HeaderCell>
+                                <HeaderCell style={{flex:0.6}}>
                                     {state}
                                 </HeaderCell>
                                 
-                                <HeaderCell style={{color: COLOR.CYAN_BLUE}} 
+                                <HeaderCell style={{color: COLOR.CYAN_BLUE ,flex:0.6}} 
                                     onClick={()=>{ 
                                         setActionView(
                                             <StaffModify staff={item} staffs={staffs} setActionView={setActionView}/>
@@ -73,7 +81,7 @@ const StaffsList = ({
                                     </ModifyView>
                                 </HeaderCell>
                                 
-                                <HeaderCell style={{color: COLOR.RED}}
+                                <HeaderCell style={{color: COLOR.RED ,flex:0.6}}
                                     onClick={()=>{ 
                                         setActionView(
                                             <StaffChange staff={item} user={user} setActionView={setActionView}/>
@@ -100,7 +108,11 @@ const StaffsList = ({
                                 </HeaderCell>
         
                                 <HeaderCell>
-                                    <TextView disabled value={item.staff_account || ""}/>
+                                    <View>
+                                        <div style={{fontSize:"14px"}}>
+                                            {item.staff_account}
+                                        </div>
+                                    </View>
                                 </HeaderCell>
         
                                 <HeaderCell>
@@ -111,14 +123,18 @@ const StaffsList = ({
                                     {remakeCallNumber(item.staff_phone)}
                                 </HeaderCell>
                                 <HeaderCell>
-                                    <TextView disabled value={item.staff_email || ""}/>
+                                    <View>
+                                        <div style={{fontSize:"14px"}}>
+                                            {item.staff_email}
+                                        </div>
+                                    </View>
                                 </HeaderCell>
                                 
-                                <HeaderCell>
+                                <HeaderCell style={{flex:0.6}}>
                                     {state}
                                 </HeaderCell>
                                 
-                                <HeaderCell style={{color: COLOR.CYAN_BLUE}} 
+                                <HeaderCell style={{color: COLOR.CYAN_BLUE,flex:0.6}} 
                                     onClick={()=>{ 
                                         setActionView(
                                             <StaffModify staff={item} setActionView={setActionView}/>
@@ -130,7 +146,7 @@ const StaffsList = ({
                                     </ModifyView>
                                 </HeaderCell>
                                 
-                                <HeaderCell style={{color: COLOR.RED}}
+                                <HeaderCell style={{color: COLOR.RED,flex:0.6}}
                                     onClick={()=>{ 
                                         setActionView(
                                             <StaffChange staff={item} user={user} setActionView={setActionView}/>
@@ -150,6 +166,12 @@ const StaffsList = ({
     );
 };
 
+const View = styled.div`
+
+    display : flex;
+    flex-direction : column;
+    white-space: pre-wrap;
+`;
 
 const ColView  = styled.div`
     display:flex;
@@ -176,7 +198,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:15px;
     flex:1;
     padding:5px;
     /*border:2px solid ${COLOR.BLACK};

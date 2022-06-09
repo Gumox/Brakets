@@ -58,24 +58,27 @@ const ControlClaimList = ({user,claim}) => {
             
                 <h2 style={{marginLeft:20}}>클레임가 – 설정과 관리</h2>
 
-                <LaView style={{justifyContent:"space-between"}}>
-                    <h5 style={{marginLeft:20}}>{" 아래 기본 설정된 조건의 사용여부를 변경하거나 새롭게 추가 가능합니다"}</h5>
-                    <div style={{width:50}}>
-                        {claim.length}건
-                    </div>
-                </LaView>
+                <div style={{fontSize:"13px",marginLeft:20}}>{"ㆍ 위치: 서비스센터 WEB > 수선접수/처리 탭 > 본사 섹션 > 클레임가 "}</div>
+                <div style={{fontSize:"13px",marginLeft:20}}>{"ㆍ 아래 기본 설정된 조건의 사용여부를 변경하거나 새롭게 추가 가능합니다"}</div>
+                   
         
                 <div style={{display:"flex",flexDirection:"row"}}>
                         
-                    <InputTableBox>
+                    <InputTableBox style={{marginTop:30}}>
                         <LaView style={{justifyContent:"space-between"}}>
-                            <div style={{marginLeft:20,width:50,padding:"5px"}} >
-                                
-                            </div>
-                            <Paging max={max} width={"600px"} num={pageNumber} setNum={setPageNumber}/>
-                            <DivButton style={{marginRight:20}} onClick={()=>{setAddState(!addState)}}>
+
+                            <DivButton style={{marginLeft:20,fontWeight:"bold"}} onClick={()=>{setAddState(!addState)}}>
                                 추가
                             </DivButton>
+                            
+
+                            
+                            <Paging max={max} width={"600px"} num={pageNumber} setNum={setPageNumber}/>
+                            
+                            <div style={{marginRight:20,width:50,padding:"5px"}} >
+                                {claim.length}건
+                            </div>
+
                         </LaView>
                         <div style={{marginBottom:10}}>
                             
@@ -84,10 +87,10 @@ const ControlClaimList = ({user,claim}) => {
                         <PrView style={{paddingLeft:2,paddingRight:2}}>
                             
                                 <HeaderCell>
-                                    클레임가
+                                    클레임가 기준
                                 </HeaderCell>
                                 <HeaderCell>
-                                    클레임가 퍼센트 설정
+                                    클레임가 비율
                                 </HeaderCell>
 
                                 

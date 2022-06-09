@@ -47,24 +47,25 @@ const ControlAnalysisList = ({user,analysisType}) => {
             
                 <h2 style={{marginLeft:20}}>내용분석 - 종류 설정과 관리 </h2>
 
-                <LaView style={{justifyContent:"space-between"}}>
-                    <h5 style={{marginLeft:20}}>{" 아래 기본 설정된 종류들의 사용여부를 변경하거나 새롭게 추가 가능합니다"}</h5>
-                    <div style={{width:50}}>
-                        {analysisType.length}건
-                    </div>
-                </LaView>
+                <div style={{fontSize:"13px",marginLeft:20}}>{"ㆍ 위치: 서비스센터 WEB > 수선접수/처리 탭 > 본사 섹션 > 내용분석 "}</div>
+                <div style={{fontSize:"13px",marginLeft:20}}>{"ㆍ 아래 기본 설정된 종류들의 사용여부를 변경하거나 새롭게 추가 가능합니다"}</div>
+                    
         
                 <div style={{display:"flex",flexDirection:"row"}}>
                         
-                    <InputTableBox>
+                    <InputTableBox style={{marginTop:30}}>
                         <LaView style={{justifyContent:"space-between"}}>
-                            <div style={{marginLeft:20,width:50,padding:"5px"}} >
-                                
-                            </div>
-                            <Paging max={max} width={"420px"} num={pageNumber} setNum={setPageNumber}/>
-                            <DivButton style={{marginRight:20}} onClick={()=>{setAddState(!addState)}}>
+
+                            <DivButton style={{marginLeft:20,fontWeight:"bold"}} onClick={()=>{setAddState(!addState)}}>
                                 추가
                             </DivButton>
+
+                            
+                            <Paging max={max} width={"420px"} num={pageNumber} setNum={setPageNumber}/>
+                            
+                            <div style={{marginRight:20,width:50,padding:"5px"}} >
+                                {analysisType.length}건
+                            </div>
                         </LaView>
                         <div style={{marginBottom:10}}>
                             

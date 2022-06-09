@@ -45,45 +45,39 @@ const StaffList = ({user,infos,brands,staffs}) => {
                   <InputTableBox>
                   <PrView>
                       
-                      <HeaderCell //style={{borderLeft:"2px solid"}}
-                      >
-                          회사이름
+                      <HeaderCell>
+                        회사 이름
                       </HeaderCell>
 
                       <HeaderCell>
-                          직원 코드
+                        직원 코드
                       </HeaderCell>
 
                       <HeaderCell>
-                          <ColView>
-                              <InColView> 직원 </InColView>
-                              <InColView> Kakao 계정 </InColView>
-                          </ColView>
+                        kakao 계정
                       </HeaderCell>
 
                       <HeaderCell>
-                          직원 이름
+                        이름
                       </HeaderCell>
 
                       <HeaderCell>
-                          직원 연락처
+                        연락처
                       </HeaderCell>
+
                       <HeaderCell>
-                          <ColView>
-                              <InColView> 직원 </InColView>
-                              <InColView> E-mail </InColView>
-                          </ColView>
+                        E-mail
                       </HeaderCell>
                       
-                      <HeaderCell>
+                      <HeaderCell style={{flex:0.6}}>
                           상태
                       </HeaderCell>
                       
-                      <HeaderCell style={{color: COLOR.CYAN_BLUE}}>
+                      <HeaderCell style={{color: COLOR.CYAN_BLUE,flex:0.6}}>
                           정보 수정
                       </HeaderCell>
                       
-                      <HeaderCell style={{color: COLOR.RED}}>
+                      <HeaderCell style={{color: COLOR.RED,flex:0.6}}>
                           직원 변경
                       </HeaderCell>
                   </PrView>

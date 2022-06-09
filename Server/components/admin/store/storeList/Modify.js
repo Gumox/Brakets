@@ -462,11 +462,11 @@ const StoreModify = ({
 
                                     <CenterView style={{margin:"10px"}}>
                                         <CheckBoxCyan checked={managerState} type={"checkbox"} onChange={()=>{setManagerState(true)}}/>
-                                        <div style={{fontSize:"13px",marginLeft:"5px",color:COLOR.CYAN_BLUE}}>On</div>
+                                        <div style={{fontSize:"13px",marginLeft:"5px",color:COLOR.CYAN_BLUE}}>ON</div>
                                     </CenterView>
                                     <CenterView style={{margin:"15px"}}>
                                         <CheckBoxRed checked={!managerState} type={"checkbox"} onChange={()=>{setManagerState(false)}}/>
-                                        <div style={{fontSize:"13px",marginLeft:"5px" ,color:COLOR.RED}}>Off</div>
+                                        <div style={{fontSize:"13px",marginLeft:"5px" ,color:COLOR.RED}}>OFF</div>
                                     </CenterView>
 
                                 </PrView>

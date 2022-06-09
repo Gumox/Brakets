@@ -57,14 +57,13 @@ const AppNoticeControl = ({
             
               <h2 style={{marginLeft:20}}>매장 APP – 자동발송 문자메시지 문구 설정과 관리</h2>
 
-              <LaView style={{justifyContent:"space-between",marginBottom:10}}>
+              <LaView style={{justifyContent:"space-between",marginBottom:10,marginTop:0}}>
                   <ColView>
-                      <InColView style={{marginLeft:20}}>{"아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게 자주 사용하는 문자메시지 문구를 만드세요. "}</InColView>
-                      <InColView style={{marginLeft:20}}>{""}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ 위치: 매장 APP > 접수 탭 > 고객조회 (또는 신규고객등록) > 고객정보"}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ 접수 시, 아래 3가지 사항들에 대하여 고객의 동의를 받아야 합니다."}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ 아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게 자주 사용하는 문자메시지 문구를 만드세요. "}</InColView>
+                      
                   </ColView>
-                  <div style={{width:50}}>
-
-                  </div>
               </LaView>
             </div>
             <LaView style={{justifyContent:"space-between",}}>
@@ -196,8 +195,9 @@ const DivButton = styled.div`
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
+    font-weight: bold;
     &:hover{
-        background-color:${COLOR.LIGHT_GRAY};
+        background-color: ${COLOR.LIGHT_GRAY};
     }
 
 `;
@@ -281,6 +281,6 @@ const ColView  = styled.div`
 `;
 const InColView  = styled.div`
     display:flex;
-    font-size:10px;
+    font-size:13px;
     align-items:center;
 `;

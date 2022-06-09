@@ -48,8 +48,8 @@ const Administrator = ({
                     <HeaderCell>
                         {
                             item.staff_state >0 ?
-                            <div style={{color:COLOR.CYAN_BLUE}}>{"On"}</div>
-                            :<div style={{color:COLOR.RED}}>{"Off"}</div>
+                            <div style={{color:COLOR.CYAN_BLUE}}>{"ON"}</div>
+                            :<div style={{color:COLOR.RED}}>{"OFF"}</div>
                         }
                     </HeaderCell>
                     

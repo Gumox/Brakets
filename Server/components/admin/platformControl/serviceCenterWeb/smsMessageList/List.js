@@ -91,7 +91,11 @@ const ListItem =({
                     {num}
                 </HeaderHash>
                 <HeaderCell style={{flex:3,width:"300px"}}>
-                    <TextInsider value={smsMessageText} readOnly />
+                    <View>
+                        <div style={{fontSize:"14px"}}>
+                            {smsMessageText}
+                        </div>
+                    </View>
                 </HeaderCell>
     
                 
@@ -135,6 +139,12 @@ const HeaderCell = styled.div`
     padding:5px;
 `;
 
+const View = styled.div`
+
+    display : flex;
+    flex-direction : column;
+    white-space: pre-wrap;
+`;
 const PrView  = styled.div`
     display:flex;
     flex-direction:row;
@@ -163,6 +173,7 @@ const ModifyView = styled.div`
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
+    font-weight: bold;
     &:hover{
         background-color:${COLOR.LIGHT_GRAY};
     }
@@ -178,6 +189,7 @@ const ChangeView = styled.div`
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
+    font-weight: bold;
     &:hover{
         background-color:${COLOR.LIGHT_GRAY};
     }

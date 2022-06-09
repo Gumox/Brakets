@@ -82,9 +82,9 @@ const ListItem =({item})=>{
             <HeaderCell style={{flex:3}}>
                 <PrView>
                     <CheckBox checked={stateCheck} type="checkbox" onChange={()=>{stateCheckHandler(!stateCheck)}}/>
-                    <div style={{fontSize:13,marginLeft:"20px",display:"flex",alignItems:"center",color:COLOR.CYAN_BLUE}}>On</div>
+                    <div style={{fontSize:13,marginLeft:"20px",display:"flex",alignItems:"center",color:COLOR.CYAN_BLUE}}>ON</div>
                     <CheckBoxRed checked={!stateCheck} style={{marginLeft:20}} type="checkbox" onChange={()=>{stateCheckHandler(!stateCheck)}}/>
-                    <div style={{fontSize:13,marginLeft:"20px",display:"flex",alignItems:"center",color:COLOR.RED}}>Off</div>
+                    <div style={{fontSize:13,marginLeft:"20px",display:"flex",alignItems:"center",color:COLOR.RED}}>OFF</div>
                 </PrView>
             </HeaderCell>
 

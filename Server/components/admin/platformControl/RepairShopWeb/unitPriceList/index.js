@@ -97,10 +97,9 @@ const UnitPriceListControl =({user,brands})=>{
 
             <LaView style={{marginBottom:20,justifyContent:"space-between"}}>
                 <ColView>
-                    <InColView style={{marginLeft:20}}>{"*.xlsx 또는 *.xls 형식의 엑셀 파일만 등록(업로드) 가능합니다. "}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ 위치: 수선처 WEB > 접수 탭 > 해당 서비스번호 클릭 > 접수용 팝업창 내 수선처 입력 섹션 "}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ *.xlsx 또는 *.xls 형식의 엑셀 파일만 등록(업로드) 가능합니다. "}</InColView>
                 </ColView>
-                <div style={{width:50}}>
-                </div>
             </LaView>
 
             <SearchBar style={{width:"300px"}}>
@@ -137,14 +136,14 @@ const UnitPriceListControl =({user,brands})=>{
             </div>
 
             <div style={{display:"flex",flexDirection:"row"}}>
-                <div style={{display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:COLOR.LIGHT_GRAY,paddingLeft:10,paddingRight:10,height:30}}>엑셀파일 업로드</div>
+                <div style={{minWidth:120,display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:COLOR.LIGHT_GRAY,paddingLeft:10,paddingRight:10,height:30}}>엑셀파일 업로드</div>
                 <label htmlFor="file" >
                     <div style={{marginLeft:10,marginRight:10,borderRadius:5,backgroundColor:COLOR.GRAY,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:60,color:COLOR.WHITE}}>
                         찾아보기
                     </div>
                 </label> 
                 <input disabled value={excelName} placeholder="첨부파일" onChange={()=>{}}/>
-                <button style={{marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:150,color:COLOR.WHITE}}
+                <button style={{minWidth:180,marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:150,color:COLOR.WHITE}}
                     onClick={()=>{registUnitPriceList()}}
                 >
                    고객유상단가표 등록
@@ -247,7 +246,7 @@ const ColView  = styled.div`
 `;
 const InColView  = styled.div`
     display:flex;
-    font-size:10px;
+    font-size:13px;
     align-items:center;
 `;
 const CenterView  = styled.div`

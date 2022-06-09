@@ -123,17 +123,16 @@ const ControlSmsMessageList = ({user,list}) => {
 
                 <LaView style={{justifyContent:"space-between",marginBottom:10}}>
                     <ColView>
-                        <InColView style={{marginLeft:20}}>{"아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게"}</InColView>
-                        <InColView style={{marginLeft:20}}>{" 자주 사용하는 문자메시지 문구를 만드세요. "}</InColView>
+                        <InColView style={{marginLeft:20}}>{"ㆍ 위치: 서비스센터 WEB > SMS전송 탭"}</InColView>
+                        <InColView style={{marginLeft:20}}>{"ㆍ 아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게 자주 사용하는 문자메시지 문구를 만드세요."}</InColView>
+                        
                     </ColView>
-                    <div style={{width:50}}>
-                        {list.length}건
-                    </div>
                 </LaView>
         
+
                 <div style={{display:"flex",flexDirection:"row"}}>
                         
-                    <InputTableBox>
+                    <InputTableBox style={{marginTop:30}}>
 
                         <PrView style={{paddingLeft:2,paddingRight:2}}>
                             
@@ -311,7 +310,7 @@ const ColView  = styled.div`
 `;
 const InColView  = styled.div`
     display:flex;
-    font-size:10px;
+    font-size:13px;
     align-items:center;
 `;
 const HeaderHash  = styled.div`

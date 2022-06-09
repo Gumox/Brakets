@@ -52,8 +52,11 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
 
               <LaView style={{justifyContent:"space-between",marginBottom:10}}>
                   <ColView>
-                      <InColView style={{marginLeft:20}}>{"아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게"}</InColView>
-                      <InColView style={{marginLeft:20}}>{" 자주 사용하는 문자메시지 문구를 만드세요. "}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ 매장 앱 접수 시, “고객용 제품”이면서 접수유형(요구)이 “수선”인 경우에만"}</InColView>
+                    <InColView style={{marginLeft:20}}>{"　  해당 고객에게 자동으로 문자 발송 ( 교환/환불/심의 문자 발송 X )"}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ 매장 앱 접수 완료되면, 수선접수상태과 접수번호 알림"}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ 매장 앱 인수 완료되면, 수선완료된 제품 수령 안내 알림"}</InColView>
+                     
                   </ColView>
                   <div style={{width:50}}>
 
@@ -63,8 +66,8 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
             <LaView style={{justifyContent:"space-evenly",marginTop:50}}>
                 
                 <DivContainer>
-                    <HeaderCell>
-                        접수
+                    <HeaderCell >
+                        접수 완료 시
                     </HeaderCell>
                     {onClickSmsReceipt 
                         ?
@@ -94,8 +97,8 @@ const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage})
                     
                 </DivContainer>
                 <DivContainer>
-                    <HeaderCell>
-                        인수
+                    <HeaderCell >
+                        인수 완료 시
                     </HeaderCell>
                     {onClickTakeOver 
                         ?
@@ -187,7 +190,7 @@ const ColView  = styled.div`
 `;
 const InColView  = styled.div`
     display:flex;
-    font-size:10px;
+    font-size:13px;
     align-items:center;
 `;
 const HeaderCell = styled.div`
@@ -203,6 +206,7 @@ const HeaderCell = styled.div`
     background-color: ${COLOR.LIGHT_GRAY};
 `;
 const DivButton = styled.div`
+    margin:5px;
     color:${COLOR.CYAN_BLUE};
     width:50px;
     display:flex;
@@ -212,6 +216,7 @@ const DivButton = styled.div`
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
+    font-weight: bold;
     &:hover{
         background-color:${COLOR.LIGHT_GRAY};
     }

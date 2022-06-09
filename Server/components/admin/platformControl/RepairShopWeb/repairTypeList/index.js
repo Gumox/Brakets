@@ -47,6 +47,12 @@ const RepairTypeListControl = ({user,repairTypes,brands}) => {
             
                 <h2 style={{marginLeft:20}}>수선처 WEB – 수선 내용, 수선비(수선 단가) 목록</h2>
 
+                <LaView style={{marginBottom:20,justifyContent:"space-between"}}>
+                    <ColView>
+                        <InColView style={{marginLeft:20}}>{"ㆍ 위치: 수선처 WEB > 접수 탭 > 해당 서비스번호 클릭 > 접수용 팝업창 내 수선처 입력 섹션 "}</InColView>
+                    </ColView>
+                </LaView>
+
                 <SearchBar style={{width:"750px"}}>
                 <SearchBarHeader >
                     조회 조건
@@ -218,7 +224,7 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 
@@ -289,6 +295,15 @@ const LaView  = styled.div`
     flex-direction:row;
     align-items:center; 
     width:850px;
+`;
+const ColView  = styled.div`
+    display:flex;
+    flex-direction: column;
+`;
+const InColView  = styled.div`
+    display:flex;
+    font-size:13px;
+    align-items:center;
 `;
 const DivButton = styled.div`
     color:${COLOR.RED};

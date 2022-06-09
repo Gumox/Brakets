@@ -75,11 +75,11 @@ const ListItem =({
             <HeaderCell>
                 {item.staff_state > 0 ?
                     <HeaderCell style={{color:COLOR.CYAN_BLUE}}>
-                        On
+                        ON
                     </HeaderCell>
                     :
                     <HeaderCell style={{color:COLOR.RED}}>
-                        Off
+                        OFF
                     </HeaderCell>
 
                 }
