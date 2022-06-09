@@ -17,7 +17,7 @@ const List = ({
                 sortedSeason.map((item,index)=>{
                     if(index+1 !== sortedSeason.length){
                         return(
-                            <Wrapper key={index}>
+                            <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 <ListItem item={item}/>
                             </Wrapper>
                         )

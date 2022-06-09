@@ -78,6 +78,8 @@ const CategoryList = ({user,infos,categorys,brands}) => {
         <Wrapper>
           
             <div>
+                
+            <h2 style={{marginLeft:"20px",padding:"5px"}}>카테고리 목록</h2>
               <SearchBar style={{width:"450px"}}>
                 <SearchBarHeader >
                     조회 조건
@@ -111,17 +113,19 @@ const CategoryList = ({user,infos,categorys,brands}) => {
                     <InputTableBox>
 
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+                                <LaView style={{width:"100%",justifyContent:"space-between",marginBottom:10}}>
 
-                            <h2 style={{marginLeft:"20px",padding:"5px"}}>카테고리 목록</h2>
-                            <div style={{display:"flex",flexDirection:"row"}}>
-                                <div style={{marginRight:20,display:"flex",justifyContent:"center",alignItems:"center"}}>{(categorys).length} 건</div>
-                                <AddButton onClick={()=>{setAction(!action)}}>추가</AddButton>
-                            </div>
-                            
+                                    <DivButton style={{marginLeft:20,paddingBottom:10, fontWeight:"bold"}} onClick={()=>{setAddState(!addState)}}>
+                                        추가
+                                    </DivButton>
 
-                        </div>
-                        <div style={{marginBottom:10}}>
-                            <Paging max={max} width={"580px"} num={pageNumber} setNum={setPageNumber}/>
+                                    <Paging max={max} width={"420px"} num={pageNumber} setNum={setPageNumber}/>
+
+                                    <div style={{marginRight:20,marginBottom:5,width:50,padding:"5px"}} >
+                                        {categorys.length}건
+                                    </div>
+
+                                </LaView>
                         </div>
                         <PrView>
                         
@@ -243,7 +247,7 @@ const HeaderCell = styled.div`
 `;
 
 const InputTableBox  = styled.div`
-    width:580px;
+    width:780px;
     margin-top:20px;
 `;
 const PrView  = styled.div`
@@ -261,7 +265,7 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 
@@ -298,7 +302,20 @@ const SearchBarButton = styled.div`
     justify-content:center;
     align-items:center;
 `;
- 
+const DivButton = styled.div`
+color:${COLOR.RED};
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:15px;
+padding:5px;
+border-radius: 10px;
+cursor: pointer;
+&:hover{
+    background-color:${COLOR.LIGHT_GRAY};
+}
+
+`;
 const AddButton =styled.h2`
     color:${COLOR.RED};
     margin-right:20px;

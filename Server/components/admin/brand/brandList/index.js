@@ -46,8 +46,8 @@ const BrandList = ({user,infos,brands,staffs}) => {
 
                       <HeaderCell>
                           <ColView>
-                              <InColView> 서비스 기간 </InColView>
-                              <InColView> (고객 약속일) </InColView>
+                              <InColView style={{fontSize:"15px"}}> 서비스 기간 </InColView>
+                              <InColView style={{fontSize:"11px"}}> (고객 약속일) </InColView>
                           </ColView>
                       </HeaderCell>
 

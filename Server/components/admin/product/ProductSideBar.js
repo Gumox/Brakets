@@ -23,26 +23,26 @@ const ProductSideBar =({path})=>{
             window.removeEventListener('resize',handleResize);
         }
     },[])
-    let listColor = COLOR.BLACK;
-    let eachRegistColor = COLOR.BLACK;
-    let excelRegistColor = COLOR.BLACK;
-    let styleListColor = COLOR.BLACK;
-    let styleExcelRegistColor = COLOR.BLACK;
+    let listColor = "rgb(133,133,133)";
+    let eachRegistColor = "rgb(133,133,133)";
+    let excelRegistColor = "rgb(133,133,133)";
+    let styleListColor = "rgb(133,133,133)";
+    let styleExcelRegistColor = "rgb(133,133,133)";
 
     if(path === "/admin/productControl"){
-        listColor = "rgb(133,133,133)";
+        listColor = COLOR.BLACK;
     }
     if(path === "/admin/productControl/productEachRegist"){
-        eachRegistColor = "rgb(133,133,133)";
+        eachRegistColor = COLOR.BLACK;
     }
     if(path === "/admin/productControl/productExcelRegist"){
-        excelRegistColor = "rgb(133,133,133)";
+        excelRegistColor = COLOR.BLACK;
     }
     if(path === "/admin/productControl/productStyleList"){
-        styleListColor = "rgb(133,133,133)";
+        styleListColor = COLOR.BLACK;
     }
     if(path === "/admin/productControl/productStyleExcelRegist"){
-        styleExcelRegistColor = "rgb(133,133,133)";
+        styleExcelRegistColor = COLOR.BLACK;
     }
 
     return(

@@ -66,109 +66,106 @@ const StaffRegist = ({infos,user,staffs}) =>{
         }
     },[])
     return (
-        <Wrapper >
+        <Wrapper style={{minWidth:"900px"}}>
             
            
             
                     
                 
-                <h2>서비스 센터 직원 등록</h2>
-                <PrView>
-                    <NameBox  >
-                        회사 이름
-                    </NameBox>
-                    
-
-                    <InputBox style={{justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <TwoNameBox >
-                            <ColView  style={{justifyContent:"center",alignItems:"center"}}>
-                                <div style={{marginBottom:5}}>{cNameKr}</div>
-                                <div >{cName}</div>
-                                
-                            </ColView>
-                        </TwoNameBox>
-                    </InputBox>
-
-                    <NameBox>
-                        회사코드
-                    </NameBox>
-
-                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <CenterView  style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
-                            {cCode}
-                        </CenterView>
-                    </InputBox>
-                    
-                </PrView>
+            <h2>서비스 센터 직원 등록</h2>
+            <PrView style={{borderRadius: "10px 10px 0 0 "}}>
+                <NameBox  style={{borderRadius: "10px 0 0 0 "}}>
+                    회사 이름
+                </NameBox>
                 
-                <PrView>
-                    <NameBox>
-                        
-                        <TwoNameBox >
-                            <ColView  style={{justifyContent:"center",alignItems:"center"}}>
-                                <div style={{marginBottom:5}}>직원 코드</div>
-                                <div style={{color:COLOR.RED}}>
-                                    {`(자동 완성)`}
-                                </div>
-                                
-                            </ColView>
-                        </TwoNameBox>
-                    </NameBox>
 
-                    <LongInputBox style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
-                        {adminCode}
-                    </LongInputBox>
-                </PrView>
-                
-                <PrView>
-                    <NameBox>
-                        직원 이름
-                    </NameBox>
+                <InputBox style={{justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <TwoNameBox >
+                        <ColView  style={{justifyContent:"center",alignItems:"center"}}>
+                            <div style={{marginBottom:5}}>{cNameKr}</div>
+                            <div >{cName}</div>
+                            
+                        </ColView>
+                    </TwoNameBox>
+                </InputBox>
 
-                    <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={staffName} style={{flex:1}} onChange={(e)=>{setStaffName(e.target.value)}}></InputLine>
-                    </InputBox>
+                <NameBox>
+                    회사코드
+                </NameBox>
 
-                    <NameBox>
-                        <TwoNameBox >
-                            <ColView  style={{justifyContent:"center",alignItems:"center"}}>
-                                <div style={{marginBottom:5}}>직원 </div>
-                                <div >Kakao 계정</div>
-                                
-                            </ColView>
-                        </TwoNameBox>
-                    </NameBox>
-
-                    <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={kakaoAcount} style={{flex:1}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
-                    </InputBox>
-                </PrView>
-                <PrView>
-                    <NameBox>
-                        직원 연락처
-                    </NameBox>
-
-                    <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={staffAddress} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}}></InputLine>
-                    </InputBox>
-
-                    <NameBox>
-                        직원 이메일
-                    </NameBox>
-
-                    <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={staffEmail} style={{flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
-                    </InputBox>
-                </PrView>
-                
-                
-                
-                
-                    <CenterView>
-                        <RegistButton onClick={()=>{registStaff()}}>
-                            등록
-                        </RegistButton>
+                <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius: "0 10px  0 0 "}}>
+                    <CenterView  style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:16}}>
+                        {cCode}
                     </CenterView>
+                </InputBox>
+                
+            </PrView>
+            
+            <PrView>
+                <NameBox style={{borderTop:"2px solid rgb(244, 244, 244)",borderBottom:"2px solid rgb(244, 244, 244)"}}>
+                    
+                    <TwoNameBox >
+                        <ColView  style={{justifyContent:"center",alignItems:"center"}}>
+                            <div style={{marginBottom:5}}>직원 코드</div>
+                            <div style={{color:COLOR.RED}}>
+                                {`(자동 완성)`}
+                            </div>
+                            
+                        </ColView>
+                    </TwoNameBox>
+                </NameBox>
+
+                <LongInputBox style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:16}}>
+                    {adminCode}
+                </LongInputBox>
+            </PrView>
+            
+            <PrView>
+                <NameBox style={{borderBottom:"2px solid rgb(244, 244, 244)"}}>
+                    직원 이름
+                </NameBox>
+
+                <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputLine value={staffName} style={{flex:1}} onChange={(e)=>{setStaffName(e.target.value)}}></InputLine>
+                </InputBox>
+
+                <NameBox style={{borderBottom:"2px solid rgb(244, 244, 244)"}}>
+                    <TwoNameBox >
+                        kakao 계정
+                            
+                    </TwoNameBox>
+                </NameBox>
+
+                <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputLine value={kakaoAcount} style={{flex:1}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
+                </InputBox>
+            </PrView>
+            <PrView style={{borderRadius: "0 0 10px 10px" }}>
+                <NameBox style={{borderRadius: "0 0 0 10px"}}>
+                    직원 연락처
+                </NameBox>
+
+                <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputLine value={staffAddress} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}}></InputLine>
+                </InputBox>
+
+                <NameBox>
+                    직원 이메일
+                </NameBox>
+
+                <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius: "0 0 10px 0"}}>
+                    <InputLine value={staffEmail} style={{flex:1,borderRadius: "0 0 10px 0"}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
+                </InputBox>
+            </PrView>
+            
+            
+            
+            
+            <CenterView>
+                <RegistButton onClick={()=>{registStaff()}}>
+                    등록
+                </RegistButton>
+            </CenterView>
                 
 
         </Wrapper>
@@ -215,30 +212,30 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     align-items:center;
     justify-content:space-around;
 
 `;
 const NameBox  = styled.div`
-    height : 80px;
+    height : 60px;
     width:140px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     justify-content:center;
     align-items:center;
 `;
 const InputBox  = styled.div`
-    height : 80px;
+    height : 60px;
     flex:1.3;
     display:flex;
     justyfiy-content:center;
     ailgn-items:center;
 `;
 const LongInputBox  = styled.div`
-    height : 80px;
+    height : 60px;
     flex:3.31;
     border: 2px solid ${COLOR.LIGHT_GRAY};
     border-left :0;
@@ -249,7 +246,7 @@ const LongInputBox  = styled.div`
 const InputLine  = styled.input`
     border 0px;
     padding-left:10px;
-    font-size:20px;
+    font-size: 16px;
 
 `;
 

@@ -17,7 +17,7 @@ const List = ({
                 brands.map((item,index)=>{
                     if(index+1 !== brands.length){
                         return(
-                            <Wrapper key={index}>
+                            <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 <ListItem item={item}/>
                             </Wrapper>
                         )
@@ -114,7 +114,7 @@ const ColView  = styled.div`
 `;
 const InColView  = styled.div`
     display:flex;
-    font-size:12px;
+    font-size:15px;
     justify-content:center;
     align-items:center;
 `;

@@ -45,12 +45,12 @@ const BrandRegist = ({infos,user}) =>{
             
                     
                 
-                <h2>브렌드 등록</h2>
-                <PrView>
-                    <NameBox  >
+                <h2 style={{marginLeft:"20px"}}>브렌드 등록</h2>
+                <PrView style={{borderRadius: "10px 10px 0 0 "}}>
+                    <NameBox  style={{borderRadius: "10px 0 0 0 "}}>
                         회사 이름
                     </NameBox>
-                    <LongInputBox style={{paddingRight:280,justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:0}}>
+                    <LongInputBox style={{borderRadius: "0 10px 0 0 ",paddingRight:280,justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:0}}>
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
                                 <div style={{marginBottom:5}}>{cNameKr}</div>
@@ -64,7 +64,7 @@ const BrandRegist = ({infos,user}) =>{
                 
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:"2px solid rgb(244, 244, 244)",borderBottom:"2px solid rgb(244, 244, 244)"}}>
                         브랜드 이름
                     </NameBox>
 
@@ -72,8 +72,9 @@ const BrandRegist = ({infos,user}) =>{
                         <InputLine value={brandName} style={{flex:1}} onChange={(e)=>{setBrandName(e.target.value)}}/>
                     </LongInputBox>
                 </PrView>
-                <PrView>
-                    <NameBox>
+
+                <PrView style={{borderRadius: "0 0 10px 10px" }}>
+                    <NameBox style={{borderRadius: "0 0 0 10px"}}>
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
                                 <div style={{marginBottom:5}}>{"서비스 기간 설정"}</div>
@@ -83,8 +84,8 @@ const BrandRegist = ({infos,user}) =>{
                         </TwoNameBox>
                     </NameBox>
 
-                    <LongInputBox style={{borderTop:0,display:"flex"}}>
-                        <InputLine value={serviceDate} style={{flex:1,textAlign:"center",paddingRight:280}} onChange={(e)=>{setServiceDate(e.target.value)}}/>
+                    <LongInputBox style={{borderTop:0,display:"flex",borderRadius: "0 0 10px 0"}}>
+                        <InputLine value={serviceDate} style={{flex:1,borderRadius: "0 0 10px 0",textAlign:"center",paddingRight:280}} onChange={(e)=>{setServiceDate(e.target.value)}}/>
                     </LongInputBox>
                 </PrView>
                 
@@ -146,30 +147,30 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     align-items:center;
     justify-content:space-around;
 
 `;
 const NameBox  = styled.div`
-    height : 80px;
+    height : 60px;
     width:280px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     justify-content:center;
     align-items:center;
 `;
 const InputBox  = styled.div`
-    height : 80px;
+    height : 60px;
     flex:1.3;
     display:flex;
     justyfiy-content:center;
     ailgn-items:center;
 `;
 const LongInputBox  = styled.div`
-    height : 80px;
+    height : 60px;
     flex:3.31;
     border: 2px solid ${COLOR.LIGHT_GRAY};
     border-left :0;

@@ -36,6 +36,7 @@ const SeasonList = ({user,infos,season=[],brands=[]}) => {
         <Wrapper>
           {!actionView &&
             <div>
+                <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold",marginBottom:20}}>시즌 목록</div>
               <SearchBar style={{width:"450px"}}>
                 <SearchBarHeader >
                     조회 조건
@@ -64,11 +65,13 @@ const SeasonList = ({user,infos,season=[],brands=[]}) => {
               </SearchBar>
             
                 <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,minWidth:"750px",alignItems:"end",}}>
-                    <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold"}}>시즌 목록</div>
-                    <div style={{marginRight:20,}}>{(season).length} 건</div>
+                    
+                    <div style={{marginLeft:20,}}></div>
+                    <Paging max={max} minWidth={"750px"} num={pageNumber} setNum={setPageNumber}/>
+                    <div style={{marginRight:20,minWidth:50}}>{(season).length} 건</div>
                 </PrView>
 
-                <Paging max={max} minWidth={"750px"} num={pageNumber} setNum={setPageNumber}/>
+                
 
 
                 <InputTableBox>
@@ -158,7 +161,7 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 

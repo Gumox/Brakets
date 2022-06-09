@@ -72,14 +72,15 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
             
               <h2 style={{marginLeft:20}}>시즌 등록</h2>
                   <InputTableBox>
-                  <PrView>
+                  <PrView style={{borderRadius: "10px 10px 0 0 "}}>
                       
-                      <HeaderCell>
-                          <NameBox  >
+                      <HeaderCell style={{borderRadius: "10px 0 0 0 "}}>
+                          <NameBox  style={{borderRadius: "10px 0 0 0 "}}>
                             브랜드 이름
                             </NameBox>
-                            <InputBox style={{justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:0}}>
-                                <select value={selectBrandId} style={{border:0,fontSize:20,fontWeight:"bold"}} onChange={(e)=>{setSelectBrandId(e.target.value)}}>
+                            
+                            <InputBox style={{borderRadius: "0 10px 0 0 ",paddingLeft:160 ,alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:0}}>
+                                <select value={selectBrandId} style={{borderRadius: "0 10px 0 0 ",border:0,fontSize:16,fontWeight:"bold"}} onChange={(e)=>{setSelectBrandId(e.target.value)}}>
                                     {
                                         brands.map((item,index)=>(
                                             <option key={index} value={item.brand_id}>{item.brand_name}</option>
@@ -93,7 +94,7 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
 
                     <PrView>
                         <HeaderCell>
-                          <NameBox  >
+                          <NameBox  style={{borderTop:"2px solid rgb(244, 244, 244)"}}>
                             시즌 이름
                             </NameBox>
                             <InputBox style={{borderBottom:0}}>
@@ -111,9 +112,9 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                         </HeaderCell>
                     </PrView>
 
-                    <PrView>
-                        <HeaderCell>
-                          <NameBox  >
+                    <PrView  style={{borderRadius: "0 0 10px 10px"}}>
+                        <HeaderCell style={{borderRadius: "0 0 0 10px"}}>
+                          <NameBox  style={{borderRadius: "0 0 0 10px",borderTop:"2px solid rgb(244, 244, 244)"}}>
                             시즌 시작일
                             </NameBox>
                             <InputBox style={{justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold"}}>
@@ -121,12 +122,12 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                             </InputBox>
                         </HeaderCell>
                      
-                        <HeaderCell>
-                          <NameBox  >
+                        <HeaderCell style={{borderRadius: "0 0 10px 0"}}>
+                          <NameBox style={{borderTop:"2px solid rgb(244, 244, 244)"}}>
                             시즌 종료일
                             </NameBox>
-                            <InputBox style={{justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold"}}>
-                                <input type="date" value={seasonEndDate} style={{border:0,fontSize:16,cursor:"pointer"}} onChange={(e)=>{setSeasonEndDate(moment(e.target.value).format("YYYY-MM-DD"))}}/>
+                            <InputBox style={{borderRadius: "0 0 10px 0",justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold"}}>
+                                <input type="date" value={seasonEndDate} style={{borderRadius: "0 0 10px 0",border:0,fontSize:16,cursor:"pointer"}} onChange={(e)=>{setSeasonEndDate(moment(e.target.value).format("YYYY-MM-DD"))}}/>
                             </InputBox>
                         </HeaderCell>
 
@@ -160,7 +161,7 @@ const NameBox  = styled.div`
     height : 60px;
     width:180px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     justify-content:center;
     align-items:center;

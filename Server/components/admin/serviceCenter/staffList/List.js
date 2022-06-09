@@ -51,7 +51,7 @@ const StaffsList = ({
                                 </HeaderCell>
         
                                 <HeaderCell>
-                                    {item.staff_name}
+                                        {item.staff_name}
                                 </HeaderCell>
         
                                 <HeaderCell>
