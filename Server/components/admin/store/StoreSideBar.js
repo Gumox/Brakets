@@ -53,7 +53,7 @@ const StoreSideBar =({path })=>{
                         매장 엑셀 등록
                     </SideMenu>
 
-                    <SideMenu selected={path === "/admin/storeControl/storeStaffsList"} onClick={() => router.push("/admin/storeControl/storeStaffsList")}>
+                    <SideMenu selected={path === "/admin/storeControl/storeStaffList"} onClick={() => router.push("/admin/storeControl/storeStaffList")}>
                         매장 직원 목록
                     </SideMenu>
 

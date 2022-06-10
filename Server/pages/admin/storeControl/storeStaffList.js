@@ -26,7 +26,7 @@ const StoreControl = ({user,store,brands,storeStaffs}) => {
             window.removeEventListener('resize',handleResize);
         }
     },[])
-    const [selectedView,setSelectedView] = useState()
+    
     return (
         <Wrapper style={{height:`${windowHeight}px`}}>
         <AdminHeader user={user} path={"/admin/storeControl"}/>
@@ -35,7 +35,9 @@ const StoreControl = ({user,store,brands,storeStaffs}) => {
             <StoreSideBar path={"/admin/storeControl/storeStaffList"}/>
             </SidebarSpace>
             <MainSpace >
-                <StoreStaffList storeStaffs={storeStaffs} store={store} brands={brands}/>
+            {
+            //    <StoreStaffList storeStaffs={storeStaffs} store={store} brands={brands}/>
+            }
             </MainSpace>
         </InSideWrapper>
         
@@ -70,7 +72,7 @@ export const getServerSideProps = async (ctx) => {
             .get(`${process.env.API_URL}/headquarter`,)
             .then(({ data }) => data.body), 
         ])
-        const [brands] = await Promise.all([
+        /*const [brands] = await Promise.all([
         axios
             .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
             .then(({ data }) => data.data), 
@@ -84,7 +86,7 @@ export const getServerSideProps = async (ctx) => {
             axios
               .get(`${process.env.API_URL}/store/getStoreStaffInHeadquarter?headquarterId=${user.headquarter_id}`,)
               .then(({ data }) => data.data), 
-        ])
+        ])*/
 
     
     if(user.level ===0){
@@ -92,10 +94,10 @@ export const getServerSideProps = async (ctx) => {
             props:
             {
             user:user,
-            infos:infos,
+            /*infos:infos,
             brands:brands,
             store:store,
-            storeStaffs:storeStaffs
+            storeStaffs:storeStaffs*/
             } 
         };
     }else{
