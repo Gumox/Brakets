@@ -186,7 +186,7 @@ const Wrapper = styled.div`
 
 const SelectOption = styled.select`
     border :0;
-    font-size:16px;
+    font-size:14px;
     padding:20px;
     &:focus { 
         outline: none !important;
@@ -196,7 +196,7 @@ const SelectOption = styled.select`
 const InputLine  = styled.input`
     border 0px;
     padding-left:20px;
-    font-size:16px;
+    font-size:14px;
     &:focus { 
         outline: none !important;
         border-color: #719ECE;
@@ -251,7 +251,7 @@ const HeaderCell = styled.div`
     width:200px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:2;
     padding:5px;
 `;

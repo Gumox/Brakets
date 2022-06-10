@@ -125,7 +125,7 @@ const HeaderHash  = styled.div`
     border-right:1px solid ${COLOR.LIGHT_GRAY};
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
 `;
 const HeaderCell = styled.div`
@@ -134,7 +134,7 @@ const HeaderCell = styled.div`
     width:200px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:2;
     padding:5px;
 `;
@@ -169,7 +169,7 @@ const ModifyView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
@@ -185,7 +185,7 @@ const ChangeView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
