@@ -131,6 +131,7 @@ const CustomerList = ({user,infos,customers,brands}) => {
                   }
                   
                 </InputTableBox>
+                
                 <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,width:"850px",alignItems:"end",}}>
                   <div style={{marginLeft:20,width:50}}></div>
                   <Paging max={max} minWidth={"750px"} num={pageNumber} setNum={setPageNumber}/>
