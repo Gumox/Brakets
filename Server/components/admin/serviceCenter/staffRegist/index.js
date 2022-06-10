@@ -244,10 +244,16 @@ const LongInputBox  = styled.div`
     ailgn-items:center;
 `;
 const InputLine  = styled.input`
-    border 0px;
+    border: 0px;
+    margin: 2px;
     padding-left:10px;
-    font-size: 15px;
-
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 
 

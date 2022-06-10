@@ -120,7 +120,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:1;
     padding:5px;
     /*border:2px solid ${COLOR.BLACK};

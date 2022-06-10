@@ -26,13 +26,13 @@ const StoreControl = ({user,store,brands,storeStaffs}) => {
             window.removeEventListener('resize',handleResize);
         }
     },[])
-    const [selectedView,setSelectedView] = useState()
+    
     return (
         <Wrapper style={{height:`${windowHeight}px`}}>
         <AdminHeader user={user} path={"/admin/storeControl"}/>
         <InSideWrapper>
             <SidebarSpace  style={{minHeight:`${windowHeight-120}px`}}>
-            <StoreSideBar path={"/admin/storeControl/storeStaffList"}/>
+            <StoreSideBar path={"/admin/storeControl/storeStaffsList"}/>
             </SidebarSpace>
             <MainSpace >
                 <StoreStaffList storeStaffs={storeStaffs} store={store} brands={brands}/>

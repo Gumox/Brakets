@@ -110,6 +110,8 @@ const StyleList = ({user,styles,products,brands}) => {
         <Wrapper>
           
             <div>
+                
+            <h2 style={{marginLeft:"15px",padding:"5px"}}>스타일 목록</h2>
               <SearchBar style={{width:"650px"}}>
                 <SearchBarHeader >
                     조회 조건
@@ -119,29 +121,38 @@ const StyleList = ({user,styles,products,brands}) => {
                           <SelectItemHeader >
                             브랜드
                           </SelectItemHeader>
-                          <SearchSelect style={{paddingLeft:20,flex:1,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                            onChange={(e)=>{setSelectedBrand(e.target.value)}}>
-                              <option  value={""} >{"전체"}</option>
-                              {
-                                brands.map((item,index)=>(
-                                  <option key={index} value={item.brand_id}>{item.brand_name}</option>
-                                ))
-                              }
-                          </SearchSelect>
+
+                          <div style={{display:"flex",flex:1,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <SearchSelect style={{paddingLeft:20}} 
+                                onChange={(e)=>{setSelectedBrand(e.target.value)}}>
+                                <option  value={""} >{"전체"}</option>
+                                {
+                                    brands.map((item,index)=>(
+                                    <option key={index} value={item.brand_id}>{item.brand_name}</option>
+                                    ))
+                                }
+                            </SearchSelect>
+                          </div>
+
                       </PrView>
                       <PrView style={{flex:1, backgroundColor:COLOR.WHITE,borderRadius:0,}}>
                           <SelectItemHeader >
                             카테고리
                           </SelectItemHeader>
-                          <SearchSelect style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                            onChange={(e)=>{setSelectedCategory(e.target.value)}}>
-                              <option  value={""} >{"전체"}</option>
-                              {
-                                categorys.map((item,index)=>(
-                                  <option key={index} value={item.text}>{item.text}</option>
-                                ))
-                              }
-                          </SearchSelect>
+                          
+                          <div style={{display:"flex",flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
+                            <SearchSelect style={{paddingLeft:20}} 
+                                onChange={(e)=>{setSelectedCategory(e.target.value)}}>
+                                <option  value={""} >{"전체"}</option>
+                                {
+                                    categorys.map((item,index)=>(
+                                    <option key={index} value={item.text}>{item.text}</option>
+                                    ))
+                                }
+                            </SearchSelect>
+                          </div>
+
+                          
                       </PrView>
                     </PrView>
                 <SearchBarButton onClick={()=>{
@@ -154,8 +165,10 @@ const StyleList = ({user,styles,products,brands}) => {
                 <SearchBarHeader >
                     스타일 코드
                 </SearchBarHeader>
-                
-                <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px",paddingLeft:20}} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
+
+                <div style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6,display:"flex"}}>
+                    <InputLine value={searchProductName} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
+                </div>
 
                 <SearchBarButton onClick={()=>{
                     setSlicedArray(slicingArray(stylesNameParse(styles,searchProductName),slicingNumber))
@@ -170,23 +183,23 @@ const StyleList = ({user,styles,products,brands}) => {
 
 
                 
-                        <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+                        
+                        
+                        <LaView style={{justifyContent:"space-between",alignItems:"center"}}>
 
-                            <h2 style={{marginLeft:"20px",padding:"5px"}}>스타일 목록</h2>
-                            <div style={{display:"flex",flexDirection:"row"}}>
-                                <div style={{marginRight:20,display:"flex",justifyContent:"center",alignItems:"center"}}>{(styles).length} 건</div>
-                                <AddButton onClick={()=>{
+                                <AddButton style={{fontSize:"15px"}} onClick={()=>{
                                     getCategorys(insertBrand);
                                     setAction(!action)
                                 }}>추가</AddButton>
-                            </div>
                             
+                            <Paging max={max} width={"420px"} num={pageNumber} setNum={setPageNumber}/>
+                            
+                            <div style={{marginRight:20,width:50,padding:"5px"}} >
+                                {(styles).length}건
+                            </div>
 
-                        </div>
-                        <div style={{marginBottom:10}}>
-                            <Paging max={max} width={"810px"} num={pageNumber} setNum={setPageNumber}/>
-                        </div>
-                        
+                        </LaView>
+
                         <PrView>
                         
                             <HeaderCell style={{flex:1}}>
@@ -226,14 +239,14 @@ const StyleList = ({user,styles,products,brands}) => {
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
-                                    <select style={{flex:1,textAlign:"center",border:"0px"}} value={insertBrand} onChange={(e)=>{getCategorys(e.target.value)}} 
+                                    <SearchSelect style={{flex:1,textAlign:"center",border:"0px"}} value={insertBrand} onChange={(e)=>{getCategorys(e.target.value)}} 
                                         >
                                         {
                                             brands.map((item,index)=>(
                                             <option key={index} value={item.brand_id}>{item.brand_name}</option>
                                             ))
                                         }
-                                    </select>
+                                    </SearchSelect>
                                 </div>
                             </LaView>
                             <LaView style={{flex:1,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -243,14 +256,14 @@ const StyleList = ({user,styles,products,brands}) => {
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
-                                    <select style={{flex:1,textAlign:"center",border:"0px"}} value={insertCategory} onChange={(e)=>{setInsertCategory(e.target.value)}} 
+                                    <SearchSelect style={{flex:1,textAlign:"center",border:"0px"}} value={insertCategory} onChange={(e)=>{setInsertCategory(e.target.value)}} 
                                         >
                                         {
                                             styleCategorys.map((item,index)=>(
                                             <option key={index} value={item.pcategory_id}>{item.category_name}</option>
                                             ))
                                         }
-                                    </select>
+                                    </SearchSelect>
                                 </div>
                             </LaView>
                             <LaView style={{flex:1,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -260,7 +273,7 @@ const StyleList = ({user,styles,products,brands}) => {
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
-                                    <input value={insertStyleNo||""} style={{flex:1,border:0,textAlign:"center"}} onChange={(e)=>{setInsertStyleNo(e.target.value)}}/>
+                                    <InputLine value={insertStyleNo||""} style={{flex:1,textAlign:"center"}} onChange={(e)=>{setInsertStyleNo(e.target.value)}}/>
                                 </div>
                             </LaView>
                             <LaView style={{flex:1,borderRadius: "0px 0px 10px 10px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,justifyContent:"space-evenly",alignItems:"center"}}>
@@ -339,11 +352,23 @@ const HeaderCell = styled.div`
     min-width:90px;
     justify-content:center;
     align-items:center;
-    font-size:15px;
+    font-size:14px;
     flex:1;
     padding:5px;
 `;
-
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    flex:1;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
 const InputTableBox  = styled.div`
     width:810px;
     margin-top:20px;
@@ -360,10 +385,11 @@ const LaView  = styled.div`
 `;
 const SelectItemHeader = styled.div`
     display : flex;
+    min-width:80px;
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 
@@ -403,22 +429,27 @@ const SearchBarButton = styled.div`
  
 const AddButton =styled.h2`
     color:${COLOR.RED};
-    margin-right:20px;
+    margin-left:20px;
+    min-width : 50px;
+    display: flex;
+    justify-content : center;
+    align-items:center;
+
     cursor: pointer;
     border-radius:5px;
-    padding:5px;
     &:hover{
         background-color:${COLOR.LIGHT_GRAY};
     }
 `
 const SearchSelect = styled.select`
   border :0;
-  border: 2px solid ${COLOR.LIGHT_GRAY};
-  height:30px;
+  margin:2px;
+  flex:1;
   min-width:175px;
   &:focus { 
     outline: none !important;
     border-color: #719ECE;
-  }
+    box-shadow: 0 0 10px #719ECE;
+    }
 `;
 export default StyleList

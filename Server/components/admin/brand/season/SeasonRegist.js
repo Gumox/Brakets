@@ -79,7 +79,7 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                             브랜드 이름
                             </NameBox>
                             
-                            <InputBox style={{borderRadius: "0 10px 0 0 ",paddingLeft:160 ,alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:0}}>
+                            <InputBox style={{borderRadius: "0 10px 0 0 ",paddingLeft:180 ,alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:0}}>
                                 <select value={selectBrandId} style={{borderRadius: "0 10px 0 0 ",border:0,fontSize:16,fontWeight:"bold"}} onChange={(e)=>{setSelectBrandId(e.target.value)}}>
                                     {
                                         brands.map((item,index)=>(
@@ -117,8 +117,8 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                           <NameBox  style={{borderRadius: "0 0 0 10px",borderTop:"2px solid rgb(244, 244, 244)"}}>
                             시즌 시작일
                             </NameBox>
-                            <InputBox style={{justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold"}}>
-                                <input type="date" value={seasonStartDate} style={{border:0,fontSize:16,cursor:"pointer"}} onChange={(e)=>{setSeasonStartDate(moment(e.target.value).format("YYYY-MM-DD"))}}/>
+                            <InputBox style={{justifyContent:"center",fontSize:20,fontWeight:"bold"}}>
+                                <InputLine type="date" value={seasonStartDate} style={{border:0,fontSize:14,cursor:"pointer",textAlign:"center"}} onChange={(e)=>{setSeasonStartDate(moment(e.target.value).format("YYYY-MM-DD"))}}/>
                             </InputBox>
                         </HeaderCell>
                      
@@ -126,8 +126,8 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                           <NameBox style={{borderTop:"2px solid rgb(244, 244, 244)"}}>
                             시즌 종료일
                             </NameBox>
-                            <InputBox style={{borderRadius: "0 0 10px 0",justifyContent:"center",alignItems:"center",fontSize:20,fontWeight:"bold"}}>
-                                <input type="date" value={seasonEndDate} style={{borderRadius: "0 0 10px 0",border:0,fontSize:16,cursor:"pointer"}} onChange={(e)=>{setSeasonEndDate(moment(e.target.value).format("YYYY-MM-DD"))}}/>
+                            <InputBox style={{borderRadius: "0 0 10px 0",justifyContent:"center",fontSize:20,fontWeight:"bold"}}>
+                                <InputLine type="date" value={seasonEndDate} style={{border:0,fontSize:16,cursor:"pointer",textAlign:"center"}} onChange={(e)=>{setSeasonEndDate(moment(e.target.value).format("YYYY-MM-DD"))}}/>
                             </InputBox>
                         </HeaderCell>
 
@@ -182,17 +182,22 @@ const RegistButton =styled.button`
     height : 50px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:14px;
     border-radius:10px;
 
 `;
 const InputLine  = styled.input`
-    flex:1;
-    border:0;
-    text-align:center;
-    font-size:20px;
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
     display:flex;
-
+    flex:1;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 const HeaderCell = styled.div`
     display:flex;
@@ -200,7 +205,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
 `;
 

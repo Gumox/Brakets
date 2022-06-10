@@ -194,14 +194,14 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderRadius: "0 10px 0 0 ",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <select style={{borderRadius: "0 10px 0 0 ",flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{getSeasonAndCategory(e.target.value)}}>
+                        <InputSelect style={{borderRadius: "0 10px 0 0 ",flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{getSeasonAndCategory(e.target.value)}}>
                             <option value={""}>{}</option>
                             {
                                 brands.map((item,index)=>(
                                     <option key={index} value={item.brand_id}>{item.brand_name}</option>
                                 ))
                             }
-                        </select>
+                        </InputSelect>
                     </InputBox>
                 </PrView>
 
@@ -232,20 +232,20 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                         <InputLine value={orgPrice || ""} style={{flex:1}} onChange={(e)=>{setOrgPrice(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
-                {/*------------------------------------------------------------------------------------------------------------------*/}
+
                 <PrView>
                     <NameBox style={{borderTop:`2px solid rgb(244, 244, 244)`}}>
                         시즌
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <select value={seasonSelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{setSeasonSelected(e.target.value)}}>
+                        <InputSelect value={seasonSelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{setSeasonSelected(e.target.value)}}>
                             {
                                 seasons.map((item,index)=>(
                                     <option key={index} value={item.value}>{item.season_name}</option>
                                 ))
                             }
-                        </select>
+                        </InputSelect>
                     </InputBox>
 
                     <NameBox style={{borderTop:`2px solid rgb(244, 244, 244)`}}>
@@ -253,13 +253,13 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <select value={categorySelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{getStyle(e.target.value,brandId)}}>
+                        <InputSelect value={categorySelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{getStyle(e.target.value,brandId)}}>
                             {
                                 categorys.map((item,index)=>(
                                     <option key={index} value={item.pcategory_id}>{item.category_name}</option>
                                 ))
                             }
-                        </select>
+                        </InputSelect>
                     </InputBox>
                 </PrView>
 
@@ -269,13 +269,13 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <select value={styleSelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{setStyleSelected(e.target.value)}}>
+                        <InputSelect value={styleSelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{setStyleSelected(e.target.value)}}>
                             {
                                 styles.map((item,index)=>(
                                     <option key={index} value={item.value}>{item.text}</option>
                                 ))
                             }
-                        </select>
+                        </InputSelect>
                     </InputBox>
 
                     <NameBox style={{borderTop:`2px solid rgb(244, 244, 244)`}}>
@@ -441,11 +441,27 @@ const LongInputBox  = styled.div`
 
 `;
 const InputLine  = styled.input`
-    border 0px;
+    border: 0px;
+    margin: 2px;
     padding-left:10px;
-    font-size:20px;
+    font-size:14px;
     display:flex;
-
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
+const InputSelect  = styled.select`
+    border: 0px;
+    margin: 2px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 
 const ImageInput = styled.input`

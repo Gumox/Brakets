@@ -46,15 +46,19 @@ const SeasonList = ({user,infos,season=[],brands=[]}) => {
                           <SelectItemHeader >
                             브랜드
                           </SelectItemHeader>
-                          <select value={selectedBrand} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                            onChange={(e)=>{setSelectedBrand(e.target.value)}}>
-                              <option  value={"ALL"} >{"전체"}</option>
-                              {
-                                brands.map((item,index)=>(
-                                  <option key={index} value={item.brand_name}>{item.brand_name}</option>
-                                ))
-                              }
-                          </select>
+                          <div  style={{display:"flex",flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <SearchSelect value={selectedBrand} style={{paddingLeft:20,flex:1}} 
+                                onChange={(e)=>{setSelectedBrand(e.target.value)}}>
+
+                                <option  value={"ALL"} >{"전체"}</option>
+                                {
+                                    brands.map((item,index)=>(
+                                        <option key={index} value={item.brand_name}>{item.brand_name}</option>
+                                    ))
+                                }
+                            </SearchSelect>
+                          </div>
+                          
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
@@ -209,7 +213,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
     padding:5px;
     /*border:2px solid ${COLOR.BLACK};
@@ -234,4 +238,27 @@ const SearchImage =styled.img`
   cursor: pointer;
 `;
 
+const SearchSelect = styled.select`
+  border :0;
+  margin:2px;
+  flex:1;
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+    }
+`;
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
 export default SeasonList

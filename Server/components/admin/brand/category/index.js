@@ -89,15 +89,19 @@ const CategoryList = ({user,infos,categorys,brands}) => {
                           <SelectItemHeader >
                             브랜드
                           </SelectItemHeader>
-                          <select value={selectedBrand} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                            onChange={(e)=>{setSelectedBrand(e.target.value)}}>
-                              <option  value={""} >{"전체"}</option>
-                              {
-                                brands.map((item,index)=>(
-                                  <option key={index} value={item.brand_name}>{item.brand_name}</option>
-                                ))
-                              }
-                          </select>
+                          
+                          <div style={{display:"flex",flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
+                            <SearchSelect value={selectedBrand} style={{paddingLeft:20,flex:1}} 
+                                onChange={(e)=>{setSelectedBrand(e.target.value)}}>
+                                <option  value={""} >{"전체"}</option>
+                                {
+                                    brands.map((item,index)=>(
+                                    <option key={index} value={item.brand_name}>{item.brand_name}</option>
+                                    ))
+                                }
+                            </SearchSelect>
+                          </div>
+                          
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
@@ -115,7 +119,7 @@ const CategoryList = ({user,infos,categorys,brands}) => {
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
                                 <LaView style={{width:"100%",justifyContent:"space-between",marginBottom:10}}>
 
-                                    <DivButton style={{marginLeft:20,paddingBottom:10, fontWeight:"bold"}} onClick={()=>{setAddState(!addState)}}>
+                                    <DivButton style={{marginLeft:20,paddingBottom:10, fontWeight:"bold"}} onClick={()=>{setAction(!action)}}>
                                         추가
                                     </DivButton>
 
@@ -161,14 +165,14 @@ const CategoryList = ({user,infos,categorys,brands}) => {
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
-                                    <select style={{flex:1,textAlign:"center",border:"0px"}} value={insertBrand} onChange={(e)=>{setInsertBrand(e.target.value)}} 
+                                    <SearchSelect style={{flex:1,textAlign:"center",border:"0px"}} value={insertBrand} onChange={(e)=>{setInsertBrand(e.target.value)}} 
                                         >
                                         {
                                             brands.map((item,index)=>(
                                             <option key={index} value={item.brand_id}>{item.brand_name}</option>
                                             ))
                                         }
-                                    </select>
+                                    </SearchSelect>
                                 </div>
                             </LaView>
                             <LaView style={{flex:1,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -178,7 +182,7 @@ const CategoryList = ({user,infos,categorys,brands}) => {
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
-                                    <input value={insertCategoryName||""} style={{flex:1,border:0,textAlign:"center"}} onChange={(e)=>{setInsertCategoryName(e.target.value)}}/>
+                                    <InputLine value={insertCategoryName||""} style={{flex:1,border:0,textAlign:"center"}} onChange={(e)=>{setInsertCategoryName(e.target.value)}}/>
                                 </div>
                             </LaView>
                             <LaView style={{flex:1,borderRadius: "0px 0px 10px 10px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,justifyContent:"space-evenly",alignItems:"center"}}>
@@ -301,6 +305,30 @@ const SearchBarButton = styled.div`
     display: flex;
     justify-content:center;
     align-items:center;
+`;
+
+const SearchSelect = styled.select`
+  border :0;
+  margin:2px;
+  flex:1;
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+    }
+`;
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 const DivButton = styled.div`
 color:${COLOR.RED};

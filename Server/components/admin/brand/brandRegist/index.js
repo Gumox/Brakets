@@ -78,7 +78,7 @@ const BrandRegist = ({infos,user}) =>{
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
                                 <div style={{marginBottom:5}}>{"서비스 기간 설정"}</div>
-                                <div >{"( 매장앱-고객약속일로 표시 )"}</div>
+                                <div >{"( 매장앱-고객약속일로 표시 )"}</div>x
                                 
                             </ColView>
                         </TwoNameBox>
@@ -147,7 +147,7 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 16px;
+    font-size: 14px;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -157,7 +157,7 @@ const NameBox  = styled.div`
     height : 60px;
     width:280px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 16px;
+    font-size: 14px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -181,13 +181,17 @@ const LongInputBox  = styled.div`
 
 `;
 const InputLine  = styled.input`
-    border 0px;
+    border: 0px;
+    margin: 2px;
     padding-left:10px;
-    font-size:20px;
+    font-size:14px;
     display:flex;
-
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
-
 
 
 

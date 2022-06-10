@@ -35,8 +35,7 @@ const BrandList = ({user,infos,brands,staffs}) => {
                   <InputTableBox>
                   <PrView>
                       
-                      <HeaderCell //style={{borderLeft:"2px solid"}}
-                      >
+                      <HeaderCell>
                           회사이름
                       </HeaderCell>
 
@@ -46,8 +45,8 @@ const BrandList = ({user,infos,brands,staffs}) => {
 
                       <HeaderCell>
                           <ColView>
-                              <InColView style={{fontSize:"15px"}}> 서비스 기간 </InColView>
-                              <InColView style={{fontSize:"11px"}}> (고객 약속일) </InColView>
+                              <InColView style={{fontSize:"14px"}}> 서비스 기간 </InColView>
+                              <InColView style={{fontSize:"10px"}}> (고객 약속일) </InColView>
                           </ColView>
                       </HeaderCell>
 
@@ -115,7 +114,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
     padding:5px;
     /*border:2px solid ${COLOR.BLACK};

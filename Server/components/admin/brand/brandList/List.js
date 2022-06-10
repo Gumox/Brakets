@@ -74,12 +74,20 @@ const ListItem =({item})=>{
 
             <HeaderCell>
                 {!modifyOn && <div>{item.brand_name}</div>}
-                {modifyOn && <input style={{textAlign:"center"}} placeholder={item.brand_name} onChange={(e)=>{setModifyBrandName(e.target.value)}}/>}
+                {modifyOn &&
+                    <div style={{flex:1,display:"flex",justifyContent:"center",height:"56px"}}>
+                        <InputLine style={{textAlign:"center", border:0, borderBottom:"2px solid", margin:5}} placeholder={item.brand_name} onChange={(e)=>{setModifyBrandName(e.target.value)}}/>
+                    </div> 
+                }
             </HeaderCell>
 
             <HeaderCell>
                 {!modifyOn && <div>{item.service_date+" 일"}</div>}
-                {modifyOn && <input type="number" style={{textAlign:"center"}} placeholder={item.service_date} onChange={(e)=>{setModifyServiceDate(e.target.value)}}/>}
+                {modifyOn &&
+                    <div style={{flex:1,display:"flex",justifyContent:"center",height:"56px"}}>
+                        <InputLine type="number" style={{textAlign:"center", border:0, borderBottom:"2px solid", margin:5}} placeholder={item.service_date} onChange={(e)=>{setModifyServiceDate(e.target.value)}}/>
+                    </div> 
+                }
             </HeaderCell>
 
             
@@ -114,7 +122,7 @@ const ColView  = styled.div`
 `;
 const InColView  = styled.div`
     display:flex;
-    font-size:15px;
+    font-size:13px;
     justify-content:center;
     align-items:center;
 `;
@@ -124,7 +132,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:1;
     padding:5px;
     /*border:2px solid ${COLOR.BLACK};
@@ -164,7 +172,18 @@ const ChangeView = styled.div`
     }
 
 `;
-
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:13px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
 
 
 export default List

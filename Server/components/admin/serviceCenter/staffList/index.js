@@ -29,19 +29,22 @@ const StaffList = ({user,infos,brands,staffs}) => {
         <Wrapper>
           {!actionView &&
             <div>
+              <h2 style={{margin:20}}>서비스 센터 직원 목록</h2>
               <SearchStaffBar>
                 <SearchStaffBarHeader >
                     직원 이름
                 </SearchStaffBarHeader>
+                <div  style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,display:"flex"}}>
+                  <InputLine value={staffName} style={{flex:1}} onChange={(e)=>{setStaffName(e.target.value)}}/>
+
+                </div>
                 
-                <input value={staffName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px"}} onChange={(e)=>{setStaffName(e.target.value)}}/>
 
                 <SearchStaffBarButton onClick={()=>{staffParse(staffName)}}>
                     <SearchImage  src="/icons/search.png"/>
                 </SearchStaffBarButton>
               </SearchStaffBar>
             
-              <h2 style={{marginLeft:20}}>서비스 센터 직원 목록</h2>
                   <InputTableBox>
                   <PrView>
                       
@@ -163,5 +166,16 @@ const SearchImage =styled.img`
   height: 20px;
   cursor: pointer;
 `;
-
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
 export default StaffList

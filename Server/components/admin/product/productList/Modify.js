@@ -102,72 +102,72 @@ const ProductModify = ({
             
                     
                 
-                <h2>상품 정보 변경</h2>
+                <h2 style={{marginLeft:20}}>상품 정보 변경</h2>
                 
-                <PrView>
-                    <div>
-                    <PrView>
-                        <NameBox>
-                            상품 바코드
-                        </NameBox>
+                <PrView tyle={{borderRadius: "10px 10px 0 0 "}}>
+                    <div tyle={{borderRadius: "10px 10px 0 0 "}}>
+                        <PrView style={{borderRadius: "10px 0 0 0 "}}>
+                            <NameBox style={{borderRadius: "10px 0 0 0 "}}>
+                                상품 바코드
+                            </NameBox>
 
-                        <InputBoxTr style={{borderLeft: `2px solid ${COLOR.LIGHT_GRAY}`,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine value={productBarcode ||""} style={{flex:1,maxWidth:"205px"}} onChange={(e)=>{setProductBarcode(e.target.value)}}></InputLine>
-                        </InputBoxTr>
+                            <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                <InputLine value={productBarcode ||""} style={{flex:1,maxWidth:"205px"}} onChange={(e)=>{setProductBarcode(e.target.value)}}/>
+                            </InputBoxTr>
 
-                        <NameBox>
-                            브랜드
-                        </NameBox>
+                            <NameBox>
+                                브랜드
+                            </NameBox>
 
-                        <InputBoxTr style={{width:"295px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,fontWeight:"bold",fontSize:"20px",display:"flex",justifyContent:"center",alignItems:"center"}}>
-                            {item.brand_name}
-                        </InputBoxTr>
-                    </PrView>
+                            <InputBoxTr style={{width:"291px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,fontWeight:"bold",fontSize:"20px",display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                {item.brand_name}
+                            </InputBoxTr>
+                        </PrView>
 
-                    <PrView >
-                        <NameBox>
-                            상품 명
-                        </NameBox>
+                        <PrView >
+                            <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
+                                상품 명
+                            </NameBox>
 
-                        <LongInputBox style={{maxWidth:"650px"}}>
-                            <InputLine value={productName ||""} style={{flex:1,borderLeft:`2px solid ${COLOR.LIGHT_GRAY}`,maxWidth:"645px"}} onChange={(e)=>{setProductName(e.target.value)}}></InputLine>
-                        </LongInputBox>
-                    </PrView>
+                            <LongInputBox style={{maxWidth:"646px"}}>
+                                <InputLine value={productName ||""} style={{flex:1,maxWidth:"645px"}} onChange={(e)=>{setProductName(e.target.value)}}/>
+                            </LongInputBox>
+                        </PrView>
 
-                    <PrView>
-                        <NameBox>
-                            희망 소비자가
-                        </NameBox>
+                        <PrView>
+                            <NameBox  style={{borderTop:"2px solid rgb(244,244,244)"}}>
+                                판매가
+                            </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,width:"210px"}}>
-                            <InputLine value={tagPrice || ""} style={{flex:1,maxWidth:"205px"}} onChange={(e)=>{setTagPrice(e.target.value)}}></InputLine>
-                        </InputBox>
+                            <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,width:"210px"}}>
+                                <InputLine value={tagPrice || ""} style={{flex:1,maxWidth:"205px"}} onChange={(e)=>{setTagPrice(e.target.value)}}/>
+                            </InputBox>
 
-                        <NameBox>
-                            원가
-                        </NameBox>
+                            <NameBox >
+                                원가
+                            </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,width:"295px"}}>
-                            <InputLine value={orgPrice || ""} style={{flex:1,maxWidth:"290px"}} onChange={(e)=>{setOrgPrice(e.target.value)}}></InputLine>
-                        </InputBox>
-                    </PrView>
+                            <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,width:"291px"}}>
+                                <InputLine value={orgPrice || ""} style={{flex:1,width:"290px"}} onChange={(e)=>{setOrgPrice(e.target.value)}}/>
+                            </InputBox>
+                        </PrView>
                     </div>
 
-                    <div style={{flex:1,height:"180px",display:"flex",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <ProductImage src={item.image}/>
+                    <div style={{borderRadius: "0 10px 0 0 ",flex:1,height:"180px",display:"flex",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <ProductImage style={{borderRadius: "0 10px 0 0 " }} src={item.image}/>
                     </div>
                 </PrView>
 
                 <PrView>
-                    <NameBox >
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         시즌
                     </NameBox>
 
-                    <InputBoxTr style={{borderLeft: `2px solid ${COLOR.LIGHT_GRAY}`,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>
+                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>
                         {item.season_name}
                     </InputBoxTr>
 
-                    <NameBox >
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         카테고리
                     </NameBox>
 
@@ -184,36 +184,36 @@ const ProductModify = ({
                 </PrView>
 
                 <PrView>
-                    <NameBox >
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         Color
                     </NameBox>
 
-                    <InputBoxTr style={{borderLeft: `2px solid ${COLOR.LIGHT_GRAY}`,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
-                        <InputLine value={color ||""} style={{flex:1,width:"210px",fontSize:14,textAlign:"center"}} onChange={(e)=>{setColor(e.target.value)}}></InputLine>
-                        
+                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>
+                        <InputLine value={color ||""} style={{flex:1,fontSize:14,textAlign:"center"}} onChange={(e)=>{setColor(e.target.value)}}/>
                     </InputBoxTr>
 
-                    <NameBox >
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         차수
                     </NameBox>
 
-                    <InputBoxTr style={{width:"150px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderLeft: `3px solid ${COLOR.LIGHT_GRAY}`}} >
-                        <InputLine value={degree ||""} style={{flex:1,width:"150px",fontSize:14,textAlign:"center"}} onChange={(e)=>{setDegree(e.target.value)}}></InputLine>
-                        
+                    <InputBoxTr style={{width:"150px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderLeft: `3px solid ${COLOR.LIGHT_GRAY}`}} >
+                        <InputLine value={degree ||""} style={{flex:1,width:"146px",fontSize:14,textAlign:"center"}} onChange={(e)=>{setDegree(e.target.value)}}/>
                     </InputBoxTr>
-                    <NameBox >
+
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         Size
                     </NameBox>
 
-                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
-                        <InputLine value={size ||""} style={{flex:1,width:"200px",fontSize:14,textAlign:"center"}} onChange={(e)=>{setSize(e.target.value)}}></InputLine>
-                        
+                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>
+                        <InputLine value={size ||""} style={{flex:1,width:"200px",fontSize:14,textAlign:"center"}} onChange={(e)=>{setSize(e.target.value)}}/>
                     </InputBoxTr>
                 </PrView>
 
                
-                <PrView >
-                    <NameBox style={{height:240}}>
+
+               
+                <PrView style={{borderRadius: "0 0 10px 10px"}}>
+                    <NameBox style={{width:"144px",borderRadius: "0 0 0 10px",height:240, borderTop:"2px solid rgb(244,244,244)"}}>
                         <TwoNameBox>
                             <ColView>
                                 상품 이미지
@@ -224,7 +224,7 @@ const ProductModify = ({
                         </TwoNameBox>
                     </NameBox>
 
-                    <LongInputBox style={{height:240,borderTop:0,flexDirection:"column",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <LongInputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius: "0 0 10px 0",height:240,flexDirection:"column",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         
                         <PrView style={{flex:1,alignItems:"center" ,height:"80px"}}>
                             <CheckBox checked={useURL} style={{marginLeft:20}} type="checkbox" onChange={()=>{setUseURL(!useURL)}}/>
@@ -232,7 +232,7 @@ const ProductModify = ({
                             <input disabled={!useURL} value={imgURL ||""} style={{flex:1,height:"20px",marginLeft:20,marginRight:20,border:0,borderBottom:`2px solid ${disabledLineColor}`}} onChange={(e)=>{setImgURL(e.target.value)}}/>
                         </PrView>
                         
-                        <PrView style={{flex:2,alignItems:"center" ,height:"160px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <PrView style={{borderRadius: "0 0 10px 0",flex:2,alignItems:"center" ,height:"160px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
 
                             <div style={{display:"flex",alignItems:"center", width :120,height:"160px"}}>
                                 <label htmlFor="image_file">
@@ -329,7 +329,6 @@ const NameBox  = styled.div`
     align-items:center;
 `;
 const InputBox  = styled.div`
-    border-left: 2px solid ${COLOR.LIGHT_GRAY};
     height : 60px;
     width:360px;
     display:flex;
@@ -363,7 +362,6 @@ const InputLine  = styled.input`
     border 0px;
     padding-left:10px;
     font-size:20px;
-    display:flex;
 
 `;
 

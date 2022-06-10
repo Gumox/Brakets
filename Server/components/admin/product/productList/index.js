@@ -86,43 +86,55 @@ const ProductList = ({user,infos,products,brands}) => {
                           <SelectItemHeader >
                             브랜드
                           </SelectItemHeader>
-                          <select style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                            onChange={(e)=>{setSelectedBrand(e.target.value)}}>
-                              <option  value={""} >{"전체"}</option>
-                              {
-                                brands.map((item,index)=>(
-                                  <option key={index} value={item.brand_id}>{item.brand_name}</option>
-                                ))
-                              }
-                          </select>
+
+                          <div style={{flex:0.7,display:"flex",borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
+                            <SearchSelect style={{paddingLeft:20,flex:1}} 
+                              onChange={(e)=>{setSelectedBrand(e.target.value)}}>
+                                <option  value={""} >{"전체"}</option>
+                                {
+                                  brands.map((item,index)=>(
+                                    <option key={index} value={item.brand_id}>{item.brand_name}</option>
+                                  ))
+                                }
+                            </SearchSelect>
+                          </div>
+                          
                       </PrView> 
                       <PrView style={{flex:1, backgroundColor:COLOR.WHITE,borderRadius:0,}}>
                           <SelectItemHeader >
                             시즌
                           </SelectItemHeader>
-                          <select style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                            onChange={(e)=>{setSelectedSeason(e.target.value)}}>
-                              <option  value={""} >{"전체"}</option>
-                              {
-                                seasons.map((item,index)=>(
-                                  <option key={index} value={item.text}>{item.text}</option>
-                                ))
-                              }
-                          </select>
+
+                          <div style={{flex:0.7,display:"flex",borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
+                            <SearchSelect style={{paddingLeft:20,flex:1}} 
+                              onChange={(e)=>{setSelectedSeason(e.target.value)}}>
+                                <option  value={""} >{"전체"}</option>
+                                {
+                                  seasons.map((item,index)=>(
+                                    <option key={index} value={item.text}>{item.text}</option>
+                                  ))
+                                }
+                            </SearchSelect>
+                          </div>
+                          
                       </PrView>
                       <PrView style={{flex:1, backgroundColor:COLOR.WHITE,borderRadius:0,}}>
                           <SelectItemHeader >
                             카테고리
                           </SelectItemHeader>
-                          <select style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                            onChange={(e)=>{setSelectedCategory(e.target.value)}}>
-                              <option  value={""} >{"전체"}</option>
-                              {
-                                categorys.map((item,index)=>(
-                                  <option key={index} value={item.text}>{item.text}</option>
-                                ))
-                              }
-                          </select>
+
+                          <div style={{flex:0.7,display:"flex",borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
+                            <SearchSelect style={{paddingLeft:20,flex:1}} 
+                              onChange={(e)=>{setSelectedCategory(e.target.value)}}>
+                                <option  value={""} >{"전체"}</option>
+                                {
+                                  categorys.map((item,index)=>(
+                                    <option key={index} value={item.text}>{item.text}</option>
+                                  ))
+                                }
+                            </SearchSelect>
+                          </div>
+                          
                       </PrView>
                     </PrView>
                 <SearchBarButton onClick={()=>{
@@ -135,9 +147,11 @@ const ProductList = ({user,infos,products,brands}) => {
                 <SearchBarHeader >
                     상품명
                 </SearchBarHeader>
-                
-                <input value={searchProductName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px",paddingLeft:20}}
+                <div style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6,display:"flex"}}>
+                  <InputLine value={searchProductName} style={{flex : 1,paddingLeft:20}}
                        onKeyPress={(e)=>{nameHandlePress(e)}} onChange={(e)=>{setSearchProductName(e.target.value)}}/>
+
+                </div>
 
                 <SearchBarButton onClick={()=>{
                     setSlicedArray(slicingArray(productsNameParse(products,searchProductName)))
@@ -299,6 +313,7 @@ const PrView  = styled.div`
 const SelectItemHeader = styled.div`
     display : flex;
     flex:0.3;
+    min-width:80px;
     justify-content : center;
     align-items : center;
     font-size: 15px;
@@ -339,4 +354,27 @@ const SearchBarButton = styled.div`
     align-items:center;
 `;
 
+const SearchSelect = styled.select`
+  border :0;
+  margin:2px;
+  flex:1;
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+    }
+`;
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
 export default ProductList

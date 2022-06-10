@@ -53,7 +53,7 @@ const StoreSideBar =({path })=>{
                         매장 엑셀 등록
                     </SideMenu>
 
-                    <SideMenu selected={path === "/admin/storeControl/storeStaffList"} onClick={() => router.push("/admin/storeControl/storeStaffList")}>
+                    <SideMenu selected={path === "/admin/storeControl/storeStaffsList"} onClick={() => router.push("/admin/storeControl/storeStaffsList")}>
                         매장 직원 목록
                     </SideMenu>
 
@@ -95,24 +95,3 @@ const SideMenu = styled.div`
     &: hover {
         color: rgb(180,180,180);
 }`
-/*<ProSidebar style={{...styles.menu,minHeight:`${windowHeight-120}px`}}>
-                <Menu  style={styles.menu} iconShape="square">
-                    <MenuItem></MenuItem>
-                    <MenuItem  style={{color : listColor }} onClick={() => {
-                        router.push("/admin/storeControl")
-                    }}>
-                        매장 목록
-                    </MenuItem>
-                    <MenuItem style={{color : eachRegistColor}} onClick={() => {
-                        router.push("/admin/storeControl/storeEachRegist")
-                    }}>
-                        매장 개별 등록
-                    </MenuItem>
-                    <MenuItem style={{color : excelRegistColor}} onClick={() => {
-                        router.push("/admin/storeControl/storeEachRegist")
-                    }}>
-                        매장 엑셀 등록
-                    </MenuItem>
-                    
-                </Menu>
-            </ProSidebar> */
