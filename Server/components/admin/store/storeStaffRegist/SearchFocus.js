@@ -125,7 +125,7 @@ const SearchFocus = ({
               :<MultiCheck></MultiCheck>
             }
           </div>
-          <InputLine placeholder="검색 or 입력" value={name || ""} style={{flex:1,minHeight:"56px",border:0,padding:10 ,display:"flex"}} 
+          <InputLine placeholder="검색 or 입력" value={name || ""} style={{flex:1,minHeight:"52px",border:0,padding:10 ,display:"flex"}} 
             onKeyPress={(e)=>{keyPressHandler(e)}}
             onChange={(e)=>{search(e.target.value)}}/>
         </PrView>
@@ -190,7 +190,7 @@ const SearchResult = styled.div`
     padding-bottom:5px;
     
     padding-left:120px;
-    font-size:18px;
+    font-size:14px;
     display:flex;
     align-items:center;
     height:30px;
@@ -206,14 +206,14 @@ const PrView  = styled.div`
     flex-direction:row;
 `;
 const InputLine  = styled.input`
-    border 0px;
+    border: 0px;
+    margin: 2px;
     padding-left:10px;
-    font-size:15px;
+    font-size:14px;
     display:flex;
     &:focus { 
-      outline: none !important;
-      border-color: #719ECE;
-        
+        outline: none !important;
+        border-color: #719ECE;
+        //box-shadow: 0 0 10px #719ECE;
     }
-
 `;

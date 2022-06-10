@@ -4,16 +4,18 @@ import COLOR from "../../../../constants/color";
 import axios from "axios";
 import _ from "lodash";
 import remakeCallNumber from "../../../../functions/remakeCallNumber";
-//import StoreModify from "./Modify";
+import StaffModify from "./Modify";
 
 const List = ({
     user=[],
     infos=[],
     store=[],
+    allStore=[],
     brands=[],
     setActionView=()=>{}
 }) => {
     const cancel =()=>{
+        console.log("5555")
         setActionView(null)
     }
     
@@ -24,13 +26,13 @@ const List = ({
                     if(index+1 !== store.length){
                         return(
                             <Wrapper key={index}  style={{borderBottom:`1px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <ListItem item={item} cancel={cancel} infos={infos} brands={brands} user={user} store={store} setActionView={setActionView}/>
+                                <ListItem item={item} cancel={cancel} staff={allStore} setActionView={setActionView}/>
                             </Wrapper>
                         )
                     }else{
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
-                                <ListItem item={item} cancel={cancel} infos={infos} brands={brands} user={user} store={store} setActionView={setActionView}/>
+                                <ListItem item={item} cancel={cancel} staff={allStore} setActionView={setActionView}/>
                             </Wrapper>
                         )
                     }
@@ -45,13 +47,11 @@ const List = ({
 
 const ListItem =({
     item,
-    infos=[],
-    brands=[],
-    user=[],
-    store=[],
+    staff=[],
     setActionView=()=>{},
     cancel=()=>{}
 })=>{
+    const staffInfo = _.filter(staff,{"staff_account":item.staff_account})
     return(
         <PrView>
                       
@@ -87,8 +87,14 @@ const ListItem =({
             
             <HeaderCell style={{color: COLOR.RED,flex:1}}>
                 {item.staff_code === "A" 
-                    ?<div></div>
-                    :<ModifyView>정보 수정</ModifyView>
+                    ?
+                    <div></div>
+                    :
+                    <ModifyView onClick={()=>{setActionView(
+                        <StaffModify item={staffInfo} cancel={cancel}/>
+                    )}}>
+                        정보 수정
+                    </ModifyView>
                 }
             </HeaderCell>
         </PrView>
@@ -106,7 +112,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:1;
     padding-left:15px;
     padding-right:15px;
@@ -131,7 +137,7 @@ const ModifyView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;

@@ -1,18 +1,16 @@
 import React ,{useEffect,useState,useCallback, useContext} from "react";
 import styled from "styled-components";
-import COLOR from "../../../constants/color";
+import COLOR from "../../../../constants/color";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 import _,{ debounce } from "lodash";
-import remakeCallNumber from "../../../functions/remakeCallNumber";
+import remakeCallNumber from "../../../../functions/remakeCallNumber";
 
 const StaffModify = ({
     item=[],
-    staffs=[],
     cancel=()=>{}
 }) =>{
     
-    const brandList =  _.sortBy(_.filter(staffs,{"staff_code":'A'}),"brand_name")
     
     let brandListToString = ""
     item.map((item)=>{
@@ -81,10 +79,10 @@ const StaffModify = ({
             
                     
                 
-                <h2 style={{marginLeft:15}}>직원 등록</h2>
-                <div style={{border:`2px solid ${COLOR.LIGHT_GRAY}` ,borderRadius:"10px",padding:5,width:"850px"}}>
+                <h2 style={{margin:20}}>직원 정보 수정</h2>
+                <div style={{padding:5,width:"850px"}}>
                     <PrView>
-                        <NameBox  style={{borderRadius:"5px 0 0 0"}}>
+                        <NameBox  style={{borderRadius:"10px 0 0 0",borderBottom:`2px solid rgb(244 ,244, 244)`}}>
                             브랜드
                         </NameBox>
                         
@@ -100,7 +98,7 @@ const StaffModify = ({
                     </PrView>
                     
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderBottom:`2px solid rgb(244 ,244, 244)`}}>
                             직원 이름
                         </NameBox>
 
@@ -108,7 +106,7 @@ const StaffModify = ({
                             <InputLine value={staffName} placeholder={item[0].staff_name} style={{flex:1}} onChange={(e)=>{setStaffName(e.target.value)}}></InputLine>
                         </InputBox>
 
-                        <NameBox>
+                        <NameBox style={{borderBottom:`2px solid rgb(244 ,244, 244)`}}>
                             Kakao 계정
                         </NameBox>
 
@@ -117,7 +115,7 @@ const StaffModify = ({
                         </InputBox>
                     </PrView>
                     <PrView>
-                        <NameBox  style={{borderRadius:"0 0 0 5px",}}>
+                        <NameBox style={{borderBottom:`2px solid rgb(244 ,244, 244)`}}>
                             연락처
                         </NameBox>
 
@@ -129,17 +127,17 @@ const StaffModify = ({
                             이메일
                         </NameBox>
 
-                        <InputBox style={{borderRadius:"0 0 5px 0",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             <InputLine value={staffEmail} placeholder={item[0].staff_email||"ex) example@email.com"} style={{flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
                         </InputBox>
                     </PrView>
                     <PrView>
-                        <NameBox  style={{borderRadius:"0 0 0 5px"}}>
+                        <NameBox  style={{borderRadius:"0 0 0 10px"}}>
                             상태
                         </NameBox>
                         
 
-                        <LongInputBox style={{borderRadius:"0 0 5px 0",alignItems:"center",borderTop:0}}>
+                        <LongInputBox style={{borderRadius:"0 0 10px 0",alignItems:"center",borderTop:0}}>
                             <PrView>
                                 <CenterView style={{margin:10}}>
                                 <CheckBox type="checkbox" checked={state} onChange ={()=>{setState(!state)}}/>
@@ -201,8 +199,8 @@ const Wrapper = styled.div`
 
 const DivButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width:60px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
     font-size:16px;
@@ -248,7 +246,7 @@ const LongInputBox  = styled.div`
     display:flex;
     padding-left:20px;
     padding-right:20px;
-    border-radius:0 5px 0 0;
+    border-radius:0 10px 0 0;
     font-size:16px;
     color:${COLOR.DARK_INDIGO};
     white-space: pre-line;

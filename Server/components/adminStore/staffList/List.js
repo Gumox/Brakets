@@ -48,7 +48,7 @@ const ListItem =({
 })=>{
     const sortedItem =_.sortBy(item,"brand_name")
 
-    const cencel = () => {
+    const cancel = () => {
         setActionView(null)
     }
     return(
@@ -105,7 +105,7 @@ const ListItem =({
                 :
                 <HeaderCell style={{color: COLOR.RED}}>
                     <ModifyView onClick={()=>{setActionView(
-                        <StaffModify item={item} staffs={staffs} cencel={cencel}/>
+                        <StaffModify item={item} staffs={staffs} cancel={cancel}/>
                     )}}>
                         정보 수정
                     </ModifyView>

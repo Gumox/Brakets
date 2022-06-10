@@ -225,9 +225,9 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                 <div>
                     <h2 style={{marginLeft:"10px"}}>매장 개별 등록</h2>
                     
-                    <PrView>
+                    <PrView style={{borderRadius:"10px 10px 0 0"}}>
                         
-                        <NameBox>
+                        <NameBox  style={{borderRadius:"10px 0 0 0"}}>
                             브랜드 선택
                         </NameBox>
 
@@ -248,13 +248,13 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             매장 코드
                         </NameBox>
 
-                        <InputBox style={{fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputBox style={{borderRadius:"0 10px 0 0",fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             {storeCode}
                         </InputBox>
                     </PrView>
                     <PrView>
                         
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             매장명
                         </NameBox>
 
@@ -263,20 +263,20 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             <InputLine style={{fontSize:15,paddingLeft:0,textAlign:"center",color:duplicateAlertColor,borderBottom:"2px solid #666666",flex:1,marginRight:20}} placeholder="매장명" value={storeName || ""} onChange={(e)=>{storeNameHandler(e.target.value)}}/>
                         </InputBox>
 
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             매장 구분
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <select value={storeCategory} style={{flex:1,border:0,paddingLeft:150,fontSize:16}} onChange={(e)=>{ storeCategory(e.target.value) }}>
+                            <SearchSelect value={storeCategory} style={{flex:1,border:0,paddingLeft:150,fontSize:16}} onChange={(e)=>{ storeCategory(e.target.value) }}>
                                 <option value={1}>정상</option>
                                 <option value={2}>상설</option>
-                            </select>
+                            </SearchSelect>
                         </InputBox>
                     </PrView>
                     <PrView>
                         
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             매장 연락처
                         </NameBox>
 
@@ -284,25 +284,25 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             <InputLine style={{fontSize:15,textAlign:"center",flex:1}} placeholder="매장 연락처 ex) xx-xxxx-xxxx" value={storeContact || ""} onChange={(e)=>{setStoreContact(e.target.value)}}/>
                         </InputBox>
 
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             행낭사용여부
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <select value={mailBagUseable} style={{flex:1,border:0,paddingLeft:140,fontSize:16}} onChange={(e)=>{ setMailBagable(e.target.value) }}>
+                            <SearchSelect value={mailBagUseable} style={{flex:1,border:0,paddingLeft:140,fontSize:16}} onChange={(e)=>{ setMailBagable(e.target.value) }}>
                                 <option value={1}>사용 함</option>
                                 <option value={0}>사용 안함</option>
-                            </select>
+                            </SearchSelect>
                         </InputBox>
                     </PrView>
                     <PrView style={{height:"120px"}}>
                         
-                        <NameBox style={{height:"120px"}}>
+                        <NameBox style={{height:"120px",borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244,244,244)`}}>
                             {/*<div style={{color:COLOR.RED,marginRight:5}}>*</div>*/} 
                             <div>매장 주소</div>
                         </NameBox>
 
-                        <LongInputBox style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,borderLeft:0,height:"120px",flexDirection:"column"}}>
+                        <LongInputBox style={{borderRadius:"0 0 10px 0",border:`2px solid ${COLOR.LIGHT_GRAY}`,borderLeft:0,height:"120px",flexDirection:"column"}}>
                             
                             <InColViewV2 style={{flex:1}}>
                                 <input value={address || ""} placeholder={"주소"} readOnly style={{flex:1 ,padding:"8px"}} onClick={()=>{setPostCodeOn(true)}}/>
@@ -333,9 +333,9 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                 </div>
                 <div style={{position:"relative"}}>
                     
-                    <PrView>
+                    <PrView style={{borderRadius:"10px 10px 0 0"}}>
                         
-                        <NameBox>
+                        <NameBox style={{borderRadius:"10px 0 0 0"}}>
                             <ColView>
                                 <InColView> 매장 매니저 </InColView>
                                 {  isNewManager && <InColView> 이름 </InColView>}
@@ -359,14 +359,14 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             </ColView>
                         </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine disabled={!isNewManager} style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerAccount || ""} onChange={(e)=>{setManagerAccount(e.target.value)}}/>
+                        <InputBox style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputLine disabled={!isNewManager} style={{borderRadius:"0 10px 0 0",fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerAccount || ""} onChange={(e)=>{setManagerAccount(e.target.value)}}/>
                         </InputBox>
                     </PrView>
 
-                    <PrView>
+                    <PrView style={{borderRadius:"0 0 10px 10px"}}>
                         
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`,borderRadius:"0 0 0 10px"}}>
                             <ColView>
                                 <InColView> 매니저 연락처 </InColView>
                                 <InColView>( 전화 번호 ) </InColView>    
@@ -378,15 +378,15 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             
                         </InputBox>
 
-                        <NameBox>
+                        <NameBox  style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             <ColView>
                                 <InColView> 매니저 </InColView>
                                 <InColView> E-mail </InColView>    
                             </ColView>
                         </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine disabled={!isNewManager} style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerEmail || ""} onChange={(e)=>{setManagerEmail(e.target.value)}}/>
+                        <InputBox style={{borderRadius:"0 0 10px 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputLine disabled={!isNewManager} style={{borderRadius:"0 0 10px 0",fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerEmail || ""} onChange={(e)=>{setManagerEmail(e.target.value)}}/>
                         </InputBox>
                     </PrView>
 
@@ -512,13 +512,29 @@ const LongInputBox  = styled.div`
 
 `;
 const InputLine  = styled.input`
-    border 0px;
+    border: 0px;
+    margin: 2px;
     padding-left:10px;
-    font-size:20px;
+    font-size:14px;
     display:flex;
-
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 
+const SearchSelect = styled.select`
+  border :0;
+  margin:2px;
+  flex:1;
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+    }
+`;
 const CheckBox = styled.input `
     appearance: none;
     display: inline-block;

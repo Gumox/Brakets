@@ -300,11 +300,11 @@ const StoreModify = ({
                     
                 
                 <div>
-                    <h2 style={{marginLeft:"10px"}}>매장 정보</h2>
+                    <h2 style={{margin:20}}>매장 정보</h2>
                     
-                    <PrView>
+                    <PrView style={{borderRadius:"10px 10px 0 0"}}>
                         
-                        <NameBox>
+                        <NameBox style={{borderRadius:"10px 0 0 0"}}>
                             브랜드 선택
                         </NameBox>
 
@@ -316,13 +316,13 @@ const StoreModify = ({
                             매장 코드
                         </NameBox>
 
-                        <InputBox style={{fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputBox style={{borderRadius:"0 10px 0 0",fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             {item.store_code}
                         </InputBox>
                     </PrView>
                     <PrView>
                         
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                             매장명
                         </NameBox>
 
@@ -331,7 +331,7 @@ const StoreModify = ({
                             <InputLine style={{fontSize:"15px",paddingLeft:"10px",height:"40px",color:duplicateAlertColor,borderBottom:"2px solid #666666",flex:1,marginRight:20}} placeholder={item.store_name} value={storeName || ""} onChange={(e)=>{storeNameHandler(e.target.value)}}/>
                         </InputBox>
 
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                             매장 구분
                         </NameBox>
 
@@ -342,7 +342,7 @@ const StoreModify = ({
                     </PrView>
                     <PrView>
                         
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                             매장 연락처
                         </NameBox>
 
@@ -350,7 +350,7 @@ const StoreModify = ({
                             <InputLine style={{fontSize:15,textAlign:"center",flex:1}} placeholder={`현재)   ${item.contact}`} value={storeContact || ""} onChange={(e)=>{setStoreContact(e.target.value)}}/>
                         </InputBox>
 
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                             행낭사용여부
                         </NameBox>
 
@@ -361,13 +361,13 @@ const StoreModify = ({
                             </select>
                         </InputBox>
                     </PrView>
-                    <PrView style={{height:"160px"}}>
+                    <PrView style={{height:"160px",borderRadius:"0 0 10px 10px"}}>
                         
-                        <NameBox style={{height:"160px"}}>
+                        <NameBox style={{height:"160px",borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244 ,244, 244)`}}>
                             <div>매장 주소</div>
                         </NameBox>
 
-                        <LongInputBox style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,borderLeft:0,height:"160px",flexDirection:"column"}}>
+                        <LongInputBox style={{borderRadius:"0 0 10px 10px",border:`2px solid ${COLOR.LIGHT_GRAY}`,borderLeft:0,height:"160px",flexDirection:"column"}}>
 
                             <PrView style={{height:"40px"}}>
 
@@ -383,7 +383,7 @@ const StoreModify = ({
                             </PrView>
                             
                             { addressChange ?
-                                <div style={{flex:1,display:"flex",flexDirection:"column"}}>
+                                <div style={{flex:1,display:"flex",flexDirection:"column",borderRadius:"0 0 0 10px"}}>
                                     <InColViewV2 style={{flex:1}}>
                                         <input value={address || ""} placeholder={"주소"} readOnly style={{flex:1 ,padding:"8px"}} onClick={()=>{setPostCodeOn(true)}}/>
                                     </InColViewV2>
@@ -392,10 +392,10 @@ const StoreModify = ({
                                     </InColViewV2>
                                 </div>
                                 :
-                                <div style={{flex:1,display:"flex",flexDirection:"column"}}>
+                                <div style={{flex:1,display:"flex",flexDirection:"column",borderRadius:"0 0 10px 0"}}>
                                     
-                                    <div style={{flex:1,display:"flex",fontSize:"14px"}}>
-                                        <textarea readOnly value={item.address} style={{flex:1,resize:"none" ,padding:"8px",border:0,backgroundColor:COLOR.WHITE}}/>
+                                    <div style={{flex:1,display:"flex",fontSize:"14px",borderRadius:"0 0 10px 0"}}>
+                                        <textarea readOnly value={item.address} style={{borderRadius:"0 0 10px 0",flex:1,resize:"none" ,padding:"8px",border:0,backgroundColor:COLOR.WHITE}}/>
                                     </div>
                                 </div>
                             }
@@ -406,7 +406,7 @@ const StoreModify = ({
                 </div>
 
                 {<div style={{marginTop:20,display:"flex",justifyContent:"space-between"}}>
-                    <h2 style={{marginLeft:"10px"}}>매니저 정보</h2>
+                    <h2 style={{margin:20}}>매니저 정보</h2>
                     <PrView style={{minWidth:0}}>
                         <CenterView style={{margin:10}}>
 
@@ -421,7 +421,7 @@ const StoreModify = ({
                     <div style={{marginTop:5}}>
                         <PrView>
                             
-                            <NameBox style={{backgroundColor:COLOR.MENU_MAIN}}>
+                            <NameBox style={{backgroundColor:COLOR.MENU_MAIN,borderRadius:"10px 0 0 0"}}>
                                 <ColView>
                                     <InColView> 매장 매니저 </InColView>
                                 </ColView>
@@ -434,13 +434,13 @@ const StoreModify = ({
                             <NameBox style={{backgroundColor:COLOR.WHITE,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 
                             </NameBox>
-                            <InputBox style={{borderLeft:0 , borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputBox style={{borderRadius:"0 10px 0 0",borderLeft:0 , borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 
                             </InputBox>
                         </PrView>
                         <PrView>
                             
-                            <NameBox>
+                            <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                                 <ColView>
                                     <InColView> 매니저 </InColView>
                                     <InColView> kakao 계정 </InColView>
@@ -476,7 +476,7 @@ const StoreModify = ({
 
                         <PrView>
                             
-                            <NameBox>
+                            <NameBox style={{borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244 ,244, 244)`}}>
                                 <ColView>
                                     <InColView> 매니저 연락처 </InColView>
                                     <InColView>( 전화 번호 ) </InColView>    
@@ -488,15 +488,15 @@ const StoreModify = ({
                                 
                             </InputBox>
 
-                            <NameBox>
+                            <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                                 <ColView>
                                     <InColView> 매니저 </InColView>
                                     <InColView> E-mail </InColView>    
                                 </ColView>
                             </NameBox>
 
-                            <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <InputLine disabled={!registedManagerUse} style={{fontSize:15,textAlign:"center",flex:1}} placeholder={item.staff_email} value={managerEmail || ""} onChange={(e)=>{setManagerEmail(e.target.value)}}/>
+                            <InputBox style={{borderRadius:"0 0 10px 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                <InputLine disabled={!registedManagerUse} style={{borderRadius:"0 0 10px 0",fontSize:15,textAlign:"center",flex:1}} placeholder={item.staff_email} value={managerEmail || ""} onChange={(e)=>{setManagerEmail(e.target.value)}}/>
                             </InputBox>
                         </PrView>
 
@@ -508,7 +508,7 @@ const StoreModify = ({
                     
                         <PrView>
                             
-                            <NameBox>
+                            <NameBox style={{borderRadius:"10px 0 0 0"}}>
                                 <ColView>
                                     <InColView> 매장 매니저 </InColView>
                                 </ColView>
@@ -530,14 +530,14 @@ const StoreModify = ({
                                 </ColView>
                             </NameBox>
 
-                            <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <InputLine  style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerAccount || ""} onChange={(e)=>{setManagerAccount(e.target.value)}}/>
+                            <InputBox style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                <InputLine  style={{borderRadius:"0 10px 0 0",fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerAccount || ""} onChange={(e)=>{setManagerAccount(e.target.value)}}/>
                             </InputBox>
                         </PrView>
 
                         <PrView>
                             
-                            <NameBox>
+                            <NameBox style={{borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244 ,244, 244)`}}>
                                 <ColView>
                                     <InColView> 매니저 연락처 </InColView>
                                     <InColView>( 전화 번호 ) </InColView>    
@@ -549,15 +549,15 @@ const StoreModify = ({
                                 
                             </InputBox>
 
-                            <NameBox>
+                            <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                                 <ColView>
                                     <InColView> 매니저 </InColView>
                                     <InColView> E-mail </InColView>    
                                 </ColView>
                             </NameBox>
 
-                            <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <InputLine  style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerEmail || ""} onChange={(e)=>{setManagerEmail(e.target.value)}}/>
+                            <InputBox style={{borderRadius:"0 0 10px 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                <InputLine  style={{borderRadius:"0 0 10px 0",fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerEmail || ""} onChange={(e)=>{setManagerEmail(e.target.value)}}/>
                             </InputBox>
                         </PrView>
                         

@@ -55,6 +55,7 @@ const StoreStaffList = ({user,storeStaffs,store,brands}) => {
     return(
         <Wrapper>
             {!actionView && <div>
+                    <div style={{margin:20,fontSize:"18px",fontWeight:"bold"}}>직원 목록</div>
               <SearchBar style={{width:"950px"}}>
                 <SearchBarHeader >
                     조회 조건
@@ -64,26 +65,36 @@ const StoreStaffList = ({user,storeStaffs,store,brands}) => {
                           <SelectItemHeader >
                             브랜드
                           </SelectItemHeader>
-                          <SearchSelect value={selectedBrand} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                            onChange={(e)=>{setSelectedBrand(e.target.value)}}>
-                              <option  value={""} >{"전체"}</option>
-                              {
-                                brands.map((item,index)=>(
-                                  <option key={index} value={item.brand_id}>{item.brand_name}</option>
-                                ))
-                              }
-                          </SearchSelect>
+                          <div style={{display:"flex",flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                              
+                            <SearchSelect value={selectedBrand} style={{paddingLeft:20,flex:1}} 
+                              onChange={(e)=>{setSelectedBrand(e.target.value)}}>
+                                <option  value={""} >{"전체"}</option>
+                                {
+                                  brands.map((item,index)=>(
+                                    <option key={index} value={item.brand_id}>{item.brand_name}</option>
+                                  ))
+                                }
+                            </SearchSelect>
+
+                          </div>
                           <SelectItemHeader >
                             매장
                           </SelectItemHeader>
-                          <AdressSearchInput type={"text"} value={insertedStoreName || ""} style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}
+                          <div style={{display:"flex",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputLine type={"text"} value={insertedStoreName || ""} style={{flex:1}}
                                               onKeyPress={(e)=>{storeNameHandlePress(e)}} onChange={(e)=>{setInsertedStoreName(e.target.value)}}/>
 
+                          </div>
+                          
                           <SelectItemHeader > 
                             직원
                           </SelectItemHeader>
-                          <AdressSearchInput type={"text"} value={insertedStaffName || ""} style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}
+                          <div style={{display:"flex",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:` 2px solid ${COLOR.LIGHT_GRAY}`}}>
+                              
+                            <InputLine type={"text"} value={insertedStaffName || ""} style={{flex:1}}
                                               onKeyPress={(e)=>{staffNameHandlePress(e)}} onChange={(e)=>{setInsertedStaffName(e.target.value)}}/>
+                          </div>
                       </PrView> 
                     </PrView>
                 <SearchBarButton onClick={()=>{
@@ -94,11 +105,11 @@ const StoreStaffList = ({user,storeStaffs,store,brands}) => {
               </SearchBar>
             
               <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,minWidth:"1080px",alignItems:"end",}}>
-                    <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold"}}>직원 목록</div>
-                    <div style={{marginRight:20,}}>{sortStoreStaff(store).length} 건</div>
+                  <div style={{marginLeft:20,width:50}}></div>
+                  <Paging max={max} minWidth={"750px"} num={pageNumber} setNum={setPageNumber}/>
+                  <div style={{marginRight:20,width:50}}>{sortStoreStaff(store).length} 건</div>
               </PrView>
                   
-                <Paging max={max} minWidth={"1080px"} num={pageNumber} setNum={setPageNumber}/>
                 <InputTableBox>
                   <PrView>
                       
@@ -131,7 +142,7 @@ const StoreStaffList = ({user,storeStaffs,store,brands}) => {
                       </HeaderCell>
                   </PrView>
 
-                  <List brands={brands} store={slicedArray[pageNumber-1]} setActionView={setActionView}/>
+                  <List brands={brands} store={slicedArray[pageNumber-1]} allStore={storeStaffs} setActionView={setActionView}/>
 
                 </InputTableBox>
                 <Paging max={max} minWidth={"1080px"} num={pageNumber} setNum={setPageNumber}/>
@@ -221,18 +232,19 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
     padding:5px;
 `;
 
 const SearchSelect = styled.select`
   border :0;
-  border: 2px solid ${COLOR.LIGHT_GRAY};
   min-width:175px;
+  
   &:focus { 
     outline: none !important;
     border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
   }
 `;
 
@@ -252,7 +264,8 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
+    min-width:60px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 
@@ -289,22 +302,16 @@ const SearchBarButton = styled.div`
     justify-content:center;
     align-items:center;
 `;
-const ColView  = styled.div`
-    display:flex;
-    flex-direction: column;
-`;
-const InColView  = styled.div`
-    display:flex;
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
     font-size:14px;
-    justify-content:center;
-    align-items:center;
-`;
-const AdressSearchInput = styled.input`
-  border :0;
-  padding-left:10px;
-  &:focus { 
-    outline: none !important;
-    border-color: #719ECE;
-  }
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 export default StoreStaffList

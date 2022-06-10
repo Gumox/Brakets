@@ -113,9 +113,9 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
                     
                 
                 <h2 style={{marginLeft:15}}>직원 등록</h2>
-                <div style={{border:`2px solid ${COLOR.LIGHT_GRAY}` ,borderRadius:"10px",padding:5,width:"850px"}}>
+                <div style={{borderRadius:"10px",padding:5,width:"850px"}}>
                     <PrView>
-                        <NameBox  style={{borderRadius:"5px 0 0 0"}}>
+                        <NameBox  style={{borderRadius:"10px 0 0 0",borderBottom:"2px solid rgb(244, 244, 244)"}}>
                             매장
                         </NameBox>
                         
@@ -130,7 +130,7 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
                     </PrView>
                     
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderBottom:"2px solid rgb(244, 244, 244)"}}>
                             <RedDiv>*</RedDiv>
                             직원 이름
                         </NameBox>
@@ -138,8 +138,8 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
                         <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             <InputLine value={staffName} placeholder={"ex) 홍길동"} style={{flex:1}} onChange={(e)=>{setStaffName(e.target.value)}}></InputLine>
                         </InputBox>
-s
-                        <NameBox>
+
+                        <NameBox style={{borderBottom:"2px solid rgb(244, 244, 244)"}}>
                             <RedDiv>*</RedDiv>
                             Kakao 계정
                         </NameBox>
@@ -149,7 +149,7 @@ s
                         </InputBox>
                     </PrView>
                     <PrView>
-                        <NameBox  style={{borderRadius:"0 0 0 5px",}}>
+                        <NameBox  style={{borderRadius:"0 0 0 10px"}}>
                             <RedDiv>*</RedDiv>
                             연락처
                         </NameBox>
@@ -162,8 +162,8 @@ s
                             이메일
                         </NameBox>
 
-                        <InputBox style={{borderRadius:"0 0 5px 0",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine value={staffEmail} placeholder={"ex) example@email.com"} style={{flex:1}} onChange={(e)=>{emailHandler(e.target.value)}}></InputLine>
+                        <InputBox style={{borderRadius:"0 0 10px 0",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputLine value={staffEmail} placeholder={"ex) example@email.com"} style={{borderRadius:"0 0 10px 0",flex:1}} onChange={(e)=>{emailHandler(e.target.value)}}></InputLine>
                         </InputBox>
                     </PrView>
                 </div>
@@ -198,7 +198,6 @@ const emptySpace =(str)=>{
 
 const Wrapper = styled.div`
     padding:2%;
-    border-radius : 10px 0 0 0;
     background-color:${COLOR.WHITE};
 `;
 
@@ -234,7 +233,7 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -248,7 +247,7 @@ const NameBox  = styled.div`
     min-height : 60px;
     width:140px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 14px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -268,23 +267,27 @@ const LongInputBox  = styled.div`
     display:flex;
     padding-left:20px;
     padding-right:20px;
-    border-radius:0 5px 0 0;
+    border-radius:0 10px 0 0;
     font-size:16px;
     color:${COLOR.DARK_INDIGO};
     white-space: pre-line;
 `;
+
 const InputLine  = styled.input`
-    border 0px;
+    border: 0px;
+    margin: 2px;
     padding-left:10px;
-    font-size:16px;
+    font-size:14px;
+    display:flex;
     &:focus { 
         outline: none !important;
         border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
     }
 `;
 const SearchSelect = styled.select`
   border :0;
-  font-size:16px;
+  font-size:14px;
   padding:20px;
   &:focus { 
     outline: none !important;
