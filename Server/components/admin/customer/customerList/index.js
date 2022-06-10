@@ -64,7 +64,7 @@ const CustomerList = ({user,infos,customers,brands}) => {
                     <PrView style={{flex:1.5, backgroundColor:COLOR.WHITE}}>
                       <PrView style={{flex:1, backgroundColor:COLOR.WHITE,borderRadius:0,}}>
                           <SelectItemHeader >
-                            고객 명
+                            고객명
                           </SelectItemHeader>
                           <InsertInputBox>
 
