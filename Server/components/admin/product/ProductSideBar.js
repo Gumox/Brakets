@@ -38,7 +38,7 @@ const ProductSideBar =({path})=>{
     if(path === "/admin/productControl/productExcelRegist"){
         excelRegistColor = COLOR.BLACK;
     }
-    if(path === "/admin/productControl/productStyleList"){
+    if(path === "/admin/productControl/productStyle"){
         styleListColor = COLOR.BLACK;
     }
     if(path === "/admin/productControl/productStyleExcelRegist"){
@@ -58,7 +58,7 @@ const ProductSideBar =({path})=>{
                     </MenuItem>
 
                     <MenuItem style={{color : styleListColor}} onClick={() => {
-                        router.push("/admin/productControl/productStyleList")
+                        router.push("/admin/productControl/productStyle")
                     }}>
                         스타일
                     </MenuItem>
