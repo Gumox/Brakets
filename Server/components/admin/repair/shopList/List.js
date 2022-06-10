@@ -93,10 +93,11 @@ const ListItem =({
         </HeaderCell>
         
         
-        
-        <HeaderCell style={{color: COLOR.RED,flex:1}}>
-            정보 변경
-        </HeaderCell>
+        {/*
+            <HeaderCell style={{color: COLOR.RED,flex:1}}>
+                정보 변경
+            </HeaderCell>
+        */}
     </PrView>
     )
 }
@@ -111,7 +112,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:1;
     padding:5px;
 `;
@@ -135,7 +136,7 @@ const ModifyView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
@@ -150,7 +151,7 @@ const ChangeView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;

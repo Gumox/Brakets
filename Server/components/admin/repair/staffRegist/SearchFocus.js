@@ -143,7 +143,7 @@ const SearchResultList =styled.div`
 const SearchResult =styled.div`
     padding-top:15px;
     padding-bottom:5px;
-    font-size:18px;
+    font-size:15px;
     display:flex;
     justify-content:center;
     align-items:center

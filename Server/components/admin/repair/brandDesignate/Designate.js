@@ -11,17 +11,12 @@ const Designate = ({
     children,
     setDesignateOn = () => {},
     selectedBrand,
+    brandName,
     categorysBrand=[],
     selectedCategory,
     brandCategoryList=[],
     repairShops =[]
 }) => {
-  
-  const brandName =  _.find(brandCategoryList,{"brand_id":Number(selectedBrand)})
-
-  console.log(brandCategoryList)
-  console.log(brandName)
-  console.log("***")
 
   const [searchName,setSearchName] = useState("")
   const [pcategoryId,setPcategoryId] = useState(selectedCategory)
@@ -63,7 +58,7 @@ const Designate = ({
                     </SelectItemHeader>
                     <SelectItemHeader style={{borderTop: 0, borderRight: 0,color: COLOR.DARK_INDIGO, backgroundColor: COLOR.WHITE}}>
                         {
-                          //brandName.brand_name
+                          brandName
                         }
                     </SelectItemHeader>
                   </div>

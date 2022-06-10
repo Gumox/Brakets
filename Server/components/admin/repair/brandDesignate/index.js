@@ -11,8 +11,8 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
     const [category,setCategory] = useState([])
 
     
-    const [selectedBrand,setSelectedBrand] = useState()
-    const [selectedBrandName,setSelectedBrandName] = useState()
+    const [selectedBrand,setSelectedBrand] = useState(null)
+    const [selectedBrandName,setSelectedBrandName] = useState(null)
     const [selectedCategory,setSelectedCategory] = useState("ALL")
 
     
@@ -25,7 +25,7 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
     const categorysBrand = _.uniqBy(categorys,"brand_name")
 
     const [allCheck,setAllCheck] = useState(false)
-    const [checkedList,setCheckedList] = useState(false)
+    const [checkedList,setCheckedList] = useState([])
 
     const [designateOn,setDesignateOn] = useState(false)
     const [deassignOn,setDeassignOn] = useState(false)
@@ -180,7 +180,7 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
 
                     {designateOn &&
                         <div style={{marginTop:105,marginLeft:20,position:"sticky",top :30}}>
-                            <Designate setDesignateOn={setDesignateOn} selectedBrand={selectedBrand} 
+                            <Designate setDesignateOn={setDesignateOn} selectedBrand={selectedBrand} brandName={selectedBrandName}
                                     selectedCategory={selectedCategory} categorysBrand={categorysBrand} 
                                     brandCategoryList={brandCategoryList} repairShops={repairShops}/>
                         </div>
@@ -209,7 +209,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
     padding:5px;
 `;
@@ -235,7 +235,7 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 
@@ -296,7 +296,7 @@ const DivButton = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;

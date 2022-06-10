@@ -66,7 +66,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                 
                 <h2 style={{fontSize:18,marginLeft:"20px"}}>수선처 등록</h2>
                 <PrView>
-                    <NameBox  >
+                    <NameBox style={{borderRadius:"10px 0 0 0"}}>
                         수선처 이름
                     </NameBox>
                     
@@ -79,7 +79,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                         수선처 코드
                     </NameBox>
 
-                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputBox style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <CenterView style={{fontSize:"18px",fontWeight:"bold",padding:"10px"}}>
                             {shopCode}
                         </CenterView>
@@ -88,7 +88,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                         대표자 이름
                     </NameBox>
 
@@ -96,7 +96,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                         <InputLine  placeholder="ex) 홍길동" value={ceoName} onChange={(e)=>{setCeoName(e.target.value)}}/>
                     </InputBox>
 
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                         <ColView >
                             <InColView>사업자</InColView>
                             <InColView>등록 번호</InColView>
@@ -109,7 +109,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                         <ColView >
                             <InColView>수선처</InColView>
                             <InColView>전화번호</InColView>
@@ -120,28 +120,23 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                         <InputLine  placeholder="ex) xxx-xxx-xxxx" value={contact} onChange={(e)=>{setContact(e.target.value)}}/>
                     </InputBox>
 
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
                         행낭 사용 여부
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <select value={useMailbag} style={{flex:1,border:0,paddingLeft:140,fontSize:16}} onChange={(e)=>{ setUseMailbag(e.target.value) }}>
+                        <SearchSelect value={useMailbag} style={{flex:1,border:0,paddingLeft:140,fontSize:16}} onChange={(e)=>{ setUseMailbag(e.target.value) }}>
                             <option value={1}>사용 함</option>
                             <option value={0}>사용 안함</option>
-                        </select>
+                        </SearchSelect>
                     </InputBox>
                 </PrView>
 
                 <PrView>
-                    <NameBox style={{height :"120px"}}>
-                        <div>
-                            <div>
-                             수선처 주소
-                            </div>
-                        </div>
-                        
+                    <NameBox style={{height :"120px",borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244 ,244, 244)`}}>
+                        수선처 주소
                     </NameBox>
-                    <LongInputBox style={{height :"120px"}}>
+                    <LongInputBox style={{height :"120px",borderRadius:"0 0 10px 0"}}>
                         <InColViewV2 style={{flex:1}}>
                             <input value={address || ""} placeholder={"주소"} readOnly style={{flex:1 ,padding:"8px"}} onClick={()=>{setPostCodeOn(true)}}/>
                         </InColViewV2>
@@ -187,7 +182,7 @@ const InColViewV2  = styled.div`
 `;
 const InColView  = styled.div`
     display:flex;
-    font-size:18px;
+    font-size:14px;
     justify-content:center;
     align-items:center;
 `;
@@ -197,7 +192,7 @@ const RegistButton =styled.button`
     height : 50px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:14px;
     border-radius:10px;
 
 `;
@@ -220,7 +215,7 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 14px;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -231,7 +226,7 @@ const NameBox  = styled.div`
     min-width:145px;
     max-width:145px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 14px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -249,7 +244,7 @@ const InputBox  = styled.div`
 const InputBoxTr  = styled.div`
     height : 60px;
     background-color:${COLOR.WHITE};
-    font-size: 18px;
+    font-size: 14px;
     display:flex;
     justify-content:center;
     width:210px;
@@ -263,23 +258,37 @@ const LongInputBox  = styled.div`
     justyfiy-content:center;
     ailgn-items:center;
     flex-direction: column;
-    font-size:18px;
+    font-size:14px;
     flex:1;
 
 `;
-const InputLine  = styled.input`
-    border 0px;
-    padding-left:10px;
-    font-size:20px;
-    display:flex;
 
+const InputLine  = styled.input`
+    border:0;
+    margin: 2px;
+    margin-right:3px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    flex:1;
     &:focus { 
         outline: none !important;
         border-color: #719ECE;
-      }
-
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 
+const SearchSelect = styled.select`
+  border :0;
+  margin:2px;
+  flex:1;
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+    }
+`;
 const CheckBox = styled.input `
     appearance: none;
     display: inline-block;

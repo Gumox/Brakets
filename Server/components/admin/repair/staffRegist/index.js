@@ -70,9 +70,9 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
            
             
                 <InputTableBox>
-                    <h2>수선처 직원 등록</h2>
+                    <h2 style={{margin:20}}>수선처 직원 등록</h2>
                     <PrView>
-                        <NameBox  >
+                        <NameBox style={{borderRadius:"10px 0 0 0"}}>
                             수선처 이름
                         </NameBox>
                         
@@ -88,8 +88,8 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                             직원 코드
                         </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <CenterView  style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                        <InputBox style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <CenterView  style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:15}}>
                                 {staffCode}
                             </CenterView>
                         </InputBox>
@@ -99,7 +99,7 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                 
                     
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             직원 이름
                         </NameBox>
 
@@ -107,14 +107,8 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                             <InputLine value={staffName || ""} placeholder={"ex) 홍길동"} style={{flex:1}} onChange={(e)=>{setStaffName(e.target.value)}} />
                         </InputBox>
 
-                        <NameBox>
-                            <TwoNameBox >
-                                <ColView  style={{justifyContent:"center",alignItems:"center"}}>
-                                    <div style={{marginBottom:5}}>직원 </div>
-                                    <div >Kakao 계정</div>
-                                    
-                                </ColView>
-                            </TwoNameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                            kakao 계정
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -122,7 +116,7 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                         </InputBox>
                     </PrView>
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244,244,244)`}}>
                             직원 연락처
                         </NameBox>
 
@@ -130,12 +124,12 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                             <InputLine value={staffAddress || ""} placeholder={"ex) xxx-xxxx-xxxx"} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}}></InputLine>
                         </InputBox>
 
-                        <NameBox>
-                            직원 이메일
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                            E-mail
                         </NameBox>
 
-                        <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine value={staffEmail || ""} placeholder={"ex) example@kakao.com"} style={{flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
+                        <InputBox style={{borderRadius:"0 0 10px 0",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputLine value={staffEmail || ""} placeholder={"ex) example@kakao.com"} style={{borderRadius:"0 0 10px 0",flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
                         </InputBox>
                     </PrView>
                 
@@ -211,7 +205,7 @@ const LongInputBox  = styled.div`
     display:flex;
     justyfiy-content:center;
     ailgn-items:center;
-    font-size:18px;
+    font-size:15px;
 
 `;
 const PrView  = styled.div`
@@ -230,7 +224,7 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -240,20 +234,22 @@ const NameBox  = styled.div`
     height : 60px;
     width:140px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     align-items:center;
 `;
 const InputLine  = styled.input`
-    border 0px;
+    border: 0px;
+    margin: 2px;
     padding-left:10px;
-    font-size:15px;
+    font-size:14px;
+    display:flex;
     &:focus { 
         outline: none !important;
-          
-      }
-
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 
 

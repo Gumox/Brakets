@@ -128,7 +128,7 @@ const AdministratorChange = ({
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
                                 <div style={{marginBottom:5}}>전체관리자 </div>
-                                <div >Kakao 계정</div>
+                                <div >kakao 계정</div>
                                 
                             </ColView>
                         </TwoNameBox>

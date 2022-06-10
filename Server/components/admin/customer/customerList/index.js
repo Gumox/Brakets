@@ -3,7 +3,7 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import _ from "lodash";
 import List from "./List";
-import Paging from "./Paging";
+import Paging from "../../Paging";
 
 const CustomerList = ({user,infos,customers,brands}) => {
     
@@ -54,6 +54,9 @@ const CustomerList = ({user,infos,customers,brands}) => {
         <Wrapper>
           
             <div>
+              
+              <div style={{margin:20,fontSize:"18px",fontWeight:"bold"}}>고객 목록</div>
+
               <SearchBar style={{width:"850px"}}>
                 <SearchBarHeader >
                     조회 조건
@@ -63,21 +66,28 @@ const CustomerList = ({user,infos,customers,brands}) => {
                           <SelectItemHeader >
                             고객 명
                           </SelectItemHeader>
+                          <InsertInputBox>
 
-                          <InsertInput value={searchCustomerName}
-                            placeholder={"ex) 홍길동"}  
-                            onKeyPress={(e)=>{nameHandlePress(e)}}
-                            onChange={(e)=>{setSearchCustomerName(e.target.value)}}/>
+                            <InputLine value={searchCustomerName}
+                              placeholder={"ex) 홍길동"}  
+                              onKeyPress={(e)=>{nameHandlePress(e)}}
+                              onChange={(e)=>{setSearchCustomerName(e.target.value)}}/>
+
+                          </InsertInputBox>
                           
                       </PrView> 
                       <PrView style={{flex:1, backgroundColor:COLOR.WHITE,borderRadius:0,}}>
                           <SelectItemHeader >
                               연락처
                           </SelectItemHeader>
-                          <InsertInput value={searchCustomerPhone} 
-                            placeholder={""} 
-                            onKeyPress={(e)=>{phoneHandlePress(e)}}
-                            onChange={(e)=>{setSearchCustomerPhone(e.target.value)}}/>
+                          <InsertInputBox>
+
+                            <InputLine value={searchCustomerPhone} 
+                              placeholder={""} 
+                              onKeyPress={(e)=>{phoneHandlePress(e)}}
+                              onChange={(e)=>{setSearchCustomerPhone(e.target.value)}}/>
+
+                          </InsertInputBox>
                           
                       </PrView>
                       
@@ -92,11 +102,12 @@ const CustomerList = ({user,infos,customers,brands}) => {
               </SearchBar>
             
                 <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,width:"850px",alignItems:"end",}}>
-                    <div style={{marginLeft:20,fontSize:"18px",fontWeight:"bold"}}>고객 목록</div>
-                    <div style={{marginRight:20,}}>{sortCustomers(customers).length} 건</div>
+                  <div style={{marginLeft:20,width:50}}></div>
+                  <Paging max={max} minWidth={"750px"} num={pageNumber} setNum={setPageNumber}/>
+                  <div style={{marginRight:20,width:50}}>{sortCustomers(customers).length} 건</div>
                 </PrView>
 
-                <Paging max={max} minWidth={"850px"} num={pageNumber} setNum={setPageNumber}/>
+                
 
                 <InputTableBox style={{marginBottom:"10px"}}>
                   <PrView>
@@ -120,8 +131,11 @@ const CustomerList = ({user,infos,customers,brands}) => {
                   }
                   
                 </InputTableBox>
-
-                <Paging max={max} minWidth={"850px"} num={pageNumber} setNum={setPageNumber}/>
+                <PrView style={{justifyContent:"space-between",backgroundColor:COLOR.WHITE,width:"850px",alignItems:"end",}}>
+                  <div style={{marginLeft:20,width:50}}></div>
+                  <Paging max={max} minWidth={"750px"} num={pageNumber} setNum={setPageNumber}/>
+                  <div style={{marginRight:20,width:50}}></div>
+                </PrView>
             </div>
             
             
@@ -190,7 +204,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
     padding:5px;
 `;
@@ -210,7 +224,7 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 
@@ -247,17 +261,26 @@ const SearchBarButton = styled.div`
     justify-content:center;
     align-items:center;
 `;
-const InsertInput = styled.input`
-    padding-left : 20px;
+const InsertInputBox = styled.div`
     flex : 0.7;
     border-left : 0;
     border-right : 0;
+    display: flex;
     border-top : 2px solid ${COLOR.LIGHT_GRAY};
     border-bottom : 2px solid ${COLOR.LIGHT_GRAY};
+    
+`;
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    flex:1;
     &:focus { 
         outline: none !important;
-        //border-bottom-color: #719ECE;
-      }
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 
 export default CustomerList

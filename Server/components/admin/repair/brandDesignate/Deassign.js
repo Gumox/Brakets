@@ -14,21 +14,35 @@ const Deassign = ({
     brandName=""
 }) => {
   
+  const selectedRepairShopList = []
+  
+  if(checkedList.length > 0){
+    checkedList.map((item,index)=>{
+      
+      if(item.receiver_name){
+        selectedRepairShopList.push(item.receiver_name)
+      }
+    })
+  }
 
 
   const brandDeassign = ()=>{
+    if(selectedRepairShopList.length>0){
 
-    checkedList.map(async(item)=>{
-      const [result] = await Promise.all([
-        axios
-          .post(`${process.env.API_URL}/RepairShop/brandDeassign?pcategoryStoreId=${item.pcategory_store_id}`,)
-          .then(({ data }) => data.data), 
-        ])
-        console.log(result)
-    })
-    alert("수선처가 해제 되었습니다")
-    window.location.reload()
-    
+      checkedList.map(async(item)=>{
+        const [result] = await Promise.all([
+          axios
+            .post(`${process.env.API_URL}/RepairShop/brandDeassign?pcategoryStoreId=${item.pcategory_store_id}`,)
+            .then(({ data }) => data.data), 
+          ])
+          console.log(result)
+      })
+      alert("수선처가 해제 되었습니다")
+      window.location.reload()
+    }else{
+      alert("선택된 수선처가 없습니다")
+    }
+
   }
 
   const dataHandler=(rValue)=>{
@@ -39,7 +53,7 @@ const Deassign = ({
     <Wrapper>
       <Section {...options}>
           <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"100%"}}>
-              <div style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",width:"85%",height:"75%"}}>
+              <div style={{marginTop:20,display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",width:"85%",height:"75%"}}>
                     <PrView>
                         <HeaderCell>
                             브랜드

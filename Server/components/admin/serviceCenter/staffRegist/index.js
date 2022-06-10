@@ -150,7 +150,7 @@ const StaffRegist = ({infos,user,staffs}) =>{
                 </InputBox>
 
                 <NameBox>
-                    직원 이메일
+                    E-mail
                 </NameBox>
 
                 <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius: "0 0 10px 0"}}>

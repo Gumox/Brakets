@@ -61,7 +61,7 @@ const StaffList = ({user,infos,brands,staffs =[]}) => {
                         </HeaderCell>
 
                         <HeaderCell>
-                            Kakao 계정
+                            kakao 계정
                         </HeaderCell>
 
                         

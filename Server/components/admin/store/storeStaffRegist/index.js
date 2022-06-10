@@ -141,7 +141,7 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
 
                         <NameBox style={{borderBottom:"2px solid rgb(244, 244, 244)"}}>
                             <RedDiv>*</RedDiv>
-                            Kakao 계정
+                            kakao 계정
                         </NameBox>
 
                         <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>

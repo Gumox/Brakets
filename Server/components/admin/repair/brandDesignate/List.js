@@ -108,14 +108,14 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:1;
 `;
 const HeaderCellv2 = styled.div`
     display:flex;
     min-height:60px;
     min-width:20px;
-    font-size:16px;
+    font-size:13px;
     flex:1;
 `;
 const SearchSelect = styled.select`
@@ -145,7 +145,7 @@ const ModifyView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
@@ -160,7 +160,7 @@ const ChangeView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;

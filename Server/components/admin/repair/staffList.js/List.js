@@ -54,10 +54,11 @@ const ListItem =({
             </HeaderCell>
 
             <HeaderCell>
-                <TextInsider readOnly value={item.staff_code}/>
-                {
-                    //item.staff_code
-                }
+                <View>  
+                    <div style={{fontSize:"13px"}}>
+                        {item.staff_code}
+                    </div>
+                </View>
             </HeaderCell>
 
             <HeaderCell >
@@ -65,7 +66,11 @@ const ListItem =({
             </HeaderCell>
 
             <HeaderCell>
-                <TextInsider readOnly value={item.account} />
+                <View>  
+                    <div style={{fontSize:"13px"}}>
+                        {item.account}
+                    </div>
+                </View>
             </HeaderCell>
 
             <HeaderCell>
@@ -121,7 +126,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:1;
     padding:5px;
 `;
@@ -154,7 +159,7 @@ const ModifyView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
@@ -163,13 +168,18 @@ const ModifyView = styled.div`
     }
 
 `;
+const View = styled.div`
 
+    display : flex;
+    flex-direction : column;
+    white-space: pre-wrap;
+`;
 const ChangeView = styled.div`
     color:${COLOR.RED};
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;

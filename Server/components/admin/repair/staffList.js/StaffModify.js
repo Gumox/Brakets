@@ -8,12 +8,10 @@ import remakeCallNumber from "../../../../functions/remakeCallNumber";
 
 const StaffModify = ({
     item,
-    repairShopsstaffs,
     cancel=()=>{}
 }) =>{
 
     const router = useRouter();
-    console.log(item)
     
     const [shopId,setShopId] = useState(null)
     const [shopName,setShopName] = useState()
@@ -53,15 +51,15 @@ const StaffModify = ({
            
             
                 <InputTableBox>
-                    <h2>수선처 직원 정보 / 상태 수정</h2>
+                    <h2 style={{margin:20}}>수선처 직원 정보 / 상태 수정</h2>
                     <PrView>
-                        <NameBox  >
+                        <NameBox style={{borderRadius:"10px 0 0 0"}}>
                             수선처 이름
                         </NameBox>
                         
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,display:"flex"}}>
-                            <CenterView  style={{color:COLOR.DARK_INDIGO,paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                            <CenterView  style={{color:COLOR.DARK_INDIGO,paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:15}}>
                                 {item.repair_shop_name}
                             </CenterView>
                         </InputBox>
@@ -70,8 +68,8 @@ const StaffModify = ({
                             직원 코드
                         </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <CenterView  style={{color:COLOR.DARK_INDIGO,paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                        <InputBox style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <CenterView  style={{borderRadius:"0 10px 0 0",color:COLOR.DARK_INDIGO,paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:15}}>
                                 {item.staff_code}
                             </CenterView>
                         </InputBox>
@@ -81,7 +79,7 @@ const StaffModify = ({
                 
                     
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             직원 이름
                         </NameBox>
 
@@ -89,14 +87,8 @@ const StaffModify = ({
                             <InputLine value={item.staff_name} readOnly style={{fontWeight:"bold",paddingLeft:20,flex:1,color:COLOR.DARK_INDIGO}}/>
                         </InputBox>
 
-                        <NameBox>
-                            <TwoNameBox >
-                                <ColView  style={{justifyContent:"center",alignItems:"center"}}>
-                                    <div style={{marginBottom:5}}>직원 </div>
-                                    <div >Kakao 계정</div>
-                                    
-                                </ColView>
-                            </TwoNameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                            kakao 계정
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -106,7 +98,7 @@ const StaffModify = ({
                         </InputBox>
                     </PrView>
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                             직원 연락처
                         </NameBox>
 
@@ -114,8 +106,8 @@ const StaffModify = ({
                             <InputLine value={staffAddress || ""} placeholder={remakeCallNumber(item.staff_phone)} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}} />
                         </InputBox>
 
-                        <NameBox>
-                            직원 이메일
+                        <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                            E-mail
                         </NameBox>
 
                         <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -123,11 +115,11 @@ const StaffModify = ({
                         </InputBox>
                     </PrView>
                     <PrView>
-                        <NameBox>
+                        <NameBox style={{borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244,244,244)`}}>
                             상태
                         </NameBox>
 
-                        <LongInputBox style={{borderTop:0}}>
+                        <LongInputBox style={{borderTop:0,borderRadius:"0 0 10px 0"}}>
                             <PrView>
                             <CenterView style={{margin:10}}>
                                 <CheckBox type="checkbox" checked={state} onChange ={()=>{setState(!state)}}/>
@@ -175,11 +167,11 @@ const Wrapper = styled.div`
 
 const DivButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width:60px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:15px;
     border-radius:10px;
 
 `;
@@ -218,7 +210,7 @@ const LongInputBox  = styled.div`
     display:flex;
     justyfiy-content:center;
     ailgn-items:center;
-    font-size:18px;
+    font-size:15px;
 
 `;
 const PrView  = styled.div`
@@ -237,7 +229,7 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -247,20 +239,22 @@ const NameBox  = styled.div`
     height : 60px;
     width:140px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     align-items:center;
 `;
 const InputLine  = styled.input`
-    border 0px;
-    padding-left:20px;
-    font-size:15px;
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
     &:focus { 
         outline: none !important;
-          
-      }
-
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
 
 const CheckBox = styled.input `

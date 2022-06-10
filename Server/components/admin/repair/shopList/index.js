@@ -68,6 +68,9 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
     return(
         <Wrapper>
             {!actionView && <div>
+              
+              <h2 style={{margin:20}}>수선처 목록</h2>
+
               <SearchBar style={{width:"950px"}}>
                 <SearchBarHeader >
                     조회 조건
@@ -77,27 +80,34 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
                             <SelectItemHeader >
                                 수선처
                             </SelectItemHeader>
-                            <SearchSelect value={selectedRepairShop} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                                onChange={(e)=>{searchBarRepairShopHandler(repairShop,e.target.value)}}>
-                                <option  value={"ALL"} >{"전체"}</option>
-                                {
-                                    repairShopName.map((item,index)=>(
-                                        <option key={index} value={item.repair_shop_name} >{item.repair_shop_name}</option>
-                                    ))
-                                }
-                            </SearchSelect>
+
+                            <div style={{display:"flex",flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
+                              <SearchSelect value={selectedRepairShop} style={{paddingLeft:20,flex:1}} 
+                                  onChange={(e)=>{searchBarRepairShopHandler(repairShop,e.target.value)}}>
+                                  <option  value={"ALL"} >{"전체"}</option>
+                                  {
+                                      repairShopName.map((item,index)=>(
+                                          <option key={index} value={item.repair_shop_name} >{item.repair_shop_name}</option>
+                                      ))
+                                  }
+                              </SearchSelect>
+                            </div>
+                            
                             <SelectItemHeader >
                                 브랜드
                             </SelectItemHeader>
-                            <SearchSelect value={selectedBrand} style={{paddingLeft:20,flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} 
-                                onChange={(e)=>{setSelectedBrand(e.target.value)}}>
-                                <option  value={"ALL"} >{"전체"}</option>
-                                {
-                                    searchBrandList.map((item,index)=>(
-                                        <option key={index} value={item.brand_name} >{item.brand_name}</option>
-                                    ))
-                                }
-                            </SearchSelect>
+
+                            <div style={{display:"flex",flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
+                              <SearchSelect value={selectedBrand} style={{paddingLeft:20,flex:1}} 
+                                  onChange={(e)=>{setSelectedBrand(e.target.value)}}>
+                                  <option  value={"ALL"} >{"전체"}</option>
+                                  {
+                                      searchBrandList.map((item,index)=>(
+                                          <option key={index} value={item.brand_name} >{item.brand_name}</option>
+                                      ))
+                                  }
+                              </SearchSelect>
+                            </div>
                           
                       </PrView> 
                     </PrView>
@@ -109,7 +119,6 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
                 </SearchBarButton>
               </SearchBar>
             
-              <h2 style={{marginLeft:20}}>매장 목록</h2>
                   <InputTableBox>
                   <PrView>
                       
@@ -130,10 +139,11 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
                       </HeaderCell>
                       
                       
-                      
+                      {/*
                       <HeaderCell style={{color: COLOR.RED,flex:1}}>
                             정보 변경
                       </HeaderCell>
+                      */}
                   </PrView>
 
                   
@@ -215,7 +225,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     flex:1;
     padding:5px;
 `;
@@ -225,7 +235,7 @@ const HeaderCellV2 = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     background-color:${COLOR.MENU_MAIN};
     flex:1;
     padding:5px;
@@ -246,7 +256,8 @@ const SelectItemHeader = styled.div`
     flex:0.3;
     justify-content : center;
     align-items : center;
-    font-size: 12px;
+    min-width:80px;
+    font-size: 15px;
     font-weight: bold;
     border: 2px solid ${COLOR.LIGHT_GRAY};
 
@@ -294,11 +305,29 @@ const InColView  = styled.div`
     justify-content:center;
     align-items:center;
 `
+
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
+
 const SearchSelect = styled.select`
   border :0;
+  margin:2px;
+  flex:1;
+  min-width:175px;
   &:focus { 
     outline: none !important;
     border-color: #719ECE;
-  }
+    box-shadow: 0 0 10px #719ECE;
+    }
 `;
 export default StoreList

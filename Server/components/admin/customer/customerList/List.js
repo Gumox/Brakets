@@ -16,7 +16,7 @@ const List = ({
                 customers.map((item,index)=>{
                     if(index+1 !== customers.length){
                         return(
-                            <Wrapper key={index}>
+                            <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 <ListItem item={item} infos={infos} user={user} />
                             </Wrapper>
                         )
@@ -67,15 +67,30 @@ const ListItem =({
     }
     return(
         <PrView>
-                      
             <HeaderCell>
-                {!modifyOn && <div>{item.name}</div>}
-                {modifyOn && <input style={{textAlign:"center"}} placeholder={item.name} onChange={(e)=>{setModifyName(e.target.value)}}/>}
+                {!modifyOn 
+                    ?
+                    <HeaderCell>
+                        <div>{item.name}</div>
+                    </HeaderCell>
+                    :
+                    <HeaderCell style={{alignItems:"normal",padding:10}}>
+                        <input style={{border:0,borderBottom:"1px solid",textAlign:"center"}} placeholder={item.name} onChange={(e)=>{setModifyName(e.target.value)}}/>
+                    </HeaderCell>    
+                }
             </HeaderCell>
 
             <HeaderCell>
-                {!modifyOn && <div>{item.phone}</div>}
-                {modifyOn && <input type="tel" style={{textAlign:"center"}} placeholder={item.phone} onChange={(e)=>{setModifyPhone(e.target.value)}}/>}
+                {!modifyOn 
+                    ?
+                    <HeaderCell>
+                        <div>{item.phone}</div>
+                    </HeaderCell>
+                    :
+                    <HeaderCell style={{alignItems:"normal",padding:10}}>
+                        <input type="tel" style={{border:0,borderBottom:"1px solid",textAlign:"center"}} placeholder={item.phone} onChange={(e)=>{setModifyPhone(e.target.value)}}/>
+                    </HeaderCell>    
+                }
             </HeaderCell>
 
             
@@ -109,7 +124,7 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:13px;
     flex:1;
     padding:5px;
 `;
@@ -133,7 +148,7 @@ const ModifyView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
@@ -148,7 +163,7 @@ const ChangeView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;
