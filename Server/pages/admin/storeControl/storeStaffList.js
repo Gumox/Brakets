@@ -72,7 +72,7 @@ export const getServerSideProps = async (ctx) => {
             .get(`${process.env.API_URL}/headquarter`,)
             .then(({ data }) => data.body), 
         ])
-        /*const [brands] = await Promise.all([
+        const [brands] = await Promise.all([
         axios
             .get(`${process.env.API_URL}/brand/inHeadquarter?headquarterId=${user.headquarter_id}`,)
             .then(({ data }) => data.data), 
@@ -86,18 +86,18 @@ export const getServerSideProps = async (ctx) => {
             axios
               .get(`${process.env.API_URL}/store/getStoreStaffInHeadquarter?headquarterId=${user.headquarter_id}`,)
               .then(({ data }) => data.data), 
-        ])*/
+        ])
 
     
     if(user.level ===0){
         return {
             props:
             {
-            user:user,
-            /*infos:infos,
-            brands:brands,
-            store:store,
-            storeStaffs:storeStaffs*/
+                user:user,
+                infos:infos,
+                brands:brands,
+                store:store,
+                storeStaffs:storeStaffs
             } 
         };
     }else{
