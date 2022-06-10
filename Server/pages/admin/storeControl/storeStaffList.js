@@ -10,6 +10,7 @@ import StoreSideBar from "../../../components/admin/store/StoreSideBar";
 import StoreStaffList from "../../../components/admin/store/storeStafList";
 
 const StoreControl = ({user,store,brands,storeStaffs}) => {
+
   
     const [windowWidth,setWindowWidth] = useState(0)
     const [windowHeight,setWindowHeight] = useState(0)
@@ -26,7 +27,6 @@ const StoreControl = ({user,store,brands,storeStaffs}) => {
             window.removeEventListener('resize',handleResize);
         }
     },[])
-    
     return (
         <Wrapper style={{height:`${windowHeight}px`}}>
         <AdminHeader user={user} path={"/admin/storeControl"}/>
@@ -35,9 +35,7 @@ const StoreControl = ({user,store,brands,storeStaffs}) => {
             <StoreSideBar path={"/admin/storeControl/storeStaffList"}/>
             </SidebarSpace>
             <MainSpace >
-            {
-            //    <StoreStaffList storeStaffs={storeStaffs} store={store} brands={brands}/>
-            }
+                <StoreStaffList storeStaffs={storeStaffs} store={store} brands={brands}/>
             </MainSpace>
         </InSideWrapper>
         
@@ -93,11 +91,11 @@ export const getServerSideProps = async (ctx) => {
         return {
             props:
             {
-                user:user,
-                infos:infos,
-                brands:brands,
-                store:store,
-                storeStaffs:storeStaffs
+            user:user,
+            infos:infos,
+            brands:brands,
+            store:store,
+            storeStaffs:storeStaffs
             } 
         };
     }else{

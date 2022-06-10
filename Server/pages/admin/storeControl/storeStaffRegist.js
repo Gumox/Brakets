@@ -26,7 +26,6 @@ const StoreControl = ({user,store,brands,storeStaffs}) => {
             window.removeEventListener('resize',handleResize);
         }
     },[])
-    const [selectedView,setSelectedView] = useState()
     return (
         <Wrapper style={{height:`${windowHeight}px`}}>
         <AdminHeader user={user} path={"/admin/storeControl"}/>

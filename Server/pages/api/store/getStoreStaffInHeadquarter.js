@@ -46,13 +46,6 @@ const getAllStoreShop = async (req, res) => {
           console.log(store)
           if(store.error){ console.log(store) }
           res.status(200).json({ data: store });
-        
-        
-        if(staffStore.length){
-           
-            //
-            
-        }
       
       
     } catch (err) {
