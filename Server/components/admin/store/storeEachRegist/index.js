@@ -97,7 +97,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
     }
     const registStore = async()=>{
         
-        if(!duplicateCheck&&address&&storeContact){
+        if(!duplicateCheck&&address&&storeContact&&managerAccount&&managerPhone&&managerName){
             const data ={
                 storeName :storeName,
                 storeCode :storeCode,
@@ -108,7 +108,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                 address : address +" "+detailAddress,
                 
                 managerAccount :emptySpace(managerAccount || ""),
-                managerEmail :emptySpace(managerAccount || ""),
+                managerEmail :emptySpace(managerEmail || ""),
                 managerName : emptySpace(managerName || ""),
                 managerPhone,
                 managerCode : "A",
@@ -150,6 +150,12 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
             alert("매장 주소를 입력해 주세요")
         }else if(!storeContact){
             alert("매장 연락처를 입력해 주세요")
+        }else if(!managerAccount){
+            alert("매니저 카카오 계정을 입력해 주세요")
+        }else if(!managerPhone){
+            alert("매니저 연락처를 입력해 주세요")
+        }else if(!managerName){
+            alert("매니저 이름을 입력해 주세요")
         }
     }
     const emptySpace =(str)=>{
@@ -232,7 +238,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <select value={brandId} style={{flex:1,border:0,paddingLeft:50 ,fontSize:16}} 
+                            <select value={brandId} style={{flex:1,border:0,paddingLeft:50 ,fontSize:15}} 
                                     onChange={(e)=>{
                                         setBrandId(e.target.value)
                                         }}>
@@ -248,7 +254,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             매장 코드
                         </NameBox>
 
-                        <InputBox style={{borderRadius:"0 10px 0 0",fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputBox style={{borderRadius:"0 10px 0 0",fontSize:15,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             {storeCode}
                         </InputBox>
                     </PrView>
@@ -268,7 +274,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <SearchSelect value={storeCategory} style={{flex:1,border:0,paddingLeft:150,fontSize:16}} onChange={(e)=>{ storeCategory(e.target.value) }}>
+                            <SearchSelect value={storeCategory} style={{flex:1,border:0,paddingLeft:150,fontSize:15}} onChange={(e)=>{ storeCategory(e.target.value) }}>
                                 <option value={1}>정상</option>
                                 <option value={2}>상설</option>
                             </SearchSelect>
@@ -289,7 +295,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <SearchSelect value={mailBagUseable} style={{flex:1,border:0,paddingLeft:140,fontSize:16}} onChange={(e)=>{ setMailBagable(e.target.value) }}>
+                            <SearchSelect value={mailBagUseable} style={{flex:1,border:0,paddingLeft:140,fontSize:15}} onChange={(e)=>{ setMailBagable(e.target.value) }}>
                                 <option value={1}>사용 함</option>
                                 <option value={0}>사용 안함</option>
                             </SearchSelect>
@@ -337,7 +343,9 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         
                         <NameBox style={{borderRadius:"10px 0 0 0"}}>
                             <ColView>
-                                <InColView> 매장 매니저 </InColView>
+                                <InColView>
+                                <RedDiv>*</RedDiv> 매장 매니저 
+                                </InColView>
                                 {  isNewManager && <InColView> 이름 </InColView>}
                                 { !isNewManager && <InColView> 정보 </InColView>}
                             </ColView>
@@ -354,7 +362,9 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
 
                         <NameBox>
                             <ColView>
-                                <InColView> 매니저 </InColView>
+                                <InColView>
+                                <RedDiv>*</RedDiv> 매니저 
+                                </InColView>
                                 <InColView> kakao 계정 </InColView>
                             </ColView>
                         </NameBox>
@@ -368,7 +378,9 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         
                         <NameBox style={{borderTop:`2px solid rgb(244,244,244)`,borderRadius:"0 0 0 10px"}}>
                             <ColView>
-                                <InColView> 매니저 연락처 </InColView>
+                                <InColView>
+                                <RedDiv>*</RedDiv> 매니저 연락처
+                                </InColView>
                                 <InColView>( 전화 번호 ) </InColView>    
                             </ColView>
                         </NameBox>
@@ -444,7 +456,7 @@ const RegistButton =styled.button`
     height : 50px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:15px;
     border-radius:10px;
 
 `;
@@ -466,18 +478,15 @@ const CenterView  = styled.div`
     justify-content:space-around;
 `;
 
-const TwoNameBox  = styled.div`
-    font-size: 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-
-`;
+const RedDiv =styled.div`
+    margin: 2px;
+    color: ${COLOR.RED};
+` 
 const NameBox  = styled.div`
     height : 60px;
     width:145px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -494,7 +503,7 @@ const InputBox  = styled.div`
 const InputBoxTr  = styled.div`
     height : 60px;
     background-color:${COLOR.WHITE};
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     width:210px;
@@ -508,7 +517,7 @@ const LongInputBox  = styled.div`
     display:flex;
     justyfiy-content:center;
     ailgn-items:center;
-    font-size:18px;
+    font-size:15px;
 
 `;
 const InputLine  = styled.input`
@@ -538,8 +547,8 @@ const SearchSelect = styled.select`
 const CheckBox = styled.input `
     appearance: none;
     display: inline-block;
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
     background-clip: content-box;
     border: 1.5px solid #bbbbbb;
     border-radius: 10px;

@@ -105,17 +105,17 @@ const ControlFaultList = ({user,faultType}) => {
             
                 
                     {addState &&
-                        <div style={{marginTop:60,marginLeft:20,height:180,width:350,border:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"10px"}}>
-                            <HeaderCell style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"10px 10px 0 0"}}>
+                        <div style={{marginTop:60,marginLeft:20,height:180,borderRadius:"10px"}}>
+                            <HeaderCell style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"10px 10px 0 0"}}>
                                 과실구분 추가
                             </HeaderCell>
-                            <LaView style={{height:60,width:340,}}>
-                                <HeaderCell style={{backgroundColor:COLOR.LIGHT_GRAY}}>
+                            <LaView style={{height:60,width:345,}}>
+                                <HeaderCell style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,backgroundColor:COLOR.LIGHT_GRAY}}>
                                     과실구분
                                 </HeaderCell>
-                                <InputLine value={faultName} placeholder={"ex) 고객과실"} style={{height:60,borderLeft:`2px solid ${COLOR.LIGHT_GRAY}`}} onChange={(e)=>{setFaultName(e.target.value)}}/>
+                                <InputLine value={faultName} placeholder={"ex) 고객과실"} style={{height:60,borderLeft:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}} onChange={(e)=>{setFaultName(e.target.value)}}/>
                             </LaView>
-                            <LaView style={{justifyContent:"space-evenly",height:60,width:345,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <LaView style={{justifyContent:"space-evenly",height:60,width:345,border:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:" 0 0 10px 10px"}}>
                                 <DivButton style={{color:COLOR.CYAN_BLUE}} onClick={()=>{addFault()}}>
                                     추가
                                 </DivButton>

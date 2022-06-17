@@ -27,23 +27,33 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
 
     
     const registStaff = async() =>{
-        const bodyData = {
-            state: true,
-            account: kakaoAcount,
-            name: staffName,
-            phone: staffAddress,
-            level:3,
-            staff_code:staffCode,
-            staff_email:staffEmail,
-            store_id :shopId
+        if(shopId && staffName && kakaoAcount && staffAddress){
+            const bodyData = {
+                state: true,
+                account: kakaoAcount,
+                name: staffName,
+                phone: staffAddress,
+                level:3,
+                staff_code:staffCode,
+                staff_email:staffEmail,
+                store_id :shopId
+            }
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/staff/regist`,bodyData)
+                .then(({ data }) => data.body), 
+                ])
+            alert("새로운 수선처 직원이 등록되었습니다.")
+            router.push("/admin/repairControl/repairShopStaff")
+        }else if(!shopId){
+            alert("수선처를 입력해 주세요")   
+        }else if(!staffName){
+            alert("직원 이름을 입력해 주세요")   
+        }else if(!kakaoAcount){
+            alert("직원 카카오 계정을 입력해 주세요")   
+        }else if(!staffAddress){
+            alert("직원 연락처를 입력해 주세요")   
         }
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/staff/regist`,bodyData)
-              .then(({ data }) => data.body), 
-            ])
-        alert("새로운 수선처 직원이 등록되었습니다.")
-        router.push("/admin/repairControl/repairShopStaff")
     }
 
     
@@ -73,7 +83,8 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                     <h2 style={{margin:20}}>수선처 직원 등록</h2>
                     <PrView>
                         <NameBox style={{borderRadius:"10px 0 0 0"}}>
-                            수선처 이름
+                            <RedDiv>*</RedDiv>
+                            수선처
                         </NameBox>
                         
 
@@ -100,6 +111,7 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                     
                     <PrView>
                         <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                        <RedDiv>*</RedDiv>
                             직원 이름
                         </NameBox>
 
@@ -108,6 +120,7 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                         </InputBox>
 
                         <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                        <RedDiv>*</RedDiv>
                             kakao 계정
                         </NameBox>
 
@@ -117,6 +130,7 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                     </PrView>
                     <PrView>
                         <NameBox style={{borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244,244,244)`}}>
+                        <RedDiv>*</RedDiv>
                             직원 연락처
                         </NameBox>
 
@@ -157,7 +171,10 @@ const Wrapper = styled.div`
     padding:2%;
     background-color:${COLOR.WHITE};
 `;
-
+const RedDiv =styled.div`
+    margin: 2px;
+    color: ${COLOR.RED};
+` 
 const RegistButton =styled.button`
     background-color : ${COLOR.INDIGO};
     width:80px;

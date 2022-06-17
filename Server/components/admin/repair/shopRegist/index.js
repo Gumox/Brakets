@@ -37,25 +37,36 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
         }
     }
     const registRepairShop = async()=>{
-        const body = {
-            shopName : shopName,
-            storeCode : shopCode,
-            
-            useMailbag,
-            contact : contact,
-            address : address+" "+detailAddress,
-            storeRegistrationNumber : registrationNumber
-        }
+            if(shopName && shopCode && registrationNumber &&contact && address){
+            const body = {
+                shopName : shopName,
+                storeCode : shopCode,
+                
+                useMailbag,
+                contact : contact,
+                address : address+" "+detailAddress,
+                storeRegistrationNumber : registrationNumber
+            }
 
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/RepairShop/regist`,body)
-              .then(({ data }) => data.data), 
-        ])
-        console.log(result)
-        if(result){
-            alert("수선처가 등록 되었습니다")
-            router.push("/admin/repairControl")
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/RepairShop/regist`,body)
+                .then(({ data }) => data.data), 
+            ])
+            if(result){
+                alert("수선처가 등록 되었습니다")
+                router.push("/admin/repairControl")
+            }
+        }else if(!shopName){
+            alert("수선처 이름을 입력해 주세요")
+        }else if(!shopCode){
+            alert("대표자 이름을 입력해 주세요")
+        }else if(!registrationNumber){
+            alert("사업자 등록 번호를 입력해 주세요")
+        }else if(!contact){
+            alert("수선처 전화번호를 입력해 주세요")
+        }else if(!address){
+            alert("수선처 주소를 입력해 주세요")
         }
     }
 
@@ -67,6 +78,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                 <h2 style={{fontSize:18,marginLeft:"20px"}}>수선처 등록</h2>
                 <PrView>
                     <NameBox style={{borderRadius:"10px 0 0 0"}}>
+                        <RedDiv>*</RedDiv>
                         수선처 이름
                     </NameBox>
                     
@@ -89,6 +101,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                 
                 <PrView>
                     <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
+                        <RedDiv>*</RedDiv>
                         대표자 이름
                     </NameBox>
 
@@ -97,10 +110,8 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                     </InputBox>
 
                     <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
-                        <ColView >
-                            <InColView>사업자</InColView>
-                            <InColView>등록 번호</InColView>
-                        </ColView>
+                        <RedDiv style={{margin:5}}>*</RedDiv>
+                        사업자 등록 번호
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -110,10 +121,8 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                 
                 <PrView>
                     <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
-                        <ColView >
-                            <InColView>수선처</InColView>
-                            <InColView>전화번호</InColView>
-                        </ColView>
+                        <RedDiv style={{margin:5}}>*</RedDiv>
+                        수선처 전화번호
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -134,6 +143,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
 
                 <PrView>
                     <NameBox style={{height :"120px",borderRadius:"0 0 0 10px",borderTop:`2px solid rgb(244 ,244, 244)`}}>
+                                <RedDiv>*</RedDiv>
                         수선처 주소
                     </NameBox>
                     <LongInputBox style={{height :"120px",borderRadius:"0 0 10px 0"}}>
@@ -170,6 +180,10 @@ const Wrapper = styled.div`
     padding:2%;
     background-color:${COLOR.WHITE};
 `;
+const RedDiv =styled.div`
+    margin: 2px;
+    color: ${COLOR.RED};
+` 
 const ColView  = styled.div`
     display:flex;
     flex-direction: column;

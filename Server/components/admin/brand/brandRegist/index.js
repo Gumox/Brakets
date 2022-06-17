@@ -11,7 +11,7 @@ const BrandRegist = ({infos,user}) =>{
     const cNameKr =infos.text
     const headquarterId = infos.value
     const [brandName,setBrandName] =useState("")
-    const [serviceDate,setServiceDate] =useState(null)
+    const [serviceDate,setServiceDate] =useState('')
 
     const emptySpace =(str)=>{
         let name = ""
@@ -27,16 +27,37 @@ const BrandRegist = ({infos,user}) =>{
     }
 
     const registBrand = async() =>{
-        let _brandName = emptySpace(brandName)
-        
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/brand/regist?brandName=${_brandName}&headquarterId=${headquarterId}&serviceDate=${serviceDate}`,)
-              .then(({ data }) => data.body), 
-            ])
-        alert("새로운 브랜드 가 등록되었습니다.")
-        router.push("/admin/brandControl")
+        if(brandName || serviceDate > 0){
+            let _brandName = emptySpace(brandName)
+            
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/brand/regist?brandName=${_brandName}&headquarterId=${headquarterId}&serviceDate=${serviceDate}`,)
+                .then(({ data }) => data.body), 
+                ])
+            alert("새로운 브랜드 가 등록되었습니다.")
+            router.push("/admin/brandControl")
+        }else if(!brandName){
+            alert("추가하실 브랜드 이름을 입력해주세요.")
+        }else if(serviceDate > 0){
+            alert("올바르지 않은 서비스 기간입니다.")
+        }
     }
+    const dateHandleFocus = () => {
+        let result = String(serviceDate).replace(/ 일/,'')
+        setServiceDate(result)
+    }
+        
+
+    const dateHandlePress = useCallback(
+        (e) => {
+          if (e.key == "Enter") {
+            setServiceDate(serviceDate+' 일')
+          }
+        },
+        
+        [serviceDate]
+    );
   
     return (
         <Wrapper >
@@ -65,6 +86,7 @@ const BrandRegist = ({infos,user}) =>{
                 
                 <PrView>
                     <NameBox style={{borderTop:"2px solid rgb(244, 244, 244)",borderBottom:"2px solid rgb(244, 244, 244)"}}>
+                        <RedDiv>*</RedDiv>
                         브랜드 이름
                     </NameBox>
 
@@ -76,16 +98,21 @@ const BrandRegist = ({infos,user}) =>{
                 <PrView style={{borderRadius: "0 0 10px 10px" }}>
                     <NameBox style={{borderRadius: "0 0 0 10px"}}>
                         <TwoNameBox >
+                            
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
-                                <div style={{marginBottom:5}}>{"서비스 기간 설정"}</div>
-                                <div >{"( 매장앱-고객약속일로 표시 )"}</div>x
+                                <div style={{marginBottom:5,display:"flex",flexDirection:"row"}}><RedDiv>*</RedDiv>{"서비스 기간 설정"}</div>
+                                <div >{"( 매장앱-고객약속일로 표시 )"}</div>
                                 
                             </ColView>
                         </TwoNameBox>
                     </NameBox>
 
                     <LongInputBox style={{borderTop:0,display:"flex",borderRadius: "0 0 10px 0"}}>
-                        <InputLine value={serviceDate} style={{flex:1,borderRadius: "0 0 10px 0",textAlign:"center",paddingRight:280}} onChange={(e)=>{setServiceDate(e.target.value)}}/>
+                        <InputLine type={"text"} value={serviceDate} style={{flex:1,borderRadius: "0 0 10px 0",textAlign:"center",paddingRight:280}} 
+                            onKeyPress={(e)=>{dateHandlePress(e)}}
+                            onFocus={()=>{dateHandleFocus()}}
+                            onBlur={()=>{setServiceDate(serviceDate+' 일')}}
+                            onChange={(e)=>{setServiceDate(e.target.value)}}/>
                     </LongInputBox>
                 </PrView>
                 
@@ -114,7 +141,10 @@ const Wrapper = styled.div`
     display:flex;
     min-width:750px;
 `;
-
+const RedDiv =styled.div`
+    margin: 2px;
+    color: ${COLOR.RED};
+` 
 const RegistButton =styled.button`
     background-color : ${COLOR.INDIGO};
     width:80px;

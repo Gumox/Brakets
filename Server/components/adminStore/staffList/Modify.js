@@ -44,20 +44,23 @@ const StaffModify = ({
     
     const modifyStaff = async() =>{
         
-        const bodyData = {
-            staffState: state,
-            staffName: staffName || item[0].staff_name,
-            staffPhone: staffAddress || item[0].staff_phone,
-            staffEmail: staffEmail || item[0].staff_email,
-            
-            staffId: item[0].staff_id
+        if(staffName.length>0 || staffAddress.length>0  || staffEmail.length>0 ){ 
+            const bodyData = {
+                staffState: state,
+                staffName: staffName || item[0].staff_name,
+                staffPhone: staffAddress || item[0].staff_phone,
+                staffEmail: staffEmail || item[0].staff_email,
+                
+                staffId: item[0].staff_id
+            }
+            const [result] = await Promise.all([
+                axios
+                    .post(`${process.env.API_URL}/store/modifyStoreStaff`,bodyData)
+                    .then(({ data }) => data), 
+                ])
+            alert("직원 정보가 변경되었습니다.")
+           
         }
-        const [result] = await Promise.all([
-            axios
-                .post(`${process.env.API_URL}/store/modifyStoreStaff`,bodyData)
-                .then(({ data }) => data), 
-            ])
-        alert("직원 정보가 변경되었습니다.")
         window.location.reload();
     }
 

@@ -21,26 +21,30 @@ const StaffModify = ({
     
     const staffName = staff.staff_name;
     const kakaoAcount = staff.staff_account;
-    const [staffAddress,setStaffAddress] =useState(staff.staff_phone)
-    const [staffEmail,setStaffEmail] =useState(staff.staff_email)
+    const [staffAddress,setStaffAddress] =useState(null)
+    const [staffEmail,setStaffEmail] =useState(null)
     const [state,setState] =useState(staff.staff_state)
     
 
     const modifyStaff = async() =>{
-        const bodyData = {
-            state:state,
-            phone:staffAddress,
-            staff_email:staffEmail,
-            staff_id:staff.staff_id,
+        if(state !== staff.staff_state || staffAddress || staffEmail){   
+            const bodyData = {
+                state:state,
+                phone:staffAddress || staff.staff_phone,
+                staff_email:staffEmail || staff.staff_email,
+                staff_id:staff.staff_id,
+            }
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/headquarter/updateAdministrator`,bodyData)
+                .then(({ data }) => data.body), 
+                ])
+            
+                alert("서비스센터 직원 정보가 변경 되었습니다.")
+            window.location.reload();
+        }else{
+            setActionView(null)
         }
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/headquarter/updateAdministrator`,bodyData)
-              .then(({ data }) => data.body), 
-            ])
-        
-            alert("서비스센터 직원 정보가 변경 되었습니다.")
-        window.location.reload();
     }
 
     

@@ -147,7 +147,7 @@ const HeaderCell = styled.div`
     min-width: 20px;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    font-size: 13px;
     flex: 1;
     padding: 5px;
     word-break: break-all;
@@ -158,7 +158,7 @@ const ItemCell = styled.div`
     min-width: 20px;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    font-size: 13px;
     flex: 1;
     padding: 5px;
     color: rgb(100,200,100);
@@ -173,7 +173,7 @@ const ModifyView = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:16px;
+    font-size:14px;
     padding:5px;
     border-radius: 10px;
     cursor: pointer;

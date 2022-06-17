@@ -122,6 +122,7 @@ const StaffRegist = ({infos,user,staffs}) =>{
             
             <PrView>
                 <NameBox style={{borderBottom:"2px solid rgb(244, 244, 244)"}}>
+                    <RedDiv>*</RedDiv>
                     직원 이름
                 </NameBox>
 
@@ -130,10 +131,8 @@ const StaffRegist = ({infos,user,staffs}) =>{
                 </InputBox>
 
                 <NameBox style={{borderBottom:"2px solid rgb(244, 244, 244)"}}>
-                    <TwoNameBox >
-                        kakao 계정
-                            
-                    </TwoNameBox>
+                    <RedDiv>*</RedDiv>
+                    kakao 계정
                 </NameBox>
 
                 <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -142,6 +141,7 @@ const StaffRegist = ({infos,user,staffs}) =>{
             </PrView>
             <PrView style={{borderRadius: "0 0 10px 10px" }}>
                 <NameBox style={{borderRadius: "0 0 0 10px"}}>
+                    <RedDiv>*</RedDiv>
                     직원 연락처
                 </NameBox>
 
@@ -190,12 +190,10 @@ const RegistButton =styled.button`
     border-radius:10px;
 
 `;
-const InsideWrapper  = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction: column;
-`;
+const RedDiv =styled.div`
+    margin: 2px;
+    color: ${COLOR.RED};
+` 
 const PrView  = styled.div`
     mon-width:540px;
     display:flex;

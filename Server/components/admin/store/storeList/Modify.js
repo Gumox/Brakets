@@ -308,7 +308,7 @@ const StoreModify = ({
                             브랜드 선택
                         </NameBox>
 
-                        <InputBox style={{fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputBox style={{fontSize:15,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             {item.brand_name}
                         </InputBox>
 
@@ -316,7 +316,7 @@ const StoreModify = ({
                             매장 코드
                         </NameBox>
 
-                        <InputBox style={{borderRadius:"0 10px 0 0",fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputBox style={{borderRadius:"0 10px 0 0",fontSize:15,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             {item.store_code}
                         </InputBox>
                     </PrView>
@@ -336,8 +336,8 @@ const StoreModify = ({
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            {item.store_category === 1 && <InputLine disabled style={{backgroundColor:COLOR.WHITE,paddingLeft:0,fontSize:16,textAlign:"center",flex:1,color:COLOR.DARK_INDIGO,fontWeight:"bold"}}  value={"정상"} onChange={(e)=>{setManagerName(e.target.value)}}/>}
-                            {item.store_category === 2 && <InputLine disabled style={{backgroundColor:COLOR.WHITE,paddingLeft:0,fontSize:16,textAlign:"center",flex:1,color:COLOR.DARK_INDIGO,fontWeight:"bold"}}  value={"상설"} onChange={(e)=>{setManagerName(e.target.value)}}/>}
+                            {item.store_category === 1 && <InputLine disabled style={{backgroundColor:COLOR.WHITE,paddingLeft:0,fontSize:15,textAlign:"center",flex:1,color:COLOR.DARK_INDIGO,fontWeight:"bold"}}  value={"정상"} onChange={(e)=>{setManagerName(e.target.value)}}/>}
+                            {item.store_category === 2 && <InputLine disabled style={{backgroundColor:COLOR.WHITE,paddingLeft:0,fontSize:15,textAlign:"center",flex:1,color:COLOR.DARK_INDIGO,fontWeight:"bold"}}  value={"상설"} onChange={(e)=>{setManagerName(e.target.value)}}/>}
                         </InputBox>
                     </PrView>
                     <PrView>
@@ -355,7 +355,7 @@ const StoreModify = ({
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <select value={mailBagUseable} style={{flex:1,border:0,paddingLeft:140,fontSize:16}} onChange={(e)=>{ setMailBagable(e.target.value) }}>
+                            <select value={mailBagUseable} style={{flex:1,border:0,paddingLeft:140,fontSize:15}} onChange={(e)=>{ setMailBagable(e.target.value) }}>
                                 <option value={1}>사용 함</option>
                                 <option value={0}>사용 안함</option>
                             </select>
@@ -427,7 +427,7 @@ const StoreModify = ({
                                 </ColView>
                             </NameBox>
                             
-                            <InputBox style={{borderLeft:`2px solid ${COLOR.MENU_MAIN}` ,fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputBox style={{borderLeft:`2px solid ${COLOR.MENU_MAIN}` ,fontSize:15,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 {item.staff_name || ""} 
                             </InputBox>
                             
@@ -447,7 +447,7 @@ const StoreModify = ({
                                 </ColView>
                             </NameBox>
                             
-                            <InputBox style={{fontSize:16,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputBox style={{fontSize:15,fontWeight:"bold",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 {item.staff_account || ""}
                             </InputBox>
 
@@ -621,7 +621,7 @@ const RegistButton =styled.button`
     height : 50px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:15px;
     border-radius:10px;
 
 `;
@@ -644,7 +644,7 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -654,7 +654,7 @@ const NameBox  = styled.div`
     height : 60px;
     width:145px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -671,7 +671,7 @@ const InputBox  = styled.div`
 const InputBoxTr  = styled.div`
     height : 60px;
     background-color:${COLOR.WHITE};
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     width:210px;

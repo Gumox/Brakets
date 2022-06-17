@@ -203,7 +203,7 @@ const DivButton =styled.button`
     height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:15px;
     border-radius:10px;
 
 `;
@@ -226,7 +226,7 @@ const NameBox  = styled.div`
     min-height : 60px;
     width:140px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -247,14 +247,14 @@ const LongInputBox  = styled.div`
     padding-left:20px;
     padding-right:20px;
     border-radius:0 10px 0 0;
-    font-size:16px;
+    font-size:15px;
     color:${COLOR.DARK_INDIGO};
     white-space: pre-line;
 `;
 const InputLine  = styled.input`
     border 0px;
     padding-left:20px;
-    font-size:16px;
+    font-size:15px;
     &:focus { 
         outline: none !important;
         border-color: #719ECE;
@@ -262,7 +262,7 @@ const InputLine  = styled.input`
 `;
 const SearchSelect = styled.select`
   border :0;
-  font-size:16px;
+  font-size:15px;
   padding:20px;
   &:focus { 
     outline: none !important;

@@ -35,55 +35,61 @@ const StaffList = ({user,infos,brands,staffs =[]}) => {
         <Wrapper>
           {!actionView &&
             <div>
+            
+            <h2 style={{margin:20}}>직원 목록</h2>
               <SearchStaffBar>
                 <SearchStaffBarHeader >
                     직원 이름
                 </SearchStaffBarHeader>
                 
-                <input value={staffName} style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,fontSize:"16px"}} 
-                    onKeyPress={(e)=>{nameKeyPress(e)}} onChange={(e)=>{setStaffName(e.target.value)}}/>
+                <div style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6 ,display : "flex"}} >
+
+                    <InputLine value={staffName} style={{flex:1 ,fontSize:"16px"}} 
+                        onKeyPress={(e)=>{nameKeyPress(e)}} onChange={(e)=>{setStaffName(e.target.value)}}/>
+                </div>
 
                 <SearchStaffBarButton onClick={()=>{staffParse(staffName)}}>
                     <SearchImage  src="/icons/search.png"/>
                 </SearchStaffBarButton>
                 </SearchStaffBar>
-            
-                    <h2 style={{marginLeft:20}}>직원 목록</h2>
-                <InputTableBox>
-                    <PrView>
-                        
-                        <HeaderCell>
-                            직원
-                        </HeaderCell>
-
-                        <HeaderCell>
-                            담당 브랜드
-                        </HeaderCell>
-
-                        <HeaderCell>
-                            kakao 계정
-                        </HeaderCell>
-
-                        
-
-                        <HeaderCell>
-                            직원 연락처
-                        </HeaderCell>
-                        <HeaderCell>
-                            E-mail
-                        </HeaderCell>
-                        
-                        <HeaderCell>
-                            상태
-                        </HeaderCell>
-                        
-                        <HeaderCell style={{color: COLOR.RED}}>
+                
+                <div style={{border:`2px solid ${COLOR.LIGHT_GRAY}` ,borderRadius:"10px",padding:5}}>
+                    <InputTableBox>
+                        <PrView>
                             
-                        </HeaderCell>
-                    </PrView>
-                    <List staffs={sortStaff(searchStaff)} setActionView={setActionView} user={user}/>
-                  
-              </InputTableBox>
+                            <HeaderCell>
+                                직원
+                            </HeaderCell>
+
+                            <HeaderCell>
+                                담당 브랜드
+                            </HeaderCell>
+
+                            <HeaderCell>
+                                kakao 계정
+                            </HeaderCell>
+
+                            
+
+                            <HeaderCell>
+                                직원 연락처
+                            </HeaderCell>
+                            <HeaderCell>
+                                E-mail
+                            </HeaderCell>
+                            
+                            <HeaderCell>
+                                상태
+                            </HeaderCell>
+                            
+                            <HeaderCell style={{color: COLOR.RED}}>
+                                
+                            </HeaderCell>
+                        </PrView>
+                        <List staffs={sortStaff(searchStaff)} setActionView={setActionView} user={user}/>
+                    
+                </InputTableBox>
+                </div>
             </div>
             }
             {
@@ -168,19 +174,18 @@ const InColView  = styled.div`
     align-items:center;
 `;
 const HeaderCell = styled.div`
-    display:flex;
-    height:60px;
-    min-width:20px;
-    justify-content:center;
-    align-items:center;
-    font-size:16px;
-    flex:1;
-    padding:5px;
+    display: flex;
+    height: 60px;
+    min-width: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    flex: 1;
+    padding: 5px;
 `;
 
 const InputTableBox  = styled.div`
     min-width:1080px;
-    margin-top:20px;
 `;
 const PrView  = styled.div`
     display:flex;
@@ -194,5 +199,16 @@ const SearchImage =styled.img`
   height: 20px;
   cursor: pointer;
 `;
-
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    flex:1;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
 export default StaffList

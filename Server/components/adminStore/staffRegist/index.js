@@ -176,102 +176,77 @@ const emptySpace =(str)=>{
 
 
 const Wrapper = styled.div`
-    padding:2%;
-    border-radius : 10px 0 0 0;
-    background-color:${COLOR.WHITE};
+    padding: 2%;
+    border-radius: 10px 0 0 0;
+    background-color: ${COLOR.WHITE};
 `;
 
 const RegistButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
+    width: 80px;
     height : 50px;
     color:${COLOR.WHITE};
-    margin:20px;
-    font-size:16px;
-    border-radius:10px;
+    margin: 20px;
+    font-size: 15px;
+    border-radius: 10px;
 
-`;
-const InsideWrapper  = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction: column;
 `;
 const PrView  = styled.div`
-    min-width:540px;
-    display:flex;
-    flex-direction:row;
-`;
-const ColView  = styled.div`
-    display:flex;
-    flex-direction: column;
+    min-width: 540px;
+    display: flex;
+    flex-direction: row;
 `;
 const CenterView  = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-`;
-
-const TwoNameBox  = styled.div`
-    font-size: 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 `;
 const RedDiv =styled.div`
-    margin:2px;
-    color:${COLOR.RED};
+    margin: 2px;
+    color: ${COLOR.RED};
 ` 
 const NameBox  = styled.div`
     min-height : 60px;
-    width:140px;
-    background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    width: 140px;
+    background-color: ${COLOR.LIGHT_GRAY};
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 const InputBox  = styled.div`
     height : 60px;
-    flex:1.3;
-    display:flex;
-    justyfiy-content:center;
-    ailgn-items:center;
+    flex: 1.3;
+    display: flex;
+    justyfiy-content: center;
+    ailgn-items: center;
+    padding: 2px;
 `;
 const LongInputBox  = styled.div`
     min-height : 60px;
-    flex:1;
+    flex: 1;
     border: 2px solid ${COLOR.LIGHT_GRAY};
     border-left :0;
-    display:flex;
-    padding-left:20px;
-    padding-right:20px;
-    border-radius:0 5px 0 0;
-    font-size:16px;
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 0 5px 0 0;
+    font-size: 15px;
     color:${COLOR.DARK_INDIGO};
     white-space: pre-line;
 `;
 const InputLine  = styled.input`
-    border 0px;
-    padding-left:10px;
-    font-size:16px;
+    border: 0px;
+    margin: 1px;
+    padding-left: 10px;
+    font-size: 14px;
+    flex:1;
     &:focus { 
         outline: none !important;
         border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
     }
 `;
-const SearchSelect = styled.select`
-  border :0;
-  font-size:16px;
-  padding:20px;
-  &:focus { 
-    outline: none !important;
-    border-color: #719ECE;
-  }
-`;
-
-
 
 
 export default StaffRegist

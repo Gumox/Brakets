@@ -111,44 +111,45 @@ const ControlClaimList = ({user,claim}) => {
                     </InputTableBox>
 
                     {addState &&
-                        <div style={{marginTop:60,marginLeft:20,height:240,width:400,border:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"10px"}}>
-                            <HeaderCell style={{borderRadius:"10px 10px 0 0",width:398}}>
+                        
+
+                        <div style={{marginTop:60,marginLeft:20,height:180,borderRadius:"10px"}}>
+                        
+                        <LaView style={{justifyContent:"space-evenly",height:60,width:345,border:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"10px 10px 0 0 "}}>
+                            <HeaderCell style={{borderRadius:"10px 10px 0 0"}}>
                                 클레임가 추가
                             </HeaderCell>
-
-                            <LaView style={{height:60,width:398,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <HeaderCell style={{backgroundColor:COLOR.LIGHT_GRAY}}>
-                                    클레임가 조건 선택
-                                </HeaderCell>
-                                <HeaderCell style={{backgroundColor:COLOR.WHITE}}>
-                                    <SelectOption value={claimType} style={{height:60,width:200}} onChange={(e)=>{setClaimType(e.target.value)}}>
+                        </LaView>
+                        <LaView style={{height:60,width:345,}}>
+                            <HeaderCell style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,backgroundColor:COLOR.LIGHT_GRAY}}>
+                                클레임가 기준 선택
+                            </HeaderCell>
+                            <div style={{display:"flex",flexDirection:"row",alignItems:"center",borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                <SelectOption value={claimType} style={{height:60,width:198,}} onChange={(e)=>{setClaimType(e.target.value)}}>
                                         <option value={"택가"}>택가</option>
                                         <option value={"원가"}>원가</option>
                                     </SelectOption>
-                                </HeaderCell>
-                            </LaView>
-
-                            <LaView style={{marginTop:1,height:60,width:398,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <HeaderCell style={{backgroundColor:COLOR.LIGHT_GRAY}}>
-                                    클레임가 퍼센트 설정
-                                </HeaderCell>
-                                <HeaderCell style={{backgroundColor:COLOR.WHITE}}>
-                                    <InputLine type={"number"} placeholder={"100"} value={claimPercent || ""} style={{height:60,width:160,textAlign:"center"}} onChange={(e)=>{setClaimPercent(e.target.value)}}/>
-                                    <div style={{fontSize:22,marginRight:"20px"}}>{"%"}</div>
-                                </HeaderCell>
-                            </LaView>
-
-                            
-
-                            <LaView style={{justifyContent:"space-evenly",height:60,width:398,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <DivButton style={{color:COLOR.CYAN_BLUE}} onClick={()=>{addClaim()}}>
+                            </div>
+                        </LaView>
+                        <LaView style={{height:60,width:345,}}>
+                            <HeaderCell style={{borderTop:`2px solid rgb(244,244,244)`,border:`2px solid ${COLOR.LIGHT_GRAY}`,backgroundColor:COLOR.LIGHT_GRAY}}>
+                                클레임가 비율 설정
+                            </HeaderCell>
+                            <div style={{display:"flex",flexDirection:"row",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                <InputLine type={"number"} placeholder={"100"} value={claimPercent || ""} style={{height:58,width:160,textAlign:"center"}} onChange={(e)=>{setClaimPercent(e.target.value)}}/>
+                                <div style={{fontSize:22,marginRight:"20px"}}>{"%"}</div>
+                            </div>
+                        </LaView>
+                        <LaView style={{justifyContent:"space-evenly",height:60,width:345,border:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:" 0 0 10px 10px"}}>
+                            <DivButton style={{color:COLOR.CYAN_BLUE}} onClick={()=>{addClaim()}}>
                                     추가
-                                </DivButton>
-                                <DivButton onClick={()=>{setAddState(!addState)}}>
-                                    취소
-                                </DivButton>
-                            </LaView>
+                            </DivButton>
+                            <DivButton onClick={()=>{setAddState(!addState)}}>
+                                취소
+                            </DivButton>
+                        </LaView>
                         </div>
+
                     }
                 </div>
                 
