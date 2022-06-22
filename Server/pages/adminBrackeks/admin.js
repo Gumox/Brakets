@@ -29,10 +29,10 @@ const AdminHome = ({user,infos,brands,staffs}) => {
         setWindowHeight(window.innerHeight)
     },1000)
     useEffect(()=>{
-        
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
         window.addEventListener('resize',handleResize);
+        router.push("/adminBrackeks/CompanyList")
         return ()=>{
             window.removeEventListener('resize',handleResize);
         }
