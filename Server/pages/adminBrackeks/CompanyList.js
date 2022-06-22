@@ -48,14 +48,15 @@ const CompanyList = ({infos,brands,user,staffs}) =>{
             
             <SrollWrapper>
                 <SidebarSpace>
-                    <LeftSideBar setIsModalOpen={setIsModalOpen}/>
+                    <LeftSideBar path={'/adminBrackeks/CompanyList'}/>
                 </SidebarSpace>
             
                 <MainSpace  style={{padding:"2%"}}>
-                {!modifyAcion &&<h2>회사 목록</h2>}
-                    {!modifyAcion &&<InputTableBox>
+                {!modifyAcion &&<h2 style={{margin:20}}>회사 목록</h2>}
+                    {!modifyAcion &&
+                    <InputTableBox>
                         <PrView>
-                            <HeaderCell style={{flex:0.1,borderLeft:"1px solid",}}>
+                            <HeaderCell style={{flex:0.1}}>
                                 #
                             </HeaderCell>
                             <HeaderCell>
@@ -156,7 +157,7 @@ export const getServerSideProps = async (ctx) => {
     }
   };
 
-  const Wrapper = styled.div`
+const Wrapper = styled.div`
     
   background-color:${COLOR.WHITE};
 
@@ -172,28 +173,24 @@ export const getServerSideProps = async (ctx) => {
     }
 `;
 
-const RowWrapper = styled.nav`
-display:flex;
-background-color :${COLOR.WHITE}
-flex-direction:row;
 
-`;
 
 
 const SidebarSpace = styled.div`
-background-color:${COLOR.INDIGO};
+  background-color:${COLOR.INDIGO};
 `;
 const MainSpace=styled.div`
 
   background-color:${COLOR.WHITE};
 `;
 const InputTableBox  = styled.div`
-  min-height:720px;
   width:1080px;
 `;
 const PrView  = styled.div`
-  display:flex;
-  flex-direction:row;
+    display:flex;
+    flex-direction:row;
+    background-color:${COLOR.LIGHT_GRAY};
+    border-radius: 10px 10px 0% 0%;
 `;
 const HeaderCell = styled.div`
     display:flex;
@@ -201,11 +198,9 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:20px;
+    font-size:14px;
     flex:1;
     padding:5px;
-    border:1px solid;
-    border-left: 0px;
 `;
 const SrollWrapper = styled.nav`
 display:flex;

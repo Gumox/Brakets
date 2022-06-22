@@ -88,25 +88,25 @@ const AdministratorRegist = ({infos,user}) =>{
             <BracketsAdminHeader  user={user}/>
             
             <SrollWrapper>
-                <SidebarSpace style={{}}>
-                    <LeftSideBar/>
+                <SidebarSpace>
+                    <LeftSideBar  path={'/adminBrackeks/AdministratorRegist'}/>
                 </SidebarSpace>
             
                 <MainSpace  style={{padding:"2%"}}>
                     
                 
                 <InsideWrapper>
-            <InputTableBox>
+            <InputTableBox style={{height:windowHeight-135}}>
                 
-                <h2>전체관리자 등록</h2>
+                <h2 style={{margin:20}}>전체관리자 등록</h2>
                 <PrView>
-                    <NameBox  >
+                    <NameBox  style={{borderRadius:"10px 0 0 0"}}>
                         회사 이름
                     </NameBox>
                     
 
-                    <InputBox style={{justifyContent:"center",alignItems:"center"}}>
-                        <select style={{minWidth:120,margin:5,flex:1,fontSize:16,height:50}}
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,justifyContent:"center",alignItems:"center"}}>
+                        <SearchSelect style={{minWidth:120,flex:1,fontSize:16,height:50}}
                             onChange={(e)=>{sellectCompanyEvent(e)}}
                         >
                             
@@ -116,14 +116,14 @@ const AdministratorRegist = ({infos,user}) =>{
                                     <option key={index} value={item.value}>{item.headquarter_name}</option>
                                 ))
                             }
-                        </select>
+                        </SearchSelect>
                     </InputBox>
 
                     <NameBox>
                         회사코드
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <CenterView  style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
                             {cCode}
                         </CenterView>
@@ -132,7 +132,7 @@ const AdministratorRegist = ({infos,user}) =>{
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                         
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
@@ -151,15 +151,15 @@ const AdministratorRegist = ({infos,user}) =>{
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                         전체관리자 이름
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={administratorName} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorName(e.target.value)}}></InputLine>
                     </InputBox>
 
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
                                 <div style={{marginBottom:5}}>전체관리자 </div>
@@ -169,34 +169,34 @@ const AdministratorRegist = ({infos,user}) =>{
                         </TwoNameBox>
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={kakaoAcount} style={{flex:1, margin: 10}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                         전체관리자 연락처
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={administratorAddress} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorAddress(e.target.value)}}></InputLine>
                     </InputBox>
 
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                         전체관리자 이메일
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={administratorEmail} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:`2px solid rgb(244,244,244)`,borderRadius:"0 0 0 10px"}}>
                         전체관리자 존재 여부
                     </NameBox>
 
-                    <LongInputBox style={{paddingLeft:20,alignItems:"center",fontSize:20,fontWeight:"bold"}}>
+                    <LongInputBox style={{borderRadius:"0 0 10px 0",paddingLeft:20,alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         {
                             IsExist ?
                                 <div style={{color:COLOR.CYAN_BLUE,}}>Yes</div>
@@ -303,41 +303,85 @@ const Wrapper = styled.div`
       }
 `;
 
-const RowWrapper = styled.nav`
-display:flex;
-background-color :${COLOR.WHITE}
-flex-direction:row;
-
+const SearchSelect = styled.select`
+  border :0;
+  margin:2px;
+  flex:1;
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+    }
 `;
-
 
 const SidebarSpace = styled.div`
 background-color:${COLOR.INDIGO};
 `;
 const MainSpace=styled.div`
+
     background-color:${COLOR.WHITE};
 `;
+const InputTableBox  = styled.div`
+    height:720px;
+    width:1080px;
+    background-color:${COLOR.WHITE};
+`;
+const InputLineArea  = styled.textarea`
+    border 1px solid;
+    border-radius: 5px;
+    resize: none;
+
+`;
+
+const RegistAligo  = styled.div`
+    border-radius: 5px;
+    color:${COLOR.RED};
+    font-size:15px;
+    &:hover {
+        color: #ff8585;
+        }
+
+`;
+
+
+const CheckBoxRed = styled.input `
+    appearance: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-clip: content-box;
+    border: 1.5px solid #bbbbbb;
+    border-radius: 10px;
+    padding:3px;
+
+    &:checked{
+
+        background-color: ${COLOR.RED};
+        border-radius: 10px;
+    }
+
+`
+
 const RegistButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width: 60px;
+    height : 40px;
     color:${COLOR.WHITE};
-    margin:20px;
-    font-size:16px;
-    border-radius:10px;
+    margin: 20px;
+    font-size: 16px;
+    border-radius: 10px;
 
 `;
 const InsideWrapper  = styled.div`
     display:flex;
+    width:1000px;
     justify-content:center;
-    align-items:center;
     flex-direction: column;
 `;
-const InputTableBox  = styled.div`
-    min-height:720px;
-    width:1280px;
-`;
+
 const PrView  = styled.div`
+    min-width:540px;
     display:flex;
     flex-direction:row;
 `;
@@ -352,44 +396,103 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 14px;
     display:flex;
     align-items:center;
     justify-content:space-around;
 
 `;
 const NameBox  = styled.div`
-    height : 80px;
-    width : 200px;
-    border 1px solid;
-    font-size: 18px;
+    height : 60px;
+    width:145px;
+    background-color:${COLOR.LIGHT_GRAY};
+    font-size: 14px;
     display:flex;
     justify-content:center;
     align-items:center;
 `;
 const InputBox  = styled.div`
-    height : 80px;
-    flex:1.3;
-    border 1px solid;
+    border-left: 2px solid ${COLOR.LIGHT_GRAY};
+    height : 60px;
+    width:355px;
     display:flex;
     justyfiy-content:center;
     ailgn-items:center;
+`;
+const InputBoxTr  = styled.div`
+    height : 60px;
+    background-color:${COLOR.WHITE};
+    font-size: 14px;
+    display:flex;
+    justify-content:center;
+    width:210px;
 `;
 const LongInputBox  = styled.div`
-    height : 80px;
-    flex:3.31;
-    border 1px solid;
+    height : 60px;
+    width:855px;
+    border: 2px solid ${COLOR.LIGHT_GRAY};
+    border-bottom:0;
     display:flex;
     justyfiy-content:center;
     ailgn-items:center;
-`;
-const InputLine  = styled.input`
-    border 1px solid;
-    border-radius: 5px;
-    padding-left:10px;
-    font-size:20px;
+    font-size:18px;
 
 `;
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
+const InputSelect  = styled.select`
+    border: 0px;
+    margin: 2px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
+
+const ImageInput = styled.input`
+    visibility:hidden;
+`
+const ImageButton = styled.img`
+    width:100px;
+    height:100px;
+    object-fit: contain;
+    background-color:${COLOR.WHITE};
+    padding:10px;
+    margin-left: 25px;
+`
+const CheckBox = styled.input `
+    appearance: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-clip: content-box;
+    border: 1.5px solid #bbbbbb;
+    border-radius: 10px;
+    padding:3px;
+
+    &:checked{
+
+        background-color: ${COLOR.INDIGO};
+        border-radius: 10px;
+    }
+
+`
+
+
+
 
 
 const SrollWrapper = styled.nav`

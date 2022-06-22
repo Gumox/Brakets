@@ -388,7 +388,7 @@ const StoreModify = ({
                                         <input value={address || ""} placeholder={"주소"} readOnly style={{flex:1 ,padding:"8px"}} onClick={()=>{setPostCodeOn(true)}}/>
                                     </InColViewV2>
                                     <InColViewV2 style={{flex:1}}>
-                                        <input  value={detailAddress || ""} placeholder={"상세 주소"}  style={{flex:1 ,padding:"8px"}} onChange={(e)=>{setDetailAddress(e.target.value)}}/>
+                                        <input  value={detailAddress || ""} placeholder={"상세 주소"} disabled={address.length === 0}  style={{flex:1 ,padding:"8px"}} onChange={(e)=>{setDetailAddress(e.target.value)}}/>
                                     </InColViewV2>
                                 </div>
                                 :

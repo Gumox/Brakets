@@ -234,10 +234,10 @@ const InsertInput = styled.input`
     border:0;
     font-size:15px;
     flex : 1;
-    &:focus { 
-        outline: none !important;
-        //border-bottom-color: #719ECE;
-      }
+        &:focus { 
+            outline: none !important;
+            //border-bottom-color: #719ECE;
+        }
 `;
 const NameBox  = styled.div`
     height : 60px;

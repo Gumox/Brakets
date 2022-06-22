@@ -20,6 +20,9 @@ const AdministratorList = ({user,infos,brands,staffs}) => {
     const [modifyAcion,setModifyAcion] = useState()
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    
+    const [companySearch, setCompanySearch] = useState(false);
+
     const closeModal = useCallback(
       () => setIsModalOpen(false),
       []
@@ -33,6 +36,7 @@ const AdministratorList = ({user,infos,brands,staffs}) => {
         }
 
     }
+  
     
 
     const [pageNumber,setPageNumber] = useState(0)
@@ -58,39 +62,52 @@ const AdministratorList = ({user,infos,brands,staffs}) => {
             
             <SrollWrapper>
                 <SidebarSpace>
-                    <LeftSideBar setIsModalOpen={setIsModalOpen}/>
+                    <LeftSideBar  path={'/adminBrackeks/AdministratorList'}/>
                 </SidebarSpace>
             
-                {!modifyAcion && <MainSpace  style={{height:windowHeight,padding:"2%"}}>
+                {!modifyAcion && 
+                
+                <MainSpace  style={{height:windowHeight-75,padding:"2%"}}>
                     
                 
                     <h2 style={{marginLeft:20}}>회사 조회</h2>
-                        <PrView >
-                            <PrView style={{borderWidth:2,borderColor: COLOR.BLACK,borderStyle:"solid",flex:1}}>
-                                    
-                                <div style={{minWidth:120,display:"flex",justifyContent:"center",alignItems:"center",flex:1,fontWeight:"bold",fontSize:18}}>
-                                    회사이름
+                    <SearchBar style={{width:"450px"}}>
+                      <SearchBarHeader >
+                          조회 조건
+                      </SearchBarHeader>
+                          <PrView style={{flex:1.5, backgroundColor:COLOR.WHITE}}>
+                            <PrView style={{flex:1, backgroundColor:COLOR.WHITE,borderRadius:0,}}>
+                                <SelectItemHeader >
+                                회사이름
+                                </SelectItemHeader>
+                                
+                                <div style={{display:"flex",flex:0.7,borderLeft:0,borderRight:0,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}} >
+                                  <SearchSelect value={companySearch} style={{paddingLeft:20,flex:1}} 
+                                      onChange={(e)=>{setCompanySearch(e.target.value)}}>
+                                      <option  value={""} >{"전체"}</option>
+                                      {
+                                          infos.map((item,index)=>(
+                                            <option key={index} value={item.value}>{item.headquarter_name}</option>
+                                        ))
+                                      }
+                                  </SearchSelect>
                                 </div>
-                                <div style={{flex:1,margin:5}}>
-                                    <select style={{minWidth:120,margin:5,flex:1,fontSize:16}} onChange={(e)=>{staffParse(e.target.value)}}>
-                                        <option value={""}>{"전체"}</option>
-                                        {
-                                            infos.map((item,index)=>(
-                                                <option key={index} value={item.value}>{item.headquarter_name}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </div>
-                            </PrView>
-                            <div style={{flex:3,display:"flex",alignItems:"center"}}>
-                               
-                            </div>
-                        </PrView>
+                                
+                            </PrView> 
+                          </PrView>
+                      <SearchBarButton onClick={()=>{
+                          staffParse(companySearch)
+                        
+                      }}>
+                          <SearchImage  src="/icons/search_white.png"/>
+                      </SearchBarButton>
+                    </SearchBar>
+                       
                     <h2 style={{marginLeft:20}}>전체 관리자 목록</h2>
                         <InputTableBox>
                         <PrView>
                             
-                            <HeaderCell style={{borderLeft:"2px solid"}}>
+                            <HeaderCell>
                                 회사이름
                             </HeaderCell>
 
@@ -220,13 +237,59 @@ const Wrapper = styled.div`
     }
 `;
 
-const RowWrapper = styled.nav`
-display:flex;
-background-color :${COLOR.WHITE}
-flex-direction:row;
-
+const SearchBar = styled.div`
+    width:540px;
+    height:50px;
+    margin-bottom:30px;
+    display: flex;
+    flex-direction : row;
+`;
+const SearchBarHeader = styled.div`
+    flex:0.4;
+    display:flex;
+    font-size:15px;
+    font-weight: bold;
+    background-color:${COLOR.LIGHT_GRAY};
+    border-radius: 10px 0px 0px 10px;
+    justify-content:center;
+    align-items:center;
+    
+`;
+const SearchBarButton = styled.div`
+    flex:0.25;
+    background-color :${COLOR.INDIGO};
+    border-radius: 0px 10px 10px 0px;
+    display: flex;
+    justify-content:center;
+    align-items:center;
 `;
 
+const SearchSelect = styled.select`
+  border :0;
+  margin:2px;
+  flex:1;
+  min-width:175px;
+  &:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+    }
+`;
+const SearchImage =styled.img`
+  width:25px;
+  height: 25px;
+  cursor: pointer;
+`;
+const SelectItemHeader = styled.div`
+    display : flex;
+    flex:0.3;
+    justify-content : center;
+    align-items : center;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid ${COLOR.LIGHT_GRAY};
+
+`;
 const SrollWrapper = styled.nav`
 display:flex;
 flex-direction:row;
@@ -299,21 +362,20 @@ const HeaderCell = styled.div`
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:20px;
+    font-size:14px;
     flex:1;
     padding:5px;
-    border:2px solid ${COLOR.BLACK};
-    border-left : 0px solid ${COLOR.BLACK};
 `;
-
 const InputTableBox  = styled.div`
-    min-height:720px;
     min-width:1080px;
     margin-top:20px;
 `;
 const PrView  = styled.div`
     display:flex;
     flex-direction:row;
+    background-color:${COLOR.LIGHT_GRAY};
+    border-radius: 10px 10px 0% 0%;
 `;
+
 
 export default AdministratorList

@@ -9,6 +9,7 @@ import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { UserContext } from "../../store/Context";
 import Link from 'next/link';
 import LeftSideBar from "../../components/BracketsAdmin/LeftSidebar";
+import PostCode from "../../components/BracketsAdmin/PostCode";
 
 const CompanyRegist = ({user,infos,brands,staffs}) =>{
     const router = useRouter();
@@ -29,7 +30,10 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
     const [compayName,setCompayName] = useState("")
     const [compayNameEN,setCompayNameEN] = useState("")
     const [compayCode,setCompayCode] = useState("")
+    
+    const [postCodeOn,setPostCodeOn]=useState(false)
     const [address,setAddress] = useState("")
+    const [detailAddress,setDetailAddress] = useState("")
 
     const [ceo,setCeo] = useState()
     const [ceoAddress,setCeoAddress] = useState()
@@ -93,23 +97,23 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
             
             <RowWrapper>
                 <SidebarSpace>
-                    <LeftSideBar/>
+                    <LeftSideBar  path={'/adminBrackeks/CompayRegist'}/>
                 </SidebarSpace>
             
             <MainSpace  style={{padding:"2%"}}>
                     
                     
             <InsideWrapper>
-            <InputTableBox>
+            <InputTableBox style={{height:windowHeight-135}}>
                 
-                <h2>회사 정보 등록</h2>
+                <h2 style={{margin:20}}>회사 정보 등록</h2>
                 <PrView>
-                    <NameBox  >
+                    <NameBox  style={{borderRadius:"10px 0 0 0"}}>
                         회사 이름
                     </NameBox>
                     
 
-                    <InputBox style={{}}>
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                     <TwoNameBox >
                         <ColView style={{ marginLeft:10,}}>
                             <div style={{marginBottom:5,fontSize:15}}>한글</div>
@@ -137,7 +141,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                         회사코드설정
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox  style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                     <CenterView>
                         <div style={{marginLeft:10,fontSize:20}}>
                         {compayCode}
@@ -148,62 +152,64 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop: `2px solid rgb(244,244,244)`}}>
                         대표자 이름
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox  style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={ceo} style={{flex:1, margin: 10}} onChange={(e)=>{setCeo(e.target.value)}}></InputLine>
                     </InputBox>
 
-                    <NameBox>
+                    <NameBox style={{borderTop: `2px solid rgb(244,244,244)`}}>
                         사업자 등록 번호
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox  style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={companyRegistrationNumber} style={{flex:1, margin: 10}} onChange={(e)=>{setCompanyRegistrationNumber(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop: `2px solid rgb(244,244,244)`}}>
                         대표자 연락처
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox  style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={ceoAddress} style={{flex:1, margin: 10}} 
                             onChange={(e)=>{setCeoAddress(e.target.value)}}                        
                         />
                     </InputBox>
 
-                    <NameBox>
+                    <NameBox style={{borderTop: `2px solid rgb(244,244,244)`}}>
                         대표자 이메일
                     </NameBox>
 
-                    <InputBox>
+                    <InputBox  style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={ceoEmail} style={{flex:1, margin: 10}} onChange={(e)=>{setceoEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
 
-                <PrView>
-                    <NameBox>
-                        <div>
-                            <div>
-                            서비스 센터 주소
-                            </div>
-                        </div>
+                <PrView style={{height:"120px"}}>
                         
-                    </NameBox>
-                    <LongInputBox >
-                        <InputLineArea  value={storeAddress} style={{flex:1, margin: 10}} onChange={(e)=>{setStoreAddress(e.target.value)}} />
-                    </LongInputBox>
+                        <NameBox style={{height:"120px",borderTop:`2px solid rgb(244,244,244)`}}>
+                            <div>서비스 센터 주소</div>
+                        </NameBox>
 
-                    
+                        <LongInputBox style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,borderLeft:0,borderBottom:0,height:"120px",flexDirection:"column"}}>
+                            
+                            <InColViewV2 style={{flex:1}}>
+                                <input value={address || ""} placeholder={"주소"} readOnly style={{flex:1 ,padding:"8px"}} onClick={()=>{setPostCodeOn(true)}}/>
+                            </InColViewV2>
+                            <InColViewV2 style={{flex:1}}>
+                                <input  value={detailAddress || ""} placeholder={"상세 주소"} disabled={address.length === 0} style={{flex:1 ,padding:"8px"}} onChange={(e)=>{setDetailAddress(e.target.value)}}/>
+                            </InColViewV2>
+                            
+                        </LongInputBox>
 
-                </PrView>
+                    </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop: `2px solid rgb(244,244,244)`}}>
                         <div>
                             <div>
                                 SMS 대표전화
@@ -214,11 +220,11 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                         </div>
                         
                     </NameBox>
-                    <InputBox style={{borderRight:0}}>
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={call} style={{flex:1, margin: 10}} onChange={(e)=>{setCall(e.target.value)}}></InputLine>
                     </InputBox>
 
-                    <NameBox style={{borderLeft:0,borderRight:0,borderColor:COLOR.BLACK }}>
+                    <NameBox>
                         <Link href={{ pathname: "https://smartsms.aligo.in/login.html"}}>
                             <a target="_blank">
                                 <RegistAligo>**알리고에 등록하기</RegistAligo>
@@ -227,16 +233,15 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                         
                     </NameBox>
 
-                    <InputBox style={{borderLeft:0}}>
-                    </InputBox>
+                    <InputBox  style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}/>
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderRadius:"0 0 0 10px", borderTop: `2px solid rgb(244,244,244)`}}>
                         수선 OK 사용 여부
                     </NameBox>
 
-                    <LongInputBox style={{}}>
+                    <LongInputBox style={{borderRadius:"0 0 10px 0", border:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <PrView>
                             <CenterView style={{margin:10}}>
                             <CheckBox type="checkbox" checked={check} onChange={()=>{setCheck(!check)}}/>
@@ -251,9 +256,9 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                         </PrView>
                     </LongInputBox>
                 </PrView>
-                <PrView style={{display:"flex",flex:1}}>
+                <PrView style={{width:1000,display:"flex",flex:1}}>
                
-                <CenterView style={{height:100,display:"flex",flex:1}}>
+                    <CenterView style={{height:100,display:"flex",flex:1}}>
                         <RegistButton onClick={()=>{registHeadquarter()}}>
                             등록
                         </RegistButton>
@@ -269,6 +274,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                 </MainSpace>
             </RowWrapper>
            
+            {postCodeOn && <PostCode setAddress={setAddress} setPostCodeOn={setPostCodeOn}/>}
         </Wrapper>
       </UserContext.Provider>
     )
@@ -370,78 +376,9 @@ const MainSpace=styled.div`
 
     background-color:${COLOR.WHITE};
 `;
-const RegistButton =styled.button`
-    background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
-    color:${COLOR.WHITE};
-    margin:20px;
-    font-size:16px;
-    border-radius:10px;
-
-`;
-const InsideWrapper  = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction: column;
-`;
 const InputTableBox  = styled.div`
     height:720px;
     width:1080px;
-`;
-const PrView  = styled.div`
-    display:flex;
-    flex-direction:row;
-`;
-const ColView  = styled.div`
-    display:flex;
-    flex-direction: column;
-`;
-const CenterView  = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-`;
-
-const TwoNameBox  = styled.div`
-    font-size: 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-
-`;
-const NameBox  = styled.div`
-    height : 80px;
-    width : 200px;
-    border 1px solid;
-    font-size: 18px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-`;
-const InputBox  = styled.div`
-    height : 80px;
-    flex:1.3;
-    border 1px solid;
-    display:flex;
-    justyfiy-content:center;
-    ailgn-items:center;
-`;
-const LongInputBox  = styled.div`
-    height : 80px;
-    flex:3.31;
-    border 1px solid;
-    display:flex;
-    justyfiy-content:center;
-    ailgn-items:center;
-`;
-const InputLine  = styled.input`
-    border 1px solid;
-    border-radius: 5px;
-    padding-left:10px;
-    font-size:20px;
-
 `;
 const InputLineArea  = styled.textarea`
     border 1px solid;
@@ -459,24 +396,13 @@ const RegistAligo  = styled.div`
         }
 
 `;
+const InColViewV2  = styled.div`
+    display:flex;
+    font-size:14px;
+    padding:10px;
+    align-items:center;
+`;
 
-const CheckBox = styled.input `
-    appearance: none;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-clip: content-box;
-    border: 1.5px solid #bbbbbb;
-    border-radius: 10px;
-    padding:3px;
-
-    &:checked{
-
-        background-color: ${COLOR.INDIGO};
-        border-radius: 10px;
-    }
-
-`
 const CheckBoxRed = styled.input `
     appearance: none;
     display: inline-block;
@@ -494,5 +420,135 @@ const CheckBoxRed = styled.input `
     }
 
 `
+
+const RegistButton =styled.button`
+    background-color : ${COLOR.INDIGO};
+    width: 60px;
+    height : 40px;
+    color:${COLOR.WHITE};
+    margin: 20px;
+    font-size: 16px;
+    border-radius: 10px;
+
+`;
+const InsideWrapper  = styled.div`
+    display:flex;
+    width:1000px;
+    justify-content:center;
+    flex-direction: column;
+`;
+
+const PrView  = styled.div`
+    min-width:540px;
+    display:flex;
+    flex-direction:row;
+`;
+const ColView  = styled.div`
+    display:flex;
+    flex-direction: column;
+`;
+const CenterView  = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+`;
+
+const TwoNameBox  = styled.div`
+    font-size: 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+
+`;
+const NameBox  = styled.div`
+    height : 60px;
+    width:145px;
+    background-color:${COLOR.LIGHT_GRAY};
+    font-size: 14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`;
+const InputBox  = styled.div`
+    border-left: 2px solid ${COLOR.LIGHT_GRAY};
+    height : 60px;
+    width:355px;
+    display:flex;
+    justyfiy-content:center;
+    ailgn-items:center;
+`;
+const InputBoxTr  = styled.div`
+    height : 60px;
+    background-color:${COLOR.WHITE};
+    font-size: 14px;
+    display:flex;
+    justify-content:center;
+    width:210px;
+`;
+const LongInputBox  = styled.div`
+    height : 60px;
+    width:855px;
+    border: 2px solid ${COLOR.LIGHT_GRAY};
+    border-bottom:0;
+    border-left :0;
+    display:flex;
+    justyfiy-content:center;
+    ailgn-items:center;
+    font-size:18px;
+
+`;
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
+const InputSelect  = styled.select`
+    border: 0px;
+    margin: 2px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
+
+const ImageInput = styled.input`
+    visibility:hidden;
+`
+const ImageButton = styled.img`
+    width:100px;
+    height:100px;
+    object-fit: contain;
+    background-color:${COLOR.WHITE};
+    padding:10px;
+    margin-left: 25px;
+`
+const CheckBox = styled.input `
+    appearance: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-clip: content-box;
+    border: 1.5px solid #bbbbbb;
+    border-radius: 10px;
+    padding:3px;
+
+    &:checked{
+
+        background-color: ${COLOR.INDIGO};
+        border-radius: 10px;
+    }
+
+`
+
 
 export default CompanyRegist

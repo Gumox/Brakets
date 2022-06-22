@@ -14,56 +14,83 @@ const Company = ({
     const cancelButton =()=>{
         setModifyAcion(null)
     }
-    
     return(
-        <Wrapper>
-            {infos.map((item,index)=>{
-                let brand = _.filter(brands, {"headquarter_id": item.value});
-                return(
-                <PrView key={index}>
-                    <HeaderCell style={{flex:0.1,borderLeft:"1px solid"}}>
-                        {index+1}
-                    </HeaderCell>
-                    <HeaderCell style={{flexDirection:"column"}}>
-                        <div>{item.headquarter_name}</div>
-                        <div>{`\n(${item.text})`}</div>
-                    </HeaderCell>
-                    
-                    <HeaderCell>
-                    <div>{moment(item.timestamp).format("YYYY-MM-DD")}</div>
-                    </HeaderCell>
-                    
-                    <HeaderCell style={{flexDirection:"column"}}>
-                        {brand.map((el,key)=>(
-                            <div key={key} style={{marginTop:5}}>{el.brand_name}</div>
-                        ))}
-                    </HeaderCell>
-                    
-                    <HeaderCell>
-                        {item.headquarter_code}
-                    </HeaderCell>
-                    
-                    <HeaderCell>
-                        {
-                            item.state >0 ?
-                            <div style={{color:COLOR.CYAN_BLUE}}>{"ON"}</div>
-                            :<div style={{color:COLOR.RED}}>{"OFF"}</div>
-                        }
-                    </HeaderCell>
-                    
-                    <HeaderCell >
-                        <ModifyButton onClick={()=>{
-                        setModifyAcion(
-                            <CompanyModify info={item} cancelButton={cancelButton}/>
+        <div>
+            {infos.length?
+                infos.map((item,index)=>{
+                    if(index+1 !== infos.length){
+                        return(
+                            <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                <ListItem item={item} num={index+1}  brand={brands}  setModifyAcion={setModifyAcion} cancelButton={cancelButton}/>
+                            </Wrapper>
+                        )
+                    }else{
+                        return(
+                            <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
+                                <ListItem item={item} num={index+1}  brand={brands}  setModifyAcion={setModifyAcion} cancelButton={cancelButton}/>
+                            </Wrapper>
+                        )
+                    }
+                })
+                :
+                <Wrapper style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px",height:"60px"}}/>
 
-                        )}}>
-                            수정
-                        </ModifyButton>
-                    </HeaderCell>
-                </PrView>
-                )
-            })}
-        </Wrapper>
+            }
+        </div>
+    );
+
+}
+
+
+const ListItem =({
+    item,
+    num,
+    brand=[],
+    setModifyAcion=()=>{},
+    cancelButton=()=>{}
+})=>{
+    return(
+        <PrView>
+            <HeaderCell style={{flex:0.1}}>
+                {num}
+            </HeaderCell>
+            <HeaderCell style={{flexDirection:"column"}}>
+                <div>{item.headquarter_name}</div>
+                <div>{`\n(${item.text})`}</div>
+            </HeaderCell>
+            
+            <HeaderCell>
+            <div>{moment(item.timestamp).format("YYYY-MM-DD")}</div>
+            </HeaderCell>
+            
+            <HeaderCell style={{flexDirection:"column"}}>
+                {brand.map((el,key)=>(
+                    <div key={key} style={{marginTop:5}}>{el.brand_name}</div>
+                ))}
+            </HeaderCell>
+            
+            <HeaderCell>
+                {item.headquarter_code}
+            </HeaderCell>
+            
+            <HeaderCell>
+                {
+                    item.state >0 ?
+                    <div style={{color:COLOR.CYAN_BLUE}}>{"ON"}</div>
+                    :<div style={{color:COLOR.RED}}>{"OFF"}</div>
+                }
+            </HeaderCell>
+            
+            <HeaderCell >
+                <ModifyButton onClick={()=>{
+                setModifyAcion(
+                    <CompanyModify info={item} cancelButton={cancelButton}/>
+
+                )}}>
+                    수정
+                </ModifyButton>
+            </HeaderCell>
+        </PrView>
     )
 }
 const RegistButton =styled.button`
@@ -78,37 +105,29 @@ const RegistButton =styled.button`
 `
 const HeaderCell = styled.div`
     display:flex;
+    min-height:60px;
     min-width:20px;
     justify-content:center;
     align-items:center;
-    font-size:20px;
+    font-size:13px;
     flex:1;
     padding:5px;
-    border-bottom:1px solid;
-    border-right : 1px solid;
 `;
 const ModifyButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width:60px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:14px;
     border-radius:10px;
 
 `
 const Wrapper  = styled.div`
-    overflow:auto;
-    &::-webkit-scrollbar {
-        width: 8px;
-        height: 10px;
-        background: rgba(210, 210, 210, 0.4);
-      }
-      &::-webkit-scrollbar-thumb {
-        background: rgba(96, 96, 96, 0.7);
-        border-radius: 6px;
-      }
+    border-left:2px solid ${COLOR.LIGHT_GRAY};
+    border-right:2px solid ${COLOR.LIGHT_GRAY};
 `;
+
 const InsideWrapper  = styled.div`
     display:flex;
     justify-content:center;
