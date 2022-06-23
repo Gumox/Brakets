@@ -62,8 +62,6 @@ async function smsMessage(messageType,headquarterId,brand,store,code) {
             WHERE message_type = ? AND headquarter_id = ?`,
     values:[messageType,headquarterId]
   });
-  console.log('is In hear?')
-  console.log(result)
   const msg = brand+" "+result[0].auto_sms_message1+" "+store +result[0].auto_sms_message2+" "+code +result[0].auto_sms_message3
 
   return msg;
@@ -92,7 +90,6 @@ async function getReceiverAsCode(receiptCode){
             WHERE receipt.receipt_code = ? `,
     values: [receiptCode],
   });
-  console.log(result)
 
   return result[0];
 }
@@ -125,11 +122,11 @@ const controller =  async (req, res) => {
 
       const message = await smsMessage(messageType,headquarterId,storeSenderString[0].brand_name,storeSenderString[0].name,customer.receipt_code)
 
-      console.log(sender)
+      /*console.log(sender)
       console.log("customer :", customer.phone)
       
 
-      console.log("customer :", String(customer.phone).replace(/-/g, ''))
+      console.log("customer :", String(customer.phone).replace(/-/g, ''))*/
       
       
         
