@@ -14,7 +14,7 @@ async function SetSmsMessageResult(sender,sms_result,sms_result_message,msg,mid,
 
 const smsList = (req, res,sender,msg,mid,hq_id,sendNumber) => {
     let AuthData = {
-        key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
+        key: process.env.ALIGO_API_KEY,
         user_id: 'brackets',
       }
     // 전송결과보기 상세

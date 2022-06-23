@@ -57,10 +57,13 @@ function ShopStepOne({ navigation , route}) {
 
     const storeId = store.getState().store_id;
     const receiptId=store.getState().receipt_id
+    const info =store.getState().userInfo[0]
 
     const smsBody = {
         "storeId": storeId,
         "receiptId":receiptId,
+        "messageType":1,
+        "headquarterId":info.headquarter_id 
 
     }//
     const submitReceipt = async (receipt_id, bag_code) => {
@@ -81,7 +84,7 @@ function ShopStepOne({ navigation , route}) {
             const json = await response.json();
             console.log(json)
             if(store.getState().requirement.id === 1){
-                //AutoSms(smsBody)
+                AutoSms(smsBody)
             }
             store.dispatch({ type: "STORE_CLEAR" })
             navigation.popToTop()

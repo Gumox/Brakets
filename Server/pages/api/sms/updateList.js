@@ -10,7 +10,7 @@ const updateResult = async(message,id)=>{
 
 const smsList = (req, res,mid,id) => {
     let AuthData = {
-        key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
+        key: process.env.ALIGO_API_KEY,
         user_id: 'brackets',
       }
     // 전송결과보기 상세

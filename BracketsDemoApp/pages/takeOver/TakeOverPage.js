@@ -19,7 +19,7 @@ import ip from '../../serverIp/Ip';
 import { CheckCode,CheckFaultDivision,CheckAnalysisType,CheckJudgmentResult } from '../../Functions/codeCheck';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {useNetInfo}from "@react-native-community/netinfo";
-
+import AutoSms from '../../Functions/AutoSms';
 
 
 const  formatDate = (inputDate)=> {
@@ -98,18 +98,29 @@ function TakeOverPage( { route,navigation } ) {
         
         try {
             const response = await fetch(ip+`/api/receipt/received`,{method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-            body: JSON.stringify({
-                step : 2,
-                code : pCode,
-                date : cDate
-            })
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                body: JSON.stringify({
+                    step : 2,
+                    code : pCode,
+                    date : cDate
+                })
             });
             const json = await response.json();
            //console.log(json)
+           
+           const storeId = store.getState().store_id;
+           const info =store.getState().userInfo[0]
+
+           const smsBody = {
+                "storeId": storeId,
+                "receiptId":pCode,
+                "messageType":2,
+                "headquarterId":info.headquarter_id 
+           }
+           AutoSms(smsBody)
         } catch (error) {
             console.error(error);
         } finally {
@@ -129,7 +140,6 @@ function TakeOverPage( { route,navigation } ) {
     const [repair3,setRepair3] =useState();
     const getImages = useCallback(async (code,) => {
 
-        console.log("press")
         const { data } = await axios.get(ip+"/api/lookup/images", {
           params: { 
             code: code

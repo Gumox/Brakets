@@ -15,7 +15,7 @@ async function SetSmsMessageResult(sender,sms_result,sms_result_message,msg,mid,
 
 const smsList = (req,msg,mid,hq_id,sendNumber) => {
     let AuthData = {
-        key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
+        key: process.env.ALIGO_API_KEY,
         user_id: 'brackets',
       }
     // 전송결과보기 상세
@@ -62,7 +62,8 @@ async function smsMessage(messageType,headquarterId,brand,store,code) {
             WHERE message_type = ? AND headquarter_id = ?`,
     values:[messageType,headquarterId]
   });
-  console.log(result[0])
+  console.log('is In hear?')
+  console.log(result)
   const msg = brand+" "+result[0].auto_sms_message1+" "+store +result[0].auto_sms_message2+" "+code +result[0].auto_sms_message3
 
   return msg;
@@ -70,14 +71,15 @@ async function smsMessage(messageType,headquarterId,brand,store,code) {
 async function getReceiver(receiptId){
   const result = await excuteQuery({
     query: `SELECT 
-            customer.phone
+            customer.phone,
+            receipt.receipt_code
             FROM receipt 
             LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
             WHERE receipt.receipt_id = ? `,
     values: [receiptId],
   });
 
-  return result[0].phone;
+  return result[0];
 }
 const controller =  async (req, res) => {
   if (req.method === "POST") {
@@ -97,18 +99,18 @@ const controller =  async (req, res) => {
 
     const hq_id = storeSenderString[0].headquarter_id
 
-    const message = await smsMessage(messageType,headquarterId,storeSenderString[0].brand_name,storeSenderString[0].name)
+    const message = await smsMessage(messageType,headquarterId,storeSenderString[0].brand_name,storeSenderString[0].name,customer.receipt_code)
 
     console.log(sender)
-    console.log("customer :", customer)
+    console.log("customer :", customer.phone)
     
 
-    console.log("customer :", String(customer).replace(/-/g, ''))
+    console.log("customer :", String(customer.phone).replace(/-/g, ''))
     
     
       
       let AuthData = {
-        key: '58b93zstbkzmrkylw4bheggqu2cx2zb2',
+        key: process.env.ALIGO_API_KEY,
         user_id: 'brackets',
       }
       
@@ -117,7 +119,7 @@ const controller =  async (req, res) => {
     req.body = {
         
       sender: sender,
-      receiver:  String(customer).replace(/-/g, ''),
+      receiver:  String(customer.phone).replace(/-/g, ''),
       msg: message,
     }
     console.log( req.body)

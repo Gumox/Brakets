@@ -1,13 +1,14 @@
 import ip from '../serverIp/Ip';
 
-const AutoSms= async({storeId,receiptId})=>{
+const AutoSms= async({storeId,receiptId,messageType,headquarterId})=>{
     const body = { 
         "storeId":storeId,
-        "receiptId":receiptId
+        "receiptId":receiptId,
 
+        "messageType":messageType,
+        "headquarterId":headquarterId
         }
 
-        console.log(body)
 
         
 
@@ -19,7 +20,6 @@ const AutoSms= async({storeId,receiptId})=>{
         body: JSON.stringify(body)
         });
         const json = await response.json();
-        console.log(json)
            
         } catch (error) {
             console.error(error);
