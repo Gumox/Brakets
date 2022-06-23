@@ -67,7 +67,7 @@ const AdministratorList = ({user,infos,brands,staffs}) => {
             
                 {!modifyAcion && 
                 
-                <MainSpace  style={{height:windowHeight-75,padding:"2%"}}>
+                <MainSpace  style={{minHeight:580,height:windowHeight-75,padding:"2%"}}>
                     
                 
                     <h2 style={{marginLeft:20}}>회사 조회</h2>

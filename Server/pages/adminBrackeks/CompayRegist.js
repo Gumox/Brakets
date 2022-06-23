@@ -57,6 +57,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
     }
 
     const registHeadquarter = async() =>{
+
         const bodyData = {
             state : check,
             headquarter_name:compayNameEN,
@@ -67,7 +68,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
             ceo_email:ceoEmail,
             company_registration_number:companyRegistrationNumber,
             headquarter_call:call,
-            address:storeAddress
+            address:storeAddress+" "+detailAddress
 
 
         }
@@ -104,11 +105,16 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                     
                     
             <InsideWrapper>
-            <InputTableBox style={{height:windowHeight-135}}>
+            <InputTableBox style={{minHeight:580,height:windowHeight-135}}>
                 
-                <h2 style={{margin:20}}>회사 정보 등록</h2>
+                <div style={{width:"980px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <h2 style={{margin:20}}>회사 정보 등록</h2>
+                    
+                    <RedDiv>* 는 필수 항목 입니다</RedDiv>
+                </div>  
                 <PrView>
                     <NameBox  style={{borderRadius:"10px 0 0 0"}}>
+                        <RedDiv>*</RedDiv>
                         회사 이름
                     </NameBox>
                     
@@ -116,8 +122,12 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                     <TwoNameBox >
                         <ColView style={{ marginLeft:10,}}>
-                            <div style={{marginBottom:5,fontSize:15}}>한글</div>
-                            <div style={{marginTop:5,fontSize:15}}>영문</div>
+                            <div style={{marginBottom:5,fontSize:15}}>
+                                한글
+                            </div>
+                            <div style={{marginTop:5,fontSize:15}}>
+                                영문
+                            </div>
                             
                         </ColView>
                         <ColView>
@@ -153,6 +163,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                 
                 <PrView>
                     <NameBox style={{borderTop: `2px solid rgb(244,244,244)`}}>
+                        <RedDiv>*</RedDiv>
                         대표자 이름
                     </NameBox>
 
@@ -161,7 +172,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                     </InputBox>
 
                     <NameBox style={{borderTop: `2px solid rgb(244,244,244)`}}>
-                        사업자 등록 번호
+                        <RedDiv>*</RedDiv>사업자 등록 번호
                     </NameBox>
 
                     <InputBox  style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
@@ -192,6 +203,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                 <PrView style={{height:"120px"}}>
                         
                         <NameBox style={{height:"120px",borderTop:`2px solid rgb(244,244,244)`}}>
+                            <RedDiv>*</RedDiv>
                             <div>서비스 센터 주소</div>
                         </NameBox>
 
@@ -210,12 +222,14 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                 
                 <PrView>
                     <NameBox style={{borderTop: `2px solid rgb(244,244,244)`}}>
+                        
                         <div>
-                            <div>
+                            <div style={{display:"flex",flexDirection:"row"}}>
+                            <RedDiv>*</RedDiv>
                                 SMS 대표전화
                             </div>
-                            <div>
-                            (발신 전용)
+                            <div style={{marginLeft:15}}>
+                            {"(발신 전용)"}
                             </div>
                         </div>
                         
@@ -227,7 +241,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                     <NameBox>
                         <Link href={{ pathname: "https://smartsms.aligo.in/login.html"}}>
                             <a target="_blank">
-                                <RegistAligo>**알리고에 등록하기</RegistAligo>
+                                <RegistAligo>*알리고에 등록하기</RegistAligo>
                             </a>
                         </Link>
                         
@@ -353,11 +367,7 @@ export const getServerSideProps = async (ctx) => {
       }
     }
   };
-  const styles = {
-      menu:{
-          color:COLOR.BLACK
-      },
-  }
+
 
 const Wrapper = styled.div`
     
@@ -374,7 +384,10 @@ const Wrapper = styled.div`
         border-radius: 6px;
       }
 `;
-
+const RedDiv =styled.div`
+    margin: 2px;
+    color: ${COLOR.RED};
+` 
 const RowWrapper = styled.nav`
 display:flex;
 background-color :${COLOR.WHITE}

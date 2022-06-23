@@ -96,7 +96,7 @@ const AdministratorRegist = ({infos,user}) =>{
                     
                 
                 <InsideWrapper>
-            <InputTableBox style={{height:windowHeight-135}}>
+            <InputTableBox style={{minHeight:580,height:windowHeight-135}}>
                 
                 <h2 style={{margin:20}}>전체관리자 등록</h2>
                 <PrView>
@@ -199,8 +199,8 @@ const AdministratorRegist = ({infos,user}) =>{
                     <LongInputBox style={{borderRadius:"0 0 10px 0",paddingLeft:20,alignItems:"center",fontSize:20,fontWeight:"bold",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         {
                             IsExist ?
-                                <div style={{color:COLOR.CYAN_BLUE,}}>Yes</div>
-                            :   <div style={{color:COLOR.RED}}>No</div>
+                                <div style={{color:COLOR.CYAN_BLUE,fontSize:15}}>YES</div>
+                            :   <div style={{color:COLOR.RED,fontSize:15}}>NO</div>
                         }
                     </LongInputBox>
                 </PrView>
