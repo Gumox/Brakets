@@ -160,9 +160,10 @@ const ChangeButton =styled.button`
 `
 const View = styled.div`
 
-    display : flex;
+        display : flex;
     flex-direction : column;
     white-space: pre-wrap;
+    word-break: break-all;
 `;
 const Wrapper  = styled.div`
     border-left:2px solid ${COLOR.LIGHT_GRAY};
