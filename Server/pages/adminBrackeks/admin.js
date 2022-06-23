@@ -11,7 +11,7 @@ import Modal from "../../components/BracketsAdmin/LinkModal";
 import { UserContext } from "../../store/Context";
 import LeftSideBar from "../../components/BracketsAdmin/LeftSidebar";
 
-const AdminHome = ({user,infos,brands,staffs}) => {
+const AdminHome = ({}) => {
     const router = useRouter();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,9 +38,8 @@ const AdminHome = ({user,infos,brands,staffs}) => {
         }
     },[])
     return (
-      <UserContext.Provider value={user}>
         <Wrapper>
-            <BracketsAdminHeader  user={user}/>
+            <BracketsAdminHeader  />
             
             <SrollWrapper>
                 <SidebarSpace>
@@ -57,11 +56,10 @@ const AdminHome = ({user,infos,brands,staffs}) => {
             )}
 
         </Wrapper>
-      </UserContext.Provider>
     );
 };
 
-
+/*
 export const getServerSideProps = async (ctx) => {
   const {
     data: { isAuthorized, user },
@@ -99,9 +97,17 @@ export const getServerSideProps = async (ctx) => {
         .get(`${process.env.API_URL}/headquarter/staff`,)
         .then(({ data }) => data.body), 
     ])
-    
-    
-    
+    console.log("//////////////////////////////")
+    console.log(
+      infos
+    )
+    console.log(
+      brands
+    )
+    console.log(
+      staffs
+    )
+    console.log("//////////////////////////////")
   
   if(user.level ===5){
     return {
@@ -126,7 +132,7 @@ const styles = {
     menu:{
         color:COLOR.BLACK
     },
-}
+}*/
 const Wrapper = styled.div`
     
 background-color:${COLOR.INDIGO};

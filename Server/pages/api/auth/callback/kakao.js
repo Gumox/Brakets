@@ -50,7 +50,7 @@ const kakao = async (req, res) => {
     const result = await excuteQuery({
       query: `SELECT staff.staff_id, id, account, staff.name, level, store.brand_id AS headquarter_id ,store.store_id, staff.staff_code
               FROM staff 
-              JOIN staff_store ON staff.staff_id = staff_store.staff_id 
+              LEFT JOIN staff_store ON staff.staff_id = staff_store.staff_id 
               LEFT JOIN store ON staff_store.store_id = store.store_id
               WHERE (id=? OR account=?) AND staff.state = 1`,
       values: [userId, email],
@@ -59,6 +59,7 @@ const kakao = async (req, res) => {
       console.log(result.error);
     }
     let user = result[0];
+    console.log(user)
     user["access_token"] = accessToken
     if (!user) {
       // 없으면

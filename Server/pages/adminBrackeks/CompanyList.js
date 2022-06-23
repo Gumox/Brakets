@@ -47,7 +47,7 @@ const CompanyList = ({infos,brands,user,staffs}) =>{
             <BracketsAdminHeader  user={user}/>
             
             <SrollWrapper>
-                <SidebarSpace>
+                <SidebarSpace style={{height: windowHeight-75}}>
                     <LeftSideBar path={'/adminBrackeks/CompanyList'}/>
                 </SidebarSpace>
             
@@ -135,6 +135,19 @@ export const getServerSideProps = async (ctx) => {
       ])
       
       
+    let infoData = []
+    let brandsData = []
+    let userData = []
+
+    if(infos){
+      infoData = infos
+    }
+    if(brands){
+      brandsData = brands
+    }
+    if(user){
+      userData = user
+    }
       
     
     if(user.level ===5){
@@ -142,9 +155,9 @@ export const getServerSideProps = async (ctx) => {
         props:
         {
           user:user,
-          infos:infos,
-          brands:brands,
-          staffs:staffs
+          infos:infoData,
+          brands:brandsData,
+          staffs:userData
         } 
       };
     }else{
