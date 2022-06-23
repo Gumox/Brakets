@@ -74,26 +74,49 @@ async function getReceiver(receiptId){
             customer.phone,
             receipt.receipt_code
             FROM receipt 
-            LEFT JOIN customer ON receipt.customer_id = customer.customer_id 
+            JOIN customer ON receipt.customer_id = customer.customer_id 
             WHERE receipt.receipt_id = ? `,
     values: [receiptId],
   });
 
   return result[0];
 }
+
+async function getReceiverAsCode(receiptCode){
+  const result = await excuteQuery({
+    query: `SELECT 
+            customer.phone,
+            receipt.receipt_code
+            FROM receipt 
+            JOIN customer ON receipt.customer_id = customer.customer_id 
+            WHERE receipt.receipt_code = ? `,
+    values: [receiptCode],
+  });
+  console.log(result)
+
+  return result[0];
+}
+
 const controller =  async (req, res) => {
   if (req.method === "POST") {
     console.log(req.body)
     const { 
       storeId,
       receiptId,
+      receiptCode,
 
       messageType,
       headquarterId
     } = req.body
 
     
-    const customer=await getReceiver(receiptId)
+    let customer
+
+    if(receiptId){
+      customer = await getReceiver(receiptId)
+    }else if(receiptCode){
+      customer = await getReceiverAsCode(receiptCode)
+    }
     const storeSenderString = await getSender(storeId)
     const sender =String(storeSenderString[0].headquarter_call).replace(/-/g, '') 
 

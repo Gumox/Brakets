@@ -116,11 +116,11 @@ function TakeOverPage( { route,navigation } ) {
 
            const smsBody = {
                 "storeId": storeId,
-                "receiptId":pCode,
+                "receiptCode":pCode,
                 "messageType":2,
                 "headquarterId":info.headquarter_id 
            }
-           AutoSms(smsBody)
+           await AutoSms(smsBody)
         } catch (error) {
             console.error(error);
         } finally {

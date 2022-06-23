@@ -1,13 +1,7 @@
 import ip from '../serverIp/Ip';
 
-const AutoSms= async({storeId,receiptId,messageType,headquarterId})=>{
-    const body = { 
-        "storeId":storeId,
-        "receiptId":receiptId,
-
-        "messageType":messageType,
-        "headquarterId":headquarterId
-        }
+const AutoSms= async(smsBody)=>{
+    const body = smsBody
 
 
         
