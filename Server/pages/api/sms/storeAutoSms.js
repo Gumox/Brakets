@@ -117,45 +117,49 @@ const controller =  async (req, res) => {
     }else if(receiptCode){
       customer = await getReceiverAsCode(receiptCode)
     }
-    const storeSenderString = await getSender(storeId)
-    const sender =String(storeSenderString[0].headquarter_call).replace(/-/g, '') 
+    if(customer.phone){
+      const storeSenderString = await getSender(storeId)
+      const sender =String(storeSenderString[0].headquarter_call).replace(/-/g, '') 
 
-    const hq_id = storeSenderString[0].headquarter_id
+      const hq_id = storeSenderString[0].headquarter_id
 
-    const message = await smsMessage(messageType,headquarterId,storeSenderString[0].brand_name,storeSenderString[0].name,customer.receipt_code)
+      const message = await smsMessage(messageType,headquarterId,storeSenderString[0].brand_name,storeSenderString[0].name,customer.receipt_code)
 
-    console.log(sender)
-    console.log("customer :", customer.phone)
-    
-
-    console.log("customer :", String(customer.phone).replace(/-/g, ''))
-    
-    
+      console.log(sender)
+      console.log("customer :", customer.phone)
       
-      let AuthData = {
-        key: process.env.ALIGO_API_KEY,
-        user_id: 'brackets',
-      }
-      
-      AuthData.testmode_yn = 'N'
 
-    req.body = {
+      console.log("customer :", String(customer.phone).replace(/-/g, ''))
+      
+      
         
-      sender: sender,
-      receiver:  String(customer.phone).replace(/-/g, ''),
-      msg: message,
-    }
-    console.log( req.body)
+        let AuthData = {
+          key: process.env.ALIGO_API_KEY,
+          user_id: 'brackets',
+        }
+        
+        AuthData.testmode_yn = 'N'
 
-    aligoapi.send(req, AuthData)
-      .then((r) => {
-        smsList(req,message,r.msg_id,hq_id,sender)
-        res.status(200).send(r)
-      })
-      .catch((e) => {
-        res.status(400)
-        res.send(e)
-      })
+      req.body = {
+          
+        sender: sender,
+        receiver:  String(customer.phone).replace(/-/g, ''),
+        msg: message,
+      }
+      console.log( req.body)
+
+      aligoapi.send(req, AuthData)
+        .then((r) => {
+          smsList(req,message,r.msg_id,hq_id,sender)
+          res.status(200).send(r)
+        })
+        .catch((e) => {
+          res.status(400)
+          res.send(e)
+        })
+    }else{
+      req.status(204)
+    }
   }
       
 };
