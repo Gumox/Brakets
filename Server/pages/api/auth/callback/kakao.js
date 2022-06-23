@@ -118,7 +118,7 @@ const kakao = async (req, res) => {
         httpOnly: true,
         path: "/",
         });
-        res.redirect("/adminBrackeks");
+        res.redirect("/adminBrackets");
       }
       else{
         res.redirect("/login?r=fail");

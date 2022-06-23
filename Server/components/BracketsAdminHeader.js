@@ -3,9 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import styled from "styled-components";
 
-import MENUS from "../constants/repairMenu";
 import COLOR from "../constants/color";
-import store from "../store/store";
 import logout from "../functions/logoutfunc";
 
 const BracketsAdminHeader = ({ path,user }) => {

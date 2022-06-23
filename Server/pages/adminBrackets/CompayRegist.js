@@ -78,7 +78,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
               .then(({ data }) => data.body), 
             ])
             console.log(result)
-            router.push("/adminBrackeks/CompanyList")
+            router.push("/adminBrackets/CompanyList")
     }
 
     useEffect(()=>{
@@ -98,7 +98,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
             
             <RowWrapper>
                 <SidebarSpace>
-                    <LeftSideBar  path={'/adminBrackeks/CompayRegist'}/>
+                    <LeftSideBar  path={'/adminBrackets/CompayRegist'}/>
                 </SidebarSpace>
             
             <MainSpace  style={{padding:"2%"}}>

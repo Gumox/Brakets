@@ -43,7 +43,7 @@ const ReceptionPage = ({ options, user }) => {
     if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
       MENUS.push({
         title: "브래키츠 관리자",
-        link: "/adminBrackeks/admin",
+        link: "/adminBrackets/admin",
       },)
     }
   }
@@ -51,7 +51,7 @@ const ReceptionPage = ({ options, user }) => {
   useEffect(()=>{
     if(user.level === 5 ){
       if(!JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS"))){
-        router.push("/adminBrackeks/admin")
+        router.push("/adminBrackets/admin")
         alert("올바른 접근이 아닙니다")
       }
       else{

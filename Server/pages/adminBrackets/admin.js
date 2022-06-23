@@ -32,7 +32,7 @@ const AdminHome = ({}) => {
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
         window.addEventListener('resize',handleResize);
-        router.push("/adminBrackeks/CompanyList")
+        router.push("/adminBrackets/CompanyList")
         return ()=>{
             window.removeEventListener('resize',handleResize);
         }

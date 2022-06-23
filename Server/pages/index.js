@@ -15,7 +15,7 @@ const Home = ({user}) => {
     if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
       MENUS.push({
         title: "브래키츠 관리자",
-        link: "/adminBrackeks/admin",
+        link: "/adminBrackets/admin",
       },)
     }
   }
@@ -51,7 +51,7 @@ const Home = ({user}) => {
       </CuetomLink>
       {
         user.level ==5 &&
-        <CuetomLink onClick={() => router.push("/adminBrackeks/admin")}>
+        <CuetomLink onClick={() => router.push("/adminBrackets/admin")}>
           브래키츠 관리자
         </CuetomLink>
       }

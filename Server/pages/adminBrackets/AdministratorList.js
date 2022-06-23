@@ -62,7 +62,7 @@ const AdministratorList = ({user,infos,brands,staffs}) => {
             
             <SrollWrapper>
                 <SidebarSpace>
-                    <LeftSideBar  path={'/adminBrackeks/AdministratorList'}/>
+                    <LeftSideBar  path={'/adminBrackets/AdministratorList'}/>
                 </SidebarSpace>
             
                 {!modifyAcion && 

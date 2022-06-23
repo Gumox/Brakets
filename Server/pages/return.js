@@ -17,7 +17,7 @@ const ReturnPage = (props) => {
     if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
       MENUS.push({
         title: "브래키츠 관리자",
-        link: "/adminBrackeks/admin",
+        link: "/adminBrackets/admin",
       },)
     }
   }

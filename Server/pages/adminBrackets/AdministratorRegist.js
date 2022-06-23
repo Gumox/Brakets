@@ -64,7 +64,7 @@ const AdministratorRegist = ({infos,user}) =>{
               .then(({ data }) => data.body), 
             ])
             console.log(result)
-            router.push("/adminBrackeks/AdministratorList")
+            router.push("/adminBrackets/AdministratorList")
     }
 
     const [windowWidth,setWindowWidth] = useState(0)
@@ -89,7 +89,7 @@ const AdministratorRegist = ({infos,user}) =>{
             
             <SrollWrapper>
                 <SidebarSpace>
-                    <LeftSideBar  path={'/adminBrackeks/AdministratorRegist'}/>
+                    <LeftSideBar  path={'/adminBrackets/AdministratorRegist'}/>
                 </SidebarSpace>
             
                 <MainSpace  style={{padding:"2%"}}>

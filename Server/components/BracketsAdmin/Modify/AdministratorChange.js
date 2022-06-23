@@ -48,7 +48,7 @@ const AdministratorChange = ({
                 .then(({ data }) => data.body), 
             ])
             console.log(result)
-            router.push("/adminBrackeks/AdministratorList")
+            router.push("/adminBrackets/AdministratorList")
         window.location.reload();
     }
     
