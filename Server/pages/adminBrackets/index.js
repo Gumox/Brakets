@@ -15,7 +15,7 @@ const AdminHome = () => {
       <Title>수선 OK</Title>
       <Logout onClick={handleLogout}>Logout</Logout>
       
-      <CuetomLink onClick={() => router.push("/adminBrackeks/admin")}>
+      <CuetomLink onClick={() => router.push("/adminBrackets/admin")}>
         admin
       </CuetomLink>
       

@@ -98,15 +98,21 @@ const AdministratorRegist = ({infos,user}) =>{
                 <InsideWrapper>
             <InputTableBox style={{minHeight:580,height:windowHeight-135}}>
                 
-                <h2 style={{margin:20}}>전체관리자 등록</h2>
+                
+                <div style={{width:1000,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <h2 style={{margin:20}}>전체관리자 등록</h2>
+                    
+                    <RedDiv>* 는 필수 항목</RedDiv>
+                </div>
                 <PrView>
                     <NameBox  style={{borderRadius:"10px 0 0 0"}}>
+                        <RedDiv>*</RedDiv>
                         회사 이름
                     </NameBox>
                     
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,justifyContent:"center",alignItems:"center"}}>
-                        <SearchSelect style={{minWidth:120,flex:1,fontSize:16,height:50}}
+                        <SearchSelect style={{paddingLeft:15,minWidth:120,flex:1,fontSize:16,height:50}}
                             onChange={(e)=>{sellectCompanyEvent(e)}}
                         >
                             
@@ -152,6 +158,7 @@ const AdministratorRegist = ({infos,user}) =>{
                 
                 <PrView>
                     <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                        <RedDiv>*</RedDiv>
                         전체관리자 이름
                     </NameBox>
 
@@ -162,8 +169,9 @@ const AdministratorRegist = ({infos,user}) =>{
                     <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
-                                <div style={{marginBottom:5}}>전체관리자 </div>
-                                <div >kakao 계정</div>
+                                <div style={{marginBottom:5,display:"flex",flexDirection:"row"}}>
+                                <RedDiv>*</RedDiv>전체관리자 </div>
+                                <div style={{marginLeft: 15}}>kakao 계정</div>
                                 
                             </ColView>
                         </TwoNameBox>
@@ -175,6 +183,7 @@ const AdministratorRegist = ({infos,user}) =>{
                 </PrView>
                 <PrView>
                     <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                        <RedDiv>*</RedDiv>
                         전체관리자 연락처
                     </NameBox>
 
@@ -183,6 +192,7 @@ const AdministratorRegist = ({infos,user}) =>{
                     </InputBox>
 
                     <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
+                        <RedDiv>*</RedDiv>
                         전체관리자 이메일
                     </NameBox>
 
@@ -266,7 +276,7 @@ export const getServerSideProps = async (ctx) => {
         
     let infoData = []
     let brandsData = []
-    let userData = []
+    let staffsData = []
 
     if(infos){
       infoData = infos
@@ -274,8 +284,8 @@ export const getServerSideProps = async (ctx) => {
     if(brands){
       brandsData = brands
     }
-    if(user){
-      userData = user
+    if(staffs){
+        staffsData = staffs
     }
     
   
@@ -286,7 +296,7 @@ export const getServerSideProps = async (ctx) => {
         user:user,
         infos:infoData,
         brands:brandsData,
-        staffs:userData
+        staffs:staffsData
       } 
     };
   }else{
@@ -315,7 +325,10 @@ const Wrapper = styled.div`
         border-radius: 6px;
       }
 `;
-
+const RedDiv =styled.div`
+    margin: 2px;
+    color: ${COLOR.RED};
+` 
 const SearchSelect = styled.select`
   border :0;
   margin:2px;

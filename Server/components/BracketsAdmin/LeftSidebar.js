@@ -39,19 +39,19 @@ const LeftSideBar =({path})=>{
     let administratorListColor = "rgb(133,133,133)";
     let administratorRegistColor = "rgb(133,133,133)";
 
-    if(path === '/adminBrackeks/CompanyList'){
+    if(path === '/adminBrackets/CompanyList'){
         controlCompany = true;
         subMenuCompanyColor = COLOR.WHITE;
         companyListColor = COLOR.WHITE;
-    }else if(path === '/adminBrackeks/CompayRegist'){
+    }else if(path === '/adminBrackets/CompayRegist'){
         controlCompany = true;
         subMenuCompanyColor = COLOR.WHITE;
         compayRegistColor = COLOR.WHITE;
-    }else if(path === '/adminBrackeks/AdministratorList'){
+    }else if(path === '/adminBrackets/AdministratorList'){
         controlAdminister = true;
         subMenuAdministratorColor = COLOR.WHITE;
         administratorListColor = COLOR.WHITE;
-    }else if(path === '/adminBrackeks/AdministratorRegist'){
+    }else if(path === '/adminBrackets/AdministratorRegist'){
         controlAdminister = true;
         subMenuAdministratorColor = COLOR.WHITE;
         administratorRegistColor = COLOR.WHITE;
@@ -65,21 +65,21 @@ const LeftSideBar =({path})=>{
                     <MenuItem></MenuItem>
                     <SubMenu style={{color: subMenuCompanyColor}} title="회사 관리" defaultOpen={controlCompany}>
                         <MenuItem style={{color: companyListColor}} 
-                            onClick={()=>{router.push("/adminBrackeks/CompanyList")}}>
+                            onClick={()=>{router.push("/adminBrackets/CompanyList")}}>
                                 회사 목록
                         </MenuItem>
                         <MenuItem style={{color: compayRegistColor}} 
-                            onClick={()=>{router.push("/adminBrackeks/CompayRegist")}}>
+                            onClick={()=>{router.push("/adminBrackets/CompayRegist")}}>
                                 회사 등록
                         </MenuItem>
                     </SubMenu>
                     <SubMenu style={{color: subMenuAdministratorColor}} title="전체관리자 관리" defaultOpen={controlAdminister}>
                         <MenuItem style={{color: administratorListColor}} 
-                            onClick={()=>{router.push("/adminBrackeks/AdministratorList")}}>
+                            onClick={()=>{router.push("/adminBrackets/AdministratorList")}}>
                                 관리자 목록
                         </MenuItem>
                         <MenuItem style={{color: administratorRegistColor}} 
-                            onClick={()=>{router.push("/adminBrackeks/AdministratorRegist")}}>
+                            onClick={()=>{router.push("/adminBrackets/AdministratorRegist")}}>
                                 관리자 등록
                         </MenuItem>
                     </SubMenu>

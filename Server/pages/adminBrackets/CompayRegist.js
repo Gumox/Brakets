@@ -335,7 +335,7 @@ export const getServerSideProps = async (ctx) => {
         
     let infoData = []
     let brandsData = []
-    let userData = []
+    let staffsData = []
 
     if(infos){
       infoData = infos
@@ -343,8 +343,8 @@ export const getServerSideProps = async (ctx) => {
     if(brands){
       brandsData = brands
     }
-    if(user){
-      userData = user
+    if(staffs){
+        staffsData = staffs
     }
       
     
@@ -355,7 +355,7 @@ export const getServerSideProps = async (ctx) => {
           user:user,
           infos:infoData,
           brands:brandsData,
-          staffs:userData
+          staffs:staffsData
         } 
       };
     }else{
