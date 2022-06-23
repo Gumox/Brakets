@@ -21,13 +21,13 @@ const Administrator = ({
                     if(index+1 !== staffs.length){
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <ListItem item={item} phone={_phone}  setModifyAcion={setModifyAcion} />
+                                <ListItem item={item} phone={_phone} staffs={staffs}  setModifyAcion={setModifyAcion} />
                             </Wrapper>
                         )
                     }else{
                         return(
                             <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
-                                <ListItem item={item}  phone={_phone}  setModifyAcion={setModifyAcion} />
+                                <ListItem item={item}  phone={_phone} staffs={staffs} setModifyAcion={setModifyAcion} />
                             </Wrapper>
                         )
                     }
@@ -43,6 +43,7 @@ const Administrator = ({
 const ListItem =({
     item,
     phone,
+    staffs,
     setModifyAcion=()=>{},
 })=>{
     return(
@@ -102,7 +103,8 @@ const ListItem =({
             
             <HeaderCell >
                 <ModifyButton
-                    onClick={()=>{setModifyAcion(
+                    onClick={()=>{  
+                        setModifyAcion(
                         <AdministratorModifiy staffs={staffs} info={item} setModifyAcion={setModifyAcion}/>
                     )}}
                 >수정</ModifyButton>
