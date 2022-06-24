@@ -15,8 +15,8 @@ const UnitPriceListControl =({user,brands})=>{
     const [excelName,setExcelName] = useState("첨부파일")
 
     const sortedBrands =SortArray(brands)
-    const [brandId,setBrandId] = useState(sortedBrands[0].brand_id)
-    const [brandName,setBrandName] = useState(sortedBrands[0].brand_name)
+    const [brandId,setBrandId] = useState(null)
+    const [brandName,setBrandName] = useState(null)
 
     const [excelFile,setExcelFile] = useState([])
 
@@ -54,25 +54,28 @@ const UnitPriceListControl =({user,brands})=>{
     }
     
     const registUnitPriceList = async() =>{
-        
-        const formData = new FormData();
-        formData.append('brand', brandName)
-        formData.append('brand_id', brandId)
-        formData.append('brand_id', brandId)
+        if(excelFile){
+            const formData = new FormData();
+            formData.append('brand', brandName)
+            formData.append('brand_id', brandId)
+            formData.append('brand_id', brandId)
 
-        if(unitPriceList){
-            formData.append('unit_price_list_id', unitPriceList.unit_price_list_id)
+            if(unitPriceList){
+                formData.append('unit_price_list_id', unitPriceList.unit_price_list_id)
+            }
+            formData.append('unitPriceList', excelFile)
+
+            
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/unitPriceList/regist`,formData)
+                .then(({ data }) => data), 
+                ])
+            alert("고객유상단가표가 등록되었습니다.")
+            window.location.reload()
+        }else{
+            alert('첨부된 파일이 없습니다')
         }
-        formData.append('unitPriceList', excelFile)
-
-        
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/unitPriceList/regist`,formData)
-              .then(({ data }) => data), 
-            ])
-        alert("고객유상단가표가 등록되었습니다.")
-        window.location.reload()
     }
 
     useState(()=>{
@@ -86,7 +89,10 @@ const UnitPriceListControl =({user,brands})=>{
             setUnitPriceList(result)
         }
         fetch()
-        
+        if(sortedBrands.length>0){
+            setBrandId(sortedBrands[0].brand_id)
+            setBrandName(sortedBrands[0].brand_name)
+        }
     },[])
     
 
@@ -144,7 +150,13 @@ const UnitPriceListControl =({user,brands})=>{
                 </label> 
                 <input disabled value={excelName} placeholder="첨부파일" onChange={()=>{}}/>
                 <button style={{minWidth:180,marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:150,color:COLOR.WHITE}}
-                    onClick={()=>{registUnitPriceList()}}
+                    onClick={()=>{
+                        if(brands.length>0){
+                            registUnitPriceList()
+                        }else{
+                            alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                        }
+                    }}
                 >
                    고객유상단가표 등록
                 </button>

@@ -3,13 +3,13 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
+import isInsertedAccount from "../../isInsertedAccount";
 
 const StaffChange = ({
     user,
     staff,
     setActionView =()=>{}
 }) =>{
-    console.log(staff)
     const router = useRouter();
     const cName =staff.headquarter_name;
     const cNameKr =staff.headquarter_name_kr;
@@ -26,35 +26,53 @@ const StaffChange = ({
 
     
     const changeStaff = async() =>{
-        const bodyData = {
-            state:false,
-            phone:staff.staff_phone,
-            staff_email:staff.staff_email,
-            staff_id:staff.staff_id,
-        }
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/headquarter/updateAdministrator`,bodyData)
-              .then(({ data }) => data.body), 
-            ])
 
-        const body = {
-            state: true,
-            account: kakaoAcount,
-            name: staffName,
-            phone: staffAddress,
-            level:1,
-            staff_code:adminCode,
-            staff_email:staffEmail,
-            store_id :storeId
+        
+
+        if(staffName && kakaoAcount && staffAddress ){
+            if(kakaoAcount){
+                const accountCheck = await isInsertedAccount(kakaoAcount)
+                if(accountCheck.length){
+                    alert("이미 등록된 kakao계정 입니다")
+                }else{
+                    const bodyData = {
+                        state:false,
+                        phone:staff.staff_phone,
+                        staff_email:staff.staff_email,
+                        staff_id:staff.staff_id,
+                    }
+                    const [result] = await Promise.all([
+                        axios
+                        .post(`${process.env.API_URL}/headquarter/updateAdministrator`,bodyData)
+                        .then(({ data }) => data.body), 
+                        ])
+        
+                    const body = {
+                        state: true,
+                        account: kakaoAcount,
+                        name: staffName,
+                        phone: staffAddress,
+                        level:1,
+                        staff_code:adminCode,
+                        staff_email:staffEmail,
+                        store_id :storeId
+                    }
+                    const [regist] = await Promise.all([
+                            axios
+                            .post(`${process.env.API_URL}/staff/regist`,body)
+                            .then(({ data }) => data.body), 
+                            ])
+                    alert("새로운 직원으로 변경되었습니다.")
+                    window.location.reload();
+                }
+            }
+        }else if(!staffName){
+            alert("새로운 직원의 이름을 입력해주세요")
+        }else if(!kakaoAcount){
+            alert("새로운 직원의 kakao계정을 입력해주세요")
+        }else if(!staffAddress){
+            alert("새로운 직원의 연락처를 입력해주세요")
         }
-        const [regist] = await Promise.all([
-                axios
-                  .post(`${process.env.API_URL}/staff/regist`,body)
-                  .then(({ data }) => data.body), 
-                ])
-        alert("새로운 직원으로 변경되었습니다.")
-        window.location.reload();
     }
 
     
@@ -103,7 +121,7 @@ const StaffChange = ({
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
                                 <div style={{marginBottom:5}}>직원 코드</div>
                                 <div style={{color:COLOR.RED,fontSize:"11px"}}>
-                                    {`(자동 완성)`}
+                                    {`( 이전 직원 코드 )`}
                                 </div>
                                 
                             </ColView>
@@ -193,7 +211,7 @@ const Wrapper = styled.div`
 const CustomButton =styled.button`
     background-color : ${COLOR.INDIGO};
     width:60px;
-    height : 50px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
     font-size:15px;

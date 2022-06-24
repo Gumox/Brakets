@@ -17,7 +17,8 @@ const List = ({
     
     return(
         <div>
-            {
+            {repairShops.length > 0 
+                ?
                 repairShops.map((item,index)=>{
                     if(index+1 !== repairShops.length){
                         return(
@@ -33,6 +34,8 @@ const List = ({
                         )
                     }
                 })
+                :
+                <Wrapper style={{height:"60px",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}/>
             }
         </div>
     );

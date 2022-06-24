@@ -19,6 +19,14 @@ const Home = ({user}) => {
       },)
     }
   }
+  if(user.level === 0){
+    if(!(_.find(MENUS, {'title': "관리자"}))){
+      MENUS.push({
+        title: "관리자",
+        link: "/admin/serviceCenterControl",
+      },)
+    }
+  }
   
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");

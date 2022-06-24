@@ -14,13 +14,19 @@ const getNextStaffCode=(staffs)=>{
         return o.length > 0
     })
     const numbering =[];
-    filt.map((el)=>{
-        const xplit =String(el).split(".")
-        const xplitLength =xplit.length
-        numbering.push(Number(xplit[xplitLength-1]))
-    })
-    const lastNumber = _.sortBy(numbering).reverse()[0]
-    const nextNumber = String(lastNumber+1)
+    let nextNumber
+    if(staffs.length>0){
+        filt.map((el)=>{
+            const xplit =String(el).split(".")
+            const xplitLength =xplit.length
+            numbering.push(Number(xplit[xplitLength-1]))
+        })
+        const lastNumber = _.sortBy(numbering).reverse()[0]
+        nextNumber = String(lastNumber+1)
+    }else{
+        nextNumber = String(1)
+    }
+
     if(nextNumber.length === 1){
         return "000"+nextNumber
     }else if(nextNumber.length === 2){

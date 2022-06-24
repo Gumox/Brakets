@@ -15,156 +15,122 @@ const StaffsList = ({
 }) => {
     return(
         <div>
-            {
-                staffs.map((item,index)=>{
-                    let state
-                    if(item.staff_state){
-                        state = (
-                        <div style={{color:COLOR.CYAN_BLUE ,fontWeight:"bold"}}>
-                            ON
-                        </div>)
-                    }else{
-                        state = (
-                        <div style={{color:COLOR.RED ,fontWeight:"bold"}}>
-                            OFF
-                        </div>)
-                    }
-                    if(index+1 !== staffs.length){
-                        return(
-                            <PrView key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            
-                                <HeaderCell //style={{borderLeft:"2px solid"}}
-                                >
-                                    {item.headquarter_name}
-                                </HeaderCell>
-        
-                                <HeaderCell>
-                                    {item.staff_code}
-                                </HeaderCell>
-        
-                                <HeaderCell>
-                                    <View>
-                                        <div style={{fontSize:"14px"}}>
-                                            {item.staff_account}
-                                        </div>
-                                    </View>
-                                </HeaderCell>
-        
-                                <HeaderCell>
-                                        {item.staff_name}
-                                </HeaderCell>
-        
-                                <HeaderCell>
-                                    {remakeCallNumber(item.staff_phone)}
-                                </HeaderCell>
-                                <HeaderCell>
-                                    <View>
-                                        <div style={{fontSize:"14px"}}>
-                                            {item.staff_email}
-                                        </div>
-                                    </View>
-                                </HeaderCell>   
-                                
-                                <HeaderCell style={{flex:0.6}}>
-                                    {state}
-                                </HeaderCell>
-                                
-                                <HeaderCell style={{color: COLOR.CYAN_BLUE ,flex:0.6}} 
-                                    onClick={()=>{ 
-                                        setActionView(
-                                            <StaffModify staff={item} staffs={staffs} setActionView={setActionView}/>
-                                        )
-
-                                    }}>
-                                    <ModifyView>
-                                        수정
-                                    </ModifyView>
-                                </HeaderCell>
-                                
-                                <HeaderCell style={{color: COLOR.RED ,flex:0.6}}
-                                    onClick={()=>{ 
-                                        setActionView(
-                                            <StaffChange staff={item} user={user} setActionView={setActionView}/>
-                                        )
-
-                                    }}>
-                                    <ModifyView style={{color: COLOR.RED}}>
-                                        변경
-                                    </ModifyView>
-                                </HeaderCell>
-                            </PrView>
-                        )
-                    }else{
-                        return(
-                            <PrView key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
-                            
-                            <HeaderCell //style={{borderLeft:"2px solid"}}
-                                >
-                                    {item.headquarter_name}
-                                </HeaderCell>
-        
-                                <HeaderCell>
-                                    {item.staff_code}
-                                </HeaderCell>
-        
-                                <HeaderCell>
-                                    <View>
-                                        <div style={{fontSize:"14px"}}>
-                                            {item.staff_account}
-                                        </div>
-                                    </View>
-                                </HeaderCell>
-        
-                                <HeaderCell>
-                                    {item.staff_name}
-                                </HeaderCell>
-        
-                                <HeaderCell>
-                                    {remakeCallNumber(item.staff_phone)}
-                                </HeaderCell>
-                                <HeaderCell>
-                                    <View>
-                                        <div style={{fontSize:"14px"}}>
-                                            {item.staff_email}
-                                        </div>
-                                    </View>
-                                </HeaderCell>
-                                
-                                <HeaderCell style={{flex:0.6}}>
-                                    {state}
-                                </HeaderCell>
-                                
-                                <HeaderCell style={{color: COLOR.CYAN_BLUE,flex:0.6}} 
-                                    onClick={()=>{ 
-                                        setActionView(
-                                            <StaffModify staff={item} setActionView={setActionView}/>
-                                        )
-
-                                    }}>
-                                    <ModifyView>
-                                        수정
-                                    </ModifyView>
-                                </HeaderCell>
-                                
-                                <HeaderCell style={{color: COLOR.RED,flex:0.6}}
-                                    onClick={()=>{ 
-                                        setActionView(
-                                            <StaffChange staff={item} user={user} setActionView={setActionView}/>
-                                        )
-
-                                    }}>
-                                    <ModifyView style={{color: COLOR.RED}}>
-                                        변경
-                                    </ModifyView>
-                                </HeaderCell>
-                            </PrView>
-                        )
-                    }
-                })
+            {staffs.length >0 
+                ?
+                
+                    staffs.map((item,index)=>{
+                        if(index+1 !== staffs.length){
+                            return(
+                                <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                                    <ListItem item={item} staffs={staffs} user={user} setActionView={setActionView}/>
+                                </Wrapper>
+                            )
+                        }else{
+                            return(
+                                <Wrapper key={index} style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}>
+                                    <ListItem item={item}  staffs={staffs} user={user} setActionView={setActionView}/>
+                                </Wrapper>
+                            )
+                        }
+                    })
+                
+                :
+                <Wrapper style={{height:"60px",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}/>
             }
         </div>
     );
 };
+
+const ListItem =({
+    item,
+    user,
+    staffs,
+    setActionView=()=>{}
+})=>{
+    
+
+    let state
+    if(item.staff_state){
+        state = (
+        <div style={{color:COLOR.CYAN_BLUE ,fontWeight:"bold"}}>
+            ON
+        </div>)
+    }else{
+        state = (
+        <div style={{color:COLOR.RED ,fontWeight:"bold"}}>
+            OFF
+        </div>)
+    }
+
+    return(
+        <PrView>
+                            
+            <HeaderCell>
+                {item.headquarter_name}
+            </HeaderCell>
+
+            <HeaderCell>
+                {item.staff_code}
+            </HeaderCell>
+
+            <HeaderCell>
+                <View>
+                    <div style={{fontSize:"14px"}}>
+                        {item.staff_account}
+                    </div>
+                </View>
+            </HeaderCell>
+
+            <HeaderCell>
+                    {item.staff_name}
+            </HeaderCell>
+
+            <HeaderCell>
+                {remakeCallNumber(item.staff_phone)}
+            </HeaderCell>
+            <HeaderCell>
+                <View>
+                    <div style={{fontSize:"14px"}}>
+                        {item.staff_email}
+                    </div>
+                </View>
+            </HeaderCell>   
+            
+            <HeaderCell style={{flex:0.6}}>
+                {state}
+            </HeaderCell>
+            
+            <HeaderCell style={{color: COLOR.CYAN_BLUE ,flex:0.6}} 
+                onClick={()=>{ 
+                    setActionView(
+                        <StaffModify staff={item} staffs={staffs} setActionView={setActionView}/>
+                    )
+
+                }}>
+                <ModifyView>
+                    수정
+                </ModifyView>
+            </HeaderCell>
+            
+            <HeaderCell style={{color: COLOR.RED ,flex:0.6}}
+                onClick={()=>{ 
+                    setActionView(
+                        <StaffChange staff={item} user={user} setActionView={setActionView}/>
+                    )
+
+                }}>
+                <ModifyView style={{color: COLOR.RED}}>
+                    변경
+                </ModifyView>
+            </HeaderCell>
+    </PrView>
+    )
+}
+    
+const Wrapper  = styled.div`
+    border-left:2px solid ${COLOR.LIGHT_GRAY};
+    border-right:2px solid ${COLOR.LIGHT_GRAY};
+`;
 
 const View = styled.div`
 
@@ -209,8 +175,6 @@ const HeaderCell = styled.div`
 const PrView  = styled.div`
     display:flex;
     flex-direction:row;
-    border-left:2px solid ${COLOR.LIGHT_GRAY};
-    border-right:2px solid ${COLOR.LIGHT_GRAY};
 `;
 const ModifyView = styled.div`
     color:${COLOR.CYAN_BLUE};

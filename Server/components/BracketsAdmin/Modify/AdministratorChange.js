@@ -21,35 +21,39 @@ const AdministratorChange = ({
     const adminCode = info.staff_code;
 
     const changeAdministrator = async() =>{
-        const bodyData = {
-            state:false,
-            phone:info.staff_phone,
-            staff_email:info.staff_email,
-            staff_id:info.staff_id,
-        }
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/headquarter/updateAdministrator`,bodyData)
-              .then(({ data }) => data.body), 
-            ])
-
-        const body = {
-            state: true,
-            account: KakaoAcount,
-            name: administratorName,
-            phone: phone,
-            staff_code:adminCode,
-            staff_email:staffEmail,
-            headquarter_id :info.headquarter_id
-        }
-        const [regist] = await Promise.all([
-            axios
-                .post(`${process.env.API_URL}/headquarter/registAdministrator`,body)
+        if(KakaoAcount && administratorName && phone){
+            const bodyData = {
+                state:false,
+                phone:info.staff_phone,
+                staff_email:info.staff_email,
+                staff_id:info.staff_id,
+            }
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/headquarter/updateAdministrator`,bodyData)
                 .then(({ data }) => data.body), 
-            ])
-            console.log(result)
-            router.push("/adminBrackets/AdministratorList")
-        window.location.reload();
+                ])
+
+            const body = {
+                state: true,
+                account: KakaoAcount,
+                name: administratorName || info.staff_name,
+                phone: phone || info.staff_phone,
+                staff_code:adminCode,
+                staff_email:staffEmail,
+                headquarter_id :info.headquarter_id
+            }
+            const [regist] = await Promise.all([
+                axios
+                    .post(`${process.env.API_URL}/headquarter/registAdministrator`,body)
+                    .then(({ data }) => data.body), 
+                ])
+                console.log(result)
+                router.push("/adminBrackets/AdministratorList")
+            window.location.reload();
+        }else if(!KakaoAcount){
+            alert("변경하실 관리자의 카카오 계정을 입력해 주세요")
+        }
     }
     
     return (
@@ -59,18 +63,16 @@ const AdministratorChange = ({
             
                 <MainSpace  style={{padding:"2%"}}>
                     
+                <InputTableBox>
                 
-                <InsideWrapper>
-            <InputTableBox>
-                
-                <h2 style={{fontWeight:"bold"}}>{"전체관리자 변경"}</h2>
+                <h2 style={{margin:20}}>{"전체관리자 변경"}</h2>
                 <PrView>
-                    <NameBox  >
+                    <NameBox style={{borderRadius:"10px 0 0 0"}}>
                         회사 이름
                     </NameBox>
                     
 
-                    <InputBox style={{alignItems:"center"}}>
+                    <InputBox style={{alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <ColView style={{ marginLeft:10,}}>
                             <div style={{marginBottom:5,fontSize:15}}>한글</div>
                             <div style={{marginTop:5,fontSize:15}}>영문</div>
@@ -92,8 +94,8 @@ const AdministratorChange = ({
                         회사코드
                     </NameBox>
 
-                    <InputBox>
-                        <CenterView  style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                    <InputBox style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <CenterView  style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:15}}>
                             {cCode}
                         </CenterView>
                     </InputBox>
@@ -101,7 +103,7 @@ const AdministratorChange = ({
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
@@ -110,18 +112,18 @@ const AdministratorChange = ({
                         </TwoNameBox>
                     </NameBox>
 
-                    <LongInputBox style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                    <LongInputBox style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:15}}>
                         {adminCode}
                     </LongInputBox>
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         전체관리자 이름
                     </NameBox>
 
                     <InputBox >
-                        <InputLine value={administratorName} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorName(e.target.value)}}></InputLine>
+                        <InputLine value={administratorName || ""} placeholder={info.staff_name} style={{flex:1}} onChange={(e)=>{setAdministratorName(e.target.value)}}></InputLine>
                     </InputBox>
 
                     <NameBox>
@@ -134,25 +136,25 @@ const AdministratorChange = ({
                         </TwoNameBox>
                     </NameBox>
 
-                    <InputBox>
-                         <InputLine value={KakaoAcount} style={{flex:1, margin: 10}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
+                    <InputBox style={{borderLeft:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                         <InputLine value={KakaoAcount || ""} placeholder={info.staff_account} style={{flex:1}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderRadius:"0 0 0 10px",borderTop:"2px solid rgb(244,244,244)"}}>
                         전체관리자 연락처
                     </NameBox>
 
-                    <InputBox>
-                        <InputLine value={phone} style={{flex:1, margin: 10}} onChange={(e)=>{setPhone(e.target.value)}}></InputLine>
+                    <InputBox style={{ borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputLine value={phone || ""} placeholder={info.staff_account} style={{flex:1}} onChange={(e)=>{setPhone(e.target.value)}}></InputLine>
                     </InputBox>
 
-                    <NameBox>
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         전체관리자 이메일
                     </NameBox>
 
-                    <InputBox>
-                        <InputLine value={staffEmail} style={{flex:1, margin: 10}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
+                    <InputBox style={{borderRadius:"0 0 10px 0",borderLeft:0,border:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputLine value={staffEmail || ""} placeholder={info.staff_email} style={{flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 
@@ -160,16 +162,16 @@ const AdministratorChange = ({
                 
                 
                 
-                    </InputTableBox>
-                    </InsideWrapper>
-                    <CenterView>
-                        <RegistButton onClick={()=>{changeAdministrator()}}>
-                            변경
-                        </RegistButton>
-                        <RegistButton  style={{backgroundColor:COLOR.RED}} onClick={()=>{setModifyAcion(null)}}>
-                            취소
-                        </RegistButton>
-                    </CenterView>
+                <CenterView >
+                    <RegistButton onClick={()=>{changeAdministrator()}}>
+                        변경
+                    </RegistButton>
+                    <RegistButton  style={{backgroundColor:COLOR.RED}} onClick={()=>{setModifyAcion(null)}}>
+                        취소
+                    </RegistButton>
+                </CenterView>
+
+                </InputTableBox>
                 </MainSpace>
             </SrollWrapper>
             
@@ -179,14 +181,26 @@ const AdministratorChange = ({
 };
 const RegistButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width: 60px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:15px;
     border-radius:10px;
 
 `
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left:10px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
 const Wrapper  = styled.div`
     overflow:auto;
     &::-webkit-scrollbar {
@@ -199,19 +213,10 @@ const Wrapper  = styled.div`
         border-radius: 6px;
       }
 `;
-const InsideWrapper  = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction: column;
-`;
 const InputTableBox  = styled.div`
-    width:1080px;
+    width:980px;
 `;
-const PrView  = styled.div`
-    display:flex;
-    flex-direction:row;
-`;
+
 const ColView  = styled.div`
     display:flex;
     flex-direction: column;
@@ -223,42 +228,10 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 15px;
     display:flex;
     align-items:center;
     justify-content:space-around;
-
-`;
-const NameBox  = styled.div`
-    height : 80px;
-    width : 200px;
-    border 1px solid;
-    font-size: 18px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-`;
-const InputBox  = styled.div`
-    height : 80px;
-    flex:1.3;
-    border 1px solid;
-    display:flex;
-    justyfiy-content:center;
-    ailgn-items:center;
-`;
-const LongInputBox  = styled.div`
-    height : 80px;
-    flex:3.31;
-    border 1px solid;
-    display:flex;
-    justyfiy-content:center;
-    ailgn-items:center;
-`;
-const InputLine  = styled.input`
-    border 1px solid;
-    border-radius: 5px;
-    padding-left:10px;
-    font-size:20px;
 
 `;
 
@@ -277,55 +250,54 @@ flex-direction:row;
   }
 `;
 
-const CheckBox = styled.input `
-    appearance: none;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-clip: content-box;
-    border: 1.5px solid #bbbbbb;
-    border-radius: 10px;
-    padding:3px;
-
-    &:checked{
-
-        background-color: ${COLOR.INDIGO};
-        border-radius: 10px;
-    }
-
-`
-const CheckBoxRed = styled.input `
-    appearance: none;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-clip: content-box;
-    border: 1.5px solid #bbbbbb;
-    border-radius: 10px;
-    padding:3px;
-
-    &:checked{
-
-        background-color: ${COLOR.RED};
-        border-radius: 10px;
-    }
-
-`
 const MainSpace=styled.div`
     background-color:${COLOR.WHITE};
     width :100%;
-    overflow:auto;
-    &::-webkit-scrollbar {
-        width: 8px;
-        height: 10px;
-        background: rgba(210, 210, 210, 0.4);
-      }
-      &::-webkit-scrollbar-thumb {
-        background: rgba(96, 96, 96, 0.7);
-        border-radius: 6px;
-      }
 `;
 
+const PrView  = styled.div`
+    min-width:540px;
+    display:flex;
+    flex-direction:row;
+`;
 
+const NameBox  = styled.div`
+    height : 60px;
+    width:145px;
+    background-color:${COLOR.LIGHT_GRAY};
+    font-size: 14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`;
+const InputBox  = styled.div`
+    height : 60px;
+    width:360px;
+    display:flex;
+    justyfiy-content:center;
+    ailgn-items:center;
+`;
+const InputBoxTr  = styled.div`
+    height : 60px;
+    background-color:${COLOR.WHITE};
+    color:${COLOR.DARK_INDIGO};
+    font-size: 14px;
+    display:flex;
+    width:210px;
+    font-size:20px;
+    font-weight:bold;
+    justify-content:center;
+`;
+const LongInputBox  = styled.div`
+    height : 60px;
+    width:865px;
+    border: 2px solid ${COLOR.LIGHT_GRAY};
+    border-left :0;
+    display:flex;
+    justyfiy-content:center;
+    ailgn-items:center;
+    font-size:14px;
+
+`;
 
 export default AdministratorChange

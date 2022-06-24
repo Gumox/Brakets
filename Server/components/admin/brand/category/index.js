@@ -39,8 +39,13 @@ const CategoryList = ({user,infos,categorys,brands}) => {
 
     const [selectedBrand,setSelectedBrand] = useState("")
     
-    const [insertBrand,setInsertBrand] =useState(brands[0].brand_id)
+    const [insertBrand,setInsertBrand] =useState(null)
     const [insertCategoryName,setInsertCategoryName] =useState(null)
+    useEffect(()=>{
+        if(brands.length>0){
+            setInsertBrand(brands[0].brand_id)
+        }
+    },[])
     
     const emptySpace =(str)=>{
         console.log("s ",str)

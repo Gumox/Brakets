@@ -13,20 +13,17 @@ const AdministratorModifiy = ({
     user,
     setModifyAcion=()=>{}
 }) =>{
-    console.log(info)
-    const router = useRouter();
-    const [cCode,setCCode] =useState("")
     const [state,setState] =useState(info.staff_state)
-    const [KakaoAcount,setKakaoAcount] =useState(info.staff_account)
-    const [staffEmail,setStaffEmail] =useState(info.staff_email)
-    const [phone,setPhone] =useState(info.staff_phone)
+    const [KakaoAcount] =useState(info.staff_account)
+    const [staffEmail,setStaffEmail] =useState(null)
+    const [phone,setPhone] =useState(null)
     const adminCode = info.staff_code;
 
     const modifyAdministrator = async() =>{
         const bodyData = {
             state:state,
-            phone:phone,
-            staff_email:staffEmail,
+            phone:phone || info.staff_phone,
+            staff_email:staffEmail || info.staff_email,
             staff_id:info.staff_id,
         }
         const [result] = await Promise.all([
@@ -55,14 +52,13 @@ const AdministratorModifiy = ({
                 <MainSpace  style={{padding:"2%"}}>
                     
                 
-                <InsideWrapper>
             <InputTableBox>
                 
-                <h2 style={{fontWeight:"bold"}}>{"전체관리자 정보 & 상태 수정"}</h2>
+                <h2 style={{fontWeight:"bold",margin:20}}>{"전체관리자 정보 & 상태 수정"}</h2>
                 
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderRadius:"10px 0 0 0"}}>
                         
                         <TwoNameBox >
                             <ColView  style={{justifyContent:"center",alignItems:"center"}}>
@@ -71,18 +67,18 @@ const AdministratorModifiy = ({
                         </TwoNameBox>
                     </NameBox>
 
-                    <LongInputBox style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                    <LongInputBox style={{paddingLeft:20,alignItems:"center",fontWeight:"bold",borderRadius:"0 10px 0 0",fontSize:14}}>
                         {adminCode}
                     </LongInputBox>
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         전체관리자 이름
                     </NameBox>
 
                     <InputBox >
-                        <div style={{paddingLeft:20,display:"flex",alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                        <div style={{paddingLeft:20,display:"flex",alignItems:"center",fontWeight:"bold",fontSize:14}}>
                             {info.staff_name}
                         </div>
                     </InputBox>
@@ -97,36 +93,36 @@ const AdministratorModifiy = ({
                         </TwoNameBox>
                     </NameBox>
 
-                    <InputBox>
-                        <div style={{paddingLeft:20,display:"flex",alignItems:"center",fontWeight:"bold",fontSize:18}}>
+                    <InputBox style={{borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <div style={{paddingLeft:20,display:"flex",alignItems:"center",fontWeight:"bold",fontSize:14}}>
                             {KakaoAcount}
                         </div>
                     </InputBox>
                 </PrView>
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         전체관리자 연락처
                     </NameBox>
 
-                    <InputBox>
-                        <InputLine value={phone} style={{flex:1, margin: 10}} onChange={(e)=>{setPhone(e.target.value)}}></InputLine>
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputLine value={phone || ''} style={{flex:1}} placeholder={remakeCallNumber(info.staff_phone)} onChange={(e)=>{setPhone(e.target.value)}}></InputLine>
                     </InputBox>
 
-                    <NameBox>
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         전체관리자 이메일
                     </NameBox>
 
-                    <InputBox>
-                        <InputLine value={staffEmail} style={{flex:1, margin: 10}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
+                    <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputLine value={staffEmail || '' } placeholder={info.staff_email} style={{flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 
                 <PrView>
-                    <NameBox>
+                    <NameBox style={{borderTop:"2px solid rgb(244,244,244)",borderRadius:"0 0 0 10px"}}>
                         전체관리자 상태
                     </NameBox>
 
-                    <LongInputBox style={{}}>
+                    <LongInputBox style={{borderRadius:"0 0 10px 0"}}>
                         <PrView>
                             <CenterView style={{margin:10}}>
                             <CheckBox type="checkbox" checked={state} onChange ={()=>{checkBeforeModify(!state)}}/>
@@ -143,9 +139,6 @@ const AdministratorModifiy = ({
                 </PrView>
                 
                 
-                
-                    </InputTableBox>
-                    </InsideWrapper>
                     <CenterView>
                         <RegistButton onClick={()=>{modifyAdministrator()}}>
                             수정
@@ -154,6 +147,8 @@ const AdministratorModifiy = ({
                             취소
                         </RegistButton>
                     </CenterView>
+                </InputTableBox>
+                   
                 </MainSpace>
             </SrollWrapper>
             
@@ -163,11 +158,11 @@ const AdministratorModifiy = ({
 };
 const RegistButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width:60px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:14px;
     border-radius:10px;
 
 `
@@ -190,11 +185,7 @@ const InsideWrapper  = styled.div`
     flex-direction: column;
 `;
 const InputTableBox  = styled.div`
-    width:1080px;
-`;
-const PrView  = styled.div`
-    display:flex;
-    flex-direction:row;
+    width:980px;
 `;
 const ColView  = styled.div`
     display:flex;
@@ -207,58 +198,37 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 14px;
     display:flex;
     align-items:center;
     justify-content:space-around;
 
 `;
-const NameBox  = styled.div`
-    height : 80px;
-    width : 200px;
-    border 1px solid;
-    font-size: 18px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-`;
-const InputBox  = styled.div`
-    height : 80px;
-    flex:1.3;
-    border 1px solid;
-    display:flex;
-    justyfiy-content:center;
-    ailgn-items:center;
-`;
-const LongInputBox  = styled.div`
-    height : 80px;
-    flex:3.31;
-    border 1px solid;
-    display:flex;
-    justyfiy-content:center;
-    ailgn-items:center;
-`;
 const InputLine  = styled.input`
-    border 1px solid;
-    border-radius: 5px;
+    border: 0px;
+    margin: 2px;
     padding-left:10px;
-    font-size:20px;
-
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 `;
-
 const SrollWrapper = styled.nav`
-display:flex;
-flex-direction:row;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 10px;
-    background: rgba(210, 210, 210, 0.4);
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(96, 96, 96, 0.7);
-    border-radius: 6px;
-  }
+    display:flex;
+    flex-direction:row;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 10px;
+        background: rgba(210, 210, 210, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(96, 96, 96, 0.7);
+        border-radius: 6px;
+    }
 `;
 
 const CheckBox = styled.input `
@@ -308,6 +278,52 @@ const MainSpace=styled.div`
         background: rgba(96, 96, 96, 0.7);
         border-radius: 6px;
       }
+`;
+
+
+const PrView  = styled.div`
+    min-width:540px;
+    display:flex;
+    flex-direction:row;
+`;
+
+const NameBox  = styled.div`
+    height : 60px;
+    width:145px;
+    background-color:${COLOR.LIGHT_GRAY};
+    font-size: 14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`;
+const InputBox  = styled.div`
+    height : 60px;
+    width:360px;
+    display:flex;
+    justyfiy-content:center;
+    ailgn-items:center;
+`;
+const InputBoxTr  = styled.div`
+    height : 60px;
+    background-color:${COLOR.WHITE};
+    color:${COLOR.DARK_INDIGO};
+    font-size: 14px;
+    display:flex;
+    width:210px;
+    font-size:20px;
+    font-weight:bold;
+    justify-content:center;
+`;
+const LongInputBox  = styled.div`
+    height : 60px;
+    width:865px;
+    border: 2px solid ${COLOR.LIGHT_GRAY};
+    border-left :0;
+    display:flex;
+    justyfiy-content:center;
+    ailgn-items:center;
+    font-size:14px;
+
 `;
 
 

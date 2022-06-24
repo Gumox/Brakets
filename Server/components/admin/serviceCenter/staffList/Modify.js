@@ -3,6 +3,7 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
+import remakeCallNumber from "../../../../functions/remakeCallNumber";
 
 const StaffModify = ({
     infos,
@@ -128,7 +129,7 @@ const StaffModify = ({
                     </NameBox>
 
                     <InputBox >
-                        <InputLine value={staffAddress || ""} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}}></InputLine>
+                        <InputLine value={staffAddress || ""} placeholder={remakeCallNumber(staff.staff_phone)} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}}></InputLine>
                     </InputBox>
 
                     <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
@@ -136,7 +137,7 @@ const StaffModify = ({
                     </NameBox>
 
                     <InputBox style={{borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={staffEmail || ""} style={{flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
+                        <InputLine value={staffEmail || ""} placeholder={staff.staff_email} style={{flex:1}} onChange={(e)=>{setStaffEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
 
@@ -187,11 +188,11 @@ const Wrapper = styled.div`
 
 const CustomButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width:60px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
-    font-size:16px;
+    font-size:15px;
     border-radius:10px;
 
 `;

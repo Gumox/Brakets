@@ -12,7 +12,8 @@ const List = ({
     
     return(
         <div>
-            {
+            {customers.length>0
+                ?
                 customers.map((item,index)=>{
                     if(index+1 !== customers.length){
                         return(
@@ -27,7 +28,10 @@ const List = ({
                             </Wrapper>
                         )
                     }
+                    
                 })
+                :
+                <Wrapper style={{height:"60px",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRadius:"0px 0px 10px 10px"}}/>
             }
         </div>
     );

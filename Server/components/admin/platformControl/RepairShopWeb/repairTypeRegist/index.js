@@ -14,15 +14,21 @@ const RepairTypeEachRegistControl = ({
     const router = useRouter();
     
     const sortedBrands =sortArray(brands)
-    const [brand,setBrand] =useState(sortedBrands[0].brand_id)
-    const [brandName,setBrandName] =useState("")
+    const [brand,setBrand] =useState(null)
     
     const sortedRepairShop =sortArray2(repairShops)
-    const [repairShop,setRepairShop] =useState(sortedRepairShop[0].repair_shop_id)
+    const [repairShop,setRepairShop] =useState(null)
     const [repairName,setRepairName] =useState(null)
     const [repairPrice,setRepairPrice] =useState(null)
 
-    
+    useState(()=>{
+        if(sortedBrands.length>0){
+            setBrand(sortedBrands[0].brand_id)
+        }
+        if(sortedRepairShop.length>0){
+            setRepairShop(sortedRepairShop[0].brand_name)
+        }
+    },[])
 
     const emptySpace =(str)=>{
         console.log("s ",str)
@@ -157,7 +163,15 @@ const RepairTypeEachRegistControl = ({
                 
                 
                     <CenterView>
-                        <RegistButton onClick={()=>{regist()}}>
+                        <RegistButton onClick={()=>{
+                            if(sortedBrands.length>0 && sortedRepairShop.length>0){
+                                regist()
+                            }else if(sortedBrands.length <1){
+                                alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                            }else if(sortedRepairShop.length < 1){
+                                alert('등록된 수선처가 없습니다 먼저 수선처를 등록해 주세요')
+                            }
+                        }}>
                             등록
                         </RegistButton>
                     </CenterView>

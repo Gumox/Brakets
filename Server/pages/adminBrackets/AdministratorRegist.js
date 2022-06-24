@@ -49,22 +49,34 @@ const AdministratorRegist = ({infos,user}) =>{
 
     
     const registAdministrator = async() =>{
-        const bodyData = {
-            state: true,
-            account: kakaoAcount,
-            name: administratorName,
-            phone: administratorAddress,
-            staff_code:adminCode,
-            staff_email:administratorEmail,
-            headquarter_id :headquarterId
+        if(headquarterId && administratorName && kakaoAcount && administratorAddress &&administratorEmail){
+            const bodyData = {
+                state: true,
+                account: kakaoAcount,
+                name: administratorName,
+                phone: administratorAddress,
+                staff_code:adminCode,
+                staff_email:administratorEmail,
+                headquarter_id :headquarterId
+            }
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/headquarter/registAdministrator`,bodyData)
+                .then(({ data }) => data.body), 
+                ])
+                console.log(result)
+                router.push("/adminBrackets/AdministratorList")
+        }else if(!headquarterId){
+            alert('회사를 선택해주세요')
+        }else if(!administratorName){
+            alert('전체관리자의 이름을 입력해주세요')
+        }else if(!kakaoAcount){
+            alert('전체관리자의 카카오 계정을 입력해주세요')
+        }else if(!administratorAddress){
+            alert('전체관리자의 연락처를 입력해주세요')
+        }else if(!administratorEmail){
+            alert('전체관리자의 이메일을 입력해주세요')
         }
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/headquarter/registAdministrator`,bodyData)
-              .then(({ data }) => data.body), 
-            ])
-            console.log(result)
-            router.push("/adminBrackets/AdministratorList")
     }
 
     const [windowWidth,setWindowWidth] = useState(0)
@@ -107,7 +119,7 @@ const AdministratorRegist = ({infos,user}) =>{
                 <PrView>
                     <NameBox  style={{borderRadius:"10px 0 0 0"}}>
                         <RedDiv>*</RedDiv>
-                        회사 이름
+                        회사
                     </NameBox>
                     
 
@@ -163,7 +175,7 @@ const AdministratorRegist = ({infos,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={administratorName} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorName(e.target.value)}}></InputLine>
+                        <InputLine value={administratorName} style={{flex:1}} onChange={(e)=>{setAdministratorName(e.target.value)}}></InputLine>
                     </InputBox>
 
                     <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
@@ -178,7 +190,7 @@ const AdministratorRegist = ({infos,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={kakaoAcount} style={{flex:1, margin: 10}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
+                        <InputLine value={kakaoAcount} style={{flex:1}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 <PrView>
@@ -188,7 +200,7 @@ const AdministratorRegist = ({infos,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={administratorAddress} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorAddress(e.target.value)}}></InputLine>
+                        <InputLine value={administratorAddress} style={{flex:1}} onChange={(e)=>{setAdministratorAddress(e.target.value)}}></InputLine>
                     </InputBox>
 
                     <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
@@ -197,7 +209,7 @@ const AdministratorRegist = ({infos,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={administratorEmail} style={{flex:1, margin: 10}} onChange={(e)=>{setAdministratorEmail(e.target.value)}}></InputLine>
+                        <InputLine value={administratorEmail} style={{flex:1}} onChange={(e)=>{setAdministratorEmail(e.target.value)}}></InputLine>
                     </InputBox>
                 </PrView>
                 

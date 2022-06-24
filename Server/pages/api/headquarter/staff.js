@@ -17,8 +17,8 @@ async function getHeadquarter(query,values) {
                 FROM staff
                 JOIN staff_store ON staff.staff_id = staff_store.staff_id 
                 LEFT JOIN store ON staff_store.store_id = store.store_id
-                LEFT JOIN headquarter ON store.brand_id = headquarter.headquarter_id
-                WHERE  ${query}
+                JOIN headquarter ON store.brand_id = headquarter.headquarter_id
+                WHERE store.store_type = 0 ${query}
                 `,
           values
       });
@@ -32,13 +32,18 @@ const controller = async (req, res) => {
         console.log(req.headers.referer);
         console.log("req.query");
         console.log(req.query);
-        const {headquarterId} = req.query
+        const {headquarterId ,level} = req.query
 
-        let query = "staff.level = 0";
+        let query = "AND staff.level = 0";
         let values = [];
+
         if(headquarterId){
-          query = "headquarter.headquarter_id =? AND staff.level = 1"
+          query  = "AND headquarter.headquarter_id =? "
           values = [headquarterId]
+        }
+        if(headquarterId && level){
+          query += "AND staff.level = 1"
+          values = [...values,level]
         }
         
     try {

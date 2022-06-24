@@ -27,14 +27,20 @@ const StyleList = ({user,styles,products,brands}) => {
     const [searchProductName,setSearchProductName] =useState("")
 
     
-    const [insertBrand,setInsertBrand] =useState(brands[0].brand_id)
+    const [insertBrand,setInsertBrand] =useState(null)
     const [insertStyleNo,setInsertStyleNo] =useState(null)
     
     const [styleCategorys,setStyleCategorys] =useState([])
     const [insertCategory,setInsertCategory] =useState(null)
     
     const [categorys,setCategorys] = useState([])
-    
+
+    useEffect(()=>{
+        if(brands.length>0){
+            setInsertBrand(brands[0].brand_id)
+        }
+    },[])
+
     const emptySpace =(str)=>{
         let name = ""
         for(let i =0; i<str.length;i++){

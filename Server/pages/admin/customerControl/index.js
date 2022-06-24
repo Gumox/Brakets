@@ -93,7 +93,7 @@ export const getServerSideProps = async (ctx) => {
           {
             user:user,
             infos:infos,
-            customers:customers,
+            customers:customers || [],
           } 
         };
       }else{

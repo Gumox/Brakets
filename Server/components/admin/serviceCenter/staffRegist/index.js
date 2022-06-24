@@ -5,9 +5,9 @@ import Router, { useRouter } from "next/router";
 import axios from "axios";
 import getNextStaffCode from "./getNextStaffCode";
 import { debounce } from "lodash";
+import isInsertedAccount from "../../isInsertedAccount";
 
 const StaffRegist = ({infos,user,staffs}) =>{
-    console.log(user)
     const router = useRouter();
     const cName =infos.headquarter_name
     const cNameKr =infos.text
@@ -23,23 +23,40 @@ const StaffRegist = ({infos,user,staffs}) =>{
 
     
     const registStaff = async() =>{
-        const bodyData = {
-            state: true,
-            account: kakaoAcount,
-            name: staffName,
-            phone: staffAddress,
-            level:1,
-            staff_code:adminCode,
-            staff_email:staffEmail,
-            store_id :storeId
+        if(staffName && kakaoAcount && staffAddress ){
+            if(kakaoAcount){
+                const accountCheck = await isInsertedAccount(kakaoAcount)
+                if(accountCheck.length){
+                    alert("이미 등록된 kakao계정 입니다")
+                }else{
+                    const bodyData = {
+                        state: true,
+                        account: kakaoAcount,
+                        name: staffName,
+                        phone: staffAddress,
+                        level:1,
+                        staff_code:adminCode,
+                        staff_email:staffEmail,
+                        store_id :storeId
+                    }
+                    const [result] = await Promise.all([
+                        axios
+                          .post(`${process.env.API_URL}/staff/regist`,bodyData)
+                          .then(({ data }) => data.body), 
+                        ])
+                    alert("새로운 서비스센터 직원이 등록되었습니다.")
+                    router.push("/admin/serviceCenterControl")
+                }
+            }
+        }else if(!staffName){
+            alert("새로운 등록할 직원의 이름을 입력해주세요")
+        }else if(!kakaoAcount){
+            alert("새로운 등록할 직원의 kakao계정을 입력해주세요")
+        }else if(!staffAddress){
+            alert("새로운 등록할 직원의 연락처를 입력해주세요")
         }
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/staff/regist`,bodyData)
-              .then(({ data }) => data.body), 
-            ])
-        alert("새로운 서비스센터 직원이 등록되었습니다.")
-        router.push("/admin/serviceCenterControl")
+        
+        
     }
 
     const [windowWidth,setWindowWidth] = useState(0)

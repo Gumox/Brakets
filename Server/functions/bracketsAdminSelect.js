@@ -1,7 +1,7 @@
 import axios from "axios";
 const bracketsAdminSelect =async(selectCompany)=>{
     const headquarterId = selectCompany
-    const [brands, repairShops, producers, faults, analysis, results, repairs] =
+    const [brands, repairShops, producers, faults, analysis, results, repairs,infos] =
       await Promise.all([
         axios
           .get(`${process.env.API_URL}/brand`, { params: { headquarterId:headquarterId } })
@@ -35,6 +35,9 @@ const bracketsAdminSelect =async(selectCompany)=>{
             params: { headquarterId },
           })
           .then(({ data }) => data), // 수선내용
+        axios
+          .get(`${process.env.API_URL}/headquarter?headquarterId=${headquarterId}`,)
+          .then(({ data }) => data), 
       ]);
       return {
         
@@ -49,6 +52,7 @@ const bracketsAdminSelect =async(selectCompany)=>{
             resultType: results ? results.body: [],
             repairType: repairs ? repairs.data: [],
             seasonList: [],
+            infos: infos ? infos.body : []
         },
         
       }

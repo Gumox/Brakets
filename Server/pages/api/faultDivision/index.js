@@ -19,7 +19,7 @@ async function getFaultDivision(addQuery,id) {
 
 const controller = async (req, res) => {
     if (req.method === "GET") {
-        console.log("req.headers.referer");
+        console.log("pages/api/faultDivision");
         console.log(req.headers.referer);
         console.log("req.query");
         console.log(req.query);
@@ -28,7 +28,7 @@ const controller = async (req, res) => {
         let addQuery ='';
 
         if(hq_id){
-          addQuery =`WHERE headquarter_id=?`
+          addQuery +=`WHERE headquarter_id=?`
         }
         if(state == 1){
           addQuery +=` AND state = 1`

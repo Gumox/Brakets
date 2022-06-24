@@ -27,13 +27,13 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
     
 
     const [check,setCheck] = useState(true)
-    const [compayName,setCompayName] = useState("")
-    const [compayNameEN,setCompayNameEN] = useState("")
-    const [compayCode,setCompayCode] = useState("")
+    const [compayName,setCompayName] = useState(null)
+    const [compayNameEN,setCompayNameEN] = useState(null)
+    const [compayCode,setCompayCode] = useState(null)
     
     const [postCodeOn,setPostCodeOn]=useState(false)
-    const [address,setAddress] = useState("")
-    const [detailAddress,setDetailAddress] = useState("")
+    const [address,setAddress] = useState(null)
+    const [detailAddress,setDetailAddress] = useState(null)
 
     const [ceo,setCeo] = useState()
     const [ceoAddress,setCeoAddress] = useState()
@@ -43,7 +43,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
     const [storeAddress,setStoreAddress] = useState()
 
     const codeNameHandler =(e)=>{
-        e.target.value = e.target.value.replace(/[^a-zA-Z_\s_0-9-]/ig, '')
+        e.target.value = e.target.value.replace(/[^a-zA-Z_\s_#_&_0-9-]/ig, '')
         let nameEN =e.target.value;
         nameEN.toUpperCase();
         setCompayNameEN(e.target.value);
@@ -57,28 +57,42 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
     }
 
     const registHeadquarter = async() =>{
+        if(compayNameEN && compayName && call && ceo && companyRegistrationNumber && storeAddress){
 
-        const bodyData = {
-            state : check,
-            headquarter_name:compayNameEN,
-            headquarter_name_kr:compayName,
-            headquarter_code:compayCode,
-            ceo:ceo,
-            ceo_address:ceoAddress,
-            ceo_email:ceoEmail,
-            company_registration_number:companyRegistrationNumber,
-            headquarter_call:call,
-            address:storeAddress+" "+detailAddress
+            const bodyData = {
+                state : check,
+                headquarter_name:compayNameEN,
+                headquarter_name_kr:compayName,
+                headquarter_code:compayCode,
+                ceo:ceo,
+                ceo_address:ceoAddress,
+                ceo_email:ceoEmail,
+                company_registration_number:companyRegistrationNumber,
+                headquarter_call:call,
+                address:storeAddress+" "+detailAddress
 
 
-        }
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/headquarter/regist`,bodyData)
-              .then(({ data }) => data.body), 
-            ])
+            }
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/headquarter/regist`,bodyData)
+                .then(({ data }) => data.body), 
+                ])
             console.log(result)
             router.push("/adminBrackets/CompanyList")
+        }else if(!compayNameEN){
+            alert("영문 회사명을 입력해주세요")
+        }else if(!compayName){
+            alert("한글 회사명을 입력해주세요")
+        }else if(!ceo){
+            alert("대표자 이름을 입력해주세요")
+        }else if(!companyRegistrationNumber){
+            alert("사업자 등록 번호를 입력해주세요")
+        }else if(!storeAddress){
+            alert("서비스 센터 주소를 입력해주세요")
+        }else if(!call){
+            alert("SMS 대표전화 (발신 전용)을 입력해주세요")
+        }
     }
 
     useEffect(()=>{
@@ -247,7 +261,13 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                         
                     </NameBox>
 
-                    <InputBox  style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}/>
+                    <InputBox  style={{display:"flex",justifyContent:"center",alignItems:"center",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <Link href={{ pathname: "https://smartsms.aligo.in/login.html"}}>
+                            <a target="_blank">
+                                <RegistAligo style={{padding:5,borderBottom:"2px solid"}}>{"https://smartsms.aligo.in/login.html"}</RegistAligo>
+                            </a>
+                        </Link>
+                    </InputBox>
                 </PrView>
                 
                 <PrView>
@@ -415,12 +435,11 @@ const InputLineArea  = styled.textarea`
 `;
 
 const RegistAligo  = styled.div`
-    border-radius: 5px;
     color:${COLOR.RED};
     font-size:15px;
     &:hover {
-        color: #ff8585;
-        }
+        opacity:0.5;
+    }
 
 `;
 const InColViewV2  = styled.div`

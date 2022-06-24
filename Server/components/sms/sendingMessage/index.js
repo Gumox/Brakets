@@ -10,46 +10,50 @@ import { debounce } from "lodash";
 // correct way
 
 const sendSms = async (user,sendNumber,{ _receivers, message }) => {
-  if(_receivers){
-    const receivers = _receivers.join(',').replace(/-/g,'')
-      try {
-      const[datas] =await Promise.all([
-        axios.post(`${process.env.API_URL}/smsHandler`,
-          {
-          
-          senderId : user.staff_id,
-          headquarterId :user.headquarter_id,
-          sender: sendNumber,
-          receiver: receivers,
-          msg: message,
-          // 테스트모드
-          testmode_yn: 'N'},
-        )
-        .then(({ data }) => data)
-        .catch(error=>{
-    
-        })
-      ])
-      const[messageResult] =await Promise.all([
-        axios.post(`${process.env.API_URL}/sms/list`,
-          {
-              sender: user.staff_id,
-              headquarterId :user.headquarter_id,
-              msg: message,
-              mid: datas.msg_id,
-              sendNumber:sendNumber,
-          }
-        )
-        .then(({ data }) => data)
-        .catch(error=>{
-    
-        })
-      ])
-      console.log(messageResult)
-      return datas; 
-    } catch (err) {
-      console.log('err', err);
+    if(user.level == 0 || user.level == 1){
+      if(_receivers){
+      const receivers = _receivers.join(',').replace(/-/g,'')
+        try {
+        const[datas] =await Promise.all([
+          axios.post(`${process.env.API_URL}/smsHandler`,
+            {
+            
+            senderId : user.staff_id,
+            headquarterId :user.headquarter_id,
+            sender: sendNumber,
+            receiver: receivers,
+            msg: message,
+            // 테스트모드
+            testmode_yn: 'N'},
+          )
+          .then(({ data }) => data)
+          .catch(error=>{
+      
+          })
+        ])
+        const[messageResult] =await Promise.all([
+          axios.post(`${process.env.API_URL}/sms/list`,
+            {
+                sender: user.staff_id,
+                headquarterId :user.headquarter_id,
+                msg: message,
+                mid: datas.msg_id,
+                sendNumber:sendNumber,
+            }
+          )
+          .then(({ data }) => data)
+          .catch(error=>{
+      
+          })
+        ])
+        console.log(messageResult)
+        return datas; 
+      } catch (err) {
+        console.log('err', err);
+      }
     }
+  }else{
+    alert("SMS 전송 권한이 없습니다")
   }
 };
 
@@ -105,8 +109,13 @@ const SendMsg = ({infos}) => {
 
   useEffect(()=>{
     const fetch =async()=>{
-      let smsMsg = await getSmsMessage(user.headquarter_id)
-      setSmsMessage(smsMsg)
+      if(user.level !== 5){
+        let smsMsg = await getSmsMessage(user.headquarter_id)
+        setSmsMessage(smsMsg)
+      }else if(user.level === 5){
+        let smsMsg = await getSmsMessage(infos.value)
+        setSmsMessage(smsMsg)
+      }
     }
     fetch();
   },[user])

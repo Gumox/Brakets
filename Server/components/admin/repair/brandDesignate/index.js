@@ -146,8 +146,18 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
                     <div style={{width:"555px"}}>
                         <h2 style={{marginLeft:20}}>검색 결과</h2>
                         <LaView style={{justifyContent:"end",width:"550px"}}>
-                            <DivButton onClick={()=>{setDesignateOn(true)}}>추가</DivButton>
-                            <DivButton style={{color:COLOR.RED,marginLeft:20}} onClick={()=>{setDeassignOn(true)}}>삭제</DivButton>
+                            <DivButton onClick={()=>{
+                                if(categorysBrand.length>0){
+                                    setDesignateOn(true)
+                                }else{
+                                    alert('등록된 브랜드가 없습니다\n먼저 브랜드를 추가해주세요')
+                                }
+                            }}>추가</DivButton>
+                            <DivButton style={{color:COLOR.RED,marginLeft:20}} onClick={()=>{
+                                if(searchResult.length>0){
+                                    setDeassignOn(true)
+                                }
+                            }}>삭제</DivButton>
                         </LaView>
                         <InputTableBox style={{width:"550px"}}>
                             {
@@ -171,7 +181,7 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
                                     <List infos={infos} user={user} categorys={searchResult} allCheck={allCheck} setAllCheck={setAllCheck} checkedList={checkedList} setCheckedList={setCheckedList}/>
                                 </div>
                                 :
-                                <PrView style={{backgroundColor:COLOR.WHITE,justifyContent:"center"}}>
+                                <PrView style={{backgroundColor:COLOR.WHITE,justifyContent:"center",borderRadius:"10px",border:`2px solid ${COLOR.LIGHT_GRAY}`,height:60,display:"flex" ,alignItems:"center"}}>
                                     결과 없음
                                 </PrView>
                             }

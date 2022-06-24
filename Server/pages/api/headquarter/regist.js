@@ -120,6 +120,45 @@ async function setHeadquarterDefaultAutoMessageData(
   
     return result;
 }
+
+async function setHeadquarterDefaultNotice(
+  headquarter_id,
+) {
+  const result = await excuteQuery({
+      query: `INSERT INTO notice (  notice_type,
+                                    text, 
+                                    red_text,
+                                    headquarter_id
+                                  ) 
+              VALUES
+              
+                (
+                '1',
+                '의류:\n동일원단이 없을 시 다른 원단으로 수선합니다.\n\n신발:\n동일한 창 및 자재가 없을 시 제품에 적합한 창, 부자재로 수선합니다.\n\n용품:\n스펙에 적합한 자재로 수선합니다.\n', 
+                '*통보일로부터 1개월 이상 경과된 제품에 대해서는 당사에서 책임을 지지 않습니다', 
+                ${headquarter_id}
+                ),
+                
+                (
+                '2',
+                '수선 접수와 완료에 관한 안내 문자가 제공됩니다.', 
+                '문자서비스 발송에 동의하십니까?', 
+                ${headquarter_id}
+                ),
+
+                ( 
+                '3',
+                '1.개인정보 수집, 이용목적 :\r\n 수선접수 및 인도\r\n2.수지하는 개인정보의 항목\r\n 1) 이용자 식별을 위한 내용 : 성명 주소\r\n 2) 수선 안내를 위한 내용: 전화번호, 휴대폰, 주소\r\n3.개인정보 보유 및 이용기간:\r\n 3년\r\n', 
+                '개인정보 수집 및 활용 동의를 거부할 권리가 있으며, 거부하는 경우 제품수선에 관한 적절한 절차를 보장 받지 못할 수 있습니다', 
+                ${headquarter_id}
+                )`,
+      
+    });
+  
+  
+    return result;
+}
+
 async function setHeadquarterDefaultMessageData(
   headquarter_id,
 ) {
@@ -224,6 +263,9 @@ const controller = async (req, res) => {
       
       const resultMessageData = await setHeadquarterDefaultMessageData(id);
       if(resultMessageData.error){console.log(resultMessageData.error)}
+
+      const resultnoticeData = await setHeadquarterDefaultNotice();
+      if(resultnoticeData.error){console.log(resultnoticeData.error)}
       
       
     } catch (err) {
@@ -234,3 +276,4 @@ const controller = async (req, res) => {
 };
 
 export default controller;
+

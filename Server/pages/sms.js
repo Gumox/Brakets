@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import cookies from "next-cookies";
 import styled from "styled-components";
 import Router, { useRouter } from "next/router";
@@ -14,6 +14,7 @@ import store from "../store/store";
 
 const Sms = ({options, user,infos}) => {
   const router = useRouter();
+  const [infosData,setInfosData] = useState(infos)
   if(user.level === 5){
     if(!(_.find(MENUS, {'title': "브래키츠 관리자"}))){
       MENUS.push({
@@ -23,14 +24,24 @@ const Sms = ({options, user,infos}) => {
     }
   }
   useEffect(()=>{
-    console.log(store.getState().send_sms_data)
+    if(user.level === 5 ){
+      if(!JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS"))){
+        router.push("/adminBrackets/admin")
+        alert("올바른 접근이 아닙니다")
+      }
+      else{
+        let adminOptions = JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS")).options
+        
+        setInfosData(adminOptions.infos)
+      }
+    }
   },[])
   return (
     <>
       <Header path={router.pathname} />
       <UserContext.Provider value={user}>
       <OptionContext.Provider value={options}>
-        <SMS infos={infos}/>
+        <SMS infos={infosData}/>
       </OptionContext.Provider>
       </UserContext.Provider>
     </>
@@ -75,7 +86,7 @@ export const getServerSideProps = async (ctx) => {
       return {
         props: {
           user,
-          infos,
+          infos: infos || [],
           options: {
             storeList: stores ? stores.data : [],
           },

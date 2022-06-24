@@ -58,13 +58,18 @@ const ReceptionPage = ({ options, user }) => {
         let adminOptions = JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS")).options
         
         setReceptionPageoptions(adminOptions)
+        console.log(adminOptions)
         
         setSelectOptions(adminOptions)
-        setTargetBrandId(adminOptions.brandList[0].value)
+        if(adminOptions.brandList.length > 0){
+          setTargetBrandId(adminOptions.brandList[0].value)
+        }
       }
     }else{
       setSelectOptions(receptionPageoptions)
-      setTargetBrandId(receptionPageoptions.brandList[0].value)
+      if(receptionPageoptions.brandList.length > 0){
+        setTargetBrandId(receptionPageoptions.brandList[0].value)
+      }
     }
   },[])
   useEffect(() => {
@@ -246,6 +251,7 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
+  console.log(user)
 
   const { headquarter_id: headquarterId } = user;
   if(user.level<2){
@@ -262,7 +268,7 @@ export const getServerSideProps = async (ctx) => {
         axios.get(`${process.env.API_URL}/store/3`).then(({ data }) => data), // 생산업체
         axios
           .get(`${process.env.API_URL}/faultDivision`, {
-            params: {hq_id: headquarterId,state:1}
+            params: {hq_id: headquarterId, state:1}
           })
           .then(({ data }) => data), // 과실구분
         axios

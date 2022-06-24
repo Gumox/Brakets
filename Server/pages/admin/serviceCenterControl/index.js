@@ -76,7 +76,7 @@ export const getServerSideProps = async (ctx) => {
       ])
       const [staffs] = await Promise.all([
         axios
-          .get(`${process.env.API_URL}/headquarter/staff?headquarterId=${user.headquarter_id}`,)
+          .get(`${process.env.API_URL}/headquarter/staff?headquarterId=${user.headquarter_id}&level=1`,)
           .then(({ data }) => data.body), 
       ])
       

@@ -48,20 +48,24 @@ const RepairTypeExcelRegistControl =({
         }
     }
     const regist = async() =>{
-        const data = {
-            headquarterId : user.headquarter_id,
-            list:excelToJson,
-            stores : sortedRepairShop,
-            brands :sortedBrands
+        if(excelToJson.length>0){
+            const data = {
+                headquarterId : user.headquarter_id,
+                list:excelToJson,
+                stores : sortedRepairShop,
+                brands :sortedBrands
+            }
+            
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/type/repairTypeRegistToExcel`,data)
+                .then(({ data }) => data.body), 
+                ])
+            alert("수선내용 및 수선단가가 등록되었습니다.")
+            window.location.reload()
+        }else{
+            alert('첨부 파일을 등록해주세요')
         }
-        
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/type/repairTypeRegistToExcel`,data)
-              .then(({ data }) => data.body), 
-            ])
-        alert("수선내용 및 수선단가가 등록되었습니다.")
-        window.location.reload()
     }
 
     return(
@@ -78,7 +82,15 @@ const RepairTypeExcelRegistControl =({
                 </label> 
                 <input disabled value={excelName} placeholder="첨부파일" onChange={()=>{}}/>
                 <button style={{marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:80,color:COLOR.WHITE}}
-                    onClick={()=>{regist()}}
+                    onClick={()=>{
+                        if(sortedBrands.length>0 && sortedRepairShop.length>0){
+                            regist()
+                        }else if(sortedBrands.length <1){
+                            alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                        }else if(sortedRepairShop.length < 1){
+                            alert('등록된 수선처가 없습니다 먼저 수선처를 등록해 주세요')
+                        }
+                    }}
                 >
                     등록
                 </button>
