@@ -8,7 +8,7 @@ import fileDownload from 'js-file-download'
 
 const XLSX = require('xlsx');
 
-const ProductExcelRegist =({infos})=>{
+const ProductExcelRegist =({infos,brands})=>{
     const router = useRouter();
     const [excelName,setExcelName] = useState("첨부파일")
 
@@ -21,8 +21,7 @@ const ProductExcelRegist =({infos})=>{
         .then((res) => {
           fileDownload(res.data, filename)
         })
-      }
-
+    }
     const readUploadFile = (e) => {
         e.preventDefault();
         if (e.target.files&&e.target.files[0]) {
@@ -47,14 +46,14 @@ const ProductExcelRegist =({infos})=>{
               .post(`${process.env.API_URL}/product/registToExcel`,data)
               .then(({ data }) => data.body), 
             ])
-        alert("제품이 등록되었습니다.")
+        alert("상품이 등록되었습니다.")
         router.push("/admin/productControl")
     }
 
     return(
         <Wrapper>
             <InsideWrapper>
-            <div style={{marginBottom:20,fontSize:20,fontWeight:"bold"}}>제품 엑셀 업로드</div>
+            <div style={{marginBottom:20,fontSize:20,fontWeight:"bold"}}>상품 엑셀 업로드</div>
 
             <div style={{display:"flex",flexDirection:"row"}}>
                 <div style={{display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:COLOR.LIGHT_GRAY,paddingLeft:10,paddingRight:10,height:30}}>엑셀파일 업로드</div>
@@ -65,9 +64,15 @@ const ProductExcelRegist =({infos})=>{
                 </label> 
                 <input disabled value={excelName} placeholder="첨부파일" onChange={()=>{}}/>
                 <button style={{marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:80,color:COLOR.WHITE}}
-                    onClick={()=>{registProduct()}}
+                    onClick={()=>{
+                        if(brands.length>0){
+                            registProduct()
+                        }else{
+                            alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                        }
+                    }}
                 >
-                    제품 등록
+                    상품 등록
                 </button>
                 
                 <CustomInput type="file" id="file" 

@@ -38,7 +38,7 @@ const BrandControlBrandRegist = ({infos,user,brands,staffs}) => {
           <BrandSideBar path={"/admin/brandControl/brandRegist"}/>
         </SidebarSpace>
         <MainSpace >
-          <BrandRegist infos={infos[0]} staffs={staffs} user={user}/>
+          <BrandRegist infos={infos[0]} brands={brands} staffs={staffs} user={user}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>

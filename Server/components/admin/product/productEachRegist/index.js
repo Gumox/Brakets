@@ -144,31 +144,61 @@ const ProductEachRegist = ({infos,brands,user}) =>{
     }
 
     const registProduct = async() =>{
-        const formData = new FormData();
-        formData.append('companyName', infos[0].headquarter_name)
-        formData.append('brandName',_.find(brands,{"brand_id":Number(brandId)}).brand_name)
-        formData.append('barcode', productBarcode)
-        formData.append('tagPrice', tagPrice)
-        formData.append('orgPrice', orgPrice)
-        formData.append('brandId', brandId)
-        formData.append('seasonId', seasonSelected)
-        formData.append('categoryId', categorySelected)
-        formData.append('styleId', styleSelected)
-        formData.append('color', color)
-        formData.append('degree', degree)
-        formData.append('size', size)
-        formData.append('productName', emptySpace(productName))
-        formData.append('useURL', useURL)
-        formData.append('imgUrl', imgURL)
-        formData.append('imgfiles',imgBase64)
+        if(seasons.length > 0 && categorys.length > 0 && styles.length > 0){
+            if(!productBarcode){
+                alert('상품 바코드를 등록해 주세요')
+            }else if(!(String(productName).replace(/_/g,"").length > 0)){
+                alert('상품 명을 입력해 주세요')
+            }else if(!tagPrice>0){
+                alert('판매가를 입력해 주세요')
+            }else if(!orgPrice>0){
+                alert('원가를 입력해 주세요')
+            }else if(!(String(color).replace(/_/g,"").length > 0)){
+                alert('색상을 입력해 주세요')
+            }else if(!(String(degree).replace(/_/g,"").length > 0)){ /// ?
+                alert('차수를 입력해 주세요')
+            }else if(!(String(size).replace(/_/g,"").length > 0)){
+                alert('사이즈를 입력해 주세요')
+            }else if(useURL&&!(String(imgURL).replace(/_/g,"").length > 0)){
+                alert('상품 이미지를 입력해 주세요')
+            }else if(!useURL&&!imgBase64){
+                alert('상품 이미지를 등록해 주세요')
+            }else{
+                const formData = new FormData();
+                formData.append('companyName', infos[0].headquarter_name)
+                formData.append('brandName',_.find(brands,{"brand_id":Number(brandId)}).brand_name)
+                formData.append('barcode', productBarcode)
+                formData.append('tagPrice', tagPrice)
+                formData.append('orgPrice', orgPrice)
+                formData.append('brandId', brandId)
+                formData.append('seasonId', seasonSelected)
+                formData.append('categoryId', categorySelected)
+                formData.append('styleId', styleSelected)
+                formData.append('color', color)
+                formData.append('degree', degree)
+                formData.append('size', size)
+                formData.append('productName', emptySpace(productName))
+                formData.append('useURL', useURL)
+                formData.append('imgUrl', imgURL)
+                formData.append('imgfiles',imgBase64)
+                
+                const [result] = await Promise.all([
+                    axios
+                    .post(`${process.env.API_URL}/product/regist`,formData)
+                    .then(({ data }) => data.body), 
+                    ])
+                alert("새로운 제품이 등록되었습니다.")
+                router.push("/admin/productControl")
+            }
+
+        }else if(!seasons.length){
+            alert('등록된 시즌이 없습니다 먼저 시즌을 등록해 주세요')
+        }else if(!categorys.length){
+            alert('등록된 카테고리가 없습니다 먼저 카테고리를 등록해 주세요')
+        }else if(!styles.length){
+            alert('등록된 스타일이 없습니다 먼저 스타일을 등록해 주세요')
+        }
         
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/product/regist`,formData)
-              .then(({ data }) => data.body), 
-            ])
-        alert("새로운 제품이 등록되었습니다.")
-        router.push("/admin/productControl")
     }
   
     return (
@@ -221,7 +251,14 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={tagPrice || ""} style={{flex:1}} onChange={(e)=>{setTagPrice(e.target.value)}}></InputLine>
+                        <InputLine min={0} type={"number"} value={tagPrice || ""}  style={{flex:1}} 
+                            onBlur={(e)=>{
+                                if(e.target.value<1){
+                                    setTagPrice(null)
+                                }
+                            }}
+                            onChange={(e)=>{setTagPrice(e.target.value)}}
+                        />
                     </InputBox>
 
                     <NameBox>
@@ -229,7 +266,14 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine value={orgPrice || ""} style={{flex:1}} onChange={(e)=>{setOrgPrice(e.target.value)}}></InputLine>
+                        <InputLine min={0} type={"number"}  value={orgPrice || ""} style={{flex:1}} 
+                            onBlur={(e)=>{
+                                if(e.target.value<1){
+                                    setOrgPrice(null)
+                                }
+                            }}
+                            onChange={(e)=>{setOrgPrice(e.target.value)}}
+                        />
                     </InputBox>
                 </PrView>
 
@@ -347,7 +391,13 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                 
                 
                     <CenterView>
-                        <RegistButton onClick={()=>{registProduct()}}>
+                        <RegistButton onClick={()=>{
+                            if(brands.length>0){
+                                registProduct()
+                            }else{
+                                alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                            }
+                        }}>
                             등록
                         </RegistButton>
                     </CenterView>
@@ -367,8 +417,8 @@ const Wrapper = styled.div`
 
 const RegistButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width: 60px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
     font-size:16px;

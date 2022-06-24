@@ -3,9 +3,9 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
-import { debounce } from "lodash";
+import _, { debounce } from "lodash";
 
-const BrandRegist = ({infos,user}) =>{
+const BrandRegist = ({infos,brands,user}) =>{
     const router = useRouter();
     const cName =infos.headquarter_name
     const cNameKr =infos.text
@@ -27,19 +27,23 @@ const BrandRegist = ({infos,user}) =>{
     }
 
     const registBrand = async() =>{
-        if(brandName || serviceDate > 0){
-            let _brandName = emptySpace(brandName)
-            
-            const [result] = await Promise.all([
-                axios
-                .post(`${process.env.API_URL}/brand/regist?brandName=${_brandName}&headquarterId=${headquarterId}&serviceDate=${serviceDate}`,)
-                .then(({ data }) => data.body), 
-                ])
-            alert("새로운 브랜드 가 등록되었습니다.")
-            router.push("/admin/brandControl")
+        if(brandName && Number((serviceDate).replace(/ 일/,'')) > 0){
+            if((_.filter(brands,{brand_name:brandName})).length > 0){
+                alert("이미 등록된 브랜드명 입니다")
+            }else{
+                let _brandName = emptySpace(brandName)
+                
+                const [result] = await Promise.all([
+                    axios
+                    .post(`${process.env.API_URL}/brand/regist?brandName=${_brandName}&headquarterId=${headquarterId}&serviceDate=${serviceDate}`,)
+                    .then(({ data }) => data.body), 
+                    ])
+                alert("새로운 브랜드 가 등록되었습니다.")
+                router.push("/admin/brandControl")
+            }
         }else if(!brandName){
             alert("추가하실 브랜드 이름을 입력해주세요.")
-        }else if(serviceDate > 0){
+        }else if(!serviceDate > 0){
             alert("올바르지 않은 서비스 기간입니다.")
         }
     }
@@ -121,7 +125,9 @@ const BrandRegist = ({infos,user}) =>{
                 
                 
                     <CenterView>
-                        <RegistButton onClick={()=>{registBrand()}}>
+                        <RegistButton onClick={()=>{
+                            registBrand()
+                        }}>
                             등록
                         </RegistButton>
                     </CenterView>

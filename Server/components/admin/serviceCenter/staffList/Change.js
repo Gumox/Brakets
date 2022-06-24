@@ -26,9 +26,6 @@ const StaffChange = ({
 
     
     const changeStaff = async() =>{
-
-        
-
         if(staffName && kakaoAcount && staffAddress ){
             if(kakaoAcount){
                 const accountCheck = await isInsertedAccount(kakaoAcount)

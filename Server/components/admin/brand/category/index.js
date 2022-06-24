@@ -124,7 +124,13 @@ const CategoryList = ({user,infos,categorys,brands}) => {
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
                                 <LaView style={{width:"100%",justifyContent:"space-between",marginBottom:10}}>
 
-                                    <DivButton style={{marginLeft:20,paddingBottom:10, fontWeight:"bold"}} onClick={()=>{setAction(!action)}}>
+                                    <DivButton style={{marginLeft:20,paddingBottom:10, fontWeight:"bold"}} onClick={()=>{
+                                        if(brands.length>0){
+                                            setAction(!action)
+                                        }else{
+                                            alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                                        }
+                                    }}>
                                         추가
                                     </DivButton>
 
@@ -150,7 +156,7 @@ const CategoryList = ({user,infos,categorys,brands}) => {
                         <List categorys={slicedArray[pageNumber-1]}/>
 
                         <div style={{marginTop:10}}>
-                            <Paging max={max} width={"580px"} num={pageNumber} setNum={setPageNumber}/>
+                            <Paging max={max} width={"780px"} num={pageNumber} setNum={setPageNumber}/>
                         </div>
                     </InputTableBox>
                     {
@@ -187,7 +193,7 @@ const CategoryList = ({user,infos,categorys,brands}) => {
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>
-                                    <InputLine value={insertCategoryName||""} style={{flex:1,border:0,textAlign:"center"}} onChange={(e)=>{setInsertCategoryName(e.target.value)}}/>
+                                    <InputLine value={insertCategoryName||""} style={{padding:0,flex:1,border:0,textAlign:"center"}} onChange={(e)=>{setInsertCategoryName(e.target.value)}}/>
                                 </div>
                             </LaView>
                             <LaView style={{flex:1,borderRadius: "0px 0px 10px 10px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,justifyContent:"space-evenly",alignItems:"center"}}>

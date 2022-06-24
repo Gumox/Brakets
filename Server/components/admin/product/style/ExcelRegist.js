@@ -65,8 +65,13 @@ const ExcelRegist =({user})=>{
                 </label> 
                 <input disabled value={excelName} placeholder="첨부파일" onChange={()=>{}}/>
                 <button style={{marginLeft:20,marginRight:10,borderRadius:5,backgroundColor:COLOR.DARK_INDIGO,display:"flex",justifyContent:"center",alignItems:"center",height:30,width:100,color:COLOR.WHITE}}
-                    onClick={()=>{registProduct()}}
-                >
+                    onClick={()=>{
+                        if(brands.length>0){
+                            registProduct()
+                        }else{
+                            alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                        }
+                    }}>
                     스타일 등록
                 </button>
                 

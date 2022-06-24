@@ -32,36 +32,42 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
     }
 
     const registSeason = async() =>{
+        if(String(seasonName).replace(/ /g,"").length>0 && String(seasonCode).replace(/ /g,"").length>0){
 
-        const data ={
-            seasonName : emptySpace(seasonName),
-            seasonCode : emptySpace(seasonCode),
-            startDate : seasonStartDate,
-            endDate : seasonEndDate,
-            brandId : selectBrandId
-        }
+            const data ={
+                seasonName : emptySpace(seasonName),
+                seasonCode : emptySpace(seasonCode),
+                startDate : seasonStartDate,
+                endDate : seasonEndDate,
+                brandId : selectBrandId
+            }
 
-        const [check] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/brand/checkRegistedSeason`,data)
-              .then(({ data }) => data), 
-            ])
-
-        
-        if(check.info1 && check.info2){
-            const [result] = await Promise.all([
+            const [check] = await Promise.all([
                 axios
-                .post(`${process.env.API_URL}/brand/registSeason`,data)
-                .then(({ data }) => data.body), 
+                .post(`${process.env.API_URL}/brand/checkRegistedSeason`,data)
+                .then(({ data }) => data), 
                 ])
-            alert("새로운 시즌이 등록되었습니다.")
-            router.push("/admin/brandControl/seasonList")
-        }
-        if(!check.info1){
-            alert("이미 등록된 시즌 이름입니다.")
-        }
-        if(!check.info2){
-            alert("이미 등록된 시즌 코드입니다.")
+
+            
+            if(check.info1 && check.info2){
+                const [result] = await Promise.all([
+                    axios
+                    .post(`${process.env.API_URL}/brand/registSeason`,data)
+                    .then(({ data }) => data.body), 
+                    ])
+                alert("새로운 시즌이 등록되었습니다.")
+                router.push("/admin/brandControl/seasonList")
+            }
+            if(!check.info1){
+                alert("이미 등록된 시즌 이름입니다.")
+            }
+            if(!check.info2){
+                alert("이미 등록된 시즌 코드입니다.")
+            }
+        }else if(String(seasonName).replace(/ /g,"").length < 1 ){
+            alert("시즌 이름을 입력해주세요")
+        }else if(String(seasonCode).replace(/ /g,"").length < 1 ){
+            alert("시즌 코드를 입력해주세요")
         }
     }
     return(
@@ -95,6 +101,7 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                     <PrView>
                         <HeaderCell>
                           <NameBox  style={{borderTop:"2px solid rgb(244, 244, 244)"}}>
+                            <RedDiv>*</RedDiv>
                             시즌 이름
                             </NameBox>
                             <InputBox style={{borderBottom:0}}>
@@ -103,7 +110,8 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                         </HeaderCell>
                     
                         <HeaderCell>
-                          <NameBox  >
+                          <NameBox>
+                            <RedDiv>*</RedDiv>
                             시즌 코드
                             </NameBox>
                             <InputBox style={{borderBottom:0}}>
@@ -134,7 +142,13 @@ const SeasonRegist = ({user,infos,season,brands=[]}) => {
                     </PrView>
 
                     <CenterView>
-                        <RegistButton onClick={()=>{registSeason()}}>
+                        <RegistButton onClick={()=>{
+                            if(brands.length>0){
+                                registSeason()
+                            }else{
+                                alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                            }
+                        }}>
                             등록
                         </RegistButton>
                     </CenterView>
@@ -178,8 +192,8 @@ const InputBox  = styled.div`
 
 const RegistButton =styled.button`
     background-color : ${COLOR.INDIGO};
-    width:80px;
-    height : 50px;
+    width:60px;
+    height : 40px;
     color:${COLOR.WHITE};
     margin:20px;
     font-size:14px;
@@ -217,6 +231,10 @@ const PrView  = styled.div`
     display:flex;
     flex-direction:row;
 `;
+const RedDiv =styled.div`
+    margin: 2px;
+    color: ${COLOR.RED};
+` 
 
 
 export default SeasonRegist

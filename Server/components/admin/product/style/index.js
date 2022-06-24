@@ -194,8 +194,12 @@ const StyleList = ({user,styles,products,brands}) => {
                         <LaView style={{justifyContent:"space-between",alignItems:"center"}}>
 
                                 <AddButton style={{fontSize:"15px"}} onClick={()=>{
-                                    getCategorys(insertBrand);
-                                    setAction(!action)
+                                     if(brands.length>0){
+                                        getCategorys(insertBrand);
+                                        setAction(!action)
+                                    }else{
+                                        alert('등록된 브랜드가 없습니다 먼저 브랜드를 등록해 주세요')
+                                    }
                                 }}>추가</AddButton>
                             
                             <Paging max={max} width={"420px"} num={pageNumber} setNum={setPageNumber}/>
