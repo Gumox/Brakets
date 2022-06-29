@@ -187,7 +187,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     .post(`${process.env.API_URL}/product/regist`,formData)
                     .then(({ data }) => data.body), 
                     ])
-                alert("새로운 제품이 등록되었습니다.")
+                alert("새로운 상품이 등록되었습니다.")
                 router.push("/admin/productControl")
             }
 
