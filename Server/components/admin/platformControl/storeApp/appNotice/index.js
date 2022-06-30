@@ -55,13 +55,13 @@ const AppNoticeControl = ({
             <div>
               
             
-              <h2 style={{marginLeft:20}}>매장 APP – 자동발송 문자메시지 문구 설정과 관리</h2>
+              <h2 style={{marginLeft:20}}>매장 APP – 수선관련고지사항 / 문자수신동의여부 / 개인정보동의여부 - 설정과 관리 </h2>
 
               <LaView style={{justifyContent:"space-between",marginBottom:10,marginTop:0}}>
                   <ColView>
                     <InColView style={{marginLeft:20}}>{"ㆍ 위치: 매장 APP > 접수 탭 > 고객조회 (또는 신규고객등록) > 고객정보"}</InColView>
                     <InColView style={{marginLeft:20}}>{"ㆍ 접수 시, 아래 3가지 사항들에 대하여 고객의 동의를 받아야 합니다."}</InColView>
-                    <InColView style={{marginLeft:20}}>{"ㆍ 아래 예시 문구를 참고하여 회사정책 또는 브랜드에 맞게 자주 사용하는 문자메시지 문구를 만드세요. "}</InColView>
+                    <InColView style={{marginLeft:20}}>{"ㆍ 아래 예시를 참고하시고, 회사정책에 따른 규정사항을 각각의 앱 화면에 직접 입력해 주세요. "}</InColView>
                       
                   </ColView>
               </LaView>
