@@ -49,7 +49,6 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
     }
 
     const allCheckHandler =(value)=>{
-        console.log(value)
         if(value){
             setAllCheck(value)
             let result =[]
@@ -57,8 +56,9 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
                 result.push(item)
             })
             result = _.uniqBy(result,"pcategory_store_id")
-            result = _.filter(result,!{"brand_id":null})
-            console.log(result)
+            result = _.filter(result,function(o){
+                return o.pcategory_store_id !== null 
+            })
             setCheckedList(result)
         }else{
             setAllCheck(value)
@@ -91,7 +91,6 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
     
     useEffect(()=>{
         if(searchResult.length > 0){
-            console.log(checkedList.length,searchResult.length)
             if(checkedList.length !== searchResult.length ){
                 setAllCheck(false)
             }else{
