@@ -28,26 +28,30 @@ const ControlClaimList = ({user,claim}) => {
     const max = Math.ceil(filted.length/slcNum)
 
     const addClaim= async() =>{
-        if(String(claimType).length>0){
+        if(claimPercent){
+            if(String(claimType).length>0){
 
-            let data ={
-                claimValue :  parseFloat(claimPercent) / 100,
-                claimText : claimPercent+"%",
-                claimType : claimType,
-                headquarterId :user.headquarter_id
+                let data ={
+                    claimValue :  parseFloat(claimPercent) / 100,
+                    claimText : claimPercent+"%",
+                    claimType : claimType,
+                    headquarterId :user.headquarter_id
+                }
+
+                console.log(data)
+
+                const [result] = await Promise.all([
+                    axios
+                    .post(`${process.env.API_URL}/claim/addClaim`,data)
+                    .then(({ data }) => data.data), 
+                ])
+                alert("추가되었습니다")
+                
+                window.location.reload();
+                
             }
-
-            console.log(data)
-
-            const [result] = await Promise.all([
-                axios
-                .post(`${process.env.API_URL}/claim/addClaim`,data)
-                .then(({ data }) => data.data), 
-            ])
-            alert("추가되었습니다")
-            
-            window.location.reload();
-            
+        }else if(!claimPercent){
+            alert("클레임가 비율을 설정해주세요")
         }
         
     }

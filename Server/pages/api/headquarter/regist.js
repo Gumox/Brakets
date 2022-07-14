@@ -105,6 +105,21 @@ async function setHeadquarterDefaultResultData(
   
     return result;
 }
+
+async function setDefaultClaim(  headquarter_id,) {
+  const result = await excuteQuery({
+      query: `INSERT INTO claim
+              ( claim_value	,claim_text, claim_type, headquarter_id)
+              VALUES 
+              (1,'100%','택가',${headquarter_id}),
+              (0.5,'50%','택가',${headquarter_id})
+              (1,'100%','원가',${headquarter_id})
+              (1.5,'150%','원가',${headquarter_id})`,
+    });
+  
+    return result;
+}
+
 async function setHeadquarterDefaultAutoMessageData(
   headquarter_id,
 ) {
@@ -256,6 +271,8 @@ const controller = async (req, res) => {
       const resultResult = await setHeadquarterDefaultResultData(id);
       if(resultResult.error){console.log(resultResult.error)}
       
+      const resultClaim = await setDefaultClaim(id);
+      if(resultClaim.error){console.log(resultClaim.error)}
       
       const resultAutoMessage = await setHeadquarterDefaultAutoMessageData(id);
       if(resultAutoMessage.error){console.log(resultAutoMessage.error)}
