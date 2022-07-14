@@ -69,7 +69,7 @@ const Designate = ({
                       </SelectItemHeader>
                       <SearchSelect value={pcategoryId} style={{borderTop:0}}
                           onChange={(e)=>{setPcategoryId(e.target.value)}}>
-                          <option value={"ALL"} >{"전체"}</option>
+                          <option value={"ALL"} >{"  "}</option>
                           {
                               brandCategoryList.map((item,index)=>(
                                   <option key={index} value={item.pcategory_id} >{item.category_name}</option>

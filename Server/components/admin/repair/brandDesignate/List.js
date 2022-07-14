@@ -84,7 +84,9 @@ const ListItem =({
         <PrView>
             <HeaderCell style={{flex:0,minWidth:40}}>
                 <input type={"checkbox"} checked={check} onChange={()=>{
-                    checkboxHandler(!check)
+                    if(item.pcategory_store_id){
+                        checkboxHandler(!check)
+                    }
                 }}/>
             </HeaderCell>
             <HeaderCell>

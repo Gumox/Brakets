@@ -11,7 +11,9 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
     const [category,setCategory] = useState([])
 
     
-    const [selectedBrand,setSelectedBrand] = useState(null)
+    const categorysBrand = _.uniqBy(categorys,"brand_name")
+
+    const [selectedBrand,setSelectedBrand] = useState(categorysBrand[0].brand_id)
     const [selectedBrandName,setSelectedBrandName] = useState(null)
     const [selectedCategory,setSelectedCategory] = useState("ALL")
 
@@ -22,7 +24,6 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
     
     const [brandCategoryList,setBrandCategoryList] = useState([])
 
-    const categorysBrand = _.uniqBy(categorys,"brand_name")
 
     const [allCheck,setAllCheck] = useState(false)
     const [checkedList,setCheckedList] = useState([])
@@ -56,6 +57,8 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
                 result.push(item)
             })
             result = _.uniqBy(result,"pcategory_store_id")
+            result = _.filter(result,!{"brand_id":null})
+            console.log(result)
             setCheckedList(result)
         }else{
             setAllCheck(value)
@@ -87,10 +90,13 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
 
     
     useEffect(()=>{
-        if(checkedList.length !== searchResult.length){
-            setAllCheck(false)
-        }else{
-            setAllCheck(true)
+        if(searchResult.length > 0){
+            console.log(checkedList.length,searchResult.length)
+            if(checkedList.length !== searchResult.length ){
+                setAllCheck(false)
+            }else{
+                setAllCheck(true)
+            }
         }
     },[checkedList])
 
