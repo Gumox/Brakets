@@ -39,7 +39,7 @@ const StoreModify = ({
     
     
     const [postCodeOn,setPostCodeOn]=useState(false)
-    const [address,setAddress]=useState(null)
+    const [address,setAddress]=useState('')
     const [addressChange,setAddressChange]=useState(false)
 
 

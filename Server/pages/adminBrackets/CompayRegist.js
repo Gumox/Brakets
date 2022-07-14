@@ -32,7 +32,7 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
     const [compayCode,setCompayCode] = useState(null)
     
     const [postCodeOn,setPostCodeOn]=useState(false)
-    const [address,setAddress] = useState(null)
+    const [address,setAddress] = useState('')
     const [detailAddress,setDetailAddress] = useState(null)
 
     const [ceo,setCeo] = useState()
