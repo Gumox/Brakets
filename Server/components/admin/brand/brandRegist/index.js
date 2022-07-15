@@ -56,7 +56,7 @@ const BrandRegist = ({infos,brands,user}) =>{
     const dateHandlePress = useCallback(
         (e) => {
           if (e.key == "Enter") {
-            setServiceDate(serviceDate+' 일')
+            setServiceDate(serviceDate.replace(/ 일/,"")+' 일')
           }
         },
         
@@ -115,8 +115,15 @@ const BrandRegist = ({infos,brands,user}) =>{
                         <InputLine type={"text"} value={serviceDate} style={{flex:1,borderRadius: "0 0 10px 0",textAlign:"center",paddingRight:280}} 
                             onKeyPress={(e)=>{dateHandlePress(e)}}
                             onFocus={()=>{dateHandleFocus()}}
-                            onBlur={()=>{setServiceDate(serviceDate+' 일')}}
-                            onChange={(e)=>{setServiceDate(e.target.value)}}/>
+                            onBlur={()=>{
+                                if(serviceDate){
+                                    setServiceDate(serviceDate.replace(/ 일/,"")+' 일')
+                                }
+                            }}
+                            onChange={(e)=>{
+                                let value = String(e.target.value).replace(/[^0-9]/g, '')
+                                setServiceDate(value)
+                            }}/>
                     </LongInputBox>
                 </PrView>
                 
