@@ -9,7 +9,7 @@ import PostCode from "../storeEachRegist/PostCode";
 import SearchFocus from "./SearchFocus";
 import checkDuplicate from "../storeEachRegist/checkDuplicate";
 import getNextStoreCode from "../storeEachRegist/getNextStoreCode";
-import { checkAccount,checkPhone,checkEmail } from "../checkDuplicateManagerInfo";
+import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
 
 import Popup from 'reactjs-popup';
 

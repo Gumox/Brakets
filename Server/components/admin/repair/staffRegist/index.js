@@ -6,6 +6,7 @@ import axios from "axios";
 import getNextStaffCode from "./getNextStaffCode";
 import _ from "lodash";
 import SearchFocus from "./SearchFocus";
+import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
 
 const StaffRegist = ({infos,user,staffs,repairShops}) =>{
 
@@ -19,18 +20,21 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
 
     const [staffCode,setStaffCode] = useState("")
     const [staffName,setStaffName] =useState()
-    const [kakaoAcount,setKakaoAcount] =useState()
+    const [kakaoAccount,setKakaoAccount] =useState()
     const [staffAddress,setStaffAddress] =useState()
     const [staffEmail,setStaffEmail] =useState()
+    const [isAccountDuplicate,setIsAccountDuplicate] = useState(false)
+    const [isPhoneDuplicate,setIsPhoneDuplicate] = useState(false)
+
 
     //const storeId =user.store_id;
 
     
     const registStaff = async() =>{
-        if(shopId && staffName && kakaoAcount && staffAddress){
+        if(shopId && staffName && kakaoAccount && staffAddress){
             const bodyData = {
                 state: true,
-                account: kakaoAcount,
+                account: kakaoAccount,
                 name: staffName,
                 phone: staffAddress,
                 level:3,
@@ -49,7 +53,7 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
             alert("수선처를 입력해 주세요")   
         }else if(!staffName){
             alert("직원 이름을 입력해 주세요")   
-        }else if(!kakaoAcount){
+        }else if(!kakaoAccount){
             alert("직원 카카오 계정을 입력해 주세요")   
         }else if(!staffAddress){
             alert("직원 연락처를 입력해 주세요")   
@@ -124,8 +128,24 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                             kakao 계정
                         </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine value={kakaoAcount || ""} placeholder={"ex) example@kakao.com"} style={{flex:1}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
+                        <InputBox style={{position:"relative",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputLine value={kakaoAccount || ""} placeholder={"ex) example@kakao.com"} style={{flex:1}} 
+                                onChange={async(e)=>{
+                                    setKakaoAccount(e.target.value)
+                                    let tof = await checkAccount(e.target.value)
+                                    setIsAccountDuplicate(tof)
+                                    if(!e.target.value){
+                                        setIsAccountDuplicate(false)
+                                    }
+                                }}
+                            />
+                            <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                                {(!isAccountDuplicate && kakaoAccount) ?
+                                    <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                                    :
+                                    <div style={{color:COLOR.RED}}>사용불가</div>
+                                }
+                            </div>
                         </InputBox>
                     </PrView>
                     <PrView>
@@ -134,8 +154,24 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                             직원 연락처
                         </NameBox>
 
-                        <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine value={staffAddress || ""} placeholder={"ex) xxx-xxxx-xxxx"} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}}></InputLine>
+                        <InputBox style={{position:"relative",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputLine value={staffAddress || ""} placeholder={"ex) xxx-xxxx-xxxx"} style={{flex:1}} 
+                                onChange={async(e)=>{
+                                    setStaffAddress(e.target.value)
+                                    let tof = await checkPhone(e.target.value)
+                                    setIsPhoneDuplicate(tof)
+                                    if(!e.target.value){
+                                        setIsPhoneDuplicate(false)
+                                    }
+                                }}
+                            />
+                            <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                                {(!isPhoneDuplicate && staffAddress) ?
+                                    <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                                    :
+                                    <div style={{color:COLOR.RED}}>사용불가</div>
+                                }
+                            </div>
                         </InputBox>
 
                         <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>

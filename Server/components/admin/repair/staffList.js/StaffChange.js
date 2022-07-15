@@ -1,66 +1,65 @@
 import React ,{useEffect,useState,useCallback} from "react";
 import styled from "styled-components";
 import COLOR from "../../../../constants/color";
-import Router, { useRouter } from "next/router";
 import axios from "axios";
 import _ from "lodash";
 import remakeCallNumber from "../../../../functions/remakeCallNumber";
+import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
 
 const StaffChange = ({
     item,
     cancel=()=>{}
 }) =>{
 
-    const router = useRouter();
-    
-    const [shopId,setShopId] = useState(null)
-    const [shopName,setShopName] = useState()
-    
-    
     const [state,setState] = useState(item.staff_state)
 
-    const [staffCode,setStaffCode] = useState("")
     const [staffName,setStaffName] =useState()
     const [kakaoAccount,setKakaoAccount] =useState()
     const [staffAddress,setStaffAddress] =useState()
     const [staffEmail,setStaffEmail] =useState()
 
-    //const storeId =user.store_id;
+    const [isAccountDuplicate,setIsAccountDuplicate] = useState(false)
 
     
+    
     const changeStaff = async() =>{
-
-        const body = {
-            state : state,
-            phone: staffAddress || item.staff_phone,
-            staff_email :staffEmail || item.staff_email,
-            staff_store_id : item.staff_store_id,
-            isChange: true,
-            staff_id: item.staff_id,
-        }
-        const [result] = await Promise.all([
-            axios
-              .post(`${process.env.API_URL}/RepairShop/repairShopStaffModify`,body)
-              .then(({ data }) => data.body), 
-            ])
-
-        const bodyData = {
-            state: true,
-            account: kakaoAccount,
-            name: staffName,
-            phone: staffAddress,
-            level:3,
-            staff_code:item.staff_code,
-            staff_email:staffEmail,
-            store_id :item.repair_shop_id
-        }
-        const [changeResult] = await Promise.all([
-            axios
-                .post(`${process.env.API_URL}/staff/regist`,bodyData)
+        if(kakaoAccount && !isAccountDuplicate){
+            const body = {
+                state : state,
+                phone: staffAddress || item.staff_phone,
+                staff_email :staffEmail || item.staff_email,
+                staff_store_id : item.staff_store_id,
+                isChange: true,
+                staff_id: item.staff_id,
+            }
+            const [result] = await Promise.all([
+                axios
+                .post(`${process.env.API_URL}/RepairShop/repairShopStaffModify`,body)
                 .then(({ data }) => data.body), 
-            ])
-        alert("수선처 직원이 변경 되었습니다.")
-        window.location.reload()
+                ])
+
+            const bodyData = {
+                state: true,
+                account: kakaoAccount,
+                name: staffName || item.staff_name,
+                phone: staffAddress || item.staff_phone,
+                level:3,
+                staff_code:item.staff_code,
+                staff_email:staffEmail || item.staff_email,
+                store_id :item.repair_shop_id
+            }
+            const [changeResult] = await Promise.all([
+                axios
+                    .post(`${process.env.API_URL}/staff/regist`,bodyData)
+                    .then(({ data }) => data.body), 
+                ])
+            alert("수선처 직원이 변경 되었습니다.")
+            window.location.reload()
+        }else if(isAccountDuplicate){
+            alert("사용 불가능한 계정입니다")
+        }else{
+            alert("변경하실 카카오 계정을 입력해주세요")
+        }
     }
 
     
@@ -116,14 +115,25 @@ const StaffChange = ({
                             kakao 계정
                         </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputBox style={{position:"relative",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
 
                             <InputLine value={kakaoAccount || ""} placeholder={item.account}  style={{paddingLeft:20,flex:1}}
-                                onChange={(e)=>{
+                                onChange={async(e)=>{
                                     setKakaoAccount(e.target.value)
+                                    let tof = await checkAccount(e.target.value)
+                                    setIsAccountDuplicate(tof)
+                                    if(!e.target.value){
+                                        setIsAccountDuplicate(false)
+                                    }
                                 }}
                             />
-
+                            <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                                {(!isAccountDuplicate && kakaoAccount) ?
+                                    <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                                    :
+                                    <div style={{color:COLOR.RED}}>사용불가</div>
+                                }
+                            </div>
                         </InputBox>
                     </PrView>
                     <PrView>
@@ -186,6 +196,18 @@ const StaffChange = ({
     );
 };
 
+const emptySpace =(str)=>{
+    let name = ""
+    for(let i =0; i<str.length;i++){
+        if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
+            name += "_"
+        }else if(str[i] !== " " && str[i]){
+            name += str[i]
+        }
+    }
+    return(String(name).replace(/_/g," "))
+    
+}
 
 
 

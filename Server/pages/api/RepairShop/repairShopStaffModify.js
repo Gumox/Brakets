@@ -27,7 +27,7 @@ async function setStaff(
 async function setStaffState( state,staff_id ) {
     const result = await excuteQuery({
         query: `UPDATE  staff 
-                   SET  state = ?,
+                   SET  state = ?
                  WHERE  staff_id = ?`,
         values:[state,staff_id]
       });
@@ -62,14 +62,14 @@ const controller = async (req, res) => {
         
     try {
 
-        
-
       if(isChange){
+
         const del =await deleteStaffStore(staff_store_id)
         console.log(del)
-        
+
         const result = await setStaffState(0,staff_id);
         console.log(result)
+        
         res.status(200).json({ body: result });
       }else{
         let _phone = String(phone).replace(/-/g,"")
@@ -80,9 +80,6 @@ const controller = async (req, res) => {
 
         res.status(200).json({ body: result });
       }
-
-          
-        
       
     } catch (err) {
       console.log(err.message);

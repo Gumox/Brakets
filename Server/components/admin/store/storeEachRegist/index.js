@@ -9,7 +9,7 @@ import PostCode from "./PostCode";
 import SearchFocus from "./SearchFocus";
 import checkDuplicate from "./checkDuplicate";
 import getNextStoreCode from "./getNextStoreCode";
-import { checkAccount,checkPhone,checkEmail } from "../checkDuplicateManagerInfo";
+import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
 
 const StoreEachRegist = ({infos,brands,user,stores}) =>{
     const router = useRouter();
