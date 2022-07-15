@@ -162,7 +162,7 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
                                     accountHandler(e.target.value)
                                 }}
                             />
-                            <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                            <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                                 {(!isAccountDuplicate && kakaoAccount) ?
                                     <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
                                     :
@@ -179,7 +179,7 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
 
                         <InputBox style={{position:"relative",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             <InputLine value={staffAddress} placeholder={"ex) xxx-xxxx-xxxx"} style={{flex:1}} onChange={(e)=>{telHandler(e.target.value)}}></InputLine>
-                            <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                            <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                                 {(!isPhoneDuplicate && staffAddress) ?
                                     <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
                                     :

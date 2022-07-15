@@ -21,6 +21,9 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
     const [storeCategory,setStoreCategory]=useState(1)
     const [mailBagUseable,setMailBagable]=useState(1)
     
+    const [isAccountDuplicate,setIsAccountDuplicate] = useState(false)
+    const [isPhoneDuplicate,setIsPhoneDuplicate] = useState(false)
+    const [isEmailDuplicate,setIsEmailDuplicate] = useState(false)
     
     const [duplicateCheck,setDuplicateCheck]=useState(true)
     const [duplicateCheckText,setDuplicateCheckText]=useState("입력")
@@ -55,6 +58,22 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
             setIsFocus(true)
         }else{
             setIsFocus(false)
+        }
+    }
+    
+    const telHandler = async(value)=>{
+
+
+        const onlyNumber = value.replace(/[^0-9]/g, '')
+        setManagerPhone(onlyNumber)
+
+        if (onlyNumber.length>9) {
+            setManagerPhone(remakeCallNumber(onlyNumber));
+        }
+        let tof = await checkPhone(onlyNumber)
+        setIsPhoneDuplicate(tof)
+        if(!value){
+            setIsPhoneDuplicate(false)
         }
     }
 
@@ -120,9 +139,11 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
             let isEmail = false 
             if(isNewManager){
                 isAccount = await checkAccount(managerAccount)
-                isPhone = await checkPhone(managerPhone) 
+                setIsAccountDuplicate(isAccount)
+                isPhone = await checkPhone(managerPhone)
+                setIsPhoneDuplicate(isPhone) 
                 isEmail = await checkEmail(managerEmail) 
-            
+                setIsEmailDuplicate(isEmail)
             }
             
 
@@ -179,8 +200,6 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
             insertedValue = String(insertedValue).replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gim,'') 
             alert("특수문자는 입력하실수 없습니다.");
        
-            
-            //insertedValue.substring( 0 , insertedValue.length - 1 ); 
        
         }
 
@@ -369,8 +388,17 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             </ColView>
                         </NameBox>
 
-                        <InputBox style={{borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputBox style={{position:"relative",borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             <InputLine disabled={!isNewManager} style={{borderRadius:"0 10px 0 0",fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerAccount || ""} onChange={(e)=>{setManagerAccount(e.target.value)}}/>
+                            
+                            <div style={{position:"absolute",top: 2, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                                {(!isAccountDuplicate && managerAccount) ?
+                                    <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                                    :
+                                    <div style={{color:COLOR.RED}}>사용불가</div>
+                                }
+                            </div>
+
                         </InputBox>
                     </PrView>
 
@@ -385,9 +413,21 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             </ColView>
                         </NameBox>
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine disabled={!isNewManager} style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) 000-0000-0000" value={managerPhone || ""} onChange={(e)=>{setManagerPhone(e.target.value)}}/>
-                            
+                        <InputBox style={{position:"relative",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                            <InputLine disabled={!isNewManager} style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) 000-0000-0000" value={managerPhone || ""} 
+                                onChange={(e)=>{telHandler(e.target.value)}}
+                                onFocus={()=>{
+                                    const onlyNumber = managerPhone.replace(/[^0-9]/g, '')
+                                    setManagerPhone(onlyNumber)
+                                }}
+                            />
+                            <div style={{position:"absolute",top: 2, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                                {(!isPhoneDuplicate && managerPhone) ?
+                                    <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                                    :
+                                    <div style={{color:COLOR.RED}}>사용불가</div>
+                                }
+                            </div>
                         </InputBox>
 
                         <NameBox  style={{borderTop:`2px solid rgb(244,244,244)`}}>

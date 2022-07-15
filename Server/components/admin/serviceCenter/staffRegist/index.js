@@ -7,6 +7,7 @@ import getNextStaffCode from "./getNextStaffCode";
 import { debounce } from "lodash";
 import isInsertedAccount from "../../isInsertedAccount";
 import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
+import remakeCallNumber from "../../../../functions/remakeCallNumber";
 
 const StaffRegist = ({infos,user,staffs}) =>{
     const router = useRouter();
@@ -68,10 +69,8 @@ const StaffRegist = ({infos,user,staffs}) =>{
         const onlyNumber = value.replace(/[^0-9-]/g, '')
         setStaffAddress(onlyNumber)
 
-        
-        const regex = /^[0-9-]{0,13}$/;
-        if (regex.test(value)) {
-            setStaffAddress(value.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+        if (onlyNumber.length>9) {
+            setStaffAddress(remakeCallNumber(onlyNumber));
         }
         let tof = await checkPhone(onlyNumber)
         setIsPhoneDuplicate(tof)
@@ -184,7 +183,7 @@ const StaffRegist = ({infos,user,staffs}) =>{
                             }
                         }}
                     />
-                   <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                   <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                         {(!isAccountDuplicate && kakaoAccount) ?
                             <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
                             :
@@ -204,8 +203,12 @@ const StaffRegist = ({infos,user,staffs}) =>{
                         onChange={(e)=>{
                             telHandler(e.target.value)
                         }}
+                        onFocus={()=>{
+                            const onlyNumber = managerPhone.replace(/[^0-9]/g, '')
+                            setManagerPhone(onlyNumber)
+                        }}
                     />
-                    <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                    <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                         {(!isPhoneDuplicate && staffAddress) ?
                             <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
                             :

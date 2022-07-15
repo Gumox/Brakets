@@ -139,7 +139,7 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                                     }
                                 }}
                             />
-                            <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                            <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                                 {(!isAccountDuplicate && kakaoAccount) ?
                                     <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
                                     :
@@ -165,7 +165,7 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                                     }
                                 }}
                             />
-                            <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                            <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                                 {(!isPhoneDuplicate && staffAddress) ?
                                     <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
                                     :

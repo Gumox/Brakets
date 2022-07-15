@@ -3,7 +3,7 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
-import _, { debounce } from "lodash";
+import _ from "lodash";
 
 const BrandRegist = ({infos,brands,user}) =>{
     const router = useRouter();
