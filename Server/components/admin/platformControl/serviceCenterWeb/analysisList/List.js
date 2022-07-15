@@ -38,7 +38,6 @@ const List = ({
 };
 
 const ListItem =({item})=>{
-    console.log(item)
     const [stateCheck,setStateCheck] = useState(item.state)
 
    

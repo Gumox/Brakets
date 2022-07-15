@@ -287,7 +287,6 @@ const RepairHistory = ({
         
         typeInfo.unshift({text:"선택",level:1})
         setRepiarType(typeInfo)
-        //console.log(typeInfo)
         sortInfo(info.body[0],typeInfo)
     }
     useEffect(()=>{

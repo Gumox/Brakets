@@ -15,7 +15,6 @@ const List = ({
     setActionView=()=>{}
 }) => {
     const cancel =()=>{
-        console.log("5555")
         setActionView(null)
     }
     

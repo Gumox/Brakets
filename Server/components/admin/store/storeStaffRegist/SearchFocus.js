@@ -62,7 +62,6 @@ const SearchFocus = ({
 
       if(text){
           let filt = _.filter(shopList,function(obj){
-            console.log(obj)
             return String(obj.store_name).toUpperCase().indexOf(String(text).toUpperCase()) !== -1;
           })
           setShopListResult(filt)

@@ -35,7 +35,6 @@ const Deassign = ({
             .post(`${process.env.API_URL}/RepairShop/brandDeassign?pcategoryStoreId=${item.pcategory_store_id}`,)
             .then(({ data }) => data.data), 
           ])
-          console.log(result)
       })
       alert("수선처가 해제 되었습니다")
       window.location.reload()
@@ -70,7 +69,6 @@ const Deassign = ({
                     </PrView>
                     {
                       checkedList.map((item,index)=>{
-                        console.log(item)
                         return(
                           <PrView key ={index}>
                             <HeaderCell>

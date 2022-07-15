@@ -143,60 +143,6 @@ const StaffList = ({user,infos,repairShopStaff}) => {
     );
 };
 
-
-const staffNameParse=(staff,name)=>{
-  let result
-  if(name && name !==""){
-      let filt = _.filter(staff,function(obj){
-        return obj.name.indexOf(name) !== -1;
-      })
-      result = filt
-  }else{
-      result =staff
-  }
-  return result
-}
-const staffFilter =(staff,brand,adress)=>{
-  let result = staff
-
-  console.log(staff)
-
-  if(brand){
-    result = (_.filter(result,function(o){
-      return o.brand_id == brand
-    }))
-  }
-  if(adress){
-    result = (_.filter(result,function(o){
-      
-      return String(o.address).includes(adress) 
-    }))
-  }
-  
-  return (result)
-}
-
-const sortStaff =(staff)=>{
-  let sortByCategory =_.sortBy(staff,"category_name");
-  let sortBySeason = _.sortBy(sortByCategory,"season_name")
-  let sortByBrand = _.sortBy(sortBySeason,"brand_name")
-  return (sortByBrand)
-}
-
-const getRepairShopStaffBrandList =(arr) =>{
-    let result = []
-    
-    if(arr.length > 0){
-        let keys = _.uniqBy(arr,"repair_shop_name")
-        keys.map((item)=>{
-            let inArr = _.filter(arr,{ 'repair_shop_name': item.repair_shop_name})
-            result.push(inArr)
-        })
-    }
-
-    return(result)
-}
-
 const Wrapper = styled.div`
     padding:2%;
     background-color:${COLOR.WHITE};

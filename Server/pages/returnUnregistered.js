@@ -55,7 +55,6 @@ export default function ReturnUnregistered() {
     }
     const insertReturnList=async(list)=>{
         const result= await insertData(list)
-        //console.log(result)
         if(result.msg){
             let data=[]
             returnList.map((el)=>{
@@ -93,7 +92,6 @@ export default function ReturnUnregistered() {
           }
         },[shopName]
     );
-    console.log()
 
     let companyDiv
     if(userInfo.level === 3 ){
@@ -118,7 +116,6 @@ export default function ReturnUnregistered() {
         )
     }else if(userInfo.level ===0 || userInfo.level === 1){
         let search = _.find(companyList, {'value':userInfo.headquarter_id});
-        console.log(search)
         companyDiv =(
             <div style={{display:'flex',alignItems:"center",justifyContent:"center",width:"100%",fontSize:15,fontWeight:"bold",msOverflowStyle:"none"}}>회사 :
                 {search  && <div style={{marginLeft : 15}}>{search.headquarter_name}</div>}
@@ -145,15 +142,10 @@ export default function ReturnUnregistered() {
             let cpList = await getHeadquarter()
             let returnListData;
             if(checkDisable(user.level)){
-                //console.log("****************************")
                 returnListData = await getAllReturnList(user.headquarter_id)
-                //console.log(returnListData)
-                //console.log("****************************")
             }else{
                 returnListData = await getReturnList(sessionStorage.getItem('SHOP')*1,sessionStorage.getItem('SHOP_NAME'))
             }
-            //console.log(cpList)
-            //console.log("****************************")
             setReturnList(returnListData)
             setResultList(returnListData) //for refresh
             setBrandList(list);
@@ -202,7 +194,6 @@ export default function ReturnUnregistered() {
                     브랜드 : 
                     <select name="brand"  style={{marginLeft:10,marginRight: 10,height:22}}  
                         onChange={(e)=>{
-                            //console.log(e.target.value)
                             if(e.target.value){
                                 setBrand(e.target.value)
                             }else{

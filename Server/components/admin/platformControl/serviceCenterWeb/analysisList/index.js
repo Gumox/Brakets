@@ -27,7 +27,6 @@ const ControlAnalysisList = ({user,analysisType}) => {
 
     const addAnalysis= async() =>{
         if(String(analysisName).length>0){
-            console.log(analysisName)
             const [result] = await Promise.all([
                 axios
                 .post(`${process.env.API_URL}/analysisType/addAnalysis?headquarterId=${user.headquarter_id}&analysisName=${analysisName}`)

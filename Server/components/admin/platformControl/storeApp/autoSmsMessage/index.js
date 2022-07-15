@@ -7,8 +7,6 @@ import AutoSmsMessage from "./AutoSmsMessage";
 
 const AutoSmsMessageControl = ({user,info,receiptSmsMessage,takeOverSmsMessage}) => {
 
-    console.log(receiptSmsMessage)
-    
     const [messageReceipt1,setMessageReceipt1] = useState(receiptSmsMessage.auto_sms_message1)
     const [messageReceipt2,setMessageReceipt2] = useState(receiptSmsMessage.auto_sms_message2)
     const [messageReceipt3,setMessageReceipt3] = useState(receiptSmsMessage.auto_sms_message3)

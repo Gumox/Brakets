@@ -30,7 +30,6 @@ const AdministratorRegist = ({infos,user}) =>{
         setHeadquarterId(e.target.value)
         if(e.target.value !== ""){
             const code =  _.find(infos, {'value': Number(e.target.value)})
-            console.log(code.headquarter_code)
             setCCode(code.headquarter_code)
             setAdminCode(code.headquarter_code+".0000")
             const [tof] = await Promise.all([
@@ -38,7 +37,6 @@ const AdministratorRegist = ({infos,user}) =>{
                   .get(`${process.env.API_URL}/headquarter/existStaff?headquarterId=${e.target.value}`,)
                   .then(({ data }) => data.message), 
             ])
-            console.log(tof)
             setIsExist(tof)
         }else{
             setCCode(null)
@@ -64,7 +62,6 @@ const AdministratorRegist = ({infos,user}) =>{
                 .post(`${process.env.API_URL}/headquarter/registAdministrator`,bodyData)
                 .then(({ data }) => data.body), 
                 ])
-                console.log(result)
                 router.push("/adminBrackets/AdministratorList")
         }else if(!headquarterId){
             alert('회사를 선택해주세요')

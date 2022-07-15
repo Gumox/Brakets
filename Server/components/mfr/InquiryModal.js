@@ -15,7 +15,6 @@ const InquiryModal = ({
   }) => {
   
   const el =item;
-  console.log(el)
 
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
@@ -54,8 +53,6 @@ const InquiryModal = ({
         ])
 
         setOverallImg(el.image)
-        console.log(datas)
-        
         setImageData(datas.data)
         setNeedImageData(datas.needImages)
     }

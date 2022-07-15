@@ -27,7 +27,6 @@ const ControlFaultList = ({user,faultType}) => {
 
     const addFault= async() =>{
         if(String(faultName).length>0){
-            console.log(faultName)
             const [result] = await Promise.all([
                 axios
                 .post(`${process.env.API_URL}/faultDivision/addFault?headquarterId=${user.headquarter_id}&faultName=${faultName}`)

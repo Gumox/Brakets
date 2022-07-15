@@ -46,7 +46,6 @@ const sendSms = async (user,sendNumber,{ _receivers, message }) => {
       
           })
         ])
-        console.log(messageResult)
         return datas; 
       } catch (err) {
         console.log('err', err);
@@ -134,7 +133,6 @@ const SendMsg = ({infos}) => {
     <Wrapper style={{width:myWidth}}>
       <MsgView>
         <SelectBox onChange={(e)=>{
-          console.log(e.target.value)
           setSendNumber(e.target.value)
           }}>
           <option value={infos.headquarter_call}>{infos.headquarter_call}</option>
@@ -149,7 +147,6 @@ const SendMsg = ({infos}) => {
           onClick={() => 
             sendSms(user,sendNumber,{ _receivers: store.getState().phone_num, message: msgText }).then((result) => {
               
-            console.log('전송결과', result);
           })}
         >
           전송

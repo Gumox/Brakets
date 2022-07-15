@@ -31,7 +31,6 @@ const UnitPriceListControl =({user,brands})=>{
     const readUploadFile = (e) => {
         e.preventDefault();
         if (e.target.files&&e.target.files[0]) {
-            console.log(e.target.files[0])
             setExcelName(e.target.files[0].name)
             setExcelFile(e.target.files[0])
         }

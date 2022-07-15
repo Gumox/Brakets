@@ -32,7 +32,6 @@ const FilterInfo = ({
   const [styleList,setStyleList] = useState([])
 
   const getStyle = async(season) =>{
-      console.log({ seasonId: season ,brandId:targetBrandId })
     const [styles] = await Promise.all([
       axios
       .get(`${process.env.API_URL}/product/seasonStyle`, {

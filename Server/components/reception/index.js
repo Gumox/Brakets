@@ -41,8 +41,7 @@ const Reception = ({
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(
     () => {
-    setIsProductImageModalOpen(true)
-    console.log(targetData[PRODUCT.IMAGE])
+      setIsProductImageModalOpen(true)
     }
     ,[]
   );

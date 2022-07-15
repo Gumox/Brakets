@@ -23,6 +23,5 @@ export const getData = async(params,level)=>{
             
         })
       ])
-      //console.log(datas)
       return datas;
 }

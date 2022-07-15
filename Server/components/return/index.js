@@ -16,9 +16,7 @@ import ReactExport from "react-export-excel";
 const Return = ({ options, user,results}) => {
 
   
-  console.log(results)
   const returnId = _.find(results,{"text": "하자반품"})
-  console.log(returnId)
   
   const [isProductImageModalOpen, setIsProductImageModalOpen] = useState(false);
   const openProductImage = useCallback(

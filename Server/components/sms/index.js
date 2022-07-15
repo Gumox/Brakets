@@ -66,9 +66,6 @@ const Sms = ({infos}) => {
       .then((response) => setTargetData(response.data.data));
   }, []);
 
-  useEffect(() => 
-  // console.log(targetData)
-  [targetData]);
 
   return (
     <Wrapper>

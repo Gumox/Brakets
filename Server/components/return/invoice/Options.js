@@ -18,7 +18,6 @@ const Options = ({ user, handleSearchButtonClick={} }) => {
 
         })
     ])
-    console.log(list, user);
     return datas;
   }
   

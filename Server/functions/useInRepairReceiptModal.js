@@ -61,7 +61,6 @@ export const getReceiptRepairInfo = async(receipt_id)=>{
 
       })
     ])
-    //console.log(datas)
     return datas;
 }
 

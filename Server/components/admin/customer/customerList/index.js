@@ -21,8 +21,6 @@ const CustomerList = ({user,infos,customers,brands}) => {
     
     const max = Math.ceil(filtedCustomers.length/10)
     
-    //console.log(sortCustomers(customers),10)
-
     const SearchBarHandler = ()=>{
         setPageNumber(1)
         let nameParse = customersNameParse(customers,searchCustomerName,)

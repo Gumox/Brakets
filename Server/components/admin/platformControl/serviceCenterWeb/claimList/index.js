@@ -38,7 +38,6 @@ const ControlClaimList = ({user,claim}) => {
                     headquarterId :user.headquarter_id
                 }
 
-                console.log(data)
 
                 const [result] = await Promise.all([
                     axios

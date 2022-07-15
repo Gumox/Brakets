@@ -14,7 +14,6 @@ const insertLogStore = async (list, user) => {
 
       })
   ])
-  console.log(list, user);
   return datas;
 }
 
@@ -28,7 +27,6 @@ const insertLogCompany = async (list, user) => {
 
       })
   ])
-  console.log(list, user);
   return datas;
 }
 

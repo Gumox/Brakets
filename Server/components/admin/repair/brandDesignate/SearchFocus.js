@@ -9,7 +9,6 @@ const SearchFocus = ({
   setName=()=>{},
   handler=()=>{},
 }) => {
-  console.log(shopList)
   const [target,setTarget] = useState("")
 
   const [shopListResult,setShopListResult] = useState(shopList)
@@ -57,7 +56,6 @@ const SearchFocus = ({
     (e) => {
       if (e.key == "Enter") {
         let isRegisted = false
-        console.log("press Enter")
         shopListResult.map((item)=>{
           if(emptySpace(e.target.value) === emptySpace(item.name)){
             clicker(item.store_id)

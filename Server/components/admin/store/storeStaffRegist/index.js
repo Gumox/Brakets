@@ -55,7 +55,6 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
                 
                 managerId:managerId
             }
-            console.log(bodyData)
             const [result] = await Promise.all([
                 axios
                   .post(`${process.env.API_URL}/store/registStoreStaff`,bodyData)

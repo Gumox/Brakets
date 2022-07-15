@@ -60,7 +60,6 @@ export default function Settlement()  {
     }
     const setTable = async(parmas)=>{
         let list = await getSettlementData(parmas)
-        //console.log(list)
 
         setSettlementList(list.data)
     }
@@ -78,7 +77,6 @@ export default function Settlement()  {
                 newList.push(item)
             }
         })
-        //console.log(newList)
         return newList
     }
     const getExcel =(data)=>{
@@ -101,7 +99,6 @@ export default function Settlement()  {
             let typeList = await getRepairType(null,null,sessionStorage.getItem('SHOP'))
             if(!checkDisable(user.level)){
                 let list = await getSettlementData({repairShop: sessionStorage.getItem('SHOP')})
-                //console.log(_.sortBy(list.data,'receipt_code'))
                 setSettlementList(_.sortBy(list.data,'receipt_code'))
                 selectShop=(
                     <div>{sessionStorage.getItem('SHOP_NAME')}</div>
@@ -154,7 +151,6 @@ export default function Settlement()  {
             <Container>회사 설정 :
             <select style={{marginLeft:10,marginRight: 10}} 
                 onChange={(e)=>{
-                    //console.log(e.target.value)
                     setHqId(e.target.value)
                 }}>
                 {companyList.map((item) => (
@@ -176,7 +172,6 @@ export default function Settlement()  {
                             <h3 style={{marginLeft:10,minWidth:50, minHeight:22}}>기준</h3>
                             <select style={{marginLeft:10,marginRight: 10, minWidth:100, minHeight:22}} 
                                 onChange={(e)=>{
-                                    //console.log(e.target.value)
                                     setSelectOption(e.target.value)
                                 }}
                             >
@@ -210,7 +205,6 @@ export default function Settlement()  {
                         <ButtonCheck disabled = {!disable} onClick={()=>{onClickOptionTwo( sortCheckedList(checkList))}}>본사확인</ButtonCheck>
                         <ButtonRepairCheck onClick={()=>{
                             onClickOptionOne( sortCheckedList(checkList))
-                            //console.log(sortCheckedList(checkList))
                            
                             }}>수선처확인</ButtonRepairCheck>
                         <ButtonCheckC  disabled = {!disable} onClick={()=>{onClickOptionEdit(sortCheckedList(checkList))}}>내용 수정</ButtonCheckC>

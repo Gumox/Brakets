@@ -12,7 +12,6 @@ const ProductModify = ({
     cancel=()=>{},
 }) =>{
     const router = useRouter();
-    console.log(item)
     const [brandId,setBrandId] =useState(item.brand_id)
     const brandName = useState(item.brand_name)
 
@@ -41,7 +40,6 @@ const ProductModify = ({
     }
     
     const emptySpace =(str)=>{
-        console.log("s ",str)
         let name = ""
         for(let i =0; i<str.length;i++){
             if(str[i] === " "&& str[i+1] && str[i+1] !== " "){

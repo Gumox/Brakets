@@ -25,7 +25,6 @@ const getNextStaffCode=(staffs)=>{
     if(lastNumber > -1){
         nextNumber = String(lastNumber+1)
     }else{
-        console.log("lastNumber",lastNumber)
         nextNumber = String(0)
     }
 

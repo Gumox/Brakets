@@ -26,7 +26,6 @@ const SmsResult = ({}) => {
     let index =0;
     let nextList =[];
     let nextIndex =0;
-    console.log(beforePack)
     beforePack.map((el)=>{
       if(list[index] !=undefined){
         
@@ -34,7 +33,6 @@ const SmsResult = ({}) => {
           index = index+1;
           list[index] = [el]
         }else{
-          console.log(el.sms_result_message)
           list[index].push(el)
         }
       }else{
@@ -75,11 +73,9 @@ const SmsResult = ({}) => {
       })
      
     }
-    console.log(nextList)
     setPack(nextList)
   }
   const getSmsResult = async(sendDate,month,year)=>{
-    console.log(sendDate,month,year)
     if(sendDate){
       const datas = await axios.post(
         `${process.env.API_URL}/sms/getSmsResult`,{
@@ -90,13 +86,11 @@ const SmsResult = ({}) => {
           }
         }
       );
-      console.log(datas.data)
       makePack(datas.data)
       return datas.data
     }
   }
   const unpack =(array)=>{
-    //console.log(array)
     let returnList =[]
     array.map((el,i)=>{
       let obj = el;

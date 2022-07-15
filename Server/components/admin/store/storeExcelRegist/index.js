@@ -35,7 +35,6 @@ const StoreExcelRegist =({infos,store})=>{
                 const worksheet = workbook.Sheets[sheetName];
                 const json = XLSX.utils.sheet_to_json(worksheet);
                 setExcelToJson(json)
-                console.log(json)
             };
             reader.readAsArrayBuffer(e.target.files[0]);
         }
@@ -48,7 +47,6 @@ const StoreExcelRegist =({infos,store})=>{
               .post(`${process.env.API_URL}/store/registToExcel`,data)
               .then(({ data }) => data), 
             ])
-        //console.log(result)
         alert("매장이 등록되었습니다.")
         router.push("/admin/storeControl")
     }

@@ -57,7 +57,6 @@ const ReceiptInfo = ({
     formData.append('receiptId', targetData["receipt_id"]);
     formData.append('customerId', targetData["customer_id"]);
     const body ={...targetData,manager_id:userInfo.staff_id}
-    console.log(body)
     
     const [data] = await Promise.all([
         axios
@@ -104,11 +103,9 @@ const ReceiptInfo = ({
       if(value == el.value){
         setClaimPriceDisable(true)
         if(el.claim_type=='택가'){
-          console.log(el.claim_value*(targetData[PRODUCT.TAG_PRICE]))
           setClaimPrice(el.claim_value*(targetData[PRODUCT.TAG_PRICE]))
           handleChangeTargetDataPrice(e,el.claim_value*(targetData[PRODUCT.TAG_PRICE]))
         }else if(el.claim_type=='원가'){
-          console.log(el.claim_value*(targetData[PRODUCT.ORG_PRICE]))
           setClaimPrice(el.claim_value*(targetData[PRODUCT.ORG_PRICE]))
           handleChangeTargetDataPrice(e,el.claim_value*(targetData[PRODUCT.ORG_PRICE]))
         }else{
@@ -127,11 +124,7 @@ const ReceiptInfo = ({
   
 
   const  setFile=(e)=> {
-    // Get the details of the files
-    ///console.log(e.target.files[0].name)
-      console.log(e.target.files)
     if(e.target.files[0]){
-      console.log(e.target.files[0].name)
       setInputFlieName(e.target.files[0].name)
       setInputFlie(e.target.files)
     }else{
@@ -243,7 +236,6 @@ const ReceiptInfo = ({
                 value={targetData[RECEIPT.RESULT_ID]}
                 onChange={(e)=>{
                   handleChangeTargetData(e);
-                  console.log(targetData)
                 }}
                 styleOptions={{ maxWidth: "160px", width: "160px" }}
               />
@@ -461,7 +453,6 @@ const ReceiptInfo = ({
                       onChange={(e)=>{
                         getClaimPrice(e.target.value,e);
                         //handleChangeTargetData(e);
-                        console.log(targetData.claim_price)
                       }}
                       value={targetData[RECEIPT.CLAIM]}
                       styleOptions={{ maxWidth: "100px", color: COLOR.PURPLE }}
@@ -473,7 +464,6 @@ const ReceiptInfo = ({
                       onChange={(e)=>{
                         //setClaimPrice(e.target.value);
                         handleChangeTargetData(e);
-                        console.log(targetData)
                       }}
                       styleOptions={{ width: "100px", color: COLOR.PURPLE }}
                     />
@@ -577,7 +567,6 @@ const ReceiptInfo = ({
             </Field>
             <SaveButton
               onClick={()=>{
-                console.log(completeDateChanged)
                 if(!targetData[RECEIPT.ID]){
                   alert("잘못된 입력입니다. \n서비스카드 번호를 확인해주세요")
                 }else if(!targetData[RECEIPT.COMPLETE_DATE]){
@@ -588,7 +577,6 @@ const ReceiptInfo = ({
                   alert("권한이 없습니다")
                 }else{
                   
-                  //console.log(targetData)
                   inputSave(targetData,inputFlie)
                   confirm("저장이 완료되었습니다.")
                 }

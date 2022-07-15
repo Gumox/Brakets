@@ -5,7 +5,6 @@ import store from '../../store/store'
 import COLOR from "../../constants/color";
 
 function SelectInquiryImageModal({overallImg,imageData,needImageData,tof = false}){
-    console.log(overallImg)
     const [mainImage, setMainImage] = useState()
 
     const [shop,setShop] = useState(store.getState().shop)
@@ -93,7 +92,6 @@ function SelectInquiryImageModal({overallImg,imageData,needImageData,tof = false
             <RepairImgWrapper>
             {
                 tof&&(toDoRepairImage.map((v, i) =>{
-                    console.log("true")
                     return(
                         <div key={i}>
                             

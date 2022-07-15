@@ -61,7 +61,6 @@ const updateDetailImage = async(receiptId, num, imagePath) => {
 
 
  const updateStepThree = async (receiptId, {pcategory, message, receiver}) => {
-   console.log(receiptId, pcategory, message, receiver)
     return excuteQuery({
       query: "UPDATE receipt SET pcategory_id=?, store_message=?, receiver=? WHERE receipt_id=?",
       values: [pcategory, message, receiver, receiptId],

@@ -22,7 +22,6 @@ const Options = ({ user, handleSearchButtonClick={} }) => {
   
       })
     ])
-    console.log(datas)
     return datas;
   }
 

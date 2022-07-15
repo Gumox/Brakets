@@ -42,7 +42,6 @@ const ListItem =({item})=>{
     const [modifyOn,setModifyOn]= useState(false)
 
     const emptySpace =(str)=>{
-        console.log("s ",str)
         let name = ""
         for(let i =0; i<str.length;i++){
             if(str[i] === " "&& str[i+1] && str[i+1] !== " "){

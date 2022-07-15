@@ -9,7 +9,6 @@ import PlatformSideBar from "../../../components/admin/platformControl/PlatformS
 import RepairTypeExcelRegistControl from "../../../components/admin/platformControl/RepairShopWeb/repairTypeExcelRegist";
 
 const ControlRepairTypeExcelRegist = ({user,brands,repairShops}) => {
-  console.log(repairShops)
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{

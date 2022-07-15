@@ -53,11 +53,11 @@ const StaffRegist = ({infos,user,staffs}) =>{
                 }
             }
         }else if(!staffName){
-            alert("새로운 등록할 직원의 이름을 입력해주세요")
+            alert("새로 등록할 직원의 이름을 입력해주세요")
         }else if(!kakaoAccount){
-            alert("새로운 등록할 직원의 kakao계정을 입력해주세요")
+            alert("새로 등록할 직원의 kakao계정을 입력해주세요")
         }else if(!staffAddress){
-            alert("새로운 등록할 직원의 연락처를 입력해주세요")
+            alert("새로 등록할 직원의 연락처를 입력해주세요")
         }
         
         

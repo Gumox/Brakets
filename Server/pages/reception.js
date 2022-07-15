@@ -58,7 +58,6 @@ const ReceptionPage = ({ options, user }) => {
         let adminOptions = JSON.parse(sessionStorage.getItem("ADMIN_OPTIONS")).options
         
         setReceptionPageoptions(adminOptions)
-        console.log(adminOptions)
         
         setSelectOptions(adminOptions)
         if(adminOptions.brandList.length > 0){
@@ -251,7 +250,6 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  console.log(user)
 
   const { headquarter_id: headquarterId } = user;
   if(user.level<2){

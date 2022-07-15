@@ -28,10 +28,6 @@ const CategoryList = ({user,infos,categorys,brands}) => {
         let brandParse = categorysNameParse(categorys,selectedBrand)
         let sort = sortCategorys(brandParse)
 
-        console.log(categorys)
-        console.log(brandParse)
-        console.log(sort)
-
         setFiltedCategorys(sort)
         setSlicedArray(slicingArray(sort,slcNum))
 
@@ -48,7 +44,6 @@ const CategoryList = ({user,infos,categorys,brands}) => {
     },[])
     
     const emptySpace =(str)=>{
-        console.log("s ",str)
         let name = ""
         for(let i =0; i<str.length;i++){
             if(str[i] === " "&& str[i+1] && str[i+1] !== " "){

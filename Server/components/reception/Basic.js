@@ -25,7 +25,6 @@ const BasicInfo = ({
   const handleKeyPress = useCallback(
     (e) => {
       if (e.key !== "Enter") return;
-      console.log(e.target.value)
       handleChangeInputData(e)
       getTargetData(receiptCode);
       searchCode(e.target.value);

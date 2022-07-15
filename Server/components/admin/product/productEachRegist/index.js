@@ -43,7 +43,6 @@ const ProductEachRegist = ({infos,brands,user}) =>{
     }
     
     const emptySpace =(str)=>{
-        console.log("s ",str)
         let name = ""
         for(let i =0; i<str.length;i++){
             if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
@@ -57,12 +56,10 @@ const ProductEachRegist = ({infos,brands,user}) =>{
     }
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
-            console.log(event.target.files)
             setImgBase64(event.target.files[0]);
           let reader = new FileReader();
           reader.onload = (e) => {
             setImgFile(e.target.result);
-            console.log(e.target.result)
           };
           reader.readAsDataURL(event.target.files[0]);
         }else{
@@ -105,7 +102,6 @@ const ProductEachRegist = ({infos,brands,user}) =>{
         
         if(categoryResult.length>0){
             setCategorySelected(categoryResult[0].pcategory_id)
-            console.log(`product/seasonStyleInBrand?pcategoryId=${categoryResult[0].pcategory_id}&brandId=${brandId}`)
 
             const [stylesResult] = await Promise.all([
                 axios
@@ -131,7 +127,6 @@ const ProductEachRegist = ({infos,brands,user}) =>{
         if(value && value !== ""){
             seasonId = value
         }
-        console.log(`/product/seasonStyleInBrand?pcategoryId=${value}?brandId=${brandId}`)
 
         
         const [result] = await Promise.all([
@@ -139,7 +134,6 @@ const ProductEachRegist = ({infos,brands,user}) =>{
               .get(`${process.env.API_URL}/product/seasonStyleInBrand?pcategoryId=${value}&brandId=${brandId}`,)
               .then(({ data }) => data.data), 
         ])
-        console.log(result)
         setStyles(result)    
     }
 

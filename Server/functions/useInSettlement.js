@@ -91,7 +91,6 @@ export const sortSettlementData = (data ,types,tof) =>{
       if(data.repair1_type_id === el.value){
           repair1_name = el.text;
           sorteddata +=repair1_name+`(${data.repair1_count})` 
-          //console.log(sorteddata)
           //result[0] = repair1_name+`(${data.repair1_count})` 
       }
       if(data.repair2_type_id === el.value){
@@ -105,7 +104,6 @@ export const sortSettlementData = (data ,types,tof) =>{
           //result[2] = repair3_name+`(${data.repair3_count})` 
       }
     })
-    //console.log(sorteddata)
     return(sorteddata)
   }
   

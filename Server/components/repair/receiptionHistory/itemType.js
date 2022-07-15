@@ -17,7 +17,6 @@ export default function ItemType(props){
                     let price;
                     repiarType.map((el)=>{
                         if(el.value == e.target.value){
-                            console.log(el.repair_price , e.target.value)
                             price = el.repair_price
                         }
 
@@ -36,7 +35,6 @@ export default function ItemType(props){
                     let price;
                     repiarType.map((el)=>{
                         if(el.value == e.target.value){
-                            console.log(el.repair_price , e.target.value)
                             price = el.repair_price
                         }
 
@@ -55,7 +53,6 @@ export default function ItemType(props){
                     let price;
                     repiarType.map((el)=>{
                         if(el.value == e.target.value){
-                            console.log(el.repair_price , e.target.value)
                             price = el.repair_price
                         }
 

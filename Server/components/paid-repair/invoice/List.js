@@ -129,9 +129,6 @@ const List = ({ data, handleDataClick = () => { } }) => {
     }))
   )
 
-  {
-    console.log(data)
-  }
 
   return (
     <Wrapper>

@@ -26,9 +26,6 @@ const StoreList = ({user,infos,store,brands}) => {
       setFilted(storeFilter(store,selectedBrand,insertedStoreName))
       let sort = sortStore(storeFilter(store,selectedBrand,insertedStoreName))
       setFilted(sort)
-
-      console.log(sort)
-      console.log(slicingArray(sort,slicingNumber))
       setSlicedArray(slicingArray(sort,slicingNumber))
 
     }
@@ -161,8 +158,6 @@ const slicingArray =(array,num)=>{
 
 const storeFilter =(store,brand,storeName)=>{
   let result = store
-
-  console.log(store)
 
   if(brand){
     result = (_.filter(result,function(o){

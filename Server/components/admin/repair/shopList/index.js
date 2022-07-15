@@ -31,7 +31,6 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
     const [selectedBrand,setSelectedBrand] = useState("ALL")
     
     const repairShopName = _.uniqBy(repairShop,"repair_shop_name")
-    console.log(parsedRepairShop)
 
     const searchBarRepairShopHandler = (arr,value)=>{
         let result = []
@@ -60,7 +59,6 @@ const StoreList = ({user,infos,store,brands,repairShop}) => {
             let inArr = _.filter(arr,{ 'brand_name': selectedBrand})
             result = getRepairShopBrandList(inArr)
         }
-        console.log(result)
         setParsedRepairShop(result)
     }
     
@@ -176,8 +174,6 @@ const storeNameParse=(store,name)=>{
 }
 const storeFilter =(store,brand,adress)=>{
   let result = store
-
-  console.log(store)
 
   if(brand){
     result = (_.filter(result,function(o){

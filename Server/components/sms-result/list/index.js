@@ -147,7 +147,6 @@ function Table({ columns, data, handleDataClick }) {
 
 const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
   //const data = _data
-  //console.log(data);
   
     // No   , megkey ,전송시각  , 수신자, 수신번호   , 내용, 발신번호       ,발신자    , TCS내용
     // index, mid    ,send_date ,  name , send_number, msg,  calling_number,staff_code,sms_result
@@ -168,7 +167,6 @@ const ReturnList = ({ data, user, handleDataClick = () => { } }) => {
   ], [])
 
 
-  // console.log(rows)
 
   return (
     <Wrapper>

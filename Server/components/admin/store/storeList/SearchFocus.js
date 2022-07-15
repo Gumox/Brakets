@@ -10,7 +10,6 @@ const SearchFocus = ({
   handler=()=>{},
   checkNewManager = ()=>{}
 }) => {
-  console.log(managerList)
   const [target,setTarget] = useState("")
 
   const [managerListResult,setManagerListResult] = useState(managerList)

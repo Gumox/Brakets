@@ -89,8 +89,6 @@ const StoreModify = ({
     const selectManagerHandler =(value,tof)=>{
         
         if(tof){
-            console.log("8520")
-            console.log(value)
             let item = _.find(managerSearchList,{staff_phone:value})
 
             setManagerName(item.staff_name)
@@ -165,7 +163,6 @@ const StoreModify = ({
             }
 
             if(isNewManager){
-                console.log("??")
                 const isAccount =await checkAccount(managerAccount)
                 const isPhone = await checkPhone(managerPhone) 
                 const isEmail = await checkEmail(managerEmail) 
@@ -279,7 +276,6 @@ const StoreModify = ({
               
     
               result.map((item)=>{
-                  console.log(item)
                   let listPush = item
                   listPush["search_text"] = `${item.staff_name}  (${remakeCallNumber(item.staff_phone)})`;
                   searchList.push(listPush)

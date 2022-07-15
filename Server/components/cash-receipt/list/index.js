@@ -110,9 +110,6 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     {Header: () => (<div style={{textAlign:"center"}}>{ '판정결과'}</div>), accessor: '판정결과',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
   ],[])
 
-    console.log("data is")
-    console.log(data)
-
     const value = data.map((cashReceipt) => ({
       "서비스카드#":cashReceipt[RECEIPT.CODE],
       "현금영수증번호":cashReceipt[RECEIPT.CASHRECEIPT_NUM] == null ? "미 발행 건" : cashReceipt[RECEIPT.CASHRECEIPT_NUM],

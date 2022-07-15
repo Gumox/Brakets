@@ -21,7 +21,6 @@ const LinkModal = ({ options, children, handleCloseButtonClick ,width}) => {
 
         })
     ]);
-    console.log(data)
     setCompanys(data)
   } 
   const setCompanyID =async()=>{

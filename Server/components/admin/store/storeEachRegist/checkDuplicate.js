@@ -15,7 +15,6 @@ const checkDuplicate =(list,name,myName)=>{
             break;
         }
     }
-    console.log(result)
     return(result)
 }
 export default checkDuplicate

@@ -49,7 +49,6 @@ export default function MfrInquiry() {
                 
             })
           ])
-          //console.log(datas)
           return datas.body;
     }
 
@@ -58,11 +57,9 @@ export default function MfrInquiry() {
         let types = await getRepairType(null,null,shopId)
         if(params.dateOption === "receipt_date"){
             datas = await getData(params)
-            console.log(datas)
             setData(datas)
         }else{
             datas = await getData(params)
-            console.log(datas)
             setData(datas)
         }
     },[setData]);

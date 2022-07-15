@@ -12,7 +12,6 @@ const StaffModify = ({
     staff,
     setActionView =()=>{}
 }) =>{
-    console.log(staff)
     const router = useRouter();
     const cName =staff.headquarter_name;
     const cNameKr =staff.headquarter_name_kr;

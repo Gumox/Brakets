@@ -31,7 +31,6 @@ const AdministratorModifiy = ({
               .post(`${process.env.API_URL}/headquarter/updateAdministrator`,bodyData)
               .then(({ data }) => data.body), 
             ])
-            console.log(result)
         window.location.reload();
     }
     const checkBeforeModify = () =>{

@@ -186,7 +186,6 @@ const getStaffList =(arr) =>{
 const storeFilter =(store,brand,storeName,staffName)=>{
   let result = store
 
-  console.log(brand,storeName,staffName)
 
   if(brand){
     result = (_.filter(result,function(o){
@@ -194,21 +193,17 @@ const storeFilter =(store,brand,storeName,staffName)=>{
     }))
   }
   if(storeName.length > 0){
-    console.log("?",brand,storeName,staffName,"?")
     result = (_.filter(result,function(o){
       
       return String(o.store_name).includes(storeName) 
     }))
-    console.log(result)
   }
   if(staffName.length > 0){
-    console.log("!",brand,staffName,"!")
     result = (_.filter(result,function(o){
       
       return String(o.staff_name).includes(staffName) 
     }))
   }
-  console.log(result)
   return (result)
 }
 

@@ -9,7 +9,6 @@ import PlatformSideBar from "../../../components/admin/platformControl/PlatformS
 import AutoSmsMessageControl from "../../../components/admin/platformControl/storeApp/autoSmsMessage";
 
 const ControlAutoSmsMessage = ({user,info,receiptSmsMessage,takeOverSmsMessage}) => {
-  console.log(takeOverSmsMessage)
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{

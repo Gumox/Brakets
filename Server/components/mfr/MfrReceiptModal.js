@@ -41,11 +41,8 @@ function MfrReceiptModal (props) {
 
   const YesOrNoFunc = useCallback(
     (tof) => {
-      console.log(completeDate)
       setYesOrNo(tof)
       if(!tof){
-        console.log(tof)
-        
         setCompleteDate(null)
       }
     },[]
@@ -89,7 +86,6 @@ function MfrReceiptModal (props) {
       headquarter_id:el.headquarter_store_id
 
     }
-    console.log(body)
     axios.post(`${process.env.API_URL}/mfr/setMfr`, body , {
       headers: {
         'Content-type': 'application/json'
@@ -97,7 +93,6 @@ function MfrReceiptModal (props) {
       .then((response) => {
       // 응답 처리
           const json =  response.data;
-          console.log(json);
           window.location.reload();
       })
       .catch((error) => {
@@ -109,7 +104,6 @@ function MfrReceiptModal (props) {
 
   useEffect( () => {
     
-    console.log(el)
     const today = formatDate(new Date)
     if(!el.mfr_register_date){
       setRegisterDate(today)

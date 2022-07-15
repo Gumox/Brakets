@@ -82,7 +82,6 @@ const heightMaker =(str)=>{
 
    
     }
-    console.log(count)
     return(18*count+10)
 }
 

@@ -285,8 +285,6 @@ const ReturnList = ({ data, user }) => {
   }))
 
 
-  // console.log(rows)
-
   return (
     <Wrapper>
       

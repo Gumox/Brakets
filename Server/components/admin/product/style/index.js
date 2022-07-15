@@ -84,7 +84,6 @@ const StyleList = ({user,styles,products,brands}) => {
               .post(`${process.env.API_URL}/product/addStyle`,data)
               .then(({ data }) => data.data), 
         ])
-        console.log(data)
         window.location.reload();
     }
 
@@ -93,8 +92,6 @@ const StyleList = ({user,styles,products,brands}) => {
         setPageNumber(1)
         setFiltedStyles(sortStyles(stylesFilter(styles,selectedBrand,selectedCategory)))
         let sort =(sortStyles(stylesFilter(styles,selectedBrand,selectedCategory) ))
-        console.log(sort)
-        console.log(slicingArray(sort,slicingNumber))
         setSlicedArray(slicingArray(sort,slicingNumber))
         
 

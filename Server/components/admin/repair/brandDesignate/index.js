@@ -42,7 +42,6 @@ const BrandDesignate = ({user,infos,store,categorys,repairShops}) => {
         
         if(selectedCategory != "ALL"){
             let filt = _.filter(result,{"pcategory_id":Number(selectedCategory)})
-            console.log(filt)
             result = filt
         }
         setSearchResult(result)

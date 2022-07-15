@@ -56,7 +56,6 @@ const SearchFocus = ({
     (e) => {
       if (e.key == "Enter") {
         let isRegisted = false
-        console.log("press Enter")
         shopListResult.map((item)=>{
           if(emptySpace(e.target.value) === emptySpace(item.receiver_name)){
             clicker(item.receiver_id,item.receiver_name,`R.${String(item.receiver_name).replace(/ /g,"_")}`)

@@ -26,9 +26,6 @@ const getReceipt = async(receiptId) => {
 }
 
 const addReceiptDetail = async ({mailbag}, {receipt_id, receipt_code, product_id, product_code, store_id, receipt_date, receiver, receiver_type}) => {
-  console.log("11111111111111111111111111111111111111")
-  console.log({mailbag})
-  console.log({receipt_id, receipt_code, product_id, product_code, store_id, receipt_date, receiver, receiver_type})  
   return excuteQuery({
         query:
           "INSERT INTO `receipt_detail`(`receipt_id`, `receipt_code`, `mailbag`, `product_id`,`product_code`, `sender`, `send_date`, `receiver`, `receiver_type`) VALUES (?,?,?,?,?,?,?,?,?)",
@@ -86,9 +83,6 @@ const addRepairDetail = async ({receipt_id,receiver, receipt_date}) => {
 
           let repairDetailId;
           if(receipt[0].receiver_type === 2) {
-            console.log("8888888888888888888888888888888")
-          console.log(fields)
-          console.log(receipt[0])
             const addRepairResult = await addRepairDetail(receipt[0]);
             if (addRepairResult.error) {
               console.log(`add repair detail failed2`);

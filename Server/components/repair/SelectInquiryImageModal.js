@@ -5,7 +5,6 @@ import store from '../../store/store'
 import COLOR from "../../constants/color";
 
 function SelectInquiryImageModal({overallImg,imageData,needImageData}){
-    console.log(overallImg)
     const [mainImage, setMainImage] = useState()
 
     const [shop,setShop] = useState(store.getState().shop)

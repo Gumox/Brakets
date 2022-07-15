@@ -211,9 +211,6 @@ const ReturnList = ({ data, handleDataClick = () => {} }) => {
     
   ],[])
 
-  console.log("data is")
-  console.log(data);
-
   const value = data.map((claim) => ({
     "서비스카드#" : claim[RECEIPT.CODE],
     "매장코드" : claim[STORE.CODE],

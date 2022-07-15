@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const SelectList = ({data})=>{
-    console.log(data)
     let lists=[];
     if(data[0]){
         data.map((item,i)=>{

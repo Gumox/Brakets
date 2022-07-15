@@ -259,8 +259,6 @@ const productsNameParse=(products,name)=>{
 }
 const productsFilter =(products,brand,seasonName,categoryName)=>{
   let result = products
-  console.log("brand",brand,"\nseasonName",seasonName,"\ncategoryName",categoryName)
-  console.log(products)
   if(brand){
     result = (_.filter(result,function(o){
       return o.brand_id == brand
@@ -272,7 +270,6 @@ const productsFilter =(products,brand,seasonName,categoryName)=>{
   if(categoryName && categoryName !==""){
     result = (_.filter(result,{"category_name":categoryName}))
   }
-  console.log(result)
   return (result)
 }
 

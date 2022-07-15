@@ -15,7 +15,6 @@ const ProductControlProductStyleList = ({user,styles,brands}) => {
     await axios.get("/api/auth/logout");
     router.push("/login");
   };
-  console.log(user)
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
   const handleResize = debounce(()=>{

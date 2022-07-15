@@ -37,7 +37,6 @@ export default function Inquiry() {
     const handleScroll = () => {
       const position = window.pageYOffset;
       setScrollPosition(position);
-      console.log(position)
     };
   
     useEffect(() => {
@@ -200,7 +199,6 @@ export default function Inquiry() {
         if( window.innerWidth > 1472){
               
           let sWidth = window.innerWidth*0.96 - 10
-          console.log(sWidth/20)
           
           itemViewWidth = Math.round(sWidth/20)
         }else{
@@ -353,7 +351,7 @@ export default function Inquiry() {
             <ItemTable >
                 
                             
-                <ScrollX   ref={ref2} style={{minHeight:320, width: "100%"}} onChange={()=>{console.log("0000000")}}>
+                <ScrollX   ref={ref2} style={{minHeight:320, width: "100%"}}>
                 
                     {
                         data.map((item,i)=>(

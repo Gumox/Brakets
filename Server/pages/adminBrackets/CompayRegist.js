@@ -78,7 +78,6 @@ const CompanyRegist = ({user,infos,brands,staffs}) =>{
                 .post(`${process.env.API_URL}/headquarter/regist`,bodyData)
                 .then(({ data }) => data.body), 
                 ])
-            console.log(result)
             router.push("/adminBrackets/CompanyList")
         }else if(!compayNameEN){
             alert("영문 회사명을 입력해주세요")

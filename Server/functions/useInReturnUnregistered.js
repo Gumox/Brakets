@@ -42,8 +42,6 @@ export const getTargetInfo = async(code,shop,shopName)=>{
         datas[0].level = 1
         datas[0].shop_name = shopName
       }
-      console.log(datas.length)
-      console.log(datas[0])
       return datas;
 }
 export const insertData = async(list) =>{
@@ -69,7 +67,6 @@ export const getReturnList = async(id,shopName)=>{
     if(datas.length>0){
       datas.forEach((obj,index) => {
         let date = obj.return_date
-        console.log(datas.length)
         datas[index].return_date = formatDate(new Date(date))
         datas[index].level = 0
         datas[index].shop_name = shopName
@@ -88,7 +85,6 @@ export const getAllReturnList = async(hq_id)=>{
     if(datas.length>0){
       datas.forEach((obj,index) => {
         let date = obj.return_date
-        console.log(datas.length)
         datas[index].return_date = formatDate(new Date(date))
         datas[index].level = 0
         datas[index].shop_name = obj.return_store_name

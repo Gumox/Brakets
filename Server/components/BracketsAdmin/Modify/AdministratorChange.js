@@ -11,7 +11,6 @@ const AdministratorChange = ({
     user,
     setModifyAcion=()=>{}
 }) =>{
-    console.log(info)
     const router = useRouter();
     const cCode=info.headquarter_code
     const [KakaoAcount,setKakaoAcount] =useState(null)
@@ -48,7 +47,6 @@ const AdministratorChange = ({
                     .post(`${process.env.API_URL}/headquarter/registAdministrator`,body)
                     .then(({ data }) => data.body), 
                 ])
-                console.log(result)
                 router.push("/adminBrackets/AdministratorList")
             window.location.reload();
         }else if(!KakaoAcount){

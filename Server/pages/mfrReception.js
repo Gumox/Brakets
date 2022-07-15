@@ -91,7 +91,6 @@ function MfrReception({options,user}) {
 
     let itemList = []
     if(loadStaff.level==3 || loadStaff.level==4){
-      console.log(list)
 
       list.body.forEach((el,index) => {
         if(images.body){
