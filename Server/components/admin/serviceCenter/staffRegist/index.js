@@ -6,6 +6,7 @@ import axios from "axios";
 import getNextStaffCode from "./getNextStaffCode";
 import { debounce } from "lodash";
 import isInsertedAccount from "../../isInsertedAccount";
+import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
 
 const StaffRegist = ({infos,user,staffs}) =>{
     const router = useRouter();
@@ -14,24 +15,27 @@ const StaffRegist = ({infos,user,staffs}) =>{
     const cCode =infos.headquarter_code
     const [adminCode,setAdminCode] =useState("")
 
+    const [isAccountDuplicate,setIsAccountDuplicate] = useState(false)
+    const [isPhoneDuplicate,setIsPhoneDuplicate] = useState(false)
+
     
     const [staffName,setStaffName] =useState()
-    const [kakaoAcount,setKakaoAcount] =useState()
+    const [kakaoAccount,setKakaoAccount] =useState()
     const [staffAddress,setStaffAddress] =useState()
     const [staffEmail,setStaffEmail] =useState()
     const storeId =user.store_id;
 
     
     const registStaff = async() =>{
-        if(staffName && kakaoAcount && staffAddress ){
-            if(kakaoAcount){
-                const accountCheck = await isInsertedAccount(kakaoAcount)
+        if(staffName && kakaoAccount && staffAddress ){
+            if(kakaoAccount){
+                const accountCheck = await isInsertedAccount(kakaoAccount)
                 if(accountCheck.length){
                     alert("이미 등록된 kakao계정 입니다")
                 }else{
                     const bodyData = {
                         state: true,
-                        account: kakaoAcount,
+                        account: kakaoAccount,
                         name: staffName,
                         phone: staffAddress,
                         level:1,
@@ -50,13 +54,30 @@ const StaffRegist = ({infos,user,staffs}) =>{
             }
         }else if(!staffName){
             alert("새로운 등록할 직원의 이름을 입력해주세요")
-        }else if(!kakaoAcount){
+        }else if(!kakaoAccount){
             alert("새로운 등록할 직원의 kakao계정을 입력해주세요")
         }else if(!staffAddress){
             alert("새로운 등록할 직원의 연락처를 입력해주세요")
         }
         
         
+    }
+    const telHandler = async(value)=>{
+
+
+        const onlyNumber = value.replace(/[^0-9-]/g, '')
+        setStaffAddress(onlyNumber)
+
+        
+        const regex = /^[0-9-]{0,13}$/;
+        if (regex.test(value)) {
+            setStaffAddress(value.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+        }
+        let tof = await checkPhone(onlyNumber)
+        setIsPhoneDuplicate(tof)
+        if(!value){
+            setIsPhoneDuplicate(false)
+        }
     }
 
     const [windowWidth,setWindowWidth] = useState(0)
@@ -152,8 +173,24 @@ const StaffRegist = ({infos,user,staffs}) =>{
                     kakao 계정
                 </NameBox>
 
-                <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                    <InputLine value={kakaoAcount} style={{flex:1}} onChange={(e)=>{setKakaoAcount(e.target.value)}}></InputLine>
+                <InputBox style={{position:"relative",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputLine value={kakaoAccount} style={{flex:1}} 
+                        onChange={async(e)=>{
+                            setKakaoAccount(e.target.value)
+                            let tof = await checkAccount(e.target.value)
+                            setIsAccountDuplicate(tof)
+                            if(!e.target.value){
+                                setIsAccountDuplicate(false)
+                            }
+                        }}
+                    />
+                   <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                        {(!isAccountDuplicate && kakaoAccount) ?
+                            <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                            :
+                            <div style={{color:COLOR.RED}}>사용불가</div>
+                        }
+                    </div>
                 </InputBox>
             </PrView>
             <PrView style={{borderRadius: "0 0 10px 10px" }}>
@@ -162,8 +199,19 @@ const StaffRegist = ({infos,user,staffs}) =>{
                     직원 연락처
                 </NameBox>
 
-                <InputBox style={{borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                    <InputLine value={staffAddress} style={{flex:1}} onChange={(e)=>{setStaffAddress(e.target.value)}}></InputLine>
+                <InputBox style={{position:"relative",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputLine value={staffAddress} style={{flex:1}} 
+                        onChange={(e)=>{
+                            telHandler(e.target.value)
+                        }}
+                    />
+                    <div style={{position:"absolute",top: 0, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                        {(!isPhoneDuplicate && staffAddress) ?
+                            <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                            :
+                            <div style={{color:COLOR.RED}}>사용불가</div>
+                        }
+                    </div>
                 </InputBox>
 
                 <NameBox>
