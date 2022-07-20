@@ -35,7 +35,6 @@ const updateReceipt = async ({
                 product_id=?, 
                 product_code=?, 
                 substitute=?, 
-                mfr_id=?, 
                 brand_id=?
             WHERE receipt_id=?
                 
