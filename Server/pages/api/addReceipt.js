@@ -21,7 +21,6 @@ const updateReceipt = async ({
   pid,
   pcode,
   substitute,
-  mfrid,
   brand,
 },receipt_id
 ) => {
@@ -39,7 +38,7 @@ const updateReceipt = async ({
             WHERE receipt_id=?
                 
           `,
-    values: [store, staff, customer, category, pid, pcode, substitute, mfrid, brand,receipt_id],
+    values: [store, staff, customer, category, pid, pcode, substitute, brand,receipt_id],
   });
 };
 
