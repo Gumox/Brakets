@@ -99,13 +99,11 @@ const ProductEachRegist = ({infos,brands,user}) =>{
             setStyleSelected(null)
         }
             
-        
         if(categoryResult.length>0){
             setCategorySelected(categoryResult[0].pcategory_id)
-
             const [stylesResult] = await Promise.all([
                 axios
-                .get(`${process.env.API_URL}/product/seasonStyleInBrand?pcategoryId=${categoryResult[0].value}&brandId=${brandId}`,)
+                .get(`${process.env.API_URL}/product/seasonStyleInBrand?pcategoryId=${categoryResult[0].pcategory_id}&brandId=${brandId}`,)
                 .then(({ data }) => data.data), 
             ])
             setStyles(stylesResult) 
