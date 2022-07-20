@@ -1,15 +1,16 @@
 import excuteQuery from "../db";
 
-async function getImageList(code) {
+async function getImageList(code,receipt_id) {
   const result = await excuteQuery({
     query: `SELECT num, type, before_image, before_store_id, after_image, after_store_id FROM receipt_image
             LEFT JOIN receipt ON receipt_image.receipt_id = receipt.receipt_id
-            WHERE receipt.receipt_code = ?`,
-    values: [code],
+            WHERE (receipt.receipt_code = ? OR receipt.receipt_id = ?)`,
+    values: [code,receipt_id],
   });
+  console.log(result)
   return result;
 }
-async function getNeedImageList(code) {
+async function getNeedImageList(code,receipt_id) {
   const result = await excuteQuery({
     query: `SELECT 
             repair_need_point.repair_need_id ,
@@ -19,8 +20,8 @@ async function getNeedImageList(code) {
             repair_need_point.need_point_image
             FROM repair_need_point
             LEFT JOIN receipt ON repair_need_point.receipt_id = receipt.receipt_id
-            WHERE receipt.receipt_code = ?`,
-    values: [code],
+            WHERE (receipt.receipt_code = ? OR receipt.receipt_id = ?)`,
+    values: [code,receipt_id],
   });
   return result;
 }
@@ -30,10 +31,10 @@ const images = async (req, res) => {
       console.log(req.headers.referer);
       console.log("req.query");
       console.log(req.query);
-      const { code } = req.query;
+      const { code ,receipt_id} = req.query;
       try {
-        const imageResult = await getImageList(code);
-        const needImageResult = await getNeedImageList(code);
+        const imageResult = await getImageList(code ,receipt_id);
+        const needImageResult = await getNeedImageList(code ,receipt_id);
         if (imageResult.error) throw new Error(imageResult.error);
         if (imageResult.length == 0) return res.status(204).send();
         if (needImageResult.error) throw new Error(needImageResult.error);

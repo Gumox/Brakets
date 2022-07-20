@@ -27,14 +27,14 @@ function LookupInfo( { route,navigation } ) {
     const needImages = route.params.needImages
     const images = route.params.images;
 
-    console.log()
+    console.log("*******************")
     console.log()
     console.log()
     console.log()
     console.log(images)
     console.log()
     console.log()
-    console.log()
+    console.log("*********************")
     const step = LookupCheckStep(data)
 
     const [number,setNumber] =useState(store.getState().number);
@@ -131,11 +131,7 @@ function LookupInfo( { route,navigation } ) {
         setProductCode(data["product_code"])                 //제품 코드
         setNumbering(data["product_degree"])                 //차수
         setProductExchange(+data["image"])                   //제품 교환
-        setProductPrice(price)           //제품가격
-
-        console.log(data)
-        console.log("data.product_id : ",data.product_id)
-
+        setProductPrice(price)                               //제품가격
 
         if(data["receipt_type"] == 1){
             setReceiptType("수선")

@@ -134,22 +134,16 @@ function LookupPage({ route,navigation }) {
   
     const handleConfirmFirst = (date) => {
       startDate.onChange("", date);
-      console.log('Start')
       hideDatePickerFrist();
     };
   
     const handleConfirmSecond = (date) => {
       endDate.onChange("sss", date);
-      console.log('End')
       hideDatePickerSecond();
     };
   
   
     const getData = useCallback(async (code,std, edd, name, phone,shopId,doReciptCheck,compliteReceiptCheck,takeReciptCheck) => {
-  
-      console.log("press")
-      console.log(name)
-      console.log(std)
   
       const { data } = await axios.get(ip + "/api/lookup", {
         params: {
@@ -166,7 +160,6 @@ function LookupPage({ route,navigation }) {
       let sData =[]
       for(let item of data.data){
         if(doReciptCheck && item["step"] == 0){
-          console.log("???")
           sData.push(item)
         }
         if(compliteReceiptCheck && item["step"] == 1){ 
@@ -283,16 +276,18 @@ function LookupPage({ route,navigation }) {
       />))
     }
 
-    const getImages = useCallback(async (code,obj) => {
+    const getImages = useCallback(async (code,rid,obj) => {
 
         console.log("press")
+        console.log(code)
         const { data } = await axios.get(ip+"/api/lookup/images", {
           params: { 
-            code: code
+            code: code,
+            receipt_id:rid
           },
         })
         setVisable(false)
-        navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
+        //navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
     }, []);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -410,7 +405,8 @@ function LookupPage({ route,navigation }) {
                         <LookupInfoCard data ={item} onPress={() => {
                             if(netInfo.isConnected){
                                 setVisable(true)
-                                getImages(item["receipt_code"],item)
+                                console.log(item)
+                                getImages(item["receipt_code"],item["receipt_id"],item)
                             }else{
                                 Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                             }
@@ -446,7 +442,6 @@ function LookupPage({ route,navigation }) {
                           style={{fontSize:16}}
                           value ={name}
                           onChangeText={(value) => {
-                          console.log(value)
                           setName(value)
                       }}
                       onSubmitEditing={(event) => (
@@ -463,7 +458,6 @@ function LookupPage({ route,navigation }) {
                       style={{fontSize:16}}
                       value={pNumber}
                       onChangeText={(value) => {
-                          console.log(value)
                           setPnumber(value)
                       }}
                       onSubmitEditing={(event) => (
@@ -645,3 +639,48 @@ const ImgIcon = styled.Image`
     marginTop:9px;
     marginBottom:9px;
 `;
+
+/*
+  {"anal
+  "category": 1, 
+  
+  "customer_id": 1, 
+  "customer_name": "고개익", 
+  "customer_phone": "01
+  
+  "fee": 0, 
+  "image": "/storage/receipt/7_0
+  
+  
+  "mfr_substitute": "Y", 
+  "paid": 0, 
+  "product_category": 1, 
+  "product_category_name": "의류", 
+  "product_code": "8809831730979", 
+  "product_color": "BEIGE", 
+  "product_degree": "1", 
+  "product_id": 1, 
+  "product_season_id": 1, 
+  "product_season_name": " 2022SS", 
+  "product_size": "L", 
+  "product_style_code": "FNSKID10423", 
+  "product_style_id": 1, 
+  "product_tag_price": 12000, 
+  "receipt_category": 1, 
+ 
+  
+  "receipt_id": 7, 
+  "receipt_message": "", 
+  "receipt_type": 1, 
+  
+  "receiver": 3, 
+  "receiver_name": "하얀실",
+  "signature": "/storage/signature/1_7.jpg", 
+  "step": 0, 
+  "store_category": 1, 
+  "store_code": "S.MLB_BOYS.00000", 
+  "store_contact": "02-333-2222", 
+  "store_id": 4, 
+  "store_message": "없음", 
+  "store_name": "MLB BOYS 상암점"}
+*/
