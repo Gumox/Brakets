@@ -287,7 +287,7 @@ function LookupPage({ route,navigation }) {
           },
         })
         setVisable(false)
-        //navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
+        navigation.navigate('LookupInfo',{data:obj,images: data.data,needImages:data.needImages})
     }, []);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -639,48 +639,3 @@ const ImgIcon = styled.Image`
     marginTop:9px;
     marginBottom:9px;
 `;
-
-/*
-  {"anal
-  "category": 1, 
-  
-  "customer_id": 1, 
-  "customer_name": "고개익", 
-  "customer_phone": "01
-  
-  "fee": 0, 
-  "image": "/storage/receipt/7_0
-  
-  
-  "mfr_substitute": "Y", 
-  "paid": 0, 
-  "product_category": 1, 
-  "product_category_name": "의류", 
-  "product_code": "8809831730979", 
-  "product_color": "BEIGE", 
-  "product_degree": "1", 
-  "product_id": 1, 
-  "product_season_id": 1, 
-  "product_season_name": " 2022SS", 
-  "product_size": "L", 
-  "product_style_code": "FNSKID10423", 
-  "product_style_id": 1, 
-  "product_tag_price": 12000, 
-  "receipt_category": 1, 
- 
-  
-  "receipt_id": 7, 
-  "receipt_message": "", 
-  "receipt_type": 1, 
-  
-  "receiver": 3, 
-  "receiver_name": "하얀실",
-  "signature": "/storage/signature/1_7.jpg", 
-  "step": 0, 
-  "store_category": 1, 
-  "store_code": "S.MLB_BOYS.00000", 
-  "store_contact": "02-333-2222", 
-  "store_id": 4, 
-  "store_message": "없음", 
-  "store_name": "MLB BOYS 상암점"}
-*/
