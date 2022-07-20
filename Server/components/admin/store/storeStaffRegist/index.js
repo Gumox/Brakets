@@ -61,7 +61,7 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
                   .then(({ data }) => data), 
                 ])
             alert("새로운 직원이 등록되었습니다.")
-            router.push("/adminstoreControlstoreStaffList")
+            router.push("/admin/storeControl/storeStaffList")
         }else if(storeName.length === 0){
             alert("매장을 입력해주세요")
 
@@ -94,17 +94,15 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
         }
     }
     const accountHandler = async(value) =>{
-        let setValue =String(value).replace(/[^A-Za-z0-9_\`\~\!\@\#\$\%\^\&\*\(\)\-\=\+\\\{\}\[\]\'\"\;\:\<\,\>\.\?\/\s]/gm,"")
-        setKakaoAccount(setValue)
-        let tof = await checkAccount(setValue)
+        setKakaoAccount(value)
+        let tof = await checkAccount(value)
         setIsAccountDuplicate(tof)
         if(!value){
             setIsAccountDuplicate(false)
         }
     }
     const emailHandler = (value) =>{
-        let setValue =String(value).replace(/[^A-Za-z0-9_\`\~\!\@\#\$\%\^\&\*\(\)\-\=\+\\\{\}\[\]\'\"\;\:\<\,\>\.\?\/\s]/gm,"")
-        setStaffEmail(setValue)
+        setStaffEmail(value)
     }
 
     const searchHandler =(value)=>{

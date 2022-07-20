@@ -104,7 +104,7 @@ const SearchFocus = ({
     
   return(
       <div 
-        style={{display:"flex",width:"691px",minHeight:"56px",position:"absolute",top:0,flexDirection:"column"}}
+        style={{display:"flex",width:"691px",minHeight:"56px",position:"absolute",top:0,flexDirection:"column" ,zIndex:99}}
         
         onFocus={()=>{
           setShopListResult(shopList)
@@ -133,13 +133,13 @@ const SearchFocus = ({
             isFocus &&
             <div>
               {shopListResult.length>0 &&
-                <SearchResultList style={{width:"340x",marginTop:"3px"}}>
+                <SearchResultList style={{width:"340px",marginTop:"3px",}}>
 
                 {
                   shopListResult.map((item,index)=>{
                     if(item.store_name){
                       return(
-                          <SearchResult key={index}  style={{width:"340x",height:"45px",cursor:"pointer"}} 
+                          <SearchResult key={index}  style={{width:"340x",height:"45px",cursor:"pointer",justifyContent:"center"}} 
                             onClick={()=>{clicker(item.staff_id,item.store_name)}} >{item.store_name}</SearchResult>
                       )
                     }})
@@ -187,11 +187,8 @@ const MultiCheck = styled.div`
 const SearchResult = styled.div`
     padding-top:15px;
     padding-bottom:5px;
-    
-    padding-left:120px;
     font-size:14px;
     display:flex;
-    align-items:center;
     height:30px;
     border-bottom: 1px solid  ${COLOR.LIGHT_GRAY};
     background-color : rgb(254,254,254);

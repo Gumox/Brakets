@@ -17,8 +17,6 @@ const staff = async (req, res) => {
       const result = await staffsAccount(account);
       if (result.error) throw new Error(result.error);
 
-      console.log(result)
-
       res.status(200).json({data:result});
     } catch (err) {
       console.log(err.message);
