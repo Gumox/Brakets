@@ -30,11 +30,9 @@ function ProductInfo({navigation, route}) {
     const [measure, setMeasure] = useState('')
     const [imageFile, setImageFile] = useState('')
     const [pid, setPid] = useState('')
-    const [mfrid, setMfrid] = useState('')
     const [brandId, setBrandId] = useState('')
 
     const checkBrand=(myBrand,productBrand)=>{
-        console.log("is hear",3)
         console.log(myBrand , productBrand)
         if(myBrand != productBrand){
             navigation.goBack();
@@ -45,7 +43,6 @@ function ProductInfo({navigation, route}) {
     const netInfo = useNetInfo();
     
     useEffect(()=>{
-        console.log("is hear",1)
         const fetch= ()=>{
             const option = {
                 url: ip+'/api/getProductInfo',
@@ -66,8 +63,6 @@ function ProductInfo({navigation, route}) {
                 response => (response.status == '200') ? (
                     // TODO
                     // () ? (qrcode) : (barcode)
-                    console.log("is hear",2),
-                    setCodeInput(response.data.body[0].qrcode),
         
                     setSerialInput(String(response.data.body[0].style_code)),
                     setProuctName(response.data.body[0].name),
@@ -76,14 +71,11 @@ function ProductInfo({navigation, route}) {
                     setSize(response.data.body[0].size),
                     setMeasure(response.data.body[0].degree),
                     setImageFile(response.data.body[0].image),
-                    setMfrid(response.data.body[0].mfr_id),
                     setPid(response.data.body[0].product_id),
                     setBrandId(response.data.body[0].brand_id),
                     store.dispatch({type:'SEASON_ID',season_id: response.data.body[0].season_id}),
-                    //console.log(response.data.body[0]),
                     
-                    checkBrand(store.getState().brand_id,response.data.body[0].brand_id),
-                    console.log("is hear",4)
+                    checkBrand(store.getState().brand_id,response.data.body[0].brand_id)
                     
                 ) : (
                     navigation.goBack(),
@@ -143,7 +135,6 @@ function ProductInfo({navigation, route}) {
         formdata.append("pid", pid);
         formdata.append("pcode", codeInput);
         formdata.append("substitute", Number(alter));//임시
-        formdata.append("mfrid", mfrid);
         formdata.append("receiptId", store.getState().receipt_id);
 
         console.log(formdata)

@@ -5,7 +5,8 @@ import styled from 'styled-components/native';
 import ContainView from '../../components/ContainView';
 import TopInfo from '../../components/TopInfo';
 import Bottom from '../../components/Bottom';
-import {Alert, Image, View,Text, StyleSheet,Modal ,Pressable,Dimensions,Button, Platform} from 'react-native';
+import {Alert, Image, View,Text, StyleSheet,Modal ,Pressable,Dimensions, Platform} from 'react-native';
+import Button from '../../components/Button';
 import StateBarSolid from '../../components/StateBarSolid';
 import StateBarVoid from '../../components/StateBarVoid';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -141,8 +142,7 @@ function ShopStepFour({navigation,route}) {
             locale='ko-kr'
           />
         )
-      }
-      else{
+    }else{
         console.log("and")
         dataPicker = ((dateInput1.show) && (
             <DateTimePicker
@@ -154,7 +154,54 @@ function ShopStepFour({navigation,route}) {
                 onChange={dateInput1.onChange}
             />
         ))
-      }
+    }
+    let cardCenterView
+    if(cardImgUri){
+        cardCenterView =(
+            <CenterView>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                    }}
+                >
+                    <CenterCardView onPress={()=>{setModalVisible(!modalVisible);}}>
+                    
+
+                    <View style={styles.modalView} >
+                        
+                        <ImageZoom cropWidth={320}
+                                cropHeight={400}
+                                imageWidth={300}
+                                imageHeight={400}
+                                style={{marginTop:20}}
+                                >
+                                <Image style={{width:300, height:400}}
+                                source={{uri:cardImgUri}}/>
+                        </ImageZoom>
+                        <CloseBtn style={{marginTop: 5}}>
+                            <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible(!modalVisible)}>
+                                닫기
+                            </CodeViewText>
+                        </CloseBtn>
+                        
+                    </View>
+                    </CenterCardView>
+                </Modal>
+                
+                
+                <Pressable  onPress={() => setModalVisible(!modalVisible)}>
+                    <Image
+                    style ={{width:200,height:200}}
+                    source={{uri:cardImgUri}}
+                    />
+                </Pressable>
+            
+            </CenterView>
+        )
+    }
 
       
     return (
@@ -165,51 +212,8 @@ function ShopStepFour({navigation,route}) {
                 
                 <CenterView><TopIntro>서비스 카드 정보</TopIntro></CenterView>
                 <InfoView>
-                {cardImgUri&&(
-                    <CenterView>
-                        
-                        <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={modalVisible}
-                            onRequestClose={() => {
-                            setModalVisible(!modalVisible);
-                            }}
-                        >
-                            <CenterCardView onPress={()=>{setModalVisible(!modalVisible);}}>
-                            
 
-                            <View style={styles.modalView} >
-                                
-                                <ImageZoom cropWidth={320}
-                                        cropHeight={400}
-                                        imageWidth={300}
-                                        imageHeight={400}
-                                        style={{marginTop:20}}
-                                        >
-                                        <Image style={{width:300, height:400}}
-                                        source={{uri:cardImgUri}}/>
-                                </ImageZoom>
-                                <CloseBtn style={{marginTop: 5}}>
-                                    <CodeViewText style={{color: "rgb(0,80,130)", fontSize: 20}} onPress={() => setModalVisible(!modalVisible)}>
-                                        닫기
-                                    </CodeViewText>
-                                </CloseBtn>
-                                
-                            </View>
-                            </CenterCardView>
-                        </Modal>
-                        
-                        
-                        <Pressable  onPress={() => setModalVisible(!modalVisible)}>
-                            <Image
-                            style ={{width:200,height:200}}
-                            source={{uri:cardImgUri}}
-                            />
-                        </Pressable>
-                    
-                    </CenterView>
-                )}
+                {cardCenterView}
 
                 <Label> 서비스 카드 바코드</Label>
                 <Input value ={barcode}/>
@@ -237,20 +241,23 @@ function ShopStepFour({navigation,route}) {
                 </InfoView>
                 <View style ={{margin:30}}/>
             </Contents>
-            <Button onPress={ ()=> {
-                
-                if(netInfo.isConnected){
-                    const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
-                    const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
+            <CenterView>
+                <Button onPress={ ()=> {
+                    
+                    if(netInfo.isConnected){
+                        const recDate =dateInput1.date.getFullYear()+'-'+(dateInput1.date.getMonth()+1)+'-'+dateInput1.date.getDate();
+                        const dueDate =dateInput2.getFullYear()+'-'+(dateInput2.getMonth()+1)+'-'+dateInput2.getDate();
 
-                    updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate,true)
+                        updateReceipt(store.getState().receipt_id,barcode,recDate,dueDate,true)
 
-                }else{
-                    Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
-                }
-                
-            }}>다음: 5단계
-            </Button>
+                    }else{
+                        Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
+                    }
+                    
+                }}>다음: 5단계
+                </Button>
+            </CenterView>
+            
             <Bottom navigation={navigation}/>
         </ContainView>
     )

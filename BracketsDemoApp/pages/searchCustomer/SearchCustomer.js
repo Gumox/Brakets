@@ -44,8 +44,6 @@ function SearchCustomer({ navigation }) {
         },
         body: JSON.stringify(bodyData)
         });
-        console.log("is hear?")
-        console.log(response.body);
         const json = await response.json(); // !!!
         setData(json.body);
         console.log(json.body);

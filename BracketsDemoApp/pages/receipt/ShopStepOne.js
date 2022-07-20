@@ -65,7 +65,8 @@ function ShopStepOne( { navigation } ) {
 
                 }}>
                 코드 스캔
-            </Button><Bottom navigation={navigation}/>
+            </Button>
+            <Bottom navigation={navigation}/>
         </Container>
     )
 }
