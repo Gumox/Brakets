@@ -7,6 +7,7 @@ import getNextStaffCode from "./getNextStaffCode";
 import _ from "lodash";
 import SearchFocus from "./SearchFocus";
 import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
+import { onChangePhoneNumber,onFocusPhoneNumber, onBlurPhoneNumber } from "../../onEventPhoneNumber";
 
 const StaffRegist = ({infos,user,staffs,repairShops}) =>{
 
@@ -26,17 +27,13 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
     const [isAccountDuplicate,setIsAccountDuplicate] = useState(false)
     const [isPhoneDuplicate,setIsPhoneDuplicate] = useState(false)
 
-
-    //const storeId =user.store_id;
-
-    
     const registStaff = async() =>{
         if(shopId && staffName && kakaoAccount && staffAddress){
             const bodyData = {
                 state: true,
                 account: kakaoAccount,
                 name: staffName,
-                phone: staffAddress,
+                phone: onFocusPhoneNumber(staffAddress),
                 level:3,
                 staff_code:staffCode,
                 staff_email:staffEmail,
@@ -157,13 +154,15 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                         <InputBox style={{position:"relative",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             <InputLine value={staffAddress || ""} placeholder={"ex) xxx-xxxx-xxxx"} style={{flex:1}} 
                                 onChange={async(e)=>{
-                                    setStaffAddress(e.target.value)
-                                    let tof = await checkPhone(e.target.value)
+                                    setStaffAddress(onChangePhoneNumber(e.target.value))
+                                    let tof = await checkPhone(onFocusPhoneNumber(e.target.value))
                                     setIsPhoneDuplicate(tof)
                                     if(!e.target.value){
                                         setIsPhoneDuplicate(false)
                                     }
                                 }}
+                                onFocus={(e)=>{setStaffAddress(onFocusPhoneNumber(e.target.value))}}
+                                onBlur={(e)=>{setStaffAddress(onBlurPhoneNumber(e.target.value))}}
                             />
                             <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                                 {(!isPhoneDuplicate && staffAddress) ?

@@ -6,6 +6,7 @@ import axios from "axios";
 import _ from "lodash";
 import SearchFocus from "./SearchFocus";
 import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
+import { onFocusPhoneNumber, onBlurPhoneNumber } from "../../onEventPhoneNumber";
 
 const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
  
@@ -50,7 +51,7 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
             const bodyData = {
                 staffAccount:emptySpace(kakaoAccount),
                 staffName:emptySpace(staffName),
-                staffPhone:staffAddress,
+                staffPhone:onFocusPhoneNumber(staffAddress),
                 staffEmail:staffEmail,
                 
                 managerId:managerId
@@ -176,7 +177,11 @@ const StoreStaffRegist = ({infos,user,stores,staffs=[]}) =>{
                         </NameBox>
 
                         <InputBox style={{position:"relative",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine value={staffAddress} placeholder={"ex) xxx-xxxx-xxxx"} style={{flex:1}} onChange={(e)=>{telHandler(e.target.value)}}></InputLine>
+                            <InputLine value={staffAddress} placeholder={"ex) xxx-xxxx-xxxx"} style={{flex:1}} 
+                                onChange={(e)=>{telHandler(e.target.value)}}
+                                onFocus={(e)=>{setStaffAddress(onFocusPhoneNumber(e.target.value))}}
+                                onBlur={(e)=>{setStaffAddress(onBlurPhoneNumber(e.target.value))}}
+                            />
                             <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                                 {(!isPhoneDuplicate && staffAddress) ?
                                     <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>

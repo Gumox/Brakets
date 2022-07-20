@@ -3,6 +3,7 @@ import styled from "styled-components";
 import COLOR from "../../../../constants/color";
 import axios from "axios";
 import _ from "lodash";
+import { onChangePhoneNumber, onFocusPhoneNumber, onBlurPhoneNumber } from "../../onEventPhoneNumber";
 
 const List = ({
     user=[],
@@ -79,7 +80,7 @@ const ListItem =({
                     </HeaderCell>
                     :
                     <HeaderCell style={{alignItems:"normal",padding:10}}>
-                        <input style={{border:0,borderBottom:"1px solid",textAlign:"center"}} placeholder={item.name} onChange={(e)=>{setModifyName(e.target.value)}}/>
+                        <InputLine placeholder={item.name} onChange={(e)=>{setModifyName(e.target.value)}}/>
                     </HeaderCell>    
                 }
             </HeaderCell>
@@ -92,7 +93,11 @@ const ListItem =({
                     </HeaderCell>
                     :
                     <HeaderCell style={{alignItems:"normal",padding:10}}>
-                        <input type="tel" style={{border:0,borderBottom:"1px solid",textAlign:"center"}} placeholder={item.phone} onChange={(e)=>{setModifyPhone(e.target.value)}}/>
+                        <InputLine type="tel" placeholder={item.phone} value={modifyPhone || ""}
+                            onChange={(e)=>{setModifyPhone(onChangePhoneNumber(e.target.value))}}
+                            onFocus={(e)=>{setModifyPhone(onFocusPhoneNumber(e.target.value))}}
+                            onBlur={(e)=>{setModifyPhone(onBlurPhoneNumber(e.target.value))}}
+                        />
                     </HeaderCell>    
                 }
             </HeaderCell>
@@ -104,7 +109,7 @@ const ListItem =({
                 </ModifyView>}
                 {modifyOn&&
                     <div style={{display:"flex",flexDirection:"row",justifyContent:"space-around",flex:1}}>
-                        <ModifyView onClick={()=>{change(emptySpace(modifyName||item.name),item.customer_id,emptySpace(modifyPhone||item.phone))}}>
+                        <ModifyView onClick={()=>{change(emptySpace(modifyName||item.name),item.customer_id,onFocusPhoneNumber(modifyPhone||item.phone))}}>
                             수정
                         </ModifyView>
                         <ChangeView onClick={()=>{setModifyOn(!modifyOn)}}>
@@ -133,7 +138,22 @@ const HeaderCell = styled.div`
     padding:5px;
 `;
 
-
+const InputLine  = styled.input`
+    border: 0px;
+    margin: 2px;
+    padding-left: 10px;
+    font-size: 14px;
+    display: flex;
+    border:0;
+    border-bottom: 1px solid;
+    text-align: center;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+        border-bottom:0px;
+    }
+`;
 const PrView  = styled.div`
     display:flex;
     flex-direction:row;

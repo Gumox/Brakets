@@ -10,6 +10,7 @@ import SearchFocus from "./SearchFocus";
 import checkDuplicate from "./checkDuplicate";
 import getNextStoreCode from "./getNextStoreCode";
 import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
+import { onChangePhoneNumber, onFocusPhoneNumber, onBlurPhoneNumber } from "../../onEventPhoneNumber";
 
 const StoreEachRegist = ({infos,brands,user,stores}) =>{
     const router = useRouter();
@@ -66,10 +67,6 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
 
         const onlyNumber = value.replace(/[^0-9]/g, '')
         setManagerPhone(onlyNumber)
-
-        if (onlyNumber.length>9) {
-            setManagerPhone(remakeCallNumber(onlyNumber));
-        }
         let tof = await checkPhone(onlyNumber)
         setIsPhoneDuplicate(tof)
         if(!value){
@@ -129,7 +126,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                 managerAccount :emptySpace(managerAccount || ""),
                 managerEmail :emptySpace(managerEmail || ""),
                 managerName : emptySpace(managerName || ""),
-                managerPhone,
+                managerPhone: onFocusPhoneNumber(managerPhone),
                 managerCode : "A",
                 managerId
             }
@@ -306,7 +303,11 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine style={{fontSize:15,textAlign:"center",flex:1}} placeholder="매장 연락처 ex) xx-xxxx-xxxx" value={storeContact || ""} onChange={(e)=>{setStoreContact(e.target.value)}}/>
+                            <InputLine style={{fontSize:15,textAlign:"center",flex:1}} placeholder="매장 연락처 ex) xx-xxxx-xxxx" value={storeContact || ""} 
+                                onChange={(e)=>{setStoreContact(onChangePhoneNumber(e.target.value))}}
+                                onFocus={(e)=>{setStoreContact(onFocusPhoneNumber(e.target.value))}}
+                                onBlur={(e)=>{setStoreContact(onBlurPhoneNumber(e.target.value))}}
+                            />
                         </InputBox>
 
                         <NameBox style={{borderTop:`2px solid rgb(244,244,244)`}}>
@@ -416,10 +417,8 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         <InputBox style={{position:"relative",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             <InputLine disabled={!isNewManager} style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) 000-0000-0000" value={managerPhone || ""} 
                                 onChange={(e)=>{telHandler(e.target.value)}}
-                                onFocus={()=>{
-                                    const onlyNumber = managerPhone.replace(/[^0-9]/g, '')
-                                    setManagerPhone(onlyNumber)
-                                }}
+                                onFocus={(e)=>{setManagerPhone(onFocusPhoneNumber(e.target.value))}}
+                                onBlur={(e)=>{setManagerPhone(onBlurPhoneNumber(e.target.value))}}
                             />
                             <div style={{position:"absolute",top: 2, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                                 {(!isPhoneDuplicate && managerPhone) ?

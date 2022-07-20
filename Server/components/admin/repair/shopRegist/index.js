@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import remakeCallNumber from "../../../../functions/remakeCallNumber";
 import PostCode from "./PostCode";
+import { onChangePhoneNumber, onFocusPhoneNumber, onBlurPhoneNumber } from "../../onEventPhoneNumber";
 
 const ShopRegist = ({infos,brands,user,stores}) =>{
     const router = useRouter();
@@ -43,7 +44,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                 storeCode : shopCode,
                 
                 useMailbag,
-                contact : contact,
+                contact : onChangePhoneNumber(contact),
                 address : address+" "+detailAddress,
                 storeRegistrationNumber : registrationNumber
             }
@@ -126,7 +127,11 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine  placeholder="ex) xxx-xxx-xxxx" value={contact} onChange={(e)=>{setContact(e.target.value)}}/>
+                        <InputLine placeholder="ex) xxx-xxx-xxxx" value={contact} 
+                            onChange={(e)=>{setContact(onChangePhoneNumber(e.target.value))}}
+                            onFocus={(e)=>{setContact(onFocusPhoneNumber(e.target.value))}}
+                            onBlur={(e)=>{setContact(onBlurPhoneNumber(e.target.value))}}
+                        />
                     </InputBox>
 
                     <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>

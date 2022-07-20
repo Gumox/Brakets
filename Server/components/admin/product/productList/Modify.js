@@ -16,8 +16,8 @@ const ProductModify = ({
     const brandName = useState(item.brand_name)
 
     const [productBarcode,setProductBarcode] =useState(item.barcode)
-    const [tagPrice,setTagPrice] =useState(item.tag_price)
-    const [orgPrice,setOrgPrice] =useState(item.org_price)
+    const [tagPrice,setTagPrice] =useState(numberDot(item.tag_price,"원"))
+    const [orgPrice,setOrgPrice] =useState(numberDot(item.org_price,"원"))
 
     const [color,setColor] =useState(item.color)
     const [degree,setDegree] =useState(item.degree)
@@ -62,9 +62,22 @@ const ProductModify = ({
         }else{
             setImgFile("/icons/image.png");
         }
-      }
-
-
+    }
+    const onChangePay = (value)=>{
+        let result =String(value).replace(/[^0-9]/g, '')
+        return result
+    }
+    const onFocusPay = (value) =>{
+        let result = String(value).replace(/,/,"").replace(/ 원/,"")
+        return result
+    }
+    const onBlurPay = (value) =>{
+        let result = null
+        if(value > 0){
+            result = numberDot(value,"원")
+        }
+        return result
+    }
 
     const modifyProduct = async() =>{
         const formData = new FormData();
@@ -73,8 +86,8 @@ const ProductModify = ({
         formData.append('productId',item.product_id)
         
         formData.append('barcode', productBarcode)
-        formData.append('tag_price', tagPrice)
-        formData.append('org_price', orgPrice)
+        formData.append('tag_price', onFocusPay(tagPrice))
+        formData.append('org_price', onFocusPay(orgPrice))
         formData.append('color', color)
         formData.append('degree', degree)
         formData.append('size', size)
@@ -92,7 +105,7 @@ const ProductModify = ({
         alert("제품 정보가 수정되었습니다.")
         window.location.reload();
     }
-  
+    
     return (
         <Wrapper >
             <InsideWrapper>
@@ -110,14 +123,14 @@ const ProductModify = ({
                             </NameBox>
 
                             <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <InputLine value={productBarcode ||""} style={{flex:1,maxWidth:"205px"}} onChange={(e)=>{setProductBarcode(e.target.value)}}/>
+                                <InputLine value={productBarcode ||""} style={{flex:1,maxWidth:"205px",textAlign:"center"}} onChange={(e)=>{setProductBarcode(e.target.value)}}/>
                             </InputBoxTr>
 
                             <NameBox>
                                 브랜드
                             </NameBox>
 
-                            <InputBoxTr style={{width:"291px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,fontWeight:"bold",fontSize:"20px",display:"flex",justifyContent:"center",alignItems:"center"}}>
+                            <InputBoxTr style={{width:"291px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,fontWeight:"bold",display:"flex",justifyContent:"center",alignItems:"center"}}>
                                 {item.brand_name}
                             </InputBoxTr>
                         </PrView>
@@ -128,7 +141,7 @@ const ProductModify = ({
                             </NameBox>
 
                             <LongInputBox style={{maxWidth:"646px"}}>
-                                <InputLine value={productName ||""} style={{flex:1,maxWidth:"645px"}} onChange={(e)=>{setProductName(e.target.value)}}/>
+                                <InputLine value={productName ||""} style={{flex:1,maxWidth:"645px",marginLeft:"50px"}} onChange={(e)=>{setProductName(e.target.value)}}/>
                             </LongInputBox>
                         </PrView>
 
@@ -138,7 +151,11 @@ const ProductModify = ({
                             </NameBox>
 
                             <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,width:"210px"}}>
-                                <InputLine value={tagPrice || ""} style={{flex:1,maxWidth:"205px"}} onChange={(e)=>{setTagPrice(e.target.value)}}/>
+                                <InputLine value={tagPrice || ""} style={{flex:1,maxWidth:"205px",textAlign:"center",paddingLeft:0}} 
+                                    onChange={(e)=>{setTagPrice(onChangePay(e.target.value))}}
+                                    onFocus={(e)=>{setTagPrice(onFocusPay(e.target.value))}}
+                                    onBlur={(e)=>{setTagPrice(onBlurPay(e.target.value))}}
+                                />
                             </InputBox>
 
                             <NameBox >
@@ -146,7 +163,11 @@ const ProductModify = ({
                             </NameBox>
 
                             <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,width:"291px"}}>
-                                <InputLine value={orgPrice || ""} style={{flex:1,width:"290px"}} onChange={(e)=>{setOrgPrice(e.target.value)}}/>
+                                <InputLine value={orgPrice || ""} style={{flex:1,width:"290px",paddingLeft:"45px"}} 
+                                    onChange={(e)=>{setOrgPrice(onChangePay(e.target.value))}}
+                                    onFocus={(e)=>{setOrgPrice(onFocusPay(e.target.value))}}
+                                    onBlur={(e)=>{setOrgPrice(onBlurPay(e.target.value))}}
+                                />
                             </InputBox>
                         </PrView>
                     </div>
@@ -270,7 +291,9 @@ const ProductModify = ({
     );
 };
 
-
+const numberDot=(value,moneySymbol)=>{
+    return(String(value).replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" "+moneySymbol)
+}
 const Wrapper = styled.div`
     padding:2%;
     background-color:${COLOR.WHITE};
@@ -310,7 +333,7 @@ const CenterView  = styled.div`
 `;
 
 const TwoNameBox  = styled.div`
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     align-items:center;
     display:flex;
@@ -321,7 +344,7 @@ const NameBox  = styled.div`
     height : 60px;
     width:145px;
     background-color:${COLOR.LIGHT_GRAY};
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -337,10 +360,9 @@ const InputBoxTr  = styled.div`
     height : 60px;
     background-color:${COLOR.WHITE};
     color:${COLOR.DARK_INDIGO};
-    font-size: 18px;
+    font-size: 16px;
     display:flex;
     width:210px;
-    font-size:20px;
     font-weight:bold;
     justify-content:center;
 `;
@@ -358,8 +380,7 @@ const LongInputBox  = styled.div`
 `;
 const InputLine  = styled.input`
     border 0px;
-    padding-left:10px;
-    font-size:20px;
+    font-size:16px;
 
 `;
 

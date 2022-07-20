@@ -65,8 +65,23 @@ const ProductEachRegist = ({infos,brands,user}) =>{
         }else{
             setImgFile("/icons/image.png");
         }
-      }
+    }
 
+    const onChangePay = (value)=>{
+        let result =String(value).replace(/[^0-9]/g, '')
+        return result
+    }
+    const onFocusPay = (value) =>{
+        let result = String(value).replace(/,/,"").replace(/ 원/,"")
+        return result
+    }
+    const onBlurPay = (value) =>{
+        let result = null
+        if(value > 0){
+            result = numberDot(value,"원")
+        }
+        return result
+    }
 
     const getSeasonAndCategory= async(brandId) =>{
         setBrandId(brandId)
@@ -183,6 +198,8 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                 router.push("/admin/productControl")
             }
 
+        }else if(!brandId){
+            alert('브랜드를 선택해주세요')
         }else if(!seasons.length){
             alert('등록된 시즌이 없습니다 먼저 시즌을 등록해 주세요')
         }else if(!categorys.length){
@@ -243,13 +260,10 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine min={0} type={"number"} value={tagPrice || ""}  style={{flex:1}} 
-                            onBlur={(e)=>{
-                                if(e.target.value<1){
-                                    setTagPrice(null)
-                                }
-                            }}
-                            onChange={(e)=>{setTagPrice(e.target.value)}}
+                        <InputLine value={tagPrice || ""}  style={{flex:1}} 
+                            onChange={(e)=>{setTagPrice(onChangePay(e.target.value))}}
+                            onFocus={(e)=>{setTagPrice(onFocusPay(e.target.value))}}
+                            onBlur={(e)=>{setTagPrice(onBlurPay(e.target.value))}}
                         />
                     </InputBox>
 
@@ -258,13 +272,10 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine min={0} type={"number"}  value={orgPrice || ""} style={{flex:1}} 
-                            onBlur={(e)=>{
-                                if(e.target.value<1){
-                                    setOrgPrice(null)
-                                }
-                            }}
-                            onChange={(e)=>{setOrgPrice(e.target.value)}}
+                        <InputLine value={orgPrice || ""} style={{flex:1}} 
+                            onChange={(e)=>{setOrgPrice(onChangePay(e.target.value))}}
+                            onFocus={(e)=>{setOrgPrice(onFocusPay(e.target.value))}}
+                            onBlur={(e)=>{setOrgPrice(onBlurPay(e.target.value))}}
                         />
                     </InputBox>
                 </PrView>
@@ -399,6 +410,9 @@ const ProductEachRegist = ({infos,brands,user}) =>{
     );
 };
 
+const numberDot=(value,moneySymbol)=>{
+    return(String(value).replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" "+moneySymbol)
+}
 
 const Wrapper = styled.div`
     padding:2%;

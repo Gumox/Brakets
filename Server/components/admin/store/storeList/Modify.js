@@ -10,6 +10,7 @@ import SearchFocus from "./SearchFocus";
 import checkDuplicate from "../storeEachRegist/checkDuplicate";
 import getNextStoreCode from "../storeEachRegist/getNextStoreCode";
 import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
+import { onChangePhoneNumber, onFocusPhoneNumber, onBlurPhoneNumber } from "../../onEventPhoneNumber";
 
 import Popup from 'reactjs-popup';
 
@@ -155,7 +156,7 @@ const StoreModify = ({
 
                 managerEmail :managerEmail ,
                 managerName :managerName ,
-                managerPhone : managerPhone ,
+                managerPhone : onFocusPhoneNumber(managerPhone) ,
         
                 managerState : managerState,
         
@@ -202,18 +203,7 @@ const StoreModify = ({
             alert("사용 불가능한 매장명 입니다")
         }
     }
-    const emptySpace =(str)=>{
-        let name = ""
-        for(let i =0; i<str.length;i++){
-            if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
-                name += "_"
-            }else if(str[i] !== " " && str[i]){
-                name += str[i]
-            }
-        }
-        return(String(name).replace(/_/g," "))
-        
-    }
+    
     const storeNameHandler = (value)=>{
 
         let regExp =  /^[a-zA-Zㄱ-힣0-9\s]*$/gi; 
@@ -286,7 +276,7 @@ const StoreModify = ({
               setManagerSearchList(managerList)
           }
         getManagerList()
-      },[])
+    },[])
 
     return (
         <Wrapper >
@@ -343,7 +333,11 @@ const StoreModify = ({
                         </NameBox>
 
                         <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                            <InputLine style={{fontSize:15,textAlign:"center",flex:1}} placeholder={`현재)   ${item.contact}`} value={storeContact || ""} onChange={(e)=>{setStoreContact(e.target.value)}}/>
+                            <InputLine style={{fontSize:15,textAlign:"center",flex:1}} placeholder={`현재)   ${item.contact}`} value={storeContact || ""} 
+                                onChange={(e)=>{setStoreContact(onChangePhoneNumber(e.target.value))}}
+                                onFocus={(e)=>{setStoreContact(onFocusPhoneNumber(e.target.value))}}
+                                onBlur={(e)=>{setStoreContact(onBlurPhoneNumber(e.target.value))}}
+                            />
                         </InputBox>
 
                         <NameBox style={{borderTop:`2px solid rgb(244 ,244, 244)`}}>
@@ -480,7 +474,11 @@ const StoreModify = ({
                             </NameBox>
 
                             <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <InputLine disabled={!registedManagerUse} style={{fontSize:15,textAlign:"center",flex:1}} placeholder={item.staff_phone} value={managerPhone || ""} onChange={(e)=>{setManagerPhone(e.target.value)}}/>
+                                <InputLine disabled={!registedManagerUse} style={{fontSize:15,textAlign:"center",flex:1}} placeholder={remakeCallNumber(item.staff_phone)} value={managerPhone || ""}
+                                    onChange={(e)=>{setManagerPhone(onChangePhoneNumber(e.target.value))}}
+                                    onFocus={(e)=>{setManagerPhone(onFocusPhoneNumber(e.target.value))}}
+                                    onBlur={(e)=>{setManagerPhone(onBlurPhoneNumber(e.target.value))}}
+                                />
                                 
                             </InputBox>
 
@@ -541,7 +539,11 @@ const StoreModify = ({
                             </NameBox>
 
                             <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                                <InputLine  style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) 000-0000-0000" value={managerPhone || ""} onChange={(e)=>{setManagerPhone(e.target.value)}}/>
+                                <InputLine  style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) 000-0000-0000" value={managerPhone || ""} 
+                                    onChange={(e)=>{setManagerPhone(onChangePhoneNumber(e.target.value))}}
+                                    onFocus={(e)=>{setManagerPhone(onFocusPhoneNumber(e.target.value))}}
+                                    onBlur={(e)=>{setManagerPhone(onBlurPhoneNumber(e.target.value))}}
+                                />
                                 
                             </InputBox>
 

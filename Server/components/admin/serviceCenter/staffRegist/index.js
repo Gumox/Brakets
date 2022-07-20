@@ -8,6 +8,7 @@ import { debounce } from "lodash";
 import isInsertedAccount from "../../isInsertedAccount";
 import { checkAccount,checkPhone,checkEmail } from "../../checkDuplicateInfo";
 import remakeCallNumber from "../../../../functions/remakeCallNumber";
+import { onFocusPhoneNumber, onBlurPhoneNumber } from "../../onEventPhoneNumber";
 
 const StaffRegist = ({infos,user,staffs}) =>{
     const router = useRouter();
@@ -38,7 +39,7 @@ const StaffRegist = ({infos,user,staffs}) =>{
                         state: true,
                         account: kakaoAccount,
                         name: staffName,
-                        phone: staffAddress,
+                        phone: onFocusPhoneNumber(staffAddress),
                         level:1,
                         staff_code:adminCode,
                         staff_email:staffEmail,
@@ -68,10 +69,6 @@ const StaffRegist = ({infos,user,staffs}) =>{
 
         const onlyNumber = value.replace(/[^0-9-]/g, '')
         setStaffAddress(onlyNumber)
-
-        if (onlyNumber.length>9) {
-            setStaffAddress(remakeCallNumber(onlyNumber));
-        }
         let tof = await checkPhone(onlyNumber)
         setIsPhoneDuplicate(tof)
         if(!value){
@@ -173,7 +170,7 @@ const StaffRegist = ({infos,user,staffs}) =>{
                 </NameBox>
 
                 <InputBox style={{position:"relative",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                    <InputLine value={kakaoAccount} style={{flex:1}} 
+                    <InputLine value={kakaoAccount} placeholder={"ex) kakao@kakao.com"} style={{flex:1}} 
                         onChange={async(e)=>{
                             setKakaoAccount(e.target.value)
                             let tof = await checkAccount(e.target.value)
@@ -199,14 +196,12 @@ const StaffRegist = ({infos,user,staffs}) =>{
                 </NameBox>
 
                 <InputBox style={{position:"relative",borderBottom:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                    <InputLine value={staffAddress} style={{flex:1}} 
+                    <InputLine value={staffAddress} placeholder={"ex) 000-0000-0000"} style={{flex:1}} 
                         onChange={(e)=>{
                             telHandler(e.target.value)
                         }}
-                        onFocus={()=>{
-                            const onlyNumber = managerPhone.replace(/[^0-9]/g, '')
-                            setManagerPhone(onlyNumber)
-                        }}
+                        onFocus={(e)=>{setStaffAddress(onFocusPhoneNumber(e.target.value))}}
+                        onBlur={(e)=>{setStaffAddress(onBlurPhoneNumber(e.target.value))}}
                     />
                     <div style={{position:"absolute",top: 1, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
                         {(!isPhoneDuplicate && staffAddress) ?
