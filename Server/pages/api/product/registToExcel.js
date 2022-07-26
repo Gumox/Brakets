@@ -83,11 +83,11 @@ const controller = async (req, res) => {
         console.log(brands)
         for(let i =1; i<list.length; i++){
           const item = list[i]
-          const itemBrand =_.find(brands,{brand_name:item["브랜드"]})
+          const itemBrand =_.find(brands,{brand_name:item["brand"]})
           if(itemBrand){
-            const itemSeason  =await getSeason(itemBrand.brand_id,item["시즌"])
-            const itemCategory  =await getProductCategory(itemBrand.brand_id,item["카테고리"])
-            const itemStyle  =await getStyle(itemBrand.brand_id,item["스타일"])
+            const itemSeason  =await getSeason(itemBrand.brand_id,item["season"])
+            const itemCategory  =await getProductCategory(itemBrand.brand_id,item["style"])
+            const itemStyle  =await getStyle(itemBrand.brand_id,item["category"])
             
             
             if(itemSeason.season_id && itemCategory.pcategory_id && itemStyle.style_id){
@@ -96,16 +96,17 @@ const controller = async (req, res) => {
               console.log("itemCategory: ",itemCategory.pcategory_id)
               console.log("itemStyle: ",itemStyle.style_id)
               
-              const barcode = item["바코드"], brandId = itemBrand.brand_id, tagPrice = item["판매가"],
-                    orgPrice = item["원가"], seasonId = itemSeason.season_id, categoryId = itemCategory.pcategory_id,
-                    styleId = itemStyle.style_id, color = item["컬러"], degree = item["차수"],
-                    size = item["사이즈"], productName = item["제품명"], imgUrl = item["제품 이미지 URL"]
+              const barcode = item["barcode"], brandId = itemBrand.brand_id, tagPrice = item["tag_price"],
+                    orgPrice = item["org_price"], seasonId = itemSeason.season_id, categoryId = itemCategory.pcategory_id,
+                    styleId = itemStyle.style_id, color = item["color"], degree = item["degree"],
+                    size = item["size"], productName = item["product_name"], imgUrl = item["image_url"]
 
               const result = await registProduct(
                     barcode, brandId, tagPrice,
                     orgPrice, seasonId, categoryId,
                     styleId, color, degree,
                     size, productName, imgUrl)
+              console.log(result)
               }
           }
         }
