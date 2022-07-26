@@ -81,7 +81,7 @@ const controller = async (req, res) => {
         const brands = await getBrand(headquarterId)
         console.log("=================================================================")
         console.log(brands)
-        for(let i =1; i<list.length; i++){
+        for(let i =2; i<list.length; i++){
           const item = list[i]
           const itemBrand =_.find(brands,{brand_name:item["brand"]})
           if(itemBrand){
