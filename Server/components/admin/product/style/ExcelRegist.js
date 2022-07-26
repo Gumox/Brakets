@@ -85,7 +85,7 @@ const ExcelRegist =({user})=>{
                     <ExcelDownload onClick={()=>{handleClick("/Style_Example.xlsx","Style_Example.xlsx")}}>
                         <ExcelDownloadImage  src="/icons/excel.png"/>
                         <ExcelDownloadText style={{}}>
-                            엑셀 샘플 다운로드?
+                            엑셀 샘플 다운로드
                         </ExcelDownloadText>
                     </ExcelDownload>
             </div>
