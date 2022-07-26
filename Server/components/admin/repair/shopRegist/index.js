@@ -56,7 +56,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
             ])
             if(result){
                 alert("수선처가 등록 되었습니다")
-                router.push("/admin/repairControl")
+                router.push("/admin/repairControl/brandDesignate")
             }
         }else if(!shopName){
             alert("수선처 이름을 입력해 주세요")
