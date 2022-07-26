@@ -85,9 +85,13 @@ const controller = async (req, res) => {
           const item = list[i]
           const itemBrand =_.find(brands,{brand_name:item["brand"]})
           if(itemBrand){
+            console.log(item)
             const itemSeason  =await getSeason(itemBrand.brand_id,item["season"])
-            const itemCategory  =await getProductCategory(itemBrand.brand_id,item["style"])
-            const itemStyle  =await getStyle(itemBrand.brand_id,item["category"])
+            const itemCategory  =await getProductCategory(itemBrand.brand_id,item["category"])
+            const itemStyle  =await getStyle(itemBrand.brand_id,item["style"])
+            console.log(itemSeason)
+            console.log(itemCategory)
+            console.log(itemStyle)
             
             
             if(itemSeason.season_id && itemCategory.pcategory_id && itemStyle.style_id){
