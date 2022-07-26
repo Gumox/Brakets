@@ -39,7 +39,7 @@ const ProductControlProductStyleList = ({user,styles,brands}) => {
           <ProductSideBar path={"/admin/productControl/productStyleExcelRegist"} setSelectedView={setSelectedView}/>
         </SidebarSpace>
         <MainSpace >
-          <ExcelRegist user={user}/>
+          <ExcelRegist user={user} brands={brands}/>
         </MainSpace>
       </InSideWrapper>
     </Wrapper>

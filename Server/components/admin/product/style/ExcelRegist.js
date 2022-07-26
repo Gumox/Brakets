@@ -8,7 +8,8 @@ import fileDownload from 'js-file-download'
 
 const XLSX = require('xlsx');
 
-const ExcelRegist =({user})=>{
+const ExcelRegist =({user,brands})=>{
+    console.log(brands.length)
     const router = useRouter();
     const [excelName,setExcelName] = useState("첨부파일")
 
@@ -48,7 +49,7 @@ const ExcelRegist =({user})=>{
               .then(({ data }) => data.body), 
             ])
         alert("스타일이 등록되었습니다.")
-        router.push("/admin/productControl/productStyleList")
+        router.push("/admin/productControl/productStyle")
     }
 
     return(
