@@ -232,7 +232,7 @@ const StyleList = ({user,styles,products,brands}) => {
                     {
                         action && 
                         
-                        <div style={{margin:40,marginTop:140,height:"300px",width:"300px",display:"flex",
+                        <div style={{margin:40,marginTop:65,height:"300px",width:"300px",display:"flex",
                                     flexDirection:"column",borderRadius:"15px",border:`2px solid ${COLOR.LIGHT_GRAY}`,
                                     position:"sticky",top:"30px"
                                 }}>
