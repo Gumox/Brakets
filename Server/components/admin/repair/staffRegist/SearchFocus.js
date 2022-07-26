@@ -44,7 +44,7 @@ const SearchFocus = ({
       setName(text)
       if(text){
           let filt = _.filter(shopList,function(obj){
-            return obj.name.indexOf(text) !== -1;
+            return String(obj.receiver_name).indexOf(text) !== -1;
           })
           setShopListResult(filt)
       }else{
