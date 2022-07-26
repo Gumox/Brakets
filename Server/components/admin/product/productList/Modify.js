@@ -194,7 +194,7 @@ const ProductModify = ({
                         {item.category_name}
                     </InputBoxTr>
                     <NameBox >
-                        스타일 NO.
+                        스타일 No.
                     </NameBox>
 
                     <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>

@@ -166,7 +166,7 @@ const StyleList = ({user,styles,products,brands}) => {
               </SearchBar>
               <SearchBar>
                 <SearchBarHeader >
-                    스타일 코드
+                    스타일 No.
                 </SearchBarHeader>
 
                 <div style={{border:`2px solid ${COLOR.LIGHT_GRAY}`,flex:0.6,display:"flex"}}>
@@ -276,7 +276,7 @@ const StyleList = ({user,styles,products,brands}) => {
                             <LaView style={{flex:1,borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                                 <div style={{flex:1,backgroundColor:COLOR.MENU_MAIN}}>
                                     <HeaderCell>
-                                        스타일 NO.
+                                        스타일 No.
                                     </HeaderCell>
                                 </div>
                                 <div style={{flex:2,display:"flex",backgroundColor:COLOR.WHITE}}>

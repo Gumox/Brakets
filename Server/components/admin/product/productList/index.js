@@ -192,7 +192,7 @@ const ProductList = ({user,infos,products,brands}) => {
                       </HeaderCell>
 
                       <HeaderCell style={{flex:1.5}}>
-                        스타일 NO.
+                        스타일 No.
                       </HeaderCell>
                       
                       <HeaderCell>

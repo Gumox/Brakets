@@ -312,7 +312,7 @@ const ProductEachRegist = ({infos,brands,user}) =>{
 
                 <PrView>
                     <NameBox style={{borderTop:`2px solid rgb(244, 244, 244)`}}>
-                        스타일 NO.
+                        스타일 No.
                     </NameBox>
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
