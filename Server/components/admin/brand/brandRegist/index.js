@@ -35,7 +35,7 @@ const BrandRegist = ({infos,brands,user}) =>{
                 
                 const [result] = await Promise.all([
                     axios
-                    .post(`${process.env.API_URL}/brand/regist?brandName=${_brandName}&headquarterId=${headquarterId}&serviceDate=${serviceDate}`,)
+                    .post(`${process.env.API_URL}/brand/regist?brandName=${_brandName}&headquarterId=${headquarterId}&serviceDate=${ Number((serviceDate).replace(/ 일/,''))}`,)
                     .then(({ data }) => data.body), 
                     ])
                 alert("새로운 브랜드 가 등록되었습니다.")
