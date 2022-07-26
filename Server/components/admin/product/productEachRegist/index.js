@@ -156,9 +156,9 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                 alert('상품 바코드를 등록해 주세요')
             }else if(!(String(productName).replace(/_/g,"").length > 0)){
                 alert('상품 명을 입력해 주세요')
-            }else if(!tagPrice>0){
+            }else if(!Number((tagPrice).replace(/원/,'').replace(/,/,""))>0){ 
                 alert('판매가를 입력해 주세요')
-            }else if(!orgPrice>0){
+            }else if(!Number((orgPrice).replace(/원/,'').replace(/,/,""))>0){
                 alert('원가를 입력해 주세요')
             }else if(!(String(color).replace(/_/g,"").length > 0)){
                 alert('색상을 입력해 주세요')
@@ -175,8 +175,8 @@ const ProductEachRegist = ({infos,brands,user}) =>{
                 formData.append('companyName', infos[0].headquarter_name)
                 formData.append('brandName',_.find(brands,{"brand_id":Number(brandId)}).brand_name)
                 formData.append('barcode', productBarcode)
-                formData.append('tagPrice', tagPrice)
-                formData.append('orgPrice', orgPrice)
+                formData.append('tagPrice', Number((tagPrice).replace(/원/,'').replace(/,/,"")))
+                formData.append('orgPrice', Number((orgPrice).replace(/원/,'').replace(/,/,"")))
                 formData.append('brandId', brandId)
                 formData.append('seasonId', seasonSelected)
                 formData.append('categoryId', categorySelected)
