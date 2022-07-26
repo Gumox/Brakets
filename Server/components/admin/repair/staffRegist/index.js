@@ -89,8 +89,8 @@ const StaffRegist = ({infos,user,staffs,repairShops}) =>{
                         </NameBox>
                         
 
-                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,display:"flex"}}>
-                            <div style={{position:"absolute",width:"358px",height:"60px"}}>
+                        <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,justifyContent:"normal",alignItems:"normal"}}>
+                            <div style={{position:"absolute",width:"358px",height:"60px",zIndex:99}}>
                                 
                                 <SearchFocus shopList={repairShops} name={shopName} setName={setShopName} handler={searchHandler}/>
                             </div>

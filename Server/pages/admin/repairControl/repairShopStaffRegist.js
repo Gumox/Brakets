@@ -10,7 +10,7 @@ import RepairSideBar from "../../../components/admin/repair/RepairSideBar";
 import StaffRegist from "../../../components/admin/repair/staffRegist";
 
 const RepairControlRepairShopStaffRegist = ({user,infos,staffs,repairShops}) => {
-  const router = useRouter();
+  const router = useRouter(); 
   
   const repairShopsList =_.uniqBy(repairShops,"receiver_name")
   
