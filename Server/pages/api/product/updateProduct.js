@@ -4,6 +4,10 @@ import excuteQuery from "../db";
 
 async function updateProduct(
   barcode,
+  brandId,
+  seasonId,
+  categoryId,
+  styleId,
   name,
   color,
   size,
@@ -17,6 +21,10 @@ async function updateProduct(
   const result = await excuteQuery({
     query: `UPDATE  product 
             SET     barcode = ?,
+                    brand_id = ?,
+                    season_id = ?,
+                    pcategory_id = ?,
+                    style_id = ?,
                     name = ?,
                     color = ?,
                     size = ?,
@@ -27,6 +35,10 @@ async function updateProduct(
             WHERE product.product_id = ?`,
     values: [
               barcode,
+              brandId,
+              seasonId,
+              categoryId,
+              styleId,
               name,
               color,
               size,
@@ -36,6 +48,7 @@ async function updateProduct(
               image,
               productId],
   });
+  console.log(result)
   return result;
 }
 
@@ -58,6 +71,10 @@ const controller = async (req, res) => {
             companyName,
             brandName,
             barcode,
+            brandId,
+            seasonId,
+            categoryId,
+            styleId,
             productName,
             color,
             size,
@@ -71,6 +88,10 @@ const controller = async (req, res) => {
 
           if(useURL ==="true"){
             const result = await updateProduct(barcode,
+                                                brandId,
+                                                seasonId,
+                                                categoryId,
+                                                styleId,
                                                 productName,
                                                 color,
                                                 size,
@@ -98,6 +119,10 @@ const controller = async (req, res) => {
                 //
                 
                 const result = await updateProduct(barcode,
+                                                    brandId,
+                                                    seasonId,
+                                                    categoryId,
+                                                    styleId,
                                                     productName,
                                                     color,
                                                     size,
