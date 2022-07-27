@@ -17,10 +17,12 @@ export default function ItemCost(props){
     }
     const setPrice=(cost)=>{
         let after = new Number(cost)
-        return after.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if(inItemCost){
+            return after.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
     }
     return(
-        <div style={{width:100,borderWidth:0,borderBottomWidth:2 ,borderBottomColor:COLOR.GRAY,borderStyle:"solid"}} 
+        <div style={{width:100,minHeight:21,borderWidth:0,borderBottomWidth:2 ,borderBottomColor:COLOR.GRAY,borderStyle:"solid"}} 
             
         >{setPrice(inItemCost)}</div>
     )
