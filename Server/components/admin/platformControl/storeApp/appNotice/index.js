@@ -167,7 +167,7 @@ const AppNoticeControl = ({
                         {onClickPrivacy 
                             ?
                             <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center"}}>
-                                <ModifyArea value={privacyText} style={{flex:0.7,borderRadius:0,textAlign:"center"}} onChange={(e)=>{setPrivacyText(e.target.value)}}></ModifyArea>
+                                <ModifyArea value={privacyText} style={{flex:0.7,borderRadius:0,textAlign:"left"}} onChange={(e)=>{setPrivacyText(e.target.value)}}></ModifyArea>
                                 
                                 <ModifyArea value={privacyRedText ||""} style={{flex:0.3,color:COLOR.RED,borderColor:COLOR.RED}} onChange={(e)=>{setPrivacyRedText(e.target.value)}}></ModifyArea>
                             </div>

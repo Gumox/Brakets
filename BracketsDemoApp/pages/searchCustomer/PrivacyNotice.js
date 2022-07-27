@@ -41,7 +41,7 @@ export default function PrivacyNotice({navigation}) {
     return(
         <Container style= {{backgroundColor:"#ffffff"}}>
             <View style={{margin:30,flex:1,alignItems:"center",justifyContent:"center",marginBottom:fontSize*5}}>
-                <MyText style={{fontSize:fontSize, margin:fontSize, textAlign: 'center'}}>
+                <MyText style={{fontSize:fontSize, margin:fontSize, textAlign: "left"}}>
                     {textData}
                 </MyText>
                 {redTextData.length >0

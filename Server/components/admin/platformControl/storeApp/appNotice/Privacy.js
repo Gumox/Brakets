@@ -8,7 +8,7 @@ const PrivacyNotice = ({data,red="",minHeight=0,fontSize="12px"}) => {
     return(
         <Container style= {{minHeight:minHeight}}>
             <View style={{margin:20,flex:1,marginTop:50,paddingBottom:12}}>
-                <div style={{fontSize: fontSize,textAlign:"center"}}>
+                <div style={{fontSize: fontSize,textAlign:"left"}}>
                     {ntc}
                 </div>
                 
