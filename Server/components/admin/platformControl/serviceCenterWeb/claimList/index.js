@@ -176,8 +176,8 @@ const slicingArray =(array,num)=>{
 }
 
 const claimSort =(array)=>{
-    let sort1=_.sortBy(array,"text")
-    let sort2=_.sortBy(array,"claim_type").reverse();
+    let sort1=_.sortBy(array,"claim_value")
+    let sort2=_.sortBy(sort1,"claim_type").reverse();
     
     return(sort2)
 }

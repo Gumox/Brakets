@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import COLOR from "../../constants/color";
+import _ from "lodash";
 
 const ClaimModal = ({
   title,
@@ -12,6 +13,7 @@ const ClaimModal = ({
   styleOptions = {},
   disabled = false,
 }) => {
+  let claimOptions = claimSort(options)
   return (
     <Wrapper>
       <CustomLabel {...styleOptions} disabled={disabled}>
@@ -25,7 +27,7 @@ const ClaimModal = ({
           value={value || ""}
           disabled={disabled}
         >
-          {options.map(({ value, text ,claim_type},index) => (
+          {claimOptions.map(({ value, text ,claim_type},index) => (
             <option key={index} value={value}>
                {claim_type} {text} 
             </option>
@@ -68,5 +70,12 @@ const SelectBox = styled.div`
   border-radius: 5px;
   border: 1px solid ${COLOR.GRAY};
 `;
+
+const claimSort =(array)=>{
+  let sort1=_.sortBy(array,"claim_value")
+  let sort2=_.sortBy(sort1,"claim_type").reverse();
+  
+  return(sort2)
+}
 
 export default ClaimModal;
