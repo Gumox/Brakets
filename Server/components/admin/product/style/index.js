@@ -50,7 +50,7 @@ const StyleList = ({user,styles,products,brands}) => {
                 name += str[i]
             }
         }
-        return(String(name).replace(/_/g," "))
+        return(String(name).replace(/_/g," ").trim())
         
     }
 

@@ -49,7 +49,7 @@ const SearchFocus = ({
         }
       }
     }
-    return(String(name).replace(/-/g," "))
+    return(String(name).replace(/-/g," ").trim())
     
 }
   

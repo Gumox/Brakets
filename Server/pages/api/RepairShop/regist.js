@@ -58,15 +58,8 @@ const repairShopInfo= async (id) => {
     return result;
 }
 const emptySpace =(str)=>{
-    let name = ""
-    for(let i =0; i<str.length;i++){
-        if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
-            name += "_"
-        }else if(str[i] !== " " && str[i]){
-            name += str[i]
-        }
-    }
-    return(String(name).replace(/_/g," "))
+    
+    return(str.trim())
     
 }
 

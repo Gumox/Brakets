@@ -34,7 +34,7 @@ const SearchFocus = ({
             name += str[i]
         }
     }
-    return(String(name).replace(/-/g," "))
+    return(String(name).replace(/-/g," ").trim())
     
 }
   

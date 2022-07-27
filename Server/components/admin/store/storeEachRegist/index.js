@@ -185,7 +185,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                 name += str[i]
             }
         }
-        return(String(name).replace(/_/g," "))
+        return(String(name).replace(/_/g," ").trim())
         
     }
     const storeNameHandler = (value)=>{

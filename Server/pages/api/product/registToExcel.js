@@ -94,7 +94,7 @@ const emptySpace =(str)=>{
           name += str[i]
       }
   }
-  return(String(name).replace(/_/g," "))
+  return(String(name).replace(/_/g," ").trim())
   
 }
 
