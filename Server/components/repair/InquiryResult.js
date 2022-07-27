@@ -81,6 +81,8 @@ const ItemView = styled.div`
   flex-direction: row ;
   align-items: center;
   justify-content:center;
+  white-space: pre-wrap;
+  word-break: break-all;
   `;
 const LaView = styled.div`
     padding-top:10px;

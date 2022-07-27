@@ -233,7 +233,7 @@ export default function Inquiry() {
             <Line/>
             </div>
 
-            <div style={{position:"sticky",top:0,backgroundColor:COLOR.WHITE}}>
+            <div style={{position:"sticky",top:0,backgroundColor:COLOR.WHITE,zIndex:99}}>
                 <Container style={{paddingLeft: "2%",paddingRight: "2%",paddingTop:"2%"}}>
                         <div>회사 설정 :</div>
                     <select style={{marginLeft:10,marginRight: 10}} 
@@ -335,7 +335,15 @@ export default function Inquiry() {
             
                 </Container>
                 <HeadScrollX  ref={ref1} style={{width:windowWidth-1}}>
-                <Container style={{paddingLeft:10,backgroundColor:COLOR.WHITE,minWidth:dataViewWidth}}>
+                
+                </HeadScrollX>
+                
+            </div>
+            <ItemTable >
+                
+                            
+                <ScrollX   ref={ref2} style={{minHeight:320, width: "100%",position:"relative"}}>
+                <Container style={{paddingLeft:10,backgroundColor:COLOR.WHITE,minWidth:dataViewWidth,position:"sticky",position:"-webkit-sticky",top:500}}>
                     {
                         userInfo.level === 3 ?
                         dataHeaderLevel3.map((item,index)=>(
@@ -347,14 +355,6 @@ export default function Inquiry() {
                     }
                     
                 </Container>
-                </HeadScrollX>
-                
-            </div>
-            <ItemTable >
-                
-                            
-                <ScrollX   ref={ref2} style={{minHeight:320, width: "100%"}}>
-                
                     {
                         data.map((item,i)=>(
                             
