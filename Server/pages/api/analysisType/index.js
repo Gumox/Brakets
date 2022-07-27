@@ -29,7 +29,7 @@ const controller = async (req, res) => {
       if(hq_id){
         addQuery =`WHERE headquarter_id=?`
       }
-      if(state === 1){
+      if(state == 1){
         addQuery +=`AND analysis_type.state = 1`
       }
     try {
