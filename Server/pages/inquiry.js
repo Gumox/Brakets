@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useCallback,useRef} from 'react';
+import React,{useState,useEffect,useCallback} from 'react';
 import RepairHeader from '../components/RepairHeader'
 import styled from 'styled-components';
 import COLOR from '../constants/color';
@@ -329,7 +329,7 @@ export default function Inquiry() {
             <ItemTable >
                 
                             
-                <ScrollX   ref={ref2} style={{minHeight:320, width: "100%",position:"relative"}}>
+                <ScrollX style={{minHeight:320, width: "100%",position:"relative"}}>
                 <Container style={{paddingLeft:10,backgroundColor:COLOR.WHITE,minWidth:dataViewWidth,position:"sticky",position:"-webkit-sticky",top:500}}>
                     {
                         userInfo.level === 3 ?
