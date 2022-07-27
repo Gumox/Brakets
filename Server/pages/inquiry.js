@@ -20,6 +20,7 @@ import { useScrollSync } from "react-use-scroll-sync"
 import { parseInquiryData } from '../functions/parseExcelData';
 import dataHeaderLevel3 from '../constants/repairInquiry/dataHeaderLevel3';
 import dataHeader from '../constants/repairInquiry/dataHeader';
+import _ from 'lodash';
 
 const XLSX = require('xlsx');
 
@@ -97,7 +98,7 @@ export default function Inquiry() {
             }else{
                 sort =await sortInquiryDataHeadquarter(datas.body,params,fI,jI,aI,types)
             }
-            setData(sort)
+            setData(_.uniqBy(sort,"receipt_code"))
         }else{
             datas = await getData(params)
             let sort =[]
@@ -107,7 +108,7 @@ export default function Inquiry() {
                 sort =await sortInquiryDataHeadquarter(datas.body,params,fI,jI,aI,types)
             }
             let result  =dateOptionListcontroll(sort,params)
-            setData(result)
+            setData(_.uniqBy(result,"receipt_code"))
         }
     },[setData]);
 
@@ -214,8 +215,9 @@ export default function Inquiry() {
         
     },[]);
 
+    console.log(data)
     
-      ///96% -10px
+    // 96% -10px
     return(
         <Nav style={{height:"100%",minWidth:950}}>
             <RepairHeader path={"/inquiry"}/>
@@ -502,11 +504,3 @@ const ItemView = styled.div`
   align-items: center;
   justify-content:center;
   `;
-const LaView = styled.div`
-    padding-top:10px;
-    padding-bottom:10px;
-    display: flex;  
-    align-items:center;
-    flex-direction: coloum ;
-
-`;

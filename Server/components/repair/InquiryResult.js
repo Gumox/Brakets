@@ -7,6 +7,8 @@ const InquiryResult =(props)=>{
     let results =[];
     const item =props.data;
     const itemViewWidth = props.width;
+    let viewWidth = props.width*21;
+    
     const [modalOpenCheckable,setModalOpenCheckable] = useState(false)
     const closeProductImage = useCallback(
         () => setModalOpenCheckable(false),
@@ -19,9 +21,12 @@ const InquiryResult =(props)=>{
         return after.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     }
+    if(props.level !== 3){
+        viewWidth = props.width*20;
+    }
     return(
         <div>
-            <LaView style={{paddingLeft:10}} onClick={()=>{setModalOpenCheckable(true)}} ><Container>
+            <LaView style={{paddingLeft:10,width:viewWidth}} onClick={()=>{setModalOpenCheckable(true)}} ><Container>
                 <ItemView style={{width : itemViewWidth}}>{item.receipt_code}</ItemView>
                 {
                     props.level !== 3 &&
@@ -80,10 +85,11 @@ const ItemView = styled.div`
 const LaView = styled.div`
     padding-top:10px;
     padding-bottom:10px;
-    border-bottom:2px solid #f2f2f2;;
     display: flex;  
     align-items:center;
     flex-direction: coloum ;
+    width:100%;
+    border-bottom:2px solid #f2f2f2;;
     &: hover {
         background-color: ${COLOR.MOCCA};
       }
