@@ -26,10 +26,14 @@ const getReceipt = async(receiptId) => {
 }
 
 const addReceiptDetail = async ({mailbag}, {receipt_id, receipt_code, product_id, product_code, store_id, receipt_date, receiver, receiver_type}) => {
+  let mailbagCode  = mailbag
+  if(!mailbag || String(mailbag).length <1){
+    mailbagCode = 0
+  }
   return excuteQuery({
         query:
           "INSERT INTO `receipt_detail`(`receipt_id`, `receipt_code`, `mailbag`, `product_id`,`product_code`, `sender`, `send_date`, `receiver`, `receiver_type`) VALUES (?,?,?,?,?,?,?,?,?)",
-        values: [receipt_id, receipt_code, mailbag, product_id, product_code, store_id, receipt_date, receiver, receiver_type],
+        values: [receipt_id, receipt_code, mailbagCode, product_id, product_code, store_id, receipt_date, receiver, receiver_type],
       });
 }
 
