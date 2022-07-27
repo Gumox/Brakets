@@ -326,7 +326,7 @@ export default function Inquiry() {
                 </Container>
                 
             </div>
-            <ItemTable >
+            <ItemTable style={{marginTop:15}}>
                 
                             
                 <ScrollX style={{minHeight:320, width: "100%",position:"relative"}}>
