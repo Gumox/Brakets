@@ -19,6 +19,15 @@ const ProductModify = ({
     const [tagPrice,setTagPrice] =useState(numberDot(item.tag_price,"원"))
     const [orgPrice,setOrgPrice] =useState(numberDot(item.org_price,"원"))
 
+    
+    const [categorys,setCategorys] = useState([])
+    const [seasons,setSeasons] = useState([])
+    const [styles,setStyles] = useState([])
+
+    const [seasonSelected,setSeasonSelected] = useState(item.season_id)
+    const [categorySelected,setCategorySelected] = useState(item.category_id)
+    const [styleSelected,setStyleSelected] = useState(item.style_id)
+
     const [color,setColor] =useState(item.color)
     const [degree,setDegree] =useState(item.degree)
     const [size,setSize] =useState(item.size)
@@ -48,7 +57,7 @@ const ProductModify = ({
                 name += str[i]
             }
         }
-        return(String(name).replace(/_/g," "))
+        return(String(name).replace(/_/g," ").trim())
         
     }
     const onImageChange = (event) => {
@@ -78,14 +87,90 @@ const ProductModify = ({
         }
         return result
     }
+    
+
+    const getSeasonAndCategory= async(brandId) =>{
+        setBrandId(brandId)
+        let _brandId =null
+        if(brandId !==""){
+            _brandId = brandId
+        }
+        
+        const [seasonResult] = await Promise.all([
+            axios
+              .get(`${process.env.API_URL}/product/season?brandId=${_brandId}`,)
+              .then(({ data }) => data.data), 
+        ])
+        const [categoryResult] = await Promise.all([
+            axios
+                .post(`${process.env.API_URL}/getProductCategory`,{brand:_brandId })
+                .then(({ data }) => data.body), 
+        ])
+
+        setSeasons(seasonResult)
+        setCategorys(categoryResult)
+
+
+
+        if(seasonResult.length>0){
+            setSeasonSelected(seasonResult[0].value)
+            
+        }else{
+            setStyles([]) 
+            setStyleSelected(null)
+        }
+            
+        if(categoryResult.length>0){
+            setCategorySelected(categoryResult[0].pcategory_id)
+            const [stylesResult] = await Promise.all([
+                axios
+                .get(`${process.env.API_URL}/product/seasonStyleInBrand?pcategoryId=${categoryResult[0].pcategory_id}&brandId=${brandId}`,)
+                .then(({ data }) => data.data), 
+            ])
+            setStyles(stylesResult) 
+            
+            if(stylesResult.length>0){
+                setStyleSelected(stylesResult[0].value)
+            }
+        }else{
+            setCategorySelected(null)
+        }
+        
+        
+    }
+    const getStyle= async(value,brandId) =>{
+        
+        setCategorySelected()
+
+        let seasonId = null;
+        if(value && value !== ""){
+            seasonId = value
+        }
+
+        
+        const [result] = await Promise.all([
+            axios
+              .get(`${process.env.API_URL}/product/seasonStyleInBrand?pcategoryId=${value}&brandId=${brandId}`,)
+              .then(({ data }) => data.data), 
+        ])
+        setStyles(result)    
+    }
+
 
     const modifyProduct = async() =>{
         const formData = new FormData();
+
         formData.append('companyName', infos[0].headquarter_name)
         formData.append('brandName',item.brand_name)
         formData.append('productId',item.product_id)
         
         formData.append('barcode', productBarcode)
+
+        formData.append('brandId', brandId)
+        formData.append('seasonId', seasonSelected)
+        formData.append('categoryId', categorySelected)
+        formData.append('styleId', styleSelected)
+
         formData.append('tag_price', onFocusPay(tagPrice))
         formData.append('org_price', onFocusPay(orgPrice))
         formData.append('color', color)
@@ -103,9 +188,11 @@ const ProductModify = ({
               .then(({ data }) => data.body), 
             ])
         alert("제품 정보가 수정되었습니다.")
-        window.location.reload();
+        //window.location.reload();
     }
-    
+    useEffect(()=>{
+        getSeasonAndCategory(item.brand_id)
+    },[brandId])
     return (
         <Wrapper >
             <InsideWrapper>
@@ -130,8 +217,17 @@ const ProductModify = ({
                                 브랜드
                             </NameBox>
 
-                            <InputBoxTr style={{width:"291px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,fontWeight:"bold",display:"flex",justifyContent:"center",alignItems:"center"}}>
-                                {item.brand_name}
+                            <InputBoxTr style={{width:"291px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,fontWeight:"bold",display:"flex",justifyContent:"center"}}>
+                                <InputSelect style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} 
+                                    value={brandId}
+                                    onChange={(e)=>{getSeasonAndCategory(e.target.value)}}>
+                                    <option value={""}>{}</option>
+                                    {
+                                        brands.map((items,index)=>(
+                                            <option key={index} value={items.brand_id}>{items.brand_name}</option>
+                                        ))
+                                    }
+                                </InputSelect>
                             </InputBoxTr>
                         </PrView>
 
@@ -141,7 +237,7 @@ const ProductModify = ({
                             </NameBox>
 
                             <LongInputBox style={{maxWidth:"646px"}}>
-                                <InputLine value={productName ||""} style={{flex:1,maxWidth:"645px",marginLeft:"50px"}} onChange={(e)=>{setProductName(e.target.value)}}/>
+                                <InputLine value={productName ||""} style={{flex:1,maxWidth:"645px",paddingLeft:"50px"}} onChange={(e)=>{setProductName(e.target.value)}}/>
                             </LongInputBox>
                         </PrView>
 
@@ -182,23 +278,42 @@ const ProductModify = ({
                         시즌
                     </NameBox>
 
-                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>
-                        {item.season_name}
+                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                        <InputSelect value={seasonSelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}}
+                         onChange={(e)=>{setSeasonSelected(e.target.value)}}>
+                            {
+                                seasons.map((item,index)=>(
+                                    <option key={index} value={item.value}>{item.season_name}</option>
+                                ))
+                            }
+                        </InputSelect>
                     </InputBoxTr>
 
                     <NameBox style={{borderTop:"2px solid rgb(244,244,244)"}}>
                         카테고리
                     </NameBox>
 
-                    <InputBoxTr style={{width:"150px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center",borderLeft: `3px solid ${COLOR.LIGHT_GRAY}`}} >
-                        {item.category_name}
+                    <InputBoxTr style={{width:"150px",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderLeft: `3px solid ${COLOR.LIGHT_GRAY}`}} >
+                    <InputSelect value={categorySelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{getStyle(e.target.value,brandId)}}>
+                            {
+                                categorys.map((item,index)=>(
+                                    <option key={index} value={item.pcategory_id}>{item.category_name}</option>
+                                ))
+                            }
+                        </InputSelect>
                     </InputBoxTr>
                     <NameBox >
                         스타일 No.
                     </NameBox>
 
-                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>
-                        {item.style_code}
+                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
+                    <InputSelect value={styleSelected} style={{flex:1,border:0,textAlign:"center",fontSize:"16px"}} onChange={(e)=>{setStyleSelected(e.target.value)}}>
+                            {
+                                styles.map((item,index)=>(
+                                    <option key={index} value={item.value}>{item.text}</option>
+                                ))
+                            }
+                        </InputSelect>
                     </InputBoxTr>
                 </PrView>
 
@@ -207,7 +322,7 @@ const ProductModify = ({
                         Color
                     </NameBox>
 
-                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>
+                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={color ||""} style={{flex:1,fontSize:14,textAlign:"center"}} onChange={(e)=>{setColor(e.target.value)}}/>
                     </InputBoxTr>
 
@@ -223,7 +338,7 @@ const ProductModify = ({
                         Size
                     </NameBox>
 
-                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`,alignItems:"center"}}>
+                    <InputBoxTr style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                         <InputLine value={size ||""} style={{flex:1,width:"200px",fontSize:14,textAlign:"center"}} onChange={(e)=>{setSize(e.target.value)}}/>
                     </InputBoxTr>
                 </PrView>
@@ -364,7 +479,6 @@ const InputBoxTr  = styled.div`
     display:flex;
     width:210px;
     font-weight:bold;
-    justify-content:center;
 `;
 const LongInputBox  = styled.div`
     height : 60px;
@@ -381,6 +495,13 @@ const LongInputBox  = styled.div`
 const InputLine  = styled.input`
     border 0px;
     font-size:16px;
+    margin: 3px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
 
 `;
 
@@ -419,6 +540,21 @@ const CheckBox = styled.input `
 
 `
 
+const InputSelect  = styled.select`
+    border: 0px;
+    margin: 3px;
+    font-size:14px;
+    display:flex;
+    &:focus { 
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+`;
+
+const InputItem  = styled.input`
+   
+`;
 
 
 export default ProductModify
