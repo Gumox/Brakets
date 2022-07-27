@@ -16,7 +16,6 @@ import {getData} from '../functions/useInInqiry';
 import { getBrandList } from '../functions/useInSettlement';
 import { getRepairShopList } from '../functions/useInReturnUnregistered';
 import Image from 'next/image'
-import { useScrollSync } from "react-use-scroll-sync"
 import { parseInquiryData } from '../functions/parseExcelData';
 import dataHeaderLevel3 from '../constants/repairInquiry/dataHeaderLevel3';
 import dataHeader from '../constants/repairInquiry/dataHeader';
@@ -25,15 +24,6 @@ import _ from 'lodash';
 const XLSX = require('xlsx');
 
 export default function Inquiry() {
-
-    const ref1 = useRef(null)
-    const ref2 = useRef(null)
-    useScrollSync([ref1, ref2], {
-        horizontal: true,
-        vertical: true,
-        proportional: true
-      })
-
     const [scrollPosition, setScrollPosition] = useState(0);
     const handleScroll = () => {
       const position = window.pageYOffset;
@@ -334,9 +324,6 @@ export default function Inquiry() {
                     >확인</button>  
             
                 </Container>
-                <HeadScrollX  ref={ref1} style={{width:windowWidth-1}}>
-                
-                </HeadScrollX>
                 
             </div>
             <ItemTable >
