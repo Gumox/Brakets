@@ -26,7 +26,7 @@ const RepairTypeEachRegistControl = ({
             setBrand(sortedBrands[0].brand_id)
         }
         if(sortedRepairShop.length>0){
-            setRepairShop(sortedRepairShop[0].brand_name)
+            setRepairShop(sortedRepairShop[0].repair_shop_id)
         }
     },[])
 
@@ -73,7 +73,6 @@ const RepairTypeEachRegistControl = ({
     const regist = async() =>{
         let repairText = String(repairName).replace(/ /g,"")
         if(String(repairPrice).length > 0 && repairText.length > 0){
-
             let data ={
                 repairName : repairName,
                 repairPrice : String(repairPrice).replace(/[^0-9]/g, ''),
