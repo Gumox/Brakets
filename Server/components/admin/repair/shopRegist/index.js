@@ -28,10 +28,11 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
     const [detailAddress,setDetailAddress]=useState("")
 
     const codeMaker =(value)=>{
-        setShopName(value)
         if(String(value).length > 0){
-                
-            let code =`R.${value}`
+            setShopName(String(value).replace(/_/,""))
+            
+            let shopNameValue = String(value).replace(/_/,"")
+            let code =`R.${String(shopNameValue).replace(/ /,"_")}`
             setShopCode(code)
         }else{
             setShopCode("")
@@ -85,7 +86,8 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
                     
 
                     <InputBox style={{borderTop:`2px solid ${COLOR.LIGHT_GRAY}`}}>
-                        <InputLine  placeholder="ex) 수선처" value={shopName} onChange={(e)=>{codeMaker(e.target.value)}}/>
+                        <InputLine  placeholder="ex) 수선처" value={shopName} 
+                        onChange={(e)=>{codeMaker(e.target.value)}}/>
                     </InputBox>
 
                     <NameBox>
