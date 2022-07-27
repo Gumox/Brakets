@@ -32,7 +32,7 @@ async function registProduct(
 }
 async function getBrand(headquarterId) {
   const result = await excuteQuery({
-    query: `SELECT * FROM brand  JOIN headquarter ON headquarter.headquarter_id = brand.headquarter_id
+    query: `SELECT UPPER(brand_name) AS brand_name , brand_id FROM brand  JOIN headquarter ON headquarter.headquarter_id = brand.headquarter_id
            WHERE brand.headquarter_id=?;
             `,
     values:[headquarterId]
@@ -53,10 +53,11 @@ async function getStyle(brandId,styleCode) {
   const result = await excuteQuery({
     query: `SELECT style_id, style_code
             FROM style_type 
-            WHERE brand_id=? AND style_type.style_code = ?`,
+            WHERE brand_id=? AND UPPER(style_code) = UPPER(?);`,
     values: [brandId,styleCode],
   });
 
+  console.log(result)
   return result[0];
 }
 
@@ -64,11 +65,23 @@ async function getSeason(brandId,seasonName) {
   const result = await excuteQuery({
     query: `SELECT season_id, season_code ,season_name
             FROM season_type 
-            WHERE brand_id=? AND season_type.season_name = ?
+            WHERE brand_id=? AND UPPER(season_name) = UPPER(?);
               `,
     values: [brandId,seasonName],
   });
+  console.log(result)
   return result[0];
+}
+
+async function getProduct(barcode) {
+  const result = await excuteQuery({
+    query: `SELECT *
+            FROM product 
+            WHERE barcode = ?`,
+
+    values: [barcode],
+  });
+  return result;
 }
 
 const controller = async (req, res) => {
@@ -83,15 +96,20 @@ const controller = async (req, res) => {
         console.log(brands)
         for(let i =2; i<list.length; i++){
           const item = list[i]
-          const itemBrand =_.find(brands,{brand_name:item["brand"]})
-          if(itemBrand){
-            console.log(item)
+          const itemBrand =_.find(brands,function(o){
+            console.log(o.brand_name,String(item["brand"]).toUpperCase())
+            return o.brand_name === String(item["brand"]).toUpperCase() && item["brand"]
+          })
+          const itemBarcode = await getProduct(item["barcode"])
+
+          if(itemBrand && itemBarcode.length < 1){
             const itemSeason  =await getSeason(itemBrand.brand_id,item["season"])
             const itemCategory  =await getProductCategory(itemBrand.brand_id,item["category"])
             const itemStyle  =await getStyle(itemBrand.brand_id,item["style"])
-            console.log(itemSeason)
-            console.log(itemCategory)
-            console.log(itemStyle)
+
+              console.log(itemSeason)
+              console.log(itemCategory)
+              console.log(itemStyle)
             
             
             if(itemSeason.season_id && itemCategory.pcategory_id && itemStyle.style_id){
