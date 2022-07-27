@@ -28,7 +28,7 @@ export default function ItemCount(props){
                 setIsBlurToggle(!isBlurToggle)}}
             onChange={(e)=>{
                 let value = e.target.value.replace(/[^0-9]/g,"")
-                e.target.value =value
+                e.target.value = value
                 setInItemCount(e.target.value);
                 props.onChange(e)
             }}/>
