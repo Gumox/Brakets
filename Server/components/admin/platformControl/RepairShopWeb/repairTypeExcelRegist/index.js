@@ -62,7 +62,7 @@ const RepairTypeExcelRegistControl =({
                 .then(({ data }) => data.body), 
                 ])
             alert("수선내용 및 수선단가가 등록되었습니다.")
-            window.location.reload()
+            router.push("/admin/platformControl/controlRepairTypeList")
         }else{
             alert('첨부 파일을 등록해주세요')
         }

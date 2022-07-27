@@ -87,7 +87,7 @@ const RepairTypeEachRegistControl = ({
                 .then(({ data }) => data.body), 
                 ])
             alert("새로운 수선내용 및 수선단가가 등록되었습니다.")
-            window.location.reload()
+            router.push("/admin/platformControl/controlRepairTypeList")
         }else if(String(repairPrice).length > 0){
             alert("수선 단가를 입력해주세요")
         }else if(repairText.length > 0){

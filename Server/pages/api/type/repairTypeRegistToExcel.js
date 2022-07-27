@@ -38,7 +38,15 @@ const result = await excuteQuery({
 
 return result;
 }
-
+async function getRepairType(repairName,storeId,brandId) {
+  return excuteQuery({
+    query: `SELECT *
+            FROM repair_type
+            WHERE  repair_type.repair_name = ? AND repair_type.store_id = ? AND repair_type.brand_id = ? 
+            `,
+    values: [repairName,storeId,brandId],
+  });
+}
 const arrayFinder = (arr,targetName,targetValue)=>{
   let result
   for(let item  of arr){
@@ -69,20 +77,9 @@ const controller = async (req, res) => {
             let _brand = arrayFinder(brands,"brand_name", item["brand"])
             let _shop = arrayFinder(stores,"repair_shop_name",item["shop"])
 
+            let _repairType = await getRepairType(item["repair_name"],_shop.repair_shop_id,_brand.brand_id)
             
-            
-            console.log("------------")
-            
-            console.log(_brand.brand_id)
-            console.log(item["brand"])
-            console.log(_shop.repair_shop_id)
-            console.log(item["shop"])
-
-            console.log("------------")
-
-            console.log(item["repair_name"])
-            console.log(item["repair_price"])
-            if(_brand && _shop){
+            if(_brand && _shop && _repairType.length < 1){
               const insertResult = await repairTypeRegist(
                                                             emptySpace(item["repair_name"]),
                                                             item["repair_price"],
