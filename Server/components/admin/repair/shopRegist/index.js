@@ -13,7 +13,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
 
     const [shopName,setShopName] = useState("")
     const [shopCode,setShopCode] = useState("")
-
+    
     
     const [ceoName,setCeoName] = useState("")
     const [contact,setContact] = useState("")
@@ -38,11 +38,11 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
         }
     }
     const registRepairShop = async()=>{
-            if(shopName && shopCode && registrationNumber &&contact && address){
+            if(shopName && shopCode && registrationNumber &&contact && address && ceoName){
             const body = {
                 shopName : shopName,
                 storeCode : shopCode,
-                
+                ceoName: ceoName.trim(),
                 useMailbag,
                 contact : onChangePhoneNumber(contact),
                 address : address+" "+detailAddress,
@@ -60,7 +60,7 @@ const ShopRegist = ({infos,brands,user,stores}) =>{
             }
         }else if(!shopName){
             alert("수선처 이름을 입력해 주세요")
-        }else if(!shopCode){
+        }else if(!ceoName){
             alert("대표자 이름을 입력해 주세요")
         }else if(!registrationNumber){
             alert("사업자 등록 번호를 입력해 주세요")

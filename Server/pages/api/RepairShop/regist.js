@@ -5,6 +5,7 @@ const repairShopRegist= async (
     storeCode,
     useMailbag,
     contact,
+    ceoName,
     address,
     storeRegistrationNumber
     ) => {
@@ -19,6 +20,7 @@ const repairShopRegist= async (
                         store_category,
                         use_mailbag,
                         contact,
+                        ceo_name,
                         address,
                         store_registration_number
 
@@ -32,6 +34,7 @@ const repairShopRegist= async (
                         ?,
                         ?,
                         ?,
+                        ?,
                         ?
                     )`,
                     
@@ -40,6 +43,7 @@ const repairShopRegist= async (
             storeCode,
             useMailbag,
             contact,
+            ceoName,
             address,
             storeRegistrationNumber
         ],
@@ -75,6 +79,7 @@ const Repair = async (req, res) => {
             
             useMailbag,
             contact,
+            ceoName,
             address,
             storeRegistrationNumber
 
@@ -94,6 +99,7 @@ const Repair = async (req, res) => {
                                             storeCode,
                                             useMailbag,
                                             contact,
+                                            ceoName,
                                             address,
                                             emptySpace(storeRegistrationNumber))
             console.log(Regist)
