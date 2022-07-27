@@ -84,6 +84,20 @@ async function getProduct(barcode) {
   return result;
 }
 
+
+const emptySpace =(str)=>{
+  let name = ""
+  for(let i =0; i<str.length;i++){
+      if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
+          name += "_"
+      }else if(str[i] !== " " && str[i]){
+          name += str[i]
+      }
+  }
+  return(String(name).replace(/_/g," "))
+  
+}
+
 const controller = async (req, res) => {
   if (req.method === "POST") {
     console.log("/api/product/registToExcel");
@@ -97,8 +111,7 @@ const controller = async (req, res) => {
         for(let i =2; i<list.length; i++){
           const item = list[i]
           const itemBrand =_.find(brands,function(o){
-            console.log(o.brand_name,String(item["brand"]).toUpperCase())
-            return o.brand_name === String(item["brand"]).toUpperCase() && item["brand"]
+            return o.brand_name === String(emptySpace(item["brand"])).toUpperCase() && item["brand"]
           })
           const itemBarcode = await getProduct(item["barcode"])
 

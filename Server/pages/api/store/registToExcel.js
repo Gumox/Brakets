@@ -142,7 +142,7 @@ async function setManagerStore(
 
 async function getBrand(headquarterId) {
   const result = await excuteQuery({
-    query: `SELECT * FROM brand  JOIN headquarter ON headquarter.headquarter_id = brand.headquarter_id
+    query: `SELECT  UPPER(brand_name) AS brand_name , brand_id FROM brand  JOIN headquarter ON headquarter.headquarter_id = brand.headquarter_id
            WHERE brand.headquarter_id=?
             `,
     values:[headquarterId]
@@ -202,7 +202,10 @@ const controller = async (req, res) => {
             console.log(manager.length)
             
            
-            const itemBrand =_.find(brands,{brand_name:emptySpace(item["brand"])})
+            const itemBrand =_.find(brands,function(o){
+              return o.brand_name === String(emptySpace(item["brand"])).toUpperCase() && item["brand"]
+            })
+              
 
             const brandCode = String(emptySpace(item["brand"])).replace(/ /g,"_")
 

@@ -58,7 +58,7 @@ const ListItem =({item})=>{
     const change = async(brandName,brandId,serviceDate)=>{
         const [result] = await Promise.all([
             axios
-              .post(`${process.env.API_URL}/brand/brandInfoChange?brandName=${brandName}&brandId=${brandId}&serviceDate=${serviceDate}`,)
+              .post(`${process.env.API_URL}/brand/brandInfoChange?brandName=${brandName.trim()}&brandId=${brandId}&serviceDate=${serviceDate}`,)
               .then(({ data }) => data.body), 
             ])
         alert("브랜드 정보가 수정되었습니다.")
@@ -112,6 +112,7 @@ const ListItem =({item})=>{
         </PrView>
     )
 }
+
 const Wrapper  = styled.div`
     border-left:2px solid ${COLOR.LIGHT_GRAY};
     border-right:2px solid ${COLOR.LIGHT_GRAY};
