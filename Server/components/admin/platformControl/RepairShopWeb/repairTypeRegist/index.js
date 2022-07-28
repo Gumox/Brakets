@@ -14,33 +14,19 @@ const RepairTypeEachRegistControl = ({
     const router = useRouter();
     
     const sortedBrands =sortArray(brands)
-    const [brand,setBrand] =useState(null)
+    const [brand,setBrand] =useState("NaN")
     
-    const sortedRepairShop =sortArray2(repairShops)
+    const [sortedRepairShop,setSortedRepairShop] = useState([])
     const [repairShop,setRepairShop] =useState(null)
     const [repairName,setRepairName] =useState(null)
     const [repairPrice,setRepairPrice] =useState(null)
 
-    useState(()=>{
-        if(sortedBrands.length>0){
-            setBrand(sortedBrands[0].brand_id)
-        }
-        if(sortedRepairShop.length>0){
-            setRepairShop(sortedRepairShop[0].repair_shop_id)
-        }
-    },[])
-
-    const emptySpace =(str)=>{
-        let name = ""
-        for(let i =0; i<str.length;i++){
-            if(str[i] === " "&& str[i+1] && str[i+1] !== " "){
-                name += "_"
-            }else if(str[i] !== " " && str[i]){
-                name += str[i]
-            }
-        }
-        return(String(name).replace(/_/g," ").trim())
-        
+    const setBrandEvent =(value)=>{
+        setBrand(value)
+        let repairLists = _.filter(repairShops, function(o){
+            return o.brand_id == value
+        })
+        setSortedRepairShop(sortArray2(repairLists))
     }
 
     const repairPriceHandler =(value)=>{
@@ -111,7 +97,8 @@ const RepairTypeEachRegistControl = ({
 
                         <LongInputBox style={{borderBottom:0,borderRadius: "0 10px 0 0"}}>
                             
-                            <SelectOption value={brand}  style={{flex:1,borderRadius: "0 10px 0 0"}} onChange={(e)=>{setBrand(e.target.value)}}>
+                            <SelectOption value={brand}  style={{flex:1,borderRadius: "0 10px 0 0"}} onChange={(e)=>{setBrandEvent(e.target.value)}}>
+                                <option value={"NaN"}>{"선택"}</option>
                                 {
                                     sortedBrands.map((item,index)=>(
                                         <option key={index} value={item.brand_id}>{item.brand_name}</option>
