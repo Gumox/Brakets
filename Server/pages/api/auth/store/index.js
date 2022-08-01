@@ -10,6 +10,7 @@ const loginStore= async (query, values) => {
   
     const result = await excuteQuery({
       query: `SELECT  
+              staff.name AS staff_name,
               staff.staff_id,
               staff.level,
               store.store_id,
