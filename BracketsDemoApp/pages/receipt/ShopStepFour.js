@@ -25,7 +25,7 @@ Date.prototype.addDays = function(days) {
 }
 
 function ShopStepFour({navigation,route}) {
-    const service_date =store.getState().serviceDate;
+    const service_date = store.getState().serviceDate;
     const [dateInput2,setDateInput2] = useState(new Date().addDays(service_date))
     const [barcode, setBarcode] = React.useState(store.getState().cardValue);
     store.dispatch({type:'SERVICECAED',value:barcode});
@@ -34,11 +34,8 @@ function ShopStepFour({navigation,route}) {
     const netInfo = useNetInfo();
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-    console.log(Dimensions.get("screen").height)
-    console.log(Dimensions.get("window").height)
-
     const useInput=(inputDate)=> {
-        let date = inputDate
+        const [date, setDate] =useState(inputDate)
         const [mode, setMode] = React.useState('date');
         const [show, setShow] = React.useState(false);
     
@@ -57,7 +54,7 @@ function ShopStepFour({navigation,route}) {
         const handleConfirm = (selectedDate) => {
             const currentDate = selectedDate || date
             setShow(Platform.OS === 'ios');
-            date = currentDate
+            setDate(currentDate)
             setDateInput2(currentDate.addDays(service_date))
             hideDatePicker();
         };
@@ -65,7 +62,7 @@ function ShopStepFour({navigation,route}) {
         const onChange = (event, selectedDate) => {
             const currentDate = selectedDate || date
             setShow(Platform.OS === 'ios');
-            date = currentDate
+            setDate(currentDate)
             setDateInput2(currentDate.addDays(service_date))
         }
         return {
@@ -91,7 +88,6 @@ function ShopStepFour({navigation,route}) {
         formdata.append("code", code);
         formdata.append("receiptdate", receiptdate);
         formdata.append("duedate", duedate);
-        console.log(formdata)
 
         try {
             const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
@@ -102,7 +98,6 @@ function ShopStepFour({navigation,route}) {
             body: formdata
             });
             const json = await response.json();
-            console.log(json)
             if(tof){
                 navigation.navigate( 'ShopStepFive' ) 
             }else{
@@ -117,9 +112,6 @@ function ShopStepFour({navigation,route}) {
     useEffect(()=>{
         const fetch =async()=>{
             const checkService = await checkServiceCard(barcode)
-            console.log("checkService: ")
-            console.log("checkService: ",checkService)
-            console.log("checkService: ")
             if(checkService.message){
                 Alert.alert("이미 등록된 서비스 카드 입니다.","",[{ text: "확인"}])
                 navigation.goBack();

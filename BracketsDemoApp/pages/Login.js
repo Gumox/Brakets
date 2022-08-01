@@ -23,18 +23,20 @@ function Login({ navigation }): React.ReactElement {
 
   const isFirstRun = useRef(true);
 
-  function SaveInfo(_userName, _userEmail, _data){
+  function SaveInfo(_userName, _userEmail, _data,_storeName){
+    console.log(_userName)
       
       AsyncStorage.setItem(
         'userInfo',
         JSON.stringify({
           'userName': _userName,
           'userEmail': _userEmail,
-          "data": _data
+          "data": _data,
+          "storeName":_storeName
         }), () => {
           console.log('user id and user email\'s saved: ' + _userName, _userEmail);
           store.dispatch({ type: 'storeStaffId', storeStaffId: _userEmail });
-          store.dispatch({ type: 'storeName', storeName: _userName })
+          store.dispatch({ type: 'storeName', storeName: _storeName })
           store.dispatch({ type: 'STORE_ID', store_id: _data[0].store_id });
           store.dispatch({ type: 'USER_INFO', userInfo: _data })
           store.dispatch({type:"BRAND_ID",brand_id:_data[0].brand_id })
@@ -50,7 +52,7 @@ function Login({ navigation }): React.ReactElement {
         console.log(UserInfo.data[0])
         store.dispatch({ type: 'USER_INFO', userInfo: UserInfo.data })
         store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
-        store.dispatch({ type: 'storeName', storeName: UserInfo.userName })
+        store.dispatch({ type: 'storeName', storeName: UserInfo.storeName })
         store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
         store.dispatch({type:"BRAND_ID",brand_id:UserInfo.data[0].brand_id })
         // console.log(store.getState().userInfo[0].staff_id)
@@ -67,7 +69,6 @@ function Login({ navigation }): React.ReactElement {
       LoadInfo();
       return;
     }
-    console.log(userEmail)
     const option = {
 
       url: ip + `/api/auth/store?email=${userEmail}`,
@@ -82,8 +83,9 @@ function Login({ navigation }): React.ReactElement {
     console.log(option.url)
     axios(option)
       .then(
-        response => (response.status == '200') && (response.data.data[0].name) ? (
-          SaveInfo(response.data.data[0].name, userEmail, response.data.data)
+        response => (response.status == '200') && (response.data.data[0].name) ? ( 
+          console.log(response.data),
+          SaveInfo(response.data.data[0].staff_name, userEmail, response.data.data,response.data.data[0].name)
         ) : (
           console.log("response" + response)
         )

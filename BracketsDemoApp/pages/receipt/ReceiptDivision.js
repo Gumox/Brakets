@@ -12,6 +12,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import store from '../../store/store';
 import { Alert, View,Text,Appearance } from 'react-native';
 import {useNetInfo}from "@react-native-community/netinfo";
+import checkChangedUserInfo from '../../Functions/CheckChangedUserinfo';
 
 const Label = styled.Text`
     font-size: 15px;
@@ -50,15 +51,12 @@ function ReceiptDivision({navigation}) {
     let bgColor = "rgb(255,255,255)"
     if (colorScheme === 'dark') {
     // Use dark color scheme
-        console.log("dark")
         bgColor = "rgb(153,153,153)"
     }
 
     useEffect(()=>{
-        console.log(store.getState().brand_id)
         var i =1;
         var list =[]
-        console.log('receipt division: ' + info)
         info.forEach(obj => {
             list.push({ label: i+'.'+obj.name, value: obj.store_id, brandId: obj.brand_id ,name:obj.name})
             i = i +1;
@@ -84,16 +82,12 @@ function ReceiptDivision({navigation}) {
                         {   
                             list.forEach(obj => {
                                 if(obj.value === value ){
-                                    console.log(obj)
                                     store.dispatch({ type: 'STORE_ID', store_id: value  })
                                     store.dispatch({type:"BRAND_ID",brand_id:obj.brandId })
                                     store.dispatch({ type: 'storeName', storeName: obj.name })
                                     setSeletStore(value)
                                 }
                             });
-                            console.log("value",value)
-                            console.log(store.getState().store_id)
-                            console.log(store.getState().brand_id)
                         
                         }
                     }
@@ -102,6 +96,10 @@ function ReceiptDivision({navigation}) {
             )
         }
     },[]);
+    
+    useEffect(() => {
+         checkChangedUserInfo(navigation)
+    }, []);
 
     return (
         <>

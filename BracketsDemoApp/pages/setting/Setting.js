@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Alert,Appearance } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
@@ -11,6 +11,7 @@ import Bottom from '../../components/Bottom';
 import Button from '../../components/Button';
 import ReceiptButton from '../../components/ReceiptButton';
 import CenterText from '../../components/CenterText';
+import checkChangedUserInfo from '../../Functions/CheckChangedUserinfo';
 
 
 const OverallView = styled.View`
@@ -74,7 +75,10 @@ function Setting({ navigation }) {
 
     const storeName = store.getState().storeName;
     const storeEmail = store.getState().storeStaffId;
-
+    
+    useEffect(() => {
+        checkChangedUserInfo(navigation)
+   }, []);
     return (
         <Container style= {{backgroundColor:"#ffffff"}}>
 

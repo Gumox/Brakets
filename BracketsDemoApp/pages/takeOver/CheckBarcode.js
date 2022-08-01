@@ -1,10 +1,11 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import Container from '../../components/Container';
 import Button from '../../components/Button';
 import styled from 'styled-components/native';
 import CenterText from '../../components/CenterText';
 import Contents from '../../components/Contents';
 import Bottom from '../../components/Bottom';
+import checkChangedUserInfo from '../../Functions/CheckChangedUserinfo';
 
 const RegistText= styled.Text`
     font-weight: bold;
@@ -37,6 +38,10 @@ const AlternativeCodeBtn = styled.TouchableOpacity`
 // 구조 분해 할당, Destructuring Assignment
 export default function CheckBarcode( { navigation } ) {
     //console.log(store.getState().recDate);
+    
+    useEffect(() => {
+        checkChangedUserInfo(navigation)
+   }, []);
     
     return (
         <Container style= {{backgroundColor:"#ffffff"}}>

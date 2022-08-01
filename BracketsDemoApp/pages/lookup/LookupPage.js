@@ -29,6 +29,7 @@ import store from '../../store/store';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import CheckBoxText from '../../components/CheckBoxText';
 import NetworkLoading from '../../components/NetworkLoading';
+import checkChangedUserInfo from '../../Functions/CheckChangedUserinfo';
 
 
 Date.prototype.addDays = function (days) {
@@ -143,6 +144,10 @@ function LookupPage({ route,navigation }) {
     };
   
   
+    useEffect(() => {
+      checkChangedUserInfo(navigation)
+    }, []);
+
     const getData = useCallback(async (code,std, edd, name, phone,shopId,doReciptCheck,compliteReceiptCheck,takeReciptCheck) => {
   
       const { data } = await axios.get(ip + "/api/lookup", {
