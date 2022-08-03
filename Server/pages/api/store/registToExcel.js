@@ -165,6 +165,28 @@ async function getStore(storeName) {
   return result;
 }
 
+async function getManagerStore(manager_id) {
+  const result = await excuteQuery({
+    query: `SELECT * 
+            FROM staff_store 
+            WHERE staff_store.staff_id = ?`,
+    values:[manager_id]
+  });
+
+  return result;
+}
+
+async function getStaffs(store_id,manager_id) {
+  const result = await excuteQuery({
+    query: `SELECT * FROM staff 
+            LEFT JOIN staff_store ON staff.staff_id = staff_store.staff_id
+            WHERE staff_store.store_id = ? AND NOT staff_store.staff_id = ?`,
+    values:[store_id,manager_id]
+  });
+
+  return result;
+}
+
 const controller = async (req, res) => {
   if (req.method === "POST") {
     console.log("/api/store/registToExcel");
@@ -179,9 +201,7 @@ const controller = async (req, res) => {
         
         for(let i =2; i<list.length; i++){
           const item = list[i]
-          
-
-          if( item["brand"] && item["manager_account"] && item["manager_email"] && item["manager_name"] && item["manager_phone"]
+          if( item["brand"] && item["manager_account"]  && item["manager_name"] && item["manager_phone"]
               && item["store_address"] && item["store_category"] && item["store_contact"] && item["store_name"] && item["use_mailbag"]){
 
 
@@ -233,11 +253,27 @@ const controller = async (req, res) => {
                 
               if(manager.length){
                 console.log(manager[0])
-                await setManagerStore(manager[0].staff_id,store.insertId)
+                const managerId = manager[0].staff_id
+        
+                await setManagerStore(managerId,store.insertId)
+                const managerStore = await getManagerStore(managerId)
+        
+                const staffs = await getStaffs(managerStore[0].store_id,managerId)
+                
+                for(let staff of staffs){
+                  await setManagerStore(staff.staff_id,store.insertId)
+                }
+
               }else{
+                let managerEmail = item["manager_email"]
+                if(managerEmail){
+                  managerEmail = emptySpace(item["manager_email"])
+                }else{
+                  managerEmail = null
+                }
                 const managerResult = await registManager(
                                     emptySpace(item["manager_account"]) ,
-                                    emptySpace(item["manager_email"]) ,
+                                    managerEmail,
                                     emptySpace(item["manager_name"]) ,
                                     emptySpace(item["manager_phone"]) ,
                                                     "A"
@@ -253,6 +289,8 @@ const controller = async (req, res) => {
               let result = item;
               result["reason"] = "중복된 매장명"
               failList.push(result)
+            }else{
+              console.log("error")
             }
           }
 
