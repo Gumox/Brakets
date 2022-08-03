@@ -58,7 +58,7 @@ const RepairSideBar =({path })=>{
 export default RepairSideBar
 const styles = {
     menu:{
-        backgroundColor:COLOR.MENU_MAIN,
+     backgroundColor:"rgb(250,250,250)",
         
         fontWeight:"bold",
     },

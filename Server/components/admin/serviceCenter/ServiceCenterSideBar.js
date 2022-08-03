@@ -43,7 +43,7 @@ const ServiceCenterSideBar =({setSelectedView = () => {} ,path})=>{
 export default ServiceCenterSideBar
 const styles = {
     menu:{
-        backgroundColor:COLOR.MENU_MAIN,
+     backgroundColor:"rgb(250,250,250)",
         color:"rgb(133,133,133)",
         fontWeight:"bold",
     },

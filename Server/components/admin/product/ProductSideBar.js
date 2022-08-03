@@ -88,7 +88,7 @@ const ProductSideBar =({path})=>{
 export default ProductSideBar
 const styles = {
     menu:{
-        backgroundColor:COLOR.MENU_MAIN,
+     backgroundColor:"rgb(250,250,250)",
         color:COLOR.BLACK,
         fontWeight:"bold",
     },

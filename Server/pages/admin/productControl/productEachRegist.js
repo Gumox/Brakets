@@ -114,7 +114,7 @@ const Wrapper = styled.div`
 }
 `;
 const SidebarSpace = styled.div`
-  background-color:${COLOR.MENU_MAIN};
+  background-color:rgb(250,250,250);
 `;
 const MainSpace=styled.div`
     width :100%;

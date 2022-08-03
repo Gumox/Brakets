@@ -37,7 +37,7 @@ const CustomerSideBar =({path})=>{
                 <Menu  style={styles.menu} iconShape="square">
                     <MenuItem></MenuItem>
                     
-                    <MenuItem style={{backgroundColor:COLOR.MENU_MAIN,color:listColor,fontWeight:"bold",}} onClick={()=>{
+                    <MenuItem style={{backgroundColor:"rgb(250,250,250)",color:listColor,fontWeight:"bold",}} onClick={()=>{
                        
                     }}
                     >고객 목록</MenuItem>
@@ -51,6 +51,6 @@ const CustomerSideBar =({path})=>{
 export default CustomerSideBar
 const styles = {
     menu:{
-        backgroundColor:COLOR.MENU_MAIN,color:COLOR.BLACK,fontWeight:"bold",
+     backgroundColor:"rgb(250,250,250)",color:COLOR.BLACK,fontWeight:"bold",
     },
 }
