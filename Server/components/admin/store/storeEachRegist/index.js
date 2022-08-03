@@ -357,7 +357,7 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         </CenterView>
                     </PrView>
                 </div>
-                <div style={{position:"relative"}}>
+                <div style={{position:"relative",zIndex:1}}>
                     
                     <PrView style={{borderRadius:"10px 10px 0 0"}}>
                         
@@ -375,7 +375,9 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                             { isNewManager && <InputLine style={{fontSize:15,textAlign:"center",flex:1}} placeholder="ex) 홍길동" value={managerName || ""} onChange={(e)=>{setManagerName(e.target.value)}}/>}
 
                             { !isNewManager && 
-                                <SearchFocus managerList={managerSearchList} handler={selectManagerHandler} focusSeter={focusHandler}/>
+                                <div style={{zIndex:10}}>
+                                    <SearchFocus managerList={managerSearchList} handler={selectManagerHandler} focusSeter={focusHandler}/>
+                                </div>
                             }
                             
                         </InputBox>
@@ -392,13 +394,18 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                         <InputBox style={{position:"relative",borderRadius:"0 10px 0 0",borderTop:`2px solid ${COLOR.LIGHT_GRAY}`,borderRight:`2px solid ${COLOR.LIGHT_GRAY}`}}>
                             <InputLine disabled={!isNewManager} style={{borderRadius:"0 10px 0 0",fontSize:15,textAlign:"center",flex:1}} placeholder="ex) example@kakao.com" value={managerAccount || ""} onChange={(e)=>{setManagerAccount(e.target.value)}}/>
                             
-                            <div style={{position:"absolute",top: 2, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
-                                {(!isAccountDuplicate && managerAccount) ?
-                                    <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
-                                    :
-                                    <div style={{color:COLOR.RED}}>사용불가</div>
-                                }
-                            </div>
+                            {isNewManager ?
+
+                                <div style={{position:"absolute",top: 2, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                                    {(!isAccountDuplicate && managerAccount) ?
+                                        <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                                        :
+                                        <div style={{color:COLOR.RED}}>사용불가</div>
+                                    }
+                                </div>
+                                :
+                                <></>
+                            }
 
                         </InputBox>
                     </PrView>
@@ -420,13 +427,17 @@ const StoreEachRegist = ({infos,brands,user,stores}) =>{
                                 onFocus={(e)=>{setManagerPhone(onFocusPhoneNumber(e.target.value))}}
                                 onBlur={(e)=>{setManagerPhone(onBlurPhoneNumber(e.target.value))}}
                             />
-                            <div style={{position:"absolute",top: 2, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
-                                {(!isPhoneDuplicate && managerPhone) ?
-                                    <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
-                                    :
-                                    <div style={{color:COLOR.RED}}>사용불가</div>
-                                }
-                            </div>
+                            {isNewManager ?
+                                <div style={{position:"absolute",top: 2, right:5, height:"35%",width:"25%",display:"flex",justifyContent:"center"}}>
+                                    {(!isPhoneDuplicate && managerPhone) ?
+                                        <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                                        :
+                                        <div style={{color:COLOR.RED}}>사용불가</div>
+                                    }
+                                </div>
+                            :
+                            <></>
+                            }
                         </InputBox>
 
                         <NameBox  style={{borderTop:`2px solid rgb(244,244,244)`}}>

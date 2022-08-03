@@ -83,6 +83,27 @@ async function setManagerStore(
   
     return resultStore;
 }
+async function getManagerStore(manager_id) {
+  const result = await excuteQuery({
+    query: `SELECT * 
+            FROM staff_store 
+            WHERE staff_store.staff_id = ?`,
+    values:[manager_id]
+  });
+
+  return result;
+}
+
+async function getStaffs(store_id,manager_id) {
+  const result = await excuteQuery({
+    query: `SELECT * FROM staff 
+            LEFT JOIN staff_store ON staff.staff_id = staff_store.staff_id
+            WHERE staff_store.store_id = ? AND NOT staff_store.staff_id = ?`,
+    values:[store_id,manager_id]
+  });
+
+  return result;
+}
 
 const Regist = async (req, res) => {
   if (req.method === "POST") {
@@ -120,9 +141,17 @@ const Regist = async (req, res) => {
       if (store.error) throw new Error(store.error);
 
       if(managerId){
-
+        
+        console.log("store")
         
         await setManagerStore(managerId,store.insertId)
+        const managerStore = await getManagerStore(managerId)
+
+        const staffs = await getStaffs(managerStore[0].store_id,managerId)
+        
+        for(let staff of staffs){
+          await setManagerStore(staff.staff_id,store.insertId)
+        }
 
         res.status(200).json({ data: store });
 
