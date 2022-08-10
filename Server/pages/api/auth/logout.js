@@ -19,7 +19,7 @@ const setStaffLog = async (staffId, account, uid)=>{
 const logout = async (req, res) => {
   if (req.method === "GET") {
 
-    const {
+    /*const {
         accessToken,
         staffId,
         account,
@@ -32,9 +32,9 @@ const logout = async (req, res) => {
     };
     console.log(accessToken);
     
-    axios.post(_url, '', { headers: _headers })*/
+    //axios.post(_url, '', { headers: _headers })
 
-    await setStaffLog(staffId, account, uid)
+    await setStaffLog(staffId, account, uid)*/
 
     setCookie(res, "token", "", {
       httpOnly: true,
