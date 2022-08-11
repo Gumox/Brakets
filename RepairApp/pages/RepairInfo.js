@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
 
 export default function RepairInfo({ route, navigation }) {
     const code = route.params.data;
+    const shop = store.getState().shopId;
     const [datas, setDatas] = useState([]);
     const [brand, setBrand] = useState('');
     const [storeName, setStoreName] = useState('');
@@ -105,7 +106,8 @@ export default function RepairInfo({ route, navigation }) {
             setStoreId(data.data['store_id'])
             setReceiverName(data.data["receiver_name"])
             
-            if (data.data["repair1_store_id"] === store.getState().shopId) {
+           
+            if(data.data["repair1_store_id"]===shop && data.data["repair1_result_id"] ){
                 console.log(data.data["repair1_complete_date"])
                 if(data.data["repair1_complete_date"]){
                     setShippingDate(formatDate(new Date(data.data["repair1_complete_date"])))
@@ -114,14 +116,25 @@ export default function RepairInfo({ route, navigation }) {
                 }
                 setRepairDetailId(data.data["repair1_detail_id"])
                 date = data.data["repair1_complete_date"]
-            } else if (data.data["repair2_store_id"] === store.getState().shopId) {
-                setShippingDate(formatDate(new Date(data.data["repair2_complete_date"])))
+            }else if(data.data["repair2_store_id"]===shop && data.data["repair2_result_id"]){
+                if(data.data["repair1_complete_date"]){
+                    setShippingDate(formatDate(new Date(data.data["repair2_complete_date"])))
+                }else{
+                    setShippingDate('')
+                }
                 setRepairDetailId(data.data["repair2_detail_id"])
                 date = data.data["repair2_complete_date"] 
-            } else if (data.data["repair3_store_id"] === store.getState().shopId) {
-                setShippingDate(formatDate(new Date(data.data["repair3_complete_date"])))
+            }else if(data.data["repair3_store_id"]===shop && data.data["repair3_result_id"]){
+                if(data.data["repair1_complete_date"]){
+                    setShippingDate(formatDate(new Date(data.data["repair3_complete_date"])))
+                }else{
+                    setShippingDate('')
+                }
                 setRepairDetailId(data.data["repair3_detail_id"])
                 date = data.data["repair3_complete_date"] 
+            }else{
+                Alert.alert("해당 제품에 맞는 수선정보가 존재 하지 않습니다.","수선 접수를 진행해 주세요")
+                navigation.goBack();
             }
             if(Object.keys(data.returnd).length){
                 setIsReceiverNull(true)

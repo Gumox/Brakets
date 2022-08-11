@@ -16,6 +16,7 @@ import NetworkLoading from '../components/NetworkLoading';
 
 function RepairMore({ navigation, route }) {
     const code = route.params.data;
+    const shop = store.getState().shopId;
     
     const [cardId, setCardID] = useState(code);
     const [receiptId, setReceiptId] = useState(code);
@@ -65,6 +66,18 @@ function RepairMore({ navigation, route }) {
         setRequire(data.data["store_message"])
         setImage(data.data["image"])
         store.dispatch({type:"IMG",img:Ip+data.data["image"]})
+
+        
+        if(data.data["repair1_store_id"]===shop && data.data["repair1_result_id"] ){
+
+        }else if(data.data["repair2_store_id"]===shop && data.data["repair2_result_id"]){
+            
+        }else if(data.data["repair3_store_id"]===shop && data.data["repair3_result_id"]){
+            
+        }else{
+            Alert.alert("해당 제품에 맞는 수선정보가 존재 하지 않습니다.","수선 접수를 진행해 주세요")
+            navigation.goBack();
+        }
         const beforeImgList =[];
         const afterImgList =[];                       
         for (let i = 0; i < data.imageList.length; i++) {

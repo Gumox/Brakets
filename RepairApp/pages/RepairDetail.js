@@ -16,6 +16,7 @@ import store from '../store/store';
 import ip from '../serverIp/Ip';
 import {NeedAfterView} from "../functions/CheckNeedAfterImg"
 import COLOR from '../contents/color';
+import returnDate from '../functions/ReturnDate';
 
 function RepairDetail({ navigation, route }) {
     const code = route.params.data;
@@ -36,7 +37,7 @@ function RepairDetail({ navigation, route }) {
     const [shippingMethod, setShippingMethod] = useState(1);
     const [shippingCost, setShippingCost] = useState("0");
     const [datas,setDatas] =useState([])
-    const [shippingPlace, setShippingPlace] = useState('');
+    const [shippingPlace, setShippingPlace] = useState(null);
     const [headquarterStoreId,setHeadquarterStoreId] =useState(0)
     const [headquarterStoreName,setHeadquarterStoreName] =useState('')
 
@@ -44,7 +45,6 @@ function RepairDetail({ navigation, route }) {
     const [repairDetailId,setRepairDetailId] = useState('')
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [btnDisabled, setBtnDiabled] = useState(true);
     const [beforeImages,setBeforeImages] =useState([]);        //제품 수선 전 세부 사진
     const [afterImages,setAfterImages] =useState([]);
     const [needImages,setNeedImages] =useState([]); 
@@ -70,11 +70,8 @@ function RepairDetail({ navigation, route }) {
         selectBackground = COLOR.ANOTHER_GRAY;
         selectTextColor = COLOR.LIGHT_SOIL;
         inputTextColor = COLOR.WHITE;
-        console.log("Dimensions.get().width")
-        console.log(Dimensions.get("window").width)
 
     }
-
     
     const alertFunctionCode = ()=>{
         Alert.alert(
@@ -89,7 +86,7 @@ function RepairDetail({ navigation, route }) {
     const getTargetData = useCallback(async (receiptId) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${receiptId}`);
         //console.log(data.needRepairImage)
-        console.log()
+        console.log(data)
         if(data.data === undefined){
             console.log("undefined")
             alertFunctionCode();
@@ -108,18 +105,30 @@ function RepairDetail({ navigation, route }) {
             setHeadquarterStoreId(data.data["headquarter_store_id"])
             setHeadquarterStoreName(data.data["headquarter_store_name"])
 
-            if(data.data["repair1_store_id"]===shop){
+            if(data.data["repair1_store_id"]===shop && data.data["repair1_result_id"] ){
                 console.log("repair1_store_id")
                 setRepairShop(data.data["repair1_store_id"])
                 setRepairDetailId(data.data["repair1_detail_id"])
-            }else if(data.data["repair2_store_id"]===shop){
+                if(data.data["receiver"] === data.data['store_id'] || data.data["receiver"] === data.data['headquarter_store_id']  ){
+                    setShippingPlace(data.data["receiver"])
+                    setShippingDate(returnDate(data.data["repair1_complete_date"]))
+                }
+            }else if(data.data["repair2_store_id"]===shop && data.data["repair2_result_id"]){
                 console.log("repair2_store_id")
                 setRepairShop(data.data["repair2_store_id"])
                 setRepairDetailId(data.data["repair2_detail_id"])
-            }else if(data.data["repair3_store_id"]===shop){
+                if(data.data["receiver"] === data.data['store_id'] || data.data["receiver"] === data.data['headquarter_store_id']  ){
+                    setShippingPlace(data.data["receiver"])
+                    setShippingDate(returnDate(data.data["repair1_complete_date"]))
+                }
+            }else if(data.data["repair3_store_id"]===shop && data.data["repair3_result_id"]){
                 console.log("repair3_store_id")
                 setRepairShop(data.data["repair3_store_id"])
                 setRepairDetailId(data.data["repair3_detail_id"])
+                if(data.data["receiver"] === data.data['store_id'] || data.data["receiver"] === data.data['headquarter_store_id']  ){
+                    setShippingPlace(data.data["receiver"])
+                    setShippingDate(returnDate(data.data["repair1_complete_date"]))
+                }
             }else{
                 console.log(shop)
                 Alert.alert("해당 제품에 맞는 수선정보가 존재 하지 않습니다.","수선 접수를 진행해 주세요")
@@ -412,6 +421,7 @@ function RepairDetail({ navigation, route }) {
                         <RNPickerSelect
                             placeholder={{ label: '[필수] 옵션을 선택하세요', value: null }}
                             style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: selectTextColor}} }
+                            value = {shippingPlace}
                             onValueChange={(value,index) => {
                                 console.log("step: ",stepArr[index])
                                 setStep(stepArr[index])
