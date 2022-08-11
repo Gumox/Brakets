@@ -1,9 +1,9 @@
-import React,{useEffect} from 'react';
+import React,{useState,useEffect} from 'react';
 import Contents from '../../../components/Contents';
 import Button from '../../../components/Button';
 import styled from 'styled-components/native';
 import ContainView from '../../../components/ContainView';
-import {Alert, Image, View,Text,useState, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler, Touchable} from 'react-native';
+import {Alert, Image, View,Text, StyleSheet,Modal ,Pressable,Dimensions,ScrollView,BackHandler, Touchable} from 'react-native';
 import StateBarSolid from '../../../components/StateBarSolid';
 import StateBarVoid from '../../../components/StateBarVoid';
 import store from '../../../store/store';
@@ -15,6 +15,7 @@ import Bottom from '../../../components/Bottom';
 import ip from '../../../serverIp/Ip';
 import { PathToFlie } from '../../../Functions/PathToFlie';
 import {useNetInfo}from "@react-native-community/netinfo";
+import NetworkLoading from '../../../components/NetworkLoading';
 
 
 function ShopStepThree5({route,navigation}) {
@@ -41,10 +42,12 @@ function ShopStepThree5({route,navigation}) {
 
     const [pcategory_id,setPcategory_id] =React.useState();
     const [receiver_id,setReceiver_id] =React.useState();
+    const [visable,setVisable]= useState(false)
     
     const netInfo = useNetInfo();
 
     const updateReceipt = async (receipt_id) => {
+        setVisable(true)
         let formdata = new FormData();
 
         formdata.append("step", "3");
@@ -77,7 +80,7 @@ function ShopStepThree5({route,navigation}) {
         } catch (error) {
             console.error(error);
         } finally {
-
+            setVisable(false)
         }
     }
     
@@ -159,7 +162,7 @@ function ShopStepThree5({route,navigation}) {
 
             
             
-            <View  >
+            <View>
                    
                    <InfoView>
                        <Label>{selectedType}</Label>
@@ -191,6 +194,7 @@ function ShopStepThree5({route,navigation}) {
                     4단계: 서비스 바코드 스캔 
                 </Button>
             </CenterView>
+            <NetworkLoading visable={visable} setVisable={setVisable} cancelOn={false}/>
             <Bottom navigation={navigation}/>
         </ContainView>
     )

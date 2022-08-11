@@ -27,18 +27,10 @@ function LookupInfo( { route,navigation } ) {
     const needImages = route.params.needImages
     const images = route.params.images;
 
-    console.log("*******************")
-    console.log()
-    console.log()
-    console.log()
-    console.log(images)
-    console.log()
-    console.log()
-    console.log("*********************")
     const step = LookupCheckStep(data)
 
-    const [number,setNumber] =useState(store.getState().number);
-    const [text, onChangeText] = useState();
+    //const [number,setNumber] =useState(store.getState().number);
+    //const [text, onChangeText] = useState();
 
     const [cardCode,setCardCode] = useState(route.params.code);              //서비스카드번호
     const [checkReceipt,setCheckReceipt] = useState();      //접수구분
