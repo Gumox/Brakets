@@ -133,7 +133,7 @@ const ResizableList = ({ searchList, getTargetData = () => {}, targetData }) => 
         {Header: () => (<div style={{textAlign:"center"}}>{'매장구분'}</div>), accessor: '매장구분',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'매장연락처'}</div>), accessor: '매장연락처',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'매장접수일'}</div>), accessor: '매장접수일',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
-        {Header: () => (<div style={{textAlign:"center"}}>{'고객ID'}</div>), accessor: '고객ID',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
+        //{Header: () => (<div style={{textAlign:"center"}}>{'고객ID'}</div>), accessor: '고객ID',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{ '접수구분'}</div>), accessor: '접수구분',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'고객'}</div>), accessor: '고객',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
         {Header: () => (<div style={{textAlign:"center"}}>{'고객연락처'}</div>), accessor: '고객연락처',Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>},
