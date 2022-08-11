@@ -26,7 +26,13 @@ const RepairTypeEachRegistControl = ({
         let repairLists = _.filter(repairShops, function(o){
             return o.brand_id == value
         })
-        setSortedRepairShop(sortArray2(repairLists))
+        if(repairLists.length>1){
+            let conArr = [{repair_shop_id : null ,repair_shop_name : "선택"}]
+            setSortedRepairShop(conArr.concat(sortArray2(repairLists)))
+        }else{
+            setSortedRepairShop(sortArray2(repairLists))
+            setRepairShop(repairLists[0].repair_shop_id)
+        }
     }
 
     const repairPriceHandler =(value)=>{
@@ -57,27 +63,31 @@ const RepairTypeEachRegistControl = ({
     }
 
     const regist = async() =>{
-        let repairText = String(repairName).replace(/ /g,"")
-        if(String(repairPrice).length > 0 && repairText.length > 0){
-            let data ={
-                repairName : repairName,
-                repairPrice : String(repairPrice).replace(/[^0-9]/g, ''),
-                headquarterId : user.headquarter_id,
-                brandId :brand,
-                storeId :repairShop
+        console.log(repairShop)
+        if(repairShop){
+            let repairText = (repairName).trim(/ /g,"")
+            if(repairPrice && repairName  ){
+                console.log(String(repairPrice) , repairText)
+                let data ={
+                    repairName : repairName,
+                    repairPrice : String(repairPrice).replace(/[^0-9]/g, ''),
+                    headquarterId : user.headquarter_id,
+                    brandId :brand,
+                    storeId :repairShop
+                }
+                
+                const [result] = await Promise.all([
+                    axios
+                    .post(`${process.env.API_URL}/type/repairTypeRegist`,data)
+                    .then(({ data }) => data.body), 
+                    ])
+                alert("새로운 수선내용 및 수선단가가 등록되었습니다.")
+                router.push("/admin/platformControl/controlRepairTypeList")
+            }else if(!repairPrice){
+                alert("수선 단가를 입력해주세요")
+            }else if(!repairName ){
+                alert("수선 내용을 입력해주세요")
             }
-            
-            const [result] = await Promise.all([
-                axios
-                .post(`${process.env.API_URL}/type/repairTypeRegist`,data)
-                .then(({ data }) => data.body), 
-                ])
-            alert("새로운 수선내용 및 수선단가가 등록되었습니다.")
-            router.push("/admin/platformControl/controlRepairTypeList")
-        }else if(String(repairPrice).length > 0){
-            alert("수선 단가를 입력해주세요")
-        }else if(repairText.length > 0){
-            alert("수선 내용을 입력해주세요")
         }
     }
   
