@@ -26,11 +26,6 @@ function RepairReceiptModal (props) {
   const [lineColor,setLineColor] = useState()
 
 
-  const [fault,setFault] = useState([])
-  const [judgment,setJudgment] = useState([])
-  const [analysis,setAnalysis] = useState([])
-  const [repiarType,setRepiarType] = useState([])
-
   const [cancelSJN,setCancelSJN] = useState()
   const [cancelSJI,setCancelSJI] = useState()
   const [cancelSF,setCancelSF] = useState()
@@ -219,7 +214,6 @@ function RepairReceiptModal (props) {
                   <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>브랜드</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.brand_name}</ItemTextBottom></ItemBox>
                   <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>서비스 번호</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.receipt_code}</ItemTextBottom></ItemBox>
                   <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>수선처</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{info.name}</ItemTextBottom></ItemBox>
-                  <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>생산업체</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.mfr_name}</ItemTextBottom></ItemBox>
                 </LeView>
                 <LeView>
                   <ItemBox><ItemTextTop style={{fontSize:fontSizeTop}}>매장명</ItemTextTop><ItemTextBottom style={{fontSize:fontSizeBottom}}>{el.name}</ItemTextBottom></ItemBox>
