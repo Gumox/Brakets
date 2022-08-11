@@ -63,11 +63,9 @@ const RepairTypeEachRegistControl = ({
     }
 
     const regist = async() =>{
-        console.log(repairShop)
         if(repairShop){
             let repairText = (repairName).trim(/ /g,"")
             if(repairPrice && repairName  ){
-                console.log(String(repairPrice) , repairText)
                 let data ={
                     repairName : repairName,
                     repairPrice : String(repairPrice).replace(/[^0-9]/g, ''),

@@ -155,7 +155,7 @@ async function getReceipt(query, values) {
             LEFT JOIN claim ON claim.claim_id = receipt.claim
             LEFT JOIN staff ON staff.staff_id = receipt.staff_id
             LEFT JOIN staff AS manager ON manager.staff_id = receipt.manager_id
-            WHERE receipt.step = 1 ${query}`,
+            WHERE receipt.step > 0 ${query}`,
     values,
   });
 

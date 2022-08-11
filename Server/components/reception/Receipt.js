@@ -330,8 +330,8 @@ const ReceiptInfo = ({
                   </Field>
                 </Row>
               ))}
-              <Row>
-                <Field marginRight="10px">
+              <Row style={{display:"flex",justifyContent:"center"}}>
+                {/*<Field marginRight="10px">
                   <Input
                     title="생산업체"
                     name={RECEIPT.MANUFACTURER_CODE}
@@ -345,7 +345,7 @@ const ReceiptInfo = ({
                     styleOptions={{ width: "150px" }}
                     disabled={true}
                   />
-                </Field>
+                </Field>*/}
                 <Field marginRight="10px">
                   <Input
                     type="date"
