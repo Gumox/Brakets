@@ -81,7 +81,7 @@ function ShopStepThree4({route,navigation}) {
     const [sendList,setSendList] = React.useState([]);
     const [itemList , setItemList] = React.useState([]);
     const productCategories = store.getState().getProductCategory;
-    const  [receiverList,setReceiverList] = React.useState(store.getState(). receiverList);
+    const  [receiverList,setReceiverList] = React.useState(store.getState().receiverList);
 
     const netInfo = useNetInfo();
 

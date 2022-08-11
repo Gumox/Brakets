@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useCallback } from 'react';
-import { Text, Image, Alert, View, Pressable, BackHandler,TextInput,ImageBackground,Appearance} from 'react-native';
+import { Text, Image, Alert, View, Pressable, BackHandler,TextInput,ImageBackground,Appearance,Dimensions} from 'react-native';
 import dayjs from 'dayjs';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RNPickerSelect from 'react-native-picker-select';
@@ -51,7 +51,12 @@ function RepairDetail({ navigation, route }) {
     
     const stepArr =[1,4,5]
     const [step,setStep] = useState()
+    const sImageWidth = Dimensions.get("window").width/4
+    const sImageHeight = sImageWidth*4/3
 
+    const bImageWidth = Dimensions.get("window").width/3
+    const bImageHeight = bImageWidth*4/3
+    
     let beforeImgList = []
     let afterImgList = []
 
@@ -65,6 +70,8 @@ function RepairDetail({ navigation, route }) {
         selectBackground = COLOR.ANOTHER_GRAY;
         selectTextColor = COLOR.LIGHT_SOIL;
         inputTextColor = COLOR.WHITE;
+        console.log("Dimensions.get().width")
+        console.log(Dimensions.get("window").width)
 
     }
 
@@ -158,10 +165,10 @@ function RepairDetail({ navigation, route }) {
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                     <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
-                        <Image style={{width:90,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
+                        <Image style={{width:sImageWidth,height:sImageHeight, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
                     <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
-                        <ImageBackground style={{width:90,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : obj}}></ImageBackground>
+                        <ImageBackground style={{width:sImageWidth,height:sImageHeight, margin:15, padding:10, marginRight:30, backgroundColor:"#828282"}} source={{uri : obj}}></ImageBackground>
                     </Pressable>
                 </View>
             )
@@ -170,10 +177,10 @@ function RepairDetail({ navigation, route }) {
             before=(
                 <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                     <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
-                        <Image style={{width:90,height:120, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
+                        <Image style={{width:sImageWidth,height:sImageHeight, margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                     </Pressable>
                     <Pressable onPress={()=>{navigation.navigate("TakePhoto",{key:"CloseShot",data:code ,store:(key+1)})}}>
-                        <ImageBackground style={{width:90,height:120, margin:15, padding:10, marginRight:30, backgroundColor:"#828282",justifyContent:"center",alignItems:"center"}} source={{uri : afterImage}}>
+                        <ImageBackground style={{width:sImageWidth,height:sImageHeight, margin:15, padding:10, marginRight:30, backgroundColor:"#828282",justifyContent:"center",alignItems:"center"}} source={{uri : afterImage}}>
                             <Text style={{color:"#FFFFFF"}}>사진을</Text>
                             <Text style={{color:"#FFFFFF"}}>추가하거나</Text>
                             <Text style={{color:"#FFFFFF"}}>변경하려면</Text>
@@ -310,7 +317,7 @@ function RepairDetail({ navigation, route }) {
                         <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:Ip+image})}}>
                         <View style = {{justifyContent: "center", alignItems: "center"}}>
                             <Image
-                                style={{ width: 120, height: 160 }}
+                                style={{ width: bImageWidth, height: bImageHeight }}
                                 source={
                                     { uri: Ip+image }
                                 }

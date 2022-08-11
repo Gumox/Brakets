@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Bottom from '../components/Bottom';
 import Button from '../components/Button';
 import { Text } from 'react-native';
+import ContainView from '../components/ContainView';
 
 function FindRoute({navigation}, _route, _prdCode,_datas){
     console.log("--------------------------------")
@@ -42,7 +43,7 @@ function InputAlternativeNumber({ navigation, route }) {
     }
 
     return (
-        <>
+        <ContainView>
             <Container>
                     <TitleView>
                         <Label>  코드 수동 입력 </Label>
@@ -68,7 +69,7 @@ function InputAlternativeNumber({ navigation, route }) {
 
             </Container>
             <Bottom navigation={navigation} />
-        </>
+        </ContainView>
     );
 }
 

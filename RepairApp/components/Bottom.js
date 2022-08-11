@@ -20,7 +20,7 @@ function Bottom(props){
 
       <BottomButton onPress = { () => props.navigation.navigate('RepairStepOne')}>
           <BottomButtonText>
-              홈
+              설정
           </BottomButtonText>
       </BottomButton>      
             

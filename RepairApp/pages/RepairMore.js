@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useCallback } from 'react';
-import { Text, Image, Alert, View, Pressable } from 'react-native';
+import { Text, Image, Alert, View, Pressable ,Dimensions} from 'react-native';
 import dayjs from 'dayjs';
 import axios from "axios";
 import _ from 'lodash';
@@ -31,10 +31,30 @@ function RepairMore({ navigation, route }) {
     const [afterImages,setAfterImages] =useState([]);
     const [needImages,setNeedImages] =useState([]);
     const [visable,setVisable] = useState(false)
+    
+    const sImageWidth = Dimensions.get("window").width/4
+    const sImageHeight = sImageWidth*4/3
+
+    const bImageWidth = Dimensions.get("window").width/3
+    const bImageHeight = bImageWidth*4/3
 
     const [takeNeedPhotos,setTakeNeedPhotos] = useState(store.getState().needPhotos);
+
+    const alertFunction = () => {
+        Alert.alert(
+            "서비스카드 오류",
+            "올바른 서비스 카드가 아닙니다",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        );
+    }
     const getTargetData = useCallback(async (code) => {
         const { data } = await axios.get(Ip+`/api/RepairDetailInfo?code=${code}`);
+        if (data === null || data === '') {
+            alertFunction();
+            navigation.goBack();
+        }
         setBrandNum(data.data['brand_name'])
         setStoreName(data.data['store_name'])
         setReceiptId(data.data['receipt_id'])
@@ -57,18 +77,11 @@ function RepairMore({ navigation, route }) {
         }
         const needImages =[]
         data.needRepairImage.forEach((obj,index) => {
-            console.log(obj)
             needImages.push({photo:Ip+obj["need_point_image"] , repair_need_id:obj["repair_need_id"],after:Ip+obj["after_need_point_image"],num : obj["number"]})
-            console.log()
-            console.log(needImages)
-            console.log()
             
         });
         setBeforeImages(beforeImgList)
         setAfterImages(afterImgList)
-        console.log("********************************")
-            console.log(needImages.length)
-            console.log()
         if(needImages.length>0){
             let uniqueArr =_.uniqBy([...needImages,...takeNeedPhotos], "repair_need_id");
             setTakeNeedPhotos(uniqueArr)
@@ -78,6 +91,7 @@ function RepairMore({ navigation, route }) {
         ////console.log("error : "+Ip+data.data["image"])
         
     });
+    
 
     const postRepairNeedPoint = async (receipt_id,image,takeNeedPhotos) => {
         let formdata = new FormData();
@@ -85,7 +99,6 @@ function RepairMore({ navigation, route }) {
         formdata.append("receipt", receipt_id);
         formdata.append("store", store.getState().shopId);
         formdata.append("image",  PathToFlie(image));
-        console.log(takeNeedPhotos)
 
         let sortedPhoto = _.sortBy(takeNeedPhotos,"num")
 
@@ -98,10 +111,6 @@ function RepairMore({ navigation, route }) {
             });
             
         }
-        console.log()
-        console.log()
-        console.log()
-        console.log(formdata["_parts"])
         
         
         try {
@@ -145,7 +154,7 @@ function RepairMore({ navigation, route }) {
         before =(
             <View key={key} style ={{flexDirection:"row",justifyContent : "space-between"}}> 
                 <Pressable onPress={()=>{navigation.navigate("PhotoControl",{img:element})}}>
-                    <Image style={{width: 90, height: 120 , margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
+                    <Image style={{width: sImageWidth, height: sImageHeight , margin:15, padding:10, marginLeft:30}} source={{uri : element}}></Image>
                 </Pressable>
                 <Pressable onPress={()=>{
                     if(afterImage !== null){
@@ -153,7 +162,7 @@ function RepairMore({ navigation, route }) {
                         navigation.navigate("PhotoControl",{img:afterImage})
                     }
                 }}>
-                    <Image style={{width: 90, height: 120 , margin:15, padding:10, marginRight:30}} source={{uri : afterImage}}></Image>
+                    <Image style={{width: sImageWidth, height: sImageHeight , margin:15, padding:10, marginRight:30}} source={{uri : afterImage}}></Image>
                 </Pressable>
             </View>
         )
@@ -180,7 +189,7 @@ function RepairMore({ navigation, route }) {
                 <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
                     <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image ,code:code})}}>
                         <Image
-                            style={{ width: 120, height: 160 }}
+                            style={{ width: bImageWidth, height: bImageHeight }}
                             source={
                                 { uri: store.getState().photo }
                             }
@@ -197,7 +206,7 @@ function RepairMore({ navigation, route }) {
                 <View style = {{flexDirection:"row", alignItems: "center",justifyContent:"space-around"}}>
                     <Pressable onPress={() => {navigation.navigate('PhotoDraw',{photo : Ip+image ,code:code})}}>
                         <Image
-                            style={{ width: 120, height: 160 }}
+                            style={{ width: bImageWidth, height: bImageHeight }}
                             source={
                                 { uri: Ip+image }
                             }
@@ -221,23 +230,23 @@ function RepairMore({ navigation, route }) {
                 let photo=(
                     <View key={index+1} style ={{flexDirection:"row",justifyContent : "space-around"}}>
     
-                    <Pressable  style={{ width: 90, height: 140 , paddingTop:10,paddingBottom:10}} onPress={() => {navigation.navigate("AddPhotoControl",{img:obj.photo,code:code})}}>
+                    <Pressable  style={{ width: sImageWidth, height: 140 , paddingTop:10,paddingBottom:10}} onPress={() => {navigation.navigate("AddPhotoControl",{img:obj.photo,code:code})}}>
                         <Image
-                            style={{ width: 90, height: 120 }}
+                            style={{ width: sImageWidth, height: sImageHeight }}
                             source={
                                 { uri: obj.photo }
                             }
                         />
                     </Pressable>
                     
-                    <Pressable  style={{ width: 90, height: 140 , paddingTop:10,paddingBottom:10}} 
+                    <Pressable  style={{ width: sImageWidth, height: 140 , paddingTop:10,paddingBottom:10}} 
                         onPress={() => {
                             if(obj.after){
                                 navigation.navigate("PhotoControl",{img:obj.after})
                             }
                         }}>
                         <Image
-                            style={{ width: 90, height: 120  }}
+                            style={{ width: sImageWidth, height: sImageHeight  }}
                             source={
                                 { uri: obj.after }
                             }
@@ -253,14 +262,14 @@ function RepairMore({ navigation, route }) {
                     <View key={takeNeedPhotos.length+1} style ={{flexDirection:"row",justifyContent : "space-between"}}>
     
                         <Pressable onPress={() => {navigation.navigate('TakePhoto',{key:"need",code:code})}}>
-                            <View style={{width: 90, height: 120 ,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
+                            <View style={{width: sImageWidth, height: sImageHeight ,justifyContent:"center",alignContent:"center",backgroundColor:"#828282" ,margin:15, padding:10, marginLeft:30}}>
                                 <Text style={{color:"#ffffff",fontSize:16}}>{" 필요 수선"}</Text>
                                 <Text style={{color:"#ffffff",fontSize:16}}>{" 부위 추가"}</Text>
                             </View>
                         </Pressable>
                         
                         <Pressable >
-                        <View style={{width: 90, height: 120 ,margin:15, padding:10, marginLeft:30}}>
+                        <View style={{width: sImageWidth, height: sImageHeight ,margin:15, padding:10, marginLeft:30}}>
     
                         </View>
                         </Pressable>
