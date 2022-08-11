@@ -136,11 +136,11 @@ const getFeeInfo = async(id) =>{
     values: [id],
   });
 }
-const updateReceiptFee = async (receiptId,fee1,fee2,fee3) => {
+const updateReceiptFee = async (receiptId,fee1,fee2,fee3,query) => {
   
   const insert = fee1+fee2+fee3
   return excuteQuery({
-    query: `UPDATE receipt SET fee=? WHERE receipt_id=?`,
+    query: `UPDATE receipt SET fee=? ${query} WHERE receipt_id=? `,
     values: [insert,receiptId],
   });
 };
@@ -177,9 +177,7 @@ const sendRepairInfo = async (req, res) => {
     const cashreceipt_num = req.body.cashreceipt_num;
     const repair_detail_id = req.body.repair_detail_id;
 
-    console.log("store")
     console.log(req.body)
-    console.log(1,"repair_detail_id:",repair_detail_id)
     
     try {
         const info = await getReceiptInfo(receipt_id)
@@ -193,10 +191,8 @@ const sendRepairInfo = async (req, res) => {
               repair3_type_id,repair3_count,repair3_price,repair3_redo,
               paid,fee,cashreceipt_num,
             ); 
-            console.log(result)
             const id = result.insertId
             const fees = await getFeeInfo(receipt_id)
-            console.log(fees)
             //const feeUpdate= updateReceiptFee(receipt_id,fees[0].repair1_fee,fees[0].repair2_fee,fees[0].repair3_fee,)
             if(info[0].repair1_detail_id === null){
               const update =updateReceiptRepair(id,receipt_id,1,paid)
@@ -221,8 +217,11 @@ const sendRepairInfo = async (req, res) => {
             );
             
             const fees =  await getFeeInfo(receipt_id)
-            
-            const feeUpdate= updateReceiptFee(receipt_id,fees[0].repair1_fee,fees[0].repair2_fee,fees[0].repair3_fee,)
+            let query=''
+            if(paid){
+              query =`, paid = ${paid}`
+            }
+            const feeUpdate = updateReceiptFee(receipt_id,fees[0].repair1_fee,fees[0].repair2_fee,fees[0].repair3_fee,query)
               
             console.log(result)
             res.status(200).json({ msg: "suc" });

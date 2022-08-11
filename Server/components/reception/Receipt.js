@@ -181,6 +181,12 @@ const ReceiptInfo = ({
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetData[RECEIPT.RESULT_ID]]);
+  console.log( targetData[RECEIPT.PAID], targetData[RECEIPT.PAID] , parseInt(targetData[RECEIPT.PAID]) )
+  if(typeof targetData[RECEIPT.PAID] === "boolean" ){
+    targetData[RECEIPT.PAID]
+  }else{
+     parseInt(targetData[RECEIPT.PAID]) === 1 
+  }
   return (
     <Wrapper>
       <SectionRow>
