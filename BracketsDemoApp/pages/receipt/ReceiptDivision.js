@@ -98,7 +98,7 @@ function ReceiptDivision({navigation}) {
     },[]);
     
     useEffect(() => {
-         checkChangedUserInfo(navigation)
+        checkChangedUserInfo(navigation)
     }, []);
 
     return (

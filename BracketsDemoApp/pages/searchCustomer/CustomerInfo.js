@@ -73,7 +73,7 @@ export default class CustomerInfo extends Component {
                 console.log(json);
 
             
-                if(json.receipt_id != undefined){
+                if(json.receipt_id){
 
                     store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
                     
@@ -83,7 +83,6 @@ export default class CustomerInfo extends Component {
             .catch((error) => {
             // 예외 처리
                 if(this.state.counter<1){
-                    console.log("001002030708090")
                     this.tick()
                     this.addReceipt()
                 }else{
@@ -98,7 +97,6 @@ export default class CustomerInfo extends Component {
         var cstSign;
         if(store.getState().customerSign == ""){console.log("''")}
         if(store.getState().customerSign != ""){
-            console.log("this Sav :    "+store.getState().customerSign);
             cstSign =(
                 <Image source={{uri: store.getState().customerSign}} style={{width:250,height:140, position : 'absolute',left:0,top:0}}/>
             )

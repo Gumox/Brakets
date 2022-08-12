@@ -25,7 +25,8 @@ function ShopStepTwo({navigation}) {
        
     }
     
-    const getProductCategory = async () => {
+    const getProductCategory = async (receipt_id) => {
+        if(receipt_id){
         const body =  JSON.stringify(bodyData)
 
         axios.post(ip+'/api/getProductCategory', body , {
@@ -55,7 +56,7 @@ function ShopStepTwo({navigation}) {
             // 예외 처리
             console.error(error);
             })
-
+        }
         
         /*try {
             const response = await fetch(ip+'/api/getProductCategory',{method: 'POST',
@@ -83,29 +84,33 @@ function ShopStepTwo({navigation}) {
     }
 
     const updateReceipt = async (receipt_id,typeN) => {
-        var formdata = new FormData();
+        let formdata = new FormData();
 
-        formdata.append("step", 2);
-        formdata.append("receipt", receipt_id);
-        formdata.append("type", typeN);
-        console.log(formdata)
+        if(receipt_id){
+            formdata.append("step", 2);
+            formdata.append("receipt", receipt_id);
+            formdata.append("type", typeN);
+            console.log(formdata)
 
-        axios.post(ip+'/api/updateReceipt', formdata , {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }})
-            .then((response) => {
-            // 응답 처리
-                const json =  response.data;
-                console.log(json);
-            
+            axios.post(ip+'/api/updateReceipt', formdata , {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                }})
+                .then((response) => {
+                // 응답 처리
+                    const json =  response.data;
+                    console.log(json);
                 
-            })
-            .catch((error) => {
-            // 예외 처리
-            console.error(error);
-            })
-
+                    
+                })
+                .catch((error) => {
+                // 예외 처리
+                console.error(error);
+                })
+        }else{
+            alert("전송오류")
+            navigation.popToTop()
+        }
         /*try {
             const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
             headers: {
@@ -141,7 +146,7 @@ function ShopStepTwo({navigation}) {
                     if(netInfo.isConnected){
                         updateReceipt(store.getState().receipt_id,1)
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:1}});
-                        getProductCategory();
+                        getProductCategory(store.getState().receipt_id);
                     }else{
                         Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
@@ -152,7 +157,7 @@ function ShopStepTwo({navigation}) {
                         updateReceipt(store.getState().receipt_id,3)
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"환불",id:3}});
                         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                        getProductCategory();
+                        getProductCategory(store.getState().receipt_id);
                     }else{
                         Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
@@ -163,7 +168,7 @@ function ShopStepTwo({navigation}) {
                         updateReceipt(store.getState().receipt_id,2)
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
                         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                        getProductCategory();
+                        getProductCategory(store.getState().receipt_id);
                     }else{
                         Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }
@@ -173,7 +178,7 @@ function ShopStepTwo({navigation}) {
                         updateReceipt(store.getState().receipt_id,4)
                         store.dispatch({type:'REQUIREMENT',requirement:{name:"심의",id:4}});
                         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
-                        getProductCategory();
+                        getProductCategory(store.getState().receipt_id);
                     }else{
                         Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
                     }

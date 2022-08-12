@@ -183,7 +183,7 @@ function LookupInfo( { route,navigation } ) {
                     <InputText>{cardCode}</InputText>
 
                     <TopText>접수 구분</TopText>
-                    <InputText>{checkReceipt}</InputText>
+                    <InputText>{checkReceipt ? checkReceipt : "미등록"}</InputText>
             
                     <TopText>매장명</TopText>
                     <InputText>{data.store_name}</InputText>
@@ -202,7 +202,7 @@ function LookupInfo( { route,navigation } ) {
                     )}
                 </InfoView>
 
-                {(<InfoView>
+                {productCode && (<InfoView>
                     <Half>
                       <HalfLine>
                             <TopText>시즌</TopText>

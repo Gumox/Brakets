@@ -2,7 +2,7 @@ import React from 'react'
 import {Modal, Text,View,ActivityIndicator,StyleSheet, Pressable} from 'react-native'
 import { BackgroundImage } from 'react-native-elements/dist/config'
 
-function NetworkLoading({visable,setVisable =()=>{},cancelOn = true}){
+function NetworkLoading({visable,setVisable =()=>{},cancelOn = true,text}){
     return(
         <View>
             <Modal
@@ -16,6 +16,7 @@ function NetworkLoading({visable,setVisable =()=>{},cancelOn = true}){
                            
                            <View style={styles.container}>
                                 <ActivityIndicator size="large" color="rgb(0,80,150)" />
+                                {text}
                                 {cancelOn ?
                                     <Pressable style={{margin:50}} onPress={()=>{setVisable( !visable)}}>
                                         <Text style={{color:'#000000'}}>닫기</Text>

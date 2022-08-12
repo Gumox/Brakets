@@ -4,9 +4,7 @@ import ip from "../serverIp/Ip";
 import AsyncStorage from "@react-native-community/async-storage";
 import store from "../store/store";
 
-const checkInfos = (one)=>{
-   
-}
+
 const checkChangedUserInfo =(navigation)=>{
         let userEmail =store.getState().storeStaffId
         console.log(userEmail)

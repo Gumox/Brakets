@@ -32,7 +32,6 @@ const check = async () => {
 function ShopStepOne( { navigation } ) {
     state = {nextPage:'InputAlternativeNumber'};
     check();
-    console.log(store.getState().customer)
     
     const netInfo = useNetInfo();
     

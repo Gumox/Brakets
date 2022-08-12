@@ -47,40 +47,47 @@ function ShopStepThree5({route,navigation}) {
     const netInfo = useNetInfo();
 
     const updateReceipt = async (receipt_id) => {
-        setVisable(true)
-        let formdata = new FormData();
+        if(receipt_id){
+            setVisable(true)
+            let formdata = new FormData();
 
-        formdata.append("step", "3");
-        formdata.append("receipt", receipt_id);
-        
-        formdata.append("pcategory", pcategory_id);
-        formdata.append("message",request );
-        formdata.append("receiver",receiver_id )
-        formdata.append("store", store.getState().store_id);//임시
+            formdata.append("step", "3");
+            formdata.append("receipt", receipt_id);
+            
+            formdata.append("pcategory", pcategory_id);
+            formdata.append("message",request );
+            formdata.append("receiver",receiver_id )
+            formdata.append("store", store.getState().store_id);//임시
 
-        formdata.append("image",  PathToFlie(indexUriList[0]));
-        formdata.append("image1", PathToFlie(indexUriList[1]));
-        formdata.append("image2", PathToFlie(indexUriList[2]));
-        formdata.append("image3", PathToFlie(indexUriList[3]));
-        formdata.append("image4", PathToFlie(indexUriList[4]));
-        console.log(formdata)
+            formdata.append("image",  PathToFlie(indexUriList[0]));
+            formdata.append("image1", PathToFlie(indexUriList[1]));
+            formdata.append("image2", PathToFlie(indexUriList[2]));
+            formdata.append("image3", PathToFlie(indexUriList[3]));
+            formdata.append("image4", PathToFlie(indexUriList[4]));
+            console.log(formdata)
 
-        try {
-            const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
-            headers: {
-                'Accept': '',
-                'Content-Type': 'multipart/form-data'
-                },
-            body: formdata
-            });
-            const json = await response.json();
-            console.log(json)
-            navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} )
-           
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setVisable(false)
+            try {
+                const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
+                headers: {
+                    'Accept': '',
+                    'Content-Type': 'multipart/form-data'
+                    },
+                body: formdata
+                });
+                const json = await response.json();
+                console.log(json)
+                setVisable(false)
+                navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} )
+            
+            } catch (error) {
+                console.error(error);
+                alert("전송 오류")
+                setVisable(false)
+            } finally {
+            }
+        }else{
+            alert("전송오류")
+            navigation.popToTop()
         }
     }
     
@@ -194,7 +201,7 @@ function ShopStepThree5({route,navigation}) {
                     4단계: 서비스 바코드 스캔 
                 </Button>
             </CenterView>
-            <NetworkLoading visable={visable} setVisable={setVisable} cancelOn={false}/>
+            <NetworkLoading visable={visable} setVisable={setVisable} cancelOn={false} text={"전송중"}/>
             <Bottom navigation={navigation}/>
         </ContainView>
     )

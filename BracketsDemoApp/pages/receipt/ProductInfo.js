@@ -112,61 +112,65 @@ function ProductInfo({navigation, route}) {
     const addReceipt = async () => {
         
         let formdata = new FormData();
-        
-        formdata.append("step",1);
-        formdata.append("store", store.getState().store_id);
-        formdata.append("staff", store.getState().userInfo[0].staff_id);
+        const receiptId =store.getState().receipt_id
+        if(receiptId){
+            formdata.append("step",1);
+            formdata.append("store", store.getState().store_id);
+            formdata.append("staff", store.getState().userInfo[0].staff_id);
 
-        if(store.getState().receptionDivision.id == 3){
-        
-            formdata.append("customer", 0);
+            if(store.getState().receptionDivision.id == 3){
             
+                formdata.append("customer", 0);
+                
+            }else{
+                formdata.append("customer", store.getState().customer.cId);
+                
+            }
+            
+            formdata.append("brand", store.getState().brand_id);
+            formdata.append("category", store.getState().receptionDivision.id);
+            //console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
+            
+            
+            
+            formdata.append("pid", pid);
+            formdata.append("pcode", codeInput);
+            formdata.append("substitute", Number(alter));//임시
+            formdata.append("receiptId", receiptId);
+
+            console.log(formdata)
+
+            axios.post(ip+'/api/addReceipt', formdata , {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                }})
+                .then((response) => {
+                // 응답 처리
+                    const json =  response.data;
+                    console.log(json);
+                
+                    navigation.navigate( 'ShopStepTwo',
+                        { 
+                            codeType: codeType, 
+                            code: codeInput, 
+                            serialInput: serialInput,
+                            productName: productName,
+                            season: season,
+                            colorValue: colorValue,
+                            size: size,
+                            measure: measure,
+                            imageFile: imageFile
+                        }
+                    )
+                })
+                .catch((error) => {
+                // 예외 처리
+                console.error(error);
+                })
         }else{
-            formdata.append("customer", store.getState().customer.cId);
-            
+            alert("전송오류")
+            navigation.popToTop()
         }
-        
-        formdata.append("brand", store.getState().brand_id);
-        formdata.append("category", store.getState().receptionDivision.id);
-        //console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
-        
-        
-        
-        formdata.append("pid", pid);
-        formdata.append("pcode", codeInput);
-        formdata.append("substitute", Number(alter));//임시
-        formdata.append("receiptId", store.getState().receipt_id);
-
-        console.log(formdata)
-
-        axios.post(ip+'/api/addReceipt', formdata , {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }})
-            .then((response) => {
-            // 응답 처리
-                const json =  response.data;
-                console.log(json);
-            
-                navigation.navigate( 'ShopStepTwo',
-                    { 
-                        codeType: codeType, 
-                        code: codeInput, 
-                        serialInput: serialInput,
-                        productName: productName,
-                        season: season,
-                        colorValue: colorValue,
-                        size: size,
-                        measure: measure,
-                        imageFile: imageFile
-                    }
-                )
-            })
-            .catch((error) => {
-            // 예외 처리
-            console.error(error);
-            })
-        
         /*try {
             const response = await fetch(ip+'/api/addReceipt',{method: 'POST',
             headers: {
