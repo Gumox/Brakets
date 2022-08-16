@@ -1,6 +1,7 @@
 import formidable from "formidable";
 import fs from "fs";
 import excuteQuery from "./db";
+import moment from "moment";
 
 /**
  * 1단계
@@ -56,10 +57,11 @@ const addReceiptZeroStep = async ({
   customer,
   category
 }) => {
+  const createDate =  moment().format("YYYY-MM-DD")
   return excuteQuery({
     query:
-      "INSERT INTO `receipt`(`store_id`, `staff_id`,`customer_id`,`category`) VALUES (?,?,?,?)",
-    values: [store, staff, customer,category],
+      "INSERT INTO `receipt`(`create_date`,`store_id`, `staff_id`,`customer_id`,`category`) VALUES (?,?,?,?,?)",
+    values: [createDate,store, staff, customer,category],
   });
 };
 
