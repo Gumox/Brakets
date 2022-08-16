@@ -192,6 +192,7 @@ function LookupPage({ route,navigation }) {
       }
       
       setData( sData)
+      console.log(sData)
       setVisable(false)
     }, []);
   

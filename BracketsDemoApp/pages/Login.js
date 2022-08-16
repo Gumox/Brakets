@@ -45,21 +45,39 @@ function Login({ navigation }): React.ReactElement {
   }
 
   function LoadInfo(){
+    let _store
+
+    AsyncStorage.getItem('selectedStore', (err, result) => {
+      if (result !== null) {
+      const info = JSON.parse(result);
+          store.dispatch({ type: 'STORE_ID', store_id: info.selectedStore });
+          _store = info.selectedStore
+      }
+    })
 
     AsyncStorage.getItem('userInfo', (err, result) => {
       if (result !== null) {
         const UserInfo = JSON.parse(result);
-        console.log(UserInfo.data[0])
+        let arr = UserInfo.data
+        let tof = false
+        for(let item of arr){
+          if(item.store_id == _store){
+            tof = true
+            break
+          }
+        }
         store.dispatch({ type: 'USER_INFO', userInfo: UserInfo.data })
         store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
         store.dispatch({ type: 'storeName', storeName: UserInfo.storeName })
-        store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
+        if(!tof){
+          store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
+        }
         store.dispatch({type:"BRAND_ID",brand_id:UserInfo.data[0].brand_id })
-        // console.log(store.getState().userInfo[0].staff_id)
         navigation.replace('ReceiptDivision');
 
       }
     })
+    
   }
 
   useEffect(() => {

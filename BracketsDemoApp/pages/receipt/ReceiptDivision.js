@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import Contents from '../../components/Contents';
 import styled from 'styled-components/native';
 import Container from '../../components/Container';
@@ -38,7 +39,7 @@ function ReceiptDivision({navigation}) {
    
     const [itemList, setItemList]= useState([]);
     const info = store.getState().userInfo;
-    const [seletStore, setSeletStore] = useState(store.getState().store_id); 
+    const [selectStore, setSelectStore] = useState(store.getState().store_id); 
     
     const storeName = store.getState().storeName;
     
@@ -53,8 +54,38 @@ function ReceiptDivision({navigation}) {
     // Use dark color scheme
         bgColor = "rgb(153,153,153)"
     }
+    const  SaveStoreInfo= (_store)=>{
+          
+        AsyncStorage.setItem(
+          'selectedStore',
+          JSON.stringify({
+            'selectedStore': _store
+          }), () => {
+            console.log(_store)
+              setSelectStore(_store)
+          });
+    }
+    const LoadInfo = () =>{
 
-    useEffect(()=>{
+        AsyncStorage.getItem('selectedStore', (err, result) => {
+            if (result !== null) {
+            const info = JSON.parse(result);
+                console.log(info)
+
+                setSelectStore(info.selectedStore)
+            
+            }
+        })
+    }
+    useEffect(()=>{        
+        console.log()
+        console.log()
+        console.log()
+        console.log(selectStore)
+        console.log()
+        console.log()
+        console.log()
+        console.log()
         var i =1;
         var list =[]
         info.forEach(obj => {
@@ -67,7 +98,7 @@ function ReceiptDivision({navigation}) {
             store.dispatch({ type: 'STORE_ID', store_id: list[0].value  })
             store.dispatch({type:"BRAND_ID",brand_id:list[0].brandId })
             store.dispatch({ type: 'storeName', storeName: list[0].name })
-            setSeletStore(list[0].value)
+            setSelectStore(list[0].value)
             setShopInShop(
                     <Text style={{marginLeft:"5%"}}>
                         {text[1]}
@@ -78,6 +109,7 @@ function ReceiptDivision({navigation}) {
                 <RNPickerSelect
                     placeholder = {{label : storeName, value: storeId }}
                     style = { {border :'solid', marginBottom : 50, borderWidth : 3, borderColor : '#000000'} }
+                    value = {selectStore}
                     onValueChange={(value) => 
                         {   
                             list.forEach(obj => {
@@ -85,7 +117,8 @@ function ReceiptDivision({navigation}) {
                                     store.dispatch({ type: 'STORE_ID', store_id: value  })
                                     store.dispatch({type:"BRAND_ID",brand_id:obj.brandId })
                                     store.dispatch({ type: 'storeName', storeName: obj.name })
-                                    setSeletStore(value)
+                                    setSelectStore(value)
+                                    SaveStoreInfo(value)
                                 }
                             });
                         
@@ -96,6 +129,8 @@ function ReceiptDivision({navigation}) {
             )
         }
     },[]);
+    
+    
     
     useEffect(() => {
         checkChangedUserInfo(navigation)
@@ -114,7 +149,7 @@ function ReceiptDivision({navigation}) {
             </PickerView>
             <Label/>
             <ReceiptButton onPress={ ()=> {
-                if(seletStore === null){
+                if(selectStore === null){
                     Alert.alert(            
                         "",             
                         "매장을 선택하세요",                   
@@ -136,7 +171,7 @@ function ReceiptDivision({navigation}) {
             }}>고객용 제품</ReceiptButton>
             
             <ReceiptButton onPress={ () => {
-                if(seletStore === null){
+                if(selectStore === null){
                     Alert.alert(            
                         "",             
                         "메장을 선택하세요",                   
@@ -158,7 +193,7 @@ function ReceiptDivision({navigation}) {
             }}>매장용-선처리 제품</ReceiptButton>
 
             <ReceiptButton onPress={ ()=> {
-                if(seletStore === null){
+                if(selectStore === null){
                     Alert.alert(            
                         "",             
                         "메장을 선택하세요",                   

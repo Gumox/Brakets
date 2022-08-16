@@ -125,7 +125,8 @@ function LookupInfoCard(props) {
     }else if( obj["receipt_category"] == 3){
         checkReceipt = "매장"; 
     }
-    let receiptDate =formatDate(obj["receipt_date"])
+    let createDate = formatDate(obj["create_date"])
+    let receiptDate = formatDate(obj["receipt_date"])
     let receiptDateColor ="#000080"
 
     if(!receiptDate){
@@ -144,6 +145,12 @@ function LookupInfoCard(props) {
     }
     return (
         <Container onPress={ props.onPress }>
+            {createDate &&
+                <PrView3>
+                    <Label>생성일</Label>
+                    <Label3 style={{color:receiptDateColor}}>{createDate}</Label3>
+                </PrView3>
+            }
             <PrView3>
                 <Label>접수일</Label>
                 <Label3 style={{color:receiptDateColor}}>{receiptDate}</Label3>
