@@ -4,6 +4,7 @@ async function getLookup(query, values) {
   const result = await excuteQuery({
     query: `SELECT receipt.receipt_id AS receipt_id,
                     receipt.step,
+                    receipt.create_date,
                     receipt.receipt_code AS receipt_code,
                     receipt.pcategory_id AS product_category,
                     product_category.category_name AS product_category_name,
