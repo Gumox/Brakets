@@ -205,8 +205,6 @@ export default function Inquiry() {
         
     },[]);
 
-    console.log(data)
-    
     // 96% -10px
     return(
         <Nav style={{height:"100%",minWidth:950}}>

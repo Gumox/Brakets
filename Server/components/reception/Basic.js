@@ -56,7 +56,6 @@ const BasicInfo = ({
 
   useEffect(()=>{
     getHeadquarterInfo()
-    console.log(sessionStorage.getItem("RECEPTION_HEADER_BRAND"))
   },[])
 
   return (

@@ -9,8 +9,6 @@ import store from "../../store/store";
 function Home({options,user})  {
   const router = useRouter();
   
-  console.log(options)
-  
 
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
@@ -37,10 +35,6 @@ function Home({options,user})  {
     sessionStorage.setItem('SHOP_NAME',options.info[0].name)
     sessionStorage.setItem('USER',JSON.stringify(user))
     sessionStorage.setItem('USER_INFO',JSON.stringify(options.info[0]))
-
-    
-    console.log(user)
-    console.log(store.getState())
 
   },[])
   return (

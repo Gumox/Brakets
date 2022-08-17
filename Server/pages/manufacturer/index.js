@@ -9,10 +9,6 @@ import COLOR from "../../constants/color";
 
 function Home({options,user})  {
   const router = useRouter();
-  console.log(options)
-  
-  
-
   const handleLogout = async () => {
     await axios.get("/api/auth/logout");
     router.push("/login");

@@ -189,8 +189,6 @@ const ReceiptInfo = ({
   }else{
      parseInt(targetData[RECEIPT.PAID]) === 1 
   }
-  console.log(
-    targetData[RECEIPT.REGISTER_DATE])
   return (
     <Wrapper>
       <SectionRow>

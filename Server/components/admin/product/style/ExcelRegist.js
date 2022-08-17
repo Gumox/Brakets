@@ -9,7 +9,6 @@ import fileDownload from 'js-file-download'
 const XLSX = require('xlsx');
 
 const ExcelRegist =({user,brands})=>{
-    console.log(brands.length)
     const router = useRouter();
     const [excelName,setExcelName] = useState("첨부파일")
 
