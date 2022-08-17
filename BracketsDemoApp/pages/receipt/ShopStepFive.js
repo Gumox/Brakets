@@ -13,7 +13,7 @@ import store from '../../store/store';
 import {useNetInfo}from "@react-native-community/netinfo";
 
 function ShopStepFive( { navigation } ) {
-    //console.log(store.getState().recDate);
+    ////console.log(store.getState().recDate);
     
     const netInfo = useNetInfo();
     

@@ -16,11 +16,9 @@ const getProductCategory = async () => {
             brand:  store.getState().brand_id,
         }
     }
-    //console.log(store.getState().brand_id)
     axios(option)
     .then(
         response => (response.status == '200') ? (
-           console.log(response.data),
            store.dispatch({type:'GET_APL_TYPE',setAplType: response.data.body})
            
         ) : (
@@ -28,7 +26,6 @@ const getProductCategory = async () => {
         )
     )
     .catch(function(error){
-        console.log(error)
         
     })
 }
@@ -41,7 +38,6 @@ export const getRepairList = async (id) => {
       "brand_id" : store.getState().brand_id
 
       }
-      console.log(bodyData)
     try {
       const response = await fetch(ip+'/api/getRepairList',{method: 'POST',
       headers: {
@@ -52,7 +48,6 @@ export const getRepairList = async (id) => {
       });
       const json = await response.json();
 
-      console.log(json)
       store.dispatch({type: 'RECIVER_LIST' ,receiverList: json.list})
 
       return(json)

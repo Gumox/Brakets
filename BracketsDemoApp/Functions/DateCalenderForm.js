@@ -17,7 +17,6 @@ export function DateCalenderForm(inputDate) {
         const currentDate = selectedDate || date
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        console.log(currentDate)
     }
     return {
         date,

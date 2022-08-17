@@ -20,7 +20,7 @@ import {useNetInfo}from "@react-native-community/netinfo";
 
 export default function CustomerSearchList({route, navigation}){
     const customers = route.params.customers;
-    console.log(customers)
+    //console.log(customers)
     const [cName,setCName] = useState(null);
     const [cPhone,setCPhone] = useState();
     let cInfoList =[];
@@ -61,7 +61,7 @@ export default function CustomerSearchList({route, navigation}){
             </ContentsScroll>
             <Button onPress={ ()=> {
                 if(netInfo.isConnected){
-                    console.log(cName)
+                    //console.log(cName)
                     if(cName == null){
                         Alert.alert("접수고객 미선택","접수 고객을 선택 해주세요")
                     }else{

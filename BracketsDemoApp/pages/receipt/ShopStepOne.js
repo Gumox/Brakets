@@ -19,10 +19,10 @@ const check = async () => {
     try {
         const result = await request(PERMISSIONS.IOS.CAMERA);
         if (result === RESULTS.GRANTED) {
-        // console.log('ok');
+        // //console.log('ok');
         }
     } catch (error) {
-        console.log('catch error');
+        //console.log('catch error');
         }
     };
 

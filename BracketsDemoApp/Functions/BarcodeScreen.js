@@ -17,15 +17,12 @@ class BarcodeScreen extends Component {
     constructor(props) {
         super(props);
         this.camera = null;
-        /* this.state = { barcodeType: '' }; */
     }
 
     
 
     onBarCodeRead(scanResult) {
 
-       /* console.log(scanResult.data);
-       console.log(scanResult.type); */
 
        var codeType = '';
        
@@ -39,7 +36,6 @@ class BarcodeScreen extends Component {
                     codeType = 'barcode'
                 }
         }
-        console.log(scanResult.data);
         
         this.props.navigation.replace(
             'ProductInfo',

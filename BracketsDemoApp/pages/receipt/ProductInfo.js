@@ -33,7 +33,7 @@ function ProductInfo({navigation, route}) {
     const [brandId, setBrandId] = useState('')
 
     const checkBrand=(myBrand,productBrand)=>{
-        console.log(myBrand , productBrand)
+        //console.log(myBrand , productBrand)
         if(myBrand != productBrand){
             navigation.goBack();
             Alert.alert("","자사 브랜드 제품이 아닙니다 제품을 확인 해주세요");
@@ -57,7 +57,7 @@ function ProductInfo({navigation, route}) {
                     code: codeInput
                 }
             }
-            //console.log(codeType)
+            ////console.log(codeType)
             axios(option)
             .then(
                 response => (response.status == '200') ? (
@@ -90,7 +90,7 @@ function ProductInfo({navigation, route}) {
                 )
                 )
             .catch(function(error){
-                console.log(error)
+                //console.log(error)
                 Alert.alert(            
                     "인터넷 연결 실패",                                
                     [                              
@@ -129,7 +129,7 @@ function ProductInfo({navigation, route}) {
             
             formdata.append("brand", store.getState().brand_id);
             formdata.append("category", store.getState().receptionDivision.id);
-            //console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
+            ////console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
             
             
             
@@ -138,7 +138,7 @@ function ProductInfo({navigation, route}) {
             formdata.append("substitute", Number(alter));//임시
             formdata.append("receiptId", receiptId);
 
-            console.log(formdata)
+            //console.log(formdata)
 
             axios.post(ip+'/api/addReceipt', formdata , {
                 headers: {
@@ -147,7 +147,7 @@ function ProductInfo({navigation, route}) {
                 .then((response) => {
                 // 응답 처리
                     const json =  response.data;
-                    console.log(json);
+                    //console.log(json);
                 
                     navigation.navigate( 'ShopStepTwo',
                         { 
@@ -171,38 +171,6 @@ function ProductInfo({navigation, route}) {
             alert("전송오류")
             navigation.popToTop()
         }
-        /*try {
-            const response = await fetch(ip+'/api/addReceipt',{method: 'POST',
-            headers: {
-                'Accept': '',
-                'Content-Type': 'multipart/form-data'
-                },
-            body: formdata
-            });
-            //const json = await response.json();
-            
-            console.log(await response.json());
-
-            navigation.navigate( 'ShopStepTwo',
-                { 
-                codeType: codeType, 
-                code: codeInput, 
-                serialInput: serialInput,
-                productName: productName,
-                season: season,
-                colorValue: colorValue,
-                size: size,
-                measure: measure,
-                imageFile: imageFile
-                }
-            )
-            
-            
-        } catch (error) {
-            console.error(error);
-        } finally {
-            
-        }*/
         
 
     }
@@ -315,7 +283,7 @@ function ProductInfo({navigation, route}) {
 
                     <Button  onPress={ ()=> {
                         if(netInfo.isConnected){
-                            console.log(codeInput)
+                            //console.log(codeInput)
                             addReceipt();
                         }else{
                             Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])

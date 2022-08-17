@@ -91,10 +91,7 @@ export default createStore(function(state,action){
         return{...state,  basicRepairStore: action.reset};
     }
     if(action.type === 'DELETE_KEY_SELECT_TYPE'){
-        console.log(state.selectType.length);
         for(let i  = 0 ; i < state.selectType.length;i++){
-            console.log(state.selectType[i]);
-            console.log(action.deleteTypeKey);
             if(state.selectType[i].key==action.deleteTypeKey){
                 state.selectType.splice(i,1);
                i--;

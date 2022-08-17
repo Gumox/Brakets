@@ -57,7 +57,6 @@ function ReceiptDivision({navigation}) {
             'selectedStore': _store,
             'selectedStoreName': _storeName
           }), () => {
-            console.log(_store)
               setSelectStore(_store)
           });
     }

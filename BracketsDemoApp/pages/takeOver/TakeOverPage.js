@@ -109,7 +109,6 @@ function TakeOverPage( { route,navigation } ) {
                 })
             });
             const json = await response.json();
-           //console.log(json)
            
            const storeId = store.getState().store_id;
            const info =store.getState().userInfo[0]
@@ -130,7 +129,6 @@ function TakeOverPage( { route,navigation } ) {
     const checkNull =(input)=>{
         if(input === "null" || input === null){
             
-            console.log("input: ",input)
             return ""
         }else{
             return input

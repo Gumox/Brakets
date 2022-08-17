@@ -37,15 +37,15 @@ function ShopStepTwo({navigation}) {
             .then((response) => {
             // 응답 처리
                 const json =  response.data;
-                console.log(json);
+                //console.log(json);
                 setData(json.body);
 
-                console.log(json.body);
-                console.log(data);
+                //console.log(json.body);
+                //console.log(data);
 
                 store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
 
-                console.log(store.getState().getProductCategory);
+                //console.log(store.getState().getProductCategory);
 
                 
                 navigation.navigate("ShopStepThree");
@@ -68,10 +68,10 @@ function ShopStepTwo({navigation}) {
             });
             const json = await response.json();
             setData(json.body);
-            console.log(json.body);
-            console.log(data);
+            //console.log(json.body);
+            //console.log(data);
             store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
-            console.log(store.getState().getProductCategory);
+            //console.log(store.getState().getProductCategory);
             
             setLoading(false);
            
@@ -90,7 +90,7 @@ function ShopStepTwo({navigation}) {
             formdata.append("step", 2);
             formdata.append("receipt", receipt_id);
             formdata.append("type", typeN);
-            console.log(formdata)
+            //console.log(formdata)
 
             axios.post(ip+'/api/updateReceipt', formdata , {
                 headers: {
@@ -99,7 +99,7 @@ function ShopStepTwo({navigation}) {
                 .then((response) => {
                 // 응답 처리
                     const json =  response.data;
-                    console.log(json);
+                    //console.log(json);
                 
                     
                 })
@@ -120,7 +120,7 @@ function ShopStepTwo({navigation}) {
             body: formdata
             });
             const json = await response.json();
-            console.log(json)
+            //console.log(json)
            
         } catch (error) {
             console.error(error);

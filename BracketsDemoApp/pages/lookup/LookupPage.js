@@ -450,9 +450,6 @@ function LookupPage({ route,navigation }) {
                           onChangeText={(value) => {
                           setName(value)
                       }}
-                      onSubmitEditing={(event) => (
-                          console.log(">>>")
-                      )}
                       ></Input>
                     </DropBackground>
                     <DropBackground style={{borderBottomWidth:2,borderBottomColor:"#000000",borderStyle:"solid"}}>
@@ -466,9 +463,6 @@ function LookupPage({ route,navigation }) {
                       onChangeText={(value) => {
                           setPnumber(value)
                       }}
-                      onSubmitEditing={(event) => (
-                          console.log(">>>")
-                      )}
                       ></Input>
                         
                     </DropBackground>

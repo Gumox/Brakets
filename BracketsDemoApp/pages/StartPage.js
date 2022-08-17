@@ -52,10 +52,6 @@ const ImgIcon =styled.Image`
     height: 45px;
 `;
 
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
-
 
 function StartPage( { navigation } ) {
     const state = {size:1};
@@ -64,17 +60,7 @@ function StartPage( { navigation } ) {
     const [check1, setCheck1] = useState(false);
     const x ={"key":2};
     
-    //새로고침 함수
-    const [refreshing, setRefreshing] = React.useState(false);
-    const OnRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(1000).then(() => {setRefreshing(false)
-        
-        console.log("is refreshing")});
-      }, [])
-
-   
-    //console.log("여기는 start 입니다");
+    
     
     return(
         <Container>

@@ -67,7 +67,7 @@ function ShopStepThree2 ({ navigation ,route}) {
       </View>
     )
   }else{
-    console.log("no")
+    //console.log("no")
     drawingImage = (
       <Image source={imageP} resizeMode="cover" style={styles.image}/>
     );
@@ -75,7 +75,7 @@ function ShopStepThree2 ({ navigation ,route}) {
 
   const capture = () =>{
     viewShot.current.capture().then(uri => {
-      console.log('do something with ', uri);
+      //console.log('do something with ', uri);
       store.dispatch({type:'PHOTO',photo: uri});
     });
   }
@@ -121,7 +121,7 @@ function ShopStepThree2 ({ navigation ,route}) {
               navigation.replace('TakePhoto', {key : 'ShopStepThree4'}); 
             }
             else if(route.params.toGo=== "PhotoControl"){
-              console.log(route.params);
+              //console.log(route.params);
               //navigation.replace('PhotoControl', {key :route.params.key,value:route.params.value }); 
             }
           }else{

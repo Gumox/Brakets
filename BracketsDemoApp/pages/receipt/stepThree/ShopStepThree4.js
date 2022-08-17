@@ -90,10 +90,10 @@ function ShopStepThree4({route,navigation}) {
         var category = [];
         var i = 1;
         var j = 1;
-        console.log("?????????????????*-*-*-*-*-*?????????????")
+        //console.log("?????????????????*-*-*-*-*-*?????????????")
         productCategories.forEach(obj => {
             
-            console.log(obj)
+            //console.log(obj)
             category.push({ label: i+'.'+obj.category_name, value: obj.category_name });
             i = i+1;
            
@@ -135,10 +135,10 @@ function ShopStepThree4({route,navigation}) {
             
             setSendList([]);
             ProductCategoriesClassify();
-            console.log("YYYYYYY");
-            console.log(store.getState().basicRepairStore)
-            console.log(bodyData)
-            console.log(json.list)
+            //console.log("YYYYYYY");
+            //console.log(store.getState().basicRepairStore)
+            //console.log(bodyData)
+            //console.log(json.list)
          
             
         } catch (error) {
@@ -151,7 +151,7 @@ function ShopStepThree4({route,navigation}) {
     var photoAdd;
     if(store.getState().photoArr.length>0){
         const addPhotos = store.getState().photoArr;
-        console.log(addPhotos);
+        //console.log(addPhotos);
         for (let i = 0; i < addPhotos.length; i++) {
         
             uriList.push(addPhotos[i]);
@@ -227,11 +227,11 @@ function ShopStepThree4({route,navigation}) {
                     selectedTypeLists = value;
                     productCategories.forEach(obj => {
                         if(value === obj.category_name){
-                            console.log("???????????"+obj.pcategory_id);
+                            //console.log("???????????"+obj.pcategory_id);
                             
                             getRepairList(obj.pcategory_id);
                             
-                            console.log(store.getState().basicRepairStore);
+                            //console.log(store.getState().basicRepairStore);
                             
                           }
                     });
@@ -266,7 +266,7 @@ function ShopStepThree4({route,navigation}) {
                 style = { {border :'solid', borderWidth : '3', borderColor : 'black' ,placeholder:{color: 'rgb(0,80,130)'}} }
                 onValueChange={(value) =>{
                     store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: value});
-                    console.log(store.getState().basicRepairStore);
+                    //console.log(store.getState().basicRepairStore);
                     setBasicSend(store.getState().basicRepairStore);
                 }}
                 items={sendList}

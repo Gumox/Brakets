@@ -28,7 +28,6 @@ import ShopStepComplete from './pages/receipt/ShopStepComplete';
 import TakeOverPage from './pages/takeOver/TakeOverPage';
 import CheckBarcode from './pages/takeOver/CheckBarcode';
 
-import LookupPage_1 from './pages/lookup/LookupPage_1'
 import LookupPage from './pages/lookup/LookupPage';
 import LookupInfo from './pages/lookup/LookupInfo';
 import LookupInfo2 from './pages/lookup/LookupInfo2';

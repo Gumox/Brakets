@@ -25,10 +25,10 @@ function SearchCustomer({ navigation }) {
 
 
     for (let i = 0; i < body.length; i++) {
-      console.log(body[i].name);
-      console.log(body[i].phone);
+      //console.log(body[i].name);
+      //console.log(body[i].phone);
       customers.push({ cName: body[i].name, cPhone: body[i].phone, cId: body[i].customer_id });
-      console.log(customers);
+      //console.log(customers);
     }
   }
   const netInfo = useNetInfo();
@@ -46,13 +46,13 @@ function SearchCustomer({ navigation }) {
         });
         const json = await response.json(); // !!!
         setData(json.body);
-        console.log(json.body);
+        //console.log(json.body);
         parseData(json.body);
         setLoading(false);
         navigation.navigate('CustomerSearchList',{customers:customers})
     } catch (error) {
-        console.log(error)
-        console.log("?????-------")
+        //console.log(error)
+        //console.log("?????-------")
         if(data == null || data == ""){
           Alert.alert(            
             "",             
@@ -79,7 +79,7 @@ function SearchCustomer({ navigation }) {
               maxLength={4}
               keyboardType='numeric'
               onChangeText={(value) => {
-                console.log(value)
+                //console.log(value)
                 setPnumber(value)
               }}
               onSubmitEditing={(event) => (getCustomer({ "lastphone": pNumber }))}
@@ -96,7 +96,7 @@ function SearchCustomer({ navigation }) {
 
               if(netInfo.isConnected){
                 setData([]);
-                console.log(data);
+                //console.log(data);
                 store.dispatch({ type: 'CUSTOMER_SIGN', customerSign: "" });
                 getCustomer({ lastphone: pNumber ,headquarterId:userInfo.headquarter_id});
               }else{

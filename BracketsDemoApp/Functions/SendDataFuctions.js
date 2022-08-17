@@ -14,7 +14,6 @@ export function changeBasicSend(value){
     
             Categories.push({'category_name' :obj.category_name, 'receiver_name': obj.receiver_name});
         }
-        console.log(obj.category_name+ " : " + obj.receiver_name);
         
     });
 
@@ -24,7 +23,6 @@ export function changeBasicSend(value){
             console.log(store.getState().basicRepairStore);
         }
     });
-    //console.log(store.getState().basicRepairStore)
 }
 export function changeSelectSend(value,key){
     const selectSendList = store.getState().typeStore;
@@ -36,8 +34,6 @@ export function changeSelectSend(value,key){
     }
     store.dispatch({type:'RESET_TYPE_STORE',reset:selectSendList});
     getList(value,key);
-    //console.log(selectSendList);
-    //console.log(store.getState().typeStore);
 } 
 export function changeSelectType(value,key){
     const selectType =store.getState().selectType;

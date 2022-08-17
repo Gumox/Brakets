@@ -26,12 +26,9 @@ export default class ScanScreen extends Component {
   onSuccess = async (e) => {
     const {route}=this.props;
 
-    console.log(route.params.key);
 
     const check = e.data.substring(0, 50);
 
-    console.log('scanned data: ' + check);
-    
     this.setState({
         result: e,
         scan: false,
@@ -60,9 +57,6 @@ export default class ScanScreen extends Component {
               store.dispatch({type:'TAKE',take:imgUri});*/
 
               const checkService = await checkServiceCard(check)
-              console.log("checkService: ")
-              console.log("checkService: ",checkService)
-              console.log("checkService: ")
               if(checkService.message){
                 this.props.navigation.goBack();
                 Alert.alert("이미 등록된 서비스 카드 입니다.","",[{ text: "확인"}])
@@ -77,7 +71,6 @@ export default class ScanScreen extends Component {
           }
           else if(route.params.key === 'ShopStepComplete'){
             store.dispatch({type:'BAGCODE',bag:check});
-            console.log(store.getState().bagCodeValue);
 
             if (this.camera) {
               /*const options = { quality: 0.9, base64: true, skipProcessing: true ,fixOrientation : true,forceUpOrientation: true,orientation:"portrait"}
@@ -111,7 +104,6 @@ export default class ScanScreen extends Component {
   render() {
     
     const {route}=this.props;
-    console.log("????")
     
     return (
       <Container>

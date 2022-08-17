@@ -13,7 +13,7 @@ import StateBarVoid from '../../components/StateBarVoid'
 import {useNetInfo}from "@react-native-community/netinfo";
 
 function ShopStepFour2( { navigation } ) {
-    //console.log(store.getState().recDate);
+    ////console.log(store.getState().recDate);
     
     const netInfo = useNetInfo();
     

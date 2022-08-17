@@ -45,9 +45,9 @@ function ShopStepOne({ navigation , route}) {
             setServiceCardPictureCheck(false)
         }
         if(bagImgUri){
-            console.log("bagImgUri")
-            console.log(bagImgUri)
-            console.log("bagImgUri")
+            //console.log("bagImgUri")
+            //console.log(bagImgUri)
+            //console.log("bagImgUri")
             setBagPictureCheck(false)
         }
     }, []);
@@ -71,7 +71,7 @@ function ShopStepOne({ navigation , route}) {
 
         formdata.append("receipt", receipt_id);
         formdata.append("mailbag", bag_code);
-        console.log(formdata)
+        //console.log(formdata)
         try {
             const response = await fetch(ip + '/api/submitReceipt', {
                 method: 'POST',
@@ -82,7 +82,7 @@ function ShopStepOne({ navigation , route}) {
                 body: formdata
             });
             const json = await response.json();
-            console.log(json)
+            //console.log(json)
             if(store.getState().requirement.id === 1){
                 AutoSms(smsBody)
             }
@@ -202,7 +202,7 @@ function ShopStepOne({ navigation , route}) {
                     </InfoView>
                     <Button onPress={() => {
                         if (netInfo.isConnected) {
-                            console.log(bag)
+                            //console.log(bag)
                             submitReceipt(store.getState().receipt_id, bag)
                             
                         } else {

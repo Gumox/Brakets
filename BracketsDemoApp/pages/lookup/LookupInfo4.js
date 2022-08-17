@@ -56,10 +56,7 @@ function LookupInfo4( { route,navigation } ) {
     const step = LookupCheckStep(data)
 
     const reReceipt =(data)=>{
-        SetReReceiptInfo(data,images)
-        console.log("step")
-        console.log(LookupCheckStep(data))
-        console.log("step")
+        SetReReceiptInfo(data)
         
         if(step ==0){
             navigation.navigate("ShopStepOne")
@@ -209,8 +206,6 @@ function LookupInfo4( { route,navigation } ) {
         )
     }
     let toHq
-    console.log("mainCenterSendDate",mainCenterSendDate)
-    console.log("mainCenterDate",mainCenterDate)
     if(mainCenterSendDate || mainCenterDate ){
         toHq =(
             <InfoView>
@@ -236,18 +231,21 @@ function LookupInfo4( { route,navigation } ) {
     return(
         <Container style= {{backgroundColor:"#ffffff"}}>
             <Contents style = {{width: Dimensions.get('window').width, height: Dimensions.get('window').height ,paddingTop:24}}>
-                        
-                <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShop}</Text>
-                <InfoView>
-                    <TopText>수선처 접수일</TopText>
-                    <InputText editable={false}>{formatDate(repairShopDate)}</InputText>
-                        
-                    <TopText>수선처 발송일</TopText>
-                    <InputText editable={false}>{repairShopSendDate}</InputText>
-                <TopText>수선처 설명</TopText>
-                <InputText editable={false} multiline ={true}>{repairShopSendDescription}</InputText>
+                {repairShop&&
+                    <>       
+                        <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShop}</Text>
+                        <InfoView>
+                            <TopText>수선처 접수일</TopText>
+                            <InputText editable={false}>{formatDate(repairShopDate)}</InputText>
+                                
+                            <TopText>수선처 발송일</TopText>
+                            <InputText editable={false}>{repairShopSendDate}</InputText>
+                        <TopText>수선처 설명</TopText>
+                        <InputText editable={false} multiline ={true}>{repairShopSendDescription}</InputText>
 
-                </InfoView>
+                        </InfoView>
+                    </>
+                }
                 {repair2}
                 {repair3}
                 

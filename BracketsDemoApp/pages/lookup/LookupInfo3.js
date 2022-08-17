@@ -113,15 +113,9 @@ function LookupInfo3( { route,navigation } ) {
         const afterImgList =[]
 
         
-        console.log("images")
-        console.log("")
-        console.log(images)
-        console.log("")
-        console.log("images")
         if(images){
             for (let i = 0; i < images.length; i++) { //제품 수선 후 사진
                 const element = images[i];
-                console.log(i+":"+element)
                 
                 beforeImgList.push(ip+element["before_image"])
                 if(element["after_image"] === null){
@@ -131,11 +125,6 @@ function LookupInfo3( { route,navigation } ) {
                     afterImgList.push(ip+element["after_image"])
                 }
             }
-            console.log("beforeImgList")
-            console.log("")
-            console.log(beforeImgList)
-            console.log("")
-            console.log("beforeImgList")
             
             setBeforeImages(beforeImgList)
             setAfterImages(afterImgList)
@@ -180,8 +169,6 @@ function LookupInfo3( { route,navigation } ) {
                 </View>
             )
             afterImageViews[key] =(after)
-        }else{
-            console.log(" in null \n")
         }
     }
     let needText;

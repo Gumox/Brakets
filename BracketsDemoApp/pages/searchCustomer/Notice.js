@@ -11,7 +11,7 @@ export default function Notice({navigation}) {
     const [textData,setTextData] =useState("")
     const [redTextData,setRedTextData] =useState("")
     const fontSize =(Dimensions.get('window').width)*0.05;
-    console.log(fontSize)
+    //console.log(fontSize)
 
     useEffect(()=>{
         const fetch = async () => {
@@ -28,12 +28,12 @@ export default function Notice({navigation}) {
     
                 })
             ])
-            console.log(smsNotice[0])
+            //console.log(smsNotice[0])
             setTextData(smsNotice[0].text)
             setRedTextData(smsNotice[0].red_text)
         }
         fetch()
-        console.log(store.getState().userInfo)
+        //console.log(store.getState().userInfo)
     },[])
 
     return(

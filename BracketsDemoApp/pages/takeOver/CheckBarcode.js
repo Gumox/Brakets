@@ -37,7 +37,6 @@ const AlternativeCodeBtn = styled.TouchableOpacity`
 
 // 구조 분해 할당, Destructuring Assignment
 export default function CheckBarcode( { navigation } ) {
-    //console.log(store.getState().recDate);
     
     useEffect(() => {
         checkChangedUserInfo(navigation)

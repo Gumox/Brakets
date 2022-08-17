@@ -56,7 +56,6 @@ function LookupInfo( { route,navigation } ) {
 
     const reReceipt = async(data,step)=>{
         SetReReceiptInfo(data,images)
-        console.log(await getRepairList(data.pcategory_id))
         
         if(step ==0){
             navigation.navigate("ShopStepOne")
@@ -90,11 +89,6 @@ function LookupInfo( { route,navigation } ) {
         
     }
     useEffect(()=>{
-        console.log()
-        console.log()
-        console.log(data.receipt_id)
-        console.log()
-        console.log()
         if(data["receipt_code"]){
             setCardCode(data["receipt_code"])                    //서비스카드번호
         }else{

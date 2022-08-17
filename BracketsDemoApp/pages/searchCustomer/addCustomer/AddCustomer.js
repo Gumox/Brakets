@@ -112,7 +112,6 @@ export default class AddCustomer extends Component {
             });
             const json = await response.json();
             
-            console.log(json);
             if(json.receipt_id){
 
                 store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});

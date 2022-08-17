@@ -94,8 +94,7 @@ export default class CustomerInfo extends Component {
     }
     
     render(){
-        var cstSign;
-        if(store.getState().customerSign == ""){console.log("''")}
+        let cstSign;
         if(store.getState().customerSign != ""){
             cstSign =(
                 <Image source={{uri: store.getState().customerSign}} style={{width:250,height:140, position : 'absolute',left:0,top:0}}/>

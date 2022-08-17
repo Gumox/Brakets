@@ -72,7 +72,7 @@ function Login({ navigation }): React.ReactElement {
         store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
         if(!tof){
           store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
-          store.dispatch({ type: 'storeName', storeName: UserInfo.storeName })
+        store.dispatch({ type: 'storeName', storeName: UserInfo.storeName })
         }
         store.dispatch({type:"BRAND_ID",brand_id:UserInfo.data[0].brand_id })
         navigation.replace('ReceiptDivision');
@@ -100,7 +100,6 @@ function Login({ navigation }): React.ReactElement {
       },
 
     }
-    console.log(option.url)
     axios(option)
       .then(
         response => (response.status == '200') && (response.data.data[0].name) ? ( 
@@ -111,8 +110,6 @@ function Login({ navigation }): React.ReactElement {
         )
       )
       .catch(function (error) {
-        console.log(error)
-        console.log(option.url)
         Alert.alert("등록된 정보가 존재하지 않습니다.","",
         { text: "확인", onPress: () =>{}}
         )

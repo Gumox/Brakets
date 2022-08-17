@@ -63,7 +63,6 @@ export default class Capture extends Component{
             
             <TouchableView underlayColor={"#CCC"} onPress={()=> 
                 { this.refs.viewShot.capture().then(uri => {
-                    console.log("do something with ", uri);
                     store.dispatch({type:'PHOTO',photo: uri});
                     wait(250).then(() => {
         

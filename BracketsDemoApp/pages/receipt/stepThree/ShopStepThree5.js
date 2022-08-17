@@ -64,7 +64,7 @@ function ShopStepThree5({route,navigation}) {
             formdata.append("image2", PathToFlie(indexUriList[2]));
             formdata.append("image3", PathToFlie(indexUriList[3]));
             formdata.append("image4", PathToFlie(indexUriList[4]));
-            console.log(formdata)
+            //console.log(formdata)
 
             try {
                 const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
@@ -75,7 +75,7 @@ function ShopStepThree5({route,navigation}) {
                 body: formdata
                 });
                 const json = await response.json();
-                console.log(json)
+                //console.log(json)
                 setVisable(false)
                 navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} )
             
@@ -95,18 +95,18 @@ function ShopStepThree5({route,navigation}) {
         if(inputTexts == ''){
             setRequet("없음")
         }else{
-            console.log(inputTexts[0])
+            //console.log(inputTexts[0])
             setRequet(inputTexts[0]);
         }
         receiverList.forEach(obj => {
             if(obj.receiver_name ==store.getState().basicRepairStore){
-                console.log(store.getState().basicRepairStore+" : "+obj.receiver_id)
+                //console.log(store.getState().basicRepairStore+" : "+obj.receiver_id)
                 setReceiver_id(obj.receiver_id);
             }
         });
         productCategories.forEach(obj =>{
             if(obj.category_name == selectedType){
-                console.log(selectedType+" : "+obj.pcategory_id)
+                //console.log(selectedType+" : "+obj.pcategory_id)
                 setPcategory_id(obj.pcategory_id)
             }
         });

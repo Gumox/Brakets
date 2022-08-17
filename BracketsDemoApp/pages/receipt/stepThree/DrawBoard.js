@@ -29,7 +29,7 @@ export default class DrawBoard extends Component {
     onSketchSave() {
         this.refs.viewShot.capture().then(uri => {
 
-            console.log("do something with ", uri);
+            //console.log("do something with ", uri);
             store.dispatch({type:'DRAW',drawingImage: uri});
             //store.dispatch({type:'PHOTO',photo: uri});
             const params = this.props.children[1];
@@ -51,10 +51,10 @@ export default class DrawBoard extends Component {
     }
     
     render() {
-        console.log(this.props.children[0]);
+        //console.log(this.props.children[0]);
         const params = this.props.children[1];
-        console.log("????")
-        console.log(params)
+        //console.log("????")
+        //console.log(params)
         return (
             <View style={{flex: 1, flexDirection: 'column' ,width : Dimensions.get('window').width, height : Dimensions.get('window').height}}>
                 

@@ -66,7 +66,6 @@ export default function PhotoControl({ navigation ,route}){
             const element = saved[i];
             if(element == selected.value){
                 saved.splice(i,1);
-                console.log(saved)
                 i--;
             }
 
@@ -75,7 +74,6 @@ export default function PhotoControl({ navigation ,route}){
         
     }
     const RetakePhoto = () =>{
-        console.log(  "value: " +selected.value+"    index: "+selected.index);
         if(selected.index>1){
             DeletePhoto();
         }else{
@@ -110,7 +108,6 @@ export default function PhotoControl({ navigation ,route}){
     React.useEffect(()=>{
        
         const backAction = () => {
-            //store.dispatch({type:'PHOTORESET',setPhoto:[]});
             navigation.pop();
             return true;
           };
