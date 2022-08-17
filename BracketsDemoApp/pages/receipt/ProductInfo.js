@@ -33,7 +33,6 @@ function ProductInfo({navigation, route}) {
     const [brandId, setBrandId] = useState('')
 
     const checkBrand=(myBrand,productBrand)=>{
-        //console.log(myBrand , productBrand)
         if(myBrand != productBrand){
             navigation.goBack();
             Alert.alert("","자사 브랜드 제품이 아닙니다 제품을 확인 해주세요");

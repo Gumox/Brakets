@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text,} from 'react-native';
+import { Text,Image,Dimensions} from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import styled from 'styled-components';
 import Button from '../components/Button';
@@ -45,7 +45,7 @@ class BarcodeScreen extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={{backgroundColor:"#000000"}}>
                 <RNCamera
                     ref={(ref) => {
                         this.camera = ref;
@@ -55,7 +55,16 @@ class BarcodeScreen extends Component {
                     type = { RNCamera.Constants.Type.back} 
                     onBarCodeRead = { this.onBarCodeRead.bind(this) }
                     style = { styles.preview }
-                >
+                ><Image source={require('../Icons/scan_blue.png')}
+                style ={{
+                  width: (Dimensions.get('window').width)/2,
+                  height:(Dimensions.get('window').width)/2,
+                  position : 'absolute',
+                  left:(Dimensions.get('window').width)/4,
+                  top:(Dimensions.get('window').height)/3,
+                  opacity:0.6
+                }}
+              />
                 </RNCamera>
 
                 <ButtonView>

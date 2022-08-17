@@ -2,32 +2,24 @@
 import store from "../store/store";
 import ip from "../serverIp/Ip";
 import axios from "axios";
-const getProductCategory = async () => {
+export const getProductCategory = async () => {
    
-    const option = {
-        url: ip+'/api/getProductCategory',
-        method: 'POST',
+    const body = {brand:  store.getState().brand_id}
 
-        // 
-        header: {
+    axios.post(ip+'/api/getProductCategory', body , {
+        headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
-        },
-        data: {
-            brand:  store.getState().brand_id,
-        }
-    }
-    axios(option)
-    .then(
-        response => (response.status == '200') ? (
-           store.dispatch({type:'GET_APL_TYPE',setAplType: response.data.body})
-           
-        ) : (
-            console.log("204")
-        )
-    )
-    .catch(function(error){
-        
-    })
+        }})
+        .then((response) => {
+        // 응답 처리
+            const json =  response.data;
+            store.dispatch({type:'GET_APL_TYPE',setAplType:  json.body})
+        })
+        .catch((error) => {
+        // 예외 처리
+        console.error(error);
+        })
 }
 export const getRepairList = async (id) => {
     const bodyData = {
@@ -74,10 +66,10 @@ const SetReReceiptInfo=async(data)=>{
 
     if(data.receipt_type==1){
         store.dispatch({type:'REQUIREMENT',requirement:{name:"수선",id:1}});
-        getProductCategory();
+        //await getProductCategory();
     }else if(data.receipt_type==2){
         store.dispatch({type:'REQUIREMENT',requirement:{name:"교환",id:2}});
-        getProductCategory();
+        //await getProductCategory();
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
     }else if(data.receipt_type==3){
         store.dispatch({type:'REQUIREMENT',requirement:{name:"환불",id:3}});
@@ -87,9 +79,9 @@ const SetReReceiptInfo=async(data)=>{
         store.dispatch({type:'REQUIREMENT',requirement:{name:"심의",id:4}});
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: "본사"});
     }
+
     if(data.image){
         store.dispatch({type:'SAVE_BASIC_REPAIR_STORE',basicRepairStore: data.receiver_name});
-        
         const Categories = [];
         const itemList = [];
         let i = 1;
@@ -104,12 +96,11 @@ const SetReReceiptInfo=async(data)=>{
             }
             
         });
-        const receiverListData = await getRepairList(data.pcategory_id);
         
         Categories.forEach(obj => {
             if(data.product_category_name === obj.category_name){
               
-
+                console.log(obj.service_date)
               
               store.dispatch({type:"SERVICE_DATE",serviceDate:obj.service_date});
               

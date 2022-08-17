@@ -192,7 +192,6 @@ function LookupPage({ route,navigation }) {
       }
       
       setData( sData)
-      console.log(sData)
       setVisable(false)
     }, []);
   
@@ -284,8 +283,6 @@ function LookupPage({ route,navigation }) {
 
     const getImages = useCallback(async (code,rid,obj) => {
 
-        console.log("press")
-        console.log(code)
         const { data } = await axios.get(ip+"/api/lookup/images", {
           params: { 
             code: code,
@@ -411,7 +408,6 @@ function LookupPage({ route,navigation }) {
                         <LookupInfoCard data ={item} onPress={() => {
                             if(netInfo.isConnected){
                                 setVisable(true)
-                                console.log(item)
                                 getImages(item["receipt_code"],item["receipt_id"],item)
                             }else{
                                 Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])

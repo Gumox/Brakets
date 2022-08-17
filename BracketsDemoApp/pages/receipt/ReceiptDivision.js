@@ -49,13 +49,14 @@ function ReceiptDivision({navigation}) {
     // Use dark color scheme
         bgColor = "rgb(153,153,153)"
     }
-    const SaveStoreInfo= (_store,_storeName)=>{
+    const SaveStoreInfo= (_store,_storeName,_storeBrand)=>{
           
         AsyncStorage.setItem(
           'selectedStore',
           JSON.stringify({
             'selectedStore': _store,
-            'selectedStoreName': _storeName
+            'selectedStoreName': _storeName,
+            'selectedStoreBrandId': _storeBrand
           }), () => {
               setSelectStore(_store)
           });
@@ -93,7 +94,7 @@ function ReceiptDivision({navigation}) {
                                     store.dispatch({type:"BRAND_ID",brand_id:obj.brandId })
                                     store.dispatch({ type: 'storeName', storeName: obj.name })
                                     setSelectStore(value)
-                                    SaveStoreInfo(value,obj.name)
+                                    SaveStoreInfo(value,obj.name,obj.brandId)
                                 }
                             });
                         

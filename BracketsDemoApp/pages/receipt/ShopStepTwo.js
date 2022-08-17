@@ -37,15 +37,9 @@ function ShopStepTwo({navigation}) {
             .then((response) => {
             // 응답 처리
                 const json =  response.data;
-                //console.log(json);
                 setData(json.body);
-
-                //console.log(json.body);
-                //console.log(data);
-
                 store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
 
-                //console.log(store.getState().getProductCategory);
 
                 
                 navigation.navigate("ShopStepThree");
@@ -58,29 +52,6 @@ function ShopStepTwo({navigation}) {
             })
         }
         
-        /*try {
-            const response = await fetch(ip+'/api/getProductCategory',{method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-            body: JSON.stringify(bodyData)
-            });
-            const json = await response.json();
-            setData(json.body);
-            //console.log(json.body);
-            //console.log(data);
-            store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
-            //console.log(store.getState().getProductCategory);
-            
-            setLoading(false);
-           
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-            navigation.navigate("ShopStepThree");
-        }*/
     }
 
     const updateReceipt = async (receipt_id,typeN) => {
@@ -90,7 +61,6 @@ function ShopStepTwo({navigation}) {
             formdata.append("step", 2);
             formdata.append("receipt", receipt_id);
             formdata.append("type", typeN);
-            //console.log(formdata)
 
             axios.post(ip+'/api/updateReceipt', formdata , {
                 headers: {
@@ -99,9 +69,6 @@ function ShopStepTwo({navigation}) {
                 .then((response) => {
                 // 응답 처리
                     const json =  response.data;
-                    //console.log(json);
-                
-                    
                 })
                 .catch((error) => {
                 // 예외 처리
@@ -111,22 +78,6 @@ function ShopStepTwo({navigation}) {
             alert("전송오류")
             navigation.popToTop()
         }
-        /*try {
-            const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
-            headers: {
-                'Accept': '',
-                'Content-Type': 'multipart/form-data'
-                },
-            body: formdata
-            });
-            const json = await response.json();
-            //console.log(json)
-           
-        } catch (error) {
-            console.error(error);
-        } finally {
-
-        }*/
     }
     
     

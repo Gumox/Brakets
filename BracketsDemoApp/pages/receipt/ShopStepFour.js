@@ -124,7 +124,6 @@ function ShopStepFour({navigation,route}) {
     let dataPicker;
 
     if(Platform.OS === 'ios'){
-        //console.log("ios")
         dataPicker = (
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
@@ -135,7 +134,6 @@ function ShopStepFour({navigation,route}) {
           />
         )
     }else{
-        //console.log("and")
         dataPicker = ((dateInput1.show) && (
             <DateTimePicker
                 testID="dateTimePicker"

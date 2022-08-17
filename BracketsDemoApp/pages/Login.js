@@ -52,6 +52,7 @@ function Login({ navigation }): React.ReactElement {
       const info = JSON.parse(result);
           store.dispatch({ type: 'STORE_ID', store_id: info.selectedStore });
           store.dispatch({ type: 'storeName', storeName: info.selectedStoreName })
+          store.dispatch({type:"BRAND_ID",brand_id:info.selectedStoreBrandId })
           console.log(info)
           _store = info.selectedStore
       }
@@ -72,9 +73,9 @@ function Login({ navigation }): React.ReactElement {
         store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
         if(!tof){
           store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
-        store.dispatch({ type: 'storeName', storeName: UserInfo.storeName })
+          store.dispatch({ type: 'storeName', storeName: UserInfo.storeName })
+          store.dispatch({type:"BRAND_ID",brand_id:UserInfo.data[0].brand_id })
         }
-        store.dispatch({type:"BRAND_ID",brand_id:UserInfo.data[0].brand_id })
         navigation.replace('ReceiptDivision');
 
       }

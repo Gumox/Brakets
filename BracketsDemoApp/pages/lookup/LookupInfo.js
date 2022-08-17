@@ -10,7 +10,7 @@ import store from '../../store/store';
 import {useNetInfo}from "@react-native-community/netinfo";
 import LookupCheckStep from '../../Functions/LookupCheckStep';
 import DeleteReceipt from '../../Functions/DeleteReceipt';
-import SetReReceiptInfo,{getRepairList} from '../../Functions/SetReReceiptInfo';
+import SetReReceiptInfo,{getProductCategory} from '../../Functions/SetReReceiptInfo';
 
 const  formatDate = (inputDate)=> {
     const sp =  inputDate;
@@ -55,6 +55,7 @@ function LookupInfo( { route,navigation } ) {
     
 
     const reReceipt = async(data,step)=>{
+        await getProductCategory()
         SetReReceiptInfo(data,images)
         
         if(step ==0){
@@ -134,13 +135,18 @@ function LookupInfo( { route,navigation } ) {
 
 
     },[]);
-    
+    const getCategory=()=>{
+        if(data.receipt_type ==1 || data.receipt_type ==2){
+            getProductCategory();
+        }
+    }
     let btn
     if(step>2){
         btn =(
             <CenterView style={{borderTopWidth:1,borderTopStyle:'solid',borderTopColor:'rgba(200,200,200,0.2)'}}>
                 <Button onPress={ ()=>{
                     if(netInfo.isConnected){
+                        getCategory()
                         navigation.navigate( 'LookupInfo3',{data:data , images:images, needImages:needImages})
                     }else{
                         Alert.alert("네트워크 연결 실패","연결 상태를 확인해주세요",[{ text: "확인", onPress: () =>{}}])
