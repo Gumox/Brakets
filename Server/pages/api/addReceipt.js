@@ -117,7 +117,6 @@ const controller = async (req, res) => {
           console.log("add Receipt (step 1)");
           res.status(200).json({ receipt_id: receiptId });
         }else if(step == 1){
-          console.log("?????????????????????")
           const receiptId = fields["receiptId"];
           const receipt = await updateReceipt(fields,receiptId);
           console.log(receipt)

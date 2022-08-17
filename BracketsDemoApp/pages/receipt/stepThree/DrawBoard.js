@@ -33,7 +33,7 @@ export default class DrawBoard extends Component {
             store.dispatch({type:'DRAW',drawingImage: uri});
             //store.dispatch({type:'PHOTO',photo: uri});
             const params = this.props.children[1];
-            wait(250).then(() => {
+            wait(500).then(() => {
         
                 if(params === undefined){
                 

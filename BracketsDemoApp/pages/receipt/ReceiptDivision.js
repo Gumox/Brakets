@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import Contents from '../../components/Contents';
 import styled from 'styled-components/native';
 import Container from '../../components/Container';
-import StateBarSolid from '../../components/StateBarSolid';
-import StateBarVoid from '../../components/StateBarVoid';
-import CenterText from '../../components/CenterText';
 import ReceiptButton from '../../components/ReceiptButton';
-import ContainView from '../../components/ContainView';
 import Bottom from '../../components/Bottom';
 import RNPickerSelect from 'react-native-picker-select';
 import store from '../../store/store';
@@ -54,40 +49,21 @@ function ReceiptDivision({navigation}) {
     // Use dark color scheme
         bgColor = "rgb(153,153,153)"
     }
-    const  SaveStoreInfo= (_store)=>{
+    const SaveStoreInfo= (_store,_storeName)=>{
           
         AsyncStorage.setItem(
           'selectedStore',
           JSON.stringify({
-            'selectedStore': _store
+            'selectedStore': _store,
+            'selectedStoreName': _storeName
           }), () => {
             console.log(_store)
               setSelectStore(_store)
           });
     }
-    const LoadInfo = () =>{
-
-        AsyncStorage.getItem('selectedStore', (err, result) => {
-            if (result !== null) {
-            const info = JSON.parse(result);
-                console.log(info)
-
-                setSelectStore(info.selectedStore)
-            
-            }
-        })
-    }
     useEffect(()=>{        
-        console.log()
-        console.log()
-        console.log()
-        console.log(selectStore)
-        console.log()
-        console.log()
-        console.log()
-        console.log()
-        var i =1;
-        var list =[]
+        let i =1;
+        let list =[]
         info.forEach(obj => {
             list.push({ label: i+'.'+obj.name, value: obj.store_id, brandId: obj.brand_id ,name:obj.name})
             i = i +1;
@@ -118,7 +94,7 @@ function ReceiptDivision({navigation}) {
                                     store.dispatch({type:"BRAND_ID",brand_id:obj.brandId })
                                     store.dispatch({ type: 'storeName', storeName: obj.name })
                                     setSelectStore(value)
-                                    SaveStoreInfo(value)
+                                    SaveStoreInfo(value,obj.name)
                                 }
                             });
                         

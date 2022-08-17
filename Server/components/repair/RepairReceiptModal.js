@@ -31,6 +31,7 @@ function RepairReceiptModal (props) {
   const [cancelSF,setCancelSF] = useState()
   const [cancelSA,setCancelSA] = useState()
 
+  const [repairRegistDate,setRepairRegistDate] = useState("미등록")
   const [selectJudgmentName,setSelectJudgmentName] = useState()
   const [selectJudgmentValue,setSelectJudgmentValue] = useState(0)
   const [selectFault,setSelectFault] =useState(0)
@@ -129,8 +130,8 @@ function RepairReceiptModal (props) {
       let resultId =`repair${i}_result_id`
       let repairStoreId=`repair${i}_store_id`
       let name =`repair${i}_result_name`
-      let analysis = `repair${i}_fault_id`
-      let fault =`repair${i}_analysis_id`
+      let fault = `repair${i}_fault_id`
+      let analysis =`repair${i}_analysis_id`
       if(el[repairStoreId] == shop){
         setSelectJudgmentValue(el[resultId])
         setSelectJudgmentName(el[name])
@@ -140,10 +141,15 @@ function RepairReceiptModal (props) {
       if(el[fault] !== null){
         setSelectFault(el[fault])
         setCancelSF(el[fault])
-      }if(el[analysis]!== null){
+      }
+      if(el[analysis]!== null){
         setSelectAnalysis(el[analysis])
         setCancelSA(el[analysis])
       }
+      if(el[`repair${1}_register_date`]){
+        setRepairRegistDate(formatDate(new Date(el[`repair${1}_register_date`])))
+      }
+
     }
     
     setFaultLists(setSelectList(fI))
@@ -259,7 +265,7 @@ function RepairReceiptModal (props) {
             <Line/>
             <div style={{marginLeft:20,marginRight:20,flex:1}}>
               <RaView>
-                <ItemTextTop style={{fontSize:fontSizeTop}}>수선처 접수일<ItemTextBottom style={{marginLeft:20}}>{formatDate(new Date(el.receipt_date))}</ItemTextBottom></ItemTextTop>
+                <ItemTextTop style={{fontSize:fontSizeTop}}>수선처 접수일<ItemTextBottom style={{marginLeft:20}}>{repairRegistDate}</ItemTextBottom></ItemTextTop>
                 <ItemTextTop style={{fontSize:fontSizeTop}}>운송 형태<ItemTextBottom style={{marginLeft:20}}>
                     <select onChange={(e)=>{setDeliveryType(e.target.value)}}  style={styles.selectStyle} >
                     <option value={1} key={'매장행낭'}>매장행낭</option>

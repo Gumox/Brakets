@@ -51,6 +51,8 @@ function Login({ navigation }): React.ReactElement {
       if (result !== null) {
       const info = JSON.parse(result);
           store.dispatch({ type: 'STORE_ID', store_id: info.selectedStore });
+          store.dispatch({ type: 'storeName', storeName: info.selectedStoreName })
+          console.log(info)
           _store = info.selectedStore
       }
     })
@@ -68,9 +70,9 @@ function Login({ navigation }): React.ReactElement {
         }
         store.dispatch({ type: 'USER_INFO', userInfo: UserInfo.data })
         store.dispatch({ type: 'storeStaffId', storeStaffId: UserInfo.userEmail });
-        store.dispatch({ type: 'storeName', storeName: UserInfo.storeName })
         if(!tof){
           store.dispatch({ type: 'STORE_ID', store_id: UserInfo.data[0].store_id });
+          store.dispatch({ type: 'storeName', storeName: UserInfo.storeName })
         }
         store.dispatch({type:"BRAND_ID",brand_id:UserInfo.data[0].brand_id })
         navigation.replace('ReceiptDivision');

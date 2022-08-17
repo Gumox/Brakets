@@ -13,16 +13,8 @@ import DrawBoard from './DrawBoard';
 
 export default function ShopStepThree3 ({navigation ,route}) {
  
-    console.log(store.getState().photo);
-    console.log("");
-    console.log("");
-    console.log("");
+    
     const  params = route.params;
-    console.log(params)
-    console.log("");
-    console.log("");
-    console.log("");
-
     var imageUri = store.getState().photo;
 
     /*const imageArray =store.getState().photoArr;
@@ -36,7 +28,6 @@ export default function ShopStepThree3 ({navigation ,route}) {
     var imagePath  =imageUri.replace("file://", "");
     const [color,setColor] = React.useState("#ff0000");
     const [modalVisible, setModalVisible] = React.useState(false);
-    console.log(imagePath);
     return (
         <View style={styles.container}>
             <ImageBackground source={{ uri: imageUri}} resizeMode="cover" style ={styles.image} > 

@@ -1,18 +1,11 @@
-import React from "react";
+import React,{useRef,useEffect} from "react";
 import styled from "styled-components";
-import Container from "../../../components/Container";
-import ImageZoom from "react-native-image-pan-zoom";
 import store from "../../../store/store";
 
-import {  Alert ,Touchable,ImageBackground,Image, View, StyleSheet, Modal, Text  } from "react-native";
+import {  Alert ,Image, View, StyleSheet } from "react-native";
 
 
-import Button from '../../../components/Button';
-import CenterText from '../../../components/CenterText';
 import _ from 'lodash';
-import StateBarSolid from '../../../components/StateBarSolid';
-import StateBarVoid from '../../../components/StateBarVoid';
-import ButtonBlack from '../../../components/ButtonBlack';
 import ViewShot from "react-native-view-shot";
 
 const CenterView =styled.View`
@@ -55,18 +48,16 @@ const wait = (timeout) => {
 }
 function ShopStepThree2 ({ navigation ,route}) {
 
-  const viewShot = React.useRef();
+  const viewShot = useRef();
   
   const imgUri=store.getState().photo;
 
   const imgUri2 =store.getState().drawingImage;
 
-  console.log(" imgUri2 : "+ imgUri2 )
   const imageP = { uri: imgUri };
-  var drawingImage
+  let drawingImage
   const imageD = { uri: imgUri2 };
   if (imgUri2 != ""){
-    console.log("has")
     drawingImage = (
       <View style={styles.image}>
         
@@ -88,13 +79,12 @@ function ShopStepThree2 ({ navigation ,route}) {
       store.dispatch({type:'PHOTO',photo: uri});
     });
   }
-  React.useEffect(() => {
-    wait(250).then(() => {
+  useEffect(() => {
+    wait(350).then(() => {
       if(imgUri2 != ""){
         capture();
       }
     });
-    console.log("??")
   }, [])
 
   
@@ -119,8 +109,6 @@ function ShopStepThree2 ({ navigation ,route}) {
             navigation.replace('ShopStepThree3')
           }
           else if(route.params.toGo=== "PhotoControl"){
-            const params = route.params; 
-            console.log(params);
             navigation.replace('ShopStepThree3',{index: 0, key: 0, toGo: 'PhotoControl', value: route.params.value});
           }
           

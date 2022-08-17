@@ -188,6 +188,27 @@ async function setHeadquarterDefaultMessageData(
   
     return result;
 }
+async function setHeadquarterDiscount(
+  headquarter_id,
+) {
+  const result = await excuteQuery({
+      query: `INSERT INTO discount_type 
+              (discount_id, discount_name, discount_value, headquarter_id) 
+              VALUES (NULL, '10%', '0.90', ${headquarter_id}), 
+              (NULL, '20%', '0.80', ${headquarter_id}), 
+              (NULL, '30%', '0.70', ${headquarter_id}), 
+              (NULL, '40%', '0.60', ${headquarter_id}), 
+              (NULL, '50%', '0.50', ${headquarter_id}), 
+              (NULL, '60%', '0.40', ${headquarter_id}), 
+              (NULL, '70%', '0.30', ${headquarter_id}), 
+              (NULL, '80%', '0.20', ${headquarter_id}), 
+              (NULL, '90%', '0.10', ${headquarter_id})`
+      
+    });
+  
+  
+    return result;
+}
 
 
 async function setHeadquarterStore(
@@ -281,8 +302,11 @@ const controller = async (req, res) => {
       const resultMessageData = await setHeadquarterDefaultMessageData(id);
       if(resultMessageData.error){console.log(resultMessageData.error)}
 
-      const resultnoticeData = await setHeadquarterDefaultNotice();
-      if(resultnoticeData.error){console.log(resultnoticeData.error)}
+      const resultNoticeData = await setHeadquarterDefaultNotice(id);
+      if(resultNoticeData.error){console.log(resultNoticeData.error)}
+
+      const resultDiscount = await setHeadquarterDiscount(id);
+      if(resultDiscount.error){console.log(resultDiscount.error)}
       
       
     } catch (err) {

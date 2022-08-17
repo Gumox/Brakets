@@ -56,6 +56,9 @@ const ReceiptInfo = ({
     formData.append('deliberation', inputFlie[0]);
     formData.append('receiptId', targetData["receipt_id"]);
     formData.append('customerId', targetData["customer_id"]);
+    if(!targetData[RECEIPT.REGISTER_DATE]){
+      targetData[RECEIPT.REGISTER_DATE] = moment().format("YYYY-MM-DD")
+    }
     const body ={...targetData,manager_id:userInfo.staff_id}
     
     const [data] = await Promise.all([
@@ -181,12 +184,13 @@ const ReceiptInfo = ({
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetData[RECEIPT.RESULT_ID]]);
-  console.log( targetData[RECEIPT.PAID], targetData[RECEIPT.PAID] , parseInt(targetData[RECEIPT.PAID]) )
   if(typeof targetData[RECEIPT.PAID] === "boolean" ){
     targetData[RECEIPT.PAID]
   }else{
      parseInt(targetData[RECEIPT.PAID]) === 1 
   }
+  console.log(
+    targetData[RECEIPT.REGISTER_DATE])
   return (
     <Wrapper>
       <SectionRow>

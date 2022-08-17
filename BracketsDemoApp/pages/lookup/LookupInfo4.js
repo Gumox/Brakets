@@ -121,7 +121,9 @@ function LookupInfo4( { route,navigation } ) {
         
     }
 
-
+    const numberWithCommas = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' 원';
+    }
 
     useEffect(()=>{
 
@@ -143,7 +145,7 @@ function LookupInfo4( { route,navigation } ) {
         //수선비
         if(data["paid"] =="1"){                              //유상수선유무
             setSelection(true)
-            setRepairPrice(data["fee"]*1.1)
+            setRepairPrice(numberWithCommas(Math.floor(data["fee"]*1.1)))
         }else{
             setSelection(false)
             setRepairPrice(0)
@@ -207,15 +209,23 @@ function LookupInfo4( { route,navigation } ) {
         )
     }
     let toHq
-    if(mainCenterSendDate &&mainCenterDate ){
-        console.log("mainCenterSendDate",mainCenterSendDate)
-        console.log("mainCenterDate",mainCenterDate)
+    console.log("mainCenterSendDate",mainCenterSendDate)
+    console.log("mainCenterDate",mainCenterDate)
+    if(mainCenterSendDate || mainCenterDate ){
         toHq =(
             <InfoView>
-                <TopText>본사 접수일</TopText>
-                <InputText editable={false}>{mainCenterDate}</InputText>
-                <TopText>본사 발송일</TopText>
-                <InputText editable={false}>{mainCenterSendDate}</InputText>
+                {mainCenterDate &&
+                    <>
+                        <TopText>본사 접수일</TopText>
+                        <InputText editable={false}>{mainCenterDate}</InputText>
+                    </>
+                }
+                {mainCenterSendDate &&
+                    <>
+                        <TopText>본사 처리일</TopText>
+                        <InputText editable={false}>{mainCenterSendDate}</InputText>
+                    </>
+                }
                 <TopText>본사 설명</TopText>
                 <InputText editable={false} multiline ={true}>{mainCenterSendDescription}</InputText>
             </InfoView>
@@ -230,7 +240,7 @@ function LookupInfo4( { route,navigation } ) {
                 <Text style={{marginBottom:10, color:"#000000"}}>수선처 : {repairShop}</Text>
                 <InfoView>
                     <TopText>수선처 접수일</TopText>
-                    <InputText editable={false}>{formatDate(repairShopSendDate)}</InputText>
+                    <InputText editable={false}>{formatDate(repairShopDate)}</InputText>
                         
                     <TopText>수선처 발송일</TopText>
                     <InputText editable={false}>{repairShopSendDate}</InputText>
@@ -252,7 +262,7 @@ function LookupInfo4( { route,navigation } ) {
                 }
                 <TopText style={{marginBottom : 10, marginLeft:10}}>매장 인수일</TopText>
                 <InputText editable={false} >{selectDay}</InputText>
-                <Half style = {{marginBottom : 50}}>
+                <Half style = {{marginBottom : 50,marginTop:8}}>
                     <Check>
                         <Text style={{color:"#000000"}}>유상수선 </Text>
                         <CheckBox
@@ -264,7 +274,7 @@ function LookupInfo4( { route,navigation } ) {
                             />
                     </Check>
                     <TotalMoney>
-                        <TopText style={{color : "#ff0000" ,fontSize :18 ,fontWeight :"bold"}}>수선비  {repairPrice}</TopText>
+                        <TopText style={{color : "#ff0000" ,fontSize :18 ,fontWeight :"bold"}}>수선비 {repairPrice}</TopText>
                     </TotalMoney>
                 </Half>
      
@@ -313,16 +323,12 @@ const CenterView = styled.View`
 const Check =styled.View`
     flex:1;
     flex-direction : row;
-    width : 40%;
-    padding : 8px;
     align-items : center;
     justify-content : center;
     `;
 const TotalMoney = styled.View`
     flex:1;
     flex-direction : row;
-    width : 50%;
-    margin-left: 10%;
 
     `;
 

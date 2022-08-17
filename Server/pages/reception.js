@@ -70,6 +70,9 @@ const ReceptionPage = ({ options, user }) => {
         setTargetBrandId(receptionPageoptions.brandList[0].value)
       }
     }
+    if(sessionStorage.getItem("RECEPTION_HEADER_BRAND")){
+      setTargetBrandId(sessionStorage.getItem("RECEPTION_HEADER_BRAND"))
+    }
   },[])
   useEffect(() => {
     

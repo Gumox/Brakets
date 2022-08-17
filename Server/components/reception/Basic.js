@@ -19,6 +19,7 @@ const BasicInfo = ({
   
 }) => {
   const {headquarter_id: headquarterId,level:level} = useContext(UserContext);
+  const sel = [{value: null, text: '선택'}]
   const { brandList } = useContext(OptionContext);
   const [headquarterCode, setHeadquarterCode] = useState("");
   const [receiptCode, setReceiptCode] = useState("");
@@ -55,6 +56,7 @@ const BasicInfo = ({
 
   useEffect(()=>{
     getHeadquarterInfo()
+    console.log(sessionStorage.getItem("RECEPTION_HEADER_BRAND"))
   },[])
 
   return (
@@ -69,9 +71,12 @@ const BasicInfo = ({
       <SelectOption
         title="브랜드:"
         name={"brandId"}
-        options={brandList}
+        options={sel.concat(brandList)}
         value={targetBrandId}
-        onChange={(e) => setTargetBrandId(e.target.value)}
+        onChange={(e) => {
+          sessionStorage.setItem("RECEPTION_HEADER_BRAND",e.target.value)
+          setTargetBrandId(e.target.value)
+        }}
         styleOptions={{ width: "200px" }}
       />
       <Input

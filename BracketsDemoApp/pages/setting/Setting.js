@@ -4,11 +4,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 
 import Container from '../../components/Container';
-import Contents from '../../components/Contents';
 import styled from 'styled-components/native';
 import store from '../../store/store';
 import Bottom from '../../components/Bottom';
-import Button from '../../components/Button';
 import ReceiptButton from '../../components/ReceiptButton';
 import CenterText from '../../components/CenterText';
 import checkChangedUserInfo from '../../Functions/CheckChangedUserinfo';
@@ -53,28 +51,7 @@ function Setting({ navigation }) {
     // Use dark color scheme
         console.log("dark")
     }
-
-    const storeId = store.getState().store_id;
-    const smsBody = {
-        "storeId": storeId,
-        "receiptId":243,
-
-    }//
-
-    const savedResultId = AsyncStorage.getItem('userInfo', (err, result) => {
-        //user_id에 담긴 아이디 불러오기
-        if (result !== null) {
-            const UserInfo = JSON.parse(result);
-            console.log('닉네임 : ' + UserInfo.userEmail); // 출력 => 닉네임 : User1 
-            console.log('휴대폰 : ' + UserInfo.userName); //  출력 => 휴대폰 : 010-xxxx-xxxx
-            console.log("load saved userId " + result);
-
-            return UserInfo.userName;
-        }
-    });
-
     const storeName = store.getState().storeName;
-    const storeEmail = store.getState().storeStaffId;
     
     useEffect(() => {
         checkChangedUserInfo(navigation)

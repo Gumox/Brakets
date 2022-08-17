@@ -7,7 +7,6 @@ import store from "../store/store";
 
 const checkChangedUserInfo =(navigation)=>{
         let userEmail =store.getState().storeStaffId
-        console.log(userEmail)
         
 
         axios.get( ip + `/api/auth/store?email=${userEmail}`,{
@@ -18,8 +17,7 @@ const checkChangedUserInfo =(navigation)=>{
             .then((response) => {
             // 응답 처리
                 let checkResult= ( JSON.stringify({'userName':response.data.data[0].staff_name,'userEmail': userEmail,"data": response.data.data,"storeName":response.data.data[0].name}))
-                console.log(checkResult)
-
+                
                 AsyncStorage.getItem('userInfo', (err, result) => {
                     if (result !== null) {
                         if(checkResult !== result){

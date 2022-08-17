@@ -16,7 +16,7 @@ function NetworkLoading({visable,setVisable =()=>{},cancelOn = true,text}){
                            
                            <View style={styles.container}>
                                 <ActivityIndicator size="large" color="rgb(0,80,150)" />
-                                {text}
+                                {text && <Text>{text}</Text>}
                                 {cancelOn ?
                                     <Pressable style={{margin:50}} onPress={()=>{setVisable( !visable)}}>
                                         <Text style={{color:'#000000'}}>닫기</Text>
