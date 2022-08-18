@@ -64,7 +64,6 @@ function ShopStepThree5({route,navigation}) {
             formdata.append("image2", PathToFlie(indexUriList[2]));
             formdata.append("image3", PathToFlie(indexUriList[3]));
             formdata.append("image4", PathToFlie(indexUriList[4]));
-            //console.log(formdata)
 
             try {
                 const response = await fetch(ip+'/api/updateReceipt',{method: 'POST',
@@ -75,18 +74,17 @@ function ShopStepThree5({route,navigation}) {
                 body: formdata
                 });
                 const json = await response.json();
-                //console.log(json)
                 setVisable(false)
                 navigation.navigate( 'ScanScreen',{key:'ShopStepFour'} )
             
             } catch (error) {
                 console.error(error);
-                alert("전송 오류")
+                 Alert.alert("전송오류",'다시 시도해 주세요')
                 setVisable(false)
             } finally {
             }
         }else{
-            alert("전송오류")
+             Alert.alert("전송오류",'다시 시도해 주세요')
             navigation.popToTop()
         }
     }
@@ -95,7 +93,6 @@ function ShopStepThree5({route,navigation}) {
         if(inputTexts == ''){
             setRequet("없음")
         }else{
-            //console.log(inputTexts[0])
             setRequet(inputTexts[0]);
         }
         receiverList.forEach(obj => {

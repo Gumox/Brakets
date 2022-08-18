@@ -2,10 +2,7 @@ import React, {useCallback ,useState,useRef, useEffect} from 'react';
 import styled from 'styled-components/native';
 import _ from 'lodash';
 import { 
-  ScrollView ,
   TouchableOpacity,
-  TouchableHighlight,
-  Modal,
   Image,
   View,
   Dimensions,
@@ -13,7 +10,6 @@ import {
   FlatList,
   StyleSheet,
   Animated,
-  Pressable,
   Alert,
   KeyboardAvoidingView
 } from 'react-native';

@@ -168,13 +168,19 @@ function LookupInfoCard(props) {
                 <Label>구분</Label>
                 <Label2 style={{color:basicInfoColor}}>{checkReceipt}</Label2>
             </PrView3>
-            <PrView3>
-                <Label>고객</Label>
-                <Label2 style={{color:basicInfoColor}}>{obj["customer_name"]}</Label2>
-            </PrView3>
-            <PrView2>
-                <Label3 style={{color:basicInfoColor ,marginRight:0}}>{obj["customer_phone"]}</Label3>
-            </PrView2>
+            {obj["customer_name"] &&
+                <>
+                    <PrView3>
+                        <Label>고객</Label>
+                        <Label2 style={{color:basicInfoColor}}>{obj["customer_name"]}</Label2>
+                    </PrView3>
+                    <PrView2>
+                        <Label3 style={{color:basicInfoColor ,marginRight:0}}>{obj["customer_phone"]}</Label3>
+                    </PrView2>
+                </>
+            }
+            
+            
             
         </Container>
     )

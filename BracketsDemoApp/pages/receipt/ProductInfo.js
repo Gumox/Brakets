@@ -56,7 +56,6 @@ function ProductInfo({navigation, route}) {
                     code: codeInput
                 }
             }
-            ////console.log(codeType)
             axios(option)
             .then(
                 response => (response.status == '200') ? (
@@ -89,7 +88,7 @@ function ProductInfo({navigation, route}) {
                 )
                 )
             .catch(function(error){
-                //console.log(error)
+                console.log(error)
                 Alert.alert(            
                     "인터넷 연결 실패",                                
                     [                              
@@ -117,18 +116,13 @@ function ProductInfo({navigation, route}) {
             formdata.append("store", store.getState().store_id);
             formdata.append("staff", store.getState().userInfo[0].staff_id);
 
-            if(store.getState().receptionDivision.id == 3){
+           
+            formdata.append("customer", store.getState().customer.cId);
+                
             
-                formdata.append("customer", 0);
-                
-            }else{
-                formdata.append("customer", store.getState().customer.cId);
-                
-            }
             
             formdata.append("brand", store.getState().brand_id);
             formdata.append("category", store.getState().receptionDivision.id);
-            ////console.log("store.getState().receptionDivision:",store.getState().receptionDivision)
             
             
             
@@ -136,8 +130,6 @@ function ProductInfo({navigation, route}) {
             formdata.append("pcode", codeInput);
             formdata.append("substitute", Number(alter));//임시
             formdata.append("receiptId", receiptId);
-
-            //console.log(formdata)
 
             axios.post(ip+'/api/addReceipt', formdata , {
                 headers: {
@@ -166,8 +158,52 @@ function ProductInfo({navigation, route}) {
                 // 예외 처리
                 console.error(error);
                 })
+        }else if(store.getState().receptionDivision.id == 3){
+            formdata.append("step",1);
+            formdata.append("store", store.getState().store_id);
+            formdata.append("staff", store.getState().userInfo[0].staff_id);
+            formdata.append("customer", 0);
+            
+            
+            formdata.append("brand", store.getState().brand_id);
+            formdata.append("category", store.getState().receptionDivision.id);
+            
+            
+            
+            formdata.append("pid", pid);
+            formdata.append("pcode", codeInput);
+            formdata.append("substitute", Number(alter));//임시
+
+            console.log(formdata)
+
+            axios.post(ip+'/api/addReceipt', formdata , {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                }})
+                .then((response) => {
+                // 응답 처리
+                    const json =  response.data;
+                    store.dispatch({type:'RECEIPT_ID',receipt_id: json.receipt_id});
+                    navigation.navigate( 'ShopStepTwo',
+                        { 
+                            codeType: codeType, 
+                            code: codeInput, 
+                            serialInput: serialInput,
+                            productName: productName,
+                            season: season,
+                            colorValue: colorValue,
+                            size: size,
+                            measure: measure,
+                            imageFile: imageFile
+                        }
+                    )
+                })
+                .catch((error) => {
+                // 예외 처리
+                console.error(error);
+                })
         }else{
-            alert("전송오류")
+            Alert.alert("전송오류",'다시 시도해 주세요')
             navigation.popToTop()
         }
         

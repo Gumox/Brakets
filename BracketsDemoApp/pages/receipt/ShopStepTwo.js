@@ -15,8 +15,6 @@ import axios from 'axios';
 import {useNetInfo}from "@react-native-community/netinfo";
 
 function ShopStepTwo({navigation}) {
-    const [data, setData] = React.useState([]);
-    const [isLoading, setLoading] = React.useState(true);
     
     const netInfo = useNetInfo();
     
@@ -37,7 +35,6 @@ function ShopStepTwo({navigation}) {
             .then((response) => {
             // 응답 처리
                 const json =  response.data;
-                setData(json.body);
                 store.dispatch({type:'GET_APL_TYPE',setAplType: json.body});
 
 
@@ -57,7 +54,7 @@ function ShopStepTwo({navigation}) {
     const updateReceipt = async (receipt_id,typeN) => {
         let formdata = new FormData();
 
-        if(receipt_id){
+        if(receipt_id ){
             formdata.append("step", 2);
             formdata.append("receipt", receipt_id);
             formdata.append("type", typeN);
@@ -75,7 +72,7 @@ function ShopStepTwo({navigation}) {
                 console.error(error);
                 })
         }else{
-            alert("전송오류")
+             Alert.alert("전송오류",'다시 시도해 주세요')
             navigation.popToTop()
         }
     }
