@@ -65,6 +65,32 @@ const addReceiptZeroStep = async ({
   });
 };
 
+const addReceiptStore = async ({
+  store,
+  staff,
+  category,
+  pid,
+  pcode,
+  substitute,
+  brand,
+}) => {
+  const createDate =  moment().format("YYYY-MM-DD")
+  return excuteQuery({
+    query:
+      `INSERT INTO 
+            receipt(
+              create_date,
+              store_id, 
+              staff_id,
+              category,
+              product_id, 
+              product_code, 
+              substitute, 
+              brand_id
+            ) VALUES (?,?,?,?,?,?,?,?)`,
+    values: [createDate,store, staff,category,pid,pcode,substitute,brand],
+  });
+};
 
 export const config = {
   api: {
@@ -83,6 +109,7 @@ const controller = async (req, res) => {
       try {
         if (err) throw new Error(err);
         const step = fields["step"];
+        const category = fields["category"];
 
         if(step == 0){
             
@@ -116,7 +143,7 @@ const controller = async (req, res) => {
 
           console.log("add Receipt (step 1)");
           res.status(200).json({ receipt_id: receiptId });
-        }else if(step == 1){
+        }else if(step == 1 && category != 3){
           const receiptId = fields["receiptId"];
           const receipt = await updateReceipt(fields,receiptId);
           console.log(receipt)
@@ -124,14 +151,13 @@ const controller = async (req, res) => {
         }else{
           if (err) throw new Error(err);
           // receipt 생성
-          const receipt = await addReceipt(fields);
+          const receipt = await addReceiptStore(fields);
           if (receipt.error) {
-            console.log("add Receipt failed");
             throw new Error(receipt.error);
           }
 
           const receiptId = receipt["insertId"];
-          const customerId = fields["customer"];
+          /*const customerId = fields["customer"];
           if(files.signature){
             const extension = files.signature.name.split(".").pop();
             const filePath = `/storage/signature/${customerId}_${receiptId}.${extension}`;
@@ -149,7 +175,7 @@ const controller = async (req, res) => {
               console.log("update Signature failed");
               throw new Error(results.error);
             }
-          }
+          }*/
 
           console.log("add Receipt (step 1)");
           res.status(200).json({ receipt_id: receiptId });
