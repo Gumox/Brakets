@@ -62,7 +62,7 @@ export const TRANSPORT_OPTIONS = [
 export const SHIPPING_OPTIONS = [
   {
     value: "1",
-    text: "퀵",
+    text: "행낭",
   },
   {
     value: "2",
@@ -70,7 +70,7 @@ export const SHIPPING_OPTIONS = [
   },
   {
     value: "3",
-    text: "행낭",
+    text: "퀵",
   },
   {
     value: "4",

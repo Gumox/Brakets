@@ -46,6 +46,7 @@ const RepairReturn = ({
         register_date: today,
         
         receiver: receiverId,
+        receiverChange: true,
         complete_date : selectedDate,
         message: message,
         shipment_type: selectedSendType,
@@ -59,7 +60,9 @@ const RepairReturn = ({
       },
         body: JSON.stringify(body)
       })
-      .then(response => res=response.json())
+      .then(response => 
+          res=response.json(),
+      )
       window.location.reload();
     }
     

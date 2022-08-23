@@ -76,12 +76,12 @@ const sortInquiryDataHeadquarter = async(data , params,_analysisType,_judgmentRe
                 shipment_type  = obj.repair1_shipment_type
                 shipment_price = obj.repair1_shipment_price  
 
-                analysis_name = obj.repair1_fault_name
+
+                fault_name = obj.repair1_fault_name
                 
                 result_name = obj.repair1_result_name
                 
-                fault_name = obj.repair1_analysis_name
-                
+                analysis_name= obj.repair1_analysis_name
 
                 if(obj.repair1_register_date == null){
                     register_date = obj.repair1_register_date
@@ -194,17 +194,17 @@ const sortInquiryDataHeadquarter = async(data , params,_analysisType,_judgmentRe
                 fee = obj.repair2_fee,
                 paid = obj.repair2_paid 
                 repair_store_name = obj.repair2_store_name
-                cashreceipt_num =obj.repair1_cashreceipt_num
+                cashreceipt_num =obj.repair2_cashreceipt_num
 
                 complete_date  = obj.repair2_complete_date
                 shipment_type  = obj.repair2_shipment_type
-                shipment_price = obj.repair2_shipment_price  
+                shipment_price = obj.repair2_shipment_price
 
-                analysis_name = obj.repair2_fault_name
+                fault_name = obj.repair2_fault_name
                 
                 result_name = obj.repair2_result_name
                 
-                fault_name = obj.repair2_analysis_name
+                analysis_name= obj.repair2_analysis_name
 
                 if(obj.repair2_register_date == null){
                     register_date = obj.repair2_register_date
@@ -315,17 +315,17 @@ const sortInquiryDataHeadquarter = async(data , params,_analysisType,_judgmentRe
                 fee = obj.repair3_fee,
                 paid = obj.repair3_paid 
                 repair_store_name = obj.repair3_store_name
-                cashreceipt_num =obj.repair1_cashreceipt_num
+                cashreceipt_num =obj.repair3_cashreceipt_num
 
                 complete_date  = obj.repair3_complete_date
                 shipment_type  = obj.repair3_shipment_type
                 shipment_price = obj.repair3_shipment_price  
 
-                analysis_name = obj.repair3_fault_name
+                fault_name = obj.repair3_fault_name
                 
                 result_name = obj.repair3_result_name
                 
-                fault_name = obj.repair3_analysis_name
+                analysis_name= obj.repair3_analysis_name
 
                 if(obj.repair3_register_date == null){
                     register_date = obj.repair3_register_date

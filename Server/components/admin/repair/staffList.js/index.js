@@ -80,7 +80,7 @@ const StaffList = ({user,infos,repairShopStaff}) => {
                 </SearchBarButton>
               </SearchBar>
             
-              <h2 style={{marginLeft:20}}>매장 목록</h2>
+              <h2 style={{marginLeft:20}}>수선처 직원 목록</h2>
                   <InputTableBox>
                   <PrView>
                       

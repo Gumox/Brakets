@@ -34,6 +34,7 @@ const InquiryModal = ({
   const [selectAnalysis,setSelectAnalysis] = useState(0)
   const [deliveryType,setDeliveryType] = useState(1)
 
+  const [repairRegistDate,setRepairRegistDate] = useState("미등록")
   const [overallImg , setOverallImg] = useState() 
   const [imageData , setImageData] = useState([])
   const [needImageData,setNeedImageData] = useState([])
@@ -88,6 +89,9 @@ const InquiryModal = ({
         setWindowWidth(window.innerWidth)
         setWindowHeight(window.innerHeight)
         setOverallImg(el.image)
+        if(el.register_date){
+          setRepairRegistDate(formatDate(new Date(el.register_date)))
+        }
         
         if(window.innerWidth<1125){
             setFontSizeTop((window.innerWidth)*0.012)
@@ -170,7 +174,7 @@ const InquiryModal = ({
                 <Line/>
                 <div style={{marginLeft:20,marginRight:20,flex:1}}>
                 <RaView>
-                    <ItemTextTop style={{fontSize:fontSizeTop}}>수선처 접수일<ItemTextBottom style={{marginLeft:20}}>{formatDate(new Date(el.receipt_date))}</ItemTextBottom></ItemTextTop>
+                    <ItemTextTop style={{fontSize:fontSizeTop}}>수선처 접수일<ItemTextBottom style={{marginLeft:20}}>{repairRegistDate}</ItemTextBottom></ItemTextTop>
                     <ItemTextTop style={{fontSize:fontSizeTop}}>운송 형태<ItemTextBottom style={{marginLeft:20, fontSize:fontSizeBottom}} >
                         행낭
                     </ItemTextBottom></ItemTextTop>

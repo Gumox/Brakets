@@ -13,8 +13,8 @@ export const STORE_CATEGORY = {
 
 export const RECEIPT_CATEGORY_TYPE = {
     1: "고객용",
-    2: "매장용",
-    3: "선처리",
+    2: "선처리",
+    3: "매장용",
 }
 
 export const RECEIPT_TYPE = {

@@ -76,6 +76,13 @@ const updateReceiptRepair = async (addQuery,values,num) => {
     values,
   });
 };
+const updateReceiptReceiver = async (receiverId,receiptId) => {
+  return excuteQuery({
+    query: `UPDATE receipt SET receiver=?  WHERE receipt_id=?`,
+    values:[receiverId,receiptId],
+  });
+};
+
 
 const updateRepair = async (id) => {
   return excuteQuery({
@@ -102,17 +109,19 @@ const sendRepairInfo = async (req, res) => {
     const shipment_type =req.body.shipment_type
     const shipment_price =req.body.shipment_price
     const receiver = req.body.receiver
+    const receiverChange = req.body.receiverChange
     const repair_detail_id = req.body.repair_detail_id
     console.log("8520258520258520258520258520258520258202520")
     console.log(req.body)
     console.log("8520258520258520258520258520258520258202520")
     try {
         const info = await getReceiptInfo(receipt_id)
-        if(repair_detail_id == null){
+        console.log(info)
+        if(!repair_detail_id){
           if(info[0] !== undefined){
             
             
-            if(info[0].repair1_detail_id === null){
+            if(!info[0].repair1_detail_id){
               const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
                 complete_date,shipment_type,shipment_price);
             
@@ -132,7 +141,7 @@ const sendRepairInfo = async (req, res) => {
               const update =await updateReceiptRepair(addQuery,value,1)
               res.status(200).json({ msg: "suc" });
               console.log(update)
-            }else if(info[0].repair2_detail_id === null){
+            }else if(!info[0].repair2_detail_id){
               const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
                 complete_date,shipment_type,shipment_price);
             
@@ -149,7 +158,7 @@ const sendRepairInfo = async (req, res) => {
               const update =await updateReceiptRepair(addQuery,value,2)
               res.status(200).json({ msg: "suc" });
               console.log(update)
-            }else if(info[0].repair3_detail_id === null){
+            }else if(!info[0].repair3_detail_id){
               const result = await addRepairDetail(receipt_id,store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
                 complete_date,shipment_type,shipment_price);
             
@@ -177,6 +186,11 @@ const sendRepairInfo = async (req, res) => {
           console.log("update")
           const result = await updateRepairDetail(store, register_date, fault_id, result_id,analysis_id,delivery_type,message,
             complete_date,shipment_type,shipment_price,repair_detail_id);
+
+            if(receiverChange){
+              const resultReceiver = await updateReceiptReceiver(receiver,receipt_id)
+              console.log(resultReceiver)
+            }
             console.log(result)
             res.status(200).json({ msg: "suc" });
         }
