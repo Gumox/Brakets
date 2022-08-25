@@ -138,7 +138,7 @@ function InquiryTable( props ) {
             Header: `　수선처　\n접수일`,
         },
         {
-            accessor: 'send_date',
+            accessor: 'complete_date',
             Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>,
             Header: '　수선처　\n발송일',
         },

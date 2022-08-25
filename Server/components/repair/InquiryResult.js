@@ -44,7 +44,7 @@ const InquiryResult =(props)=>{
                 <ItemView style={{width : itemViewWidth}}>{item.analysis}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.result}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.register_date ? formatDate((item.register_date)): "미등록"}</ItemView>
-                <ItemView style={{width : itemViewWidth}}>{item.send_date}</ItemView>
+                <ItemView style={{width : itemViewWidth}}>{item.complete_date ? formatDate((item.complete_date)): "미등록"}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.repair1_name}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{setPrice(item.repair_detail_repair1_price)}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.repair2_name}</ItemView>
