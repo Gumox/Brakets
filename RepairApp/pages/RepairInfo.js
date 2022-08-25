@@ -74,6 +74,8 @@ export default function RepairInfo({ route, navigation }) {
     const [storeId, setStoreId] = useState(0);
     const [receiverName, setReceiverName] = useState('');
 
+    const [isDataHas,setIsDataHas] = useState(false)
+
     const [isReceiverNull,setIsReceiverNull] =useState(false)
     
     const [receiverSet,setReceiverSet] = useState(null);
@@ -116,6 +118,7 @@ export default function RepairInfo({ route, navigation }) {
                 }
                 setRepairDetailId(data.data["repair1_detail_id"])
                 date = data.data["repair1_complete_date"]
+                setIsDataHas(true)
             }else if(data.data["repair2_store_id"]===shop && data.data["repair2_result_id"]){
                 if(data.data["repair1_complete_date"]){
                     setShippingDate(formatDate(new Date(data.data["repair2_complete_date"])))
@@ -124,6 +127,7 @@ export default function RepairInfo({ route, navigation }) {
                 }
                 setRepairDetailId(data.data["repair2_detail_id"])
                 date = data.data["repair2_complete_date"] 
+                setIsDataHas(true)
             }else if(data.data["repair3_store_id"]===shop && data.data["repair3_result_id"]){
                 if(data.data["repair1_complete_date"]){
                     setShippingDate(formatDate(new Date(data.data["repair3_complete_date"])))
@@ -132,7 +136,9 @@ export default function RepairInfo({ route, navigation }) {
                 }
                 setRepairDetailId(data.data["repair3_detail_id"])
                 date = data.data["repair3_complete_date"] 
+                setIsDataHas(true)
             }else{
+                setIsDataHas(false)
                 Alert.alert("해당 제품에 맞는 수선정보가 존재 하지 않습니다.","수선 접수를 진행해 주세요")
                 navigation.goBack();
             }
@@ -203,7 +209,7 @@ export default function RepairInfo({ route, navigation }) {
     }, []);
     
     
-    return (
+    return isDataHas?(
         <Container>
             <Contents style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height, paddingTop: 24 }}>
 
@@ -251,5 +257,5 @@ export default function RepairInfo({ route, navigation }) {
             <Bottom navigation={navigation} />
 
         </Container>
-    )
+    ):<Container></Container>
 }

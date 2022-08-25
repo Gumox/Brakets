@@ -32,6 +32,7 @@ function RepairReceiptModal (props) {
   const [cancelSA,setCancelSA] = useState()
 
   const [repairRegistDate,setRepairRegistDate] = useState("미등록")
+  const [registDate,setRegistDate] = useState(null)
   const [selectJudgmentName,setSelectJudgmentName] = useState()
   const [selectJudgmentValue,setSelectJudgmentValue] = useState(0)
   const [selectFault,setSelectFault] =useState(0)
@@ -71,7 +72,7 @@ function RepairReceiptModal (props) {
     imageView[index] = (img);
   })
 
-  let date = formatDate(new Date(el.receipt_date))
+  let date = formatDate(el.receipt_date)
 
   const [faultLists,setFaultLists] = useState();
   const [judgmentLists,setJudgmentLists] = useState()
@@ -85,11 +86,11 @@ function RepairReceiptModal (props) {
     )
   }else if(selectJudgmentName == "매장반송"){
     selectJudgmentBox =(
-      <RepairReturn _receiver={"매장"} {...{closeTooltip}} _receiverId={el.store_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shopId={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn _receiver={"매장"} {...{closeTooltip}} registDate ={registDate} _receiverId={el.store_id} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shopId={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgmentName == "본사반송"){
     selectJudgmentBox =(
-      <RepairReturn _receiver={"본사"} {...{closeTooltip}} _receiverId={1} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shopId={info.store_id} receipt={el.receipt_id}></RepairReturn>
+      <RepairReturn _receiver={"본사"} {...{closeTooltip}} registDate ={registDate} _receiverId={1} infos = {{fault:selectFault,analysis:selectAnalysis ,delivery: deliveryType ,result: selectJudgmentValue}} shopId={info.store_id} receipt={el.receipt_id}></RepairReturn>
     )
   }else if(selectJudgmentName == "기타"){
     selectJudgmentBox =(
@@ -146,8 +147,9 @@ function RepairReceiptModal (props) {
         setSelectAnalysis(el[analysis])
         setCancelSA(el[analysis])
       }
-      if(el[`repair${1}_register_date`]){
-        setRepairRegistDate(formatDate(new Date(el[`repair${1}_register_date`])))
+      if(el[`repair${i}_register_date`]){
+        setRepairRegistDate(formatDate(el[`repair${i}_register_date`]))
+        setRegistDate(el[`repair${i}_register_date`])
       }
 
     }

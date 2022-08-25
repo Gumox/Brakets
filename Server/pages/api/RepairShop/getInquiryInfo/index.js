@@ -154,7 +154,11 @@ async function getReceiptList(query,values) {
                 ORDER BY receipt.receipt_date ASC`,
         values,
       });
+      console.log("is here")
+      console.log(query)
     
+      console.log(values)
+      console.log(result)
       return result;
 }
 

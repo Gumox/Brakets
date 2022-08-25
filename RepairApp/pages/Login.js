@@ -4,6 +4,7 @@ import {
   KakaoProfile,
   getProfile as getKakaoProfile,
   login,
+  loginWithKakaoAccount,
   logout,
   unlink,
 } from '@react-native-seoul/kakao-login';
@@ -14,12 +15,17 @@ import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import store from '../store/store';
 
+const REQUEST_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
+const REQUEST_TOKEN_INFO_URL = "https://kapi.kakao.com/v2/user/me";
+const THIRTY_MINUTES = 60 * 30 * 1000;
+
 
 function Login({ navigation }) {
 
   const isFirstRun = useRef(true);
 
   const [result, setResult] = useState();
+  const [resultId, setResultID] = useState();
 
   function SaveInfo(_info, _userEmail) {
     console.log(_info)
@@ -64,7 +70,7 @@ function Login({ navigation }) {
       loadInfo();
       return;
     }
-
+    console.log(result)
     const option = {
 
       url: ip + `/api/auth/repair?email=${result}`,
@@ -83,12 +89,15 @@ function Login({ navigation }) {
           SaveInfo(response.data.data, result)
           //check(response.data.data)
         ) : (
+          console.log("not success"),
+          console.log(response.status),
           Alert.alert(
             "등록된 정보가 존재하지 않습니다.",""
           )
         )
       )
       .catch(function (error) {
+        console.log("error")
         console.log(error)
         Alert.alert(
           "등록된 정보가 존재하지 않습니다.",""
@@ -96,27 +105,27 @@ function Login({ navigation }) {
       })
   }, [result]);
 
-  const signInWithKakao = async (): Promise<void> => {
-    const token: KakaoOAuthToken = await login();
-
+  const signInWithKakao = async ()  => {
+    const token = await loginWithKakaoAccount();
+    
     // setResult(JSON.stringify(token));
     // console.log(JSON.stringify(token));
     await getProfile();
   };
 
-  const signOutWithKakao = async (): Promise<void> => {
+  const signOutWithKakao = async ()  => {
     const message = await logout();
 
     setResult(message);
   };
 
-  const getProfile = async (): Promise<void> => {
-    const profile: KakaoProfile = await getKakaoProfile();
-    console.log(profile)
+  const getProfile = async ()  => {
+    const profile  = await getKakaoProfile();
     setResult(profile.email);
+    setResultID(profile.id)
   };
 
-  const unlinkKakao = async (): Promise<void> => {
+  const unlinkKakao = async ()  => {
     const message = await unlink();
     setResult(message);
   };

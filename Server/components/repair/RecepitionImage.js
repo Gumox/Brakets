@@ -3,8 +3,6 @@ import React,{useEffect,useState,useCallback} from "react";
 import styled from "styled-components";
 import Modal from "./Modal";
 import 'reactjs-popup/dist/index.css';
-import formatDate from "../../functions/formatDate";
-import Image from 'next/image';
 import { debounce } from "lodash";
 
 function RecepitionImage (props) {

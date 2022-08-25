@@ -4,7 +4,9 @@ import COLOR from "../../constants/color";
 import formatDate from "../../functions/formatDate";
 import { getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
 import { debounce } from "lodash";
+
 const RepairReturn = ({
+    registDate,
     _receiver,
     _receiverId,
     infos,
@@ -17,7 +19,7 @@ const RepairReturn = ({
     const info = infos;
     const shop = shopId;
     const receipt_id = receipt;
-    
+    const minDate = formatDate(registDate) || formatDate(new Date())
     const [repairDetailId, setRepairDetailId] = useState(null)
     const [selectedDate,setSelectedDate] = useState(null);
     const [message,setMessage] = useState("");
@@ -93,6 +95,7 @@ const RepairReturn = ({
         window.removeEventListener('resize',handleResize);
     }
   },[])
+  
     return(
         <div>
             <ItemText>수선 내역</ItemText>
@@ -105,7 +108,7 @@ const RepairReturn = ({
             ></textarea>
             <LaView>
               <ItemText>수선처 발송일</ItemText>
-                <input type="date" style={{marginLeft:10,marginTop:20,marginBottom:10}} onChange={(e)=>{setSelectedDate(e.target.value)}}></input>
+                <input type="date" min={minDate} style={{marginLeft:10,marginTop:20,marginBottom:10}} onChange={(e)=>{setSelectedDate(e.target.value)}}></input>
                 <div style={{color :"#ff0000",marginTop:10,marginLeft:10}}>
                   <h6>⚠️발송일 입력없이 저장이 불가능합니다</h6>
                 </div>

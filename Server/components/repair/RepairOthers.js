@@ -24,7 +24,7 @@ const RepairOthers = ({
   const onSave = async()=>{
     
     let res;
-    const today = formatDate(new Date)
+    const today = formatDate(new Date())
     const body ={
       receipt_id : receipt_id,
 

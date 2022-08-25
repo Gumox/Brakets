@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
-import formatDate from "../../functions/formatDate";
 import { debounce } from "lodash";
 import { getRepairType,getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
 import ItemCount from "./receiptionHistory/itemCount";

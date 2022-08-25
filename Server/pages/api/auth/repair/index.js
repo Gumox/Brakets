@@ -3,9 +3,6 @@ import jwt from "jsonwebtoken";
 import { setCookie } from "../../../../utils/cookies";
 import excuteQuery from "../../db";
 
-const REQUEST_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
-const REQUEST_TOKEN_INFO_URL = "https://kapi.kakao.com/v2/user/me";
-const THIRTY_MINUTES = 60 * 30 * 1000;
 const loginRepair= async (query, values) => {
   
     const result = await excuteQuery({
@@ -81,7 +78,7 @@ const repair = async (req, res) => {
       try {
         const {
             
-            email, // 기간전체, 하루만
+            email,
         } = req.query;
         let query = "";
         let values = [];

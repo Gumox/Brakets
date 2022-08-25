@@ -90,7 +90,7 @@ const InquiryModal = ({
         setWindowHeight(window.innerHeight)
         setOverallImg(el.image)
         if(el.register_date){
-          setRepairRegistDate(formatDate(new Date(el.register_date)))
+          setRepairRegistDate(formatDate(el.register_date))
         }
         
         if(window.innerWidth<1125){

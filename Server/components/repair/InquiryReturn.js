@@ -1,8 +1,6 @@
 import React, { useState,useEffect  } from "react";
 import styled from "styled-components";
 import COLOR from "../../constants/color";
-import formatDate from "../../functions/formatDate";
-import { getReceiptRepairInfo} from "../../functions/useInRepairReceiptModal";
 import { debounce } from "lodash";
 const InquiryReturn = ({item,sendLevel}) => {
   const el = item

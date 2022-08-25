@@ -9,8 +9,6 @@ const InquiryResult =(props)=>{
     const itemViewWidth = props.width;
     let viewWidth = props.width*21;
 
-    const [repairRegistDate,setRepairRegistDate] = useState("미등록")
-    
     const [modalOpenCheckable,setModalOpenCheckable] = useState(false)
     const closeProductImage = useCallback(
         () => setModalOpenCheckable(false),
@@ -26,11 +24,6 @@ const InquiryResult =(props)=>{
     if(props.level !== 3){
         viewWidth = props.width*20;
     }
-    useEffect(()=>{
-        if(item.register_date){
-            setRepairRegistDate(formatDate(new Date(item.register_date)))
-          }
-    },[])
     return(
         <div>
             <LaView style={{paddingLeft:10,width:viewWidth}} onClick={()=>{setModalOpenCheckable(true)}} ><Container>
@@ -50,7 +43,7 @@ const InquiryResult =(props)=>{
                 <ItemView style={{width : itemViewWidth}}>{item.fault}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.analysis}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.result}</ItemView>
-                <ItemView style={{width : itemViewWidth}}>{repairRegistDate}</ItemView>
+                <ItemView style={{width : itemViewWidth}}>{item.register_date ? formatDate((item.register_date)): "미등록"}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.send_date}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{item.repair1_name}</ItemView>
                 <ItemView style={{width : itemViewWidth}}>{setPrice(item.repair_detail_repair1_price)}</ItemView>

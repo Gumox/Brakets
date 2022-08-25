@@ -21,6 +21,9 @@ import returnDate from '../functions/ReturnDate';
 function RepairDetail({ navigation, route }) {
     const code = route.params.data;
     const shop = store.getState().shopId;
+
+    const [isDataHas,setIsDataHas] = useState(false)
+
     const [cardId, setCardID] = useState(code);
     const [brandNum, setBrandNum] = useState('');
     const [storeName, setStoreName] = useState('');
@@ -50,6 +53,7 @@ function RepairDetail({ navigation, route }) {
     const [needImages,setNeedImages] =useState([]); 
     
     const stepArr =[1,4,5]
+    const [minimumDate,setMinimumDate] = useState(null)
     const [step,setStep] = useState()
     const sImageWidth = Dimensions.get("window").width/4
     const sImageHeight = sImageWidth*4/3
@@ -113,6 +117,7 @@ function RepairDetail({ navigation, route }) {
                     setShippingPlace(data.data["receiver"])
                     setShippingDate(returnDate(data.data["repair1_complete_date"]))
                 }
+                setIsDataHas(true)
             }else if(data.data["repair2_store_id"]===shop && data.data["repair2_result_id"]){
                 console.log("repair2_store_id")
                 setRepairShop(data.data["repair2_store_id"])
@@ -121,6 +126,7 @@ function RepairDetail({ navigation, route }) {
                     setShippingPlace(data.data["receiver"])
                     setShippingDate(returnDate(data.data["repair1_complete_date"]))
                 }
+                setIsDataHas(true)
             }else if(data.data["repair3_store_id"]===shop && data.data["repair3_result_id"]){
                 console.log("repair3_store_id")
                 setRepairShop(data.data["repair3_store_id"])
@@ -129,6 +135,7 @@ function RepairDetail({ navigation, route }) {
                     setShippingPlace(data.data["receiver"])
                     setShippingDate(returnDate(data.data["repair1_complete_date"]))
                 }
+                setIsDataHas(true)
             }else{
                 console.log(shop)
                 Alert.alert("해당 제품에 맞는 수선정보가 존재 하지 않습니다.","수선 접수를 진행해 주세요")
@@ -248,7 +255,7 @@ function RepairDetail({ navigation, route }) {
         });
     }
 
-    return (
+    return isDataHas?(
         <ContainView>
 
             <Contents>
@@ -384,6 +391,7 @@ function RepairDetail({ navigation, route }) {
                             />
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
+                            minimumDate={minimumDate}
                             mode="date"
                             locale='ko-kr'
                             onConfirm={handleConfirm}
@@ -423,7 +431,6 @@ function RepairDetail({ navigation, route }) {
                             style = { {border :'solid', marginBottom : '50', borderWidth : '3', borderColor : 'black',placeholder:{color: selectTextColor}} }
                             value = {shippingPlace}
                             onValueChange={(value,index) => {
-                                console.log("step: ",stepArr[index])
                                 setStep(stepArr[index])
                                 setShippingPlace(value)
                                 setShipping(value)
@@ -498,7 +505,7 @@ function RepairDetail({ navigation, route }) {
 
             <Bottom navigation={navigation} />
         </ContainView>
-    )
+    ):<ContainView/>
 
 }
 
