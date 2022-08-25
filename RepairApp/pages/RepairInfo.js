@@ -209,6 +209,8 @@ export default function RepairInfo({ route, navigation }) {
     }, []);
     
     
+    console.log(brand)
+    console.log("shippingDate",shippingDate)
     return isDataHas?(
         <Container>
             <Contents style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height, paddingTop: 24 }}>
@@ -224,7 +226,7 @@ export default function RepairInfo({ route, navigation }) {
                 </InfoView>
 
                 <TopText>수선처 발송일</TopText>
-                <InputText>{shippingDate}</InputText>
+                <InputText>{shippingDate || "미등록"}</InputText>
                 <TopText>발송방법</TopText>
                 <InputText>행낭</InputText>
                 <TopText>받는곳</TopText>
@@ -234,12 +236,19 @@ export default function RepairInfo({ route, navigation }) {
 
             </Contents>
             <Button onPress={() =>{ 
-                if(receiverSet !== null){
+                if(receiverSet !== null && shippingDate){
                     if(isReceiverNull){
                         postSendRepairInfo(datas.receiver,formatDate(new Date()),1,0,repairDetailId)
                     }
                     navigation.navigate('DetectCode',{ toGo: "ProductSend", datas: datas })
-                    console.log(datas)
+                }else if(!shippingDate){
+                    Alert.alert(
+                        "발송일 미등록",
+                        "수선 촬영을 확인해주세요",
+                        [
+                            { text: "OK", onPress: () => navigation.popToTop() }
+                        ]
+                    );
                 }else{
                     Alert.alert(
                         "발송지 미설정",

@@ -117,6 +117,7 @@ function RepairDetail({ navigation, route }) {
                     setShippingPlace(data.data["receiver"])
                     setShippingDate(returnDate(data.data["repair1_complete_date"]))
                 }
+                setMinimumDate(new Date(data.data["repair1_register_date"]))
                 setIsDataHas(true)
             }else if(data.data["repair2_store_id"]===shop && data.data["repair2_result_id"]){
                 console.log("repair2_store_id")
@@ -124,8 +125,9 @@ function RepairDetail({ navigation, route }) {
                 setRepairDetailId(data.data["repair2_detail_id"])
                 if(data.data["receiver"] === data.data['store_id'] || data.data["receiver"] === data.data['headquarter_store_id']  ){
                     setShippingPlace(data.data["receiver"])
-                    setShippingDate(returnDate(data.data["repair1_complete_date"]))
+                    setShippingDate(returnDate(data.data["repair2_complete_date"]))
                 }
+                setMinimumDate(new Date(data.data["repair2_register_date"]))
                 setIsDataHas(true)
             }else if(data.data["repair3_store_id"]===shop && data.data["repair3_result_id"]){
                 console.log("repair3_store_id")
@@ -133,11 +135,11 @@ function RepairDetail({ navigation, route }) {
                 setRepairDetailId(data.data["repair3_detail_id"])
                 if(data.data["receiver"] === data.data['store_id'] || data.data["receiver"] === data.data['headquarter_store_id']  ){
                     setShippingPlace(data.data["receiver"])
-                    setShippingDate(returnDate(data.data["repair1_complete_date"]))
+                    setShippingDate(returnDate(data.data["repair3_complete_date"]))
                 }
+                setMinimumDate(new Date(data.data["repair3_register_date"]))
                 setIsDataHas(true)
             }else{
-                console.log(shop)
                 Alert.alert("해당 제품에 맞는 수선정보가 존재 하지 않습니다.","수선 접수를 진행해 주세요")
                 navigation.goBack();
             }

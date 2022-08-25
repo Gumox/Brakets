@@ -35,11 +35,9 @@ function InputAlternativeNumber({ navigation, route }) {
 
     const [prdCode, setPrdCode] = useState('');
     const toGo = route.params['toGo'];
-    console.log(toGo)
     let datas;
     if(route.params['datas']){
         datas = route.params['datas']
-        console.log(datas)
     }
 
     return (
