@@ -33,7 +33,7 @@ const addReceiptDetail = async ({mailbag}, {receipt_id, receipt_code, product_id
   return excuteQuery({
         query:
           "INSERT INTO `receipt_detail`(`receipt_id`, `receipt_code`, `mailbag`, `product_id`,`product_code`, `sender`, `send_date`, `receiver`, `receiver_type`) VALUES (?,?,?,?,?,?,?,?,?)",
-        values: [receipt_id, receipt_code, mailbagCode, product_id, product_code, store_id, z, receiver, receiver_type],
+        values: [receipt_id, receipt_code, mailbagCode, product_id, product_code, store_id, null, receiver, receiver_type],
       });
 }
 
