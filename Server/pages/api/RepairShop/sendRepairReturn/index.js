@@ -83,6 +83,14 @@ const updateReceiptReceiver = async (receiverId,receiptId) => {
   });
 };
 
+const updateReceiptStep = async (step,receiptId) => {
+  return excuteQuery({
+    query: `UPDATE receipt SET receiver=?  WHERE receipt_id=?`,
+    values:[step,receiptId],
+  });
+};
+
+
 
 const updateRepair = async (id) => {
   return excuteQuery({
@@ -94,7 +102,7 @@ const sendRepairInfo = async (req, res) => {
   if (req.method === "POST") {
     console.log(`[${new Date().toISOString()}] /api/RepairShop/sendRepairInfo`);
     
-    const receipt_id = req.body.receipt_id; 
+    /*const receipt_id = req.body.receipt_id; 
 
     const store = req.body.store_id;
     const register_date = req.body.register_date;
@@ -110,13 +118,39 @@ const sendRepairInfo = async (req, res) => {
     const shipment_price =req.body.shipment_price
     const receiver = req.body.receiver
     const receiverChange = req.body.receiverChange
-    const repair_detail_id = req.body.repair_detail_id
-    console.log("8520258520258520258520258520258520258202520")
+    const repair_detail_id = req.body.repair_detail_id*/
+
+    const {
+      receipt_id,
+
+      store,
+      register_date,
+      fault_id, 
+      result_id, 
+      
+      analysis_id, 
+      delivery_type, 
+      message,
+      
+      complete_date,
+      shipment_type,
+      shipment_price,
+      receiver, 
+      receiverChange, 
+      repair_detail_id,
+
+      step
+    } =req.body
     console.log(req.body)
-    console.log("8520258520258520258520258520258520258202520")
     try {
         const info = await getReceiptInfo(receipt_id)
         console.log(info)
+        if(step){
+          const stepResult =  await updateReceiptStep(step,receipt_id)
+          if(stepResult.error){
+            console.log(stepResult.error)
+          }
+        }
         if(!repair_detail_id){
           if(info[0] !== undefined){
             

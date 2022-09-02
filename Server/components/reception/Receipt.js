@@ -66,12 +66,13 @@ const ReceiptInfo = ({
         .put(`${process.env.API_URL}/receipt/inputSave`, { body: body  })
         .then(({ data }) => data),
       ])
-    
-    const [inputPDF] = await Promise.all([
-      axios
-      .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
-      .then(({ data }) => data),
-    ])
+    if(inputFlie){
+      const [inputPDF] = await Promise.all([
+        axios
+        .post(`${process.env.API_URL}/receipt/inputDeliberationResult`, formData)
+        .then(({ data }) => data),
+      ])
+    }
     window.location.reload();
       
   }

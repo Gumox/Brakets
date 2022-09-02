@@ -10,11 +10,11 @@ export const RECEIPT_CATEGORY_OPTIONS = [
   },
   {
     value: "2",
-    text: "매장용",
+    text: "선처리",
   },
   {
     value: "3",
-    text: "선처리",
+    text: "매장용",
   },
 ];
 export const RECEIPT_TYPE_OPTIONS = [
