@@ -35,6 +35,13 @@ const RepairReturn = ({
 
     const onSave = async()=>{
       let res;
+      let receiptStep
+
+      if(_receiver == "매장"){
+        receiptStep = 4
+      }else if(_receiver == "본사"){
+        receiptStep = 5
+      }
       const today = formatDate(new Date)
       const body ={
         receipt_id : receipt_id,
@@ -53,7 +60,9 @@ const RepairReturn = ({
         message: message,
         shipment_type: selectedSendType,
         shipment_price: shipmentPay,
-        repair_detail_id : repairDetailId
+        repair_detail_id : repairDetailId,
+
+        step : receiptStep
       }
       fetch(`${process.env.API_URL}/RepairShop/sendRepairReturn`, {
         method: "POST",

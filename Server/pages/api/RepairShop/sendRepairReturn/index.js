@@ -85,7 +85,7 @@ const updateReceiptReceiver = async (receiverId,receiptId) => {
 
 const updateReceiptStep = async (step,receiptId) => {
   return excuteQuery({
-    query: `UPDATE receipt SET receiver=?  WHERE receipt_id=?`,
+    query: `UPDATE receipt SET step=?  WHERE receipt_id=?`,
     values:[step,receiptId],
   });
 };
@@ -119,11 +119,10 @@ const sendRepairInfo = async (req, res) => {
     const receiver = req.body.receiver
     const receiverChange = req.body.receiverChange
     const repair_detail_id = req.body.repair_detail_id*/
-
+    
+    const store = req.body.store_id;
     const {
       receipt_id,
-
-      store,
       register_date,
       fault_id, 
       result_id, 
@@ -145,8 +144,22 @@ const sendRepairInfo = async (req, res) => {
     try {
         const info = await getReceiptInfo(receipt_id)
         console.log(info)
+        console.log("")
+        console.log("")
+        console.log("")
+        console.log("")
+        console.log(step)
+        console.log("")
+        console.log("")
+        console.log("")
+        console.log("")
         if(step){
           const stepResult =  await updateReceiptStep(step,receipt_id)
+          console.log("stepResult")
+          console.log("")
+          console.log(stepResult)
+          console.log("")
+          console.log("stepResult")
           if(stepResult.error){
             console.log(stepResult.error)
           }

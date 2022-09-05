@@ -3,6 +3,7 @@ import {
   KakaoProfile,
   getProfile as getKakaoProfile,
   login,
+  loginWithKakaoAccount,
   logout,
   unlink,
 } from '@react-native-seoul/kakao-login';
@@ -15,7 +16,7 @@ import store from '../store/store';
 import ip from '../serverIp/Ip';
 
 
-function Login({ navigation }): React.ReactElement {
+function Login({ navigation }) {
 
   const [userId, setUserID] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -125,9 +126,9 @@ function Login({ navigation }): React.ReactElement {
 
 
 
-  const signInWithKakao = async (): Promise<void> => {
+  const signInWithKakao = async () => {
 
-    const token: KakaoOAuthToken = await login();
+    const token = await loginWithKakaoAccount();
 
     await getProfile();
 
@@ -135,12 +136,12 @@ function Login({ navigation }): React.ReactElement {
     //console.log("(sign in)user email: " + userEmail);
   };
 
-  const signOutWithKakao = async (): Promise<void> => {
+  const signOutWithKakao = async ()=> {
     const message = await logout();
   };
 
-  const getProfile = async (): Promise<void> => {
-    const profile: KakaoProfile = await getKakaoProfile();
+  const getProfile = async ()=> {
+    const profile = await getKakaoProfile();
 
     console.log("profile id is " + profile.id);
     console.log("profile email is " + profile.email);
@@ -154,7 +155,7 @@ function Login({ navigation }): React.ReactElement {
 
   }
 
-  const unlinkKakao = async (): Promise<void> => {
+  const unlinkKakao = async ()=> {
     const message = await unlink();
   };
 
