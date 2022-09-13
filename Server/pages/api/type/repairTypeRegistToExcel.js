@@ -100,6 +100,7 @@ const controller = async (req, res) => {
           
         }
         console.log({fail:failList})
+        
         console.log("=================================================================")
 
         res.status(200).json({message:"succeed",fail:failList})

@@ -1,4 +1,5 @@
 import excuteQuery from "../db";
+import _ from "lodash";
 
 async function getRepairType(addQuery,values) {
   return excuteQuery({
@@ -16,6 +17,12 @@ async function getRepairType(addQuery,values) {
               JOIN store ON store.store_id = repair_type.store_id
               WHERE store.store_type = 2 ${addQuery}`,
     values,
+  });
+}
+async function deleteRepairType(repairId ) {
+  return excuteQuery({
+    query: `DELETE FROM repair_type WHERE repair_type.repair_id = ?`,
+    values: [repairId],
   });
 }
 
@@ -45,6 +52,22 @@ const controller = async (req, res) => {
       const types = await getRepairType(addQuery,values);
       if (types.error) throw new Error(types.error);
 
+      if(headquarterId&&!brandId&&!storeId){
+        const reTypes = await getRepairType(addQuery,values);
+        if (reTypes.error) throw new Error(reTypes.error);
+        
+        console.log("=======================")
+        
+        let uqName = _.uniqWith(reTypes, function(item, nextItem) {
+          return (item?.text === nextItem?.text && item?.brand_id === nextItem?.brand_id && item?.store_id === nextItem?.store_id);
+        });
+        let deList = _.difference(reTypes,uqName)
+        console.log(deList)
+        for (let item of deList) {
+          deleteRepairType(item.value)
+        }
+        console.log("reTypes===================")
+      }
       res.status(200).json({ data: types });
     } catch (err) {
       console.log(err.message);
