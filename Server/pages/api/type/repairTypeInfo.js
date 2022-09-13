@@ -61,9 +61,9 @@ const controller = async (req, res) => {
         let uqName = _.uniqWith(reTypes, function(item, nextItem) {
           return (item?.text === nextItem?.text && item?.brand_id === nextItem?.brand_id && item?.store_id === nextItem?.store_id);
         });
-        let deList = _.difference(reTypes,uqName)
-        console.log(deList)
-        for (let item of deList) {
+        let differenceList = _.difference(reTypes,uqName)
+        console.log(differenceList)
+        for (let item of differenceList) {
           deleteRepairType(item.value)
         }
         console.log("reTypes===================")
