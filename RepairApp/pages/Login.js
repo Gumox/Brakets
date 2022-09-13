@@ -11,7 +11,7 @@ import {
 import styled from 'styled-components';
 import ip from '../serverIp/Ip';
 import axios from 'axios'
-import { Alert } from 'react-native'
+import { Alert,TouchableHighlight } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import store from '../store/store';
 
@@ -105,14 +105,25 @@ function Login({ navigation }) {
       })
   }, [result]);
 
-  const signInWithKakao = async ()  => {
-    const token = await loginWithKakaoAccount();
-    
-    // setResult(JSON.stringify(token));
-    // console.log(JSON.stringify(token));
-    await getProfile();
-  };
+  
+  const signInWithKakao = async () => {
 
+    const token = await login();
+
+    await getProfile();
+
+    //console.log("(sign in)user id: " + userId);
+    //console.log("(sign in)user email: " + userEmail);
+  };
+  const signInWithKakaoOther = async () => {
+
+    const token = await loginWithKakaoAccount();
+
+    await getProfile();
+
+    //console.log("(sign in)user id: " + userId);
+    //console.log("(sign in)user email: " + userEmail);
+  };
   const signOutWithKakao = async ()  => {
     const message = await logout();
 
@@ -136,6 +147,9 @@ function Login({ navigation }) {
       <Button onPress={() => signInWithKakao()}>
         <Label> 카카오 로그인 </Label>
       </Button>
+      <TouchableHighlight underlayColor={"rgba(0,0,0,0.1)"} style={{padding:2,borderRadius:4}} onPress={()=>{signInWithKakaoOther()}}>
+        <OtherLoginText> 다른 계정으로 로그인 </OtherLoginText>
+      </TouchableHighlight>
     </Container>
   );
 }
@@ -143,6 +157,10 @@ function Login({ navigation }) {
 export default Login;
 
 
+const OtherLoginText = styled.Text`
+  font-size:10px;
+  color:#000;
+`
 const ImgIcon = styled.Image`
     width: 200px;
     height: 200px;
