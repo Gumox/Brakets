@@ -237,7 +237,7 @@ const controller = async (req, res) => {
               }
               
               
-              const store = await registStore(
+              const rStore = await registStore(
                                     emptySpace(item["store_name"] ),
                                               storeCode,
                                               itemBrand.brand_id ,
@@ -247,8 +247,8 @@ const controller = async (req, res) => {
                                     emptySpace(item["store_address"]) 
                                               );
   
-              console.log(store)
-              if (store.error) throw new Error(store.error);
+              console.log(rStore)
+              if (rStore.error) throw new Error(rStore.error);
   
                 
               if(manager.length){

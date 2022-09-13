@@ -16,6 +16,8 @@ const RepairTypeExcelRegistControl =({
 })=>{
     const router = useRouter();
 
+    const store_id = user?.store_id
+
     const sortedBrands =sortArray(brands)
     const sortedRepairShop =sortArray2(repairShops)
     const [excelName,setExcelName] = useState("첨부파일")
@@ -62,7 +64,7 @@ const RepairTypeExcelRegistControl =({
                 .then(({ data }) => data.body), 
                 ])
             alert("수선내용 및 수선단가가 등록되었습니다.")
-            router.push("/admin/platformControl/controlRepairTypeList")
+            //router.push("/admin/platformControl/controlRepairTypeList")
         }else{
             alert('첨부 파일을 등록해주세요')
         }

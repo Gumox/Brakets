@@ -72,14 +72,13 @@ const controller = async (req, res) => {
         for(let i =2; i<list.length; i++){
           const item = list[i]
           
-
           if( item["brand"] && item["shop"] && item["repair_name"] && item["repair_price"] ){
             let _brand = arrayFinder(brands,"brand_name", item["brand"])
             let _shop = arrayFinder(stores,"repair_shop_name",item["shop"])
 
             let _repairType = await getRepairType(item["repair_name"],_shop.repair_shop_id,_brand.brand_id)
             
-            if(_brand && _shop && _repairType.length < 1){
+           if(_brand && _shop && _repairType.length < 1){
               const insertResult = await repairTypeRegist(
                                                             emptySpace(item["repair_name"]),
                                                             item["repair_price"],
@@ -88,18 +87,20 @@ const controller = async (req, res) => {
                                                             _shop.repair_shop_id
 
                                                           )
-              console.log(insertResult)
+              if(insertResult.error){
+                console.log(insertResult.error)
+              } 
             }else{
+              item["reason"] = "수선내용 중복"
               failList.push(item)
             }
 
           }
           
-
+          
         }
-
-        console.log("=================================================================")
         console.log({fail:failList})
+        console.log("=================================================================")
 
         res.status(200).json({message:"succeed",fail:failList})
       

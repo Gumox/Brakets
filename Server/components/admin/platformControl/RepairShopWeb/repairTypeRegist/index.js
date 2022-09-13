@@ -3,7 +3,7 @@ import styled from "styled-components";
 import COLOR from "../../../../../constants/color";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
-import _ from "lodash";
+import _, { trim } from "lodash";
 
 const RepairTypeEachRegistControl = ({
     user,
@@ -31,7 +31,7 @@ const RepairTypeEachRegistControl = ({
             setSortedRepairShop(conArr.concat(sortArray2(repairLists)))
         }else{
             setSortedRepairShop(sortArray2(repairLists))
-            setRepairShop(repairLists[0].repair_shop_id)
+            setRepairShop(repairLists[0]?.repair_shop_id)
         }
     }
 
@@ -63,7 +63,7 @@ const RepairTypeEachRegistControl = ({
     }
 
     const regist = async() =>{
-        if(repairShop){
+        if(repairShop &&  repairNameUseable === 1){
             let repairText = (repairName).trim(/ /g,"")
             if(repairPrice && repairName  ){
                 let data ={
@@ -82,12 +82,41 @@ const RepairTypeEachRegistControl = ({
                 alert("새로운 수선내용 및 수선단가가 등록되었습니다.")
                 router.push("/admin/platformControl/controlRepairTypeList")
             }else if(!repairPrice){
-                alert("수선 단가를 입력해주세요")
-            }else if(!repairName ){
-                alert("수선 내용을 입력해주세요")
+                alert("수선 단가를 입력해주세요.")
             }
+        }else if( repairNameUseable === 0){
+            alert("중복된 수선내용입니다. ")
         }
     }
+    const [repairNameList,setRepairNameList] = useState([])
+    const [repairNameUseable,setRepairNameUseable] = useState(0)
+    const repairNameListGet = async()=>{
+        if(brand !== "NaN" && repairShop){
+            const [repairTypes] = await Promise.all([
+                axios
+                .get(`${process.env.API_URL}/type/repairTypeInfo?headquarterId=${user.headquarter_id}&brandId=${brand}&storeId=${repairShop}`,)
+                .then(({ data }) => data.data), 
+            ])
+            setRepairNameList(repairTypes)
+        }else{
+            setRepairNameList([])
+        }
+    }
+    const repairNameCheck = (name)=>{
+        let find = _.filter(repairNameList,
+            function(o){
+                return (o.text)?.replace(/ /g,"") === (name).replace(/ /g,"")
+            }
+        )
+        if(find.length < 1){
+            setRepairNameUseable(1)
+        }else{
+            setRepairNameUseable(0)
+        }
+    }
+    useEffect(()=>{
+        repairNameListGet()
+    },[brand,repairShop])
   
     return (
         <Wrapper>
@@ -105,7 +134,9 @@ const RepairTypeEachRegistControl = ({
 
                         <LongInputBox style={{borderBottom:0,borderRadius: "0 10px 0 0"}}>
                             
-                            <SelectOption value={brand}  style={{flex:1,borderRadius: "0 10px 0 0"}} onChange={(e)=>{setBrandEvent(e.target.value)}}>
+                            <SelectOption value={brand}  style={{flex:1,borderRadius: "0 10px 0 0"}} 
+                                onChange={(e)=>{setBrandEvent(e.target.value)}
+                                }>
                                 <option value={"NaN"}>{"선택"}</option>
                                 {
                                     sortedBrands.map((item,index)=>(
@@ -135,8 +166,19 @@ const RepairTypeEachRegistControl = ({
                             수선 내용
                         </NameBox>
 
-                        <LongInputBox style={{borderBottom:0}}>
-                            <InsertInput value={repairName || ""} placeholder={"ex) 원단 마모"} onChange={(e)=>{setRepairName(e.target.value)}}/>
+                        <LongInputBox style={{borderBottom:0, position: "relative"}}>
+                            <InsertInput value={repairName || ""} placeholder={"ex) 원단 마모"} 
+                                onChange={(e)=>{
+                                    setRepairName(e.target.value)
+                                    repairNameCheck(e.target.value)
+                                }}/>
+                            <div style={{position: "absolute" ,top:2,right:20, zIndex:99, fontSize:"8px"}}>
+                                {repairNameUseable == 1 ?
+                                    <div style={{color:COLOR.CYAN_BLUE}}>사용가능</div>
+                                    :
+                                    <div style={{color:COLOR.RED}}>사용불가</div>
+                                }
+                            </div>
                         </LongInputBox>
                     </PrView>
                     <PrView>

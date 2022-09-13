@@ -39,6 +39,7 @@ const RepairTypeListControl = ({user,repairTypes,brands}) => {
         }
         setFilted(result)
         setSlicedArray(slicingArray(result,slcNum))
+        setPageNumber(1)
     }
     return(
         <Wrapper>
