@@ -196,10 +196,12 @@ const ReceptionPage = ({ options, user }) => {
     if(data == ""){
       alert("정확한 서비스 카드 번호를 입력하세요.")
     }
-    setOverallImg(data.data.image)
-    setImageData(data.imageList);
-    setNeedImageData(data.needImageList)
-    setTargetData(data.data);
+    if(data.data){
+      setOverallImg(data.data.image)
+      setImageData(data.imageList);
+      setNeedImageData(data.needImageList)
+      setTargetData(data.data);
+    }
   }, []);
 
  

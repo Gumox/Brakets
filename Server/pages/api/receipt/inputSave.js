@@ -178,12 +178,6 @@ const receipt = async (req, res) => {
 
                 if (updateResult.error) throw new Error(updateResult.error);
 
-                console.log(repair)
-                console.log(repair1_send_date && moment(repair[0]?.send_date).format("YYYY-MM-DD") != moment(repair1_send_date).format("YYYY-MM-DD"))
-                console.log(repair1_send_date )
-                console.log(moment(repair[0]?.send_date).format("YYYY-MM-DD"), moment(repair1_send_date).format("YYYY-MM-DD"))
-
-
                 if(repair1_send_date && moment(repair[0].send_date).format("YYYY-MM-DD") != moment(repair1_send_date).format("YYYY-MM-DD")){
                   query += `, receiver = ?`
                   values = [...values,repair1_store_id]

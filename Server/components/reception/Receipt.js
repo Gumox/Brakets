@@ -311,6 +311,7 @@ const ReceiptInfo = ({
                       value={targetData[REPAIR.PLACE_ID]}
                       styleOptions={{ maxWidth: "160px", width: "160px" }}
                       onChange={handleChangeTargetData}
+                      disabled = {targetData[REPAIR.SEND_DATE] ? true : false}
                     />
                   </Field>
                   <Field>
