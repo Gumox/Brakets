@@ -27,6 +27,7 @@ import axios from "axios";
 import { getRepairShop } from "../../functions/getInfos";
 import { getClaim ,getDiscount} from "../../functions/getClaim";
 import ClaimModal from "./claimModal";
+
 const ReceiptInfo = ({
   targetData = {},
   handleChangeTargetData = () => {},
@@ -324,6 +325,7 @@ const ReceiptInfo = ({
                             )
                           : undefined
                       }
+                      min={moment().format("YYYY-MM-DD")}
                       onChange={handleChangeTargetData}
                     />
                   </Field>
@@ -355,7 +357,7 @@ const ReceiptInfo = ({
                     disabled={true}
                   />
                 </Field>*/}
-                <Field marginRight="10px">
+                {/*<Field marginRight="10px">
                   <Input
                     type="date"
                     title="발송일 to M"
@@ -370,7 +372,7 @@ const ReceiptInfo = ({
                     onChange={handleChangeTargetData}
                   />
                 </Field>
-                {/*<Field marginRight="0px">
+                <Field marginRight="0px">
                   <Input
                     title="수선대체상품"
                     styleOptions={{ width: "20px" }}

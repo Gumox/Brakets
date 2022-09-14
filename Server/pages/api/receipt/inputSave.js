@@ -1,4 +1,5 @@
 import excuteQuery from "../db";
+import moment from "moment";
 
 async function updateReceipt(query, values) {
   const result = await excuteQuery({
@@ -9,7 +10,6 @@ async function updateReceipt(query, values) {
             WHERE receipt_id=?`,
     values,
   });
-
   return result;
 }
 async function updateReceiptRepair(receipt_id,detail_id,num) {
@@ -24,12 +24,11 @@ async function updateReceiptRepair(receipt_id,detail_id,num) {
 }
 async function getRepairDetail( repair_detail_id ) {
     const result = await excuteQuery({
-      query: `SELECT * 
+      query: `SELECT DATE_FORMAT(send_date, '%Y-%m-%d') AS send_date
               FROM repair_detail
               WHERE repair_detail_id =?`,
       values:[repair_detail_id],
     });
-  
     return result;
   }
 async function updateMfrReceipt( mfr_detail_id,mfr_store_id,receipt_id  ) {
@@ -179,6 +178,17 @@ const receipt = async (req, res) => {
 
                 if (updateResult.error) throw new Error(updateResult.error);
 
+                console.log(repair)
+                console.log(repair1_send_date && moment(repair[0]?.send_date).format("YYYY-MM-DD") != moment(repair1_send_date).format("YYYY-MM-DD"))
+                console.log(repair1_send_date )
+                console.log(moment(repair[0]?.send_date).format("YYYY-MM-DD"), moment(repair1_send_date).format("YYYY-MM-DD"))
+
+
+                if(repair1_send_date && moment(repair[0].send_date).format("YYYY-MM-DD") != moment(repair1_send_date).format("YYYY-MM-DD")){
+                  query += `, receiver = ?`
+                  values = [...values,repair1_store_id]
+                }
+
             }else if(!repair1_detail_id){
                 const insertResult =await insertRepairDetail(repair1_store_id,receipt_id,repair1_send_date)
                 const insertId = insertResult.insertId
@@ -196,6 +206,11 @@ const receipt = async (req, res) => {
             if(repair.length){
                 const updateResult = await updateRepairDetail(repair2_send_date,repair2_detail_id)
                 if (updateResult.error) throw new Error(updateResult.error);
+                
+                if(repair1_send_date && moment(repair[0]?.send_date).format("YYYY-MM-DD") != moment(repair2_send_date).format("YYYY-MM-DD")){
+                  query += `, receiver = ?`
+                  values = [...values,repair2_store_id]
+                }
             }else if(!repair2_detail_id){
                 const insertResult =await insertRepairDetail(repair2_store_id,receipt_id,repair2_send_date)
                 const insertId = insertResult.insertId
@@ -205,7 +220,7 @@ const receipt = async (req, res) => {
                 if (updateResult.error) throw new Error(updateResult.error);
                 if (updateReceiptRepairShop.error) throw new Error(updateReceiptRepairShop.error);
                 query += `, receiver = ?`
-                values = [...values,repair1_store_id]
+                values = [...values,repair2_store_id]
             }
         }
         if(repair3_store_id){
@@ -213,6 +228,11 @@ const receipt = async (req, res) => {
             if(repair.length){
                 const updateResult = await updateRepairDetail(repair3_send_date,repair3_detail_id)
                 if (updateResult.error) throw new Error(updateResult.error);
+                
+                if(repair1_send_date && moment(repair[0]?.send_date).format("YYYY-MM-DD") != moment(repair3_send_date).format("YYYY-MM-DD")){
+                  query += `, receiver = ?`
+                  values = [...values,repair3_store_id]
+                }
             }else if(!repair3_detail_id){
                 const insertResult =await insertRepairDetail(repair3_store_id,receipt_id,repair3_send_date)
                 const insertId = insertResult.insertId
@@ -222,7 +242,7 @@ const receipt = async (req, res) => {
                 if (updateResult.error) throw new Error(updateResult.error);
                 if (updateReceiptRepairShop.error) throw new Error(updateReceiptRepairShop.error);
                 query += `, receiver = ?`
-                values = [...values,repair1_store_id]
+                values = [...values,repair3_store_id]
             }
         }
         values = [...values,receipt_id]
