@@ -7,7 +7,7 @@ export default function ItemCount(props){
 
    
 
-    const [inItemCount,setInItemCount] = useState();
+    const [inItemCount,setInItemCount] = useState(0);
     const [isBlurToggle,setIsBlurToggle] = useState(false);
     
     useEffect(()=>{

@@ -169,6 +169,9 @@ function LookupPage({ route,navigation }) {
         if(takeReciptCheck && item["step"] == 2 ){
           sData.push(item)
         }
+        if(takeReciptCheck && item["step"] == 3 ){
+          sData.push(item)
+        }
         if(item["step"] == 4){
           sData.push(item)
         }

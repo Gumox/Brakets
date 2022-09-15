@@ -281,7 +281,7 @@ function RepairReceiptModal (props) {
                 <RightItemBox>
                   <ItemTextTop style={{fontSize:fontSizeTop}}>과실구분</ItemTextTop>
                   <ItemTextBottom style={{fontSize:fontSizeBottom}}>
-                    <select onChange={(e)=>{setSelectFault(e.target.value)}} value={selectFault} style={styles.selectStyle} >
+                    <select onChange={(e)=>{setSelectFault(e.target.value)}} value={selectFault || ""} style={styles.selectStyle} >
                       { 
                         faultLists
                       }
@@ -291,7 +291,7 @@ function RepairReceiptModal (props) {
                 <RightItemBox>
                   <ItemTextTop style={{fontSize:fontSizeTop}}>냬용분석</ItemTextTop>
                   <ItemTextBottom style={{fontSize:fontSizeBottom}}>
-                    <select onChange={(e)=>{setSelectAnalysis(e.target.value)}} value={selectAnalysis}  style={styles.selectStyle} >
+                    <select onChange={(e)=>{setSelectAnalysis(e.target.value)}} value={selectAnalysis || ""}  style={styles.selectStyle} >
                       {
                         analysisLists
                       }
@@ -301,7 +301,7 @@ function RepairReceiptModal (props) {
                 <RightItemBox>
                   <ItemTextTop style={{fontSize:fontSizeTop}}>판정결과</ItemTextTop>
                   <ItemTextBottom style={{fontSize:fontSizeBottom}}>
-                    <select id="selectBox" style={styles.selectStyle} value={selectJudgmentValue} onChange={(e)=>{
+                    <select id="selectBox" style={styles.selectStyle} value={selectJudgmentValue || ""} onChange={(e)=>{
                         var target = document.getElementById("selectBox");
                         setSelectJudgmentName(target.options[target.selectedIndex].text)
                         setSelectJudgmentValue(e.target.value)

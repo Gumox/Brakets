@@ -125,14 +125,6 @@ async function getLookup(query, values) {
                     (repair3.repair1_price + repair3.repair2_price + repair3.repair3_price) AS repair3_total,
                     repair3.shipment_type AS repair3_shipment_type,
                     repair3.shipment_price AS repair3_shipment_price,
-                    receipt.mfr_detail_id,
-                    mfr_store.name AS manufacturer_name,
-                    mfr.store_id AS mfr_store_id,
-                    DATE_FORMAT(mfr.send_date, '%Y-%m-%d %H:%i:%s') AS mfr_send_date,  
-                    DATE_FORMAT(mfr.register_date, '%Y-%m-%d %H:%i:%s') AS mfr_register_date,  
-                    IF(mfr.substitute=0, "N", "Y") AS mfr_substitute,
-                    mfr.message AS mfr_message,
-                    DATE_FORMAT(mfr.complete_date, '%Y-%m-%d %H:%i:%s') AS mfr_complete_date ,
                     receipt.image  
             FROM receipt 
             LEFT JOIN store ON receipt.store_id = store.store_id 
@@ -149,8 +141,6 @@ async function getLookup(query, values) {
             LEFT JOIN store AS repair2_store ON repair2.store_id = repair2_store.store_id
             LEFT JOIN repair_detail AS repair3 ON receipt.repair3_detail_id = repair3.repair_detail_id
             LEFT JOIN store AS repair3_store ON repair3.store_id = repair3_store.store_id
-            LEFT JOIN mfr_detail AS mfr ON receipt.mfr_detail_id = mfr.mfr_detail_id
-            LEFT JOIN store AS mfr_store ON receipt.mfr_id = mfr_store.store_id
             LEFT JOIN store AS receiver ON receipt.receiver = receiver.store_id
             LEFT JOIN product_category AS product_category ON receipt.pcategory_id = product_category.pcategory_id 
              ${query}`,

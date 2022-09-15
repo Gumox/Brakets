@@ -399,18 +399,18 @@ const RepairHistory = ({
               ></textarea>
             <div style={{position: 'absolute',bottom:0,marginLeft:10,display:"flex",width:"46%",flexDirection:"column",alignItems:"center"}}>
                 
-            <LaView >
-                <div style={{marginTop:20,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <LaView  style={{alignItems:"flex-end",marginBottom:10}}>
+                <div style={{marginTop:20,display:"flex",alignItems:"center",justifyContent:"center"}}>
                     {
                         checkBoxTag(paid)
                     }
                 </div>
                 <div style={{fontSize:15,color:`${COLOR.RED}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>유상수선비</div>
-                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, width:windowWidth*0.08,borderBottomColor:`${COLOR.RED}`}} value = {fee}
+                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, width:windowWidth*0.08,borderBottomColor:`${COLOR.RED}`}} value = {fee  || "" }
                         onChange={(e)=>{setFee(e.target.value)}}
                 />
                 <div style={{fontSize:15,color:`${COLOR.BLACK}`,marginLeft:20,marginRight:20,marginTop:10,fontWeight:"bold"}}>현금영수증 번호</div>
-                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, width:windowWidth*0.1}} value = {cashreceiptNum}
+                <input style={{borderTopWidth:0,borderBottomWidth:2,borderLeftWidth:0,borderRightWidth:0, width:windowWidth*0.1}} value = {cashreceiptNum  || ""}
                         onChange={(e)=>{
                             setCashreceiptNum((e.target.value).toString())
                         }}
