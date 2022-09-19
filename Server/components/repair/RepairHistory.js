@@ -180,7 +180,8 @@ const RepairHistory = ({
             inputInfoRepair(info,1);
             setRepairDetailId(info.repair1_detail_id)
 
-        }else if(shop == info.repair2_store_id){
+        }
+        if(shop == info.repair2_store_id){
             setMessage(info.repair2_message);
             inputTypeCost(info,typeInfo,2);
             setRepairType1(info.repair2_repair1_type_id);
@@ -200,7 +201,8 @@ const RepairHistory = ({
             setPaid(Boolean(info.repair2_paid));
             inputInfoRepair(info,2);
             setRepairDetailId(info.repair2_detail_id)
-        }else if(shop == info.repair3_store_id){
+        }
+        if(shop == info.repair3_store_id){
             setMessage(info.repair3_message);
             inputTypeCost(info,typeInfo,3);
             setRepairType1(info.repair3_repair1_type_id);
@@ -221,13 +223,6 @@ const RepairHistory = ({
             inputInfoRepair(info,3);
             setRepairDetailId(info.repair3_detail_id)
 
-        }
-        if(info.repair1_detail_id !== null){
-            setRepairDetailId(info.repair1_detail_id)
-        }else if(info.repair2_detail_id !== null){
-            setRepairDetailId(info.repair2_detail_id)
-        }else if(info.repair3_detail_id !== null){
-            setRepairDetailId(info.repair3_detail_id)
         }
     }
     const checkBoxTag = (tof) => {
