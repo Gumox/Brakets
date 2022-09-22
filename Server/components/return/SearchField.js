@@ -102,7 +102,8 @@ const SearchField = ({
             <button style={{ backgroundColor: "black",color: "white",margin: "2px",padding: "2px 20px",borderRadius: "10px",border: "none"}}>
               Excel
             </button>
-          }>        
+          }
+        >        
 
           <ExcelSheet data={searchList} name="하자반품">
             {/* <ExcelColumn label="Name" value={`${searchList[RECEIPT.ID]}`}/> */}
