@@ -82,7 +82,6 @@ export default function Inquiry() {
         if(params.dateOption === "receipt_date"){
 
             datas = await getData(params,userInfo.level)
-            console.log(datas)
             let sort =[]
             if(level === 3){
                 sort =await sortInquiryData(datas.body,params,fI,jI,aI,types)
@@ -102,7 +101,6 @@ export default function Inquiry() {
             setData(_.uniqBy(result,"receipt_code"))
         }
     },[setData]);
-    console.log("len",data.length)
 
     const handleKeyPress = useCallback(
         (e,code) => {

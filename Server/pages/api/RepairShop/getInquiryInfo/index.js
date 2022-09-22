@@ -125,7 +125,7 @@ async function getReceiptList(query,values) {
                 LEFT JOIN receipt_detail ON receipt.receipt_id = receipt_detail.receipt_id
                 LEFT JOIN product ON product.product_id = receipt.product_id
                 LEFT JOIN brand ON product.brand_id  = brand.brand_id 
-                LEFT JOIN store AS headquarter_store ON headquarter_store.brand_id  = brand.headquarter_id 
+                LEFT JOIN store AS headquarter_store ON (headquarter_store.brand_id  = brand.headquarter_id  AND headquarter_store.store_type = 0)
                 LEFT JOIN store ON store.store_id = receipt.store_id
                 LEFT JOIN season_type ON season_type.season_id = product.season_id
                 LEFT JOIN style_type ON style_type.style_id  = product.style_id 
@@ -155,9 +155,6 @@ async function getReceiptList(query,values) {
         values,
       });
       console.log("is here")
-      console.log(query)
-    
-      console.log(values)
       console.log(result)
       return result;
 }
@@ -180,6 +177,7 @@ const controller = async (req, res) => {
         } = req.query;
         let query = "";
         let values = [];
+        console.log("headquarter_name")
 
         if(shop_id){
           query += " AND repair_detail.store_id = ? ";

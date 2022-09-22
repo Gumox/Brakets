@@ -82,6 +82,7 @@ function TakeOverPage( { route,navigation } ) {
    
     
     const [requestImageModalVisible,setRequestImageModalVisible] = useState(false)
+    const [isSend,setIsSend] = useState(false)
 
 
     
@@ -113,13 +114,15 @@ function TakeOverPage( { route,navigation } ) {
            const storeId = store.getState().store_id;
            const info =store.getState().userInfo[0]
 
-           const smsBody = {
-                "storeId": storeId,
-                "receiptCode":pCode,
-                "messageType":2,
-                "headquarterId":info.headquarter_id 
-           }
-           await AutoSms(smsBody)
+           if(isSend){
+                const smsBody = {
+                        "storeId": storeId,
+                        "receiptCode":pCode,
+                        "messageType":2,
+                        "headquarterId":info.headquarter_id 
+                }
+                await AutoSms(smsBody)
+            }
         } catch (error) {
             console.error(error);
         } finally {
@@ -157,7 +160,8 @@ function TakeOverPage( { route,navigation } ) {
         
         setCardCode(readData["receipt_code"])                    //서비스카드번호
         if( readData["receipt_category"] == 1){                  //접수구분
-            setCheckReceipt("고객") 
+            setCheckReceipt("고객")
+            setIsSend(true) 
         }else if( readData["receipt_category"] == 2){
             setCheckReceipt("선처리") 
         }else if( readData["receipt_category"] == 3){
@@ -168,10 +172,6 @@ function TakeOverPage( { route,navigation } ) {
 
         // TODO
         setReceiptDate(String(readData["receipt_date"]).slice(0, 10))     //매장접수일
-        {console.log("read data is")}
-        {console.log(String(readData["receipt_date"]).slice(0, 10))}
-        {console.log(typeof(readData["receipt_date"]))}
-        
         setAppointmentDate(String(readData["due_date"]).slice(0, 10))     //고객약속일
         setSeason(readData["product_season_name"])               //시즌
         setProductStyle(readData["product_style_code"])          //제품 스타일
@@ -393,7 +393,7 @@ function TakeOverPage( { route,navigation } ) {
         if(element !== null){
             const before =(
                 <View key ={key}>
-                    <View style ={{justifyContent:"center", width:"100%", height:220,margin:10}}>
+                    <View style ={{justifyContent:"center", width:"100%", height:220}}>
                             <Pressable style={{justifyContent:"center",alignItems:"center"}} onPress={()=> {
                                 navigation.navigate("EnlargePhoto",{image: element})
                             }}>
@@ -578,7 +578,7 @@ function TakeOverPage( { route,navigation } ) {
               <InfoView>
                     <InText>고객 요구</InText>
                     <InText style={{fontSize:20,padding:15}}>{receiptType}</InText>
-                    <InText>제품 전체 사진</InText>
+                    <InText style={{margin:5}}>제품 전체 사진</InText>
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -620,16 +620,16 @@ function TakeOverPage( { route,navigation } ) {
                             </Pressable>
                         </View>
 
-                    <InText>제품 세부 사진 (수선전)</InText>
+                    <InText style={{margin:5}}>제품 세부 사진 (수선전)</InText>
                     <View style={{alignItems:"center"}}>
                         <ScrollView  horizontal ={true}>
                             {beforeImageViews}
                         </ScrollView>
                     </View>
-                    <InText>제품 세부 사진 (수선 후)</InText>
+                    <InText style={{margin:5}}>제품 세부 사진 (수선 후)</InText>
                     
                     <View style={{alignItems:"center"}}>
-                        <ScrollView style={{height : 150}} horizontal ={true}>
+                        <ScrollView style={{height : 240,border:"2px solid #f00"}} horizontal ={true}>
                             {afterImageViews}    
                         </ScrollView>
                     </View>

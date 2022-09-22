@@ -4,7 +4,7 @@ import COLOR from "../../constants/color";
 import { debounce } from "lodash";
 const InquiryReturn = ({item,sendLevel}) => {
   const el = item
-  const [shipmentType,setShipmentType] = useState(0)
+  const [shipmentType,setShipmentType] = useState("")
   const [sender,setSender] = useState(0)
   const [windowWidth,setWindowWidth] = useState(0)
   const [windowHeight,setWindowHeight] = useState(0)
@@ -30,7 +30,7 @@ const InquiryReturn = ({item,sendLevel}) => {
     }else if(el.shipment_type == 3){
       setShipmentType("퀵")
     }else if(el.shipment_type == 4){
-      setShipmentType("기타")
+      setShipmentType("행낭 (행낭 바코드 X)")
     }
   setWindowWidth(window.innerWidth)
   setWindowHeight(window.innerHeight)
@@ -56,7 +56,7 @@ const InquiryReturn = ({item,sendLevel}) => {
           </LaView>
           <LaView>
             <ItemText>발송비용</ItemText>
-            <ItemText2>{setPrice(el.shipment_price)}</ItemText2>
+            <ItemText2>{el.shipment_price ? setPrice(el.shipment_price)+" 원": "없음"}</ItemText2>
           </LaView>
           <LaView>
             <ItemText>받는곳</ItemText>
@@ -108,6 +108,7 @@ const ItemText = styled.div`
   color:${COLOR.BLACK};
   font-weight: bold;
   align-items: center;
+  min-width:120px;
   margin-left:20px;
   margin-top:20px;
   margin-bottom:10px;
@@ -118,7 +119,6 @@ const ItemText2 = styled.div`
   color:${COLOR.BRAUN};
   font-weight: bold;
   align-items: center;
-  margin-left:35px;
   margin-top:20px;
   margin-bottom:10px;
 `;
