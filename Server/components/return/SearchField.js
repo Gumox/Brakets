@@ -97,18 +97,13 @@ const SearchField = ({
           />
         </Field>
         <SearchButton onClick={handleSearchButtonClick}>조회</SearchButton>
-        <ExcelFile filename="하자반품" element={<button
-          style={{
-            // minHeight:maxContent,
-            backgroundColor: "black",
-            color: "white",
-            margin: "2px",
-            padding: "2px 20px",
-            borderRadius: "10px",
-            border: "none"
-          }}
+        <ExcelFile filename="하자반품" 
+          element={
+            <button style={{ backgroundColor: "black",color: "white",margin: "2px",padding: "2px 20px",borderRadius: "10px",border: "none"}}>
+              Excel
+            </button>
+          }>        
 
-        >Excel</button>}>        
           <ExcelSheet data={searchList} name="하자반품">
             {/* <ExcelColumn label="Name" value={`${searchList[RECEIPT.ID]}`}/> */}
             <ExcelColumn label="서비스카드 번호" value={(col) => col[RECEIPT.CODE]}/>
