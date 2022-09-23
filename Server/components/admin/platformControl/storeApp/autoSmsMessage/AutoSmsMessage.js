@@ -74,15 +74,18 @@ const AutoSmsMessage = ({text="",state=false,message1,message2,message3,
 }
 const heightMaker =(str)=>{
     let count = 0;
-    let pos = str.indexOf('\n'); 
+    //let pos = str.indexOf('\n'); 
 
-    while (pos !== -1) {
+    /*while (pos !== -1) {
     count++;
     pos = str.indexOf('\n', pos + 1);
 
    
     }
-    return(18*count+10)
+    if(count == 0){*/
+        count = String(str).length/16
+    //}
+    return(18*count+15)
 }
 
 export default AutoSmsMessage
