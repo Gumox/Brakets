@@ -128,7 +128,7 @@ async function setHeadquarterDefaultAutoMessageData(
               ( message_type, auto_sms_message1, auto_sms_message2, auto_sms_message3, headquarter_id) 
               VALUES 
               ('1', '입니다. \r\n의뢰하신 상품이', '점에 접수 되었습니다.\r\n접수 번호는 ', '입니다. 감사합니다.', ${headquarter_id}), 
-              ('2', '입니다. \r\n요청하셨던 제품이 수선 완료되어', '점에 도착했습니다. \r\n접수 번호는', '입니다.  \r\n매장에 방문해 주시길 바랍니다.  감사합니다.', ${headquarter_id})`,
+              ('2', '입니다. \r\n요청하셨던 요청하셨던 접수가 처리되어 제품이', '점에 도착했습니다. \r\n접수 번호는', '입니다.  \r\n매장에 방문해 주시길 바랍니다.  감사합니다.', ${headquarter_id})`,
       
     });
   

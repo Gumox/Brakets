@@ -78,7 +78,7 @@ function ShopStepOne({ navigation , route}) {
                 body: formdata
             });
             const json = await response.json();
-            if(store.getState().receptionDivision === 1 && store.getState().requirement.id === 1){
+            if(store.getState().receptionDivision.id === 1 ){
                 AutoSms(smsBody)
             }
             store.dispatch({ type: "STORE_CLEAR" })

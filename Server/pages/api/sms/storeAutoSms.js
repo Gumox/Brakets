@@ -55,7 +55,7 @@ async function getSender(storeId) {
 
   return result;
 }
-async function smsMessage(messageType,headquarterId,brand,store,code) {
+async function smsMessage(messageType,headquarterId,brand,store,code,sendState) {
   const result = await excuteQuery({
     query: `SELECT * 
             FROM auto_sms_message 
@@ -63,14 +63,19 @@ async function smsMessage(messageType,headquarterId,brand,store,code) {
     values:[messageType,headquarterId]
   });
   const msg = brand+" "+result[0].auto_sms_message1+" "+store +result[0].auto_sms_message2+" "+code +result[0].auto_sms_message3
+  let isSend = false
+  if(result[0][sendState]){
+    isSend = true
+  }
 
-  return msg;
+  return [msg,isSend];
 }
 async function getReceiver(receiptId){
   const result = await excuteQuery({
     query: `SELECT 
             customer.phone,
-            receipt.receipt_code
+            receipt.receipt_code,
+            receipt.receipt_type
             FROM receipt 
             JOIN customer ON receipt.customer_id = customer.customer_id 
             WHERE receipt.receipt_id = ? `,
@@ -84,7 +89,8 @@ async function getReceiverAsCode(receiptCode){
   const result = await excuteQuery({
     query: `SELECT 
             customer.phone,
-            receipt.receipt_code
+            receipt.receipt_code,
+            receipt.receipt_type
             FROM receipt 
             JOIN customer ON receipt.customer_id = customer.customer_id 
             WHERE receipt.receipt_code = ? `,
@@ -108,26 +114,25 @@ const controller =  async (req, res) => {
 
     
     let customer
-
+    let sendMessageReceiptType = {1:"repair_product",2:"change_product",3:"refund_product",4:"deliberate_product"}
     if(receiptId){
       customer = await getReceiver(receiptId)
     }else if(receiptCode){
       customer = await getReceiverAsCode(receiptCode)
     }
+    
     if(customer.phone){
+      const sendState = sendMessageReceiptType[customer.receipt_type]
       const storeSenderString = await getSender(storeId)
       const sender =String(storeSenderString[0].headquarter_call).replace(/-/g, '') 
 
       const hq_id = storeSenderString[0].headquarter_id
 
-      const message = await smsMessage(messageType,headquarterId,storeSenderString[0].brand_name,storeSenderString[0].name,customer.receipt_code)
+      const message = await smsMessage(messageType,headquarterId,storeSenderString[0].brand_name,storeSenderString[0].name,customer.receipt_code,sendState)
 
-      /*console.log(sender)
-      console.log("customer :", customer.phone)
+      console.log(message)
       
-
-      console.log("customer :", String(customer.phone).replace(/-/g, ''))*/
-      
+      if(message[1]){
       
         
         let AuthData = {
@@ -137,25 +142,28 @@ const controller =  async (req, res) => {
         
         AuthData.testmode_yn = 'N'
 
-      req.body = {
-          
-        sender: sender,
-        receiver:  String(customer.phone).replace(/-/g, ''),
-        msg: message,
-      }
-      console.log( req.body)
+        req.body = {
+            
+          sender: sender,
+          receiver:  String(customer.phone).replace(/-/g, ''),
+          msg: message[0],
+        }
+        console.log( req.body)
 
-      aligoapi.send(req, AuthData)
-        .then((r) => {
-          smsList(req,message,r.msg_id,hq_id,sender)
-          res.status(200).send(r)
-        })
-        .catch((e) => {
-          res.status(400)
-          res.send(e)
-        })
+        aligoapi.send(req, AuthData)
+          .then((r) => {
+            smsList(req,message[0],r.msg_id,hq_id,sender)
+            res.status(200).send(r)
+          })
+          .catch((e) => {
+            res.status(400)
+            res.send(e)
+          })
+      }else{
+        res.status(204).send()
+      }
     }else{
-      req.status(204)
+      res.status(204).send()
     }
   }
       
